@@ -1,0 +1,51 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Dependency directories
+node_modules/
+jspm_packages/
+web_modules/
+
+# Jest artifacts
+.jest/
+
+# Editor directories and files
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# dotenv environment variables file
+.env
+.env*.local
+
+# Mac files
+.DS_Store
+
+# npm package manager cache
+.npm/
+
+# Yarn integrity file
+.yarn-integrity
+
+# Temporary files
+tmp/
+*.tmp
+*.bak
+
+# Build output directory
+build/
+dist/
+out/
+
+# Vite-specific files
+.vite/
