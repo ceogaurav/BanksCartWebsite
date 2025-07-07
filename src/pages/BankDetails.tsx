@@ -4,8 +4,11 @@ import { ExternalLink, MapPin, Phone, Mail, Star, TrendingUp, CheckCircle, Build
 import { banks } from '../data/banks';
 import { loanRates } from '../data/mockData';
 import { formatCurrency } from '../utils/calculations';
+interface BankDetailsProps {
+  openEligibilityModal: (loanType?: string) => void;
+}
 
-const BankDetails: React.FC = () => {
+const BankDetails: React.FC<BankDetailsProps> = ({ openEligibilityModal }) => {
   const { bankId } = useParams<{ bankId: string }>();
   const bank = banks.find(b => b.id === bankId);
   
@@ -69,12 +72,12 @@ const BankDetails: React.FC = () => {
                 <ExternalLink className="h-4 w-4" />
                 <span>Visit Website</span>
               </a>
-              <Link
-                to="/eligibility"
+              <button
+                onClick={() => openEligibilityModal()}
                 className="flex items-center justify-center space-x-2 border border-primary-600 text-primary-600 px-6 py-3 rounded-lg font-semibold hover:bg-primary-50 transition-colors"
               >
                 <span>Check Eligibility</span>
-              </Link>
+              </button>
             </div>
           </div>
         </div>
@@ -219,12 +222,12 @@ const BankDetails: React.FC = () => {
             <div className="bg-white rounded-xl shadow-lg p-6">
               <h3 className="text-lg font-bold text-gray-900 mb-4">Quick Actions</h3>
               <div className="space-y-3">
-                <Link
-                  to="/eligibility"
+                <button
+                  onClick={() => openEligibilityModal()}
                   className="block w-full bg-primary-600 text-white text-center py-3 rounded-lg font-semibold hover:bg-primary-700 transition-colors"
                 >
                   Check Eligibility
-                </Link>
+                </button>
                 <Link
                   to="/calculators"
                   className="block w-full border border-primary-600 text-primary-600 text-center py-3 rounded-lg font-semibold hover:bg-primary-50 transition-colors"

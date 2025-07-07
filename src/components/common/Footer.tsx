@@ -2,7 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
 
-const Footer: React.FC = () => {
+interface FooterProps {
+  openEligibilityModal: (loanType?: string) => void;
+}
+
+const Footer: React.FC<FooterProps> = ({ openEligibilityModal }) => {
   const quickLinks = [
     { name: 'Personal Loan', href: '/loans/personal' },
     { name: 'Home Loan', href: '/loans/home' },
@@ -24,7 +28,7 @@ const Footer: React.FC = () => {
     { name: 'Income Tax', href: '/resources/income-tax' },
     { name: 'PPF', href: '/resources/ppf' },
     { name: 'Gold Rates', href: '/resources/gold-rates' },
-    { name: 'Check Eligibility', href: '/eligibility' },
+    { name: 'Check Eligibility', action: () => openEligibilityModal() },
   ];
 
   return (
@@ -85,14 +89,22 @@ const Footer: React.FC = () => {
             <h3 className="text-lg font-semibold mb-6">Tools & Resources</h3>
             <ul className="space-y-3">
               {resources.map((link) => (
-                <li key={link.name}>
-                  <Link
-                    to={link.href}
-                    className="text-gray-300 hover:text-blue-400 transition-colors text-sm"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
+                link.href ? (
+                  <li key={link.name}>
+                    <Link
+                      to={link.href}
+                      className="text-gray-300 hover:text-blue-400 transition-colors text-sm"
+                    >
+                      {link.name}
+                    </Link>
+                  </li>
+                ) : (
+                  <li key={link.name}>
+                    <button onClick={link.action} className="text-gray-300 hover:text-blue-400 transition-colors text-sm text-left w-full">
+                      {link.name}
+                    </button>
+                  </li>
+                )
               ))}
             </ul>
           </div>

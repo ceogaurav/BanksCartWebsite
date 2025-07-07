@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'; // Import useState and useEffect
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 // Import your pages and components
@@ -12,7 +12,7 @@ import Calculators from './pages/Calculators';
 import IFSCFinder from './pages/IFSCFinder';
 import IncomeTaxPage from './pages/IncomeTaxPage';
 import PPFPage from './pages/PPFPage';
-import Eligibility from './pages/Eligibility'; // This is your existing eligibility page
+import Eligibility from './pages/Eligibility';
 import GoldLoansPage from './pages/GoldLoansPage';
 import DebitCardsPage from './pages/DebitCardsPage';
 import LoanRates from './pages/LoanRates';
@@ -46,11 +46,13 @@ import UsedCarLoanPage from './pages/UsedCarLoanPage';
 // Import common components
 import Header from './components/common/Header';
 import Footer from './components/common/Footer';
-import LoanApplicationModal from './components/common/LoanApplicationModal'; // Import the loan application modal
-import EligibilityCheckModal from './components/common/EligibilityCheckModal'; // Import the new eligibility modal
-import PartnerApplicationModal from './components/modals/PartnerApplicationModal'; // NEW: Import PartnerApplicationModal
+import LoanApplicationModal from './components/common/LoanApplicationModal';
+import EligibilityCheckModal from './components/common/EligibilityCheckModal';
+import PartnerApplicationModal from './components/modals/PartnerApplicationModal';
+import CibilCheckButton from './components/common/CibilCheckButton'; // NEW: Import CibilCheckButton
+import CibilScoreCheckModal from './components/modals/CibilScoreCheckModal'; // NEW: Import CibilScoreCheckModal
 
-// A simple 404 Not Found component (optional, but good practice)
+// A simple 404 Not Found component
 const NotFound = () => (
   <div className="flex items-center justify-center min-h-[60vh] text-center">
     <div>
@@ -70,8 +72,11 @@ const App: React.FC = () => {
   const [isEligibilityModalOpen, setIsEligibilityModalOpen] = useState(false);
   const [currentEligibilityLoanType, setCurrentEligibilityLoanType] = useState('');
 
-  // NEW: State for Partner Application Modal
+  // State for Partner Application Modal
   const [isPartnerModalOpen, setIsPartnerModalOpen] = useState(false);
+
+  // NEW: State for CIBIL Score Check Modal
+  const [isCibilModalOpen, setIsCibilModalOpen] = useState(false);
 
   // Functions to control Loan Application Modal
   const openApplyModal = (loanType: string = '') => {
@@ -95,13 +100,22 @@ const App: React.FC = () => {
     setCurrentEligibilityLoanType('');
   };
 
-  // NEW: Functions to control Partner Application Modal
+  // Functions to control Partner Application Modal
   const openPartnerModal = () => {
     setIsPartnerModalOpen(true);
   };
 
   const closePartnerModal = () => {
     setIsPartnerModalOpen(false);
+  };
+
+  // NEW: Functions to control CIBIL Score Check Modal
+  const openCibilModal = () => {
+    setIsCibilModalOpen(true);
+  };
+
+  const closeCibilModal = () => {
+    setIsCibilModalOpen(false);
   };
 
   // useEffect hook to load the Tawk.to chat widget script
@@ -119,13 +133,12 @@ const App: React.FC = () => {
         document.body.removeChild(script);
       }
     };
-  }, []); // Empty dependency array ensures this runs only once on mount
+  }, []);
 
   return (
     <Router>
       <div className="flex flex-col min-h-screen bg-white font-inter">
         {/* Header component, visible on all pages, passing modal open functions */}
-        {/* NEW: Pass openPartnerModal to Header */}
         <Header
           openApplyModal={openApplyModal}
           openEligibilityModal={openEligibilityModal}
@@ -134,7 +147,6 @@ const App: React.FC = () => {
         <main className="flex-grow">
           {/* Routes component renders the first matching Route */}
           <Routes>
-            {/* Main navigation routes, passing openApplyModal where needed */}
             <Route path="/" element={<Home openApplyModal={openApplyModal} />} />
             <Route path="/resources/loan-rates" element={<LoanRates />} />
             <Route path="/eligibility" element={<Eligibility />} />
@@ -178,12 +190,10 @@ const App: React.FC = () => {
             <Route path="/insurance/term-life" element={<TermInsurancePage />} />
             <Route path="/resources/gold-rates" element={<GoldLoansPage openApplyModal={openApplyModal} />} />
             <Route path="/resources/pincodes" element={<PincodesPage />} />
-            {/* NEW: Pass openPartnerModal to BecomePartnerPage if it has a button */}
             <Route path="/become-partner" element={<BecomePartnerPage openApplyModal={openApplyModal} openPartnerModal={openPartnerModal} />} />
             <Route path="/resources/ppf" element={<PPFPage />} />
             <Route path="/resources/income-tax" element={<IncomeTaxPage />} />
-            <Route path="/bank-details" element={<BankDetails />} /> {/* Added missing BankDetails route */}
-
+            <Route path="/bank-details" element={<BankDetails />} />
 
             {/* Catch-all route for any undefined paths (404 Not Found) */}
             <Route path="*" element={<NotFound />} />
@@ -192,25 +202,29 @@ const App: React.FC = () => {
         {/* Footer component, visible on all pages */}
         <Footer />
 
-        {/* Loan Application Modal */}
+        {/* Modals */}
         <LoanApplicationModal
           isOpen={isApplyModalOpen}
           onClose={closeApplyModal}
           initialLoanType={currentLoanType}
         />
-
-        {/* Eligibility Check Modal */}
         <EligibilityCheckModal
           isOpen={isEligibilityModalOpen}
           onClose={closeEligibilityModal}
           initialLoanType={currentEligibilityLoanType}
         />
-
-        {/* NEW: Partner Application Modal */}
         <PartnerApplicationModal
           isOpen={isPartnerModalOpen}
           onClose={closePartnerModal}
         />
+        {/* NEW: CIBIL Score Check Modal */}
+        <CibilScoreCheckModal
+          isOpen={isCibilModalOpen}
+          onClose={closeCibilModal}
+        />
+
+        {/* NEW: CIBIL Check Sliding Button - Appears on all pages */}
+        <CibilCheckButton openCibilModal={openCibilModal} />
       </div>
     </Router>
   );

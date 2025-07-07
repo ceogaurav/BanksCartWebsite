@@ -6,13 +6,18 @@ import QuickTools from '../components/home/QuickTools';
 import CurrentRatesTable from '../components/home/CurrentRatesTable';
 import TrustIndicators from '../components/home/TrustIndicators';
 
-const Home: React.FC = () => {
+interface HomeProps {
+  openApplyModal: (loanType?: string) => void;
+  openEligibilityModal: (loanType?: string) => void;
+}
+
+const Home: React.FC<HomeProps> = ({ openApplyModal, openEligibilityModal }) => {
   return (
     <div className="font-inter">
-      <HeroSection />
+      <HeroSection openApplyModal={openApplyModal} openEligibilityModal={openEligibilityModal} />
       <InterestRateTicker />
       <LoanTypeCards />
-      <QuickTools />
+      <QuickTools openEligibilityModal={openEligibilityModal} />
       <CurrentRatesTable />
       <TrustIndicators />
     </div>

@@ -22,7 +22,7 @@ const QuickTools: React.FC = () => {
       name: 'IFSC Finder',
       description: 'Find bank branch IFSC codes',
       icon: Search,
-      href: '/ifsc-finder',
+      href: '/resources/ifsc-finder',
       color: 'bg-purple-500',
     },
     {

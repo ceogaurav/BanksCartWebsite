@@ -5,10 +5,11 @@ import Button from '../common/Button';
 import ApplyButton from '../common/ApplyButton';
 
 interface HeroSectionProps {
-  openApplyModal?: (loanType?: string) => void;
+  openApplyModal: (loanType?: string) => void;
+  openEligibilityModal: (loanType?: string) => void;
 }
 
-const HeroSection: React.FC<HeroSectionProps> = ({ openApplyModal }) => {
+const HeroSection: React.FC<HeroSectionProps> = ({ openApplyModal, openEligibilityModal }) => {
   const features = [
     { icon: TrendingUp, text: 'Compare rates from 50+ banks' },
     { icon: Shield, text: 'Secure & encrypted platform' },
@@ -62,11 +63,9 @@ const HeroSection: React.FC<HeroSectionProps> = ({ openApplyModal }) => {
                   </Button>
                 </Link>
               )}
-              <Link to="/eligibility">
-                <Button variant="outline" size="lg">
-                  Check Eligibility
-                </Button>
-              </Link>
+              <Button variant="outline" size="lg" onClick={() => openEligibilityModal()}>
+                Check Eligibility
+              </Button>
             </div>
 
             {/* Trust Indicators */}

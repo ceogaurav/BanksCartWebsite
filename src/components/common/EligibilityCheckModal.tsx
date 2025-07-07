@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { X, CheckCircle, Loader2, AlertTriangle } from 'lucide-react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { X, CheckCircle, Loader2, AlertTriangle, User, Mail, Phone, Calendar, MapPin, Briefcase, Building } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { initializeApp } from 'firebase/app';
 import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from 'firebase/auth';
@@ -11,28 +11,388 @@ interface EligibilityCheckModalProps {
   initialLoanType?: string;
 }
 
+// Expanded Mock MCA Company List (IMPORTANT: The data.gov.in API endpoint provided does NOT support
+// direct company name search. Reverting to mock data for autocomplete functionality.
+// For real-time search, a different API or backend filtering would be needed.)
+const mockIndianCompanies = [
+  "Reliance Industries Limited",
+  "Tata Consultancy Services",
+  "HDFC Bank Limited",
+  "ICICI Bank Limited",
+  "Infosys Limited",
+  "Hindustan Unilever Limited",
+  "State Bank of India",
+  "Bharti Airtel Limited",
+  "Axis Bank Limited",
+  "Larsen & Toubro Limited",
+  "Wipro Limited",
+  "Kotak Mahindra Bank Limited",
+  "Asian Paints Limited",
+  "Maruti Suzuki India Limited",
+  "Tech Mahindra Limited",
+  "Bajaj Finance Limited",
+  "Nestle India Limited",
+  "UltraTech Cement Limited",
+  "Power Grid Corporation of India Limited",
+  "NTPC Limited",
+  "Adani Enterprises Limited",
+  "JSW Steel Limited",
+  "Grasim Industries Limited",
+  "Mahindra & Mahindra Limited",
+  "IndusInd Bank Limited",
+  "Sun Pharmaceutical Industries Limited",
+  "Dr. Reddy's Laboratories Limited",
+  "Cipla Limited",
+  "Eicher Motors Limited",
+  "Hero MotoCorp Limited",
+  "Britannia Industries Limited",
+  "Godrej Consumer Products Limited",
+  "Dabur India Limited",
+  "Pidilite Industries Limited",
+  "TVS Motor Company Limited",
+  "Bharat Petroleum Corporation Limited",
+  "Indian Oil Corporation Limited",
+  "Oil and Natural Gas Corporation Limited",
+  "Coal India Limited",
+  "GAIL (India) Limited",
+  "HCL Technologies Limited",
+  "Bajaj Auto Limited",
+  "Titan Company Limited",
+  "Shree Cement Limited",
+  "Divi's Laboratories Limited",
+  "Apollo Hospitals Enterprise Limited",
+  "DLF Limited",
+  "Godrej Properties Limited",
+  "Prestige Estates Projects Limited",
+  "Sobha Limited",
+  "Vedanta Limited",
+  "Hindalco Industries Limited",
+  "Tata Steel Limited",
+  "Jindal Steel & Power Limited",
+  "Steel Authority of India Limited",
+  "Cement Corporation of India Limited",
+  "Ambuja Cements Limited",
+  "ACC Limited",
+  "Grasim Industries Limited",
+  "UltraTech Cement Limited",
+  "Shree Cement Limited",
+  "Dalmia Bharat Limited",
+  "Ramco Cements Limited",
+  "JK Cement Limited",
+  "Star Cement Limited",
+  "Orient Cement Limited",
+  "The India Cements Limited",
+  "Birla Corporation Limited",
+  "HeidelbergCement India Limited",
+  "Kesoram Industries Limited",
+  "Century Textiles and Industries Limited",
+  "Raymond Limited",
+  "Arvind Limited",
+  "Welspun India Limited",
+  "Trident Limited",
+  "Himatsingka Seide Limited",
+  "Vardhman Textiles Limited",
+  "KPR Mill Limited",
+  "Page Industries Limited",
+  "Lux Industries Limited",
+  "Dollar Industries Limited",
+  "Rupa & Company Limited",
+  "Ashok Leyland Limited",
+  "Tata Motors Limited",
+  "Mahindra & Mahindra Limited",
+  "Maruti Suzuki India Limited",
+  "Hero MotoCorp Limited",
+  "Bajaj Auto Limited",
+  "TVS Motor Company Limited",
+  "Eicher Motors Limited",
+  "Swaraj Engines Limited",
+  "Force Motors Limited",
+  "SML Isuzu Limited",
+  "Escorts Kubota Limited",
+  "VST Tillers Tractors Limited",
+  "Greaves Cotton Limited",
+  "Cummins India Limited",
+  "Bosch Limited",
+  "Motherson Sumi Systems Limited",
+  "Apollo Tyres Limited",
+  "MRF Limited",
+  "Ceat Limited",
+  "JK Tyre & Industries Limited",
+  "Balkrishna Industries Limited",
+  "Exide Industries Limited",
+  "Amaraja Batteries Limited",
+  "Graphite India Limited",
+  "HEG Limited",
+  "Philips Carbon Black Limited",
+  "Rain Industries Limited",
+  "Deepak Fertilizers and Petrochemicals Corporation Limited",
+  "GSFC Limited",
+  "National Fertilizers Limited",
+  "Rashtriya Chemicals and Fertilizers Limited",
+  "Coromandel International Limited",
+  "Zuari Agro Chemicals Limited",
+  "Chambal Fertilizers and Chemicals Limited",
+  "Mangalore Chemicals & Fertilizers Limited",
+  "Paradeep Phosphates Limited",
+  "Gujarat Narmada Valley Fertilizers & Chemicals Limited",
+  "Gujarat State Fertilizers & Chemicals Limited",
+  "Aarti Industries Limited",
+  "Deepak Nitrite Limited",
+  "Navin Fluorine International Limited",
+  "SRF Limited",
+  "Fine Organic Industries Limited",
+  "Clean Science and Technology Limited",
+  "Galaxy Surfactants Limited",
+  "Rossari Biotech Limited",
+  "Vinati Organics Limited",
+  "Balaji Amines Limited",
+  "Alkyl Amines Chemicals Limited",
+  "Neogen Chemicals Limited",
+  "Anupam Rasayan India Limited",
+  "Laxmi Organic Industries Limited",
+  "Tatva Chintan Pharma Chem Limited",
+  "Chemcon Speciality Chemicals Limited",
+  "Home First Finance Company India Limited",
+  "Aavas Financiers Limited",
+  "Can Fin Homes Limited",
+  "Repco Home Finance Limited",
+  "PNB Housing Finance Limited",
+  "LIC Housing Finance Limited",
+  "IndiaBulls Housing Finance Limited",
+  "GIC Housing Finance Limited",
+  "Dewan Housing Finance Corporation Limited", // Note: DHFL is under resolution
+  "Muthoot Finance Limited",
+  "Manappuram Finance Limited",
+  "Shriram Finance Limited",
+  "Bajaj Finserv Limited",
+  "Cholamandalam Investment and Finance Company Limited",
+  "Mahindra & Mahindra Financial Services Limited",
+  "Power Finance Corporation Limited",
+  "REC Limited",
+  "Indian Railway Finance Corporation Limited",
+  "National Aluminium Company Limited",
+  "Hindustan Copper Limited",
+  "NMDC Limited",
+  "MOIL Limited",
+  "Gujarat Mineral Development Corporation Limited",
+  "KIOCL Limited",
+  "The Sandur Manganese & Iron Ores Limited",
+  "GMDC Limited",
+  "Ashapura Minechem Limited",
+  "Orient Refractories Limited",
+  "Vesuvius India Limited",
+  "Graphite India Limited",
+  "HEG Limited",
+  "Rain Industries Limited",
+  "Philips Carbon Black Limited",
+  "Himadri Speciality Chemical Limited",
+  "Kabra Extrusion Technik Limited",
+  "Polyplex Corporation Limited",
+  "Uflex Limited",
+  "Jindal Poly Films Limited",
+  "Cosmo First Limited",
+  "Garware Hi-Tech Films Limited",
+  "Essel Propack Limited",
+  "Huhtamaki India Limited",
+  "TCPL Packaging Limited",
+  "Manjushree Technopack Limited",
+  "Flexituff Ventures International Limited",
+  "Xpro India Limited",
+  "Bilcare Limited",
+  "Mold-Tek Packaging Limited",
+  "Time Technoplast Limited",
+  "Responsive Industries Limited",
+  "Supreme Industries Limited",
+  "Finolex Industries Limited",
+  "Astral Limited",
+  "Prince Pipes and Fittings Limited",
+  "APL Apollo Tubes Limited",
+  "Jindal Saw Limited",
+  "Welspun Corp Limited",
+  "Ratnamani Metals & Tubes Limited",
+  "Goodluck India Limited",
+  "Suraj Limited",
+  "Prakash Industries Limited",
+  "Jindal Stainless Limited",
+  "Jindal Stainless (Hisar) Limited",
+  "APL Apollo Tubes Limited",
+  "Tata Metaliks Limited",
+  "Electrosteel Castings Limited",
+  "Jai Balaji Industries Limited",
+  "Srikalahasthi Pipes Limited",
+  "Manaksia Limited",
+  "Mishra Dhatu Nigam Limited",
+  "Bharat Forge Limited",
+  "Ramkrishna Forgings Limited",
+  "MM Forgings Limited",
+  "Sona BLW Precision Forgings Limited",
+  "Endurance Technologies Limited",
+  "Sundram Fasteners Limited",
+  "GNA Axles Limited",
+  "Talbros Automotive Components Limited",
+  "JBM Auto Limited",
+  "Munjal Showa Limited",
+  "Federal-Mogul Goetze (India) Limited",
+  "Rico Auto Industries Limited",
+  "Jamna Auto Industries Limited",
+  "Lumax Industries Limited",
+  "Minda Industries Limited",
+  "Varroc Engineering Limited",
+  "Suprajit Engineering Limited",
+  "Fiem Industries Limited",
+  "Spark Minda, Ashok Minda Group",
+  "Automotive Axles Limited",
+  "WABCO India Limited",
+  "Sundaram Clayton Limited",
+  "Wheels India Limited",
+  "Jay Bharat Maruti Limited",
+  "Bharat Seats Limited",
+  "Subros Limited",
+  "Denso India Limited",
+  "Craftsman Automation Limited",
+  "Sansera Engineering Limited",
+  "Rolex Rings Limited",
+  "MTAR Technologies Limited",
+  "Data Patterns (India) Limited",
+  "Paras Defence and Space Technologies Limited",
+  "Mazagon Dock Shipbuilders Limited",
+  "Garden Reach Shipbuilders & Engineers Limited",
+  "Cochin Shipyard Limited",
+  "Hindustan Aeronautics Limited",
+  "Bharat Electronics Limited",
+  "Bharat Dynamics Limited",
+  "BEML Limited",
+  "GRSE Limited",
+  "Goa Shipyard Limited",
+  "Cochin Shipyard Limited",
+  "Defence Public Sector Undertakings (DPSUs)",
+  "Indian Railways",
+  "National Highways Authority of India (NHAI)",
+  "Power Grid Corporation of India Limited",
+  "NTPC Limited",
+  "NHPC Limited",
+  "SJVN Limited",
+  "THDC India Limited",
+  "Power Finance Corporation Limited",
+  "REC Limited",
+  "Adani Power Limited",
+  "Tata Power Company Limited",
+  "Reliance Power Limited",
+  "Torrent Power Limited",
+  "CESC Limited",
+  "Jindal Steel & Power Limited",
+  "JSW Energy Limited",
+  "NLC India Limited",
+  "Gujarat State Electricity Corporation Limited",
+  "Maharashtra State Power Generation Company Limited",
+  "Uttar Pradesh Rajya Vidyut Utpadan Nigam Limited",
+  "Madhya Pradesh Power Generating Company Limited",
+  "Chhattisgarh State Power Generation Company Limited",
+  "Odisha Power Generation Corporation Limited",
+  "Damodar Valley Corporation",
+  "Neyveli Lignite Corporation of India Limited",
+  "Coal India Limited",
+  "Singareni Collieries Company Limited",
+  "Gujarat Mineral Development Corporation Limited",
+  "Reliance Infrastructure Limited",
+  "Adani Transmission Limited",
+  "Sterlite Power Transmission Limited",
+  "Kalpataru Power Transmission Limited",
+  "KEC International Limited",
+  "Skipper Limited",
+  "Voltamp Transformers Limited",
+  "Transformers and Rectifiers (India) Limited",
+  "GE T&D India Limited",
+  "Siemens Limited",
+  "ABB India Limited",
+  "Schneider Electric Infrastructure Limited",
+  "Honeywell Automation India Limited",
+  "Thermax Limited",
+  "Kirloskar Brothers Limited",
+  "Kirloskar Oil Engines Limited",
+  "Praj Industries Limited",
+  "Ion Exchange (India) Limited",
+  "Va Tech Wabag Limited",
+  "Jash Engineering Limited",
+  "WPIL Limited",
+  "Ksb Limited",
+  "Grundfos Pumps India Private Limited",
+  "Wilo Mather and Platt Pumps Private Limited",
+  "Shakti Pumps (India) Limited",
+  "Roto Pumps Limited",
+  "Hawa Engineers Limited",
+  "Kirloskar Pneumatic Company Limited",
+  "Elgi Equipments Limited",
+  "Ingersoll-Rand (India) Limited",
+  "Atlas Copco (India) Limited",
+  "Kennametal India Limited",
+  "Sandvik Asia Private Limited",
+  "Timken India Limited",
+  "SKF India Limited",
+  "FAG Bearings India Limited",
+  "Schaeffler India Limited",
+  "NRB Bearings Limited",
+  "ABC Bearings Limited",
+  "Rollatainers Limited",
+  "Ess Dee Aluminium Limited",
+  "Hindustan Tin Works Limited",
+  "Precision Containeurs Limited",
+  "TCPL Packaging Limited",
+  "Shree Krishna Paper Mills & Industries Limited",
+  "Emami Paper Mills Limited",
+  "Seshasayee Paper and Boards Limited",
+  "Andhra Paper Limited",
+  "West Coast Paper Mills Limited",
+  "JK Paper Limited",
+  "Orient Paper & Industries Limited",
+  "Satia Industries Limited",
+  "Genus Paper & Boards Limited",
+  "N R Agarwal Industries Limited",
+  "Shreyans Industries Limited",
+  "Bindal Papers Mills Limited",
+  "Rama Paper Mills Limited",
+  "Khanna Paper Mills Limited",
+  "Century Paper and Board Mills Limited",
+  "Tamil Nadu Newsprint and Papers Limited",
+  "International Paper APPM Limited",
+  "Star Paper Mills Limited",
+  "NR Agarwal Industries Limited",
+  "Shreyans Industries Limited",
+  "Bindal Papers Mills Limited",
+  "Rama Paper Mills Limited",
+  "Khanna Paper Mills Limited",
+  "Century Paper and Board Mills Limited",
+  "Tamil Nadu Newsprint and Papers Limited",
+  "International Paper APPM Limited",
+  "Star Paper Mills Limited"
+];
+
+
 const EligibilityCheckModal: React.FC<EligibilityCheckModalProps> = ({ isOpen, onClose, initialLoanType = '' }) => {
   const [fullName, setFullName] = useState('');
-  const [emailUsername, setEmailUsername] = useState(''); // New state for email username
-  const [emailDomain, setEmailDomain] = useState('gmail.com'); // New state for email domain, default to gmail.com
-  const [phoneNumberDigits, setPhoneNumberDigits] = useState(''); // New state for 10-digit phone number
+  const [emailUsername, setEmailUsername] = useState('');
+  const [emailDomain, setEmailDomain] = useState('gmail.com');
+  const [phoneNumberDigits, setPhoneNumberDigits] = useState('');
   const [loanType, setLoanType] = useState(initialLoanType);
   const [pincode, setPincode] = useState('');
   const [city, setCity] = useState('');
-  const [income, setIncome] = useState('');
-  const [salary, setSalary] = useState(''); // State for Salary
+  const [salary, setSalary] = useState(''); // Changed from 'income' to 'salary' for consistency with previous changes
   const [cibilScore, setCibilScore] = useState('');
+
+  const [employmentType, setEmploymentType] = useState<'salaried' | 'self-employed' | ''>('');
+  const [companyName, setCompanyName] = useState('');
+  const [filteredCompanies, setFilteredCompanies] = useState<string[]>([]);
+  const companyInputRef = useRef<HTMLInputElement>(null);
+  const suggestionsRef = useRef<HTMLDivElement>(null);
 
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submissionSuccess, setSubmissionSuccess] = useState(false);
-  const [isEligibleForHighLoan, setIsEligibleForHighLoan] = useState(false);
-  const [eligibleLoanAmount, setEligibleLoanAmount] = useState<number | null>(null); // State for calculated loan amount
+  const [eligibleLoanAmount, setEligibleLoanAmount] = useState<number | null>(null); // Changed from isEligibleForHighLoan
   const [submissionError, setSubmissionError] = useState<string | null>(null);
 
   const navigate = useNavigate();
 
-  // Common email domains
   const emailDomains = ['gmail.com', 'yahoo.com', 'outlook.com', 'hotmail.com', 'aol.com', 'protonmail.com', 'zohomail.com', 'icloud.com', 'custom'];
 
   // Firebase setup (using global variables provided by Canvas for deployment, or .env for local)
@@ -43,12 +403,10 @@ const EligibilityCheckModal: React.FC<EligibilityCheckModalProps> = ({ isOpen, o
     storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
     messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
     appId: import.meta.env.VITE_FIREBASE_APP_ID,
-    measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID, // Optional
+    measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
   };
 
   let firebaseConfig = localFirebaseConfig;
-
-  // If running in Canvas environment, override with provided config
   if (typeof __firebase_config !== 'undefined' && __firebase_config) {
     try {
       const canvasConfig = JSON.parse(__firebase_config);
@@ -58,10 +416,8 @@ const EligibilityCheckModal: React.FC<EligibilityCheckModalProps> = ({ isOpen, o
     }
   }
 
-  // Determine appId for Firestore path
   const appId = typeof __app_id !== 'undefined' ? __app_id : firebaseConfig.projectId || 'default-app-id';
 
-  // Initialize Firebase and Firestore
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
   const auth = getAuth(app);
@@ -69,7 +425,6 @@ const EligibilityCheckModal: React.FC<EligibilityCheckModalProps> = ({ isOpen, o
   const [userId, setUserId] = useState<string | null>(null);
   const [isAuthReady, setIsAuthReady] = useState(false);
 
-  // Authenticate user on component mount
   useEffect(() => {
     const authenticate = async () => {
       try {
@@ -107,17 +462,53 @@ const EligibilityCheckModal: React.FC<EligibilityCheckModalProps> = ({ isOpen, o
       setLoanType(initialLoanType);
       setPincode('');
       setCity('');
-      setIncome('');
       setSalary(''); // Reset salary
       setCibilScore('');
+      setEmploymentType('');
+      setCompanyName('');
+      setFilteredCompanies([]);
       setErrors({});
       setIsSubmitting(false);
       setSubmissionSuccess(false);
-      setIsEligibleForHighLoan(false);
-      setEligibleLoanAmount(null);
+      setEligibleLoanAmount(null); // Reset eligible loan amount
       setSubmissionError(null);
     }
   }, [isOpen, initialLoanType]);
+
+  // Handle company name input and filter suggestions using mock data
+  const handleCompanyNameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setCompanyName(value);
+    if (value.length > 2) {
+      const filtered = mockIndianCompanies.filter(company =>
+        company.toLowerCase().includes(value.toLowerCase())
+      ).slice(0, 10);
+      setFilteredCompanies(filtered);
+    } else {
+      setFilteredCompanies([]);
+    }
+  }, []);
+
+  // Handle click on a suggestion
+  const handleSuggestionClick = (company: string) => {
+    setCompanyName(company);
+    setFilteredCompanies([]);
+  };
+
+  // Close suggestions when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (suggestionsRef.current && !suggestionsRef.current.contains(event.target as Node) &&
+          companyInputRef.current && !companyInputRef.current.contains(event.target as Node)) {
+        setFilteredCompanies([]);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
 
   const validateForm = () => {
     const newErrors: { [key: string]: string } = {};
@@ -145,12 +536,16 @@ const EligibilityCheckModal: React.FC<EligibilityCheckModalProps> = ({ isOpen, o
       newErrors.pincode = 'Pincode must be 6 digits.';
     }
     if (!city.trim()) newErrors.city = 'City is required.';
-    if (!income.trim()) newErrors.income = 'Income selection is required.';
-
-    if (!salary.trim()) {
-      newErrors.salary = 'Salary is required.';
+    if (!salary.trim()) { // Validate salary field
+      newErrors.salary = 'Monthly Salary is required.';
     } else if (isNaN(Number(salary)) || Number(salary) <= 0) {
-      newErrors.salary = 'Salary must be a positive number.';
+      newErrors.salary = 'Monthly Salary must be a positive number.';
+    }
+
+    if (!employmentType) {
+      newErrors.employmentType = 'Employment Type is required.';
+    } else if (employmentType === 'salaried' && !companyName.trim()) {
+      newErrors.companyName = 'Company Name is required for salaried individuals.';
     }
 
     if (cibilScore.trim() !== '' && (isNaN(Number(cibilScore)) || Number(cibilScore) < 300 || Number(cibilScore) > 900)) {
@@ -165,8 +560,7 @@ const EligibilityCheckModal: React.FC<EligibilityCheckModalProps> = ({ isOpen, o
     e.preventDefault();
     setSubmissionError(null);
     setSubmissionSuccess(false);
-    setIsEligibleForHighLoan(false);
-    setEligibleLoanAmount(null);
+    setEligibleLoanAmount(null); // Reset eligible loan amount
 
     const fullEmail = `${emailUsername}@${emailDomain === 'custom' ? (document.getElementById('customEmailDomain') as HTMLInputElement)?.value : emailDomain}`;
     const fullPhoneNumber = `+91${phoneNumberDigits}`;
@@ -182,6 +576,7 @@ const EligibilityCheckModal: React.FC<EligibilityCheckModalProps> = ({ isOpen, o
 
     setIsSubmitting(true);
     try {
+      // Calculate eligible loan amount based on salary (e.g., 4 times monthly salary)
       const calculatedLoanAmount = Number(salary) * 4;
       setEligibleLoanAmount(calculatedLoanAmount);
 
@@ -192,10 +587,11 @@ const EligibilityCheckModal: React.FC<EligibilityCheckModalProps> = ({ isOpen, o
         loanType,
         pincode,
         city,
-        income,
-        salary: Number(salary),
+        salary: Number(salary), // Use salary field
+        employmentType,
+        companyName: employmentType === 'salaried' ? companyName : null,
         cibilScore: cibilScore.trim() === '' ? null : Number(cibilScore),
-        eligibleLoanAmount: calculatedLoanAmount,
+        eligibleLoanAmount: calculatedLoanAmount, // Store calculated amount
         userId: userId,
         timestamp: serverTimestamp(),
         status: 'Initial Check',
@@ -204,13 +600,10 @@ const EligibilityCheckModal: React.FC<EligibilityCheckModalProps> = ({ isOpen, o
       const eligibilityCollectionRef = collection(db, `artifacts/${appId}/public/data/eligibilityChecks`);
       await addDoc(eligibilityCollectionRef, eligibilityData);
 
-      if (Number(cibilScore) >= 730 && Number(salary) >= 40000) {
-        setIsEligibleForHighLoan(true);
-      } else {
-        setIsEligibleForHighLoan(false);
-      }
-
       setSubmissionSuccess(true);
+      // Removed the navigate to /eligibility, as the user wanted to see the result in the modal.
+      // The modal will now stay open showing the success message and eligible amount.
+      // User can close it manually.
     } catch (error) {
       console.error("Error submitting eligibility check:", error);
       setSubmissionError("Failed to submit eligibility check. Please try again.");
@@ -223,7 +616,7 @@ const EligibilityCheckModal: React.FC<EligibilityCheckModalProps> = ({ isOpen, o
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-[9999] p-4 font-inter">
-      <div className="bg-white rounded-xl shadow-2xl w-full max-w-lg p-6 sm:p-8 relative transform transition-all scale-100 opacity-100 max-h-[90vh] overflow-y-auto"> {/* Added max-h-[90vh] and overflow-y-auto */}
+      <div className="bg-white rounded-xl shadow-2xl w-full max-w-lg p-6 sm:p-8 relative transform transition-all scale-100 opacity-100 max-h-[90vh] overflow-y-auto">
         <button
           onClick={onClose}
           className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 transition-colors rounded-full p-1 hover:bg-gray-100"
@@ -235,7 +628,7 @@ const EligibilityCheckModal: React.FC<EligibilityCheckModalProps> = ({ isOpen, o
         {!submissionSuccess ? (
           <>
             <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6 text-center">Check Your Eligibility</h2>
-            <form onSubmit={handleSubmit} className="space-y-4 pb-20"> {/* Added pb-20 for spacing */}
+            <form onSubmit={handleSubmit} className="space-y-4 pb-20">
               <div>
                 <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-1">
                   Full Name
@@ -380,26 +773,72 @@ const EligibilityCheckModal: React.FC<EligibilityCheckModalProps> = ({ isOpen, o
                 {errors.city && <p className="text-red-500 text-xs mt-1">{errors.city}</p>}
               </div>
 
+              {/* Employment Type Selection */}
               <div>
-                <label htmlFor="income" className="block text-sm font-medium text-gray-700 mb-1">
-                  Monthly Income
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <Briefcase className="inline-block h-4 w-4 mr-1 text-gray-500" /> Employment Type
                 </label>
-                <select
-                  id="income"
-                  value={income}
-                  onChange={(e) => setIncome(e.target.value)}
-                  className={`w-full px-4 py-2 border ${errors.income ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors bg-white`}
-                  required
-                >
-                  <option value="">Select Income Range</option>
-                  <option value="Below 1 Lakh">Below ₹1 Lakh</option>
-                  <option value="1-2 Lakh">₹1 Lakh - ₹2 Lakh</option>
-                  <option value="2-5 Lakh">₹2 Lakh - ₹5 Lakh</option>
-                  <option value="5-10 Lakh">₹5 Lakh - ₹10 Lakh</option>
-                  <option value="Above 10 Lakh">Above ₹10 Lakh</option>
-                </select>
-                {errors.income && <p className="text-red-500 text-xs mt-1">{errors.income}</p>}
+                <div className="flex space-x-4">
+                  <label className="inline-flex items-center">
+                    <input
+                      type="radio"
+                      name="employmentType"
+                      value="salaried"
+                      checked={employmentType === 'salaried'}
+                      onChange={() => setEmploymentType('salaried')}
+                      className="form-radio h-4 w-4 text-blue-600"
+                    />
+                    <span className="ml-2 text-gray-700">Salaried</span>
+                  </label>
+                  <label className="inline-flex items-center">
+                    <input
+                      type="radio"
+                      name="employmentType"
+                      value="self-employed"
+                      checked={employmentType === 'self-employed'}
+                      onChange={() => { setEmploymentType('self-employed'); setCompanyName(''); setFilteredCompanies([]); }}
+                      className="form-radio h-4 w-4 text-blue-600"
+                    />
+                    <span className="ml-2 text-gray-700">Self-employed</span>
+                  </label>
+                </div>
+                {errors.employmentType && <p className="text-red-500 text-xs mt-1">{errors.employmentType}</p>}
               </div>
+
+              {/* Company Name Field (Conditional) */}
+              {employmentType === 'salaried' && (
+                <div className="relative">
+                  <label htmlFor="companyName" className="block text-sm font-medium text-gray-700 mb-1">
+                    <Building className="inline-block h-4 w-4 mr-1 text-gray-500" /> Working Company Name
+                  </label>
+                  <input
+                    type="text"
+                    id="companyName"
+                    ref={companyInputRef}
+                    value={companyName}
+                    onChange={handleCompanyNameChange}
+                    className={`w-full px-4 py-2 border ${errors.companyName ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors`}
+                    placeholder="e.g., Tata Consultancy Services"
+                    required={employmentType === 'salaried'}
+                  />
+                  {errors.companyName && <p className="text-red-500 text-xs mt-1">{errors.companyName}</p>}
+
+                  {/* Suggestions Dropdown */}
+                  {filteredCompanies.length > 0 && (
+                    <div ref={suggestionsRef} className="absolute z-10 w-full bg-white border border-gray-200 rounded-lg shadow-lg mt-1 max-h-48 overflow-y-auto">
+                      {filteredCompanies.map((company, index) => (
+                        <div
+                          key={index}
+                          className="px-4 py-2 cursor-pointer hover:bg-gray-100 text-gray-800 text-sm"
+                          onClick={() => handleSuggestionClick(company)}
+                        >
+                          {company}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
 
               <div>
                 <label htmlFor="salary" className="block text-sm font-medium text-gray-700 mb-1">
@@ -456,16 +895,16 @@ const EligibilityCheckModal: React.FC<EligibilityCheckModalProps> = ({ isOpen, o
           </>
         ) : (
           <div className="text-center py-8">
-            {isEligibleForHighLoan ? (
+            {eligibleLoanAmount !== null ? (
               <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
             ) : (
               <AlertTriangle className="h-16 w-16 text-orange-500 mx-auto mb-4" />
             )}
             <h3 className="text-2xl font-bold text-gray-900 mb-2">
-              {isEligibleForHighLoan ? "Congratulations!" : "Thank You!"}
+              {eligibleLoanAmount !== null ? "Congratulations!" : "Thank You!"}
             </h3>
             <p className="text-gray-600 mb-6">
-              {isEligibleForHighLoan && eligibleLoanAmount !== null
+              {eligibleLoanAmount !== null
                 ? `You are eligible for up to ₹${eligibleLoanAmount.toLocaleString('en-IN')} loan! Our team will get back to you shortly.`
                 : "Thank you for your submission. Our team will review your details and get back to you."}
             </p>
