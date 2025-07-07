@@ -2,8 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { TrendingUp, Shield, Clock, CheckCircle } from 'lucide-react';
 import Button from '../common/Button';
+import ApplyButton from '../common/ApplyButton';
 
-const HeroSection: React.FC = () => {
+interface HeroSectionProps {
+  openApplyModal?: (loanType?: string) => void;
+}
+
+const HeroSection: React.FC<HeroSectionProps> = ({ openApplyModal }) => {
   const features = [
     { icon: TrendingUp, text: 'Compare rates from 50+ banks' },
     { icon: Shield, text: 'Secure & encrypted platform' },
@@ -40,11 +45,23 @@ const HeroSection: React.FC = () => {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4">
-              <Link to="/home-loan-compare">
-                <Button variant="primary" size="lg" className="animate-bounce-gentle">
-                  Compare Loan Rates
-                </Button>
-              </Link>
+              {openApplyModal ? (
+                <ApplyButton
+                  loanType="Loan Application"
+                  openApplyModal={openApplyModal}
+                  variant="primary"
+                  size="lg"
+                  className="animate-bounce-gentle"
+                >
+                  Apply for a Loan
+                </ApplyButton>
+              ) : (
+                <Link to="/home-loan-compare">
+                  <Button variant="primary" size="lg" className="animate-bounce-gentle">
+                    Compare Loan Rates
+                  </Button>
+                </Link>
+              )}
               <Link to="/eligibility">
                 <Button variant="outline" size="lg">
                   Check Eligibility

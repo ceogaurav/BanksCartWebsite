@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Menu, X, Briefcase, CreditCard, Home, Shield, Trophy, Star, Banknote, Lock, Unlock, TrendingUp, Calendar, Phone, FileText, CheckCircle, Users, Settings, PieChart, Mail } from "lucide-react";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import ApplyButton from '../components/common/ApplyButton';
 
 // Move style/font injection into a custom hook for best practice
 function useBusinessLoanPageAssets() {
@@ -42,11 +43,12 @@ function useBusinessLoanPageAssets() {
   }, []);
 }
 
-const BusinessLoanPage = () => {
+const BusinessLoanPage = ({ openApplyModal }) => {
   useBusinessLoanPageAssets();
   useEffect(() => {
     AOS.init({ once: true, duration: 800 });
   }, []);
+
   const navItems = [
     { label: 'Cards', icon: <CreditCard size={18} />, dropdown: ['Credit Cards', 'Debit Cards', 'Prepaid Cards'] },
     { label: 'Loans', icon: <Briefcase size={18} />, dropdown: ['Personal Loans', 'Business Loans', 'Home Loans'] },
@@ -65,7 +67,15 @@ const BusinessLoanPage = () => {
         <h1 className="text-4xl md:text-5xl font-bold mb-4 text-center">Business Loan</h1>
         <h2 className="text-lg md:text-2xl text-gray-700 mb-2 text-center max-w-2xl">A business loan is financial assistance provided to small businesses and entrepreneurs to meet their capital requirements. These loans are used to fund various aspects of the business, like expansion, growth, and other business activities.</h2>
         <p className="text-gray-600 mb-6 text-center max-w-2xl">In India, a lot of leading banks offer business loans to entrepreneurs and businessmen at competitive rates of interest. Read on to know more about the business loans offered in India.</p>
-        <button className="btn-primary bg-orange-500 text-white px-8 py-3 rounded-lg text-lg font-semibold shadow-lg animate-bounce hover:scale-105 transition">FREE Credit Score - Check Now</button>
+        {openApplyModal && (
+          <ApplyButton
+            loanType="Business Loan"
+            openApplyModal={openApplyModal}
+            className="btn-primary bg-orange-500 text-white px-8 py-3 rounded-lg text-lg font-semibold shadow-lg animate-bounce hover:scale-105 transition"
+          >
+            Apply for Business Loan
+          </ApplyButton>
+        )}
         {/* Floating animated icons, background shapes, etc. */}
         <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
           {/* Add animated SVGs or Lottie here */}
@@ -106,7 +116,7 @@ const BusinessLoanPage = () => {
             {/* Stepper */}
             <div className="flex flex-row md:flex-col gap-6 md:gap-8 items-center md:items-start">
               {/* Step 1 */}
-              <div className="flex flex-col items-center group">
+              <div className="flex flex-col items-center group cursor-pointer" onClick={() => openApplyModal && openApplyModal('Business Loan')}>
                 <Users className="w-10 h-10 text-blue-600 bg-blue-100 rounded-full p-2 group-hover:bg-blue-600 group-hover:text-white transition" />
                 <div className="mt-2 font-semibold text-gray-700">Apply Online</div>
                 <div className="text-xs text-gray-500 text-center max-w-[120px]">Fill out a simple application form with your business details.</div>
@@ -385,12 +395,6 @@ const BusinessLoanPage = () => {
           </div>
         </div>
       </section>
-      <section className="py-12 bg-blue-50">
-        <h3 className="text-2xl font-bold text-center mb-8">Quick Apply for Business Loan</h3>
-        <div className="flex justify-center">
-          <MultiStepBusinessLoanForm />
-        </div>
-      </section>
       <div className="fixed bottom-6 right-6 z-50">
         {/* Floating chat button */}
         <button className="bg-blue-700 text-white rounded-full w-16 h-16 shadow-lg flex items-center justify-center text-3xl animate-bounce">💬</button>
@@ -471,143 +475,6 @@ function EMIPieChart() {
       <text x="100" y="140" textAnchor="middle" fontSize="0.9em" fill="#f59e42">Interest</text>
       <text x="100" y="155" textAnchor="middle" fontSize="0.9em" fill="#2563eb">Principal</text>
     </svg>
-  );
-}
-
-// Multi-step form component for Quick Apply
-function MultiStepBusinessLoanForm() {
-  const steps = [
-    {
-      label: 'Your Name',
-      icon: <Users className="w-6 h-6 text-blue-500" />,
-      field: 'name',
-      placeholder: 'Enter your full name',
-      type: 'text',
-      validate: v => v.trim().length > 2 || 'Name is required',
-    },
-    {
-      label: 'Mobile Number',
-      icon: <Phone className="w-6 h-6 text-green-500" />,
-      field: 'mobile',
-      placeholder: '10-digit mobile number',
-      type: 'tel',
-      validate: v => /^\d{10}$/.test(v) || 'Enter a valid 10-digit mobile',
-    },
-    {
-      label: 'Email',
-      icon: <Mail className="w-6 h-6 text-orange-500" />,
-      field: 'email',
-      placeholder: 'Enter your email address',
-      type: 'email',
-      validate: v => /.+@.+\..+/.test(v) || 'Enter a valid email',
-    },
-    {
-      label: 'Business Details',
-      icon: <Briefcase className="w-6 h-6 text-purple-500" />,
-      field: 'business',
-      placeholder: 'Business name/type',
-      type: 'text',
-      validate: v => v.trim().length > 2 || 'Business details required',
-    },
-    {
-      label: 'Review & Submit',
-      icon: <CheckCircle className="w-6 h-6 text-blue-600" />,
-      field: 'review',
-    },
-  ];
-  const [step, setStep] = React.useState(0);
-  const [form, setForm] = React.useState({ name: '', mobile: '', email: '', business: '' });
-  const [error, setError] = React.useState('');
-  const [submitting, setSubmitting] = React.useState(false);
-  const [success, setSuccess] = React.useState(false);
-
-  const handleNext = () => {
-    if (step < steps.length - 1) {
-      const s = steps[step];
-      if (s.validate) {
-        const valid = s.validate(form[s.field]);
-        if (valid !== true) {
-          setError(valid);
-          return;
-        }
-      }
-      setError('');
-      setStep(step + 1);
-    } else if (step === steps.length - 1) {
-      setSubmitting(true);
-      setTimeout(() => {
-        setSubmitting(false);
-        setSuccess(true);
-      }, 1200);
-    }
-  };
-  const handleBack = () => {
-    if (step > 0) {
-      setError('');
-      setStep(step - 1);
-    }
-  };
-  const handleChange = e => {
-    setForm({ ...form, [steps[step].field]: e.target.value });
-    setError('');
-  };
-
-  if (success) {
-    return (
-      <div className="bg-white p-8 rounded-lg shadow w-full max-w-md flex flex-col items-center animate__animated animate__fadeInUp">
-        <CheckCircle className="w-14 h-14 text-green-500 mb-4 animate-bounce" />
-        <div className="text-xl font-bold mb-2 text-blue-700">Application Submitted!</div>
-        <div className="text-gray-600 mb-4 text-center">Thank you for applying. Our team will contact you soon to discuss your business loan options.</div>
-        <button className="btn-primary bg-orange-500 text-white px-6 py-2 rounded mt-2" onClick={() => { setStep(0); setForm({ name: '', mobile: '', email: '', business: '' }); setSuccess(false); }}>Apply Again</button>
-      </div>
-    );
-  }
-
-  return (
-    <form className="bg-white p-8 rounded-lg shadow w-full max-w-md animate__animated animate__fadeInUp" onSubmit={e => { e.preventDefault(); handleNext(); }}>
-      {/* Progress bar */}
-      <div className="flex items-center justify-center mb-6">
-        {steps.map((s, i) => (
-          <div key={s.label} className="flex items-center">
-            <div className={`rounded-full border-2 flex items-center justify-center w-8 h-8 text-lg font-bold transition-all duration-300 ${i < step ? 'bg-blue-500 border-blue-500 text-white' : i === step ? 'bg-white border-orange-400 text-orange-500' : 'bg-gray-100 border-gray-300 text-gray-400'}`}>{s.icon}</div>
-            {i < steps.length - 1 && <div className={`w-8 h-1 ${i < step ? 'bg-blue-500' : 'bg-gray-200'} mx-1 rounded`}></div>}
-          </div>
-        ))}
-      </div>
-      {/* Step content */}
-      <div className="mb-6 min-h-[60px]">
-        {step < steps.length - 1 ? (
-          <div className="flex flex-col gap-2 animate__animated animate__fadeInRight">
-            <label className="font-semibold text-gray-700 mb-1">{steps[step].label}</label>
-            <input
-              className="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400 text-base"
-              type={steps[step].type}
-              placeholder={steps[step].placeholder}
-              value={form[steps[step].field]}
-              onChange={handleChange}
-              autoFocus
-            />
-            {error && <div className="text-red-500 text-xs mt-1">{error}</div>}
-          </div>
-        ) : (
-          <div className="animate__animated animate__fadeInRight">
-            <div className="font-semibold text-gray-700 mb-2">Review your details:</div>
-            <div className="bg-blue-50 rounded p-3 mb-2"><b>Name:</b> {form.name}</div>
-            <div className="bg-blue-50 rounded p-3 mb-2"><b>Mobile:</b> {form.mobile}</div>
-            <div className="bg-blue-50 rounded p-3 mb-2"><b>Email:</b> {form.email}</div>
-            <div className="bg-blue-50 rounded p-3 mb-2"><b>Business:</b> {form.business}</div>
-          </div>
-        )}
-      </div>
-      {/* Navigation buttons */}
-      <div className="flex justify-between items-center mt-4">
-        <button type="button" className="text-blue-500 font-semibold px-4 py-2 rounded hover:underline disabled:opacity-50" onClick={handleBack} disabled={step === 0 || submitting}>Back</button>
-        <button type="submit" className="btn-primary bg-orange-500 text-white px-6 py-2 rounded shadow disabled:opacity-50 flex items-center gap-2" disabled={submitting}>
-          {submitting ? <span className="animate-spin mr-2">⏳</span> : null}
-          {step < steps.length - 1 ? 'Next' : 'Submit'}
-        </button>
-      </div>
-    </form>
   );
 }
 

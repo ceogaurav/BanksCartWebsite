@@ -14,6 +14,7 @@
     "@supabase/supabase-js": "^2.50.3",
     "aos": "^2.3.4",
     "chart.js": "^4.5.0",
+    "firebase": "^11.10.0",
     "framer-motion": "^12.19.2",
     "gsap": "^3.13.0",
     "ifsc": "^2.0.44",

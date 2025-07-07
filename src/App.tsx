@@ -1,48 +1,53 @@
-import React, { useEffect } from 'react'; // Import useEffect
+import React, { useState, useEffect } from 'react'; // Import useState and useEffect
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-// Import your components
-import Header from './components/common/Header';
-import Footer from './components/common/Footer';
+// Import your pages and components
 import Home from './pages/Home';
-import LoanRates from './pages/LoanRates';
-import Eligibility from './pages/Eligibility';
-import IFSCFinder from './pages/IFSCFinder';
+import PersonalLoanPage from './pages/PersonalLoanPage';
+import HomeLoanPage from './pages/HomeLoanPage';
+import CreditCardsPage from './pages/CreditCardsPage';
+import FixedDepositPage from './pages/FixedDepositPage';
+import MutualFundsPage from './pages/MutualFundsPage';
 import Calculators from './pages/Calculators';
-import MortgageCalculatorPage from './pages/MortgageCalculatorPage';
+import IFSCFinder from './pages/IFSCFinder';
+import IncomeTaxPage from './pages/IncomeTaxPage';
+import PPFPage from './pages/PPFPage';
+import Eligibility from './pages/Eligibility'; // This is your existing eligibility page
+import GoldLoansPage from './pages/GoldLoansPage';
+import DebitCardsPage from './pages/DebitCardsPage';
+import LoanRates from './pages/LoanRates';
 import Status from './pages/Status';
-import AadharCard from './pages/AadharCard';
 import PanCard from './pages/PanCard';
 import PersonalLoanEMI from './pages/calculators/PersonalLoanEMI';
 import HomeLoanEMI from './pages/calculators/HomeLoanEMI';
 import CarLoanEMI from './pages/calculators/CarLoanEMI';
 import IncomeTaxCalculator from './pages/calculators/IncomeTaxCalculator';
-import PlotConstructionLoan from './pages/PlotConstructionLoan';
-import HomeLoanCompare from './pages/HomeLoanCompare';
-import LoansOverviewPage from './pages/LoansOverviewPage';
-import HomeLoanPage from './pages/HomeLoanPage';
-import PersonalLoanPage from './pages/PersonalLoanPage';
-import BusinessLoanPage from './pages/BusinessLoanPage';
-import CarLoanPage from './pages/CarLoanPage';
-import UsedCarLoanPage from './pages/UsedCarLoanPage';
-import TwoWheelerLoanPage from './pages/TwoWheelerLoanPage';
-import EducationLoanPage from "./pages/EducationLoanPage";
-import MutualFundsPage from './pages/MutualFundsPage';
-import FixedDepositPage from './pages/FixedDepositPage';
-import InvestmentPlansPage from './pages/InvestmentPlansPage';
-import CreditCardsPage from './pages/CreditCardsPage';
-import DebitCardsPage from './pages/DebitCardsPage';
-import BanksCartHealthInsurancePage from './pages/HealthInsurancePage';
-import CarInsurancePage from './pages/CarInsurancePage';
-import TermInsurancePage from './pages/TermInsurancePage';
-import GoldLoansPage from './pages/GoldLoansPage';
-import PincodesPage from './pages/PincodesPage';
+import AadharCard from './pages/AadharCard';
+import BankDetails from './pages/BankDetails';
 import BecomePartnerPage from './pages/BecomePartnerPage';
-import PPFPage from './pages/PPFPage';
-import IncomeTaxPage from './pages/IncomeTaxPage';
+import BusinessLoanPage from './pages/BusinessLoanPage';
+import CarInsurancePage from './pages/CarInsurancePage';
+import CarLoanPage from './pages/CarLoanPage';
+import EMIcalculatorPage from './pages/EMIcalculatorPage';
+import EducationLoanPage from "./pages/EducationLoanPage";
+import HealthInsurancePage from './pages/HealthInsurancePage';
+import HomeLoanCompare from './pages/HomeLoanCompare';
+import HomeLoanEMICalculator from './pages/HomeLoanEMICalculator';
+import InvestmentPlansPage from './pages/InvestmentPlansPage';
+import LoanCalculatorPage from './pages/LoanCalculatorPage';
+import LoansOverviewPage from './pages/LoansOverviewPage';
+import MortgageCalculatorPage from './pages/MortgageCalculatorPage';
+import PincodesPage from './pages/PincodesPage';
+import PlotConstructionLoan from './pages/PlotConstructionLoan';
+import TermInsurancePage from './pages/TermInsurancePage';
+import TwoWheelerLoanPage from './pages/TwoWheelerLoanPage';
+import UsedCarLoanPage from './pages/UsedCarLoanPage';
 
-
-
+// Import common components
+import Header from './components/common/Header';
+import Footer from './components/common/Footer';
+import LoanApplicationModal from './components/common/LoanApplicationModal'; // Import the loan application modal
+import EligibilityCheckModal from './components/common/EligibilityCheckModal'; // Import the new eligibility modal
 
 // A simple 404 Not Found component (optional, but good practice)
 const NotFound = () => (
@@ -55,9 +60,38 @@ const NotFound = () => (
   </div>
 );
 
-function App() {
+const App: React.FC = () => {
+  // State for Loan Application Modal
+  const [isApplyModalOpen, setIsApplyModalOpen] = useState(false);
+  const [currentLoanType, setCurrentLoanType] = useState('');
+
+  // State for Eligibility Check Modal
+  const [isEligibilityModalOpen, setIsEligibilityModalOpen] = useState(false);
+  const [currentEligibilityLoanType, setCurrentEligibilityLoanType] = useState('');
+
+  // Functions to control Loan Application Modal
+  const openApplyModal = (loanType: string = '') => {
+    setCurrentLoanType(loanType);
+    setIsApplyModalOpen(true);
+  };
+
+  const closeApplyModal = () => {
+    setIsApplyModalOpen(false);
+    setCurrentLoanType('');
+  };
+
+  // Functions to control Eligibility Check Modal
+  const openEligibilityModal = (loanType: string = '') => {
+    setCurrentEligibilityLoanType(loanType);
+    setIsEligibilityModalOpen(true);
+  };
+
+  const closeEligibilityModal = () => {
+    setIsEligibilityModalOpen(false);
+    setCurrentEligibilityLoanType('');
+  };
+
   // useEffect hook to load the Tawk.to chat widget script
-  // This will run once when the App component mounts
   useEffect(() => {
     const script = document.createElement("script");
     script.async = true;
@@ -65,12 +99,8 @@ function App() {
     script.charset = "UTF-8";
     script.setAttribute("crossorigin", "*");
 
-    // Append the script to the document body
     document.body.appendChild(script);
 
-    // Cleanup function: remove the script when the component unmounts
-    // This is good practice, though for a root App component, it might not strictly be necessary
-    // unless you have complex unmounting logic for the entire app.
     return () => {
       if (document.body.contains(script)) {
         document.body.removeChild(script);
@@ -79,23 +109,22 @@ function App() {
   }, []); // Empty dependency array ensures this runs only once on mount
 
   return (
-    // BrowserRouter enables client-side routing
     <Router>
-      <div className="min-h-screen bg-white font-inter">
-        {/* Header component, visible on all pages */}
-        <Header />
-        <main>
+      <div className="flex flex-col min-h-screen bg-white font-inter">
+        {/* Header component, visible on all pages, passing modal open functions */}
+        <Header openApplyModal={openApplyModal} openEligibilityModal={openEligibilityModal} />
+        <main className="flex-grow">
           {/* Routes component renders the first matching Route */}
           <Routes>
-            {/* Main navigation routes */}
-            <Route path="/" element={<Home />} />
+            {/* Main navigation routes, passing openApplyModal where needed */}
+            <Route path="/" element={<Home openApplyModal={openApplyModal} />} />
             <Route path="/resources/loan-rates" element={<LoanRates />} />
             <Route path="/eligibility" element={<Eligibility />} />
             <Route path="/resources/ifsc-finder" element={<IFSCFinder />} />
             <Route path="/calculators" element={<Calculators />} />
             <Route path="/status" element={<Status />} />
+            <Route path="/pan-card" element={<PanCard />} />
             <Route path="/resources/aadhar-pan" element={<AadharCard />} />
-            <Route path="/resources/PanCard" element={<PanCard />} />
             <Route path="/MortgageCalculatorPage" element={<MortgageCalculatorPage />} />
 
             {/* Calculator specific routes */}
@@ -105,40 +134,36 @@ function App() {
             <Route path="/income-tax-calculator" element={<IncomeTaxCalculator />} />
 
             {/* Loan product specific routes */}
-            <Route path="/plot-construction-loan" element={<PlotConstructionLoan />} />
+            <Route path="/plot-construction-loan" element={<PlotConstructionLoan openApplyModal={openApplyModal} />} />
             <Route path="/home-loan-compare" element={<HomeLoanCompare />} />
             <Route path="/loans" element={<LoansOverviewPage />} />
-            <Route path="/loans/home" element={<HomeLoanPage />} />
-            <Route path="/loans/personal" element={<PersonalLoanPage />} />
-            <Route path="/loans/business" element={<BusinessLoanPage />} />
-            <Route path="/loans/car" element={<CarLoanPage />} />
-            <Route path="/loans/used-car" element={<UsedCarLoanPage />} />
-            <Route path="/loans/two-wheeler" element={<TwoWheelerLoanPage />} />
-            <Route path="/loans/education" element={<EducationLoanPage />} />
+            <Route path="/loans/home" element={<HomeLoanPage openApplyModal={openApplyModal} />} />
+            <Route path="/loans/personal" element={<PersonalLoanPage openApplyModal={openApplyModal} />} />
+            <Route path="/loans/business" element={<BusinessLoanPage openApplyModal={openApplyModal} />} />
+            <Route path="/loans/car" element={<CarLoanPage openApplyModal={openApplyModal} />} />
+            <Route path="/loans/used-car" element={<UsedCarLoanPage openApplyModal={openApplyModal} />} />
+            <Route path="/loans/two-wheeler" element={<TwoWheelerLoanPage openApplyModal={openApplyModal} />} />
+            <Route path="/loans/education" element={<EducationLoanPage openApplyModal={openApplyModal} />} />
 
             {/* Investment product specific routes */}
-            <Route path="/investment/fixed-deposit" element={<FixedDepositPage />} />
-            <Route path="/investment/mutual-funds" element={<MutualFundsPage />} />
+            <Route path="/investment/fixed-deposit" element={<FixedDepositPage openApplyModal={openApplyModal} />} />
+            <Route path="/investment/mutual-funds" element={<MutualFundsPage openApplyModal={openApplyModal} />} />
             <Route path="/investment/more-plans" element={<InvestmentPlansPage />} />
 
             {/* Card product specific routes */}
-            <Route path="/cards/credit" element={<CreditCardsPage />} />
-            <Route path="/cards/debit" element={<DebitCardsPage />} />
+            <Route path="/cards/credit" element={<CreditCardsPage openApplyModal={openApplyModal} />} />
+            <Route path="/cards/debit" element={<DebitCardsPage openApplyModal={openApplyModal} />} />
 
             {/* Insurance product specific routes */}
-            <Route path="/insurance/health" element={<BanksCartHealthInsurancePage />} />
+            <Route path="/insurance/health" element={<HealthInsurancePage />} />
             <Route path="/insurance/car" element={<CarInsurancePage />} />
-            {/* THIS IS THE ROUTE FOR YOUR TERM INSURANCE PAGE */}
             <Route path="/insurance/term-life" element={<TermInsurancePage />} />
-            {/* THIS IS THE ROUTE FOR YOUR GOLD LOANS PAGE */}
-            <Route path="/resources/gold-rates" element={<GoldLoansPage />} />
-            {/* THIS IS THE ROUTE FOR YOUR PINCODES PAGE */}
+            <Route path="/resources/gold-rates" element={<GoldLoansPage openApplyModal={openApplyModal} />} />
             <Route path="/resources/pincodes" element={<PincodesPage />} />
-            {/* THIS IS THE ROUTE FOR YOUR BECOME PARTNER PAGE */}
-            <Route path="/become-partner" element={<BecomePartnerPage />} />
+            <Route path="/become-partner" element={<BecomePartnerPage openApplyModal={openApplyModal} />} />
             <Route path="/resources/ppf" element={<PPFPage />} />
-            <Route path="/resources/income-tax" element={<IncomeTaxPage />} />   
-
+            <Route path="/resources/income-tax" element={<IncomeTaxPage />} />
+            <Route path="/bank-details" element={<BankDetails />} /> {/* Added missing BankDetails route */}
 
 
             {/* Catch-all route for any undefined paths (404 Not Found) */}
@@ -147,9 +172,23 @@ function App() {
         </main>
         {/* Footer component, visible on all pages */}
         <Footer />
+
+        {/* Loan Application Modal */}
+        <LoanApplicationModal
+          isOpen={isApplyModalOpen}
+          onClose={closeApplyModal}
+          initialLoanType={currentLoanType}
+        />
+
+        {/* Eligibility Check Modal */}
+        <EligibilityCheckModal
+          isOpen={isEligibilityModalOpen}
+          onClose={closeEligibilityModal}
+          initialLoanType={currentEligibilityLoanType}
+        />
       </div>
     </Router>
   );
-}
+};
 
 export default App;

@@ -1,18 +1,19 @@
+// src/components/common/Button.tsx
 import React from 'react';
-import { DivideIcon as LucideIcon } from 'lucide-react';
-import LoadingSpinner from './LoadingSpinner';
+import { DivideIcon as LucideIcon } from 'lucide-react'; // Assuming DivideIcon is a placeholder, adjust if needed
+import LoadingSpinner from './LoadingSpinner'; // Import the LoadingSpinner
 
 interface ButtonProps {
   children: React.ReactNode;
   variant?: 'primary' | 'secondary' | 'outline' | 'ghost';
   size?: 'sm' | 'md' | 'lg';
-  icon?: LucideIcon;
+  icon?: LucideIcon; // This should be React.ElementType if it's a component
   iconPosition?: 'left' | 'right';
   loading?: boolean;
   disabled?: boolean;
   fullWidth?: boolean;
   className?: string;
-  onClick?: () => void;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void; // Explicitly define onClick type
   type?: 'button' | 'submit' | 'reset';
 }
 
@@ -30,12 +31,12 @@ const Button: React.FC<ButtonProps> = ({
   type = 'button',
 }) => {
   const baseClasses = 'inline-flex items-center justify-center font-semibold rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2';
-  
+
   const variantClasses = {
-    primary: 'bg-gradient-to-r from-primary-600 to-secondary-600 text-white hover:shadow-lg transform hover:scale-105 focus:ring-primary-500',
+    primary: 'bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:shadow-lg transform hover:scale-105 focus:ring-blue-500', // Adjusted gradient to match previous examples
     secondary: 'bg-gray-600 text-white hover:bg-gray-700 focus:ring-gray-500',
-    outline: 'border border-primary-600 text-primary-600 hover:bg-primary-50 focus:ring-primary-500',
-    ghost: 'text-primary-600 hover:bg-primary-50 focus:ring-primary-500',
+    outline: 'border border-blue-600 text-blue-600 hover:bg-blue-50 focus:ring-blue-500',
+    ghost: 'text-blue-600 hover:bg-blue-50 focus:ring-blue-500',
   };
 
   const sizeClasses = {

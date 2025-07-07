@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CheckCircle, CreditCard, DollarSign, Award, Briefcase, Globe } from 'lucide-react'; // Importing icons from Lucide React
 
-const CardTypesShowcase = () => {
+import ApplyButton from '../common/ApplyButton';
+
+const CardTypesShowcase = ({ openApplyModal }) => {
   // State to keep track of the currently selected card index
   const [selectedCard, setSelectedCard] = useState(0);
 
@@ -272,13 +274,17 @@ const CardTypesShowcase = () => {
                   </div>
 
                   {/* Apply Button */}
-                  <motion.button
-                    className="w-full px-8 py-4 rounded-full font-bold text-lg bg-gradient-to-r from-teal-500 to-cyan-500 text-white shadow-lg hover:from-teal-600 hover:to-cyan-600 transition-all duration-300 ease-in-out transform hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-teal-500 focus:ring-opacity-50"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    Apply for {cards[selectedCard].name}
-                  </motion.button>
+                  {openApplyModal && (
+                    <ApplyButton
+                      loanType={`Debit Card - ${cards[selectedCard].name}`}
+                      openApplyModal={openApplyModal}
+                      variant="primary"
+                      size="lg"
+                      className="w-full px-8 py-4 rounded-full font-bold text-lg bg-gradient-to-r from-teal-500 to-cyan-500 text-white shadow-lg hover:from-teal-600 hover:to-cyan-600 transition-all duration-300 ease-in-out transform hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-teal-500 focus:ring-opacity-50"
+                    >
+                      Apply for {cards[selectedCard].name}
+                    </ApplyButton>
+                  )}
                 </div>
               </motion.div>
             </AnimatePresence>

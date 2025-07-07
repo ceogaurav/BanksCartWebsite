@@ -5,14 +5,18 @@ import {
   X,
   Calculator,
   TrendingUp,
-  Building2,
-  Search,
-  FileText,
   CreditCard,
   BadgeInfo,
+  FileText,
 } from 'lucide-react'; // All valid Lucide icons
+import Button from './Button'; // Import the Button component
 
-const Header: React.FC = () => {
+interface HeaderProps {
+  openApplyModal: (loanType?: string) => void; // Existing prop for Loan Application Modal
+  openEligibilityModal: (loanType?: string) => void; // New prop for Eligibility Check Modal
+}
+
+const Header: React.FC<HeaderProps> = ({ openApplyModal, openEligibilityModal }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
 
@@ -43,7 +47,7 @@ const Header: React.FC = () => {
       ]
     },
     {
-      name: 'Cards',  
+      name: 'Cards',
       href: '/cards',
       icon: CreditCard,
       submenu: [
@@ -64,7 +68,7 @@ const Header: React.FC = () => {
   ];
   const moreNav = [
     {
-      name: 'Investment',
+      name: 'Investment', // This seems redundant with mainNav, but keeping as per your provided structure
       href: '/investment',
       icon: TrendingUp,
       submenu: [
@@ -82,7 +86,6 @@ const Header: React.FC = () => {
         { name: 'Gold Rates', href: '/resources/gold-rates' },
         { name: 'Aadhar Card', href: '/resources/aadhar-pan' },
         { name: 'PanCard', href: '/resources/PanCard' },
-        
         { name: 'IFSC Finder', href: '/resources/ifsc-finder' },
         { name: 'Pincodes', href: '/resources/pincodes' },
         { name: 'Loan Rates', href: '/resources/loan-rates' },
@@ -91,7 +94,7 @@ const Header: React.FC = () => {
       ]
     },
     {
-      name: 'Calculators',
+      name: 'Calculators', // This seems redundant with Resources submenu, but keeping as per your provided structure
       href: '/calculators',
       icon: Calculator
     },
@@ -109,21 +112,18 @@ const Header: React.FC = () => {
 
   const isActive = (path: string) => location.pathname === path;
 
-  
   return (
     <header className="bg-white/80 backdrop-blur-md shadow-xl sticky top-0 z-50 border-b border-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12">
         <div className="flex justify-between items-center py-3">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 group">
-            {/* Replaced Building2 icon and BanksCart text with your image logo */}
             <img
               src="/logos/bankscartlogof.jpg" // Path to your logo in the public folder
               alt="BanksCart Logo"
               className="h-12 w-auto rounded-xl shadow-xl group-hover:scale-110 transition-transform border-4 border-white/80" // Adjusted size and styling
             />
           </Link>
-
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-1">
@@ -146,20 +146,20 @@ const Header: React.FC = () => {
                       <svg className="ml-1 h-3 w-3 text-gray-400 group-hover:text-primary-600 transition" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
                     </Link>
                     {/* Animated Dropdown */}
-                          <div className="absolute right-full top-0 mt-0 mr-2 min-w-[220px] bg-white/95 shadow-2xl rounded-2xl opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 group-hover:visible invisible transition-all duration-200 z-[60] border border-gray-100 ring-2 ring-primary-100">
-                            <ul className="py-2">
-                              {item.submenu.map((sub) => (
-                                <li key={sub.name}>
-                                  <Link
-                                    to={sub.href}
-                                    className="block px-7 py-2 text-gray-700 hover:bg-gradient-to-r hover:from-primary-100 hover:to-secondary-100 hover:text-primary-700 rounded-xl transition-all duration-150 font-semibold tracking-wide"
-                                  >
-                                    {sub.name}
-                                  </Link>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
+                    <div className="absolute right-full top-0 mt-0 mr-2 min-w-[220px] bg-white/95 shadow-2xl rounded-2xl opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 group-hover:visible invisible transition-all duration-200 z-[60] border border-gray-100 ring-2 ring-primary-100">
+                      <ul className="py-2">
+                        {item.submenu.map((sub) => (
+                          <li key={sub.name}>
+                            <Link
+                              to={sub.href}
+                              className="block px-7 py-2 text-gray-700 hover:bg-gradient-to-r hover:from-primary-100 hover:to-secondary-100 hover:text-primary-700 rounded-xl transition-all duration-150 font-semibold tracking-wide"
+                            >
+                              {sub.name}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
                 );
               }
@@ -248,25 +248,31 @@ const Header: React.FC = () => {
 
           {/* CTA Buttons */}
           <div className="hidden md:flex items-center gap-3">
+            {/* "Become Partner" Button */}
             <div className="relative flex flex-col items-center">
-              <Link
-                to="/become-partner"
-                className="eye-catching-cta"
+              <Button
+                variant="secondary" // Using the Button component
+                size="md"
+                onClick={() => openApplyModal('Become Partner')} // Call openApplyModal
+                className="eye-catching-cta" // Keep custom styling if desired
                 style={{ fontWeight: 900 }}
               >
                 <span className="drop-shadow">Become Partner</span>
-              </Link>
-              <span className="absolute left-1/2 -translate-x-1/2 top-full mt-1 text-xs font-semibold text-pink-600 bg-white/90 px-2 py-1 rounded-xl shadow-md border border-pink-200 animate-bounce z-10 whitespace-nowrap" style={{minWidth:'max-content'}}>
-                earn upto ₹1 lakh
+              </Button>
+              <span className="absolute left-1/2 -translate-x-1/2 top-full mt-1 text-xs font-semibold text-pink-600 bg-white/90 px-2 py-1 rounded-xl shadow-md border border-pink-200 animate-bounce z-10 whitespace-nowrap" style={{ minWidth: 'max-content' }}>
+                Earn upto ₹1 lakh
               </span>
             </div>
-            <Link
-              to="/eligibility"
-              className="eye-catching-cta"
+            {/* "Check Eligibility" Button */}
+            <Button
+              variant="primary" // Using the Button component
+              size="md"
+              onClick={() => openEligibilityModal()} // Call openEligibilityModal
+              className="eye-catching-cta" // Keep custom styling if desired
               style={{ fontWeight: 900 }}
             >
               <span className="drop-shadow">Check Eligibility</span>
-            </Link>
+            </Button>
           </div>
           <style>
             {`
@@ -376,13 +382,24 @@ const Header: React.FC = () => {
                   </Link>
                 );
               })}
-              <Link
-                to="/eligibility"
-                onClick={() => setIsMenuOpen(false)}
-                className="mt-4 bg-gradient-to-r from-primary-600 via-pink-500 to-secondary-500 text-white px-6 py-3 rounded-2xl font-black text-center shadow-xl hover:scale-110 transition-all duration-200 border-2 border-transparent hover:border-primary-400 tracking-wider text-lg"
+              {/* "Become Partner" Button for mobile */}
+              <Button
+                variant="secondary"
+                size="md"
+                className="w-full mt-4"
+                onClick={() => { openApplyModal('Become Partner'); setIsMenuOpen(false); }}
               >
-                <span className="drop-shadow">Check Eligibility</span>
-              </Link>
+                Become Partner
+              </Button>
+              {/* "Check Eligibility" Button for mobile */}
+              <Button
+                variant="primary"
+                size="md"
+                className="w-full mt-2"
+                onClick={() => { openEligibilityModal(); setIsMenuOpen(false); }}
+              >
+                Check Eligibility
+              </Button>
             </nav>
           </div>
         )}

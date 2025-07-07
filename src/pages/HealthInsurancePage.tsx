@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import ApplyButton from '../components/common/ApplyButton'; // Add this line
 import {
   Shield, HeartPulse, DollarSign, FileText, Zap, Truck, CheckCircle, Clock, Users, Smile, Globe,
   ArrowRight, CreditCard, Award, Verified, Quote, UserCircle2, Headphones, Smartphone, Briefcase,
@@ -279,7 +280,11 @@ const PremiumCalculator = () => {
 
 
 // --- Main Health Insurance Page Component ---
-const BanksCartHealthInsurancePage = () => {
+interface HealthInsurancePageProps {
+    openApplyModal?: (loanType?: string) => void;
+}
+
+const BanksCartHealthInsurancePage: React.FC<HealthInsurancePageProps> = ({ openApplyModal }) => {
   const [openFAQIndex, setOpenFAQIndex] = useState(null);
 
   // --- Data for Sections ---
@@ -606,20 +611,32 @@ const BanksCartHealthInsurancePage = () => {
           >
             Compare comprehensive health plans from India's top insurers on BanksCart – your trusted partner for unbiased advice and effortless purchase.
           </motion.p>
-          <motion.button
-            className="px-10 py-5 rounded-full font-bold text-xl bg-gradient-to-r from-green-500 to-teal-500 text-white shadow-lg
-                       hover:from-green-600 hover:to-teal-600 transition-all duration-300 ease-in-out transform hover:-translate-y-1
-                       focus:outline-none focus:ring-4 focus:ring-green-500 focus:ring-opacity-50 flex items-center justify-center gap-3 mx-auto"
-            variants={itemVariants}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => {
-              document.getElementById('premium-calculator-section')?.scrollIntoView({ behavior: 'smooth' });
-            }}
-          >
-            <Calculator className="w-7 h-7" /> Get a Free Quote Today
-            <ArrowRight className="w-6 h-6 ml-2" />
-          </motion.button>
+          <motion.div variants={itemVariants}>
+            {openApplyModal ? (
+                <ApplyButton
+                    loanType="Health Insurance"
+                    openApplyModal={openApplyModal}
+                    variant="primary"
+                    size="lg"
+                    className="px-10 py-5 rounded-full font-bold text-xl bg-gradient-to-r from-green-500 to-teal-500 text-white shadow-lg
+                               hover:from-green-600 hover:to-teal-600 transition-all duration-300 ease-in-out transform hover:-translate-y-1
+                               focus:outline-none focus:ring-4 focus:ring-green-500 focus:ring-opacity-50 flex items-center justify-center gap-3 mx-auto"
+                >
+                    <Calculator className="w-7 h-7" /> Get a Free Quote Today
+                    <ArrowRight className="w-6 h-6 ml-2" />
+                </ApplyButton>
+            ) : (
+              <motion.button
+                className="px-10 py-5 rounded-full font-bold text-xl bg-gradient-to-r from-green-500 to-teal-500 text-white shadow-lg hover:from-green-600 hover:to-teal-600 transition-all duration-300 ease-in-out transform hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-green-500 focus:ring-opacity-50 flex items-center justify-center gap-3 mx-auto"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => document.getElementById('premium-calculator-section')?.scrollIntoView({ behavior: 'smooth' })}
+              >
+                <Calculator className="w-7 h-7" /> Get a Free Quote Today
+                <ArrowRight className="w-6 h-6 ml-2" />
+              </motion.button>
+            )}
+          </motion.div>
           {/* Trust Indicators */}
           <motion.div className="mt-8 flex items-center justify-center gap-4 text-gray-300" variants={itemVariants}>
             <div className="flex items-center">
@@ -1293,19 +1310,30 @@ const BanksCartHealthInsurancePage = () => {
             className="flex flex-col sm:flex-row justify-center gap-6"
             variants={itemVariants}
           >
-            <motion.button
-              className="px-10 py-5 rounded-full font-bold text-xl bg-gradient-to-r from-green-500 to-teal-500 text-white shadow-lg
-                         hover:from-green-600 hover:to-teal-600 transition-all duration-300 ease-in-out transform hover:-translate-y-1
-                         focus:outline-none focus:ring-4 focus:ring-green-500 focus:ring-opacity-50 flex items-center justify-center gap-3"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => {
-                document.getElementById('premium-calculator-section')?.scrollIntoView({ behavior: 'smooth' });
-              }}
-            >
-              <Calculator className="w-7 h-7" /> Compare Plans & Get Quote
-              <ArrowRight className="w-6 h-6 ml-2" />
-            </motion.button>
+            {openApplyModal ? (
+              <ApplyButton
+                loanType="Health Insurance - Compare"
+                openApplyModal={openApplyModal}
+                variant="primary"
+                size="lg"
+                className="px-10 py-5 rounded-full font-bold text-xl bg-gradient-to-r from-green-500 to-teal-500 text-white shadow-lg
+                           hover:from-green-600 hover:to-teal-600 transition-all duration-300 ease-in-out transform hover:-translate-y-1
+                           focus:outline-none focus:ring-4 focus:ring-green-500 focus:ring-opacity-50 flex items-center justify-center gap-3"
+              >
+                <Calculator className="w-7 h-7" /> Compare Plans & Get Quote
+                <ArrowRight className="w-6 h-6 ml-2" />
+              </ApplyButton>
+            ) : (
+              <motion.button
+                className="px-10 py-5 rounded-full font-bold text-xl bg-gradient-to-r from-green-500 to-teal-500 text-white shadow-lg hover:from-green-600 hover:to-teal-600 transition-all duration-300 ease-in-out transform hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-green-500 focus:ring-opacity-50 flex items-center justify-center gap-3"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => document.getElementById('premium-calculator-section')?.scrollIntoView({ behavior: 'smooth' })}
+              >
+                <Calculator className="w-7 h-7" /> Compare Plans & Get Quote
+                <ArrowRight className="w-6 h-6 ml-2" />
+              </motion.button>
+            )}
             <motion.button
               className="px-10 py-5 rounded-full font-bold text-xl bg-transparent border-2 border-gray-500 text-gray-300
                          hover:bg-gray-700 hover:border-gray-700 hover:text-white transition-all duration-300 ease-in-out transform hover:-translate-y-1

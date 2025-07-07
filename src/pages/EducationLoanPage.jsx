@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import CountUp from 'react-countup';
+import ApplyButton from '../components/common/ApplyButton'; // Add this line
 // import Swiper from 'swiper'; // For testimonials carousel (add if needed)
 
 // --- Education Loan Page for BanksCart ---
-function EducationLoanPage() {
+const EducationLoanPage = ({ openApplyModal }) => {
   // Sticky header scroll state
   const [showTop, setShowTop] = useState(false);
   useEffect(() => {
@@ -76,7 +77,15 @@ function EducationLoanPage() {
             >
               Calculate Your Loan
             </motion.button>
-            <button className="bg-white text-[#2563eb] px-6 py-3 rounded-full font-semibold shadow hover:bg-blue-50 transition">Get Pre-Approved Now</button>
+            {openApplyModal && (
+              <ApplyButton
+                loanType="Education Loan"
+                openApplyModal={openApplyModal}
+                className="bg-white text-[#2563eb] px-6 py-3 rounded-full font-semibold shadow hover:bg-blue-50 transition"
+              >
+                Get Pre-Approved Now
+              </ApplyButton>
+            )}
           </div>
           <div className="flex items-center space-x-6 mt-6">
             <div className="flex items-center bg-white bg-opacity-20 px-4 py-2 rounded-full">
@@ -150,7 +159,15 @@ function EducationLoanPage() {
             </div>
           </div>
         </motion.div>
-        <motion.button whileHover={{ scale: 1.05 }} className="bg-gradient-to-r from-[#10b981] to-[#059669] text-white px-8 py-4 rounded-full font-bold text-lg shadow-lg transition w-full">Apply for This Amount</motion.button>
+        {openApplyModal && (
+          <ApplyButton
+            loanType="Education Loan"
+            openApplyModal={openApplyModal}
+            className="bg-gradient-to-r from-[#10b981] to-[#059669] text-white px-8 py-4 rounded-full font-bold text-lg shadow-lg transition w-full"
+          >
+            Apply for This Amount
+          </ApplyButton>
+        )}
       </div>
     </section>
   );
@@ -389,7 +406,15 @@ function EducationLoanPage() {
       <div className="max-w-3xl mx-auto">
         <h2 className="text-4xl font-bold mb-4 font-inter">Your Education Journey Starts Here</h2>
         <div className="text-xl mb-8 font-poppins">Join 2 Million+ students who trusted BanksCart for their education dreams</div>
-        <motion.button whileHover={{ scale: 1.05 }} className="bg-gradient-to-r from-[#10b981] to-[#059669] text-white px-12 py-5 rounded-full font-bold text-2xl shadow-lg transition mb-6">Start Your Application</motion.button>
+        {openApplyModal && (
+          <ApplyButton
+            loanType="Education Loan"
+            openApplyModal={openApplyModal}
+            className="bg-gradient-to-r from-[#10b981] to-[#059669] text-white px-12 py-5 rounded-full font-bold text-2xl shadow-lg transition mb-6"
+          >
+            Start Your Application
+          </ApplyButton>
+        )}
         <div className="flex justify-center items-center space-x-6 mt-6">
           <a href="tel:+1800123456" className="flex items-center space-x-2 hover:underline"><span>📞</span> <span>1800-123-456</span></a>
           <a href="https://wa.me/1800123456" className="flex items-center space-x-2 hover:underline"><span>💬</span> <span>WhatsApp</span></a>

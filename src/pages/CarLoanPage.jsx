@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect } from "react";
+import ApplyButton from '../components/common/ApplyButton';
 
 // --- Dynamic Data ---
 const banks = [
@@ -98,7 +99,7 @@ const howToApply = [
 // ...existing code...
 
 // --- EMI Calculator ---
-const CarLoanPage = () => {
+const CarLoanPage = ({ openApplyModal }) => {
   const [loanAmount, setLoanAmount] = useState(5000000);
   const [interestRate, setInterestRate] = useState(8.5);
   const [tenure, setTenure] = useState(5);
@@ -150,7 +151,15 @@ const CarLoanPage = () => {
       <div className="text-sm text-gray-500 mb-2">Home &gt; Car Loan</div>
       <h1 className="text-3xl md:text-5xl font-extrabold text-[#2C3E50] mb-4">Car Loan in India 2025</h1>
       <p className="text-lg text-gray-700 mb-6 max-w-2xl">Car Loan - A car loan is a financial agreement that allows you to borrow money to purchase a vehicle, which you repay over time with interest. In India, car loans come with low interest rates and can be repaid over up to 8 years. Some lenders may offer loans covering up to 100% of the car's on-road price.</p>
-      <button className="bg-[#E74C3C] text-white rounded-full px-8 py-4 font-bold text-lg shadow-lg animate-pulse transition-colors duration-300 hover:bg-red-600">FREE Credit Score Check Now</button>
+      {openApplyModal && (
+        <ApplyButton
+          loanType="Car Loan"
+          openApplyModal={openApplyModal}
+          className="bg-[#E74C3C] text-white rounded-full px-8 py-4 font-bold text-lg shadow-lg animate-pulse transition-colors duration-300 hover:bg-red-600"
+        >
+          Apply for Car Loan
+        </ApplyButton>
+      )}
     </section>
 
     {/* Table Section: Car Loan Comparison Table */}
@@ -163,48 +172,40 @@ const CarLoanPage = () => {
               <th className="py-3 px-4">Name of the Bank</th>
               <th className="py-3 px-4">Interest Rate (p.a.)</th>
               <th className="py-3 px-4">Tenure</th>
+              <th className="py-3 px-4">Apply</th>
             </tr>
           </thead>
           <tbody>
-            {[
-              ["State Bank of India", "9.10% p.a. onwards", "Up to 7 years"],
-              ["Indian Overseas Bank", "8.60% p.a. onwards", "Up to 7 years"],
-              ["IDFC First Bank", "9.99% p.a. onwards", "Up to 10 years"],
-              ["Jammu and Kashmir Bank", "RLLR + 0.75% p.a. onwards (floating), RLLR + 0.25% p.a. onwards (fixed)", "Up to 7 years"],
-              ["Canara Bank", "8.20% p.a. onwards", "Up to 7 years"],
-              ["HDFC Bank", "9.40% p.a. onwards (Rack Interest)", "Up to 7 years"],
-              ["IndusInd Bank", "8.00% p.a. onwards", "Up to 5 years"],
-              ["ICICI Bank", "9.10% p.a. onwards", "Up to 7 years"],
-              ["Karur Vysya Bank", "9.25% p.a. onwards", "Up to 7 years"],
-              ["South Indian Bank", "8.75% p.a. onwards", "Up to 7 years"],
-              ["Kotak Mahindra Bank", "Contact the bank", "Up to 7 years"],
-              ["IDBI Bank", "8.65% p.a. onwards (floating), 9.20% p.a. onwards (fixed)", "Up to 7 years"],
-              ["Yes Bank", "Contact the bank", "Up to 8 years"],
-              ["Karnataka Bank", "8.80% p.a. onwards", "Up to 7 years"],
-              ["Federal Bank of India", "9.00% p.a. onwards", "Up to 7 years"],
-              ["Equitas Small Finance Bank", "9.00% p.a. onwards", "Up to 7 years"],
-              ["Punjab National Bank", "Floating: 8.35% p.a. onwards, Fixed: 9.35% p.a. onwards", "Up to 7 years"],
-              ["Union Bank of India", "8.20% p.a. onwards", "Up to 7 years"],
-              ["Axis Bank", "9.40% p.a. onwards", "Up to 7 years"],
-              ["Bank of Baroda", "Fixed: 8.80% p.a. onwards, Floating: 8.90% p.a. onwards", "Up to 7 years"],
-              ["Tamilnad Mercantile Bank", "10.25% p.a. onwards", "Up to 7 years"],
-              ["Bank of India", "8.75% p.a. onwards", "Up to 7 years"],
-              ["Bank of Maharashtra", "8.20% p.a. onwards", "Up to 7 years"],
-              ["Central Bank of India", "8.35% p.a. onwards", "Up to 7 years"],
-              ["Indian Bank", "8.25% p.a. onwards", "Up to 7 years"],
-              ["UCO Bank", "8.35% p.a. onwards", "Up to 7 years"],
-              ["Bandhan Bank", "8.47% p.a. onwards", "Up to 7 years"],
-            ].map((row, i) => (
-              <tr key={row[0]} className={i % 2 === 0 ? "bg-white hover:bg-blue-50 transition-colors" : "bg-gray-50 hover:bg-blue-50 transition-colors"}>
-                <td className="py-2 px-4">{row[0]}</td>
-                <td className="py-2 px-4">{row[1]}</td>
-                <td className="py-2 px-4">{row[2]}</td>
+            {banks.map((bank, i) => (
+              <tr key={bank.name} className={i % 2 === 0 ? "bg-white hover:bg-blue-50 transition-colors" : "bg-gray-50 hover:bg-blue-50 transition-colors"}>
+                <td className="py-2 px-4">{bank.name}</td>
+                <td className="py-2 px-4">{bank.rate}</td>
+                <td className="py-2 px-4">{bank.tenure}</td>
+                <td className="py-2 px-4">
+                  {openApplyModal && (
+                    <ApplyButton
+                      loanType={`Car Loan - ${bank.name}`}
+                      openApplyModal={openApplyModal}
+                      className="bg-[#E74C3C] text-white rounded-full px-4 py-1 text-sm font-bold shadow-md hover:bg-red-600 transition-colors"
+                    >
+                      Apply
+                    </ApplyButton>
+                  )}
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-      <button className="mt-6 bg-[#E74C3C] text-white rounded-full px-6 py-3 font-bold shadow-lg animate-pulse hover:bg-red-600 transition-colors duration-300">Check Your Credit Score for FREE</button>
+      {openApplyModal && (
+        <ApplyButton
+          loanType="Car Loan"
+          openApplyModal={openApplyModal}
+          className="mt-6 bg-[#E74C3C] text-white rounded-full px-6 py-3 font-bold shadow-lg animate-pulse hover:bg-red-600 transition-colors duration-300"
+        >
+          Apply Now
+        </ApplyButton>
+      )}
     </section>
 
     {/* Promotional Section */}
@@ -250,7 +251,15 @@ const CarLoanPage = () => {
           <p className="text-gray-700">When one is in dire need of funds, he or she can pledge his or her old car as collateral in order to obtain sufficient funds to purchase a new car. This is known as Loan against Car. If you have a bad credit score, you can pledge your old car to the bank as collateral to obtain some much-needed funds.</p>
         </div>
       </div>
-      <button className="mt-8 bg-[#E74C3C] text-white rounded-full px-6 py-3 font-bold shadow-lg animate-pulse hover:bg-red-600 transition-colors duration-300">Check Your Credit Score for FREE</button>
+      {openApplyModal && (
+        <ApplyButton
+          loanType="Car Loan"
+          openApplyModal={openApplyModal}
+          className="mt-8 bg-[#E74C3C] text-white rounded-full px-6 py-3 font-bold shadow-lg animate-pulse hover:bg-red-600 transition-colors duration-300"
+        >
+          Apply Now
+        </ApplyButton>
+      )}
     </section>
 
     {/* Car Loan Tips Section */}
@@ -262,7 +271,15 @@ const CarLoanPage = () => {
           <li>No security or collateral is required when availing car loans. The car acts as the security.</li>
         </ul>
       </div>
-      <button className="mt-8 bg-[#E74C3C] text-white rounded-full px-6 py-3 font-bold shadow-lg animate-pulse hover:bg-red-600 transition-colors duration-300">Check Your Credit Score for FREE</button>
+      {openApplyModal && (
+        <ApplyButton
+          loanType="Car Loan"
+          openApplyModal={openApplyModal}
+          className="mt-8 bg-[#E74C3C] text-white rounded-full px-6 py-3 font-bold shadow-lg animate-pulse hover:bg-red-600 transition-colors duration-300"
+        >
+          Apply Now
+        </ApplyButton>
+      )}
     </section>
 
     {/* Key Components of a Car Loan Section */}
@@ -290,7 +307,15 @@ const CarLoanPage = () => {
           <p className="text-gray-700">The amount that is borrowed to buy the car. The principal amount does not include any fees or interest levied by the bank.</p>
         </div>
       </div>
-      <button className="mt-8 bg-[#E74C3C] text-white rounded-full px-6 py-3 font-bold shadow-lg animate-pulse hover:bg-red-600 transition-colors duration-300">Check Your Credit Score for FREE</button>
+      {openApplyModal && (
+        <ApplyButton
+          loanType="Car Loan"
+          openApplyModal={openApplyModal}
+          className="mt-8 bg-[#E74C3C] text-white rounded-full px-6 py-3 font-bold shadow-lg animate-pulse hover:bg-red-600 transition-colors duration-300"
+        >
+          Apply Now
+        </ApplyButton>
+      )}
     </section>
 
     {/* How to Apply for a Car Loan Section */}
@@ -316,7 +341,15 @@ const CarLoanPage = () => {
           </ol>
         </div>
       </div>
-      <button className="mt-8 bg-[#E74C3C] text-white rounded-full px-6 py-3 font-bold shadow-lg animate-pulse hover:bg-red-600 transition-colors duration-300">Check Your Credit Score for FREE</button>
+      {openApplyModal && (
+        <ApplyButton
+          loanType="Car Loan"
+          openApplyModal={openApplyModal}
+          className="mt-8 bg-[#E74C3C] text-white rounded-full px-6 py-3 font-bold shadow-lg animate-pulse hover:bg-red-600 transition-colors duration-300"
+        >
+          Apply Now
+        </ApplyButton>
+      )}
     </section>
 
     {/* Eligibility Criteria Section */}
@@ -330,7 +363,15 @@ const CarLoanPage = () => {
           <li>Must be salaried or self-employed, working for a government establishment or a private company.</li>
         </ol>
       </div>
-      <button className="mt-8 bg-[#E74C3C] text-white rounded-full px-6 py-3 font-bold shadow-lg animate-pulse hover:bg-red-600 transition-colors duration-300">Check Your Credit Score for FREE</button>
+      {openApplyModal && (
+        <ApplyButton
+          loanType="Car Loan"
+          openApplyModal={openApplyModal}
+          className="mt-8 bg-[#E74C3C] text-white rounded-full px-6 py-3 font-bold shadow-lg animate-pulse hover:bg-red-600 transition-colors duration-300"
+        >
+          Apply Now
+        </ApplyButton>
+      )}
     </section>
 
     {/* Documents Required Section */}
@@ -360,7 +401,15 @@ const CarLoanPage = () => {
           </tbody>
         </table>
       </div>
-      <button className="mt-8 bg-[#E74C3C] text-white rounded-full px-6 py-3 font-bold shadow-lg animate-pulse hover:bg-red-600 transition-colors duration-300">Check Your Credit Score for FREE</button>
+      {openApplyModal && (
+        <ApplyButton
+          loanType="Car Loan"
+          openApplyModal={openApplyModal}
+          className="mt-8 bg-[#E74C3C] text-white rounded-full px-6 py-3 font-bold shadow-lg animate-pulse hover:bg-red-600 transition-colors duration-300"
+        >
+          Apply Now
+        </ApplyButton>
+      )}
     </section>
 
     {/* Checklist Table Section */}
@@ -409,7 +458,15 @@ const CarLoanPage = () => {
           </tbody>
         </table>
       </div>
-      <button className="mt-8 bg-[#E74C3C] text-white rounded-full px-6 py-3 font-bold shadow-lg animate-pulse hover:bg-red-600 transition-colors duration-300">Check Your Credit Score for FREE</button>
+      {openApplyModal && (
+        <ApplyButton
+          loanType="Car Loan"
+          openApplyModal={openApplyModal}
+          className="mt-8 bg-[#E74C3C] text-white rounded-full px-6 py-3 font-bold shadow-lg animate-pulse hover:bg-red-600 transition-colors duration-300"
+        >
+          Apply Now
+        </ApplyButton>
+      )}
     </section>
 
     {/* EMI Calculator Section (Ultra Legend) */}
@@ -567,7 +624,15 @@ const CarLoanPage = () => {
         </div>
       </form>
       <div className="flex justify-center mt-8">
-        <button className="bg-gradient-to-r from-[#E74C3C] via-[#F59E42] to-[#2E86C1] text-white rounded-full px-8 py-4 font-extrabold text-xl shadow-xl hover:scale-105 transition-transform duration-300 animate-pulse tracking-wider">Check Your Credit Score for FREE</button>
+        {openApplyModal && (
+          <ApplyButton
+            loanType="Car Loan"
+            openApplyModal={openApplyModal}
+            className="bg-gradient-to-r from-[#E74C3C] via-[#F59E42] to-[#2E86C1] text-white rounded-full px-8 py-4 font-extrabold text-xl shadow-xl hover:scale-105 transition-transform duration-300 animate-pulse tracking-wider"
+          >
+            Apply Now
+          </ApplyButton>
+        )}
       </div>
     </section>
 
@@ -575,11 +640,27 @@ const CarLoanPage = () => {
     <section className="my-12 fade-in-section" id="faq">
       <h2 className="text-2xl font-bold text-[#2C3E50] mb-4">Frequently Asked Questions (FAQs) about Car Loans</h2>
       <FAQAccordion />
-      <button className="mt-8 bg-[#E74C3C] text-white rounded-full px-6 py-3 font-bold shadow-lg animate-pulse hover:bg-red-600 transition-colors duration-300">Check Your Credit Score for FREE</button>
+      {openApplyModal && (
+        <ApplyButton
+          loanType="Car Loan"
+          openApplyModal={openApplyModal}
+          className="mt-8 bg-[#E74C3C] text-white rounded-full px-6 py-3 font-bold shadow-lg animate-pulse hover:bg-red-600 transition-colors duration-300"
+        >
+          Apply Now
+        </ApplyButton>
+      )}
     </section>
 
     {/* Sticky CTA Button */}
-    <button className="fixed bottom-6 right-6 bg-[#E74C3C] text-white rounded-full px-6 py-3 font-bold shadow-lg animate-pulse z-50 hover:bg-red-600 transition-colors">Check Your Credit Score for FREE</button>
+    {openApplyModal && (
+      <ApplyButton
+        loanType="Car Loan - Quick Apply"
+        openApplyModal={openApplyModal}
+        className="fixed bottom-6 right-6 bg-[#E74C3C] text-white rounded-full px-6 py-3 font-bold shadow-lg animate-pulse z-50 hover:bg-red-600 transition-colors"
+      >
+        Apply Now
+      </ApplyButton>
+    )}
   </div>
   );
 };

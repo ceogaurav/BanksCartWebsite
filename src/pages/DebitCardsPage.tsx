@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 // Import all mutual funds page components (to be created in ../components/DebitCardsPage/)
+import ApplyButton from '../components/common/ApplyButton'; // Add this line
 import HeroSection from '../components/DebitCardsPage/HeroSection';
 import CardTypesShowcase from '../components/DebitCardsPage/CardTypesShowcase';
 import SecurityFeatures from '../components/DebitCardsPage/SecurityFeatures';
@@ -13,7 +14,11 @@ import FAQSection from '../components/DebitCardsPage/FAQSection';
 import FinalCTASection from '../components/DebitCardsPage/FinalCTASection';
 import '../components/DebitCardsPage/DebitCards.css';
 
-const DebitCardsPage = () => {
+interface DebitCardsPageProps {
+    openApplyModal?: (loanType?: string) => void; // <--- This line should be present
+}
+
+const DebitCardsPage: React.FC<DebitCardsPageProps> = ({ openApplyModal }) => {
   useEffect(() => {
     AOS.init({
       duration: 1000,
@@ -25,15 +30,15 @@ const DebitCardsPage = () => {
 
   return (
     <div className="debit-cards-page">
-      <HeroSection />
-      <CardTypesShowcase />
+      <HeroSection openApplyModal={openApplyModal} />
+      <CardTypesShowcase openApplyModal={openApplyModal} />
       <SecurityFeatures />
       <BenefitsRewards />
       <HowItWorks />
-      <ComparisonTable />
+      <ComparisonTable openApplyModal={openApplyModal} />
       <CustomerTestimonials />
       <FAQSection />
-      <FinalCTASection />
+      <FinalCTASection openApplyModal={openApplyModal} />
     </div>
   );
 };

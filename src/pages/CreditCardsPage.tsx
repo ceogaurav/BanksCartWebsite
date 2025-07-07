@@ -1,8 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 // Removed specific GSAP imports as they were causing resolution errors in this environment.
 // Assuming GSAP and ScrollTrigger are globally available via CDN in the surrounding HTML context.
+import ApplyButton from '../components/common/ApplyButton';
+interface CreditCardsPageProps {
+    openApplyModal?: (loanType?: string) => void;
+}
 
-function App() {
+const CreditCardsPage: React.FC<CreditCardsPageProps> = ({ openApplyModal }) => {
     // Register GSAP plugins (assuming gsap is globally available)
     // This line should remain as it registers the plugin with the global GSAP object.
     // Ensure GSAP and ScrollTrigger are loaded via CDN in the main HTML file (e.g., public/index.html)
@@ -861,9 +865,17 @@ function App() {
                             Compare 60+ credit cards, get instant approval, and unlock exclusive benefits tailored to your lifestyle.
                         </p>
                         <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 justify-center md:justify-start">
-                            <button className="btn-primary-gradient text-white font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1 animate-scale-in">
-                                Find My Card
-                            </button>
+                            {openApplyModal && (
+                                <ApplyButton
+                                    loanType="Credit Card"
+                                    openApplyModal={openApplyModal}
+                                    variant="primary"
+                                    size="lg"
+                                    className="btn-primary-gradient text-white font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1 animate-scale-in"
+                                >
+                                    Find My Card
+                                </ApplyButton>
+                            )}
                             <button className="btn-secondary-outline text-white font-bold py-3 px-8 rounded-full transition duration-300 ease-in-out animate-scale-in delay-100">
                                 Compare Cards
                             </button>
@@ -970,7 +982,17 @@ function App() {
                                     <div className="bg-blue-600 h-2.5 rounded-full" style={{ width: '85%' }} id="popularity-bar-1"></div>
                                 </div>
                             </div>
-                            <button className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-300">Learn More</button>
+                            {openApplyModal && (
+                                <ApplyButton
+                                    loanType="Credit Card - Premium Travel"
+                                    openApplyModal={openApplyModal}
+                                    variant="primary"
+                                    fullWidth={true}
+                                    className="py-2 rounded-lg"
+                                >
+                                    Apply Now
+                                </ApplyButton>
+                            )}
                         </div>
 
                         {/* Card 2: Cashback Card */}
@@ -993,7 +1015,17 @@ function App() {
                                     <div className="bg-green-600 h-2.5 rounded-full" style={{ width: '92%' }} id="popularity-bar-2"></div>
                                 </div>
                             </div>
-                            <button className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition duration-300">Learn More</button>
+                            {openApplyModal && (
+                                <ApplyButton
+                                    loanType="Credit Card - Cashback"
+                                    openApplyModal={openApplyModal}
+                                    variant="primary"
+                                    fullWidth={true}
+                                    className="py-2 rounded-lg bg-green-600 hover:bg-green-700"
+                                >
+                                    Apply Now
+                                </ApplyButton>
+                            )}
 
                             {/* Hover effect revealing additional benefits */}
                             <div className="absolute inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl">
@@ -1028,7 +1060,17 @@ function App() {
                                     <div className="bg-yellow-600 h-2.5 rounded-full" style={{ width: '78%' }} id="popularity-bar-3"></div>
                                 </div>
                             </div>
-                            <button className="w-full bg-yellow-600 text-white py-2 rounded-lg hover:bg-yellow-700 transition duration-300">Learn More</button>
+                            {openApplyModal && (
+                                <ApplyButton
+                                    loanType="Credit Card - Business"
+                                    openApplyModal={openApplyModal}
+                                    variant="primary"
+                                    fullWidth={true}
+                                    className="py-2 rounded-lg bg-yellow-600 hover:bg-yellow-700"
+                                >
+                                    Apply Now
+                                </ApplyButton>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -1643,9 +1685,19 @@ function App() {
                             <p><strong>Ideal For:</strong> <span>{modalContent.idealFor}</span></p>
                             <p><strong>Annual Fee:</strong> <span>{modalContent.annualFee}</span></p>
                         </div>
-                        <button className="mt-8 btn-primary-gradient text-white font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1">
-                            Apply Now
-                        </button>
+                        {openApplyModal && (
+                            <ApplyButton
+                                loanType={modalContent.cardType}
+                                openApplyModal={openApplyModal}
+                                variant="primary"
+                                size="md"
+                                fullWidth={true}
+                                className="mt-8 rounded-lg font-semibold"
+                                onClick={closeComparisonModal}
+                            >
+                                Apply for this Card
+                            </ApplyButton>
+                        )}
                     </div>
                 </div>
             )}
@@ -1800,11 +1852,18 @@ function App() {
             </footer>
 
             {/* Floating Action Button for Quick Application */}
-            <button id="fab-apply-now" className="fixed bottom-6 right-6 bg-green-500 text-white rounded-full p-4 shadow-lg hover:bg-green-600 transition duration-300 ease-in-out transform hover:scale-110 z-40 animate-bounce-fab">
-                <i className="fas fa-credit-card text-2xl mr-2"></i> Apply Now
-            </button>
+            {openApplyModal && (
+                <ApplyButton
+                    loanType="Credit Card - Quick Apply"
+                    openApplyModal={openApplyModal}
+                    variant="primary"
+                    className="fixed bottom-6 right-6 rounded-full p-4 shadow-lg bg-green-500 hover:bg-green-600 transition duration-300 ease-in-out transform hover:scale-110 z-40 animate-bounce-fab"
+                >
+                    <i className="fas fa-credit-card text-2xl mr-2"></i> Apply Now
+                </ApplyButton>
+            )}
         </>
     );
 }
 
-export default App;
+export default CreditCardsPage;

@@ -1,4 +1,5 @@
 import React from "react";
+import ApplyButton from "../common/ApplyButton";
 
 const steps = [
   {
@@ -81,7 +82,7 @@ const steps = [
   },
 ];
 
-const ApplicationSteps = () => (
+const ApplicationSteps = ({ openApplyModal }) => (
   <section className="my-16">
     <div className="max-w-4xl mx-auto bg-gradient-to-br from-blue-50 via-white to-teal-50 rounded-3xl shadow-2xl p-10 border border-blue-100">
       <h2 className="text-3xl font-extrabold mb-8 text-blue-900 text-center tracking-tight drop-shadow">
@@ -132,6 +133,19 @@ const ApplicationSteps = () => (
             </li>
           ))}
         </ol>
+      </div>
+      <div className="mt-12 text-center">
+        {openApplyModal && (
+          <ApplyButton
+            loanType="Personal Loan"
+            openApplyModal={openApplyModal}
+            variant="primary"
+            size="lg"
+            className="font-bold"
+          >
+            Apply for a Personal Loan
+          </ApplyButton>
+        )}
       </div>
       <div className="mt-10 text-xs text-blue-500 text-center italic">
         <span className="inline-flex items-center gap-1">

@@ -1,32 +1,41 @@
 import React, { useState, useEffect } from 'react';
-import { X, CheckCircle, Loader2 } from 'lucide-react';
+import { X, CheckCircle, Loader2, AlertTriangle } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { initializeApp } from 'firebase/app';
 import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from 'firebase/auth';
 import { getFirestore, collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
-interface LoanApplicationModalProps {
+interface EligibilityCheckModalProps {
   isOpen: boolean;
   onClose: () => void;
-  initialLoanType?: string; // Optional: to pre-fill loan type if coming from a specific page
+  initialLoanType?: string;
 }
 
-const LoanApplicationModal: React.FC<LoanApplicationModalProps> = ({ isOpen, onClose, initialLoanType = '' }) => {
+const EligibilityCheckModal: React.FC<EligibilityCheckModalProps> = ({ isOpen, onClose, initialLoanType = '' }) => {
   const [fullName, setFullName] = useState('');
   const [emailUsername, setEmailUsername] = useState(''); // New state for email username
   const [emailDomain, setEmailDomain] = useState('gmail.com'); // New state for email domain, default to gmail.com
   const [phoneNumberDigits, setPhoneNumberDigits] = useState(''); // New state for 10-digit phone number
   const [loanType, setLoanType] = useState(initialLoanType);
-  const [desiredAmount, setDesiredAmount] = useState('');
+  const [pincode, setPincode] = useState('');
+  const [city, setCity] = useState('');
+  const [income, setIncome] = useState('');
+  const [salary, setSalary] = useState(''); // State for Salary
+  const [cibilScore, setCibilScore] = useState('');
+
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submissionSuccess, setSubmissionSuccess] = useState(false);
+  const [isEligibleForHighLoan, setIsEligibleForHighLoan] = useState(false);
+  const [eligibleLoanAmount, setEligibleLoanAmount] = useState<number | null>(null); // State for calculated loan amount
   const [submissionError, setSubmissionError] = useState<string | null>(null);
+
+  const navigate = useNavigate();
 
   // Common email domains
   const emailDomains = ['gmail.com', 'yahoo.com', 'outlook.com', 'hotmail.com', 'aol.com', 'protonmail.com', 'zohomail.com', 'icloud.com', 'custom'];
 
   // Firebase setup (using global variables provided by Canvas for deployment, or .env for local)
-  // For local development, Vite exposes .env variables via import.meta.env
   const localFirebaseConfig = {
     apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
     authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
@@ -43,11 +52,9 @@ const LoanApplicationModal: React.FC<LoanApplicationModalProps> = ({ isOpen, onC
   if (typeof __firebase_config !== 'undefined' && __firebase_config) {
     try {
       const canvasConfig = JSON.parse(__firebase_config);
-      // Merge properties, Canvas config takes precedence
       firebaseConfig = { ...localFirebaseConfig, ...canvasConfig };
     } catch (e) {
       console.error("Error parsing __firebase_config:", e);
-      // Fallback to local config if Canvas config is malformed
     }
   }
 
@@ -81,7 +88,7 @@ const LoanApplicationModal: React.FC<LoanApplicationModalProps> = ({ isOpen, onC
       if (user) {
         setUserId(user.uid);
       } else {
-        setUserId(crypto.randomUUID()); // Anonymous or unauthenticated user
+        setUserId(crypto.randomUUID());
       }
       setIsAuthReady(true);
     });
@@ -95,13 +102,19 @@ const LoanApplicationModal: React.FC<LoanApplicationModalProps> = ({ isOpen, onC
     if (isOpen) {
       setFullName('');
       setEmailUsername('');
-      setEmailDomain('gmail.com'); // Reset to default
-      setPhoneNumberDigits(''); // Reset new field
+      setEmailDomain('gmail.com');
+      setPhoneNumberDigits('');
       setLoanType(initialLoanType);
-      setDesiredAmount('');
+      setPincode('');
+      setCity('');
+      setIncome('');
+      setSalary(''); // Reset salary
+      setCibilScore('');
       setErrors({});
       setIsSubmitting(false);
       setSubmissionSuccess(false);
+      setIsEligibleForHighLoan(false);
+      setEligibleLoanAmount(null);
       setSubmissionError(null);
     }
   }, [isOpen, initialLoanType]);
@@ -110,17 +123,15 @@ const LoanApplicationModal: React.FC<LoanApplicationModalProps> = ({ isOpen, onC
     const newErrors: { [key: string]: string } = {};
     if (!fullName.trim()) newErrors.fullName = 'Full Name is required.';
 
-    // Email validation
     const fullEmail = `${emailUsername}@${emailDomain === 'custom' ? (document.getElementById('customEmailDomain') as HTMLInputElement)?.value : emailDomain}`;
     if (!emailUsername.trim()) {
       newErrors.emailUsername = 'Email username is required.';
     } else if (emailDomain === 'custom' && !(document.getElementById('customEmailDomain') as HTMLInputElement)?.value.trim()) {
       newErrors.emailDomain = 'Custom domain is required.';
     } else if (!/\S+@\S+\.\S+/.test(fullEmail)) {
-      newErrors.email = 'Email address is invalid.'; // General email error
+      newErrors.email = 'Email address is invalid.';
     }
 
-    // Phone number validation
     if (!phoneNumberDigits.trim()) {
       newErrors.phoneNumber = 'Phone Number is required.';
     } else if (!/^\d{10}$/.test(phoneNumberDigits)) {
@@ -128,11 +139,24 @@ const LoanApplicationModal: React.FC<LoanApplicationModalProps> = ({ isOpen, onC
     }
 
     if (!loanType.trim()) newErrors.loanType = 'Loan Type is required.';
-    if (!desiredAmount.trim()) {
-      newErrors.desiredAmount = 'Desired Amount is required.';
-    } else if (isNaN(Number(desiredAmount)) || Number(desiredAmount) <= 0) {
-      newErrors.desiredAmount = 'Desired Amount must be a positive number.';
+    if (!pincode.trim()) {
+      newErrors.pincode = 'Pincode is required.';
+    } else if (!/^\d{6}$/.test(pincode)) {
+      newErrors.pincode = 'Pincode must be 6 digits.';
     }
+    if (!city.trim()) newErrors.city = 'City is required.';
+    if (!income.trim()) newErrors.income = 'Income selection is required.';
+
+    if (!salary.trim()) {
+      newErrors.salary = 'Salary is required.';
+    } else if (isNaN(Number(salary)) || Number(salary) <= 0) {
+      newErrors.salary = 'Salary must be a positive number.';
+    }
+
+    if (cibilScore.trim() !== '' && (isNaN(Number(cibilScore)) || Number(cibilScore) < 300 || Number(cibilScore) > 900)) {
+      newErrors.cibilScore = 'CIBIL Score must be a number between 300 and 900.';
+    }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -141,6 +165,8 @@ const LoanApplicationModal: React.FC<LoanApplicationModalProps> = ({ isOpen, onC
     e.preventDefault();
     setSubmissionError(null);
     setSubmissionSuccess(false);
+    setIsEligibleForHighLoan(false);
+    setEligibleLoanAmount(null);
 
     const fullEmail = `${emailUsername}@${emailDomain === 'custom' ? (document.getElementById('customEmailDomain') as HTMLInputElement)?.value : emailDomain}`;
     const fullPhoneNumber = `+91${phoneNumberDigits}`;
@@ -156,24 +182,38 @@ const LoanApplicationModal: React.FC<LoanApplicationModalProps> = ({ isOpen, onC
 
     setIsSubmitting(true);
     try {
-      const applicationData = {
+      const calculatedLoanAmount = Number(salary) * 4;
+      setEligibleLoanAmount(calculatedLoanAmount);
+
+      const eligibilityData = {
         fullName,
-        email: fullEmail, // Use the combined email
-        phoneNumber: fullPhoneNumber, // Use the combined phone number
+        email: fullEmail,
+        phoneNumber: fullPhoneNumber,
         loanType,
-        desiredAmount: Number(desiredAmount),
+        pincode,
+        city,
+        income,
+        salary: Number(salary),
+        cibilScore: cibilScore.trim() === '' ? null : Number(cibilScore),
+        eligibleLoanAmount: calculatedLoanAmount,
         userId: userId,
         timestamp: serverTimestamp(),
-        status: 'Pending',
+        status: 'Initial Check',
       };
 
-      const applicationsCollectionRef = collection(db, `artifacts/${appId}/public/data/loanApplications`);
-      await addDoc(applicationsCollectionRef, applicationData);
+      const eligibilityCollectionRef = collection(db, `artifacts/${appId}/public/data/eligibilityChecks`);
+      await addDoc(eligibilityCollectionRef, eligibilityData);
+
+      if (Number(cibilScore) >= 730 && Number(salary) >= 40000) {
+        setIsEligibleForHighLoan(true);
+      } else {
+        setIsEligibleForHighLoan(false);
+      }
 
       setSubmissionSuccess(true);
     } catch (error) {
-      console.error("Error submitting loan application:", error);
-      setSubmissionError("Failed to submit application. Please try again.");
+      console.error("Error submitting eligibility check:", error);
+      setSubmissionError("Failed to submit eligibility check. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -183,7 +223,7 @@ const LoanApplicationModal: React.FC<LoanApplicationModalProps> = ({ isOpen, onC
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-[9999] p-4 font-inter">
-      <div className="bg-white rounded-xl shadow-2xl w-full max-w-lg p-6 sm:p-8 relative transform transition-all scale-100 opacity-100">
+      <div className="bg-white rounded-xl shadow-2xl w-full max-w-lg p-6 sm:p-8 relative transform transition-all scale-100 opacity-100 max-h-[90vh] overflow-y-auto"> {/* Added max-h-[90vh] and overflow-y-auto */}
         <button
           onClick={onClose}
           className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 transition-colors rounded-full p-1 hover:bg-gray-100"
@@ -194,8 +234,8 @@ const LoanApplicationModal: React.FC<LoanApplicationModalProps> = ({ isOpen, onC
 
         {!submissionSuccess ? (
           <>
-            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6 text-center">Apply for a Loan</h2>
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6 text-center">Check Your Eligibility</h2>
+            <form onSubmit={handleSubmit} className="space-y-4 pb-20"> {/* Added pb-20 for spacing */}
               <div>
                 <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-1">
                   Full Name
@@ -245,7 +285,7 @@ const LoanApplicationModal: React.FC<LoanApplicationModalProps> = ({ isOpen, onC
                     id="customEmailDomain"
                     placeholder="enter custom domain (e.g., yourcompany.com)"
                     className={`w-full px-4 py-2 mt-2 border ${errors.emailDomain || errors.email ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors`}
-                    onBlur={(e) => { // Re-validate on blur for custom domain
+                    onBlur={(e) => {
                       if (emailDomain === 'custom') {
                         validateForm();
                       }
@@ -269,7 +309,7 @@ const LoanApplicationModal: React.FC<LoanApplicationModalProps> = ({ isOpen, onC
                     id="phoneNumberDigits"
                     value={phoneNumberDigits}
                     onChange={(e) => {
-                      const value = e.target.value.replace(/\D/g, ''); // Allow only digits
+                      const value = e.target.value.replace(/\D/g, '');
                       if (value.length <= 10) {
                         setPhoneNumberDigits(value);
                       }
@@ -285,7 +325,7 @@ const LoanApplicationModal: React.FC<LoanApplicationModalProps> = ({ isOpen, onC
 
               <div>
                 <label htmlFor="loanType" className="block text-sm font-medium text-gray-700 mb-1">
-                  Loan Type
+                  Desired Loan Type
                 </label>
                 <select
                   id="loanType"
@@ -308,20 +348,91 @@ const LoanApplicationModal: React.FC<LoanApplicationModalProps> = ({ isOpen, onC
               </div>
 
               <div>
-                <label htmlFor="desiredAmount" className="block text-sm font-medium text-gray-700 mb-1">
-                  Desired Amount (₹)
+                <label htmlFor="pincode" className="block text-sm font-medium text-gray-700 mb-1">
+                  Pincode
+                </label>
+                <input
+                  type="text"
+                  id="pincode"
+                  value={pincode}
+                  onChange={(e) => setPincode(e.target.value)}
+                  className={`w-full px-4 py-2 border ${errors.pincode ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors`}
+                  placeholder="e.g., 560068"
+                  maxLength={6}
+                  required
+                />
+                {errors.pincode && <p className="text-red-500 text-xs mt-1">{errors.pincode}</p>}
+              </div>
+
+              <div>
+                <label htmlFor="city" className="block text-sm font-medium text-gray-700 mb-1">
+                  City
+                </label>
+                <input
+                  type="text"
+                  id="city"
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)}
+                  className={`w-full px-4 py-2 border ${errors.city ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors`}
+                  placeholder="e.g., Bengaluru"
+                  required
+                />
+                {errors.city && <p className="text-red-500 text-xs mt-1">{errors.city}</p>}
+              </div>
+
+              <div>
+                <label htmlFor="income" className="block text-sm font-medium text-gray-700 mb-1">
+                  Monthly Income
+                </label>
+                <select
+                  id="income"
+                  value={income}
+                  onChange={(e) => setIncome(e.target.value)}
+                  className={`w-full px-4 py-2 border ${errors.income ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors bg-white`}
+                  required
+                >
+                  <option value="">Select Income Range</option>
+                  <option value="Below 1 Lakh">Below ₹1 Lakh</option>
+                  <option value="1-2 Lakh">₹1 Lakh - ₹2 Lakh</option>
+                  <option value="2-5 Lakh">₹2 Lakh - ₹5 Lakh</option>
+                  <option value="5-10 Lakh">₹5 Lakh - ₹10 Lakh</option>
+                  <option value="Above 10 Lakh">Above ₹10 Lakh</option>
+                </select>
+                {errors.income && <p className="text-red-500 text-xs mt-1">{errors.income}</p>}
+              </div>
+
+              <div>
+                <label htmlFor="salary" className="block text-sm font-medium text-gray-700 mb-1">
+                  Monthly Salary (₹)
                 </label>
                 <input
                   type="number"
-                  id="desiredAmount"
-                  value={desiredAmount}
-                  onChange={(e) => setDesiredAmount(e.target.value)}
-                  className={`w-full px-4 py-2 border ${errors.desiredAmount ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors`}
-                  placeholder="e.g., 500000"
-                  min="1"
+                  id="salary"
+                  value={salary}
+                  onChange={(e) => setSalary(e.target.value)}
+                  className={`w-full px-4 py-2 border ${errors.salary ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors`}
+                  placeholder="e.g., 40000"
+                  min="0"
                   required
                 />
-                {errors.desiredAmount && <p className="text-red-500 text-xs mt-1">{errors.desiredAmount}</p>}
+                {errors.salary && <p className="text-red-500 text-xs mt-1">{errors.salary}</p>}
+              </div>
+
+              <div>
+                <label htmlFor="cibilScore" className="block text-sm font-medium text-gray-700 mb-1">
+                  CIBIL Score (Optional)
+                </label>
+                <input
+                  type="number"
+                  id="cibilScore"
+                  value={cibilScore}
+                  onChange={(e) => setCibilScore(e.target.value)}
+                  className={`w-full px-4 py-2 border ${errors.cibilScore ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors`}
+                  placeholder="e.g., 750 (300-900)"
+                  min="300"
+                  max="900"
+                />
+                {errors.cibilScore && <p className="text-red-500 text-xs mt-1">{errors.cibilScore}</p>}
               </div>
 
               {submissionError && (
@@ -330,25 +441,33 @@ const LoanApplicationModal: React.FC<LoanApplicationModalProps> = ({ isOpen, onC
 
               <button
                 type="submit"
-                className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 rounded-lg font-semibold text-lg hover:from-blue-600 hover:to-purple-700 transition-all duration-300 shadow-lg flex items-center justify-center gap-2"
+                className="w-full bg-gradient-to-r from-green-500 to-teal-600 text-white py-3 rounded-lg font-semibold text-lg hover:from-green-600 hover:to-teal-700 transition-all duration-300 shadow-lg flex items-center justify-center gap-2"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? (
                   <>
-                    <Loader2 className="animate-spin h-5 w-5" /> Submitting...
+                    <Loader2 className="animate-spin h-5 w-5" /> Checking...
                   </>
                 ) : (
-                  'Submit Application'
+                  'Check Eligibility'
                 )}
               </button>
             </form>
           </>
         ) : (
           <div className="text-center py-8">
-            <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
-            <h3 className="text-2xl font-bold text-gray-900 mb-2">Application Submitted!</h3>
+            {isEligibleForHighLoan ? (
+              <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
+            ) : (
+              <AlertTriangle className="h-16 w-16 text-orange-500 mx-auto mb-4" />
+            )}
+            <h3 className="text-2xl font-bold text-gray-900 mb-2">
+              {isEligibleForHighLoan ? "Congratulations!" : "Thank You!"}
+            </h3>
             <p className="text-gray-600 mb-6">
-              Thank you for your application. Our team will review it and get back to you shortly.
+              {isEligibleForHighLoan && eligibleLoanAmount !== null
+                ? `You are eligible for up to ₹${eligibleLoanAmount.toLocaleString('en-IN')} loan! Our team will get back to you shortly.`
+                : "Thank you for your submission. Our team will review your details and get back to you."}
             </p>
             <button
               onClick={onClose}
@@ -363,4 +482,4 @@ const LoanApplicationModal: React.FC<LoanApplicationModalProps> = ({ isOpen, onC
   );
 };
 
-export default LoanApplicationModal;
+export default EligibilityCheckModal;

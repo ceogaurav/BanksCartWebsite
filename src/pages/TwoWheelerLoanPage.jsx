@@ -1,13 +1,11 @@
-
-
-import React, { useState } from "react";
-import { useState as useLocalState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import ApplyButton from '../components/common/ApplyButton';
 // import AOS from 'aos'; // Uncomment if you want to use AOS for scroll animations
 // import 'aos/dist/aos.css';
 
 // --- Two Wheeler Loan Page for bankscart ---
-function TwoWheelerLoanPage() {
+function TwoWheelerLoanPage({ openApplyModal }) {
   // useEffect(() => { AOS.init({ duration: 800 }); }, []); // Uncomment if using AOS
   return (
     <div className="min-h-screen bg-[#f8f9fa] font-['Open Sans','Roboto','Lato',sans-serif] text-[#343A40]">
@@ -51,12 +49,12 @@ function TwoWheelerLoanPage() {
       </section>
 
       {/* 4. PROMOTIONAL BANNER SECTION */}
-      <PromotionalBanner />
+      <PromotionalBanner openApplyModal={openApplyModal} />
 
       {/* 5. BANK-SPECIFIC LOAN SECTIONS */}
       <section className="py-16 bg-[#f8f9fa]">
         <h2 className="text-3xl font-bold text-[#2C3E50] mb-8 text-center">Bank-Specific Two-Wheeler Loan Options</h2>
-        <BankLoanSections />
+        <BankLoanSections openApplyModal={openApplyModal} />
       </section>
 
       {/* 7. DETAILED CONTENT SECTIONS: Eligibility & Documents */}
@@ -93,47 +91,6 @@ function TwoWheelerLoanPage() {
       <section className="py-16 bg-white">
         <h2 className="text-3xl font-bold text-[#2C3E50] mb-8 text-center">Frequently Asked Questions</h2>
         <FAQSection />
-      </section>
-
-      {/* Application Tips & Do's and Don'ts */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-12">
-          <div>
-            <h2 className="text-2xl font-bold text-[#2C3E50] mb-4">Application Tips</h2>
-            <ol className="list-decimal pl-6 space-y-3 text-lg text-[#374151]">
-              <li>Research well before applying</li>
-              <li>Check eligibility criteria</li>
-              <li>Compare interest rates</li>
-              <li>Submit required documents</li>
-              <li>Track your application status</li>
-            </ol>
-          </div>
-          <div>
-            <h2 className="text-2xl font-bold text-[#2C3E50] mb-4">Do's and Don'ts</h2>
-            <table className="w-full text-left border border-gray-200 rounded-lg">
-              <thead className="bg-[#eaf3fb]">
-                <tr>
-                  <th className="px-4 py-3 font-semibold">Do's</th>
-                  <th className="px-4 py-3 font-semibold">Don'ts</th>
-                </tr>
-              </thead>
-              <tbody className="bg-white">
-                <tr>
-                  <td className="px-4 py-2">Maintain a good credit score</td>
-                  <td className="px-4 py-2">Don't provide false information</td>
-                </tr>
-                <tr>
-                  <td className="px-4 py-2">Compare offers from multiple banks</td>
-                  <td className="px-4 py-2">Don't ignore terms and conditions</td>
-                </tr>
-                <tr>
-                  <td className="px-4 py-2">Read the fine print</td>
-                  <td className="px-4 py-2">Don't miss EMI payments</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
       </section>
 
 
@@ -223,7 +180,7 @@ function LoanComparisonTable() {
 }
 
 // --- 4. PROMOTIONAL BANNER SECTION ---
-function PromotionalBanner() {
+function PromotionalBanner({ openApplyModal }) {
   return (
     <motion.section initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="relative py-12 px-6 md:px-16 mb-12 rounded-3xl overflow-hidden bg-gradient-to-r from-[#20B2AA] to-[#4682B4] flex flex-col md:flex-row items-center justify-between shadow-xl">
       <div className="flex-1 z-10">
@@ -235,7 +192,17 @@ function PromotionalBanner() {
           <li className="flex items-center text-white text-lg"><span className="mr-2 text-green-200">✓</span>Fast Loan Disbursement</li>
           <li className="flex items-center text-white text-lg"><span className="mr-2 text-green-200">✓</span>No Hidden Charges</li>
         </ul>
-        <motion.button whileHover={{ scale: 1.05, boxShadow: "0 8px 24px rgba(32,178,170,0.3)" }} className="bg-white text-[#20B2AA] font-bold px-8 py-4 rounded-full shadow-lg text-xl transition mb-4 animate-pulse">Apply Now</motion.button>
+        {openApplyModal && (
+          <ApplyButton
+            loanType="Two-Wheeler Loan"
+            openApplyModal={openApplyModal}
+            variant="primary"
+            size="lg"
+            className="bg-white text-[#20B2AA] font-bold px-8 py-4 rounded-full shadow-lg text-xl transition mb-4 animate-pulse hover:scale-105 hover:shadow-xl"
+          >
+            Apply Now
+          </ApplyButton>
+        )}
         <div className="flex items-center mt-4">
         </div>
       </div>
@@ -266,9 +233,9 @@ function PromotionalBanner() {
 }
 
 // --- 5. BANK-SPECIFIC LOAN SECTIONS ---
-function BankLoanSections() {
+function BankLoanSections({ openApplyModal }) {
   // Use state to manage expanded/collapsed sections
-  const [open, setOpen] = useLocalState(null);
+  const [open, setOpen] = useState(null);
   const banks = [
     {
       name: "State Bank of India",
@@ -359,10 +326,17 @@ function BankLoanSections() {
                 </ul>
                 {bank.cta && (
                   <div className="mt-4">
-                    <button className="inline-flex items-center bg-[#20B2AA] text-white px-4 py-2 rounded-full font-semibold shadow hover:shadow-lg transition animate-pulse">
-                      <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" /></svg>
-                      Check Your Free Credit Score Now
-                    </button>
+                    {openApplyModal && (
+                      <ApplyButton
+                        loanType={`Two-Wheeler Loan - ${bank.name}`}
+                        openApplyModal={openApplyModal}
+                        variant="primary"
+                        size="md"
+                        className="inline-flex items-center bg-[#20B2AA] text-white px-4 py-2 rounded-full font-semibold shadow hover:shadow-lg transition animate-pulse"
+                      >
+                        Apply Now
+                      </ApplyButton>
+                    )}
                   </div>
                 )}
               </motion.div>
@@ -445,12 +419,12 @@ function AdvantagesSection() {
 
 // --- 9. EMI CALCULATOR SECTION (Upgraded) ---
 function EMICalculatorV2() {
-  const [amount, setAmount] = useLocalState(50000);
-  const [rate, setRate] = useLocalState(12.5);
-  const [tenure, setTenure] = useLocalState(36);
-  const [emi, setEmi] = useLocalState(0);
-  const [totalInterest, setTotalInterest] = useLocalState(0);
-  const [totalPayment, setTotalPayment] = useLocalState(0);
+  const [amount, setAmount] = useState(50000);
+  const [rate, setRate] = useState(12.5);
+  const [tenure, setTenure] = useState(36);
+  const [emi, setEmi] = useState(0);
+  const [totalInterest, setTotalInterest] = useState(0);
+  const [totalPayment, setTotalPayment] = useState(0);
   useEffect(() => {
     const principal = parseFloat(amount);
     const annualRate = parseFloat(rate);
@@ -512,7 +486,7 @@ function ApplicationTips() {
     { text: "Submit required documents", color: "bg-purple-100" },
     { text: "Track your application status", color: "bg-pink-100" },
   ];
-  const [checked, setChecked] = useLocalState(Array(tips.length).fill(false));
+  const [checked, setChecked] = useState(Array(tips.length).fill(false));
   return (
     <ol className="list-decimal pl-6 space-y-3 text-lg">
       {tips.map((tip, i) => (
@@ -549,7 +523,7 @@ function DosAndDontsTable() {
 
 // --- 11. FAQ SECTION ---
 function FAQSection() {
-  const [open, setOpen] = useLocalState(null);
+  const [open, setOpen] = useState(null);
   const faqs = [
     { q: "Who is eligible for a two-wheeler loan?", a: "Salaried and self-employed individuals meeting age, income, and credit score criteria." },
     { q: "What documents are required?", a: "Identity, address, and income proof as per bank policy." },
@@ -558,9 +532,9 @@ function FAQSection() {
     { q: "What is the minimum credit score required?", a: "Usually 750 or above." },
     // Add more FAQs as needed
   ];
-  const [search, setSearch] = useLocalState("");
+  const [search, setSearch] = useState("");
   const filteredFaqs = faqs.filter(f => f.q.toLowerCase().includes(search.toLowerCase()));
-  const [votes, setVotes] = useLocalState(Array(faqs.length).fill(null));
+  const [votes, setVotes] = useState(Array(faqs.length).fill(null));
   return (
     <div className="max-w-2xl mx-auto">
       <input type="text" placeholder="Search FAQs..." value={search} onChange={e => setSearch(e.target.value)} className="w-full mb-4 px-4 py-2 border rounded" />

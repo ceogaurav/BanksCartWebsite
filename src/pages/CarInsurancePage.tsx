@@ -27,8 +27,13 @@ import {
   FileText,
   Headphones
 } from 'lucide-react';
+import ApplyButton from '../components/common/ApplyButton'; // Add this line
 
-function CarInsurancePage() {
+interface CarInsurancePageProps {
+  openApplyModal?: (loanType?: string) => void;
+}
+
+const CarInsurancePage: React.FC<CarInsurancePageProps> = ({ openApplyModal }) => {
   const [activeInsuranceType, setActiveInsuranceType] = useState(0);
   const [activeFaq, setActiveFaq] = useState(null);
   const [isVisible, setIsVisible] = useState({});
@@ -231,12 +236,18 @@ function CarInsurancePage() {
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4">
-                <button className="bg-white text-blue-600 px-8 py-4 rounded-xl font-semibold hover:bg-blue-50 transition-all transform hover:scale-105 shadow-lg">
-                  <div className="flex items-center justify-center space-x-2">
-                    <Calculator className="w-5 h-5" />
-                    <span>Get Instant Quote</span>
-                  </div>
-                </button>
+                {openApplyModal && (
+                  <ApplyButton
+                    loanType="Car Insurance"
+                    openApplyModal={openApplyModal}
+                    className="bg-white text-blue-600 px-8 py-4 rounded-xl font-semibold hover:bg-blue-50 transition-all transform hover:scale-105 shadow-lg"
+                  >
+                    <div className="flex items-center justify-center space-x-2">
+                      <Calculator className="w-5 h-5" />
+                      <span>Get Instant Quote</span>
+                    </div>
+                  </ApplyButton>
+                )}
                 <button className="border-2 border-white/30 text-white px-8 py-4 rounded-xl font-semibold hover:bg-white/10 transition-all backdrop-blur-sm">
                   <div className="flex items-center justify-center space-x-2">
                     <Play className="w-5 h-5" />
@@ -282,9 +293,15 @@ function CarInsurancePage() {
                       className="w-full px-4 py-3 rounded-xl bg-white/20 border border-white/30 placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/50"
                     />
                   </div>
-                  <button className="w-full bg-gradient-to-r from-orange-500 to-red-500 text-white px-6 py-3 rounded-xl font-semibold hover:from-orange-600 hover:to-red-600 transition-all transform hover:scale-105">
-                    Get Instant Quote
-                  </button>
+                  {openApplyModal && (
+                    <ApplyButton
+                      loanType="Car Insurance - Quick Quote"
+                      openApplyModal={openApplyModal}
+                      className="w-full bg-gradient-to-r from-orange-500 to-red-500 text-white px-6 py-3 rounded-xl font-semibold hover:from-orange-600 hover:to-red-600 transition-all transform hover:scale-105"
+                    >
+                      Get Instant Quote
+                    </ApplyButton>
+                  )}
                 </div>
               </div>
             </div>
@@ -331,9 +348,15 @@ function CarInsurancePage() {
                 
                 <div className="border-t pt-4">
                   <div className="text-lg font-bold text-blue-600 mb-3">{type.price}</div>
-                  <button className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm font-semibold">
-                    Get Quote
-                  </button>
+                  {openApplyModal && (
+                    <ApplyButton
+                      loanType={`Car Insurance - ${type.title}`}
+                      openApplyModal={openApplyModal}
+                      className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm font-semibold"
+                    >
+                      Get Quote
+                    </ApplyButton>
+                  )}
                 </div>
               </div>
             ))}
@@ -397,9 +420,15 @@ function CarInsurancePage() {
                     <span className="text-sm text-gray-600">Starting from</span>
                     <span className="text-xl font-bold text-gray-900">{company.price}</span>
                   </div>
-                  <button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all font-semibold">
-                    Get Quote
-                  </button>
+                  {openApplyModal && (
+                    <ApplyButton
+                      loanType={`Car Insurance - ${company.name}`}
+                      openApplyModal={openApplyModal}
+                      className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all font-semibold"
+                    >
+                      Get Quote
+                    </ApplyButton>
+                  )}
                 </div>
               </div>
             ))}
@@ -538,9 +567,15 @@ function CarInsurancePage() {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-white text-blue-600 px-8 py-4 rounded-xl font-semibold hover:bg-blue-50 transition-all transform hover:scale-105">
-              Get Instant Quote
-            </button>
+            {openApplyModal && (
+              <ApplyButton
+                loanType="Car Insurance"
+                openApplyModal={openApplyModal}
+                className="bg-white text-blue-600 px-8 py-4 rounded-xl font-semibold hover:bg-blue-50 transition-all transform hover:scale-105"
+              >
+                Get Instant Quote
+              </ApplyButton>
+            )}
             <button className="border-2 border-white/30 text-white px-8 py-4 rounded-xl font-semibold hover:bg-white/10 transition-all">
               <div className="flex items-center justify-center space-x-2">
                 <Phone className="w-5 h-5" />

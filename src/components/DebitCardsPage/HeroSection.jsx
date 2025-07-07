@@ -3,9 +3,10 @@ import { motion } from 'framer-motion';
 
 // Import Lucide React for icons (e.g., check-circle)
 // Make sure to install: npm install lucide-react
+import ApplyButton from '../common/ApplyButton';
 import { CheckCircle } from 'lucide-react';
 
-const HeroSection = () => {
+const HeroSection = ({ openApplyModal }) => {
   // State for the user count, animating it to show growth
   const [userCount, setUserCount] = useState(1950000);
 
@@ -175,13 +176,17 @@ const HeroSection = () => {
             className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
             variants={itemVariants}
           >
-            <motion.button
-              className="px-8 py-4 rounded-full font-bold text-lg bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 ease-in-out transform hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-purple-500 focus:ring-opacity-50"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Get Your Card Today
-            </motion.button>
+            {openApplyModal && (
+              <ApplyButton
+                loanType="Debit Card - General"
+                openApplyModal={openApplyModal}
+                variant="primary"
+                size="lg"
+                className="px-8 py-4 rounded-full font-bold text-lg bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 ease-in-out transform hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-purple-500 focus:ring-opacity-50"
+              >
+                Get Your Card Today
+              </ApplyButton>
+            )}
             <motion.button
               className="px-8 py-4 rounded-full font-bold text-lg bg-transparent border-2 border-indigo-500 text-indigo-300 hover:bg-indigo-500 hover:text-white transition-all duration-300 ease-in-out transform hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-indigo-500 focus:ring-opacity-50"
               whileHover={{ scale: 1.05 }}

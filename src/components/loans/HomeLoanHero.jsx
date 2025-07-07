@@ -1,9 +1,10 @@
 import React from "react";
 import { motion } from "framer-motion";
+import ApplyButton from "../common/ApplyButton";
 import { Home, ArrowRight } from "lucide-react";
 
 
-const HomeLoanHero = () => (
+const HomeLoanHero = ({ openApplyModal }) => (
   <motion.section
     initial={{ opacity: 0, y: -40 }}
     animate={{ opacity: 1, y: 0 }}
@@ -51,16 +52,24 @@ const HomeLoanHero = () => (
       >
         Get <span className="font-bold text-primary-600">instant approval</span>, flexible EMIs, and expert support. <br className="hidden md:block" />Start your home ownership journey today!
       </motion.p>
-      <motion.a
-        href="#apply-form"
-        className="group bg-gradient-to-r from-primary-600 to-secondary-600 text-white px-10 py-4 rounded-xl font-bold shadow-2xl hover:from-secondary-700 hover:to-primary-700 transition-all text-lg flex items-center gap-3 focus:outline-none focus:ring-4 focus:ring-primary-300/50"
-        whileHover={{ scale: 1.07, boxShadow: "0 8px 32px 0 rgba(80, 80, 200, 0.18)" }}
-        whileTap={{ scale: 0.97 }}
-        tabIndex={0}
-      >
-        Apply Now
-        <ArrowRight className="h-5 w-5 ml-1 group-hover:translate-x-1 transition-transform" />
-      </motion.a>
+      {openApplyModal && (
+        <motion.div
+          initial={{ opacity: 0, x: -40 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.5, duration: 0.7 }}
+          whileHover={{ scale: 1.07, boxShadow: "0 8px 32px 0 rgba(80, 80, 200, 0.18)" }}
+          whileTap={{ scale: 0.97 }}
+        >
+          <ApplyButton
+            loanType="Home Loan"
+            openApplyModal={openApplyModal}
+            className="group bg-gradient-to-r from-primary-600 to-secondary-600 text-white px-10 py-4 rounded-xl font-bold shadow-2xl hover:from-secondary-700 hover:to-primary-700 transition-all text-lg flex items-center gap-3 focus:outline-none focus:ring-4 focus:ring-primary-300/50"
+          >
+            Apply Now
+            <ArrowRight className="h-5 w-5 ml-1 group-hover:translate-x-1 transition-transform" />
+          </ApplyButton>
+        </motion.div>
+      )}
     </div>
     <motion.div
       className="flex-1 flex justify-center z-10"

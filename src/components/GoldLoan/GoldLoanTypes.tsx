@@ -1,8 +1,13 @@
 import React from 'react';
 import { Coins, Home, Building, Briefcase, Users, Crown } from 'lucide-react';
+import ApplyButton from '../common/ApplyButton';
 
-const GoldLoanTypes = () => {
-  const loanTypes = [
+interface GoldLoanTypesProps {
+  openApplyModal?: (loanType?: string) => void;
+}
+
+const GoldLoanTypes: React.FC<GoldLoanTypesProps> = ({ openApplyModal }) => {
+    const loanTypes = [
     {
       icon: Coins,
       title: 'Personal Gold Loan',
@@ -62,7 +67,7 @@ const GoldLoanTypes = () => {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {loanTypes.map((loan, index) => (
             <div
-              key={index}
+              key={loan.title}
               className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border-t-4 border-orange-500"
             >
               <div className="flex items-center mb-4">
@@ -78,17 +83,26 @@ const GoldLoanTypes = () => {
               <p className="text-gray-600 mb-4">{loan.description}</p>
               
               <ul className="space-y-2 mb-4">
-                {loan.features.map((feature, idx) => (
-                  <li key={idx} className="flex items-center text-sm text-gray-600">
+                {loan.features.map((feature) => (
+                  <li key={feature} className="flex items-center text-sm text-gray-600">
                     <div className="w-2 h-2 bg-orange-500 rounded-full mr-2"></div>
                     {feature}
                   </li>
                 ))}
               </ul>
               
-              <button className="w-full bg-gradient-to-r from-orange-500 to-yellow-500 text-white py-2 rounded-lg hover:from-orange-600 hover:to-yellow-600 transition-all duration-300 transform hover:scale-105">
-                Apply Now
-              </button>
+              {openApplyModal && (
+                <ApplyButton
+                  loanType={`Gold Loan - ${loan.title}`}
+                  openApplyModal={openApplyModal}
+                  variant="primary"
+                  size="md"
+                  fullWidth={true}
+                  className="bg-gradient-to-r from-orange-500 to-yellow-500 text-white py-2 rounded-lg hover:from-orange-600 hover:to-yellow-600 transition-all duration-300 transform hover:scale-105"
+                >
+                  Apply Now
+                </ApplyButton>
+              )}
             </div>
           ))}
         </div>

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
+import ApplyButton from '../components/common/ApplyButton';
 
-// --- Used Car Loan EMI Calculator ---
-const UsedCarLoanPage = () => {
+// --- Used Car Loan Page ---
+const UsedCarLoanPage = ({ openApplyModal }) => {
   const [loanAmount, setLoanAmount] = useState(500000);
   const [interestRate, setInterestRate] = useState(12.0);
   const [tenure, setTenure] = useState(5);
@@ -58,7 +59,16 @@ const UsedCarLoanPage = () => {
               <div className="flex items-center"><span className="mr-2">✓</span>Quick approval in 2 hours</div>
               <div className="flex items-center"><span className="mr-2">✓</span>Minimal documentation required</div>
             </div>
-            <button className="bg-[#ff4444] text-white px-8 py-4 rounded-full font-bold text-xl shadow-lg hover:bg-red-600 transition">Get Instant Approval</button>
+            {/* Replace the existing button with ApplyButton */}
+            {openApplyModal && (
+              <ApplyButton
+                  loanType="Used Car Loan"  // Consistent loan type name
+                  openApplyModal={openApplyModal}
+                  variant="primary"
+                  size="lg"
+                  className="bg-[#ff4444] text-white px-8 py-4 rounded-full font-bold text-xl shadow-lg hover:bg-red-600 transition"
+              >Get Instant Approval</ApplyButton>
+            )}
           </div>
           <div className="bg-white rounded-lg p-8 shadow-xl">
             <h3 className="text-2xl font-semibold text-gray-800 mb-6">Check Your Eligibility</h3>
@@ -206,35 +216,45 @@ const UsedCarLoanPage = () => {
                   <td className="px-6 py-4">11.75% - 15.25% p.a.</td>
                   <td className="px-6 py-4">5 years (maximum)</td>
                   <td className="px-6 py-4">0.50% of loan amount</td>
-                  <td className="px-6 py-4 text-center"><button className="bg-[#ff4444] text-white px-4 py-2 rounded-full font-semibold">Apply Now</button></td>
+                  <td className="px-6 py-4 text-center">
+                    {openApplyModal && <ApplyButton loanType="Used Car Loan - State Bank of India" openApplyModal={openApplyModal} variant="primary" size="md" className="bg-[#ff4444] text-white px-4 py-2 rounded-full font-semibold">Apply Now</ApplyButton>}
+                  </td>
                 </tr>
                 <tr className="border-b hover:bg-gray-50">
                   <td className="px-6 py-4 flex items-center"><img src="/images/tata.png" alt="Tata Capital" className="w-8 h-8 mr-3" /><span className="font-semibold">Tata Capital</span></td>
                   <td className="px-6 py-4">10.75% p.a. onwards</td>
                   <td className="px-6 py-4">1 year to 5 years</td>
                   <td className="px-6 py-4">Up to 3% of loan amount</td>
-                  <td className="px-6 py-4 text-center"><button className="bg-[#ff4444] text-white px-4 py-2 rounded-full font-semibold">Apply Now</button></td>
+                  <td className="px-6 py-4 text-center">
+                    {openApplyModal && <ApplyButton loanType="Used Car Loan - Tata Capital" openApplyModal={openApplyModal} variant="primary" size="md" className="bg-[#ff4444] text-white px-4 py-2 rounded-full font-semibold">Apply Now</ApplyButton>}
+                  </td>
                 </tr>
                 <tr className="border-b hover:bg-gray-50">
                   <td className="px-6 py-4 flex items-center"><img src="/images/hdfc.png" alt="HDFC Bank" className="w-8 h-8 mr-3" /><span className="font-semibold">HDFC Bank</span></td>
                   <td className="px-6 py-4">13.75% p.a. onwards</td>
                   <td className="px-6 py-4">7 years</td>
                   <td className="px-6 py-4">Up to 2.5% of loan amount</td>
-                  <td className="px-6 py-4 text-center"><button className="bg-[#ff4444] text-white px-4 py-2 rounded-full font-semibold">Apply Now</button></td>
+                  <td className="px-6 py-4 text-center">
+                    {openApplyModal && <ApplyButton loanType="Used Car Loan - HDFC Bank" openApplyModal={openApplyModal} variant="primary" size="md" className="bg-[#ff4444] text-white px-4 py-2 rounded-full font-semibold">Apply Now</ApplyButton>}
+                  </td>
                 </tr>
                 <tr className="border-b hover:bg-gray-50">
                   <td className="px-6 py-4 flex items-center"><img src="/images/pnb.png" alt="Punjab National Bank" className="w-8 h-8 mr-3" /><span className="font-semibold">Punjab National Bank</span></td>
                   <td className="px-6 py-4">9.40% p.a. onwards</td>
                   <td className="px-6 py-4">5 years</td>
                   <td className="px-6 py-4">0.50% of loan amount</td>
-                  <td className="px-6 py-4 text-center"><button className="bg-[#ff4444] text-white px-4 py-2 rounded-full font-semibold">Apply Now</button></td>
+                  <td className="px-6 py-4 text-center">
+                    {openApplyModal && <ApplyButton loanType="Used Car Loan - Punjab National Bank" openApplyModal={openApplyModal} variant="primary" size="md" className="bg-[#ff4444] text-white px-4 py-2 rounded-full font-semibold">Apply Now</ApplyButton>}
+                  </td>
                 </tr>
                 <tr className="hover:bg-gray-50">
                   <td className="px-6 py-4 flex items-center"><img src="/images/axis.png" alt="Axis Bank" className="w-8 h-8 mr-3" /><span className="font-semibold">Axis Bank</span></td>
                   <td className="px-6 py-4">13.55% - 15.80% p.a.</td>
                   <td className="px-6 py-4">5 years</td>
                   <td className="px-6 py-4">Up to 2% of loan amount</td>
-                  <td className="px-6 py-4 text-center"><button className="bg-[#ff4444] text-white px-4 py-2 rounded-full font-semibold">Apply Now</button></td>
+                  <td className="px-6 py-4 text-center">
+                    {openApplyModal && <ApplyButton loanType="Used Car Loan - Axis Bank" openApplyModal={openApplyModal} variant="primary" size="md" className="bg-[#ff4444] text-white px-4 py-2 rounded-full font-semibold">Apply Now</ApplyButton>}
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -365,7 +385,11 @@ const UsedCarLoanPage = () => {
           </div>
           <div className="text-center mt-12">
             <p className="text-gray-600 mb-4">Ready to apply with these EMI calculations?</p>
-            <button className="bg-[#ff4444] text-white px-8 py-4 rounded-full font-bold text-xl shadow-lg hover:bg-red-600 transition">Apply for Loan Now</button>
+            {openApplyModal && (
+              <ApplyButton loanType="Used Car Loan" openApplyModal={openApplyModal} variant="primary" size="xl" className="bg-[#ff4444] text-white px-8 py-4 rounded-full font-bold text-xl shadow-lg hover:bg-red-600 transition">
+                  Apply for Loan Now
+              </ApplyButton>
+            )}
           </div>
         </div>
       </section>

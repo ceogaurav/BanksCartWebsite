@@ -1,12 +1,13 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import ApplyButton from '../common/ApplyButton';
 import {
   // Importing all necessary Lucide icons for a rich visual experience
   DollarSign, Globe, TrendingUp, Shield, Headphones, Users, CreditCard,
   PiggyBank, Briefcase, Car, Award, Zap, CheckCircle, XCircle, Plane
 } from 'lucide-react';
 
-const ComparisonTable = () => {
+const ComparisonTable = ({ openApplyModal }) => {
   // Define the features and their values for each card type
   // Each value now includes an 'icon' (optional), 'value' (string or React element), and 'highlight' boolean
   const features = [
@@ -219,33 +220,43 @@ const ComparisonTable = () => {
           <div className="grid grid-cols-4 min-w-[768px] lg:min-w-0 bg-gray-800/70 rounded-b-2xl pt-6 pb-4 px-6 border-t border-gray-700">
             <div className="col-span-1"></div> {/* Empty cell for feature column */}
             {/* CTA Buttons */}
-            <div className="flex justify-center items-center">
-              <motion.button
-                className="px-6 py-3 rounded-full font-bold text-base bg-transparent border-2 border-blue-500 text-blue-300 hover:bg-blue-500 hover:text-white transition-all duration-300 ease-in-out transform hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Get Essential
-              </motion.button>
-            </div>
-            <div className="flex justify-center items-center">
-              <motion.button
-                className="px-6 py-3 rounded-full font-bold text-base bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg hover:from-indigo-700 hover:to-purple-700 transition-all duration-300 ease-in-out transform hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-purple-500 focus:ring-opacity-50"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Get Premium
-              </motion.button>
-            </div>
-            <div className="flex justify-center items-center">
-              <motion.button
-                className="px-6 py-3 rounded-full font-bold text-base bg-transparent border-2 border-green-500 text-green-300 hover:bg-green-500 hover:text-white transition-all duration-300 ease-in-out transform hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-green-500 focus:ring-opacity-50"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Get Business
-              </motion.button>
-            </div>
+            {openApplyModal && (
+              <>
+                <div className="flex justify-center items-center">
+                  <ApplyButton
+                    loanType="Debit Card - Essential"
+                    openApplyModal={openApplyModal}
+                    variant="primary"
+                    size="md"
+                    className="px-6 py-3 rounded-full font-bold text-base bg-transparent border-2 border-blue-500 text-blue-300 hover:bg-blue-500 hover:text-white transition-all duration-300 ease-in-out transform hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50"
+                  >
+                    Get Essential
+                  </ApplyButton>
+                </div>
+                <div className="flex justify-center items-center">
+                  <ApplyButton
+                    loanType="Debit Card - Premium"
+                    openApplyModal={openApplyModal}
+                    variant="primary"
+                    size="md"
+                    className="px-6 py-3 rounded-full font-bold text-base bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg hover:from-indigo-700 hover:to-purple-700 transition-all duration-300 ease-in-out transform hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-purple-500 focus:ring-opacity-50"
+                  >
+                    Get Premium
+                  </ApplyButton>
+                </div>
+                <div className="flex justify-center items-center">
+                  <ApplyButton
+                    loanType="Debit Card - Business"
+                    openApplyModal={openApplyModal}
+                    variant="primary"
+                    size="md"
+                    className="px-6 py-3 rounded-full font-bold text-base bg-transparent border-2 border-green-500 text-green-300 hover:bg-green-500 hover:text-white transition-all duration-300 ease-in-out transform hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-green-500 focus:ring-opacity-50"
+                  >
+                    Get Business
+                  </ApplyButton>
+                </div>
+              </>
+            )}
           </div>
         </motion.div>
       </div>
