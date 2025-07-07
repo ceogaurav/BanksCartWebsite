@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ApplyButton from './common/ApplyButton';
 
 // Utility for currency formatting
 const formatCurrency = (value: number) =>
@@ -11,9 +12,10 @@ import FDLiveCharts, { FDChartProps } from './FDLiveCharts';
 
 interface FDCalculatorProps {
   LiveChartsComponent?: React.ComponentType<FDChartProps>;
+  openApplyModal?: (loanType?: string) => void;
 }
 
-const FDCalculator: React.FC<FDCalculatorProps> = ({ LiveChartsComponent }) => {
+const FDCalculator: React.FC<FDCalculatorProps> = ({ LiveChartsComponent, openApplyModal }) => {
   // State
   const [amount, setAmount] = useState(100000);
   const [tenure, setTenure] = useState(1); // in years
@@ -160,7 +162,15 @@ const FDCalculator: React.FC<FDCalculatorProps> = ({ LiveChartsComponent }) => {
         </div>
         {/* Action Buttons */}
         <div className="flex flex-col md:flex-row gap-4 mt-8 justify-center">
-          <button className="bg-gradient-to-r from-[#059669] to-[#10B981] text-white font-poppins text-lg px-8 py-3 rounded-xl font-bold shadow-lg transform transition hover:scale-105 hover:shadow-2xl">Invest This Amount</button>
+          {openApplyModal && (
+            <ApplyButton
+              loanType="Fixed Deposit"
+              openApplyModal={openApplyModal}
+              className="bg-gradient-to-r from-[#059669] to-[#10B981] text-white font-poppins text-lg px-8 py-3 rounded-xl font-bold shadow-lg transform transition hover:scale-105 hover:shadow-2xl"
+            >
+              Invest This Amount
+            </ApplyButton>
+          )}
           <button className="bg-white text-[#1E40AF] font-poppins text-lg px-8 py-3 rounded-xl font-bold shadow-lg border-2 border-[#1E40AF] hover:bg-blue-50 hover:scale-105 transition">Compare Other Options</button>
           <button className="bg-white text-[#059669] font-poppins text-lg px-8 py-3 rounded-xl font-bold shadow-lg border-2 border-[#059669] hover:bg-green-50 hover:scale-105 transition">Share Results</button>
         </div>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ApplyButton from './common/ApplyButton';
 
 const testimonials = [
   {
@@ -31,7 +32,11 @@ const testimonials = [
   // Add more testimonials as needed
 ];
 
-const CustomerTestimonials: React.FC = () => {
+interface CustomerTestimonialsProps {
+  openApplyModal?: (loanType?: string) => void;
+}
+
+const CustomerTestimonials: React.FC<CustomerTestimonialsProps> = ({ openApplyModal }) => {
   const [active, setActive] = useState(0);
 
   return (
@@ -69,6 +74,17 @@ const CustomerTestimonials: React.FC = () => {
                 aria-label={`Go to testimonial ${idx + 1}`}
               />
             ))}
+          </div>
+          <div className="flex justify-center mt-8">
+            {openApplyModal && (
+              <ApplyButton
+                loanType="Fixed Deposit"
+                openApplyModal={openApplyModal}
+                className="bg-gradient-to-r from-[#059669] to-[#10B981] text-white font-poppins text-lg px-8 py-3 rounded-xl font-bold shadow-lg hover:scale-105 transition"
+              >
+                Become a Happy Investor
+              </ApplyButton>
+            )}
           </div>
         </div>
       </div>

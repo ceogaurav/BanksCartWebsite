@@ -12,19 +12,23 @@ import CTASection from '../components/mutualFunds/CTASection';
 import DarkModeToggle from '../components/mutualFunds/DarkModeToggle';
 import LanguageSwitcher from '../components/mutualFunds/LanguageSwitcher';
 
-const MutualFundsPage: React.FC = () => (
+interface MutualFundsPageProps {
+  openApplyModal?: (loanType?: string) => void;
+}
+
+const MutualFundsPage: React.FC<MutualFundsPageProps> = ({ openApplyModal }) => (
   <div className="font-inter bg-[#F8FAFC] dark:bg-[#1F2937] transition-colors duration-500">
     <DarkModeToggle />
     <LanguageSwitcher />
-    <HeroSection />
-    <FeaturedProducts />
-    <InvestmentTools />
-    <FeaturesBenefits />
-    <HowItWorks />
-    <PerformanceDashboard />
-    <EducationalResources />
-    <TestimonialsSection />
-    <CTASection />
+    <HeroSection openApplyModal={openApplyModal} />
+    <FeaturedProducts openApplyModal={openApplyModal} />
+    <InvestmentTools openApplyModal={openApplyModal} />
+    <FeaturesBenefits openApplyModal={openApplyModal} />
+    <HowItWorks openApplyModal={openApplyModal} />
+    <PerformanceDashboard openApplyModal={openApplyModal} />
+    <EducationalResources openApplyModal={openApplyModal} />
+    <TestimonialsSection openApplyModal={openApplyModal} />
+    <CTASection openApplyModal={openApplyModal} />
   </div>
 );
 

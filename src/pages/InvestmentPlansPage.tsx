@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { motion } from 'framer-motion';
@@ -45,10 +45,23 @@ interface Goal {
   color: string;
 }
 
-const InvestmentPlansPage: React.FC = () => {
+interface InvestmentPlansPageProps {
+  openApplyModal?: (loanType?: string) => void;
+}
+
+const InvestmentPlansPage: React.FC<InvestmentPlansPageProps> = ({ openApplyModal }) => {
   useEffect(() => {
     AOS.init();
   }, []);
+
+  // State for the calculator
+  const [investmentType, setInvestmentType] = useState('SIP');
+  const [investmentAmount, setInvestmentAmount] = useState(5000);
+  const [investmentDuration, setInvestmentDuration] = useState(10);
+  const [expectedRate] = useState(12); // 12% annual return
+  const [futureValue, setFutureValue] = useState(0);
+  const [totalInvestment, setTotalInvestment] = useState(0);
+  const [interestEarned, setInterestEarned] = useState(0);
 
   const investmentPlans: InvestmentPlan[] = [
     {
@@ -164,6 +177,31 @@ const InvestmentPlansPage: React.FC = () => {
     }
   ];
 
+  useEffect(() => {
+    const calculateReturns = () => {
+      const P = Number(investmentAmount);
+      const t = Number(investmentDuration);
+      const r = Number(expectedRate) / 100;
+
+      if (investmentType === 'SIP') {
+        const n = t * 12; // number of months
+        const i = r / 12; // monthly interest rate
+        const fv = P * ((Math.pow(1 + i, n) - 1) / i);
+        const totalInv = P * n;
+        setFutureValue(fv);
+        setTotalInvestment(totalInv);
+        setInterestEarned(fv - totalInv);
+      } else { // Lump Sum
+        const fv = P * Math.pow(1 + r, t);
+        setFutureValue(fv);
+        setTotalInvestment(P);
+        setInterestEarned(fv - P);
+      }
+    };
+
+    if (investmentAmount > 0 && investmentDuration > 0) calculateReturns();
+  }, [investmentType, investmentAmount, investmentDuration, expectedRate]);
+
   return (
     <div className="font-inter bg-[#F8FAFC] dark:bg-[#1F2937] transition-colors duration-500">
       {/* Hero Section */}
@@ -177,10 +215,16 @@ const InvestmentPlansPage: React.FC = () => {
               Choose the perfect investment strategy for your financial goals
             </p>
             <div className="flex flex-wrap justify-center gap-4 mt-8">
-              <button className="bg-white text-blue-600 px-8 py-3 rounded-full font-semibold hover:bg-blue-50 transition-colors">
+              <button
+                className="bg-white text-blue-600 px-8 py-3 rounded-full font-semibold hover:bg-blue-50 transition-colors"
+                onClick={() => openApplyModal && openApplyModal('Investment Plan - Start Investing')}
+              >
                 Start Investing
               </button>
-              <button className="bg-blue-50 text-blue-600 px-8 py-3 rounded-full font-semibold hover:bg-blue-100 transition-colors">
+              <button
+                className="bg-blue-50 text-blue-600 px-8 py-3 rounded-full font-semibold hover:bg-blue-100 transition-colors"
+                onClick={() => openApplyModal && openApplyModal('Investment Plan - Learn More')}
+              >
                 Learn More
               </button>
             </div>
@@ -204,32 +248,40 @@ const InvestmentPlansPage: React.FC = () => {
             {investmentPlans.map((plan: InvestmentPlan, index: number) => (
               <div 
                 key={plan.title}
-                className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6 hover:shadow-2xl transition-shadow duration-300"
+                className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6 hover:shadow-2xl transition-shadow duration-300 flex flex-col"
                 data-aos="fade-up"
                 data-aos-delay={index * 100}
               >
-                <div className="flex items-center justify-center w-16 h-16 rounded-full bg-blue-100 dark:bg-blue-900 mb-6">
-                  <span className="text-3xl font-bold text-blue-600">{plan.icon}</span>
+                <div className="flex-grow">
+                  <div className="flex items-center justify-center w-16 h-16 rounded-full bg-blue-100 dark:bg-blue-900 mb-6">
+                    <span className="text-3xl font-bold text-blue-600">{plan.icon}</span>
+                  </div>
+                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                    {plan.title}
+                  </h3>
+                  <p className="text-gray-600 dark:text-gray-300 mb-6">
+                    {plan.description}
+                  </p>
+                  <div className="space-y-2">
+                    {plan.features.map((feature: string, i: number) => (
+                      <div key={i} className="flex items-center text-gray-600 dark:text-gray-300">
+                        <svg className="w-4 h-4 text-blue-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        {feature}
+                      </div>
+                    ))}
+                  </div>
+                  <p className="mt-4 text-sm text-gray-500 dark:text-gray-400">
+                    Best for: {plan.bestFor}
+                  </p>
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-                  {plan.title}
-                </h3>
-                <p className="text-gray-600 dark:text-gray-300 mb-6">
-                  {plan.description}
-                </p>
-                <div className="space-y-2">
-                  {plan.features.map((feature: string, i: number) => (
-                    <div key={i} className="flex items-center text-gray-600 dark:text-gray-300">
-                      <svg className="w-4 h-4 text-blue-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
-                      </svg>
-                      {feature}
-                    </div>
-                  ))}
-                </div>
-                <p className="mt-4 text-sm text-gray-500 dark:text-gray-400">
-                  Best for: {plan.bestFor}
-                </p>
+                <button
+                  className="mt-6 w-full bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+                  onClick={() => openApplyModal && openApplyModal(`Investment Solution - ${plan.title}`)}
+                >
+                  Choose Plan
+                </button>
               </div>
             ))}
           </div>
@@ -245,7 +297,10 @@ const InvestmentPlansPage: React.FC = () => {
           <p className="text-xl text-blue-100 mb-8">
             Take the first step towards financial freedom today
           </p>
-          <button className="bg-white text-blue-600 px-8 py-3 rounded-full font-semibold hover:bg-blue-50 transition-colors">
+          <button
+            className="bg-white text-blue-600 px-8 py-3 rounded-full font-semibold hover:bg-blue-50 transition-colors"
+            onClick={() => openApplyModal && openApplyModal('Investment Plan - Get Started')}
+          >
             Get Started Now
           </button>
         </div>
@@ -267,46 +322,75 @@ const InvestmentPlansPage: React.FC = () => {
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       Investment Type
                     </label>
-                    <select className="w-full p-2 border rounded-md">
-                      <option>SIP</option>
-                      <option>Lump Sum</option>
+                    <select
+                      className="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                      value={investmentType}
+                      onChange={(e) => setInvestmentType(e.target.value)}
+                    >
+                      <option value="SIP">SIP (Monthly)</option>
+                      <option value="Lump Sum">Lump Sum (One-time)</option>
                     </select>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Amount (₹)
+                      {investmentType === 'SIP' ? 'Monthly Investment (₹)' : 'Total Investment (₹)'}
                     </label>
                     <input
                       type="number"
-                      className="w-full p-2 border rounded-md"
-                      placeholder="Enter amount"
+                      className="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                      value={investmentAmount}
+                      onChange={(e) => setInvestmentAmount(Number(e.target.value))}
+                      placeholder="e.g., 5000"
                     />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       Investment Duration (years)
                     </label>
-                    <input
-                      type="range"
-                      min="1"
-                      max="30"
-                      className="w-full"
-                    />
+                    <div className="flex items-center gap-4">
+                      <input
+                        type="range"
+                        min="1"
+                        max="30"
+                        value={investmentDuration}
+                        onChange={(e) => setInvestmentDuration(Number(e.target.value))}
+                        className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+                      />
+                      <span className="font-semibold text-blue-600">{investmentDuration} Yrs</span>
+                    </div>
                   </div>
                 </div>
               </div>
               <div>
                 <h3 className="text-xl font-bold mb-4">Expected Returns</h3>
                 <div className="space-y-4">
-                  <div className="bg-blue-50 p-4 rounded-lg">
-                    <h4 className="text-lg font-semibold mb-2">Projected Returns</h4>
-                    <p className="text-2xl font-bold text-blue-600">₹1,50,000</p>
-                    <p className="text-sm text-gray-500">Based on 12% annual returns</p>
+                  <div className="bg-blue-50 p-6 rounded-lg text-center">
+                    <h4 className="text-lg font-semibold mb-2 text-gray-600">Maturity Value</h4>
+                    <p className="text-4xl font-bold text-blue-600">
+                      ₹{futureValue.toLocaleString('en-IN', { maximumFractionDigits: 0 })}
+                    </p>
+                    <p className="text-sm text-gray-500 mt-1">Based on {expectedRate}% annual returns</p>
                   </div>
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <h4 className="text-lg font-semibold mb-2">Monthly Returns</h4>
-                    <p className="text-xl font-bold text-green-600">₹1,250</p>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="bg-gray-50 p-4 rounded-lg text-center">
+                      <h4 className="text-md font-semibold mb-1 text-gray-600">Total Investment</h4>
+                      <p className="text-xl font-bold text-gray-800">
+                        ₹{totalInvestment.toLocaleString('en-IN', { maximumFractionDigits: 0 })}
+                      </p>
+                    </div>
+                    <div className="bg-green-50 p-4 rounded-lg text-center">
+                      <h4 className="text-md font-semibold mb-1 text-green-700">Interest Earned</h4>
+                      <p className="text-xl font-bold text-green-600">
+                        ₹{interestEarned.toLocaleString('en-IN', { maximumFractionDigits: 0 })}
+                      </p>
+                    </div>
                   </div>
+                  <button
+                    className="w-full bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors mt-4"
+                    onClick={() => openApplyModal && openApplyModal(`Investment Plan - Calculator`)}
+                  >
+                    Start This Investment
+                  </button>
                 </div>
               </div>
             </div>
@@ -338,7 +422,7 @@ const InvestmentPlansPage: React.FC = () => {
                 viewport={{ once: true }}
                 className="relative"
               >
-                <GoalCard goal={goal} />
+                <GoalCard goal={goal} openApplyModal={openApplyModal} />
               </motion.div>
             ))}
           </div>

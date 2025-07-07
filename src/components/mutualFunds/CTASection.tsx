@@ -3,7 +3,11 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { gsap } from 'gsap';
 
-const CTASection: React.FC = () => {
+interface CTASectionProps {
+  openApplyModal?: (loanType?: string) => void;
+}
+
+const CTASection: React.FC<CTASectionProps> = ({ openApplyModal }) => {
   const ctaRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     AOS.init({ once: true, duration: 800 });
@@ -25,7 +29,12 @@ const CTASection: React.FC = () => {
           <li>Expert-curated fund recommendations</li>
           <li>Real-time portfolio tracking</li>
         </ul>
-        <button className="mt-6 bg-white text-[#1E40AF] font-poppins text-lg px-8 py-3 rounded-xl font-bold shadow-lg border-2 border-white hover:bg-blue-50 hover:scale-105 transition">Start Investing Today</button>
+        <button
+          className="mt-6 bg-white text-[#1E40AF] font-poppins text-lg px-8 py-3 rounded-xl font-bold shadow-lg border-2 border-white hover:bg-blue-50 hover:scale-105 transition"
+          onClick={() => openApplyModal && openApplyModal('Mutual Fund - Final CTA')}
+        >
+          Start Investing Today
+        </button>
       </div>
     </section>
   );

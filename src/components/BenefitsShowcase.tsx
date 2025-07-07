@@ -1,4 +1,5 @@
 import React from 'react';
+import ApplyButton from './common/ApplyButton';
 
 const benefits = [
   {
@@ -39,7 +40,11 @@ const benefits = [
   },
 ];
 
-const BenefitsShowcase: React.FC = () => {
+interface BenefitsShowcaseProps {
+  openApplyModal?: (loanType?: string) => void;
+}
+
+const BenefitsShowcase: React.FC<BenefitsShowcaseProps> = ({ openApplyModal }) => {
   return (
     <section id="fd-benefits" className="w-full bg-white py-16 px-2 md:px-0 flex flex-col items-center">
       <div className="max-w-6xl w-full flex flex-col gap-8 animate-fadeInUp">
@@ -55,6 +60,17 @@ const BenefitsShowcase: React.FC = () => {
               <p className="text-base font-poppins text-center">{b.text}</p>
             </div>
           ))}
+        </div>
+        <div className="flex justify-center mt-8">
+          {openApplyModal && (
+            <ApplyButton
+              loanType="Fixed Deposit"
+              openApplyModal={openApplyModal}
+              className="bg-gradient-to-r from-[#059669] to-[#10B981] text-white font-poppins text-lg px-8 py-3 rounded-xl font-bold shadow-lg hover:scale-105 transition"
+            >
+              Start Investing Now
+            </ApplyButton>
+          )}
         </div>
       </div>
     </section>

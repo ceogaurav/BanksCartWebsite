@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import ApplyButton from '../components/common/ApplyButton';
 
 // --- Used Car Loan Page ---
-const UsedCarLoanPage = ({ openApplyModal }) => {
+const UsedCarLoanPage = ({ openApplyModal, openEligibilityModal, openCibilModal }) => {
   const [loanAmount, setLoanAmount] = useState(500000);
   const [interestRate, setInterestRate] = useState(12.0);
   const [tenure, setTenure] = useState(5);
@@ -70,35 +70,16 @@ const UsedCarLoanPage = ({ openApplyModal }) => {
               >Get Instant Approval</ApplyButton>
             )}
           </div>
-          <div className="bg-white rounded-lg p-8 shadow-xl">
-            <h3 className="text-2xl font-semibold text-gray-800 mb-6">Check Your Eligibility</h3>
-            <form className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Monthly Income</label>
-                <select className="form-select w-full border rounded px-3 py-2">
-                  <option>₹25,000 - ₹50,000</option>
-                  <option>₹50,000 - ₹1,00,000</option>
-                  <option>Above ₹1,00,000</option>
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Employment Type</label>
-                <select className="form-select w-full border rounded px-3 py-2">
-                  <option>Salaried</option>
-                  <option>Self-employed</option>
-                  <option>Business Owner</option>
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Loan Amount Required</label>
-                <input type="text" placeholder="₹5,00,000" className="form-input w-full border rounded px-3 py-2" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Mobile Number</label>
-                <input type="tel" placeholder="+91 98765 43210" className="form-input w-full border rounded px-3 py-2" />
-              </div>
-              <button type="submit" className="bg-[#1e3a8a] text-white w-full py-3 rounded-full font-bold">Check Eligibility Now</button>
-            </form>
+          <div className="bg-white rounded-lg p-8 shadow-xl text-center">
+            <h3 className="text-2xl font-semibold text-gray-800 mb-4">Check Your Loan Eligibility</h3>
+            <p className="text-gray-600 mb-6">Get a quick assessment of your eligibility for a used car loan in just a few steps.</p>
+            <button
+              onClick={() => openEligibilityModal('Used Car Loan')}
+              className="bg-[#1e3a8a] text-white w-full py-3 rounded-full font-bold hover:bg-blue-800 transition-colors"
+            >
+              Check Eligibility Now
+            </button>
+            <p className="text-xs text-gray-500 mt-3">Checking eligibility will not impact your credit score.</p>
           </div>
         </div>
       </section>
@@ -260,7 +241,9 @@ const UsedCarLoanPage = ({ openApplyModal }) => {
             </table>
           </div>
           <div className="text-center mt-8">
-            <button className="bg-[#1e3a8a] text-white px-8 py-4 rounded-full font-bold text-xl shadow-lg hover:bg-blue-800 transition">Check Your Credit Score for FREE</button>
+            {openCibilModal && (
+              <button onClick={openCibilModal} className="bg-[#1e3a8a] text-white px-8 py-4 rounded-full font-bold text-xl shadow-lg hover:bg-blue-800 transition">Check Your Credit Score for FREE</button>
+            )}
           </div>
         </div>
       </section>
@@ -311,7 +294,12 @@ const UsedCarLoanPage = ({ openApplyModal }) => {
             </div>
           </div>
           <div className="text-center mt-12">
-            <button className="bg-[#1e3a8a] text-white px-8 py-4 rounded-full font-bold text-xl shadow-lg hover:bg-blue-800 transition">Check Your Eligibility</button>
+            <button
+              onClick={() => openEligibilityModal('Used Car Loan')}
+              className="bg-[#1e3a8a] text-white px-8 py-4 rounded-full font-bold text-xl shadow-lg hover:bg-blue-800 transition"
+            >
+              Check Your Eligibility
+            </button>
           </div>
         </div>
       </section>

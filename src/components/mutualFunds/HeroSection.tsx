@@ -4,8 +4,11 @@ import 'aos/dist/aos.css';
 import { gsap } from 'gsap';
 import Particles from 'react-tsparticles';
 
+interface HeroSectionProps {
+  openApplyModal?: (loanType?: string) => void;
+}
 
-const HeroSection: React.FC = () => {
+const HeroSection: React.FC<HeroSectionProps> = ({ openApplyModal }) => {
   const headlineRef = useRef<HTMLHeadingElement>(null);
   useEffect(() => {
     AOS.init({ once: true, duration: 1000 });
@@ -47,8 +50,18 @@ const HeroSection: React.FC = () => {
           <span className="bg-white/20 rounded-full px-5 py-2 text-lg font-semibold border border-white/30">0% Commission</span>
         </div>
         <div className="flex gap-4 mt-6" data-aos="fade-up" data-aos-delay="600">
-          <button className="bg-gradient-to-r from-[#059669] to-[#10B981] text-white font-poppins text-lg px-8 py-3 rounded-xl font-bold shadow-lg transform transition hover:scale-105 hover:shadow-2xl animate-pulse">Start Investing</button>
-          <button className="bg-white text-[#1E40AF] font-poppins text-lg px-8 py-3 rounded-xl font-bold shadow-lg border-2 border-[#1E40AF] hover:bg-blue-50 hover:scale-105 transition">Explore Funds</button>
+          <button
+            className="bg-gradient-to-r from-[#059669] to-[#10B981] text-white font-poppins text-lg px-8 py-3 rounded-xl font-bold shadow-lg transform transition hover:scale-105 hover:shadow-2xl animate-pulse"
+            onClick={() => openApplyModal && openApplyModal('Mutual Fund')}
+          >
+            Start Investing
+          </button>
+          <button
+            className="bg-white text-[#1E40AF] font-poppins text-lg px-8 py-3 rounded-xl font-bold shadow-lg border-2 border-[#1E40AF] hover:bg-blue-50 hover:scale-105 transition"
+            onClick={() => openApplyModal && openApplyModal('Mutual Fund - Explore')}
+          >
+            Explore Funds
+          </button>
         </div>
         {/* Hero Illustration Placeholder */}
         <div className="mt-8 w-full flex justify-center" data-aos="fade-up" data-aos-delay="800">

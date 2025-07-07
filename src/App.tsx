@@ -42,6 +42,8 @@ import PlotConstructionLoan from './pages/PlotConstructionLoan';
 import TermInsurancePage from './pages/TermInsurancePage';
 import TwoWheelerLoanPage from './pages/TwoWheelerLoanPage';
 import UsedCarLoanPage from './pages/UsedCarLoanPage';
+import CreditScore from './pages/creditscore'; // Import the new page component
+
 
 // Import common components
 import Header from './components/common/Header';
@@ -147,7 +149,7 @@ const App: React.FC = () => {
         <main className="flex-grow">
           {/* Routes component renders the first matching Route */}
           <Routes>
-            <Route path="/" element={<Home openApplyModal={openApplyModal} />} />
+            <Route path="/" element={<Home openApplyModal={openApplyModal} openEligibilityModal={openEligibilityModal} openCibilModal={openCibilModal} />} />
             <Route path="/resources/loan-rates" element={<LoanRates />} />
             <Route path="/eligibility" element={<Eligibility />} />
             <Route path="/resources/ifsc-finder" element={<IFSCFinder />} />
@@ -165,14 +167,14 @@ const App: React.FC = () => {
 
             {/* Loan product specific routes */}
             <Route path="/plot-construction-loan" element={<PlotConstructionLoan openApplyModal={openApplyModal} />} />
-            <Route path="/home-loan-compare" element={<HomeLoanCompare />} />
+            <Route path="/home-loan-compare" element={<HomeLoanCompare openApplyModal={openApplyModal} />} />
             <Route path="/loans" element={<LoansOverviewPage />} />
             <Route path="/loans/home" element={<HomeLoanPage openApplyModal={openApplyModal} />} />
-            <Route path="/loans/personal" element={<PersonalLoanPage openApplyModal={openApplyModal} />} />
+            <Route path="/loans/personal" element={<PersonalLoanPage openApplyModal={openApplyModal} openEligibilityModal={openEligibilityModal} />} />
             <Route path="/loans/business" element={<BusinessLoanPage openApplyModal={openApplyModal} />} />
             <Route path="/loans/car" element={<CarLoanPage openApplyModal={openApplyModal} />} />
-            <Route path="/loans/used-car" element={<UsedCarLoanPage openApplyModal={openApplyModal} />} />
-            <Route path="/loans/two-wheeler" element={<TwoWheelerLoanPage openApplyModal={openApplyModal} />} />
+            <Route path="/loans/used-car" element={<UsedCarLoanPage openApplyModal={openApplyModal} openEligibilityModal={openEligibilityModal} openCibilModal={openCibilModal} />} />
+            <Route path="/loans/two-wheeler" element={<TwoWheelerLoanPage openApplyModal={openApplyModal} openCibilModal={openCibilModal} />} />
             <Route path="/loans/education" element={<EducationLoanPage openApplyModal={openApplyModal} />} />
 
             {/* Investment product specific routes */}
@@ -183,6 +185,7 @@ const App: React.FC = () => {
             {/* Card product specific routes */}
             <Route path="/cards/credit" element={<CreditCardsPage openApplyModal={openApplyModal} />} />
             <Route path="/cards/debit" element={<DebitCardsPage openApplyModal={openApplyModal} />} />
+            <Route path="/credit-score" element={<CreditScore />} /> {/* NEW: Add this route */}
 
             {/* Insurance product specific routes */}
             <Route path="/insurance/health" element={<HealthInsurancePage />} />
@@ -191,9 +194,9 @@ const App: React.FC = () => {
             <Route path="/resources/gold-rates" element={<GoldLoansPage openApplyModal={openApplyModal} />} />
             <Route path="/resources/pincodes" element={<PincodesPage />} />
             <Route path="/become-partner" element={<BecomePartnerPage openApplyModal={openApplyModal} openPartnerModal={openPartnerModal} />} />
-            <Route path="/resources/ppf" element={<PPFPage />} />
+            <Route path="/resources/ppf" element={<PPFPage openApplyModal={openApplyModal} />} />
             <Route path="/resources/income-tax" element={<IncomeTaxPage />} />
-            <Route path="/bank-details" element={<BankDetails />} />
+            <Route path="/bank-details/:bankId" element={<BankDetails openEligibilityModal={openEligibilityModal} />} />
 
             {/* Catch-all route for any undefined paths (404 Not Found) */}
             <Route path="*" element={<NotFound />} />

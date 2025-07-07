@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
 import { Home, Calculator, TrendingUp, MapPin, Building, CheckCircle, AlertCircle, Clock } from 'lucide-react';
 import { formatCurrency } from '../utils/calculations';
+import ApplyButton from '../components/common/ApplyButton';
 
-const PlotConstructionLoan: React.FC = () => {
+interface PlotConstructionLoanProps {
+  openApplyModal?: (loanType?: string) => void;
+}
+
+const PlotConstructionLoan: React.FC<PlotConstructionLoanProps> = ({ openApplyModal }) => {
   const [activeTab, setActiveTab] = useState('overview');
 
   const tabs = [
@@ -281,9 +286,15 @@ const PlotConstructionLoan: React.FC = () => {
                 </div>
 
                 <div className="mt-6 flex flex-col sm:flex-row gap-3">
-                  <button className="flex-1 bg-primary-600 text-white py-2 px-4 rounded-lg font-semibold hover:bg-primary-700 transition-colors">
-                    Apply Now
-                  </button>
+                  {openApplyModal && (
+                    <ApplyButton
+                      loanType={`Plot & Construction Loan - ${bank.bank}`}
+                      openApplyModal={openApplyModal}
+                      className="flex-1 bg-primary-600 text-white py-2 px-4 rounded-lg font-semibold hover:bg-primary-700 transition-colors"
+                    >
+                      Apply Now
+                    </ApplyButton>
+                  )}
                   <button className="flex-1 border border-primary-600 text-primary-600 py-2 px-4 rounded-lg font-semibold hover:bg-primary-50 transition-colors">
                     View Details
                   </button>

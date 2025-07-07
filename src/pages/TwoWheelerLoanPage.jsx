@@ -5,7 +5,7 @@ import ApplyButton from '../components/common/ApplyButton';
 // import 'aos/dist/aos.css';
 
 // --- Two Wheeler Loan Page for bankscart ---
-function TwoWheelerLoanPage({ openApplyModal }) {
+function TwoWheelerLoanPage({ openApplyModal, openCibilModal }) {
   // useEffect(() => { AOS.init({ duration: 800 }); }, []); // Uncomment if using AOS
   return (
     <div className="min-h-screen bg-[#f8f9fa] font-['Open Sans','Roboto','Lato',sans-serif] text-[#343A40]">
@@ -20,9 +20,11 @@ function TwoWheelerLoanPage({ openApplyModal }) {
             <p className="text-lg text-[#374151] mb-6">A Two-Wheeler Loan Helps You Buy Motorcycles or Scooters with Easy EMIs. While Some Banks Offer Full Financing, Others Provide Partial Coverage of the Vehicle's Road Price.</p>
             <div className="bg-[#FFC107] text-[#2C3E50] font-semibold px-4 py-2 rounded mb-6 inline-block">Updated On - 01 Jul 2025</div>
             <div className="flex items-center space-x-4 mt-4">
-              <button className="bg-[#ff4444] text-white rounded-full px-6 py-3 font-bold text-lg shadow-lg hover:bg-red-600 transition flex items-center">
-                FREE Credit Score <span className="ml-2">Check Now &gt;&gt;</span>
-              </button>
+              {openCibilModal && (
+                <button onClick={openCibilModal} className="bg-[#ff4444] text-white rounded-full px-6 py-3 font-bold text-lg shadow-lg hover:bg-red-600 transition flex items-center">
+                  FREE Credit Score <span className="ml-2">Check Now &gt;&gt;</span>
+                </button>
+              )}
             </div>
           </div>
           <div className="flex justify-center items-center">

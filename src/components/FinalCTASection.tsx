@@ -1,4 +1,5 @@
 import React from 'react';
+import ApplyButton from './common/ApplyButton';
 
 // Define the CSS styles for the animation.
 // In a real application, these would typically be in a separate CSS file
@@ -20,7 +21,11 @@ const styles = `
   }
 `;
 
-const FinalCTASection: React.FC = () => (
+interface FinalCTASectionProps {
+  openApplyModal?: (loanType?: string) => void;
+}
+
+const FinalCTASection: React.FC<FinalCTASectionProps> = ({ openApplyModal }) => (
   <>
     {/* Inject the styles directly into the component for demonstration.
         In a production environment, consider external CSS files or CSS-in-JS. */}
@@ -47,8 +52,24 @@ const FinalCTASection: React.FC = () => (
 
         {/* Call to action buttons */}
         <div className="flex flex-col md:flex-row gap-6 mt-6 justify-center">
-          <button className="bg-gradient-to-r from-[#059669] to-[#10B981] text-white font-poppins text-2xl px-10 py-5 rounded-2xl font-black shadow-xl hover:scale-110 transition-all border-2 border-white/30">Calculate & Invest Now</button>
-          <button className="bg-white text-[#1E40AF] font-poppins text-xl px-8 py-4 rounded-2xl font-bold shadow-lg border-2 border-[#1E40AF] hover:bg-blue-50 hover:scale-105 transition">Talk to Expert</button>
+          {openApplyModal && (
+            <ApplyButton
+              loanType="Fixed Deposit"
+              openApplyModal={openApplyModal}
+              className="bg-gradient-to-r from-[#059669] to-[#10B981] text-white font-poppins text-2xl px-10 py-5 rounded-2xl font-black shadow-xl hover:scale-110 transition-all border-2 border-white/30"
+            >
+              Calculate & Invest Now
+            </ApplyButton>
+          )}
+          {openApplyModal && (
+            <ApplyButton
+              loanType="Fixed Deposit - Expert Advice"
+              openApplyModal={openApplyModal}
+              className="bg-white text-[#1E40AF] font-poppins text-xl px-8 py-4 rounded-2xl font-bold shadow-lg border-2 border-[#1E40AF] hover:bg-blue-50 hover:scale-105 transition"
+            >
+              Talk to Expert
+            </ApplyButton>
+          )}
           <button className="bg-gradient-to-r from-[#D97706] to-[#F59E0B] text-white font-poppins text-xl px-8 py-4 rounded-2xl font-bold shadow-lg border-2 border-[#F59E0B] hover:scale-105 transition">Download App</button>
         </div>
 

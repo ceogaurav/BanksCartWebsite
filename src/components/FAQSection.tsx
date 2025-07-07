@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ApplyButton from './common/ApplyButton';
 
 const faqData = [
   {
@@ -39,7 +40,11 @@ const faqData = [
   },
 ];
 
-const FAQSection: React.FC = () => {
+interface FAQSectionProps {
+  openApplyModal?: (loanType?: string) => void;
+}
+
+const FAQSection: React.FC<FAQSectionProps> = ({ openApplyModal }) => {
   const [open, setOpen] = useState<{cat: number, q: number} | null>(null);
   const [search, setSearch] = useState('');
 
@@ -90,6 +95,17 @@ const FAQSection: React.FC = () => {
               </div>
             </div>
           ))}
+        </div>
+        <div className="flex justify-center mt-8">
+          {openApplyModal && (
+            <ApplyButton
+              loanType="Fixed Deposit - FAQ"
+              openApplyModal={openApplyModal}
+              className="bg-gradient-to-r from-[#1E40AF] to-[#3B82F6] text-white font-poppins text-lg px-8 py-3 rounded-xl font-bold shadow-lg hover:scale-105 transition"
+            >
+              Still have questions? Talk to an expert
+            </ApplyButton>
+          )}
         </div>
       </div>
     </section>

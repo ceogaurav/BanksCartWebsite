@@ -13,9 +13,9 @@ const teamAvatars = [
   "/images/avatar5.jpg",
 ];
 const featuredCustomer = {
-  name: "Tushar Agarwal",
+  name: "Tushar Sahani",
   photo: "/images/tushar.jpg",
-  twitter: "@tusharagarwal",
+  twitter: "@tushaarshna",
   quote: "Bankscart made my home loan journey seamless and stress-free!",
 };
 const guides = [
@@ -157,7 +157,7 @@ const FAQAccordion = ({ faqs }) => {
 };
 
 // Loan Calculator
-const LoanCalculator = () => {
+const LoanCalculator = ({ openApplyModal }) => {
   const [amount, setAmount] = useState(5000000);
   const [years, setYears] = useState(20);
   const [rate, setRate] = useState(8.5);
@@ -342,6 +342,7 @@ const LoanCalculator = () => {
               Reset
             </button>
             <button
+              onClick={() => openApplyModal('Home Loan - From Calculator')}
               className="px-6 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-blue-400 text-white font-semibold shadow hover:from-blue-700 hover:to-blue-500 transition flex items-center gap-2"
               type="button"
             >
@@ -381,7 +382,7 @@ const LeadForm = () => {
   );
 };
 
-const HomeLoanPage = () => {
+const HomeLoanPage = ({ openApplyModal }) => {
   const [showAllBanks, setShowAllBanks] = useState(false);
   const [bankFilter, setBankFilter] = useState("");
   const visibleBanks = showAllBanks ? bankLogos : bankLogos.slice(0, 8);
@@ -446,8 +447,8 @@ const HomeLoanPage = () => {
               Get <span className="font-bold text-white">instant home loan offers</span> from 20+ banks. Compare, choose & apply online. No impact on credit score.
             </motion.p>
             {/* CTA Button */}
-            <motion.a
-              href="#apply-form"
+            <motion.button
+              onClick={() => openApplyModal('Home Loan')}
               className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-400 hover:from-blue-700 hover:to-blue-500 text-white px-8 py-3 rounded-xl font-bold shadow-xl text-lg mb-8 transition-all focus:outline-none focus:ring-4 focus:ring-blue-300/50"
               whileHover={{ scale: 1.06 }}
               whileTap={{ scale: 0.97 }}
@@ -457,7 +458,7 @@ const HomeLoanPage = () => {
             >
               Get Started
               <ArrowRight className="h-5 w-5 ml-1" />
-            </motion.a>
+            </motion.button>
             <div className="flex gap-8 mb-6">
               <AnimatedCounter value={10000} label="Happy Customers" />
               <div className="flex flex-col items-center">
@@ -673,7 +674,7 @@ const HomeLoanPage = () => {
       <section className="py-16 bg-white w-full">
         <h2 className="text-3xl font-bold text-center mb-2">OUR OFFERINGS</h2>
         <div className="text-center text-gray-500 mb-8">What are you looking for?</div>
-        <LoanCalculator />
+        <LoanCalculator openApplyModal={openApplyModal} />
       </section>
 
       {/* Bank Partners Section */}
@@ -707,7 +708,11 @@ const HomeLoanPage = () => {
         </div>
         <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
           {partnerBankOffers.map((bank, i) => (
-            <motion.div whileHover={{ scale: 1.02 }} key={i} className="bg-white rounded-xl shadow-lg p-6 flex flex-col md:flex-row items-center justify-between border border-gray-200 transition-all group hover:shadow-2xl hover:border-blue-600 relative cursor-pointer">
+            <motion.div
+              whileHover={{ scale: 1.02 }} key={i}
+              className="bg-white rounded-xl shadow-lg p-6 flex flex-col md:flex-row items-center justify-between border border-gray-200 transition-all group hover:shadow-2xl hover:border-blue-600 relative cursor-pointer"
+              onClick={() => openApplyModal(`Home Loan - ${bank.name}`)}
+            >
               <div className="flex-1 flex flex-col md:flex-row items-center gap-4">
                 <Home className="text-blue-600" size={32} />
                 <span className="text-xl font-bold text-navy-900">{bank.name}</span>

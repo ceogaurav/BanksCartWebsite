@@ -11,7 +11,11 @@ const tools = [
   { name: 'Retirement Planner', desc: 'Plan for your golden years', color: 'from-gray-100 to-gray-200', icon: '👴' },
 ];
 
-const InvestmentTools: React.FC = () => {
+interface InvestmentToolsProps {
+  openApplyModal?: (loanType?: string) => void;
+}
+
+const InvestmentTools: React.FC<InvestmentToolsProps> = ({ openApplyModal }) => {
   useEffect(() => {
     AOS.init({ once: true, duration: 800 });
   }, []);
@@ -30,7 +34,12 @@ const InvestmentTools: React.FC = () => {
               <div className={`w-12 h-12 rounded-full flex items-center justify-center text-2xl mb-2 bg-gradient-to-tr ${tool.color}`}>{tool.icon}</div>
               <span className="font-bold text-lg text-blue-800">{tool.name}</span>
               <span className="text-gray-600">{tool.desc}</span>
-              <button className="bg-blue-700 text-white px-4 py-2 rounded-lg font-bold hover:bg-blue-800 transition">Try Now</button>
+              <button
+                className="bg-blue-700 text-white px-4 py-2 rounded-lg font-bold hover:bg-blue-800 transition"
+                onClick={() => openApplyModal && openApplyModal(`Investment Tool - ${tool.name}`)}
+              >
+                Try Now
+              </button>
             </div>
           ))}
         </div>

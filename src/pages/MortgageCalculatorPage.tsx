@@ -1,7 +1,11 @@
 import React from 'react';
 // import MortgageCalculator from '../components/calculators/MortgageCalculator'; // Uncomment if you have this component
 
-const MortgageCalculatorPage: React.FC = () => {
+interface MortgageCalculatorPageProps {
+  openApplyModal?: (loanType?: string) => void;
+}
+
+const MortgageCalculatorPage: React.FC<MortgageCalculatorPageProps> = ({ openApplyModal }) => {
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -98,6 +102,20 @@ const MortgageCalculatorPage: React.FC = () => {
             <p>
               Our Mortgage Calculator is an essential tool for anyone considering buying a home or refinancing an existing mortgage. By understanding your monthly payments, total interest, and overall loan cost, you can make smarter financial decisions and achieve your homeownership goals with confidence.
             </p>
+          </section>
+          <section>
+            <h2 className="text-2xl font-semibold mb-2">Ready to Apply?</h2>
+            <p className="mb-4">
+              Now that you have an estimate, take the next step towards owning your home. Apply for a mortgage loan through BanksCart and get competitive offers from top lenders.
+            </p>
+            {openApplyModal && (
+              <button
+                onClick={() => openApplyModal('Mortgage Loan')}
+                className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-all text-lg"
+              >
+                Apply for a Mortgage Loan
+              </button>
+            )}
           </section>
           {/* Add more detailed sections, case studies, and expert tips to reach 3200+ words as needed */}
         </div>

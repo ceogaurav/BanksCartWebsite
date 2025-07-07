@@ -12,11 +12,8 @@ import TaxBenefitsSection from '../components/TaxBenefitsSection';
 import FAQSection from '../components/FAQSection';
 import FinalCTASection from '../components/FinalCTASection';
 
-interface FixedDepositPageProps {
-  openApplyModal?: (loanType?: string) => void;
-}
 // Placeholder for all sections, to be filled in next steps
-const FixedDepositPage: React.FC<FixedDepositPageProps> = ({ openApplyModal }) => {
+const FixedDepositPage: React.FC<{ openApplyModal?: (loanType?: string) => void }> = ({ openApplyModal }) => {
   return (
     <main className="bg-light-blue min-h-screen w-full font-inter">
       {/* 1. Hero Section */}

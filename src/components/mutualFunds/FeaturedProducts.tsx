@@ -79,7 +79,11 @@ const fundData = [
   },
 ];
 
-const FeaturedProducts: React.FC = () => {
+interface FeaturedProductsProps {
+  openApplyModal?: (loanType?: string) => void;
+}
+
+const FeaturedProducts: React.FC<FeaturedProductsProps> = ({ openApplyModal }) => {
   useEffect(() => {
     AOS.init({ once: true, duration: 800 });
 
@@ -136,7 +140,12 @@ const FeaturedProducts: React.FC = () => {
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-sm text-gray-700">Min Investment: {fund.minInvestment}</span>
-                <button className="bg-green-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-green-700 transition">Invest Now</button>
+                <button
+                  className="bg-green-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-green-700 transition"
+                  onClick={() => openApplyModal && openApplyModal(`Mutual Fund - ${fund.name}`)}
+                >
+                  Invest Now
+                </button>
               </div>
             </div>
           ))}

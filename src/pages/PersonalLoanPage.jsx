@@ -16,14 +16,14 @@ import InfoSections from "../components/loans/InfoSections";
 import FaqSection from "../components/loans/FaqSection";
 
 
-function PersonalLoanPage() {
+function PersonalLoanPage({ openApplyModal }) {
   return (
     <div className="min-h-screen bg-gradient-to-br from-white/60 to-blue-50/80">
       <Breadcrumb path={["Home", "Personal Loan"]} />
       <HeroSection />
       <div className="container mx-auto px-4 md:px-12">
         <EmiCalculator />
-        <LoanOffersGrid />
+        <LoanOffersGrid openApplyModal={openApplyModal} />
         <WhyChooseUs />
         <AuthorReviewerSection />
         <EligibilityTable />
@@ -32,7 +32,7 @@ function PersonalLoanPage() {
         <ApplicationSteps />
         <LoanTypesBenefits />
         <TrustIndicators />
-        <PreApprovedOffersTable />
+        <PreApprovedOffersTable openApplyModal={openApplyModal} />
         <InfoSections />
         <FaqSection />
       </div>

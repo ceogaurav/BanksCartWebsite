@@ -118,7 +118,7 @@ const ResultBox = ({ emi, amount, interest, fee }: any) => (
   </motion.div>
 );
 
-const AmortizationTable = ({ schedule }: any) => (
+const AmortizationTable = ({ schedule, openApplyModal }: { schedule: any[], openApplyModal?: (loanType?: string) => void }) => (
   <div className="mt-8">
     <div className="bg-[#4a90e2] text-white rounded-t-lg px-4 py-3 font-bold text-lg">Your Amortization Details (Yearly)</div>
     <div className="bg-white rounded-b-lg overflow-x-auto">
@@ -143,19 +143,40 @@ const AmortizationTable = ({ schedule }: any) => (
             </tr>
           ))}
         </tbody>
+        <tfoot>
+          <tr className="bg-gray-100">
+            <td colSpan={5} className="text-center py-4">
+              {openApplyModal && (
+                <button
+                  onClick={() => openApplyModal('Home Loan')}
+                  className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-all text-lg"
+                >
+                  Apply for this Home Loan
+                </button>
+              )}
+            </td>
+          </tr>
+        </tfoot>
       </table>
     </div>
   </div>
 );
 
-const CreditScoreButton = () => (
-  <button className="bg-[#ff6b6b] hover:bg-[#ff5252] text-white font-bold py-3 px-6 rounded-full shadow-lg transition-all text-lg flex flex-col items-center mb-6">
+const CreditScoreButton = ({ onClick }: { onClick?: () => void }) => (
+  <button
+    onClick={onClick}
+    className="bg-[#ff6b6b] hover:bg-[#ff5252] text-white font-bold py-3 px-6 rounded-full shadow-lg transition-all text-lg flex flex-col items-center mb-6"
+  >
     FREE Credit Score
     <span className="text-xs font-normal">Check Now</span>
   </button>
 );
 
-const HomeLoanEMICalculator: React.FC = () => {
+interface HomeLoanEMICalculatorProps {
+  openApplyModal?: (loanType?: string) => void;
+}
+
+const HomeLoanEMICalculator: React.FC<HomeLoanEMICalculatorProps> = ({ openApplyModal }) => {
   const [amount, setAmount] = useState(SLIDER_CONFIG.amount.default);
   const [rate, setRate] = useState(SLIDER_CONFIG.rate.default);
   const [tenure, setTenure] = useState(SLIDER_CONFIG.tenure.default);
@@ -176,16 +197,16 @@ const HomeLoanEMICalculator: React.FC = () => {
             <Slider label="Interest Rate" value={rate} setValue={setRate} min={SLIDER_CONFIG.rate.min} max={SLIDER_CONFIG.rate.max} step={SLIDER_CONFIG.rate.step} unit="%" format={v => v + '%'} color="#4a90e2" />
             <Slider label="Loan Tenure" value={tenure} setValue={setTenure} min={SLIDER_CONFIG.tenure.min} max={SLIDER_CONFIG.tenure.max} step={SLIDER_CONFIG.tenure.step} unit="Years" format={v => v + ' Yr'} color="#4a90e2" />
             <Slider label="Processing Fee" value={fee} setValue={setFee} min={SLIDER_CONFIG.fee.min} max={SLIDER_CONFIG.fee.max} step={SLIDER_CONFIG.fee.step} unit="%" format={v => v + '%'} color="#4a90e2" />
-            <div className="mt-6"><CreditScoreButton /></div>
+            <div className="mt-6"><CreditScoreButton onClick={() => openApplyModal && openApplyModal('Credit Score Check')} /></div>
           </div>
           {/* Right Panel - Results */}
           <div className="flex-1 min-w-[320px] flex flex-col items-center">
             <ResultBox emi={emi} amount={amount} interest={totalInterest} fee={amount * (fee / 100)} />
-            <CreditScoreButton />
+            <CreditScoreButton onClick={() => openApplyModal && openApplyModal('Credit Score Check')} />
           </div>
         </div>
-        <AmortizationTable schedule={schedule} />
-        <div className="mt-8"><CreditScoreButton /></div>
+        <AmortizationTable schedule={schedule} openApplyModal={openApplyModal} />
+        <div className="mt-8"><CreditScoreButton onClick={() => openApplyModal && openApplyModal('Credit Score Check')} /></div>
         {/* Content Sections (abbreviated for brevity, add all as needed) */}
         <section className="mt-12">
           <h3 className="text-2xl font-bold mb-2">How can home loan EMI calculator help you?</h3>

@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Calculator, Shield, TrendingUp, Calendar, IndianRupee, Users, FileText, CheckCircle, ArrowRight, Wallet, PiggyBank, Award, Clock } from 'lucide-react';
+import ApplyButton from '../components/common/ApplyButton';
 
-const PPFPage: React.FC = () => {
+interface PPFPageProps {
+  openApplyModal?: (loanType?: string) => void;
+}
+
+const PPFPage: React.FC<PPFPageProps> = ({ openApplyModal }) => {
   const [ppfAmount, setPpfAmount] = useState(150000);
   const [ppfYears, setPpfYears] = useState(15);
   const [currentRate] = useState(7.1);
@@ -136,9 +141,15 @@ const PPFPage: React.FC = () => {
             Discover everything about PPF - India's most trusted long-term investment option with guaranteed returns, tax benefits, and government backing.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-300 transform hover:scale-105">
-              Open PPF Account
-            </button>
+            {openApplyModal && (
+              <ApplyButton
+                loanType="PPF Account"
+                openApplyModal={openApplyModal}
+                className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-300 transform hover:scale-105"
+              >
+                Open PPF Account
+              </ApplyButton>
+            )}
             <button className="border border-blue-600 text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-all duration-300">
               Calculate Returns
             </button>
@@ -421,9 +432,15 @@ const PPFPage: React.FC = () => {
           <h2 className="text-4xl font-bold text-white mb-4">Ready to Start Your PPF Journey?</h2>
           <p className="text-xl text-blue-100 mb-8">Join millions of smart investors who trust PPF for their long-term financial goals</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-all duration-300 transform hover:scale-105">
-              Open PPF Account Now
-            </button>
+            {openApplyModal && (
+              <ApplyButton
+                loanType="PPF Account"
+                openApplyModal={openApplyModal}
+                className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-all duration-300 transform hover:scale-105"
+              >
+                Open PPF Account Now
+              </ApplyButton>
+            )}
             <button className="border border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-all duration-300">
               Compare PPF vs Other Investments
             </button>

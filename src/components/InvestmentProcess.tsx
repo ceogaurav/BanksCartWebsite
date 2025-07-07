@@ -1,4 +1,5 @@
 import React from 'react';
+import ApplyButton from './common/ApplyButton';
 
 const steps = [
   {
@@ -24,7 +25,11 @@ const steps = [
   },
 ];
 
-const InvestmentProcess: React.FC = () => {
+interface InvestmentProcessProps {
+  openApplyModal?: (loanType?: string) => void;
+}
+
+const InvestmentProcess: React.FC<InvestmentProcessProps> = ({ openApplyModal }) => {
   return (
     <section id="fd-process" className="w-full bg-[#F0F9FF] py-16 px-2 md:px-0 flex flex-col items-center">
       <div className="max-w-5xl w-full flex flex-col gap-8 animate-fadeInUp">
@@ -59,7 +64,15 @@ const InvestmentProcess: React.FC = () => {
           </div>
         </div>
         <div className="flex justify-center mt-4">
-          <button className="bg-gradient-to-r from-[#059669] to-[#10B981] text-white font-poppins text-lg px-8 py-3 rounded-xl font-bold shadow-lg hover:scale-105 transition">Resume Later</button>
+          {openApplyModal && (
+            <ApplyButton
+              loanType="Fixed Deposit - Resume"
+              openApplyModal={openApplyModal}
+              className="bg-gradient-to-r from-[#059669] to-[#10B981] text-white font-poppins text-lg px-8 py-3 rounded-xl font-bold shadow-lg hover:scale-105 transition"
+            >
+              Start or Resume Application
+            </ApplyButton>
+          )}
         </div>
       </div>
     </section>

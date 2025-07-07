@@ -42,7 +42,11 @@ function areAllEqual(arr: string[]) {
   return arr.length > 1 && arr.every((v) => v === arr[0]);
 }
 
-const HomeLoanCompare: React.FC = () => {
+interface HomeLoanCompareProps {
+  openApplyModal?: (loanType?: string) => void;
+}
+
+const HomeLoanCompare: React.FC<HomeLoanCompareProps> = ({ openApplyModal }) => {
   const [selectedType, setSelectedType] = useState<string>("home");
   const [selected, setSelected] = useState<(string | null)[]>([null, null]);
   const [showCompare, setShowCompare] = useState(false);
@@ -185,12 +189,14 @@ const HomeLoanCompare: React.FC = () => {
                   >
                     Edit Banks
                   </button>
-                  <button
-                    className="bg-primary-600 text-white px-4 py-2 rounded hover:bg-primary-700"
-                    onClick={() => alert('Get Offers (demo)')}
-                  >
-                    Get Offers
-                  </button>
+                  {openApplyModal && (
+                    <button
+                      className="bg-primary-600 text-white px-4 py-2 rounded hover:bg-primary-700"
+                      onClick={() => openApplyModal(`${loanTypes.find(t => t.key === selectedType)?.label} Comparison`)}
+                    >
+                      Get Offers
+                    </button>
+                  )}
                 </div>
               </div>
               <div className="overflow-x-auto">

@@ -416,8 +416,8 @@ const EducationLoanPage = ({ openApplyModal }) => {
           </ApplyButton>
         )}
         <div className="flex justify-center items-center space-x-6 mt-6">
-          <a href="tel:+1800123456" className="flex items-center space-x-2 hover:underline"><span>📞</span> <span>1800-123-456</span></a>
-          <a href="https://wa.me/1800123456" className="flex items-center space-x-2 hover:underline"><span>💬</span> <span>WhatsApp</span></a>
+          <a href="tel:+91 968 685 9296" className="flex items-center space-x-2 hover:underline"><span>📞</span> <span>+91 968 685 9296</span></a>
+          <a href="https://wa.me/+919686859296" className="flex items-center space-x-2 hover:underline"><span>💬</span> <span>WhatsApp</span></a>
           <a href="mailto:support@bankscart.com" className="flex items-center space-x-2 hover:underline"><span>✉️</span> <span>Email</span></a>
         </div>
       </div>

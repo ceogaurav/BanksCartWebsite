@@ -2,15 +2,15 @@ import React from "react";
 
 const author = {
   name: "Amit Sharma",
-  designation: "Senior Finance Writer",
-  linkedin: "https://linkedin.com/in/amitsharma",
+  designation: "Senior Finance Advisor",
+  linkedin: "https://linkedin.com/in/",
   photo: "/images/avatar1.jpg",
   bio: "10+ years in personal finance content. Passionate about simplifying loans for everyone.",
 };
 const reviewer = {
-  name: "Priya Mehra",
+  name: "Priya mishra",
   designation: "Certified Credit Counselor",
-  linkedin: "https://linkedin.com/in/priyamehra",
+  linkedin: "https://linkedin.com/in/",
   photo: "/images/avatar3.jpg",
   bio: "Reviewed by a credit expert with 12 years of experience in banking and lending.",
 };

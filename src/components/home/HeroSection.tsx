@@ -1,15 +1,18 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom'; // NEW: Import useNavigate
 import { TrendingUp, Shield, Clock, CheckCircle } from 'lucide-react';
 import Button from '../common/Button';
 import ApplyButton from '../common/ApplyButton';
 
 interface HeroSectionProps {
   openApplyModal: (loanType?: string) => void;
-  openEligibilityModal: (loanType?: string) => void;
+  // REMOVED: openEligibilityModal is no longer passed as a prop
 }
 
-const HeroSection: React.FC<HeroSectionProps> = ({ openApplyModal, openEligibilityModal }) => {
+// Updated component signature to remove openEligibilityModal and use useNavigate
+const HeroSection: React.FC<HeroSectionProps> = ({ openApplyModal }) => {
+  const navigate = useNavigate(); // NEW: Initialize useNavigate hook
+
   const features = [
     { icon: TrendingUp, text: 'Compare rates from 50+ banks' },
     { icon: Shield, text: 'Secure & encrypted platform' },
@@ -39,7 +42,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ openApplyModal, openEligibili
                 Rates in India
               </h1>
               <p className="text-xl text-gray-600 leading-relaxed">
-                Compare interest rates from top banks, check eligibility instantly, 
+                Compare interest rates from top banks, check eligibility instantly,
                 and apply for loans with the lowest rates. Your financial journey starts here.
               </p>
             </div>
@@ -63,7 +66,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({ openApplyModal, openEligibili
                   </Button>
                 </Link>
               )}
-              <Button variant="outline" size="lg" onClick={() => openEligibilityModal()}>
+              {/* MODIFIED: onClick now navigates to the Eligibility page */}
+              <Button variant="outline" size="lg" onClick={() => navigate('/eligibility')}>
                 Check Eligibility
               </Button>
             </div>
@@ -94,7 +98,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ openApplyModal, openEligibili
                   </h3>
                   <p className="text-gray-600">Calculate your EMI instantly</p>
                 </div>
-                
+
                 <div className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -109,7 +113,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ openApplyModal, openEligibili
                       />
                     </div>
                   </div>
-                  
+
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -124,7 +128,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ openApplyModal, openEligibili
                         <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500">%</span>
                       </div>
                     </div>
-                    
+
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
                         Tenure
@@ -139,7 +143,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ openApplyModal, openEligibili
                       </div>
                     </div>
                   </div>
-                  
+
                   <div className="bg-gradient-to-r from-primary-50 to-secondary-50 p-4 rounded-lg">
                     <div className="text-center">
                       <p className="text-sm text-gray-600 mb-1">Monthly EMI</p>
@@ -148,7 +152,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ openApplyModal, openEligibili
                       </p>
                     </div>
                   </div>
-                  
+
                   <Link to="/calculators" className="block">
                     <Button variant="primary" fullWidth>
                       View Detailed Calculator

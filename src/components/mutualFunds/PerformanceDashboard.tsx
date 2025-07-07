@@ -41,7 +41,11 @@ const pieData = {
   ],
 };
 
-const PerformanceDashboard: React.FC = () => {
+interface PerformanceDashboardProps {
+  openApplyModal?: (loanType?: string) => void;
+}
+
+const PerformanceDashboard: React.FC<PerformanceDashboardProps> = ({ openApplyModal }) => {
   useEffect(() => {
     AOS.init({ once: true, duration: 800 });
   }, []);
@@ -106,7 +110,12 @@ const PerformanceDashboard: React.FC = () => {
           </div>
         </div>
         <div className="mt-8 flex justify-center">
-          <button className="bg-blue-700 text-white px-8 py-3 rounded-xl font-bold hover:bg-blue-800 transition">View Full Dashboard</button>
+          <button
+            className="bg-blue-700 text-white px-8 py-3 rounded-xl font-bold hover:bg-blue-800 transition"
+            onClick={() => openApplyModal && openApplyModal('Mutual Fund Dashboard')}
+          >
+            View Full Dashboard
+          </button>
         </div>
       </div>
     </section>

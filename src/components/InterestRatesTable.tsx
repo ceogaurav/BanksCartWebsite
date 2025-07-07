@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ApplyButton from './common/ApplyButton';
 
 const rateTable = [
   {
@@ -31,7 +32,11 @@ const specialCategories = [
   { label: 'High Value (₹1 Cr+)', desc: 'Negotiable rates up to 8.00%', color: 'bg-green-100 text-green-800' },
 ];
 
-const InterestRatesTable: React.FC = () => {
+interface InterestRatesTableProps {
+  openApplyModal?: (loanType?: string) => void;
+}
+
+const InterestRatesTable: React.FC<InterestRatesTableProps> = ({ openApplyModal }) => {
   const [activeCat, setActiveCat] = useState(0);
 
   return (
@@ -82,7 +87,18 @@ const InterestRatesTable: React.FC = () => {
         </div>
         {/* Placeholder for comparison slider, best rate highlighter, historical trends */}
         <div className="mt-8 w-full flex flex-col items-center">
-          <div className="w-full h-32 bg-gradient-to-r from-[#F0F9FF] to-[#D1FAE5] rounded-2xl flex items-center justify-center text-gray-400 font-poppins">[Rate Comparison & Trends Coming Soon]</div>
+          <div className="w-full bg-gradient-to-r from-[#F0F9FF] to-[#D1FAE5] rounded-2xl flex flex-col items-center justify-center text-gray-400 font-poppins p-6 gap-4">
+            <h4 className="text-lg font-bold text-gray-700">Ready to lock in these rates?</h4>
+            {openApplyModal && (
+              <ApplyButton
+                loanType="Fixed Deposit"
+                openApplyModal={openApplyModal}
+                className="bg-gradient-to-r from-[#059669] to-[#10B981] text-white font-poppins text-lg px-8 py-3 rounded-xl font-bold shadow-lg hover:scale-105 transition"
+              >
+                Invest Now
+              </ApplyButton>
+            )}
+          </div>
         </div>
       </div>
     </section>

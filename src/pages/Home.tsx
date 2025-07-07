@@ -19,7 +19,7 @@ const Home: React.FC<HomeProps> = ({ openApplyModal, openEligibilityModal }) => 
       <LoanTypeCards />
       <QuickTools openEligibilityModal={openEligibilityModal} />
       <CurrentRatesTable />
-      <TrustIndicators />
+      <TrustIndicators openApplyModal={openApplyModal}/>
     </div>
   );
 };

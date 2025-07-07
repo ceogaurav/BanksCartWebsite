@@ -7,25 +7,25 @@ const banks = [
     id: 1,
     name: 'HDFC Bank',
     rate: '8.40%',
-    link: '/loan-rates/hdfc-bank',
+    link: '/resources/loan-rates',
   },
   {
     id: 2,
     name: 'ICICI Bank',
     rate: '8.60%',
-    link: '/loan-rates/icici-bank',
+    link: '/resources/loan-rates',
   },
   {
     id: 3,
     name: 'SBI',
     rate: '8.20%',
-    link: '/loan-rates/sbi',
+    link: '/resources/loan-rates',
   },
   {
     id: 4,
     name: 'Axis Bank',
     rate: '8.50%',
-    link: '/loan-rates/axis-bank',
+    link: '/resources/loan-rates',
   },
 ];
 

@@ -52,7 +52,7 @@ const badgeColors = {
 };
 
 
-const LoanOffersGrid = () => (
+const LoanOffersGrid = ({ openApplyModal }) => (
   <section className="my-12 bg-gradient-to-br from-gray-50 via-white to-gray-100 py-10 px-2 rounded-2xl shadow-inner">
     <h2 className="text-3xl font-extrabold mb-6 text-gray-900 text-center tracking-tight drop-shadow-sm">
       Compare Personal Loan Offers
@@ -88,7 +88,10 @@ const LoanOffersGrid = () => (
             <div className="flex justify-between"><span className="font-medium">Interest Rate:</span> <span>{offer.interestRate}</span></div>
           </div>
           <div className="flex gap-2 mt-auto w-full">
-            <button className="flex-1 bg-gradient-to-r from-teal-500 to-teal-700 hover:from-teal-600 hover:to-teal-800 text-white py-2 rounded-lg font-bold shadow-md transition flex items-center justify-center gap-2 group">
+            <button
+              onClick={() => openApplyModal(`Personal Loan - ${offer.bank}`)}
+              className="flex-1 bg-gradient-to-r from-teal-500 to-teal-700 hover:from-teal-600 hover:to-teal-800 text-white py-2 rounded-lg font-bold shadow-md transition flex items-center justify-center gap-2 group"
+            >
               <svg className="w-4 h-4 text-white group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
               Apply Now
             </button>

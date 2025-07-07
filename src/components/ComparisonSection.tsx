@@ -1,4 +1,5 @@
 import React from 'react';
+import ApplyButton from './common/ApplyButton';
 
 const features = [
   { label: 'Interest Rates', bankscart: '7.75% p.a. ✓', banks: '6.50% p.a.', nbfc: '7.00% p.a.' },
@@ -9,7 +10,11 @@ const features = [
   { label: 'Customer Support', bankscart: '24/7 Online ✓', banks: 'Branch Hours', nbfc: 'Limited Hours' },
 ];
 
-const ComparisonSection: React.FC = () => (
+interface ComparisonSectionProps {
+  openApplyModal?: (loanType?: string) => void;
+}
+
+const ComparisonSection: React.FC<ComparisonSectionProps> = ({ openApplyModal }) => (
   <section id="fd-comparison" className="w-full bg-white py-16 px-2 md:px-0 flex flex-col items-center">
     <div className="max-w-5xl w-full flex flex-col gap-8 animate-fadeInUp">
       <div className="text-center">
@@ -38,7 +43,15 @@ const ComparisonSection: React.FC = () => (
         </table>
       </div>
       <div className="flex justify-center mt-8">
-        <button className="bg-gradient-to-r from-[#059669] to-[#10B981] text-white font-poppins text-lg px-8 py-3 rounded-xl font-bold shadow-lg hover:scale-105 transition">Choose the Best Option</button>
+        {openApplyModal && (
+          <ApplyButton
+            loanType="Fixed Deposit"
+            openApplyModal={openApplyModal}
+            className="bg-gradient-to-r from-[#059669] to-[#10B981] text-white font-poppins text-lg px-8 py-3 rounded-xl font-bold shadow-lg hover:scale-105 transition"
+          >
+            Choose the Best Option
+          </ApplyButton>
+        )}
       </div>
     </div>
   </section>

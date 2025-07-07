@@ -1,33 +1,34 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const offers = [
   {
     bank: "HDFC Bank",
     logo: "/images/hdfc.png",
     rate: "10.5% p.a.",
-    link: "#",
+    slug: "hdfc-bank",
   },
   {
     bank: "ICICI Bank",
     logo: "/images/icici.png",
     rate: "10.6% p.a.",
-    link: "#",
+    slug: "icici-bank",
   },
   {
     bank: "Bajaj Finserv",
     logo: "/images/bajaj.png",
     rate: "10.5% p.a.",
-    link: "#",
+    slug: "bajaj-finserv",
   },
   {
     bank: "Axis Bank",
     logo: "/images/axis.png",
     rate: "9.99% p.a.",
-    link: "#",
+    slug: "axis-bank",
   },
 ];
 
-const PreApprovedOffersTable = () => (
+const PreApprovedOffersTable = ({ openApplyModal }) => (
   <section className="my-12 rounded-xl bg-gradient-to-br from-blue-50 via-white to-teal-50 shadow-lg px-4 py-10 md:px-10 lg:px-20">
     <div className="flex flex-col items-center mb-6">
       <span className="inline-flex items-center gap-2 mb-1">
@@ -58,13 +59,16 @@ const PreApprovedOffersTable = () => (
               </td>
               <td className="px-6 py-4 text-gray-600 font-medium text-base">{offer.rate}</td>
               <td className="px-6 py-4 text-center">
-                <button className="bg-gradient-to-r from-teal-500 to-blue-500 hover:from-teal-600 hover:to-blue-600 text-white px-5 py-2 rounded-lg font-bold shadow flex items-center gap-2 justify-center transition-all duration-150">
+                <button
+                  onClick={() => openApplyModal(`Pre-approved Personal Loan - ${offer.bank}`)}
+                  className="bg-gradient-to-r from-teal-500 to-blue-500 hover:from-teal-600 hover:to-blue-600 text-white px-5 py-2 rounded-lg font-bold shadow flex items-center gap-2 justify-center transition-all duration-150"
+                >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
                   Apply Now
                 </button>
               </td>
               <td className="px-6 py-4 text-center">
-                <a href={offer.link} className="text-blue-600 hover:underline font-semibold transition-colors duration-150">View</a>
+                <Link to={`/bank-details/${offer.slug}`} className="text-blue-600 hover:underline font-semibold transition-colors duration-150">View</Link>
               </td>
             </tr>
           ))}

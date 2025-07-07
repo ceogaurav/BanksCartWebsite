@@ -11,7 +11,11 @@ const resources = [
   { title: 'Risk Management Strategies', desc: 'Learn to manage and mitigate investment risks.', icon: '🛡️', color: 'from-gray-100 to-gray-200' },
 ];
 
-const EducationalResources: React.FC = () => {
+interface EducationalResourcesProps {
+  openApplyModal?: (loanType?: string) => void;
+}
+
+const EducationalResources: React.FC<EducationalResourcesProps> = ({ openApplyModal }) => {
   useEffect(() => {
     AOS.init({ once: true, duration: 800 });
   }, []);
@@ -30,7 +34,12 @@ const EducationalResources: React.FC = () => {
               <div className={`w-12 h-12 rounded-full flex items-center justify-center text-2xl mb-2 bg-gradient-to-tr ${res.color}`}>{res.icon}</div>
               <span className="font-bold text-lg text-blue-800">{res.title}</span>
               <span className="text-gray-600">{res.desc}</span>
-              <button className="bg-blue-700 text-white px-4 py-2 rounded-lg font-bold hover:bg-blue-800 transition">Read More</button>
+              <button
+                className="bg-blue-700 text-white px-4 py-2 rounded-lg font-bold hover:bg-blue-800 transition"
+                onClick={() => openApplyModal && openApplyModal(`Educational Resource - ${res.title}`)}
+              >
+                Read More
+              </button>
             </div>
           ))}
         </div>

@@ -108,6 +108,11 @@ const Header: React.FC<HeaderProps> = ({ openApplyModal, openEligibilityModal, o
       href: '/xpert-advice',
       icon: BadgeInfo
     },
+     {
+      name: 'Credit Score',
+      href: '/credit-score', // Corrected from '/creditscore.tsx'
+      icon: TrendingUp // Reusing TrendingUp, or use CreditCard if preferred
+    }
   ];
 
   const isActive = (path: string) => location.pathname === path;

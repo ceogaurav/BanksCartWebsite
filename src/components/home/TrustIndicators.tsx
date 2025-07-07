@@ -1,7 +1,13 @@
 import React from 'react';
 import { Shield, Users, Award, CheckCircle, Clock, Star } from 'lucide-react';
 
-const TrustIndicators: React.FC = () => {
+// Define props for TrustIndicators
+interface TrustIndicatorsProps {
+  openApplyModal: (loanType?: string) => void; // Add this prop
+}
+
+// Update component to accept openApplyModal prop
+const TrustIndicators: React.FC<TrustIndicatorsProps> = ({ openApplyModal }) => {
   const stats = [
     {
       icon: Users,
@@ -114,7 +120,11 @@ const TrustIndicators: React.FC = () => {
             <p className="text-gray-100 mb-6">
               Join millions of Indians who trust BanksCart for their loan needs
             </p>
-            <button className="bg-white text-primary-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+            {/* MODIFIED: Add onClick to open the LoanApplicationModal */}
+            <button
+              onClick={() => openApplyModal('Loan Application')} // Pass a default loan type
+              className="bg-white text-primary-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+            >
               Start Your Loan Journey
             </button>
           </div>

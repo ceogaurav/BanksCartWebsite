@@ -1,4 +1,5 @@
 import React from 'react';
+import ApplyButton from './common/ApplyButton';
 
 const fdTypes = [
   {
@@ -39,7 +40,11 @@ const fdTypes = [
   },
 ];
 
-const FDTypesSection: React.FC = () => {
+interface FDTypesSectionProps {
+  openApplyModal?: (loanType?: string) => void;
+}
+
+const FDTypesSection: React.FC<FDTypesSectionProps> = ({ openApplyModal }) => {
   return (
     <section id="fd-types" className="w-full bg-[#F0F9FF] py-16 px-2 md:px-0 flex flex-col items-center">
       <div className="max-w-5xl w-full flex flex-col gap-8 animate-fadeInUp">
@@ -55,7 +60,15 @@ const FDTypesSection: React.FC = () => {
               <ul className="text-gray-700 text-base font-poppins flex flex-col gap-1 mb-4">
                 {type.features.map(f => <li key={f}>• {f}</li>)}
               </ul>
-              <button className={`bg-gradient-to-r ${type.color} text-white font-poppins px-6 py-2 rounded-xl font-bold shadow-lg hover:scale-105 transition`}>{type.cta}</button>
+              {openApplyModal && (
+                <ApplyButton
+                  loanType={`Fixed Deposit - ${type.title}`}
+                  openApplyModal={openApplyModal}
+                  className={`bg-gradient-to-r ${type.color} text-white font-poppins px-6 py-2 rounded-xl font-bold shadow-lg hover:scale-105 transition`}
+                >
+                  {type.cta}
+                </ApplyButton>
+              )}
             </div>
           ))}
         </div>
