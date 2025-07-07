@@ -48,6 +48,7 @@ import Header from './components/common/Header';
 import Footer from './components/common/Footer';
 import LoanApplicationModal from './components/common/LoanApplicationModal'; // Import the loan application modal
 import EligibilityCheckModal from './components/common/EligibilityCheckModal'; // Import the new eligibility modal
+import PartnerApplicationModal from './components/modals/PartnerApplicationModal'; // NEW: Import PartnerApplicationModal
 
 // A simple 404 Not Found component (optional, but good practice)
 const NotFound = () => (
@@ -68,6 +69,9 @@ const App: React.FC = () => {
   // State for Eligibility Check Modal
   const [isEligibilityModalOpen, setIsEligibilityModalOpen] = useState(false);
   const [currentEligibilityLoanType, setCurrentEligibilityLoanType] = useState('');
+
+  // NEW: State for Partner Application Modal
+  const [isPartnerModalOpen, setIsPartnerModalOpen] = useState(false);
 
   // Functions to control Loan Application Modal
   const openApplyModal = (loanType: string = '') => {
@@ -91,6 +95,15 @@ const App: React.FC = () => {
     setCurrentEligibilityLoanType('');
   };
 
+  // NEW: Functions to control Partner Application Modal
+  const openPartnerModal = () => {
+    setIsPartnerModalOpen(true);
+  };
+
+  const closePartnerModal = () => {
+    setIsPartnerModalOpen(false);
+  };
+
   // useEffect hook to load the Tawk.to chat widget script
   useEffect(() => {
     const script = document.createElement("script");
@@ -112,7 +125,12 @@ const App: React.FC = () => {
     <Router>
       <div className="flex flex-col min-h-screen bg-white font-inter">
         {/* Header component, visible on all pages, passing modal open functions */}
-        <Header openApplyModal={openApplyModal} openEligibilityModal={openEligibilityModal} />
+        {/* NEW: Pass openPartnerModal to Header */}
+        <Header
+          openApplyModal={openApplyModal}
+          openEligibilityModal={openEligibilityModal}
+          openPartnerModal={openPartnerModal}
+        />
         <main className="flex-grow">
           {/* Routes component renders the first matching Route */}
           <Routes>
@@ -160,7 +178,8 @@ const App: React.FC = () => {
             <Route path="/insurance/term-life" element={<TermInsurancePage />} />
             <Route path="/resources/gold-rates" element={<GoldLoansPage openApplyModal={openApplyModal} />} />
             <Route path="/resources/pincodes" element={<PincodesPage />} />
-            <Route path="/become-partner" element={<BecomePartnerPage openApplyModal={openApplyModal} />} />
+            {/* NEW: Pass openPartnerModal to BecomePartnerPage if it has a button */}
+            <Route path="/become-partner" element={<BecomePartnerPage openApplyModal={openApplyModal} openPartnerModal={openPartnerModal} />} />
             <Route path="/resources/ppf" element={<PPFPage />} />
             <Route path="/resources/income-tax" element={<IncomeTaxPage />} />
             <Route path="/bank-details" element={<BankDetails />} /> {/* Added missing BankDetails route */}
@@ -185,6 +204,12 @@ const App: React.FC = () => {
           isOpen={isEligibilityModalOpen}
           onClose={closeEligibilityModal}
           initialLoanType={currentEligibilityLoanType}
+        />
+
+        {/* NEW: Partner Application Modal */}
+        <PartnerApplicationModal
+          isOpen={isPartnerModalOpen}
+          onClose={closePartnerModal}
         />
       </div>
     </Router>

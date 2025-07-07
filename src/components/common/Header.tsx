@@ -13,14 +13,14 @@ import Button from './Button'; // Import the Button component
 
 interface HeaderProps {
   openApplyModal: (loanType?: string) => void; // Existing prop for Loan Application Modal
-  openEligibilityModal: (loanType?: string) => void; // New prop for Eligibility Check Modal
+  openEligibilityModal: (loanType?: string) => void; // Existing prop for Eligibility Check Modal
+  openPartnerModal: () => void; // NEW: Add openPartnerModal prop
 }
 
-const Header: React.FC<HeaderProps> = ({ openApplyModal, openEligibilityModal }) => {
+const Header: React.FC<HeaderProps> = ({ openApplyModal, openEligibilityModal, openPartnerModal }) => { // NEW: Destructure openPartnerModal
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
 
-  // Main nav always visible, secondary nav goes into More on md screens
   const mainNav = [
     {
       name: 'Loans',
@@ -68,7 +68,7 @@ const Header: React.FC<HeaderProps> = ({ openApplyModal, openEligibilityModal })
   ];
   const moreNav = [
     {
-      name: 'Investment', // This seems redundant with mainNav, but keeping as per your provided structure
+      name: 'Investment',
       href: '/investment',
       icon: TrendingUp,
       submenu: [
@@ -94,7 +94,7 @@ const Header: React.FC<HeaderProps> = ({ openApplyModal, openEligibilityModal })
       ]
     },
     {
-      name: 'Calculators', // This seems redundant with Resources submenu, but keeping as per your provided structure
+      name: 'Calculators',
       href: '/calculators',
       icon: Calculator
     },
@@ -119,9 +119,9 @@ const Header: React.FC<HeaderProps> = ({ openApplyModal, openEligibilityModal })
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 group">
             <img
-              src="/logos/bankscartlogof.jpg" // Path to your logo in the public folder
+              src="/logos/bankscartlogof.jpg"
               alt="BanksCart Logo"
-              className="h-12 w-auto rounded-xl shadow-xl group-hover:scale-110 transition-transform border-4 border-white/80" // Adjusted size and styling
+              className="h-12 w-auto rounded-xl shadow-xl group-hover:scale-110 transition-transform border-4 border-white/80"
             />
           </Link>
 
@@ -251,10 +251,10 @@ const Header: React.FC<HeaderProps> = ({ openApplyModal, openEligibilityModal })
             {/* "Become Partner" Button */}
             <div className="relative flex flex-col items-center">
               <Button
-                variant="secondary" // Using the Button component
+                variant="secondary"
                 size="md"
-                onClick={() => openApplyModal('Become Partner')} // Call openApplyModal
-                className="eye-catching-cta" // Keep custom styling if desired
+                onClick={openPartnerModal} // NEW: Call openPartnerModal directly
+                className="eye-catching-cta"
                 style={{ fontWeight: 900 }}
               >
                 <span className="drop-shadow">Become Partner</span>
@@ -265,10 +265,10 @@ const Header: React.FC<HeaderProps> = ({ openApplyModal, openEligibilityModal })
             </div>
             {/* "Check Eligibility" Button */}
             <Button
-              variant="primary" // Using the Button component
+              variant="primary"
               size="md"
-              onClick={() => openEligibilityModal()} // Call openEligibilityModal
-              className="eye-catching-cta" // Keep custom styling if desired
+              onClick={() => openEligibilityModal()}
+              className="eye-catching-cta"
               style={{ fontWeight: 900 }}
             >
               <span className="drop-shadow">Check Eligibility</span>
@@ -387,7 +387,7 @@ const Header: React.FC<HeaderProps> = ({ openApplyModal, openEligibilityModal })
                 variant="secondary"
                 size="md"
                 className="w-full mt-4"
-                onClick={() => { openApplyModal('Become Partner'); setIsMenuOpen(false); }}
+                onClick={() => { openPartnerModal(); setIsMenuOpen(false); }} // NEW: Call openPartnerModal directly
               >
                 Become Partner
               </Button>
