@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ApplyButton from '../components/common/ApplyButton'; // Add this line
+import { useNavigate } from 'react-router-dom';
 import {
   Shield, HeartPulse, DollarSign, FileText, Zap, Truck, CheckCircle, Clock, Users, Smile, Globe,
   ArrowRight, CreditCard, Award, Verified, Quote, UserCircle2, Headphones, Smartphone, Briefcase,
@@ -127,12 +128,12 @@ const FAQItem = ({ question, answer, isOpen, onClick }) => {
 };
 
 // --- Premium Calculator Component ---
-const PremiumCalculator = () => {
+const PremiumCalculator = ({ openApplyModal }: { openApplyModal?: (loanType?: string) => void }) => {
   const [age, setAge] = useState('');
   const [members, setMembers] = useState('1');
   const [sumInsured, setSumInsured] = useState('500000');
   const [estimatedPremium, setEstimatedPremium] = useState(null);
-
+  
   const calculatePremium = (e) => {
     e.preventDefault();
     const ageVal = parseInt(age);
@@ -146,19 +147,19 @@ const PremiumCalculator = () => {
 
     // Dummy calculation logic (more complex to simulate real factors)
     let basePremium = 5000; // Base premium for 1 member, 18 years, 1 lakh SI
-    
+
     // Age factor: increases with age
-    basePremium += (ageVal - 18) * 150; 
+    basePremium += (ageVal - 18) * 150;
 
     // Members factor: adds cost per additional member, with slight discount for more members
     if (membersVal > 1) {
       basePremium += (membersVal - 1) * 3000 * (1 - (membersVal * 0.05));
     }
-
+    
     // Sum Insured factor: increases with coverage amount
-    basePremium += (sumInsuredVal / 100000 - 1) * 1000; 
+    basePremium += (sumInsuredVal / 100000 - 1) * 1000;
 
-    // Add some random variation for a more "realistic" feel
+    // Add some random variation for a more "realistic" feel 
     basePremium = Math.max(2500, basePremium + (Math.random() * 2000 - 1000)); // Ensure minimum premium
 
     setEstimatedPremium(`₹ ${Math.round(basePremium).toLocaleString('en-IN')}`);
@@ -270,6 +271,22 @@ const PremiumCalculator = () => {
               <p className="text-4xl font-extrabold text-white mt-2 flex items-center justify-center">
                 {estimatedPremium}
               </p>
+              {openApplyModal && typeof estimatedPremium === 'string' && estimatedPremium.startsWith('₹') && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                  className="mt-6"
+                >
+                  <ApplyButton
+                    loanType={`Health Insurance - Premium ${estimatedPremium}`}
+                    openApplyModal={openApplyModal}
+                    className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-full shadow-lg transition-all"
+                  >
+                    Apply Now
+                  </ApplyButton>
+                </motion.div>
+              )}
             </motion.div>
           )}
         </motion.form>
@@ -285,6 +302,7 @@ interface HealthInsurancePageProps {
 }
 
 const BanksCartHealthInsurancePage: React.FC<HealthInsurancePageProps> = ({ openApplyModal }) => {
+  const navigate = useNavigate();
   const [openFAQIndex, setOpenFAQIndex] = useState(null);
 
   // --- Data for Sections ---
@@ -622,7 +640,7 @@ const BanksCartHealthInsurancePage: React.FC<HealthInsurancePageProps> = ({ open
                                hover:from-green-600 hover:to-teal-600 transition-all duration-300 ease-in-out transform hover:-translate-y-1
                                focus:outline-none focus:ring-4 focus:ring-green-500 focus:ring-opacity-50 flex items-center justify-center gap-3 mx-auto"
                 >
-                    <Calculator className="w-7 h-7" /> Get a Free Quote Today
+                    <FileText className="w-7 h-7" /> Apply for Insurance
                     <ArrowRight className="w-6 h-6 ml-2" />
                 </ApplyButton>
             ) : (
@@ -686,6 +704,9 @@ const BanksCartHealthInsurancePage: React.FC<HealthInsurancePageProps> = ({ open
           </div>
         </div>
       </motion.section>
+
+      {/* --- Premium Calculator Section --- */}
+      <PremiumCalculator openApplyModal={openApplyModal} />
 
       {/* --- Why Health Insurance is Crucial --- */}
       <motion.section
@@ -1111,7 +1132,13 @@ const BanksCartHealthInsurancePage: React.FC<HealthInsurancePageProps> = ({ open
             <motion.div className="bg-gray-800/50 rounded-2xl shadow-xl p-8 border border-gray-700 backdrop-blur-md flex flex-col items-center text-center" variants={cardVariants}>
               <MapPin className="w-20 h-20 text-blue-400 mb-6" />
               <h3 className="text-2xl font-bold text-white mb-3">Extensive Network Hospitals</h3>
-              <p className="text-gray-300">Access cashless treatment at 10,500+ hospitals nationwide. <a href="#" className="text-blue-400 hover:underline">Find a hospital near you</a>.</p>
+              <p className="text-gray-300">Access cashless treatment at 10,500+ hospitals nationwide.
+                {openApplyModal ? (
+                  <button onClick={() => openApplyModal('Find Hospital')} className="text-blue-400 hover:underline font-semibold ml-1">Find a hospital near you</button>
+                ) : (
+                  <a href="#" className="text-blue-400 hover:underline ml-1">Find a hospital near you</a>
+                )}
+              .</p>
             </motion.div>
             <motion.div className="bg-gray-800/50 rounded-2xl shadow-xl p-8 border border-gray-700 backdrop-blur-md flex flex-col items-center text-center" variants={cardVariants}>
               <Download className="w-20 h-20 text-purple-400 mb-6" />
@@ -1173,6 +1200,7 @@ const BanksCartHealthInsurancePage: React.FC<HealthInsurancePageProps> = ({ open
 
       {/* --- FAQ Section (Updated for Mediator Role) --- */}
       <motion.section
+        id="faq-section"
         className="relative py-16 px-4 sm:px-6 lg:px-8 bg-gray-900 text-white overflow-hidden"
         variants={sectionVariants}
         initial="hidden"
@@ -1310,34 +1338,20 @@ const BanksCartHealthInsurancePage: React.FC<HealthInsurancePageProps> = ({ open
             className="flex flex-col sm:flex-row justify-center gap-6"
             variants={itemVariants}
           >
-            {openApplyModal ? (
-              <ApplyButton
-                loanType="Health Insurance - Compare"
-                openApplyModal={openApplyModal}
-                variant="primary"
-                size="lg"
-                className="px-10 py-5 rounded-full font-bold text-xl bg-gradient-to-r from-green-500 to-teal-500 text-white shadow-lg
+            <motion.button
+              onClick={() => navigate('/loan-apply', { state: { loanType: 'Health Insurance' } })}
+              className="px-10 py-5 rounded-full font-bold text-xl bg-gradient-to-r from-green-500 to-teal-500 text-white shadow-lg
                            hover:from-green-600 hover:to-teal-600 transition-all duration-300 ease-in-out transform hover:-translate-y-1
                            focus:outline-none focus:ring-4 focus:ring-green-500 focus:ring-opacity-50 flex items-center justify-center gap-3"
-              >
-                <Calculator className="w-7 h-7" /> Compare Plans & Get Quote
-                <ArrowRight className="w-6 h-6 ml-2" />
-              </ApplyButton>
-            ) : (
-              <motion.button
-                className="px-10 py-5 rounded-full font-bold text-xl bg-gradient-to-r from-green-500 to-teal-500 text-white shadow-lg hover:from-green-600 hover:to-teal-600 transition-all duration-300 ease-in-out transform hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-green-500 focus:ring-opacity-50 flex items-center justify-center gap-3"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => document.getElementById('premium-calculator-section')?.scrollIntoView({ behavior: 'smooth' })}
-              >
-                <Calculator className="w-7 h-7" /> Compare Plans & Get Quote
-                <ArrowRight className="w-6 h-6 ml-2" />
-              </motion.button>
-            )}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <FileText className="w-7 h-7" /> Apply & Compare Plans
+              <ArrowRight className="w-6 h-6 ml-2" />
+            </motion.button>
             <motion.button
-              className="px-10 py-5 rounded-full font-bold text-xl bg-transparent border-2 border-gray-500 text-gray-300
-                         hover:bg-gray-700 hover:border-gray-700 hover:text-white transition-all duration-300 ease-in-out transform hover:-translate-y-1
-                         focus:outline-none focus:ring-4 focus:ring-gray-500 focus:ring-opacity-50"
+              onClick={() => navigate('/loan-apply', { state: { loanType: 'Health Insurance - Expert Contact' } })}
+              className="px-10 py-5 rounded-full font-bold text-xl bg-transparent border-2 border-gray-500 text-gray-300 hover:bg-gray-700 hover:border-gray-700 hover:text-white transition-all duration-300 ease-in-out transform hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-gray-500 focus:ring-opacity-50"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -1347,39 +1361,25 @@ const BanksCartHealthInsurancePage: React.FC<HealthInsurancePageProps> = ({ open
         </div>
       </motion.section>
 
-      {/* --- Footer & Additional Information (Conceptual) --- */}
-      <footer className="bg-gray-800 text-gray-400 py-12 px-4 sm:px-6 lg:px-8 text-center">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
-          <div>
-            <h3 className="text-xl font-bold text-white mb-4">BanksCart Health Insurance</h3>
-            <p className="text-sm">Your trusted partner for health insurance comparison and purchase. We simplify insurance, so you can focus on what matters most.</p>
-          </div>
-          <div>
-            <h3 className="text-xl font-bold text-white mb-4">Quick Links</h3>
-            <ul className="space-y-2 text-sm">
-              <li><a href="#" className="hover:text-blue-400">About Us</a></li>
-              <li><a href="#" className="hover:text-blue-400">Partner Insurers</a></li>
-              <li><a href="#" className="hover:text-blue-400">Careers</a></li>
-              <li><a href="#" className="hover:text-blue-400">Blog</a></li>
-              <li><a href="#" className="hover:text-blue-400">Sitemap</a></li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="text-xl font-bold text-white mb-4">Support & Legal</h3>
-            <ul className="space-y-2 text-sm">
-              <li><a href="#" className="hover:text-blue-400">Contact Us</a></li>
-              <li><a href="#" className="hover:text-blue-400">Privacy Policy</a></li>
-              <li><a href="#" className="hover:text-blue-400">Terms & Conditions</a></li>
-              <li><a href="#" className="hover:text-blue-400">Disclaimer</a></li>
-              <li><a href="#" className="hover:text-blue-400">IRDAI Public Disclosure</a></li>
-            </ul>
-          </div>
-        </div>
-        <div className="mt-10 pt-8 border-t border-gray-700 text-sm text-gray-500">
-          &copy; {new Date().getFullYear()} BanksCart. All rights reserved. <br/>
-          BanksCart Insurance Brokers Pvt. Ltd. | IRDAI Reg. No. 999
-        </div>
-      </footer>
+      {/* Floating Action Button for Quick Application */}
+      {openApplyModal ? (
+        <ApplyButton
+          loanType="Health Insurance - Quick Apply"
+          openApplyModal={openApplyModal}
+          className="fixed bottom-6 right-6 rounded-full p-4 shadow-lg bg-gradient-to-r from-green-500 to-teal-500 text-white transition duration-300 ease-in-out transform hover:scale-110 z-50 flex items-center gap-2"
+        >
+          <Shield className="w-6 h-6" />
+          <span className="font-semibold hidden sm:inline">Apply Now</span>
+        </ApplyButton>
+      ) : (
+        <button
+          onClick={() => document.getElementById('premium-calculator-section')?.scrollIntoView({ behavior: 'smooth' })}
+          className="fixed bottom-6 right-6 rounded-full p-4 shadow-lg bg-gradient-to-r from-green-500 to-teal-500 text-white transition duration-300 ease-in-out transform hover:scale-110 z-50 flex items-center gap-2"
+        >
+          <Shield className="w-6 h-6" />
+          <span className="font-semibold hidden sm:inline">Get Quote</span>
+        </button>
+      )}
     </div>
   );
 };

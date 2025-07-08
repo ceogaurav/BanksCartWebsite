@@ -141,7 +141,7 @@ const PPFPage: React.FC<PPFPageProps> = ({ openApplyModal }) => {
             Discover everything about PPF - India's most trusted long-term investment option with guaranteed returns, tax benefits, and government backing.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            {openApplyModal && (
+            {openApplyModal ? (
               <ApplyButton
                 loanType="PPF Account"
                 openApplyModal={openApplyModal}
@@ -149,8 +149,12 @@ const PPFPage: React.FC<PPFPageProps> = ({ openApplyModal }) => {
               >
                 Open PPF Account
               </ApplyButton>
+            ) : (
+              <button className="bg-gray-400 text-white px-8 py-3 rounded-lg font-semibold cursor-not-allowed" disabled>Open PPF Account</button>
             )}
-            <button className="border border-blue-600 text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-all duration-300">
+            <button 
+              onClick={() => document.getElementById('calculator')?.scrollIntoView({ behavior: 'smooth' })}
+              className="border border-blue-600 text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-all duration-300">
               Calculate Returns
             </button>
           </div>
@@ -432,7 +436,7 @@ const PPFPage: React.FC<PPFPageProps> = ({ openApplyModal }) => {
           <h2 className="text-4xl font-bold text-white mb-4">Ready to Start Your PPF Journey?</h2>
           <p className="text-xl text-blue-100 mb-8">Join millions of smart investors who trust PPF for their long-term financial goals</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            {openApplyModal && (
+            {openApplyModal ? (
               <ApplyButton
                 loanType="PPF Account"
                 openApplyModal={openApplyModal}
@@ -440,10 +444,20 @@ const PPFPage: React.FC<PPFPageProps> = ({ openApplyModal }) => {
               >
                 Open PPF Account Now
               </ApplyButton>
+            ) : (
+              <button className="bg-gray-200 text-gray-500 px-8 py-3 rounded-lg font-semibold cursor-not-allowed" disabled>Open PPF Account Now</button>
             )}
-            <button className="border border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-all duration-300">
-              Compare PPF vs Other Investments
-            </button>
+            {openApplyModal ? (
+              <ApplyButton
+                loanType="Compare Investments"
+                openApplyModal={openApplyModal}
+                className="border border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-all duration-300"
+              >
+                Compare PPF vs Other Investments
+              </ApplyButton>
+            ) : (
+              <button className="border border-gray-400 text-gray-400 px-8 py-3 rounded-lg font-semibold cursor-not-allowed" disabled>Compare PPF vs Other Investments</button>
+            )}
           </div>
         </div>
       </section>

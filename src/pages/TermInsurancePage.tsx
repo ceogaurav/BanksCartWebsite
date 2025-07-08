@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // --- Helper Data (Could be fetched from an API in a real app) ---
 const NAV_LINKS = [
@@ -1153,190 +1154,25 @@ const FAQSection = ({ faqData }) => {
   );
 };
 
-// Apply Now Modal Component
-const ApplyNowModal = ({ onClose }) => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    product: '',
-    message: ''
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submissionStatus, setSubmissionStatus] = useState(null); // 'success' or 'error'
+// Call To Action Component
+const CallToAction = ({ openApplyModal, navigate }) => {
   const [messageBox, setMessageBox] = useState(null);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setSubmissionStatus(null);
-    setMessageBox(null);
-
-    // Basic validation
-    if (!formData.name || !formData.email || !formData.phone || !formData.product) {
-      setMessageBox({ message: "Please fill in all required fields.", type: "error" });
-      setIsSubmitting(false);
+  const handleApplyNowClick = () => {
+    // Prioritize navigation if available, otherwise use modal
+    if (navigate) {
+      navigate('/loan-apply', { state: { loanType: 'Term Insurance' } });
       return;
     }
 
-    // Simulate API call
-    try {
-      // In a real application, you would send formData to your backend API here
-      // Example: const response = await fetch('/api/apply', { method: 'POST', body: JSON.stringify(formData) });
-      // const data = await response.json();
-
-      await new Promise(resolve => setTimeout(resolve, 1500)); // Simulate network delay
-
-      // Assume success for this example
-      setSubmissionStatus('success');
-      setMessageBox({ message: "Your application has been submitted successfully! We will contact you shortly.", type: "success" });
-      setFormData({ name: '', email: '', phone: '', product: '', message: '' }); // Clear form
-    } catch (error) {
-      console.error("Form submission error:", error);
-      setSubmissionStatus('error');
-      setMessageBox({ message: "Failed to submit application. Please try again later.", type: "error" });
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  // Allows closing with Escape key
-  const handleKeyDown = (event) => {
-    if (event.key === 'Escape') {
-      onClose();
-    }
-  };
-
-  return (
-    <div
-      className="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50 p-4 animate-fadeIn"
-      onKeyDown={handleKeyDown}
-      onClick={onClose} // Close on overlay click
-      tabIndex={-1} // Make div focusable
-      role="dialog"
-      aria-modal="true"
-    >
-      <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8 max-w-lg w-full relative transform scale-95 animate-zoomIn" onClick={e => e.stopPropagation()}> {/* Prevent click from bubbling to overlay */}
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 focus:outline-none cursor-pointer"
-          aria-label="Close form"
-          tabIndex={0}
-        >
-          <Icon name="X" className="w-6 h-6" />
-        </button>
-        <h3 className="text-3xl font-extrabold text-center text-gray-800 mb-6">Apply Now</h3>
-        <p className="text-center text-gray-600 mb-8">Fill out the form below and our experts will get in touch!</p>
-
-        <form onSubmit={handleSubmit} className="space-y-5">
-          <div>
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">Full Name:</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              className="form-input"
-              placeholder="John Doe"
-              required
-            />
-          </div>
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email Address:</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              className="form-input"
-              placeholder="john.doe@example.com"
-              required
-            />
-          </div>
-          <div>
-            <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">Phone Number:</label>
-            <input
-              type="tel"
-              id="phone"
-              name="phone"
-              value={formData.phone}
-              onChange={handleChange}
-              className="form-input"
-              placeholder="+91 9876543210"
-              required
-            />
-          </div>
-          <div>
-            <label htmlFor="product" className="block text-sm font-medium text-gray-700 mb-1">Product of Interest:</label>
-            <select
-              id="product"
-              name="product"
-              value={formData.product}
-              onChange={handleChange}
-              className="form-select"
-              required
-            >
-              <option value="">Select a product</option>
-              <option value="Term Insurance">Term Insurance</option>
-              <option value="Home Loan">Home Loan</option>
-              <option value="Personal Loan">Personal Loan</option>
-              <option value="Car Insurance">Car Insurance</option>
-              <option value="Health Insurance">Health Insurance</option>
-              <option value="Fixed Deposit">Fixed Deposit</option>
-              <option value="Other">Other</option>
-            </select>
-          </div>
-          <div>
-            <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">Your Message (Optional):</label>
-            <textarea
-              id="message"
-              name="message"
-              value={formData.message}
-              onChange={handleChange}
-              rows="3"
-              className="form-input"
-              placeholder="Any specific questions or requirements?"
-            ></textarea>
-          </div>
-
-          <button
-            type="submit"
-            className="btn-primary-large w-full mt-6"
-            disabled={isSubmitting}
-          >
-            {isSubmitting ? 'Submitting...' : 'Submit Application'}
-          </button>
-        </form>
-        {messageBox && (
-          <MessageBox
-            message={messageBox.message}
-            type={messageBox.type}
-            onClose={() => setMessageBox(null)}
-          />
-        )}
-      </div>
-    </div>
-  );
-};
-
-
-// Call To Action Component
-const CallToAction = () => {
-  const [messageBox, setMessageBox] = useState(null);
-  const [isApplyModalOpen, setIsApplyModalOpen] = useState(false); // State for Apply Now modal
-
-  const handleGetQuoteClick = (e) => {
-    e.preventDefault();
-    const premiumCalculator = document.getElementById('premium-calculator');
-    if (premiumCalculator) {
-      premiumCalculator.scrollIntoView({ behavior: 'smooth' });
+    // Fallback to modal if navigate is not available
+    if (openApplyModal) {
+      openApplyModal('Term Insurance');
+    } else {
+      setMessageBox({
+        message: "The 'Apply Now' feature is currently unavailable. Please contact support.",
+        type: "error"
+      });
     }
   };
 
@@ -1345,8 +1181,8 @@ const CallToAction = () => {
       message: (
         <>
           <p className="mb-2">Our experts are ready to assist you!</p>
-          <p><strong>Phone:</strong> +91 12345 67890</p>
-          <p><strong>Email:</strong> experts@bankscart.com</p>
+          <p><strong>Phone:</strong> +91 968 685 9296</p>
+          <p><strong>Email:</strong> support@bankscart.com</p>
           <p className="text-sm mt-2 text-gray-500">Available Mon-Fri, 9 AM - 6 PM IST</p>
         </>
       ),
@@ -1360,8 +1196,7 @@ const CallToAction = () => {
         <h2 className="text-4xl md:text-5xl font-extrabold mb-6">Ready to Secure Your Family's Future?</h2>
         <p className="text-lg md:text-xl opacity-90 mb-10">Get a personalized quote in minutes or talk to our experts for guidance.</p>
         <div className="flex flex-col sm:flex-row justify-center gap-4">
-          {/* Changed this button to open the Apply Now modal */}
-          <button onClick={() => setIsApplyModalOpen(true)} className="btn-white-outline-large group">
+          <button onClick={handleApplyNowClick} className="btn-white-outline-large group">
             Apply Now
             <Icon name="Send" className="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" />
           </button>
@@ -1378,13 +1213,18 @@ const CallToAction = () => {
           onClose={() => setMessageBox(null)}
         />
       )}
-      {isApplyModalOpen && <ApplyNowModal onClose={() => setIsApplyModalOpen(false)} />}
     </section>
   );
 };
 
+interface TermInsurancePageProps {
+  openApplyModal?: (loanType?: string) => void;
+}
+
 // --- Main Term Insurance Page Component (Everything consolidated here) ---
-const TermInsurancePage = () => {
+const TermInsurancePage: React.FC<TermInsurancePageProps> = ({ openApplyModal }) => {
+  const navigate = useNavigate();
+
   // Load Tailwind CSS, Lucide React Icons, and html2pdf from CDN
   const CDN_IMPORTS_AND_CONFIG = `
     <script src="https://cdn.tailwindcss.com"></script>
@@ -1558,7 +1398,7 @@ const TermInsurancePage = () => {
 
         <FAQSection faqData={FAQ_DATA} />
 
-        <CallToAction />
+        <CallToAction openApplyModal={openApplyModal} navigate={navigate} />
       </main>
 
       {/* Footer removed as per user request */}

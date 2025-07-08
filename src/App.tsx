@@ -53,6 +53,11 @@ import EligibilityCheckModal from './components/common/EligibilityCheckModal';
 import PartnerApplicationModal from './components/modals/PartnerApplicationModal';
 import CibilCheckButton from './components/common/CibilCheckButton'; // NEW: Import CibilCheckButton
 import CibilScoreCheckModal from './components/modals/CibilScoreCheckModal'; // NEW: Import CibilScoreCheckModal
+import LoanApplyPage from './pages/loanapply';
+
+// Import the CalculatorPages
+import CarLoanCalculatorPage from './pages/calculators/CarLoanCalculatorPage';
+
 
 // A simple 404 Not Found component
 const NotFound = () => (
@@ -197,6 +202,10 @@ const App: React.FC = () => {
             <Route path="/resources/ppf" element={<PPFPage openApplyModal={openApplyModal} />} />
             <Route path="/resources/income-tax" element={<IncomeTaxPage />} />
             <Route path="/bank-details/:bankId" element={<BankDetails openEligibilityModal={openEligibilityModal} />} />
+            <Route path="/loan-apply" element={<LoanApplyPage />} />
+
+             {/* NEW: Route for the Car Loan Calculator Page */}
+             <Route path="/car-loan-calculator" element={<CarLoanCalculatorPage openApplyModal={openApplyModal} />} />
 
             {/* Catch-all route for any undefined paths (404 Not Found) */}
             <Route path="*" element={<NotFound />} />

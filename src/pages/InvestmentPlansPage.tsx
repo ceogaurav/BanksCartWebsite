@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import ApplyButton from '../components/common/ApplyButton';
 import { motion } from 'framer-motion';
-import GoalCard from '../components/investmentPlans/GoalCard';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -53,6 +53,31 @@ const InvestmentPlansPage: React.FC<InvestmentPlansPageProps> = ({ openApplyModa
   useEffect(() => {
     AOS.init();
   }, []);
+
+  const GoalCard = ({ goal, openApplyModal }: { goal: Goal, openApplyModal?: (loanType?: string) => void }) => {
+    return (
+      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6 hover:shadow-2xl transition-shadow duration-300 flex flex-col h-full">
+        <div className="flex-grow">
+          <div className="flex items-center justify-center w-16 h-16 rounded-full bg-blue-100 dark:bg-blue-900 mb-6">
+            <span className="text-3xl font-bold text-blue-600">{goal.icon}</span>
+          </div>
+          <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">{goal.title}</h3>
+          <p className="text-gray-600 dark:text-gray-300 mb-2"><strong>Timeline:</strong> {goal.timeline}</p>
+          <p className="text-gray-600 dark:text-gray-300 mb-2"><strong>Target:</strong> {goal.suggestedAmount}</p>
+          <p className="text-gray-600 dark:text-gray-300 mb-6"><strong>Strategy:</strong> {goal.strategy}</p>
+        </div>
+        {openApplyModal ? (
+          <ApplyButton loanType={`Investment Goal - ${goal.title}`} openApplyModal={openApplyModal} className="mt-auto w-full bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors">
+            Start Planning
+          </ApplyButton>
+        ) : (
+          <button className="mt-auto w-full bg-indigo-400 text-white px-6 py-3 rounded-lg font-semibold cursor-not-allowed opacity-70" disabled>
+            Start Planning
+          </button>
+        )}
+      </div>
+    );
+  };
 
   // State for the calculator
   const [investmentType, setInvestmentType] = useState('SIP');
@@ -215,18 +240,28 @@ const InvestmentPlansPage: React.FC<InvestmentPlansPageProps> = ({ openApplyModa
               Choose the perfect investment strategy for your financial goals
             </p>
             <div className="flex flex-wrap justify-center gap-4 mt-8">
-              <button
-                className="bg-white text-blue-600 px-8 py-3 rounded-full font-semibold hover:bg-blue-50 transition-colors"
-                onClick={() => openApplyModal && openApplyModal('Investment Plan - Start Investing')}
-              >
-                Start Investing
-              </button>
-              <button
-                className="bg-blue-50 text-blue-600 px-8 py-3 rounded-full font-semibold hover:bg-blue-100 transition-colors"
-                onClick={() => openApplyModal && openApplyModal('Investment Plan - Learn More')}
-              >
-                Learn More
-              </button>
+              {openApplyModal ? (
+                <ApplyButton
+                  loanType="Investment Plan - Start Investing"
+                  openApplyModal={openApplyModal}
+                  className="bg-white text-blue-600 px-8 py-3 rounded-full font-semibold hover:bg-blue-50 transition-colors"
+                >
+                  Start Investing
+                </ApplyButton>
+              ) : (
+                <button className="bg-gray-200 text-gray-500 px-8 py-3 rounded-full font-semibold cursor-not-allowed" disabled>Start Investing</button>
+              )}
+              {openApplyModal ? (
+                <ApplyButton
+                  loanType="Investment Plan - Learn More"
+                  openApplyModal={openApplyModal}
+                  className="bg-blue-50 text-blue-600 px-8 py-3 rounded-full font-semibold hover:bg-blue-100 transition-colors"
+                >
+                  Learn More
+                </ApplyButton>
+              ) : (
+                <button className="bg-gray-200 text-gray-500 px-8 py-3 rounded-full font-semibold cursor-not-allowed" disabled>Learn More</button>
+              )}
             </div>
           </div>
         </div>
@@ -276,12 +311,17 @@ const InvestmentPlansPage: React.FC<InvestmentPlansPageProps> = ({ openApplyModa
                     Best for: {plan.bestFor}
                   </p>
                 </div>
-                <button
-                  className="mt-6 w-full bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
-                  onClick={() => openApplyModal && openApplyModal(`Investment Solution - ${plan.title}`)}
-                >
-                  Choose Plan
-                </button>
+                {openApplyModal ? (
+                  <ApplyButton
+                    loanType={`Investment Solution - ${plan.title}`}
+                    openApplyModal={openApplyModal}
+                    className="mt-6 w-full bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+                  >
+                    Choose Plan
+                  </ApplyButton>
+                ) : (
+                  <button className="mt-6 w-full bg-blue-400 text-white px-6 py-3 rounded-lg font-semibold cursor-not-allowed opacity-70" disabled>Choose Plan</button>
+                )}
               </div>
             ))}
           </div>
@@ -297,12 +337,17 @@ const InvestmentPlansPage: React.FC<InvestmentPlansPageProps> = ({ openApplyModa
           <p className="text-xl text-blue-100 mb-8">
             Take the first step towards financial freedom today
           </p>
-          <button
-            className="bg-white text-blue-600 px-8 py-3 rounded-full font-semibold hover:bg-blue-50 transition-colors"
-            onClick={() => openApplyModal && openApplyModal('Investment Plan - Get Started')}
-          >
-            Get Started Now
-          </button>
+          {openApplyModal ? (
+            <ApplyButton
+              loanType="Investment Plan - Get Started"
+              openApplyModal={openApplyModal}
+              className="bg-white text-blue-600 px-8 py-3 rounded-full font-semibold hover:bg-blue-50 transition-colors"
+            >
+              Get Started Now
+            </ApplyButton>
+          ) : (
+            <button className="bg-gray-200 text-gray-500 px-8 py-3 rounded-full font-semibold cursor-not-allowed" disabled>Get Started Now</button>
+          )}
         </div>
       </section>
 
@@ -385,12 +430,17 @@ const InvestmentPlansPage: React.FC<InvestmentPlansPageProps> = ({ openApplyModa
                       </p>
                     </div>
                   </div>
-                  <button
-                    className="w-full bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors mt-4"
-                    onClick={() => openApplyModal && openApplyModal(`Investment Plan - Calculator`)}
-                  >
-                    Start This Investment
-                  </button>
+                  {openApplyModal ? (
+                    <ApplyButton
+                      loanType="Investment Plan - Calculator"
+                      openApplyModal={openApplyModal}
+                      className="w-full bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors mt-4"
+                    >
+                      Start This Investment
+                    </ApplyButton>
+                  ) : (
+                    <button className="w-full bg-green-400 text-white px-6 py-3 rounded-lg font-semibold cursor-not-allowed opacity-70 mt-4" disabled>Start This Investment</button>
+                  )}
                 </div>
               </div>
             </div>

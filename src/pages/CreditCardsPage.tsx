@@ -401,29 +401,29 @@ const CreditCardsPage: React.FC<CreditCardsPageProps> = ({ openApplyModal }) => 
 
         switch(cardType) {
             case "Travel Credit Card":
-                features = "Unlimited Lounge Access, Air Miles, Travel Insurance";
+                features = "Unlimited Lounge Access, Air Miles, Travel Insurance, No Annual Fee";
                 idealFor = "Frequent flyers, international travelers";
-                annualFee = "₹2,500 - ₹10,000";
+                annualFee = "₹0 - ₹FREE";
                 break;
             case "Cashback Credit Card":
                 features = "5% Cashback on All Spends, No Annual Fee";
                 idealFor = "Everyday spenders, budget-conscious individuals";
-                annualFee = "₹0 - ₹500";
+                annualFee = "₹0 - ₹FREE";
                 break;
             case "Rewards Credit Card":
-                features = "Accelerated Reward Points, Vouchers, Merchandise";
+                features = "Accelerated Reward Points, Vouchers, Merchandise, No Annual Fee";
                 idealFor = "Shoppers, those who like redeeming points";
-                annualFee = "₹500 - ₹2,000";
+                annualFee = "₹0 - ₹FREE";
                 break;
             case "Business Credit Card":
-                features = "Higher Credit Limits, Expense Management, Corporate Benefits";
+                features = "Higher Credit Limits, Expense Management, Corporate Benefits, No Annual Fee";
                 idealFor = "Entrepreneurs, small business owners";
-                annualFee = "₹1,000 - ₹5,000";
+                annualFee = "₹0 - ₹FREE";
                 break;
             case "Fuel Credit Card":
-                features = "Cashback/Discounts on Fuel, Surcharge Waiver";
+                features = "Cashback/Discounts on Fuel, Surcharge Waiver, No Annual Fee";
                 idealFor = "Daily commuters, frequent drivers";
-                annualFee = "₹0 - ₹750";
+                annualFee = "₹0 - ₹FREE";
                 break;
             case "Lifetime-Free Card":
                 features = "No Annual Fee, No Joining Fee";
@@ -432,8 +432,8 @@ const CreditCardsPage: React.FC<CreditCardsPageProps> = ({ openApplyModal }) => 
                 break;
             default:
                 features = "N/A";
-                idealFor = "N/A";
-                annualFee = "N/A";
+                idealFor = "YOU";
+                annualFee = "No Annual Fee";
         }
 
         setModalContent({ cardType, features, idealFor, annualFee });
@@ -480,25 +480,6 @@ const CreditCardsPage: React.FC<CreditCardsPageProps> = ({ openApplyModal }) => 
             content.style.maxHeight = content.scrollHeight + "px";
             chevron.classList.add('rotate-180');
         }
-    };
-
-    // Footer - Newsletter Signup
-    const handleNewsletterSubmit = (e) => {
-        e.preventDefault();
-        const newsletterSuccess = document.getElementById('newsletter-success');
-        if (window.gsap) {
-            window.gsap.to(newsletterSuccess, { opacity: 1, display: 'block', duration: 0.5, onComplete: () => {
-                window.gsap.to(newsletterSuccess, { opacity: 0, delay: 2, duration: 0.5, onComplete: () => {
-                    newsletterSuccess.style.display = 'none';
-                }});
-            }});
-        } else {
-            newsletterSuccess.style.display = 'block';
-            setTimeout(() => {
-                newsletterSuccess.style.display = 'none';
-            }, 2500);
-        }
-        e.target.reset(); // Reset the form
     };
 
     // Floating Action Button Animation
@@ -865,7 +846,7 @@ const CreditCardsPage: React.FC<CreditCardsPageProps> = ({ openApplyModal }) => 
                             Compare 60+ credit cards, get instant approval, and unlock exclusive benefits tailored to your lifestyle.
                         </p>
                         <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 justify-center md:justify-start">
-                            {openApplyModal && (
+                            {openApplyModal ? (
                                 <ApplyButton
                                     loanType="Credit Card"
                                     openApplyModal={openApplyModal}
@@ -875,18 +856,28 @@ const CreditCardsPage: React.FC<CreditCardsPageProps> = ({ openApplyModal }) => 
                                 >
                                     Find My Card
                                 </ApplyButton>
+                            ) : (
+                                <button className="btn-primary-gradient text-white font-bold py-3 px-8 rounded-full shadow-lg opacity-50 cursor-not-allowed" disabled>Find My Card</button>
                             )}
-                            <button className="btn-secondary-outline text-white font-bold py-3 px-8 rounded-full transition duration-300 ease-in-out animate-scale-in delay-100">
-                                Compare Cards
-                            </button>
+                            {openApplyModal ? (
+                                <ApplyButton
+                                    loanType="Credit Card - Compare"
+                                    openApplyModal={openApplyModal}
+                                    className="btn-secondary-outline text-white font-bold py-3 px-8 rounded-full transition duration-300 ease-in-out animate-scale-in delay-100"
+                                >
+                                    Compare Cards
+                                </ApplyButton>
+                            ) : (
+                                <button className="btn-secondary-outline text-white font-bold py-3 px-8 rounded-full opacity-50 cursor-not-allowed" disabled>Compare Cards</button>
+                            )}
                         </div>
                     </div>
                     <div className="md:w-1/2 flex justify-center items-center card-stack-container">
                         {/* Animated Credit Card Stack (simplified 3D with CSS) */}
                         <div className="relative w-72 h-48 md:w-96 md:h-64">
-                            <img src="https://placehold.co/384x256/1a365d/ffffff?text=BankA" alt="Credit Card 1" className="absolute w-full h-full rounded-xl shadow-2xl credit-card-item opacity-0 animate-fade-in-right" />
-                            <img src="https://placehold.co/384x256/63b3ed/ffffff?text=BankB" alt="Credit Card 2" className="absolute w-full h-full rounded-xl shadow-2xl credit-card-item opacity-0 animate-fade-in-right delay-200" />
-                            <img src="https://placehold.co/384x256/48bb78/ffffff?text=BankC" alt="Credit Card 3" className="absolute w-full h-full rounded-xl shadow-2xl credit-card-item opacity-0 animate-fade-in-right delay-400" />
+                            <img src="/cards/sbi.png" alt="SBI Credit Card" className="absolute w-full h-full rounded-xl shadow-2xl credit-card-item opacity-0 animate-fade-in-right" />
+                            <img src="/cards/icici.png" alt="ICICI Credit Card" className="absolute w-full h-full rounded-xl shadow-2xl credit-card-item opacity-0 animate-fade-in-right delay-200" />
+                            <img src="/cards/axis.png" alt="Axis Bank Credit Card" className="absolute w-full h-full rounded-xl shadow-2xl credit-card-item opacity-0 animate-fade-in-right delay-400" />
                         </div>
                     </div>
                 </div>
@@ -932,19 +923,19 @@ const CreditCardsPage: React.FC<CreditCardsPageProps> = ({ openApplyModal }) => 
                     <div className="carousel-container py-8">
                         <div className="carousel-track flex items-center">
                             {/* Duplicate items for seamless loop */}
-                            <div className="carousel-item"><img src="https://placehold.co/120x60/f0f0f0/333333?text=Bank+A" alt="Bank Logo" className="h-12 object-contain mx-auto rounded-md" /></div>
-                            <div className="carousel-item"><img src="https://placehold.co/120x60/f0f0f0/333333?text=Bank+B" alt="Bank Logo" className="h-12 object-contain mx-auto rounded-md" /></div>
-                            <div className="carousel-item"><img src="https://placehold.co/120x60/f0f0f0/333333?text=Bank+C" alt="Bank Logo" className="h-12 object-contain mx-auto rounded-md" /></div>
-                            <div className="carousel-item"><img src="https://placehold.co/120x60/f0f0f0/333333?text=Bank+D" alt="Bank Logo" className="h-12 object-contain mx-auto rounded-md" /></div>
-                            <div className="carousel-item"><img src="https://placehold.co/120x60/f0f0f0/333333?text=Bank+E" alt="Bank Logo" className="h-12 object-contain mx-auto rounded-md" /></div>
-                            <div className="carousel-item"><img src="https://placehold.co/120x60/f0f0f0/333333?text=Bank+F" alt="Bank Logo" className="h-12 object-contain mx-auto rounded-md" /></div>
+                            <div className="carousel-item"><img src="/logos/sbi.png" alt="SBI Logo" className="h-12 object-contain mx-auto rounded-md" /></div>
+                            <div className="carousel-item"><img src="/logos/bob.png" alt="Bank of Baroda Logo" className="h-12 object-contain mx-auto rounded-md" /></div>
+                            <div className="carousel-item"><img src="/logos/axis.png" alt="Axis Bank Logo" className="h-12 object-contain mx-auto rounded-md" /></div>
+                            <div className="carousel-item"><img src="/logos/icici.png" alt="ICICI Bank Logo" className="h-12 object-contain mx-auto rounded-md" /></div>
+                            <div className="carousel-item"><img src="/logos/hdfc.png" alt="HDFC Bank Logo" className="h-12 object-contain mx-auto rounded-md" /></div>
+                            <div className="carousel-item"><img src="/logos/pnb.png" alt="PNB Logo" className="h-12 object-contain mx-auto rounded-md" /></div>
                             {/* Duplicates for seamless loop */}
-                            <div className="carousel-item"><img src="https://placehold.co/120x60/f0f0f0/333333?text=Bank+A" alt="Bank Logo" className="h-12 object-contain mx-auto rounded-md" /></div>
-                            <div className="carousel-item"><img src="https://placehold.co/120x60/f0f0f0/333333?text=Bank+B" alt="Bank Logo" className="h-12 object-contain mx-auto rounded-md" /></div>
-                            <div className="carousel-item"><img src="https://placehold.co/120x60/f0f0f0/333333?text=Bank+C" alt="Bank Logo" className="h-12 object-contain mx-auto rounded-md" /></div>
-                            <div className="carousel-item"><img src="https://placehold.co/120x60/f0f0f0/333333?text=Bank+D" alt="Bank Logo" className="h-12 object-contain mx-auto rounded-md" /></div>
-                            <div className="carousel-item"><img src="https://placehold.co/120x60/f0f0f0/333333?text=Bank+E" alt="Bank Logo" className="h-12 object-contain mx-auto rounded-md" /></div>
-                            <div className="carousel-item"><img src="https://placehold.co/120x60/f0f0f0/333333?text=Bank+F" alt="Bank Logo" className="h-12 object-contain mx-auto rounded-md" /></div>
+                            <div className="carousel-item"><img src="/logos/sbi.png" alt="SBI Logo" className="h-12 object-contain mx-auto rounded-md" /></div>
+                            <div className="carousel-item"><img src="/logos/bob.png" alt="Bank of Baroda Logo" className="h-12 object-contain mx-auto rounded-md" /></div>
+                            <div className="carousel-item"><img src="/logos/axis.png" alt="Axis Bank Logo" className="h-12 object-contain mx-auto rounded-md" /></div>
+                            <div className="carousel-item"><img src="/logos/icici.png" alt="ICICI Bank Logo" className="h-12 object-contain mx-auto rounded-md" /></div>
+                            <div className="carousel-item"><img src="/logos/hdfc.png" alt="HDFC Bank Logo" className="h-12 object-contain mx-auto rounded-md" /></div>
+                            <div className="carousel-item"><img src="/logos/pnb.png" alt="PNB Logo" className="h-12 object-contain mx-auto rounded-md" /></div>
                         </div>
                     </div>
                 </div>
@@ -969,7 +960,7 @@ const CreditCardsPage: React.FC<CreditCardsPageProps> = ({ openApplyModal }) => 
                                 <li><i className="fas fa-dollar-sign text-green-500 mr-2"></i> Zero Forex Fees</li>
                             </ul>
                             <p className="text-gray-700 mb-4">
-                                Joining Fee: <span className="font-bold strikethrough-text">₹10,000 + Taxes</span> <span className="text-green-600 font-bold"> (Waiver Available!)</span>
+                                Joining Fee: <span className="font-bold strikethrough-text">₹FREE + No Annual Fee</span> <span className="text-green-600 font-bold"> (FREE!)</span>
                             </p>
                             <div className="flex flex-wrap gap-2 mb-4">
                                 <span className="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Travel</span>
@@ -982,7 +973,7 @@ const CreditCardsPage: React.FC<CreditCardsPageProps> = ({ openApplyModal }) => 
                                     <div className="bg-blue-600 h-2.5 rounded-full" style={{ width: '85%' }} id="popularity-bar-1"></div>
                                 </div>
                             </div>
-                            {openApplyModal && (
+                            {openApplyModal ? (
                                 <ApplyButton
                                     loanType="Credit Card - Premium Travel"
                                     openApplyModal={openApplyModal}
@@ -992,6 +983,8 @@ const CreditCardsPage: React.FC<CreditCardsPageProps> = ({ openApplyModal }) => 
                                 >
                                     Apply Now
                                 </ApplyButton>
+                            ) : (
+                                <button className="w-full py-2 rounded-lg bg-gray-400 text-white cursor-not-allowed" disabled>Apply Now</button>
                             )}
                         </div>
 
@@ -1015,7 +1008,7 @@ const CreditCardsPage: React.FC<CreditCardsPageProps> = ({ openApplyModal }) => 
                                     <div className="bg-green-600 h-2.5 rounded-full" style={{ width: '92%' }} id="popularity-bar-2"></div>
                                 </div>
                             </div>
-                            {openApplyModal && (
+                            {openApplyModal ? (
                                 <ApplyButton
                                     loanType="Credit Card - Cashback"
                                     openApplyModal={openApplyModal}
@@ -1025,6 +1018,8 @@ const CreditCardsPage: React.FC<CreditCardsPageProps> = ({ openApplyModal }) => 
                                 >
                                     Apply Now
                                 </ApplyButton>
+                            ) : (
+                                <button className="w-full py-2 rounded-lg bg-gray-400 text-white cursor-not-allowed" disabled>Apply Now</button>
                             )}
 
                             {/* Hover effect revealing additional benefits */}
@@ -1060,7 +1055,7 @@ const CreditCardsPage: React.FC<CreditCardsPageProps> = ({ openApplyModal }) => 
                                     <div className="bg-yellow-600 h-2.5 rounded-full" style={{ width: '78%' }} id="popularity-bar-3"></div>
                                 </div>
                             </div>
-                            {openApplyModal && (
+                            {openApplyModal ? (
                                 <ApplyButton
                                     loanType="Credit Card - Business"
                                     openApplyModal={openApplyModal}
@@ -1070,6 +1065,8 @@ const CreditCardsPage: React.FC<CreditCardsPageProps> = ({ openApplyModal }) => 
                                 >
                                     Apply Now
                                 </ApplyButton>
+                            ) : (
+                                <button className="w-full py-2 rounded-lg bg-gray-400 text-white cursor-not-allowed" disabled>Apply Now</button>
                             )}
                         </div>
                     </div>
@@ -1077,7 +1074,7 @@ const CreditCardsPage: React.FC<CreditCardsPageProps> = ({ openApplyModal }) => 
             </section>
 
             {/* Interactive Card Comparison Tool */}
-            <section className="py-16 bg-white">
+            <section id="rewards-calculator" className="py-16 bg-white">
                 <div className="container mx-auto px-6 md:px-12 text-center">
                     <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-12 animate-fade-in">
                         Don't Know Which Card to Use?
@@ -1125,9 +1122,13 @@ const CreditCardsPage: React.FC<CreditCardsPageProps> = ({ openApplyModal }) => 
                             Potential Monthly Earnings: <span className="text-green-600">₹{potentialEarnings.toLocaleString('en-IN', { maximumFractionDigits: 0 })}</span>
                         </div>
 
-                        <button className="btn-primary-gradient text-white font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1 flex items-center justify-center mx-auto">
-                            Try Rewards Calculator <i className="fas fa-arrow-right ml-2 animate-bounce-right"></i>
-                        </button>
+                        {openApplyModal ? (
+                            <ApplyButton loanType="Credit Card - Rewards Calculator" openApplyModal={openApplyModal} className="btn-primary-gradient text-white font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1 flex items-center justify-center mx-auto">
+                                Find Best Card For Me <i className="fas fa-arrow-right ml-2 animate-bounce-right"></i>
+                            </ApplyButton>
+                        ) : (
+                            <button className="btn-primary-gradient text-white font-bold py-3 px-8 rounded-full shadow-lg opacity-50 cursor-not-allowed flex items-center justify-center mx-auto" disabled>Find Best Card For Me <i className="fas fa-arrow-right ml-2"></i></button>
+                        )}
                     </div>
                 </div>
             </section>
@@ -1685,7 +1686,7 @@ const CreditCardsPage: React.FC<CreditCardsPageProps> = ({ openApplyModal }) => 
                             <p><strong>Ideal For:</strong> <span>{modalContent.idealFor}</span></p>
                             <p><strong>Annual Fee:</strong> <span>{modalContent.annualFee}</span></p>
                         </div>
-                        {openApplyModal && (
+                        {openApplyModal ? (
                             <ApplyButton
                                 loanType={modalContent.cardType}
                                 openApplyModal={openApplyModal}
@@ -1697,6 +1698,8 @@ const CreditCardsPage: React.FC<CreditCardsPageProps> = ({ openApplyModal }) => 
                             >
                                 Apply for this Card
                             </ApplyButton>
+                        ) : (
+                            <button className="mt-8 w-full rounded-lg font-semibold py-2 bg-gray-400 text-white cursor-not-allowed" disabled>Apply for this Card</button>
                         )}
                     </div>
                 </div>
@@ -1788,71 +1791,8 @@ const CreditCardsPage: React.FC<CreditCardsPageProps> = ({ openApplyModal }) => 
                 </div>
             </section>
 
-            {/* Footer Section */}
-            <footer className="bg-blue-900 text-white py-12 px-6 md:px-12">
-                <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
-                    {/* About BanksCart */}
-                    <div>
-                        <h3 className="text-xl font-bold mb-4">BanksCart</h3>
-                        <p className="text-gray-300 text-sm">Your trusted partner for finding the perfect credit card and managing your finances wisely.</p>
-                        <div className="flex space-x-4 mt-6">
-                            <a href="#" className="text-gray-300 hover:text-white transition duration-300 transform hover:scale-110 social-icon"><i className="fab fa-facebook-f"></i></a>
-                            <a href="#" className="text-gray-300 hover:text-white transition duration-300 transform hover:scale-110 social-icon"><i className="fab fa-twitter"></i></a>
-                            <a href="#" className="text-gray-300 hover:text-white transition duration-300 transform hover:scale-110 social-icon"><i className="fab fa-instagram"></i></a>
-                            <a href="#" className="text-gray-300 hover:text-white transition duration-300 transform hover:scale-110 social-icon"><i className="fab fa-linkedin-in"></i></a>
-                        </div>
-                    </div>
-
-                    {/* Quick Links */}
-                    <div>
-                        <h3 className="text-xl font-bold mb-4">Quick Links</h3>
-                        <ul className="space-y-2">
-                            <li><a href="#" className="text-gray-300 hover:text-white text-sm hover-underline">Credit Cards</a></li>
-                            <li><a href="#" className="text-gray-300 hover:text-white text-sm hover-underline">Personal Loans</a></li>
-                            <li><a href="#" className="text-gray-300 hover:text-white text-sm hover-underline">FAQs</a></li>
-                            <li><a href="#" className="text-gray-300 hover:text-white text-sm hover-underline">Privacy Policy</a></li>
-                            <li><a href="#" className="text-gray-300 hover:text-white text-sm hover-underline">Terms of Service</a></li>
-                        </ul>
-                    </div>
-
-                    {/* Contact Information */}
-                    <div>
-                        <h3 className="text-xl font-bold mb-4">Contact Us</h3>
-                        <p className="text-gray-300 text-sm mb-2">
-                            <i className="fas fa-map-marker-alt mr-2"></i> 123 BanksCart Avenue, Bengaluru, India
-                        </p>
-                        <p className="text-gray-300 text-sm mb-2">
-                            <a href="tel:+918012345678" className="hover:text-white transition duration-300 click-to-call">
-                                <i className="fas fa-phone mr-2"></i> +91 80 1234 5678
-                            </a>
-                        </p>
-                        <p className="text-gray-300 text-sm mb-2">
-                            <a href="mailto:info@bankscart.com" className="hover:text-white transition duration-300">
-                                <i className="fas fa-envelope mr-2"></i> info@bankscart.com
-                            </a>
-                        </p>
-                    </div>
-
-                    {/* Newsletter Signup */}
-                    <div>
-                        <h3 className="text-xl font-bold mb-4">Stay Updated</h3>
-                        <p className="text-gray-300 text-sm mb-4">Subscribe to our newsletter for the latest offers and financial tips.</p>
-                        <form id="newsletter-form" className="flex flex-col sm:flex-row" onSubmit={handleNewsletterSubmit}>
-                            <input type="email" placeholder="Your email address" className="p-3 rounded-l-lg sm:rounded-l-md sm:rounded-r-none w-full sm:w-auto flex-grow text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                            <button type="submit" className="bg-green-500 text-white p-3 rounded-r-lg sm:rounded-r-md sm:rounded-l-none mt-2 sm:mt-0 hover:bg-green-600 transition duration-300">Subscribe</button>
-                        </form>
-                        <div id="newsletter-success" className="text-green-400 mt-3 text-sm hidden">
-                            <i className="fas fa-check-circle mr-2"></i> Subscribed successfully!
-                        </div>
-                    </div>
-                </div>
-                <div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400 text-sm">
-                    &copy; 2024 BanksCart. All rights reserved.
-                </div>
-            </footer>
-
             {/* Floating Action Button for Quick Application */}
-            {openApplyModal && (
+            {openApplyModal ? (
                 <ApplyButton
                     loanType="Credit Card - Quick Apply"
                     openApplyModal={openApplyModal}
@@ -1861,6 +1801,8 @@ const CreditCardsPage: React.FC<CreditCardsPageProps> = ({ openApplyModal }) => 
                 >
                     <i className="fas fa-credit-card text-2xl mr-2"></i> Apply Now
                 </ApplyButton>
+            ) : (
+                <button className="fixed bottom-6 right-6 rounded-full p-4 shadow-lg bg-gray-400 z-40 cursor-not-allowed" disabled><i className="fas fa-credit-card text-2xl mr-2 text-white"></i> <span className="text-white">Apply Now</span></button>
             )}
         </>
     );

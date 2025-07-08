@@ -157,6 +157,9 @@ const Calculators: React.FC = () => {
           case 'mortgage':
             pageRoute = '/MortgageCalculatorPage';
             break;
+          case 'carloan':
+            pageRoute = '/car-loan-calculator';
+            break;
           // Add more cases for other calculators as you create their pages
           default:
             pageRoute = '';

@@ -2,7 +2,11 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { CreditCard, Zap, ShieldCheck, Award, ArrowRight } from 'lucide-react'; // Importing relevant Lucide icons
 
-const FinalCTA = () => {
+interface FinalCTAProps {
+  openApplyModal?: (loanType?: string) => void;
+}
+
+const FinalCTA: React.FC<FinalCTAProps> = ({ openApplyModal }) => {
   // Framer Motion variants for the main section entry
   const sectionVariants = {
     hidden: { opacity: 0, y: 50 },
@@ -112,16 +116,27 @@ const FinalCTA = () => {
           className="flex flex-col sm:flex-row justify-center gap-6"
           variants={itemVariants}
         >
-          <motion.button
-            className="px-10 py-5 rounded-full font-bold text-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg
-                       hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 ease-in-out transform hover:-translate-y-1
-                       focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 flex items-center justify-center gap-3"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <CreditCard className="w-7 h-7" /> Get Your BanksCart Debit Card
-            <ArrowRight className="w-6 h-6 ml-2" />
-          </motion.button>
+          {openApplyModal ? (
+            <motion.button
+              onClick={() => openApplyModal('Debit Card')}
+              className="px-10 py-5 rounded-full font-bold text-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg
+                         hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 ease-in-out transform hover:-translate-y-1
+                         focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 flex items-center justify-center gap-3"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <CreditCard className="w-7 h-7" /> Get Your BanksCart Debit Card
+              <ArrowRight className="w-6 h-6 ml-2" />
+            </motion.button>
+          ) : (
+            <motion.button
+              className="px-10 py-5 rounded-full font-bold text-xl bg-gray-400 text-white shadow-lg cursor-not-allowed flex items-center justify-center gap-3"
+              disabled
+            >
+              <CreditCard className="w-7 h-7" /> Get Your BanksCart Debit Card
+              <ArrowRight className="w-6 h-6 ml-2" />
+            </motion.button>
+          )}
           <motion.button
             className="px-10 py-5 rounded-full font-bold text-xl bg-transparent border-2 border-gray-500 text-gray-300
                        hover:bg-gray-700 hover:border-gray-700 hover:text-white transition-all duration-300 ease-in-out transform hover:-translate-y-1

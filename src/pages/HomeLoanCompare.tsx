@@ -189,13 +189,15 @@ const HomeLoanCompare: React.FC<HomeLoanCompareProps> = ({ openApplyModal }) => 
                   >
                     Edit Banks
                   </button>
-                  {openApplyModal && (
+                  {openApplyModal ? (
                     <button
                       className="bg-primary-600 text-white px-4 py-2 rounded hover:bg-primary-700"
                       onClick={() => openApplyModal(`${loanTypes.find(t => t.key === selectedType)?.label} Comparison`)}
                     >
                       Get Offers
                     </button>
+                  ) : (
+                    <button className="bg-gray-400 text-white px-4 py-2 rounded cursor-not-allowed" disabled>Get Offers</button>
                   )}
                 </div>
               </div>

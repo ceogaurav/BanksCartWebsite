@@ -286,7 +286,7 @@ const PlotConstructionLoan: React.FC<PlotConstructionLoanProps> = ({ openApplyMo
                 </div>
 
                 <div className="mt-6 flex flex-col sm:flex-row gap-3">
-                  {openApplyModal && (
+                  {openApplyModal ? (
                     <ApplyButton
                       loanType={`Plot & Construction Loan - ${bank.bank}`}
                       openApplyModal={openApplyModal}
@@ -294,10 +294,20 @@ const PlotConstructionLoan: React.FC<PlotConstructionLoanProps> = ({ openApplyMo
                     >
                       Apply Now
                     </ApplyButton>
+                  ) : (
+                    <button className="flex-1 bg-gray-400 text-white py-2 px-4 rounded-lg font-semibold cursor-not-allowed" disabled>Apply Now</button>
                   )}
-                  <button className="flex-1 border border-primary-600 text-primary-600 py-2 px-4 rounded-lg font-semibold hover:bg-primary-50 transition-colors">
-                    View Details
-                  </button>
+                  {openApplyModal ? (
+                    <ApplyButton
+                      loanType={`View Details - ${bank.bank}`}
+                      openApplyModal={openApplyModal}
+                      className="flex-1 border border-primary-600 text-primary-600 py-2 px-4 rounded-lg font-semibold hover:bg-primary-50 transition-colors"
+                    >
+                      View Details
+                    </ApplyButton>
+                  ) : (
+                    <button className="flex-1 border border-gray-400 text-gray-400 py-2 px-4 rounded-lg font-semibold cursor-not-allowed" disabled>View Details</button>
+                  )}
                 </div>
               </div>
             ))}

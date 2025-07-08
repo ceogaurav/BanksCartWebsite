@@ -134,7 +134,7 @@ const AmortizationTable = ({ schedule, openApplyModal }: { schedule: any[], open
         </thead>
         <tbody>
           {schedule.map((row: any, i: number) => (
-            <tr key={row.year} className={i % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
+            <tr key={row.year} className={`${i % 2 === 0 ? 'bg-gray-50' : 'bg-white'} hover:bg-blue-50 transition-colors`}>
               <td className="py-2 px-3 font-semibold">{row.year}</td>
               <td className="py-2 px-3">{formatCurrency(row.principalPaid)}</td>
               <td className="py-2 px-3">{formatCurrency(row.interestPaid)}</td>
@@ -146,13 +146,15 @@ const AmortizationTable = ({ schedule, openApplyModal }: { schedule: any[], open
         <tfoot>
           <tr className="bg-gray-100">
             <td colSpan={5} className="text-center py-4">
-              {openApplyModal && (
+              {openApplyModal ? (
                 <button
                   onClick={() => openApplyModal('Home Loan')}
                   className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-all text-lg"
                 >
                   Apply for this Home Loan
                 </button>
+              ) : (
+                <button className="bg-gray-400 text-white font-bold py-3 px-8 rounded-full shadow-lg cursor-not-allowed" disabled>Apply for this Home Loan</button>
               )}
             </td>
           </tr>
@@ -197,16 +199,32 @@ const HomeLoanEMICalculator: React.FC<HomeLoanEMICalculatorProps> = ({ openApply
             <Slider label="Interest Rate" value={rate} setValue={setRate} min={SLIDER_CONFIG.rate.min} max={SLIDER_CONFIG.rate.max} step={SLIDER_CONFIG.rate.step} unit="%" format={v => v + '%'} color="#4a90e2" />
             <Slider label="Loan Tenure" value={tenure} setValue={setTenure} min={SLIDER_CONFIG.tenure.min} max={SLIDER_CONFIG.tenure.max} step={SLIDER_CONFIG.tenure.step} unit="Years" format={v => v + ' Yr'} color="#4a90e2" />
             <Slider label="Processing Fee" value={fee} setValue={setFee} min={SLIDER_CONFIG.fee.min} max={SLIDER_CONFIG.fee.max} step={SLIDER_CONFIG.fee.step} unit="%" format={v => v + '%'} color="#4a90e2" />
-            <div className="mt-6"><CreditScoreButton onClick={() => openApplyModal && openApplyModal('Credit Score Check')} /></div>
+            <div className="mt-6">
+              {openApplyModal ? (
+                <CreditScoreButton onClick={() => openApplyModal('Credit Score Check')} />
+              ) : (
+                <button className="bg-gray-400 text-white font-bold py-3 px-6 rounded-full shadow-lg cursor-not-allowed" disabled>FREE Credit Score</button>
+              )}
+            </div>
           </div>
           {/* Right Panel - Results */}
           <div className="flex-1 min-w-[320px] flex flex-col items-center">
             <ResultBox emi={emi} amount={amount} interest={totalInterest} fee={amount * (fee / 100)} />
-            <CreditScoreButton onClick={() => openApplyModal && openApplyModal('Credit Score Check')} />
+            {openApplyModal ? (
+              <CreditScoreButton onClick={() => openApplyModal('Credit Score Check')} />
+            ) : (
+              <button className="bg-gray-400 text-white font-bold py-3 px-6 rounded-full shadow-lg cursor-not-allowed" disabled>FREE Credit Score</button>
+            )}
           </div>
         </div>
         <AmortizationTable schedule={schedule} openApplyModal={openApplyModal} />
-        <div className="mt-8"><CreditScoreButton onClick={() => openApplyModal && openApplyModal('Credit Score Check')} /></div>
+        <div className="mt-8">
+          {openApplyModal ? (
+            <CreditScoreButton onClick={() => openApplyModal('Credit Score Check')} />
+          ) : (
+            <button className="bg-gray-400 text-white font-bold py-3 px-6 rounded-full shadow-lg cursor-not-allowed" disabled>FREE Credit Score</button>
+          )}
+        </div>
         {/* Content Sections (abbreviated for brevity, add all as needed) */}
         <section className="mt-12">
           <h3 className="text-2xl font-bold mb-2">How can home loan EMI calculator help you?</h3>

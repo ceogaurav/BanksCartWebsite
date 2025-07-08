@@ -29,16 +29,13 @@ const FixedDepositPage: React.FC<{ openApplyModal?: (loanType?: string) => void 
             <span className="bg-white/20 rounded-full px-5 py-2 text-lg font-semibold border border-white/30">₹10,000 minimum investment • Up to 10 years tenure • 100% secure</span>
           </div>
           <div className="flex gap-4 mt-6">
-            {openApplyModal && (
-              <ApplyButton
-                loanType="Fixed Deposit"
-                openApplyModal={openApplyModal}
-                className="bg-gradient-to-r from-[#059669] to-[#10B981] text-white font-poppins text-lg px-8 py-3 rounded-xl font-bold shadow-lg transform transition hover:scale-105 hover:shadow-2xl animate-pulse"
-              >
-                Calculate Your Returns
-              </ApplyButton>
-            )}
-            {openApplyModal && (
+            <button
+              onClick={() => document.getElementById('fd-calculator')?.scrollIntoView({ behavior: 'smooth' })}
+              className="bg-gradient-to-r from-[#059669] to-[#10B981] text-white font-poppins text-lg px-8 py-3 rounded-xl font-bold shadow-lg transform transition hover:scale-105 hover:shadow-2xl animate-pulse"
+            >
+              Calculate Your Returns
+            </button>
+            {openApplyModal ? (
               <ApplyButton
                 loanType="Fixed Deposit"
                 openApplyModal={openApplyModal}
@@ -46,6 +43,8 @@ const FixedDepositPage: React.FC<{ openApplyModal?: (loanType?: string) => void 
               >
                 Start Investing Today
               </ApplyButton>
+            ) : (
+              <button className="bg-gray-200 text-gray-500 font-poppins text-lg px-8 py-3 rounded-xl font-bold shadow-lg cursor-not-allowed" disabled>Start Investing Today</button>
             )}
           </div>
           {/* Trust Indicators */}
@@ -71,7 +70,7 @@ const FixedDepositPage: React.FC<{ openApplyModal?: (loanType?: string) => void 
         </div>
       </section>
       {/* 2. Calculator Section */}
-      <section className="w-full flex flex-col md:flex-row justify-center items-start gap-8 bg-[#F0F9FF] py-8">
+      <section id="fd-calculator" className="w-full flex flex-col md:flex-row justify-center items-start gap-8 bg-[#F0F9FF] py-8">
         <div className="w-full md:w-1/2 max-w-2xl mx-auto">
           <FDCalculator LiveChartsComponent={FDLiveCharts} openApplyModal={openApplyModal} />
         </div>
