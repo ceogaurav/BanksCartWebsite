@@ -160,6 +160,117 @@ const Calculators: React.FC = () => {
           case 'carloan':
             pageRoute = '/car-loan-calculator';
             break;
+            case 'studentloan':
+            pageRoute = '/student-loan-calculator';
+            break;
+            case 'personalloan':
+            pageRoute = '/personal-loan-emi-calculator';
+            break;
+            case 'paydayloan':
+            pageRoute = '/payday-loan-calculator';
+            break;
+          case 'compound':
+            pageRoute = '/compound-interest-calculator';
+            break;
+          case 'investmentgrowth':
+            pageRoute = '/investment-growth-calculator';
+            break;
+          case 'retirement':
+            pageRoute = '/retirement-calculator';
+            break;
+            case 'rothvstrad':
+            pageRoute = '/roth-vs-trad-calculator';
+            break;
+              case 'stock':
+            pageRoute = '/stock-calculator';
+            break;
+          case 'incometax':
+            pageRoute = '/income-tax-calculator';
+            break;
+          case 'capitalgains':
+            pageRoute = '/capital-gains-calculator';
+            break;  
+          case 'salestax':
+            pageRoute = '/sales-tax-calculator';
+            break;  
+          case 'payrolltax':
+            pageRoute = '/payroll-tax-calculator';
+            break;
+          case 'breakeven':
+            pageRoute = '/break-even-calculator';
+            break;
+          case 'npv':
+            pageRoute = '/npv-calculator';
+            break;
+          case 'irr':
+            pageRoute = '/irr-calculator';
+            break;
+          case 'cashflow':
+            pageRoute = '/cash-flow-calculator';
+            break;
+            case 'depreciation':
+            pageRoute = '/depreciation-calculator';
+            break;
+            case 'budget':
+            pageRoute = '/budget-calculator';
+            break;
+          case 'expense':
+            pageRoute = '/expense-calculator';
+            break;
+          case 'debtpayoff':
+            pageRoute = '/debt-payoff-calculator';
+            break;
+          case 'savingsgoal':
+            pageRoute = '/savings-goal-calculator';
+            break;  
+          case 'emergencyfund':
+            pageRoute = '/emergency-fund-calculator';
+            break;  
+          case 'collegesavings':
+            pageRoute = '/college-savings-calculator';
+            break;
+          case 'currency':
+            pageRoute = '/currency-converter';
+            break;
+          case 'forex':
+            pageRoute = '/foreign-exchange-rate-calculator';
+            break;
+            case 'creditcardpayoff':
+            pageRoute = '/credit-card-payoff-calculator';
+            break;
+          case 'creditcardinterest':
+            pageRoute = '/credit-card-interest-calculator';
+            break;
+          case 'balancetransfer':
+            pageRoute = '/balance-transfer-calculator';
+            break;
+            case 'homeafford':
+            pageRoute = '/home-affordability-calculator';
+            break;
+          case 'rentvsbuy':
+            pageRoute = '/rent-vs-buy-calculator';
+            break;
+          case 'propertytax':
+            pageRoute = '/property-tax-calculator';
+            break;
+          case 'caprate':
+            pageRoute = '/caprate-calculator';
+            break;  
+          case 'inflation':
+            pageRoute = '/inflation-calculator';
+            break;
+          case 'amortization':
+            pageRoute = '/amortization-calculator';
+            break;
+          case 'annuity':
+            pageRoute = '/annuity-calculator';
+            break;
+          case 'pension':
+            pageRoute = '/pension-calculator';
+            break;
+          case 'socialsecurity':
+            pageRoute = '/social-security-calculator';
+            break;
           // Add more cases for other calculators as you create their pages
           default:
             pageRoute = '';

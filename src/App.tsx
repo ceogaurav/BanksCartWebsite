@@ -57,6 +57,43 @@ import LoanApplyPage from './pages/loanapply';
 
 // Import the CalculatorPages
 import CarLoanCalculatorPage from './pages/calculators/CarLoanCalculatorPage';
+import StudentLoanCalculatorPage from './pages/calculators/StudentLoanCalculatorPage';
+import PaydayLoanCalculatorPage from './pages/calculators/PaydayLoanCalculatorPage';
+import CompoundInterestCalculatorPage from './pages/calculators/CompoundInterestCalculatorPage';
+import InvestmentGrowthCalculatorPage from './pages/calculators/InvestmentGrowthCalculatorPage';
+import RetirementSavingsCalculatorPage from './pages/calculators/RetirementSavingsCalculatorPage';
+import RothVsTraditionalIRACalculatorPage from './pages/calculators/RothVsTraditionalIRACalculatorPage';
+import StockInvestmentCalculatorPage from './pages/calculators/StockInvestmentCalculatorPage';
+import CapitalGainsTaxCalculatorPage from './pages/calculators/CapitalGainsTaxCalculatorPage';
+import SalesTaxCalculatorPage from './pages/calculators/SalesTaxCalculatorPage';
+import PayrollTaxCalculatorPage from './pages/calculators/PayrollTaxCalculatorPage';
+import BreakEvenCalculatorPage from './pages/calculators/BreakEvenCalculatorPage';
+import NetPresentValueCalculatorPage from './pages/calculators/NetPresentValueCalculatorPage';
+import InternalRateOfReturnCalculatorPage from './pages/calculators/InternalRateOfReturnCalculatorPage';
+import CashFlowCalculatorPage from './pages/calculators/CashFlowCalculatorPage';
+import DepreciationCalculatorPage from './pages/calculators/DepreciationCalculatorPage';
+import BudgetCalculatorPage from './pages/calculators/BudgetCalculatorPage';
+import ExpenseCalculatorPage from './pages/calculators/ExpenseCalculatorPage';
+import DebtPayoffCalculatorPage from './pages/calculators/DebtPayoffCalculatorPage';
+import SavingsGoalCalculatorPage from './pages/calculators/SavingsGoalCalculatorPage';
+import EmergencyFundCalculatorPage from './pages/calculators/EmergencyFundCalculatorPage';
+import BalanceTransferCalculatorPage from './pages/calculators/BalanceTransferCalculatorPage';
+import CreditCardInterestCalculatorPage from './pages/calculators/CreditCardInterestCalculatorPage';
+import CreditCardPayoffCalculatorPage from './pages/calculators/CreditCardPayoffCalculatorPage';
+import ForeignExchangeRateCalculatorPage from './pages/calculators/ForeignExchangeRateCalculatorPage';
+import CurrencyConverterPage from './pages/calculators/CurrencyConverterPage';
+import CollegeSavingsCalculatorPage from './pages/calculators/CollegeSavingsCalculatorPage';
+import HomeAffordabilityCalculatorPage from './pages/calculators/HomeAffordabilityCalculatorPage';
+import RentVsBuyCalculatorPage from './pages/calculators/RentVsBuyCalculatorPage';
+import PropertyTaxCalculatorPage from './pages/calculators/PropertyTaxCalculatorPage';
+import CapitalizationRateCalculatorPage from './pages/calculators/CapitalizationRateCalculatorPage';
+import InflationCalculatorPage from './pages/calculators/InflationCalculatorPage';
+import LoanAmortizationCalculatorPage from './pages/calculators/LoanAmortizationCalculatorPage';
+import AnnuityCalculatorPage from './pages/calculators/AnnuityCalculatorPage';
+import PensionCalculatorPage from './pages/calculators/PensionCalculatorPage';
+import SocialSecurityCalculatorPage from './pages/calculators/SocialSecurityCalculatorPage';
+
+
 
 
 // A simple 404 Not Found component
@@ -204,8 +241,45 @@ const App: React.FC = () => {
             <Route path="/bank-details/:bankId" element={<BankDetails openEligibilityModal={openEligibilityModal} />} />
             <Route path="/loan-apply" element={<LoanApplyPage />} />
 
-             {/* NEW: Route for the Car Loan Calculator Page */}
+             {/* NEW: Route for the  Calculator Page */}
              <Route path="/car-loan-calculator" element={<CarLoanCalculatorPage openApplyModal={openApplyModal} />} />
+             <Route path="/student-loan-calculator" element={<StudentLoanCalculatorPage openApplyModal={openApplyModal} />} />
+             <Route path="/payday-loan-calculator" element={<PaydayLoanCalculatorPage openApplyModal={openApplyModal} />} />
+             <Route path="/compound-interest-calculator" element={<CompoundInterestCalculatorPage openApplyModal={openApplyModal} />} />
+             <Route path="/investment-growth-calculator" element={<InvestmentGrowthCalculatorPage openApplyModal={openApplyModal} />} />
+             <Route path="/retirement-calculator" element={<RetirementSavingsCalculatorPage openApplyModal={openApplyModal} />} />
+             <Route path="/roth-vs-trad-calculator" element={<RothVsTraditionalIRACalculatorPage openApplyModal={openApplyModal} />} />
+             <Route path="/stock-calculator" element={<StockInvestmentCalculatorPage openApplyModal={openApplyModal} />} />
+             <Route path="/capital-gains-calculator" element={<CapitalGainsTaxCalculatorPage openApplyModal={openApplyModal} />} />
+             <Route path="/sales-tax-calculator" element={<SalesTaxCalculatorPage openApplyModal={openApplyModal} />} />
+             <Route path="/payroll-tax-calculator" element={<PayrollTaxCalculatorPage openApplyModal={openApplyModal} />} />
+             <Route path="/break-even-calculator" element={<BreakEvenCalculatorPage openApplyModal={openApplyModal} />} />
+             <Route path="/npv-calculator" element={<NetPresentValueCalculatorPage openApplyModal={openApplyModal} />} />
+             <Route path="/irr-calculator" element={<InternalRateOfReturnCalculatorPage openApplyModal={openApplyModal} />} />
+             <Route path="/cash-flow-calculator" element={<CashFlowCalculatorPage openApplyModal={openApplyModal} />} />
+             <Route path="/depreciation-calculator" element={<DepreciationCalculatorPage openApplyModal={openApplyModal} />} />
+             <Route path="/budget-calculator" element={<BudgetCalculatorPage openApplyModal={openApplyModal} />} />
+             <Route path="/expense-calculator" element={<ExpenseCalculatorPage openApplyModal={openApplyModal} />} />
+             <Route path="/debt-payoff-calculator" element={<DebtPayoffCalculatorPage openApplyModal={openApplyModal} />} />
+             <Route path="/savings-goal-calculator" element={<SavingsGoalCalculatorPage openApplyModal={openApplyModal} />} />
+             <Route path="/emergency-fund-calculator" element={<EmergencyFundCalculatorPage openApplyModal={openApplyModal} />} />
+             <Route path="/balance-transfer-calculator" element={<BalanceTransferCalculatorPage openApplyModal={openApplyModal} />} />
+             <Route path="/credit-card-interest-calculator" element={<CreditCardInterestCalculatorPage openApplyModal={openApplyModal} />} />
+             <Route path="/credit-card-payoff-calculator" element={<CreditCardPayoffCalculatorPage openApplyModal={openApplyModal} />} />
+             <Route path="/foreign-exchange-rate-calculator" element={<ForeignExchangeRateCalculatorPage openApplyModal={openApplyModal} />} />
+             <Route path="/currency-converter" element={<CurrencyConverterPage openApplyModal={openApplyModal} />} />
+             <Route path="/college-savings-calculator" element={<CollegeSavingsCalculatorPage openApplyModal={openApplyModal} />} />
+             <Route path="/home-affordability-calculator" element={<HomeAffordabilityCalculatorPage openApplyModal={openApplyModal} />} />
+             <Route path="/rent-vs-buy-calculator" element={<RentVsBuyCalculatorPage openApplyModal={openApplyModal} />} />
+             <Route path="/property-tax-calculator" element={<PropertyTaxCalculatorPage openApplyModal={openApplyModal} />} />
+             <Route path="/caprate-calculator" element={<CapitalizationRateCalculatorPage openApplyModal={openApplyModal} />} />
+             <Route path="/inflation-calculator" element={<InflationCalculatorPage openApplyModal={openApplyModal} />} />
+             <Route path="/amortization-calculator" element={<LoanAmortizationCalculatorPage openApplyModal={openApplyModal} />} />
+             <Route path="/annuity-calculator" element={<AnnuityCalculatorPage openApplyModal={openApplyModal} />} />
+             <Route path="/pension-calculator" element={<PensionCalculatorPage openApplyModal={openApplyModal} />} />
+             <Route path="/social-security-calculator" element={<SocialSecurityCalculatorPage openApplyModal={openApplyModal} />} />
+
+
 
             {/* Catch-all route for any undefined paths (404 Not Found) */}
             <Route path="*" element={<NotFound />} />
