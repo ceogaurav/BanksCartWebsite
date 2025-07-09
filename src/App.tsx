@@ -36,6 +36,9 @@ import HomeLoanEMICalculator from './pages/HomeLoanEMICalculator';
 import InvestmentPlansPage from './pages/InvestmentPlansPage';
 import LoanCalculatorPage from './pages/LoanCalculatorPage';
 import LoansOverviewPage from './pages/LoansOverviewPage';
+import InsuranceOverviewPage from './pages/InsuranceOverviewPage';
+import CardsOverviewPage from './pages/CardsOverviewPage';
+import InvestmentsOverviewPage from './pages/InvestmentsOverviewPage';
 import MortgageCalculatorPage from './pages/MortgageCalculatorPage';
 import PincodesPage from './pages/PincodesPage';
 import PlotConstructionLoan from './pages/PlotConstructionLoan';
@@ -43,6 +46,7 @@ import TermInsurancePage from './pages/TermInsurancePage';
 import TwoWheelerLoanPage from './pages/TwoWheelerLoanPage';
 import UsedCarLoanPage from './pages/UsedCarLoanPage';
 import CreditScore from './pages/CreditScore'; // CORRECTED: Changed 'creditscore' to 'CreditScore'
+import ExpertAdvicePage from './pages/ExpertAdvicePage';
 
 
 // Import common components
@@ -208,7 +212,9 @@ const App: React.FC = () => {
             {/* Loan product specific routes */}
             <Route path="/plot-construction-loan" element={<PlotConstructionLoan openApplyModal={openApplyModal} />} />
             <Route path="/home-loan-compare" element={<HomeLoanCompare openApplyModal={openApplyModal} />} />
-            <Route path="/loans" element={<LoansOverviewPage />} />
+            <Route path="/loans" element={<LoansOverviewPage />} />              <Route path="/insurance" element={<InsuranceOverviewPage />} /> {/* NEW: Route for the Insurance Overview Page */}
+            <Route path="/investment" element={<InvestmentsOverviewPage />} /> {/* NEW: Route for the Investments Overview Page */}
+            <Route path="/cards" element={<CardsOverviewPage />} /> {/* NEW: Route for the Cards Overview Page */}
             <Route path="/loans/home" element={<HomeLoanPage openApplyModal={openApplyModal} />} />
             <Route path="/loans/personal" element={<PersonalLoanPage openApplyModal={openApplyModal} openEligibilityModal={openEligibilityModal} />} />
             <Route path="/loans/business" element={<BusinessLoanPage openApplyModal={openApplyModal} />} />
@@ -220,12 +226,13 @@ const App: React.FC = () => {
             {/* Investment product specific routes */}
             <Route path="/investment/fixed-deposit" element={<FixedDepositPage openApplyModal={openApplyModal} />} />
             <Route path="/investment/mutual-funds" element={<MutualFundsPage openApplyModal={openApplyModal} />} />
-            <Route path="/investment/more-plans" element={<InvestmentPlansPage />} />
+            <Route path="/investment/more-plans" element={<InvestmentPlansPage openApplyModal={openApplyModal} />} />
 
             {/* Card product specific routes */}
             <Route path="/cards/credit" element={<CreditCardsPage openApplyModal={openApplyModal} />} />
             <Route path="/cards/debit" element={<DebitCardsPage openApplyModal={openApplyModal} />} />
             <Route path="/credit-score" element={<CreditScore />} />
+            <Route path="/expert-advice" element={<ExpertAdvicePage openApplyModal={openApplyModal} />} />
 
             {/* Insurance product specific routes */}
             <Route path="/insurance/health" element={<HealthInsurancePage />} />

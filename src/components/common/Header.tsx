@@ -105,7 +105,7 @@ const Header: React.FC<HeaderProps> = ({ openApplyModal, openEligibilityModal, o
     },
     {
       name: 'Expert Advice',
-      href: '/xpert-advice',
+      href: '/expert-advice',
       icon: BadgeInfo
     },
      {
@@ -126,7 +126,7 @@ const Header: React.FC<HeaderProps> = ({ openApplyModal, openEligibilityModal, o
             <img
               src="/logos/bankscartlogof.jpg"
               alt="BanksCart Logo"
-              className="h-12 w-auto rounded-xl shadow-xl group-hover:scale-110 transition-transform border-4 border-white/80"
+              className="h-14 w-auto rounded-xl shadow-xl group-hover:scale-110 transition-transform border-4 border-white/80"
             />
           </Link>
 

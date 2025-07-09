@@ -616,7 +616,13 @@ const EligibilityCheckModal: React.FC<EligibilityCheckModalProps> = ({ isOpen, o
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-[9999] p-4 font-inter">
-      <div className="bg-white rounded-xl shadow-2xl w-full max-w-lg p-6 sm:p-8 relative transform transition-all scale-100 opacity-100 max-h-[90vh] overflow-y-auto">
+      {/* Dynamic Background Layer */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="animated-gradient-bg"></div>
+      </div>
+
+      {/* Modal Content */}
+      <div className="bg-white/90 backdrop-blur-md rounded-xl shadow-2xl w-full max-w-lg p-6 sm:p-8 relative z-10 transform transition-all scale-100 opacity-100 max-h-[90vh] overflow-y-auto">
         <button
           onClick={onClose}
           className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 transition-colors rounded-full p-1 hover:bg-gray-100"
@@ -819,17 +825,15 @@ const EligibilityCheckModal: React.FC<EligibilityCheckModalProps> = ({ isOpen, o
                     onChange={handleCompanyNameChange}
                     className={`w-full px-4 py-2 border ${errors.companyName ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors`}
                     placeholder="e.g., Tata Consultancy Services"
-                    required={employmentType === 'salaried'}
+                    required
                   />
                   {errors.companyName && <p className="text-red-500 text-xs mt-1">{errors.companyName}</p>}
-
-                  {/* Suggestions Dropdown */}
                   {filteredCompanies.length > 0 && (
-                    <div ref={suggestionsRef} className="absolute z-10 w-full bg-white border border-gray-200 rounded-lg shadow-lg mt-1 max-h-48 overflow-y-auto">
+                    <div ref={suggestionsRef} className="absolute z-20 w-full bg-white border border-gray-300 rounded-lg shadow-lg mt-1 max-h-48 overflow-y-auto">
                       {filteredCompanies.map((company, index) => (
                         <div
                           key={index}
-                          className="px-4 py-2 cursor-pointer hover:bg-gray-100 text-gray-800 text-sm"
+                          className="px-4 py-2 cursor-pointer hover:bg-gray-100 text-gray-800"
                           onClick={() => handleSuggestionClick(company)}
                         >
                           {company}
@@ -842,7 +846,7 @@ const EligibilityCheckModal: React.FC<EligibilityCheckModalProps> = ({ isOpen, o
 
               <div>
                 <label htmlFor="salary" className="block text-sm font-medium text-gray-700 mb-1">
-                  Monthly Salary (₹)
+                  Monthly Salary (INR)
                 </label>
                 <input
                   type="number"
@@ -850,8 +854,9 @@ const EligibilityCheckModal: React.FC<EligibilityCheckModalProps> = ({ isOpen, o
                   value={salary}
                   onChange={(e) => setSalary(e.target.value)}
                   className={`w-full px-4 py-2 border ${errors.salary ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors`}
-                  placeholder="e.g., 40000"
+                  placeholder="e.g., 50000"
                   min="0"
+                  step="1000"
                   required
                 />
                 {errors.salary && <p className="text-red-500 text-xs mt-1">{errors.salary}</p>}
@@ -867,7 +872,7 @@ const EligibilityCheckModal: React.FC<EligibilityCheckModalProps> = ({ isOpen, o
                   value={cibilScore}
                   onChange={(e) => setCibilScore(e.target.value)}
                   className={`w-full px-4 py-2 border ${errors.cibilScore ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors`}
-                  placeholder="e.g., 750 (300-900)"
+                  placeholder="e.g., 750"
                   min="300"
                   max="900"
                 />
@@ -875,48 +880,89 @@ const EligibilityCheckModal: React.FC<EligibilityCheckModalProps> = ({ isOpen, o
               </div>
 
               {submissionError && (
-                <p className="text-red-600 text-center text-sm mt-4">{submissionError}</p>
+                <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg relative flex items-center gap-2" role="alert">
+                  <AlertTriangle className="h-5 w-5" />
+                  <span className="block sm:inline">{submissionError}</span>
+                </div>
               )}
 
               <button
                 type="submit"
-                className="w-full bg-gradient-to-r from-green-500 to-teal-600 text-white py-3 rounded-lg font-semibold text-lg hover:from-green-600 hover:to-teal-700 transition-all duration-300 shadow-lg flex items-center justify-center gap-2"
+                className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-300 flex items-center justify-center gap-2"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? (
                   <>
-                    <Loader2 className="animate-spin h-5 w-5" /> Checking...
+                    <Loader2 className="h-5 w-5 animate-spin" /> Submitting...
                   </>
                 ) : (
-                  'Check Eligibility'
+                  <>
+                    <CheckCircle className="h-5 w-5" /> Check Eligibility
+                  </>
                 )}
               </button>
             </form>
           </>
         ) : (
           <div className="text-center py-8">
-            {eligibleLoanAmount !== null ? (
-              <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
-            ) : (
-              <AlertTriangle className="h-16 w-16 text-orange-500 mx-auto mb-4" />
-            )}
-            <h3 className="text-2xl font-bold text-gray-900 mb-2">
-              {eligibleLoanAmount !== null ? "Congratulations!" : "Thank You!"}
-            </h3>
-            <p className="text-gray-600 mb-6">
-              {eligibleLoanAmount !== null
-                ? `You are eligible for up to ₹${eligibleLoanAmount.toLocaleString('en-IN')} loan! Our team will get back to you shortly.`
-                : "Thank you for your submission. Our team will review your details and get back to you."}
+            <CheckCircle className="h-20 w-20 text-green-500 mx-auto mb-6 animate-bounce" />
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Eligibility Check Complete!</h2>
+            <p className="text-lg text-gray-700 mb-4">
+              Thank you for submitting your details. Based on your provided salary,
+              your estimated eligible loan amount is:
+            </p>
+            <p className="text-4xl font-extrabold text-blue-600 mb-6">
+              ₹ {eligibleLoanAmount?.toLocaleString('en-IN') || 'N/A'}
+            </p>
+            <p className="text-md text-gray-600 mb-8">
+              Our experts will review your application and get in touch with you shortly to discuss further options and guide you through the process.
             </p>
             <button
               onClick={onClose}
-              className="bg-blue-500 text-white py-2 px-6 rounded-lg font-semibold hover:bg-blue-600 transition-colors"
+              className="bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-300"
             >
               Close
             </button>
           </div>
         )}
       </div>
+
+      {/* Custom CSS for the animated background */}
+      <style>{`
+        @keyframes moveGradient {
+          0% {
+            transform: translate(0%, 0%);
+          }
+          25% {
+            transform: translate(-10%, 10%);
+          }
+          50% {
+            transform: translate(-20%, -20%);
+          }
+          75% {
+            transform: translate(10%, -10%);
+          }
+          100% {
+            transform: translate(0%, 0%);
+          }
+        }
+
+        .animated-gradient-bg {
+          position: absolute;
+          width: 200%; /* Larger than viewport to allow movement */
+          height: 200%;
+          top: -50%;
+          left: -50%;
+          background:
+            radial-gradient(circle at 20% 30%, rgba(167, 139, 250, 0.6), transparent 50%), /* Purple */
+            radial-gradient(circle at 70% 80%, rgba(244, 114, 182, 0.6), transparent 50%), /* Pink */
+            radial-gradient(circle at 90% 10%, rgba(96, 165, 250, 0.6), transparent 50%), /* Blue */
+            radial-gradient(circle at 10% 90%, rgba(52, 211, 153, 0.6), transparent 50%); /* Green */
+          background-size: 50% 50%;
+          animation: moveGradient 30s linear infinite alternate;
+          z-index: 0; /* Ensure it's behind the modal content */
+        }
+      `}</style>
     </div>
   );
 };

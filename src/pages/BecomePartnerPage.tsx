@@ -26,22 +26,13 @@ import {
   Loader2
 } from 'lucide-react';
 import { supabase, type LoanPartner } from './lib/supabase';
+interface BecomePartnerPageProps {
+  openPartnerModal: () => void;
+}
 
-function App() {
-  const [isFormOpen, setIsFormOpen] = useState(false);
+const BecomePartnerPage: React.FC<BecomePartnerPageProps> = ({ openPartnerModal }) => {
   const [timeLeft, setTimeLeft] = useState({ hours: 23, minutes: 59, seconds: 59 });
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    city: '',
-    experience: '',
-    currentIncome: ''
-  });
-
   // Countdown timer
   useEffect(() => {
     const timer = setInterval(() => {
@@ -60,71 +51,6 @@ function App() {
 
     return () => clearInterval(timer);
   }, []);
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setSubmitStatus('idle');
-
-    try {
-      const partnerData: LoanPartner = {
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone,
-        city: formData.city,
-        experience: formData.experience,
-        current_income: formData.currentIncome
-      };
-
-      const { data, error } = await supabase
-        .from('loan_partners')
-        .insert([partnerData])
-        .select();
-
-      if (error) {
-        console.error('Error submitting form:', error);
-        setSubmitStatus('error');
-        
-        // Check if it's a duplicate email error
-        if (error.code === '23505') {
-          alert('This email is already registered. Please use a different email address.');
-        } else {
-          alert('There was an error submitting your application. Please try again.');
-        }
-      } else {
-        console.log('Form submitted successfully:', data);
-        setSubmitStatus('success');
-        
-        // Reset form
-        setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          city: '',
-          experience: '',
-          currentIncome: ''
-        });
-        
-        // Show success message and close form after delay
-        alert('🎉 Congratulations! Your application has been submitted successfully. Our team will contact you within 24 hours to get you started on your earning journey!');
-        
-        setTimeout(() => {
-          setIsFormOpen(false);
-          setSubmitStatus('idle');
-        }, 2000);
-      }
-    } catch (error) {
-      console.error('Unexpected error:', error);
-      setSubmitStatus('error');
-      alert('An unexpected error occurred. Please try again.');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
 
   const benefits = [
     {
@@ -220,7 +146,7 @@ function App() {
                 </div>
               </div>
               <button 
-                onClick={() => setIsFormOpen(true)}
+                onClick={openPartnerModal}
                 className="bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-4 px-8 rounded-xl text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
               >
                 Join Now - Free Registration
@@ -261,7 +187,7 @@ function App() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {benefits.map((benefit, index) => (
               <div key={index} className="group p-6 bg-gradient-to-br from-gray-50 to-white rounded-xl border border-gray-200 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-                <div className="flex items-center mb-4">
+                <div claSSssName="flex items-center mb-4">
                   {benefit.icon}
                   <h3 className="text-xl font-semibold text-gray-900 ml-3">{benefit.title}</h3>
                 </div>
@@ -407,165 +333,15 @@ function App() {
           <h2 className="text-4xl font-bold mb-4">Ready to Start Your Journey?</h2>
           <p className="text-xl mb-8">Join thousands of successful loan partners and transform your financial future</p>
           <button 
-            onClick={() => setIsFormOpen(true)}
+            onClick={openPartnerModal}
             className="bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-4 px-8 rounded-xl text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
           >
             Start Earning Today - Free Registration
           </button>
         </div>
       </div>
-
-      {/* Popup Form */}
-      {isFormOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl max-w-md w-full max-h-[90vh] overflow-y-auto transform animate-scale-up">
-            <div className="relative p-6">
-              <button 
-                onClick={() => setIsFormOpen(false)}
-                className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
-                disabled={isSubmitting}
-              >
-                <X className="w-6 h-6" />
-              </button>
-              
-              <div className="text-center mb-6">
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">Join BanksCart Today!</h3>
-                <p className="text-gray-600">Start earning up to ₹2 Lakh per month</p>
-              </div>
-
-              {/* Countdown Timer */}
-              <div className="bg-gradient-to-r from-red-500 to-pink-500 text-white p-4 rounded-lg mb-6">
-                <div className="text-center">
-                  <p className="text-sm font-semibold mb-2">LIMITED TIME OFFER!</p>
-                  <div className="flex justify-center space-x-4 text-lg font-bold">
-                    <div className="text-center">
-                      <div className="bg-white/20 rounded px-2 py-1">
-                        {String(timeLeft.hours).padStart(2, '0')}
-                      </div>
-                      <div className="text-xs mt-1">Hours</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="bg-white/20 rounded px-2 py-1">
-                        {String(timeLeft.minutes).padStart(2, '0')}
-                      </div>
-                      <div className="text-xs mt-1">Minutes</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="bg-white/20 rounded px-2 py-1">
-                        {String(timeLeft.seconds).padStart(2, '0')}
-                      </div>
-                      <div className="text-xs mt-1">Seconds</div>
-                    </div>
-                  </div>
-                  <p className="text-sm mt-2">Register now and get ₹5,000 joining bonus!</p>
-                </div>
-              </div>
-
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                  <input
-                    type="text"
-                    name="name"
-                    placeholder="Full Name *"
-                    required
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    disabled={isSubmitting}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors disabled:opacity-50"
-                  />
-                </div>
-                <div>
-                  <input
-                    type="email"
-                    name="email"
-                    placeholder="Email Address *"
-                    required
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    disabled={isSubmitting}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors disabled:opacity-50"
-                  />
-                </div>
-                <div>
-                  <input
-                    type="tel"
-                    name="phone"
-                    placeholder="Phone Number *"
-                    required
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                    disabled={isSubmitting}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors disabled:opacity-50"
-                  />
-                </div>
-                <div>
-                  <input
-                    type="text"
-                    name="city"
-                    placeholder="City *"
-                    required
-                    value={formData.city}
-                    onChange={handleInputChange}
-                    disabled={isSubmitting}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors disabled:opacity-50"
-                  />
-                </div>
-                <div>
-                  <select
-                    name="experience"
-                    required
-                    value={formData.experience}
-                    onChange={handleInputChange}
-                    disabled={isSubmitting}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors disabled:opacity-50"
-                  >
-                    <option value="">Select Experience *</option>
-                    <option value="fresher">Fresher (0-1 years)</option>
-                    <option value="intermediate">Intermediate (1-3 years)</option>
-                    <option value="experienced">Experienced (3+ years)</option>
-                  </select>
-                </div>
-                <div>
-                  <select
-                    name="currentIncome"
-                    required
-                    value={formData.currentIncome}
-                    onChange={handleInputChange}
-                    disabled={isSubmitting}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors disabled:opacity-50"
-                  >
-                    <option value="">Current Monthly Income *</option>
-                    <option value="0-25000">₹0 - ₹25,000</option>
-                    <option value="25000-50000">₹25,000 - ₹50,000</option>
-                    <option value="50000-100000">₹50,000 - ₹1,00,000</option>
-                    <option value="100000+">₹1,00,000+</option>
-                  </select>
-                </div>
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold py-4 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center"
-                >
-                  {isSubmitting ? (
-                    <>
-                      <Loader2 className="w-5 h-5 animate-spin mr-2" />
-                      Submitting...
-                    </>
-                  ) : (
-                    'Register Now - Start Earning Today!'
-                  )}
-                </button>
-              </form>
-              
-              <div className="mt-4 text-center text-sm text-gray-500">
-                <p>By registering, you agree to our Terms & Conditions</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
 
-export default App;
+export default BecomePartnerPage;
