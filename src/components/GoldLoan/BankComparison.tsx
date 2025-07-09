@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import { TrendingUp, Star, Award, CheckCircle } from 'lucide-react';
 
-const BankComparison = () => {
+interface BankComparisonProps {
+  openApplyModal?: (loanType?: string) => void;
+}
+
+const BankComparison: React.FC<BankComparisonProps> = ({ openApplyModal }) => {
   const [selectedCategory, setSelectedCategory] = useState('All');
 
   const banks = [
@@ -157,9 +161,14 @@ const BankComparison = () => {
                 </div>
 
                 <div className="lg:col-span-1">
-                  <button className="w-full bg-gradient-to-r from-orange-500 to-yellow-500 text-white py-3 rounded-lg font-semibold hover:from-orange-600 hover:to-yellow-600 transition-all duration-300 transform hover:scale-105">
-                    Apply Now
-                  </button>
+                  {openApplyModal && (
+                    <button
+                      onClick={() => openApplyModal(`Gold Loan - Compare - ${bank.name}`)}
+                      className="w-full bg-gradient-to-r from-orange-500 to-yellow-500 text-white py-3 rounded-lg font-semibold hover:from-orange-600 hover:to-yellow-600 transition-all duration-300 transform hover:scale-105"
+                    >
+                      Apply Now
+                    </button>
+                  )}
                 </div>
               </div>
 

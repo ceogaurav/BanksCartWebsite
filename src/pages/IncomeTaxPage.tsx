@@ -8,7 +8,11 @@ import FilingProcess from '../components/IncomeTaxPage/FilingProcess';
 import ImportantDates from '../components/IncomeTaxPage/ImportantDates';
 import FAQSection from '../components/IncomeTaxPage/FAQSection';
 
-const IncomeTaxPage = () => {
+interface IncomeTaxPageProps {
+  openApplyModal?: (loanType?: string) => void;
+}
+
+const IncomeTaxPage: React.FC<IncomeTaxPageProps> = ({ openApplyModal }) => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -18,7 +22,7 @@ const IncomeTaxPage = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
       <main className={`transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
-        <HeroSection />
+        <HeroSection openApplyModal={openApplyModal} />
         
         {/* What is Income Tax Section */}
         <section id="tax-basics" className="py-20 bg-white">
@@ -88,12 +92,12 @@ const IncomeTaxPage = () => {
           </div>
         </section>
 
-        <TaxBrackets />
-        <DeductionsSection />
-        <PPFCalculator />
-        <FilingProcess />
+        <TaxBrackets openApplyModal={openApplyModal} />
+        <DeductionsSection openApplyModal={openApplyModal} />
+        <PPFCalculator openApplyModal={openApplyModal} />
+        <FilingProcess openApplyModal={openApplyModal} />
         <ImportantDates />
-        <FAQSection />
+        <FAQSection openApplyModal={openApplyModal} />
 
         {/* Key Statistics Section */}
         <section className="py-20 bg-gradient-to-r from-indigo-600 to-purple-600">

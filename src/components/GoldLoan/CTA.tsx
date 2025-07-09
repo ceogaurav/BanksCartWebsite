@@ -1,7 +1,11 @@
 import React from 'react';
 import { ArrowRight, Phone, MessageCircle, Calculator } from 'lucide-react';
 
-const CTA = () => {
+interface CTAProps {
+  openApplyModal?: (loanType?: string) => void;
+}
+
+const CTA: React.FC<CTAProps> = ({ openApplyModal }) => {
   return (
     <section className="py-16 bg-gradient-to-br from-orange-600 via-yellow-500 to-orange-500 text-white relative overflow-hidden">
       <div className="absolute inset-0 bg-black opacity-10"></div>
@@ -35,18 +39,26 @@ const CTA = () => {
         </div>
 
         <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-          <button className="bg-white text-orange-600 px-6 py-4 rounded-xl font-semibold hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-2">
-            <Calculator className="w-5 h-5" />
-            <span>Calculate Loan</span>
-          </button>
-          <button className="bg-white text-orange-600 px-6 py-4 rounded-xl font-semibold hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-2">
+          {openApplyModal && (
+            <button
+              onClick={() => openApplyModal('Gold Loan - CTA Calculator')}
+              className="bg-white text-orange-600 px-6 py-4 rounded-xl font-semibold hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-2">
+              <Calculator className="w-5 h-5" />
+              <span>Calculate Loan</span>
+            </button>
+          )}
+          <a href="tel:+919686859296" className="bg-white text-orange-600 px-6 py-4 rounded-xl font-semibold hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-2">
             <Phone className="w-5 h-5" />
             <span>Call Expert</span>
-          </button>
-          <button className="bg-gradient-to-r from-orange-700 to-yellow-600 text-white px-6 py-4 rounded-xl font-semibold hover:from-orange-800 hover:to-yellow-700 transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-2">
-            <span>Apply Now</span>
-            <ArrowRight className="w-5 h-5" />
-          </button>
+          </a>
+          {openApplyModal && (
+            <button
+              onClick={() => openApplyModal('Gold Loan - CTA Apply Now')}
+              className="bg-gradient-to-r from-orange-700 to-yellow-600 text-white px-6 py-4 rounded-xl font-semibold hover:from-orange-800 hover:to-yellow-700 transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-2">
+              <span>Apply Now</span>
+              <ArrowRight className="w-5 h-5" />
+            </button>
+          )}
         </div>
 
         <div className="mt-8 text-center">

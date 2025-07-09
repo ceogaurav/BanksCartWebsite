@@ -1,7 +1,15 @@
 import React from 'react';
 import { Calculator, TrendingUp, Shield } from 'lucide-react';
 
-const HeroSection = () => {
+interface HeroSectionProps {
+  openApplyModal?: (loanType?: string) => void;
+}
+
+const HeroSection: React.FC<HeroSectionProps> = ({ openApplyModal }) => {
+  const handleScrollToCalculator = () => {
+    document.getElementById('ppf-calculator')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <section className="relative py-20 overflow-hidden">
       {/* Background Pattern */}
@@ -25,10 +33,16 @@ const HeroSection = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12 animate-fade-in-delay-2">
-            <button className="bg-indigo-600 text-white px-8 py-4 rounded-full font-semibold hover:bg-indigo-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+            <button
+              onClick={() => openApplyModal && openApplyModal('Tax Planning')}
+              className="bg-indigo-600 text-white px-8 py-4 rounded-full font-semibold hover:bg-indigo-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+            >
               Start Tax Planning
             </button>
-            <button className="bg-white text-indigo-600 px-8 py-4 rounded-full font-semibold border-2 border-indigo-600 hover:bg-indigo-50 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+            <button
+              onClick={handleScrollToCalculator}
+              className="bg-white text-indigo-600 px-8 py-4 rounded-full font-semibold border-2 border-indigo-600 hover:bg-indigo-50 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+            >
               Calculate PPF Returns
             </button>
           </div>

@@ -1,7 +1,11 @@
 import React from 'react';
 import { FileText, Search, DollarSign, CheckCircle, ArrowRight } from 'lucide-react';
 
-const HowItWorks = () => {
+interface HowItWorksProps {
+  openApplyModal?: (loanType?: string) => void;
+}
+
+const HowItWorks: React.FC<HowItWorksProps> = ({ openApplyModal }) => {
   const steps = [
     {
       icon: FileText,
@@ -84,14 +88,22 @@ const HowItWorks = () => {
           <div className="bg-gradient-to-r from-orange-500 to-yellow-500 rounded-xl p-8 text-white">
             <h3 className="text-2xl font-bold mb-4">Total Process Time: 30 Minutes</h3>
             <p className="text-lg mb-6">From application to disbursement, everything happens in just 30 minutes</p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="bg-white text-orange-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-all duration-300">
-                Calculate Loan Amount
-              </button>
-              <button className="border-2 border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-orange-600 transition-all duration-300">
-                Start Application
-              </button>
-            </div>
+            {openApplyModal && (
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <button
+                  onClick={() => openApplyModal('Gold Loan - How It Works Calculator')}
+                  className="bg-white text-orange-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-all duration-300"
+                >
+                  Calculate Loan Amount
+                </button>
+                <button
+                  onClick={() => openApplyModal('Gold Loan - How It Works Apply')}
+                  className="border-2 border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-orange-600 transition-all duration-300"
+                >
+                  Start Application
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>

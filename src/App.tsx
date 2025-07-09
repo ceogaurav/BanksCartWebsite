@@ -231,11 +231,11 @@ const App: React.FC = () => {
             <Route path="/insurance/health" element={<HealthInsurancePage />} />
             <Route path="/insurance/car" element={<CarInsurancePage />} />
             <Route path="/insurance/term-life" element={<TermInsurancePage />} />
-            <Route path="/resources/gold-rates" element={<GoldLoansPage openApplyModal={openApplyModal} />} />
+            <Route path="/resources/gold-rates" element={<GoldLoansPage openApplyModal={openApplyModal} openEligibilityModal={openEligibilityModal} />} />
             <Route path="/resources/pincodes" element={<PincodesPage />} />
             <Route path="/become-partner" element={<BecomePartnerPage openApplyModal={openApplyModal} openPartnerModal={openPartnerModal} />} />
             <Route path="/resources/ppf" element={<PPFPage openApplyModal={openApplyModal} />} />
-            <Route path="/resources/income-tax" element={<IncomeTaxPage />} />
+            <Route path="/resources/income-tax" element={<IncomeTaxPage openApplyModal={openApplyModal} />} />
             <Route path="/bank-details/:bankId" element={<BankDetails openEligibilityModal={openEligibilityModal} />} />
             <Route path="/loan-apply" element={<LoanApplyPage />} />
 

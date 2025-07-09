@@ -9,12 +9,13 @@ import CTA from '../components/GoldLoan/CTA';
 
 interface GoldLoansPageProps {
   openApplyModal?: (loanType?: string) => void;
+  openEligibilityModal?: (loanType?: string) => void;
 }
 
-const GoldLoansPage: React.FC<GoldLoansPageProps> = ({ openApplyModal }) => {
+const GoldLoansPage: React.FC<GoldLoansPageProps> = ({ openApplyModal, openEligibilityModal }) => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-yellow-50">
-      <Hero openApplyModal={openApplyModal} />
+      <Hero openApplyModal={openApplyModal} openEligibilityModal={openEligibilityModal} />
       <GoldLoanTypes openApplyModal={openApplyModal} />
       <BankComparison openApplyModal={openApplyModal} />
       <Features openApplyModal={openApplyModal} />

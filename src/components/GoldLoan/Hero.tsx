@@ -1,7 +1,12 @@
 import React from 'react';
 import { Shield, Clock, Calculator, ArrowRight } from 'lucide-react';
 
-const Hero = () => {
+interface HeroProps {
+  openApplyModal?: (loanType?: string) => void;
+  openEligibilityModal?: (loanType?: string) => void;
+}
+
+const Hero: React.FC<HeroProps> = ({ openApplyModal, openEligibilityModal }) => {
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-orange-500 via-yellow-500 to-orange-600 text-white">
       <div className="absolute inset-0 bg-black opacity-10"></div>
@@ -39,15 +44,27 @@ const Hero = () => {
               </div>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-4">
-              <button className="bg-white text-orange-600 px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-2">
-                <span>Apply for Gold Loan</span>
-                <ArrowRight className="w-5 h-5" />
-              </button>
-              <button className="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-orange-600 transition-all duration-300">
-                Check Eligibility
-              </button>
-            </div>
+            {(openApplyModal || openEligibilityModal) && (
+              <div className="flex flex-col sm:flex-row gap-4">
+                {openApplyModal && (
+                  <button
+                    onClick={() => openApplyModal('Gold Loan - Hero Apply')}
+                    className="bg-white text-orange-600 px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-2"
+                  >
+                    <span>Apply for Gold Loan</span>
+                    <ArrowRight className="w-5 h-5" />
+                  </button>
+                )}
+                {openEligibilityModal && (
+                  <button
+                    onClick={() => openEligibilityModal('Gold Loan - Hero Eligibility')}
+                    className="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-orange-600 transition-all duration-300"
+                  >
+                    Check Eligibility
+                  </button>
+                )}
+              </div>
+            )}
           </div>
 
           <div className="relative">
@@ -67,9 +84,13 @@ const Hero = () => {
                     <option>18 Karat</option>
                   </select>
                 </div>
-                <button className="w-full bg-white text-orange-600 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-all duration-300">
-                  Calculate Loan Amount
-                </button>
+                {openApplyModal && (
+                  <button
+                    onClick={() => openApplyModal('Gold Loan - Hero Calculator')}
+                    className="w-full bg-white text-orange-600 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-all duration-300">
+                    Calculate Loan Amount
+                  </button>
+                )}
               </div>
             </div>
           </div>

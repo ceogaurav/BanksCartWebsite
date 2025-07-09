@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
-import { HelpCircle, ChevronDown, ChevronUp } from 'lucide-react';
+import { HelpCircle, ChevronDown, ChevronUp, MessageSquare } from 'lucide-react';
 
-const FAQSection = () => {
+interface FAQSectionProps {
+  openApplyModal?: (loanType?: string) => void;
+}
+
+const FAQSection: React.FC<FAQSectionProps> = ({ openApplyModal }) => {
   const [expandedFAQ, setExpandedFAQ] = useState<number | null>(null);
 
   const faqs = [
@@ -97,12 +101,20 @@ const FAQSection = () => {
               Our tax experts are here to help you with personalized guidance
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="bg-white text-indigo-600 px-6 py-3 rounded-lg font-semibold hover:bg-indigo-50 transition-colors">
+              <button
+                onClick={() => openApplyModal && openApplyModal('Tax Consultation')}
+                className="bg-white text-indigo-600 px-6 py-3 rounded-lg font-semibold hover:bg-indigo-50 transition-colors"
+              >
                 Book Consultation
               </button>
-              <button className="bg-indigo-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-400 transition-colors">
-                Live Chat Support
-              </button>
+              <a
+                href="https://wa.me/919686859296"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-green-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-600 transition-colors flex items-center justify-center gap-2"
+              >
+                <MessageSquare className="h-5 w-5" /> Live Chat Support
+              </a>
             </div>
           </div>
         </div>

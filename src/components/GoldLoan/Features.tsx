@@ -1,7 +1,11 @@
 import React from 'react';
 import { Shield, Clock, Calculator, CreditCard, Users, Award, Smartphone, FileText } from 'lucide-react';
 
-const Features = () => {
+interface FeaturesProps {
+  openApplyModal?: (loanType?: string) => void;
+}
+
+const Features: React.FC<FeaturesProps> = ({ openApplyModal }) => {
   const features = [
     {
       icon: Shield,
@@ -81,13 +85,17 @@ const Features = () => {
         </div>
 
         <div className="mt-12 text-center">
-          <div className="bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-8 border border-white border-opacity-20">
-            <h3 className="text-2xl font-bold mb-4">Ready to Get Your Gold Loan?</h3>
-            <p className="text-gray-300 mb-6">Join millions of satisfied customers who trust us with their gold loan needs</p>
-            <button className="bg-gradient-to-r from-orange-500 to-yellow-500 text-white px-8 py-3 rounded-lg font-semibold hover:from-orange-600 hover:to-yellow-600 transition-all duration-300 transform hover:scale-105">
-              Start Your Application
-            </button>
-          </div>
+          {openApplyModal && (
+            <div className="bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-8 border border-white border-opacity-20">
+              <h3 className="text-2xl font-bold mb-4">Ready to Get Your Gold Loan?</h3>
+              <p className="text-gray-300 mb-6">Join millions of satisfied customers who trust us with their gold loan needs</p>
+              <button
+                onClick={() => openApplyModal('Gold Loan - Features CTA')}
+                className="bg-gradient-to-r from-orange-500 to-yellow-500 text-white px-8 py-3 rounded-lg font-semibold hover:from-orange-600 hover:to-yellow-600 transition-all duration-300 transform hover:scale-105">
+                Start Your Application
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </section>
