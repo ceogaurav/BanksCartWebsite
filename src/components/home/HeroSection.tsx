@@ -149,8 +149,21 @@ const HeroSection: React.FC<HeroSectionProps> = ({ openApplyModal }) => {
                   {/* Amount Slider */}
                   <div>
                     <div className="flex justify-between items-center mb-2">
-                      <label className="text-sm font-medium text-gray-700">Loan Amount</label>
-                      <span className="px-3 py-1 text-sm font-semibold text-primary-700 bg-primary-100 rounded-md">{formatCurrency(amount)}</span>
+                      <label htmlFor="amount-input" className="text-sm font-medium text-gray-700">Loan Amount</label>
+                      <div className="relative">
+                        <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-500 text-sm">₹</span>
+                        <input
+                          id="amount-input"
+                          type="text"
+                          value={amount.toLocaleString('en-IN')}
+                          onChange={(e) => setAmount(Number(e.target.value.replace(/[^0-9]/g, '')) || 0)}
+                          onBlur={() => {
+                            if (amount < 100000) setAmount(100000);
+                            if (amount > 10000000) setAmount(10000000);
+                          }}
+                          className="w-36 pl-7 pr-2 py-1 text-sm font-semibold text-primary-700 bg-primary-50 rounded-md border border-primary-200 focus:ring-primary-500 focus:border-primary-500 focus:outline-none text-right"
+                        />
+                      </div>
                     </div>
                     <input
                       type="range"
@@ -167,8 +180,22 @@ const HeroSection: React.FC<HeroSectionProps> = ({ openApplyModal }) => {
                   <div className="grid grid-cols-2 gap-6">
                     <div>
                       <div className="flex justify-between items-center mb-2">
-                        <label className="text-sm font-medium text-gray-700">Rate</label>
-                        <span className="px-2 py-1 text-sm font-semibold text-secondary-700 bg-secondary-100 rounded-md">{rate.toFixed(2)} %</span>
+                        <label htmlFor="rate-input" className="text-sm font-medium text-gray-700">Rate</label>
+                        <div className="relative">
+                          <input
+                            id="rate-input"
+                            type="number"
+                            value={rate}
+                            onChange={(e) => setRate(Number(e.target.value) || 0)}
+                            onBlur={() => {
+                              if (rate < 5) setRate(5);
+                              if (rate > 20) setRate(20);
+                            }}
+                            className="w-24 pr-7 pl-2 py-1 text-sm font-semibold text-secondary-700 bg-secondary-50 rounded-md border border-secondary-200 focus:ring-secondary-500 focus:border-secondary-500 focus:outline-none text-right"
+                            step="0.05"
+                          />
+                          <span className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 text-sm">%</span>
+                        </div>
                       </div>
                       <input
                         type="range"
@@ -182,8 +209,22 @@ const HeroSection: React.FC<HeroSectionProps> = ({ openApplyModal }) => {
                     </div>
                     <div>
                       <div className="flex justify-between items-center mb-2">
-                        <label className="text-sm font-medium text-gray-700">Tenure</label>
-                        <span className="px-2 py-1 text-sm font-semibold text-accent-700 bg-accent-100 rounded-md">{tenure} Yrs</span>
+                        <label htmlFor="tenure-input" className="text-sm font-medium text-gray-700">Tenure</label>
+                        <div className="relative">
+                          <input
+                            id="tenure-input"
+                            type="number"
+                            value={tenure}
+                            onChange={(e) => setTenure(Number(e.target.value) || 0)}
+                            onBlur={() => {
+                              if (tenure < 1) setTenure(1);
+                              if (tenure > 30) setTenure(30);
+                            }}
+                            className="w-24 pr-12 pl-2 py-1 text-sm font-semibold text-accent-700 bg-accent-50 rounded-md border border-accent-200 focus:ring-accent-500 focus:border-accent-500 focus:outline-none text-right"
+                            step="1"
+                          />
+                          <span className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 text-sm">Yrs</span>
+                        </div>
                       </div>
                       <input
                         type="range"
