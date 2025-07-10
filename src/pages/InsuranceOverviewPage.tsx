@@ -1,7 +1,7 @@
 import React from "react";
-import InsuranceCard from "../components/insurance/InsuranceCard";
+import InsuranceCard from "../components/insurance/InsuranceCard"; // <--- THIS LINE IS CRUCIAL
 import { motion } from 'framer-motion';
-import { HeartPulse, Car, Shield, LifeBuoy, Home, Briefcase, Plane } from "lucide-react"; // Importing Lucide icons
+import { HeartPulse, Car, Shield, LifeBuoy, Home, Briefcase, Plane, Gem } from "lucide-react"; // Importing Lucide icons
 
 // Define the types of insurance offered
 const insuranceTypes = [

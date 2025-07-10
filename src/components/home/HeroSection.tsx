@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom'; // NEW: Import useNavigate
 import { TrendingUp, Shield, Clock, CheckCircle } from 'lucide-react';
 import Button from '../common/Button';
@@ -12,6 +12,52 @@ interface HeroSectionProps {
 // Updated component signature to remove openEligibilityModal and use useNavigate
 const HeroSection: React.FC<HeroSectionProps> = ({ openApplyModal }) => {
   const navigate = useNavigate(); // NEW: Initialize useNavigate hook
+
+  // State for calculator inputs
+  const [amount, setAmount] = useState(500000);
+  const [rate, setRate] = useState(8.5);
+  const [tenure, setTenure] = useState(5);
+
+  // State for calculated results
+  const [emi, setEmi] = useState(0);
+  const [totalInterest, setTotalInterest] = useState(0);
+  const [totalAmount, setTotalAmount] = useState(0);
+
+  // Format numbers to Indian currency style
+  const formatCurrency = (value: number) => {
+    return new Intl.NumberFormat('en-IN', {
+      style: 'currency',
+      currency: 'INR',
+      maximumFractionDigits: 0,
+    }).format(value);
+  };
+
+  useEffect(() => {
+    const calculateEmi = () => {
+      const principal = amount;
+      const annualRate = rate;
+      const years = tenure;
+
+      if (principal <= 0 || annualRate <= 0 || years <= 0) {
+        setEmi(0);
+        setTotalInterest(0);
+        setTotalAmount(0);
+        return;
+      }
+
+      const monthlyRate = annualRate / 12 / 100;
+      const numberOfMonths = years * 12;
+      const emiValue = (principal * monthlyRate * Math.pow(1 + monthlyRate, numberOfMonths)) / (Math.pow(1 + monthlyRate, numberOfMonths) - 1);
+      const totalAmountValue = emiValue * numberOfMonths;
+      const totalInterestValue = totalAmountValue - principal;
+
+      setEmi(isFinite(emiValue) ? emiValue : 0);
+      setTotalInterest(isFinite(totalInterestValue) ? totalInterestValue : 0);
+      setTotalAmount(isFinite(totalAmountValue) ? totalAmountValue : 0);
+    };
+
+    calculateEmi();
+  }, [amount, rate, tenure]);
 
   const features = [
     { icon: TrendingUp, text: 'Compare rates from 50+ banks' },
@@ -99,62 +145,113 @@ const HeroSection: React.FC<HeroSectionProps> = ({ openApplyModal }) => {
                   <p className="text-gray-600">Calculate your EMI instantly</p>
                 </div>
 
-                <div className="space-y-4">
+                <div className="space-y-6">
+                  {/* Amount Slider */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Loan Amount
-                    </label>
-                    <div className="relative">
-                      <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">₹</span>
+                    <div className="flex justify-between items-center mb-2">
+                      <label className="text-sm font-medium text-gray-700">Loan Amount</label>
+                      <span className="px-3 py-1 text-sm font-semibold text-primary-700 bg-primary-100 rounded-md">{formatCurrency(amount)}</span>
+                    </div>
+                    <input
+                      type="range"
+                      min="100000"
+                      max="10000000"
+                      step="50000"
+                      value={amount}
+                      onChange={(e) => setAmount(Number(e.target.value))}
+                      className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-primary-600"
+                    />
+                  </div>
+
+                  {/* Rate and Tenure Sliders */}
+                  <div className="grid grid-cols-2 gap-6">
+                    <div>
+                      <div className="flex justify-between items-center mb-2">
+                        <label className="text-sm font-medium text-gray-700">Rate</label>
+                        <span className="px-2 py-1 text-sm font-semibold text-secondary-700 bg-secondary-100 rounded-md">{rate.toFixed(2)} %</span>
+                      </div>
                       <input
-                        type="text"
-                        placeholder="5,00,000"
-                        className="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                        type="range"
+                        min="5"
+                        max="20"
+                        step="0.05"
+                        value={rate}
+                        onChange={(e) => setRate(Number(e.target.value))}
+                        className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-secondary-600"
+                      />
+                    </div>
+                    <div>
+                      <div className="flex justify-between items-center mb-2">
+                        <label className="text-sm font-medium text-gray-700">Tenure</label>
+                        <span className="px-2 py-1 text-sm font-semibold text-accent-700 bg-accent-100 rounded-md">{tenure} Yrs</span>
+                      </div>
+                      <input
+                        type="range"
+                        min="1"
+                        max="30"
+                        step="1"
+                        value={tenure}
+                        onChange={(e) => setTenure(Number(e.target.value))}
+                        className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-accent-600"
                       />
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Interest Rate
-                      </label>
-                      <div className="relative">
-                        <input
-                          type="text"
-                          placeholder="12.5"
-                          className="w-full pr-8 pl-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                        />
-                        <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500">%</span>
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Tenure
-                      </label>
-                      <div className="relative">
-                        <input
-                          type="text"
-                          placeholder="5"
-                          className="w-full pr-12 pl-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                        />
-                        <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500">years</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="bg-gradient-to-r from-primary-50 to-secondary-50 p-4 rounded-lg">
+                  {/* Results */}
+                  <div className="bg-gradient-to-r from-primary-50 to-secondary-50 p-6 rounded-lg space-y-4">
                     <div className="text-center">
                       <p className="text-sm text-gray-600 mb-1">Monthly EMI</p>
-                      <p className="text-3xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
-                        ₹11,122
+                      <p className="text-4xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
+                        {formatCurrency(emi)}
                       </p>
+                    </div>
+                    <div className="flex justify-around items-center text-center pt-2">
+                      <div className="w-24 h-24 relative">
+                        <svg className="w-full h-full" viewBox="0 0 36 36">
+                          <path
+                            className="text-primary-200"
+                            d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="3"
+                          />
+                          <path
+                            className="text-secondary-500"
+                            strokeDasharray={`${(totalInterest / totalAmount) * 100}, 100`}
+                            d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="3"
+                            strokeLinecap="round"
+                            transform="rotate(-90 18 18)"
+                          />
+                        </svg>
+                      </div>
+                      <div className="space-y-2 text-left">
+                        <div className="flex items-center">
+                          <span className="h-3 w-3 rounded-full bg-primary-200 mr-2"></span>
+                          <div>
+                            <p className="text-xs text-gray-500">Principal</p>
+                            <p className="text-sm font-semibold text-gray-800">{formatCurrency(amount)}</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center">
+                          <span className="h-3 w-3 rounded-full bg-secondary-500 mr-2"></span>
+                          <div>
+                            <p className="text-xs text-gray-500">Total Interest</p>
+                            <p className="text-sm font-semibold text-gray-800">{formatCurrency(totalInterest)}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="text-center border-t border-gray-200 pt-3">
+                      <p className="text-xs text-gray-500">Total Payment</p>
+                      <p className="text-lg font-bold text-gray-800">{formatCurrency(totalAmount)}</p>
                     </div>
                   </div>
 
                   <Link to="/calculators" className="block">
-                    <Button variant="primary" fullWidth>
+                    <Button variant="outline" fullWidth>
                       View Detailed Calculator
                     </Button>
                   </Link>
