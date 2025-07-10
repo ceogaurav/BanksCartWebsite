@@ -293,7 +293,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ openApplyModal }) => {
 
                   <Link to="/calculators" className="block">
                     <Button variant="outline" fullWidth>
-                      View Detailed Calculator
+                      View More & Detailed Calculators
                     </Button>
                   </Link>
                 </div>
