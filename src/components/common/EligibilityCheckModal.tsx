@@ -577,7 +577,7 @@ const EligibilityCheckModal: React.FC<EligibilityCheckModalProps> = ({ isOpen, o
     setIsSubmitting(true);
     try {
       // Calculate eligible loan amount based on salary (e.g., 4 times monthly salary)
-      const calculatedLoanAmount = Number(salary) * 4;
+      const calculatedLoanAmount = Number(salary) * 25;
       setEligibleLoanAmount(calculatedLoanAmount);
 
       const eligibilityData = {

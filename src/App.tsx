@@ -28,13 +28,10 @@ import BecomePartnerPage from './pages/BecomePartnerPage';
 import BusinessLoanPage from './pages/BusinessLoanPage';
 import CarInsurancePage from './pages/CarInsurancePage';
 import CarLoanPage from './pages/CarLoanPage';
-import EMIcalculatorPage from './pages/EMIcalculatorPage';
 import EducationLoanPage from "./pages/EducationLoanPage";
 import HealthInsurancePage from './pages/HealthInsurancePage';
 import HomeLoanCompare from './pages/HomeLoanCompare';
-import HomeLoanEMICalculator from './pages/HomeLoanEMICalculator';
 import InvestmentPlansPage from './pages/InvestmentPlansPage';
-import LoanCalculatorPage from './pages/LoanCalculatorPage';
 import LoansOverviewPage from './pages/LoansOverviewPage';
 import InsuranceOverviewPage from './pages/InsuranceOverviewPage';
 import CardsOverviewPage from './pages/CardsOverviewPage';
@@ -57,7 +54,7 @@ import EligibilityCheckModal from './components/common/EligibilityCheckModal';
 import PartnerApplicationModal from './components/modals/PartnerApplicationModal';
 import CibilCheckButton from './components/common/CibilCheckButton';
 import CibilScoreCheckModal from './components/modals/CibilScoreCheckModal';
-import LoanApplyPage from './pages/loanapply';
+import LoanApplyPage from './pages/LoanApply';
 
 // Import the CalculatorPages (already correctly pointing to calculators directory)
 import CarLoanCalculatorPage from './pages/calculators/CarLoanCalculatorPage';
