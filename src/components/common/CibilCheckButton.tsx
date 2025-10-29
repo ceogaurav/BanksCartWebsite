@@ -40,7 +40,7 @@ const CibilCheckButton: React.FC<CibilCheckButtonProps> = ({ openCibilModal }) =
         } as React.CSSProperties} // Type assertion for custom CSS variables
       >
         <TrendingUp className="h-6 w-6" />
-        CHECK FREE CIBIL SCORE
+        Venkateswarlu Veguru
       </button>
 
       {/* Custom CSS for animation */}
