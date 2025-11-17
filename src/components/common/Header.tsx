@@ -8,7 +8,6 @@ import {
   CreditCard,
   BadgeInfo,
   FileText,
-  DollarSign, // NEW: Icon for Hanva button
 } from 'lucide-react'; // All valid Lucide icons
 import Button from './Button'; // Import the Button component
 
@@ -201,7 +200,7 @@ const Header: React.FC<HeaderProps> = ({ openApplyModal, openEligibilityModal, o
                         <span className="flex items-center gap-2 px-7 py-2 text-gray-700 font-semibold tracking-wide cursor-pointer hover:bg-gradient-to-r hover:from-primary-100 hover:to-secondary-100 hover:text-primary-700 rounded-xl transition-all duration-150">
                           <item.icon className="h-5 w-5" />
                           {item.name}
-                          <svg className="ml-1 h-3 w-3 text-gray-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
+                          <svg className="ml-1 h-3 w-3 text-gray-400 group-hover:text-primary-600 transition" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
                         </span>
                         {item.name === 'Resources' ? (
                           <div className="absolute right-full top-0 mt-0 mr-2 min-w-[220px] bg-white/95 shadow-2xl rounded-2xl opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 group-hover:visible invisible transition-all duration-200 z-[60] border border-gray-100 ring-2 ring-primary-100">
@@ -254,17 +253,6 @@ const Header: React.FC<HeaderProps> = ({ openApplyModal, openEligibilityModal, o
 
           {/* CTA Buttons */}
           <div className="hidden md:flex items-center gap-3">
-            {/* NEW: Hanva Button (External Link) */}
-            <a
-              href="https://www.hanva.in/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-2 rounded-xl text-base font-bold transition-all duration-200 shadow-lg border-2 border-transparent whitespace-nowrap bg-gradient-to-r from-green-500 to-teal-500 text-white hover:from-green-600 hover:to-teal-600 hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-green-300"
-              style={{ fontWeight: 900 }}
-            >
-              <DollarSign className="h-5 w-5" />
-              <span>Hanva</span>
-            </a>
             {/* "Become Partner" Button */}
             <div className="relative flex flex-col items-center">
               <Button
@@ -399,17 +387,6 @@ const Header: React.FC<HeaderProps> = ({ openApplyModal, openEligibilityModal, o
                   </Link>
                 );
               })}
-              {/* NEW: Hanva Button for mobile */}
-              <a
-                href="https://www.hanva.in/"
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => setIsMenuOpen(false)}
-                className="flex items-center gap-3 px-5 py-3 rounded-2xl text-lg font-bold transition-all duration-200 shadow-sm border-2 border-transparent w-full mt-4 bg-gradient-to-r from-green-500 to-teal-500 text-white hover:from-green-600 hover:to-teal-600 hover:scale-[1.03] hover:shadow-lg"
-              >
-                <DollarSign className="h-6 w-6" />
-                <span>Hanva</span>
-              </a>
               {/* "Become Partner" Button for mobile */}
               <Button
                 variant="secondary"
