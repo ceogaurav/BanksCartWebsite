@@ -101,6 +101,10 @@ import CreditReportTerms from './pages/legal/CreditReportTerms';
 import TermsOfUse from './pages/legal/TermsOfUse';
 import PrivacyPolicy from './pages/legal/PrivacyPolicy';
 import BlogList from './pages/BlogList';
+import InvestorRelations from './pages/legal/InvestorRelations';
+import Disclaimer from './pages/legal/Disclaimer';
+import IntellectualPolicy from './pages/legal/IntellectualPolicy';
+import SitemapPage from './pages/SitemapPage';
 
 
 
@@ -415,6 +419,10 @@ const App: React.FC = () => {
                 <Route path="/credit-report-terms" element={<CreditReportTerms />} />
                 <Route path="/terms-of-use" element={<TermsOfUse />} />
                 <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                <Route path="/investor-relations" element={<InvestorRelations />} />
+                <Route path="/disclaimer" element={<Disclaimer />} />
+                <Route path="/intellectual-policy" element={<IntellectualPolicy />} />
+                <Route path="/sitemap" element={<SitemapPage />} />
 
                 {/* Catch-all route for any undefined paths (404 Not Found) */}
                 <Route path="*" element={<NotFound />} />
