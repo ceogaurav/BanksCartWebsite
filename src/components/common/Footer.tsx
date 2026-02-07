@@ -1,158 +1,135 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
+import { Facebook, Twitter, Instagram, Linkedin, Youtube, Smartphone } from 'lucide-react';
 
 interface FooterProps {
   openEligibilityModal: (loanType?: string) => void;
 }
 
 const Footer: React.FC<FooterProps> = ({ openEligibilityModal }) => {
-  const quickLinks = [
-    { name: 'Personal Loan', href: '/loans/personal' },
-    { name: 'Home Loan', href: '/loans/home' },
-    { name: 'Credit Cards', href: '/cards/credit' },
-    { name: 'Fixed Deposit', href: '/investment/fixed-deposit' },
-    { name: 'Mutual Funds', href: '/investment/mutual-funds' },
-  ];
-
-  const legalLinks = [
-    { name: 'Privacy Policy', href: '/privacy' },
-    { name: 'Terms of Service', href: '/terms' },
-    { name: 'Disclaimer', href: '/disclaimer' },
-    { name: 'Grievance Redressal', href: '/grievance' },
-  ];
-
-  const resources = [
-    { name: 'Calculators', href: '/calculators' },
-    { name: 'IFSC Finder', href: '/resources/ifsc-finder' },
-    { name: 'Income Tax', href: '/resources/income-tax' },
-    { name: 'PPF', href: '/resources/ppf' },
-    { name: 'Gold Rates', href: '/resources/gold-rates' },
-    { name: 'Check Eligibility', action: () => openEligibilityModal() },
-  ];
+  const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-gray-900 text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {/* Company Info */}
+    <footer className="bg-[#0B0F19] text-slate-400 font-sans border-t border-slate-800">
+      {/* Top Section: Main Navigation */}
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+
+          {/* Column 1: Logo & About */}
           <div className="space-y-6">
             <Link to="/" className="flex items-center space-x-2">
-              {/* Updated Logo: Using the provided path from the public folder */}
               <img
-                src="/logos/bankscartlogof.jpg" // Relative path for public assets
-                alt="BanksCart Logo"
-                className="h-10 w-auto rounded-lg" // Adjust height/width as needed for your logo
+                src="/logos/bankscartlogof.jpg" // Ensure this logo looks good on dark bg, or use a white version
+                alt="BanksCart"
+                className="h-10 w-auto rounded"
               />
-              {/* Removed the Building2 icon and text 'BanksCart' as they are replaced by the image logo */}
             </Link>
-            <p className="text-gray-300 text-sm leading-relaxed">
-              India's leading loan comparison platform. Compare interest rates from top banks and
-              apply for loans with instant eligibility check and quick approval.
-            </p>
-            <div className="flex space-x-4">
-              {/* Updated Social Media URLs */}
-              <a href="https://www.facebook.com/profile.php?id=61577799593188" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-500 transition-colors">
-                <Facebook className="h-5 w-5" />
-              </a>
-              <a href="https://x.com/BANKSCART124005" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-400 transition-colors">
-                <Twitter className="h-5 w-5" />
-              </a>
-              <a href="https://www.instagram.com/bankscart/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-pink-500 transition-colors">
-                <Instagram className="h-5 w-5" />
-              </a>
-              <a href="https://www.threads.com/@bankscart" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-700 transition-colors">
-                <Linkedin className="h-5 w-5" /> {/* Using Linkedin icon for Threads link as requested, assuming visual preference */}
-              </a>
+            <h3 className="text-white text-sm font-bold uppercase tracking-wider">BANKS CART</h3>
+            <ul className="space-y-3 text-sm">
+              <li><Link to="/about" className="hover:text-blue-400 transition-colors">About</Link></li>
+              <li><Link to="/careers" className="hover:text-blue-400 transition-colors">Careers</Link></li>
+              <li><Link to="/contact" className="hover:text-blue-400 transition-colors">Contact Us</Link></li>
+              <li><Link to="/partners" className="hover:text-blue-400 transition-colors">Partners</Link></li>
+            </ul>
+          </div>
+
+          {/* Column 2: Group Brands */}
+          <div className="space-y-6">
+            <h3 className="text-white text-sm font-bold uppercase tracking-wider">GROUP BRANDS</h3>
+            <ul className="space-y-3 text-sm">
+              <li><a href="#" className="hover:text-blue-400 transition-colors">PolicyBazaar.com</a></li>
+              <li><a href="#" className="hover:text-blue-400 transition-colors">PaisaBazaar.com</a></li>
+              <li><a href="#" className="hover:text-blue-400 transition-colors">DocPrime.com</a></li>
+              <li><a href="#" className="hover:text-blue-400 transition-colors">QuickFixCars.com</a></li>
+            </ul>
+          </div>
+
+          {/* Column 3: Legal & Policy */}
+          <div className="space-y-6">
+            <h3 className="text-white text-sm font-bold uppercase tracking-wider">LEGAL & POLICY</h3>
+            <ul className="space-y-3 text-sm">
+              <li><Link to="/privacy-policy" className="hover:text-blue-400 transition-colors">Privacy Policy</Link></li>
+              <li><Link to="/terms-of-use" className="hover:text-blue-400 transition-colors">Terms of Use</Link></li>
+              <li><Link to="/disclaimer" className="hover:text-blue-400 transition-colors">Disclaimer</Link></li>
+              <li><Link to="/grievance" className="hover:text-blue-400 transition-colors">Grievance Redressal</Link></li>
+            </ul>
+          </div>
+
+
+          {/* Column 4: Download App */}
+          <div className="space-y-6">
+            <h3 className="text-white text-sm font-bold uppercase tracking-wider">DOWNLOAD APP</h3>
+            <div className="flex flex-col space-y-3">
+              <button className="flex items-center gap-3 bg-[#1A1F2E] hover:bg-[#252b40] border border-slate-700 rounded-lg p-3 transition-colors group text-left w-fit min-w-[160px]">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Play Store" className="h-8 w-auto" />
+              </button>
+              <button className="flex items-center gap-3 bg-[#1A1F2E] hover:bg-[#252b40] border border-slate-700 rounded-lg p-3 transition-colors group text-left w-fit min-w-[160px]">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="App Store" className="h-8 w-auto" />
+              </button>
             </div>
           </div>
 
-          {/* Quick Links */}
-          <div>
-            <h3 className="text-lg font-semibold mb-6">Popular Products</h3>
-            <ul className="space-y-3">
-              {quickLinks.map((link) => (
-                <li key={link.name}>
-                  <Link
-                    to={link.href}
-                    className="text-gray-300 hover:text-blue-400 transition-colors text-sm"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+        </div>
+      </div>
 
-          {/* Resources */}
-          <div>
-            <h3 className="text-lg font-semibold mb-6">Tools & Resources</h3>
-            <ul className="space-y-3">
-              {resources.map((link) => (
-                link.href ? (
-                  <li key={link.name}>
-                    <Link
-                      to={link.href}
-                      className="text-gray-300 hover:text-blue-400 transition-colors text-sm"
-                    >
-                      {link.name}
-                    </Link>
-                  </li>
-                ) : (
-                  <li key={link.name}>
-                    <button onClick={link.action} className="text-gray-300 hover:text-blue-400 transition-colors text-sm text-left w-full">
-                      {link.name}
-                    </button>
-                  </li>
-                )
-              ))}
-            </ul>
-          </div>
-
-          {/* Contact & Legal */}
-          <div>
-            <h3 className="text-lg font-semibold mb-6">Contact & Legal</h3>
-            <div className="space-y-4 mb-6">
-              <div className="flex items-center space-x-3">
-                <Phone className="h-4 w-4 text-blue-400" /> {/* Changed to a specific blue shade for consistency */}
-                <a href="tel:+919686859296" className="text-gray-300 hover:text-blue-400 transition-colors text-sm">+91 968 685 9296</a>
-              </div>
-              <div className="flex items-center space-x-3">
-                <Mail className="h-4 w-4 text-blue-400" /> {/* Changed to a specific blue shade for consistency */}
-                <a href="mailto:support@bankscart.com" className="text-gray-300 hover:text-blue-400 transition-colors text-sm">support@bankscart.com</a>
-              </div>
-              <div className="flex items-start space-x-3">
-                <MapPin className="h-4 w-4 text-blue-400 mt-0.5" /> {/* Changed to a specific blue shade for consistency */}
-                <address className="text-gray-300 text-sm not-italic">
-                  Raj Arcade Gb. Palya<br />
-                  Bengaluru, Karnataka 560068<br />
-                  India
-                </address>
-              </div>
+      {/* Middle Bar: Quick Links & Social */}
+      <div className="bg-[#111521] border-t border-slate-800 border-b">
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <div className="flex flex-wrap justify-center gap-6 text-xs font-medium">
+              <Link to="/investor-relations" className="hover:text-white transition-colors">Investor Relations</Link>
+              <Link to="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link>
+              <Link to="/terms-of-use" className="hover:text-white transition-colors">Terms of Use</Link>
+              <Link to="/disclaimer" className="hover:text-white transition-colors">Disclaimer</Link>
+              <Link to="/intellectual-policy" className="hover:text-white transition-colors">Intellectual Policy</Link>
+              <Link to="/sitemap" className="hover:text-white transition-colors">Sitemap</Link>
             </div>
-            <ul className="space-y-2">
-              {legalLinks.map((link) => (
-                <li key={link.name}>
-                  <Link
-                    to={link.href}
-                    className="text-gray-400 hover:text-blue-400 transition-colors text-xs"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            <div className="flex items-center gap-4">
+              <a href="#" className="p-2 bg-[#1A1F2E] rounded-full hover:bg-blue-600 hover:text-white transition-all"><Facebook className="w-4 h-4" /></a>
+              <a href="#" className="p-2 bg-[#1A1F2E] rounded-full hover:bg-blue-400 hover:text-white transition-all"><Twitter className="w-4 h-4" /></a>
+              <a href="#" className="p-2 bg-[#1A1F2E] rounded-full hover:bg-blue-700 hover:text-white transition-all"><Linkedin className="w-4 h-4" /></a>
+              <a href="#" className="p-2 bg-[#1A1F2E] rounded-full hover:bg-red-600 hover:text-white transition-all"><Youtube className="w-4 h-4" /></a>
+              <a href="#" className="p-2 bg-[#1A1F2E] rounded-full hover:bg-pink-600 hover:text-white transition-all"><Instagram className="w-4 h-4" /></a>
+            </div>
           </div>
         </div>
+      </div>
 
-        <div className="border-t border-gray-800 mt-12 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <p className="text-gray-400 text-sm">
-              © 2017 - {new Date().getFullYear()} BanksCart. All rights reserved.
-            </p>
-            <p className="text-gray-400 text-sm">
-              Licensed financial services comparison platform
-            </p>
+      {/* Bottom Section: Payment & Security */}
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+
+          {/* Payment Methods */}
+          <div className="space-y-2">
+            <h4 className="text-xs font-semibold text-slate-500 uppercase">Supported Payment Methods</h4>
+            <div className="flex flex-wrap gap-2">
+              <div className="h-8 bg-white rounded px-2 flex items-center"><img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa" className="h-4 w-auto" /></div>
+              <div className="h-8 bg-white rounded px-2 flex items-center"><img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/American_Express_logo_%282018%29.svg" alt="Amex" className="h-4 w-auto" /></div>
+              <div className="h-8 bg-white rounded px-2 flex items-center"><img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard" className="h-4 w-auto" /></div>
+              <div className="h-8 bg-white rounded px-2 flex items-center"><img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="Paypal" className="h-4 w-auto" /></div>
+              <div className="h-8 bg-white rounded px-2 flex items-center"><img src="https://upload.wikimedia.org/wikipedia/commons/d/d1/RuPay.svg" alt="Rupay" className="h-4 w-auto" /></div>
+            </div>
+          </div>
+
+          {/* Security Badges */}
+          <div className="space-y-2 lg:text-right">
+            <h4 className="text-xs font-semibold text-slate-500 uppercase">Secured By & Certified By</h4>
+            <div className="flex flex-wrap gap-3 lg:justify-end">
+              <div className="bg-white p-1 rounded h-8 flex items-center"><span className="text-xs font-bold text-black px-1">PCI DSS</span></div>
+              <div className="bg-white p-1 rounded h-8 flex items-center"><span className="text-xs font-bold text-black px-1">256-BIT SSL</span></div>
+              <div className="bg-white p-1 rounded h-8 flex items-center"><span className="text-xs font-bold text-black px-1">ISO 27001</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Copyright Bar */}
+      <div className="bg-[#05080F] py-4 border-t border-slate-900">
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] text-slate-500">
+          <p>CIN No. U74900HR2011PTC044581 © Copyright 2014-{currentYear} BanksCart.com. All Rights Reserved.</p>
+          <div className="flex items-center gap-2">
+            <img src="https://upload.wikimedia.org/wikipedia/en/4/41/Flag_of_India.svg" alt="India" className="h-3 w-auto" />
+            <span>Built with Love, Made in India</span>
           </div>
         </div>
       </div>
