@@ -24,7 +24,7 @@ export default function BlogPost() {
     if (!post) return <div className="text-center py-10">Loading...</div>;
 
     return (
-        <article className="max-w-3xl mx-auto py-12 px-4">
+        <article className="max-w-3xl mx-auto py-12 px-4 pt-24">
             <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
             <p className="text-gray-500 mb-8">{new Date(post.publishedAt).toDateString()}</p>
             {post.mainImage && (

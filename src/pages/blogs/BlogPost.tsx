@@ -50,7 +50,7 @@ export default function BlogPost() {
                 <meta property="og:image" content={post.mainImage} />
             </Helmet>
 
-            <article className="max-w-3xl mx-auto py-10 px-4">
+            <article className="max-w-3xl mx-auto py-10 px-4 pt-24">
                 <h1 className="text-4xl font-bold mb-4 text-gray-900">{post.title}</h1>
                 <p className="text-gray-500 mb-8">
                     Published: {new Date(post.publishedAt).toDateString()}
