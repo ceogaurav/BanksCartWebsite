@@ -33,14 +33,14 @@ const Footer: React.FC<FooterProps> = ({ openEligibilityModal }) => {
             </ul>
           </div>
 
-          {/* Column 2: Group Brands */}
+          {/* Column 2: Explore */}
           <div className="space-y-6">
-            <h3 className="text-white text-sm font-bold uppercase tracking-wider">GROUP BRANDS</h3>
+            <h3 className="text-white text-sm font-bold uppercase tracking-wider">EXPLORE</h3>
             <ul className="space-y-3 text-sm">
-              <li><a href="#" className="hover:text-blue-400 transition-colors">PolicyBazaar.com</a></li>
-              <li><a href="#" className="hover:text-blue-400 transition-colors">PaisaBazaar.com</a></li>
-              <li><a href="#" className="hover:text-blue-400 transition-colors">DocPrime.com</a></li>
-              <li><a href="#" className="hover:text-blue-400 transition-colors">QuickFixCars.com</a></li>
+              <li><Link to="/blogs" className="hover:text-blue-400 transition-colors">Blogs</Link></li>
+              <li><Link to="/calculators" className="hover:text-blue-400 transition-colors">Calculators</Link></li>
+              <li><Link to="/loans" className="hover:text-blue-400 transition-colors">Loans</Link></li>
+              <li><Link to="/cards" className="hover:text-blue-400 transition-colors">Credit Cards</Link></li>
             </ul>
           </div>
 
