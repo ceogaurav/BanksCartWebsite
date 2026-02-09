@@ -8,9 +8,6 @@ export default function BlogPost() {
     const { slug } = useParams();
 
     useEffect(() => {
-        // Log the current slug to debug
-        console.log("Fetching post for slug:", slug);
-
         // Fetch current post and broad list of recent posts
         // Switched order to _createdAt to ensure results even if publishedAt is missing
         const query = `{
@@ -33,7 +30,6 @@ export default function BlogPost() {
 
         client.fetch(query, { slug })
             .then((result) => {
-                console.log("Sanity Result:", result); // Debug log
                 setData(result);
             })
             .catch((err) => {
@@ -66,20 +62,6 @@ export default function BlogPost() {
     return (
         <div className="max-w-7xl mx-auto px-4 py-12">
 
-            {/* AGGRESSIVE DEBUG BANNER */}
-            <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-8" role="alert">
-                <p className="font-bold">Debug Info (Top of Page)</p>
-                <p>Slug: {slug}</p>
-                <p>Latest Posts Count: {latestPosts?.length ?? 'Undefined'}</p>
-                <p>Related Posts Count: {relatedPosts?.length ?? 'Undefined'}</p>
-                <details>
-                    <summary>Raw Data JSON</summary>
-                    <pre className="text-xs mt-2 bg-white p-2 border overflow-auto max-h-40">
-                        {JSON.stringify(latestPosts, null, 2)}
-                    </pre>
-                </details>
-            </div>
-
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
 
                 {/* LEFT COLUMN: Main Blog Content */}
@@ -106,7 +88,7 @@ export default function BlogPost() {
                     </article>
 
                     {/* RELATED BLOGS (Bottom Section) */}
-                    {relatedPosts.length > 0 ? (
+                    {relatedPosts.length > 0 && (
                         <div className="mt-16 pt-10 border-t border-gray-200">
                             <h3 className="text-2xl font-bold mb-6 text-gray-900">You might also like</h3>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -138,14 +120,6 @@ export default function BlogPost() {
                                     </Link>
                                 ))}
                             </div>
-                        </div>
-                    ) : (
-                        <div className="mt-10 p-4 bg-yellow-50 border border-yellow-200 rounded-lg text-sm text-yellow-800">
-                            <strong>Debug Info:</strong> No related posts found to display.
-                            <br />
-                            Raw fetched posts: {latestPosts?.length || 0}
-                            <br />
-                            Current slug: {slug}
                         </div>
                     )}
                 </div>
