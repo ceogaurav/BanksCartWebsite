@@ -91,8 +91,8 @@ export default function BlogPost() {
                         </div>
                     </article>
 
-                    {/* RELATED BLOGS (Bottom Section) - Only show if there are related posts */}
-                    {relatedPosts.length > 0 && (
+                    {/* RELATED BLOGS (Bottom Section) */}
+                    {relatedPosts.length > 0 ? (
                         <div className="mt-16 pt-10 border-t border-gray-200">
                             <h3 className="text-2xl font-bold mb-6 text-gray-900">You might also like</h3>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -117,13 +117,21 @@ export default function BlogPost() {
                                                     {post.title}
                                                 </h4>
                                                 <p className="text-sm text-gray-500 mt-auto">
-                                                    {new Date(post.publishedAt).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}
+                                                    {new Date(post.publishedAt || post._createdAt || Date.now()).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}
                                                 </p>
                                             </div>
                                         </div>
                                     </Link>
                                 ))}
                             </div>
+                        </div>
+                    ) : (
+                        <div className="mt-10 p-4 bg-yellow-50 border border-yellow-200 rounded-lg text-sm text-yellow-800">
+                            <strong>Debug Info:</strong> No related posts found to display.
+                            <br />
+                            Raw fetched posts: {latestPosts?.length || 0}
+                            <br />
+                            Current slug: {slug}
                         </div>
                     )}
                 </div>
