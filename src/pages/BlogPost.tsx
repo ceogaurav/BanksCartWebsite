@@ -66,6 +66,20 @@ export default function BlogPost() {
     return (
         <div className="max-w-7xl mx-auto px-4 py-12">
 
+            {/* AGGRESSIVE DEBUG BANNER */}
+            <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-8" role="alert">
+                <p className="font-bold">Debug Info (Top of Page)</p>
+                <p>Slug: {slug}</p>
+                <p>Latest Posts Count: {latestPosts?.length ?? 'Undefined'}</p>
+                <p>Related Posts Count: {relatedPosts?.length ?? 'Undefined'}</p>
+                <details>
+                    <summary>Raw Data JSON</summary>
+                    <pre className="text-xs mt-2 bg-white p-2 border overflow-auto max-h-40">
+                        {JSON.stringify(latestPosts, null, 2)}
+                    </pre>
+                </details>
+            </div>
+
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
 
                 {/* LEFT COLUMN: Main Blog Content */}
