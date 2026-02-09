@@ -105,6 +105,7 @@ import InvestorRelations from './pages/legal/InvestorRelations';
 import Disclaimer from './pages/legal/Disclaimer';
 import IntellectualPolicy from './pages/legal/IntellectualPolicy';
 import SitemapPage from './pages/SitemapPage';
+import CreditCards from './pages/CreditCards';
 
 
 
@@ -423,6 +424,9 @@ const App: React.FC = () => {
                 <Route path="/disclaimer" element={<Disclaimer />} />
                 <Route path="/intellectual-policy" element={<IntellectualPolicy />} />
                 <Route path="/sitemap" element={<SitemapPage />} />
+
+                {/* Financial Products */}
+                <Route path="/credit-cards" element={<CreditCards />} />
 
                 {/* Catch-all route for any undefined paths (404 Not Found) */}
                 <Route path="*" element={<NotFound />} />
