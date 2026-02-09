@@ -8,7 +8,11 @@ export default function BlogPost() {
     const { slug } = useParams();
 
     useEffect(() => {
-        // Fetch current post and generic recent posts (filtering client-side to be safe)
+        // Log the current slug to debug
+        console.log("Fetching post for slug:", slug);
+
+        // Fetch current post and broad list of recent posts
+        // Switched order to _createdAt to ensure results even if publishedAt is missing
         const query = `{
       "currentPost": *[_type == "post" && slug.current == $slug][0]{
         title,
@@ -18,17 +22,23 @@ export default function BlogPost() {
         "authorName": author->name,
         "authorImage": author->image.asset->url
       },
-      "latestPosts": *[_type == "post"] | order(publishedAt desc)[0...5]{
+      "latestPosts": *[_type == "post"] | order(_createdAt desc)[0...10]{
         title,
         slug,
         "imageUrl": mainImage.asset->url,
-        publishedAt
+        publishedAt,
+        _createdAt
       }
     }`;
 
         client.fetch(query, { slug })
-            .then((result) => setData(result))
-            .catch(console.error);
+            .then((result) => {
+                console.log("Sanity Result:", result); // Debug log
+                setData(result);
+            })
+            .catch((err) => {
+                console.error("Sanity Fetch Error:", err);
+            });
     }, [slug]);
 
     if (!data || !data.currentPost) return <div className="text-center py-20">Loading...</div>;
