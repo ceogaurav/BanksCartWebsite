@@ -1,10 +1,13 @@
 import React, { useState, useMemo } from 'react';
+import { Wallet } from 'lucide-react';
 import Header from '../components/common/Header';
 import Footer from '../components/common/Footer';
 import HeroSection from '../components/credit-cards/HeroSection';
 import FilterSidebar from '../components/credit-cards/FilterSidebar';
 import CreditCardCard from '../components/credit-cards/CreditCardCard';
 import CreditCardSavingsCalculator from '../components/credit-cards/CreditCardSavingsCalculator';
+import PreApprovedCarousel from '../components/credit-cards/PreApprovedCarousel';
+import RewardsCalculator from '../components/credit-cards/RewardsCalculator';
 import { creditCards } from '../data/creditCards';
 
 export default function CreditCards() {
@@ -12,39 +15,31 @@ export default function CreditCards() {
     const [selectedBanks, setSelectedBanks] = useState<string[]>([]);
     const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
-    // 2. Filter Logic (Apply filters to the full list)
+    // 2. Filter Logic
     const filteredCards = useMemo(() => {
         return creditCards.filter(card => {
-            // Check Bank Filter
-            // Assumes your card data has a 'bankName' property
             if (selectedBanks.length > 0 && !selectedBanks.includes(card.bankName)) {
                 return false;
             }
-            
-            // Check Category Filter
-            // Assumes your card data has a 'category' or 'type' property
-            // If category is an array: card.categories.some(c => selectedCategories.includes(c))
-            // If category is a string: selectedCategories.includes(card.category)
             if (selectedCategories.length > 0) {
-                 // Adjust 'card.category' below to match your data structure exactly
-                return selectedCategories.includes(card.category); 
+                // Check if card has ANY of the selected categories
+                const hasCategory = card.categories.some(c => selectedCategories.includes(c));
+                if (!hasCategory) return false;
             }
-            
             return true;
         });
     }, [selectedBanks, selectedCategories]);
 
-    // 3. Dynamic Facets Calculation (Count how many cards exist for each filter)
+    // 3. Facets
     const facets = useMemo(() => {
         const banksMap = new Map<string, number>();
         const categoriesMap = new Map<string, number>();
 
         creditCards.forEach(card => {
-            // Count Banks
             banksMap.set(card.bankName, (banksMap.get(card.bankName) || 0) + 1);
-            
-            // Count Categories (adjust 'card.category' to match your data)
-            categoriesMap.set(card.category, (categoriesMap.get(card.category) || 0) + 1);
+            card.categories.forEach(cat => {
+                categoriesMap.set(cat, (categoriesMap.get(cat) || 0) + 1);
+            });
         });
 
         return {
@@ -53,17 +48,12 @@ export default function CreditCards() {
         };
     }, []);
 
-    // 4. Handlers
     const toggleBank = (bank: string) => {
-        setSelectedBanks(prev => 
-            prev.includes(bank) ? prev.filter(b => b !== bank) : [...prev, bank]
-        );
+        setSelectedBanks(prev => prev.includes(bank) ? prev.filter(b => b !== bank) : [...prev, bank]);
     };
 
     const toggleCategory = (category: string) => {
-        setSelectedCategories(prev => 
-            prev.includes(category) ? prev.filter(c => c !== category) : [...prev, category]
-        );
+        setSelectedCategories(prev => prev.includes(category) ? prev.filter(c => c !== category) : [...prev, category]);
     };
 
     const clearAllFilters = () => {
@@ -76,10 +66,15 @@ export default function CreditCards() {
             <Header />
             <HeroSection />
 
+            {/* Pre-Approved Cards Section (New from Image 4) */}
+            <div className="bg-white border-b border-gray-200 py-10">
+                <div className="max-w-7xl mx-auto px-4 lg:px-8">
+                     <PreApprovedCarousel />
+                </div>
+            </div>
+
             <div className="max-w-7xl mx-auto px-4 lg:px-8 py-12">
                 <div className="flex gap-8 items-start">
-
-                    {/* Pass Props to Sidebar */}
                     <FilterSidebar 
                         availableBanks={facets.banks}
                         availableCategories={facets.categories}
@@ -91,24 +86,30 @@ export default function CreditCards() {
                     />
 
                     <main className="flex-1 min-w-0">
-                        {/* Mobile Filter Bar (Optional visual only for now) */}
-                        <div className="lg:hidden mb-6 flex gap-2 overflow-x-auto pb-2">
-                            <button className="px-4 py-2 bg-white border border-gray-200 rounded-full text-sm font-medium whitespace-nowrap">Filter</button>
-                            <button className="px-4 py-2 bg-white border border-gray-200 rounded-full text-sm font-medium whitespace-nowrap">Sort By</button>
+                        {/* Section Title */}
+                        <div className="mb-4">
+                            <h1 className="text-2xl font-bold text-gray-900">Best Credit Cards in India</h1>
                         </div>
 
-                        {/* Results Header */}
-                        <div className="mb-6 flex justify-between items-end">
-                            <div>
-                                <h1 className="text-2xl font-bold text-gray-900">Best Credit Cards in India</h1>
-                                <p className="text-sm text-gray-500 mt-1">
-                                    Showing {filteredCards.length} Cards 
-                                    {(selectedBanks.length > 0 || selectedCategories.length > 0) && ' (Filtered)'}
-                                </p>
+                        {/* Purple Banner (from Image 2) */}
+                        <div className="bg-[#48126b] rounded-xl p-4 mb-6 flex items-center justify-between text-white shadow-lg relative overflow-hidden">
+                            <div className="relative z-10 flex items-center gap-4">
+                                <div className="bg-green-500/20 p-2 rounded-lg">
+                                    <Wallet className="w-8 h-8 text-green-400" />
+                                </div>
+                                <div>
+                                    <p className="font-bold text-lg">Apply for a Credit Card & Get <span className="text-yellow-400">₹500 Cashback</span> in PB Wallet*</p>
+                                    <p className="text-xs text-purple-200">*PB Wallet is available on the Paisabazaar App</p>
+                                </div>
                             </div>
+                            <button className="bg-white text-[#48126b] px-6 py-2 rounded font-bold text-sm hover:bg-gray-100 transition-colors z-10">
+                                Apply Now {'>'}
+                            </button>
+                             {/* Abstract bg shapes */}
+                             <div className="absolute right-0 top-0 h-full w-1/3 bg-purple-800/30 skew-x-12"></div>
                         </div>
 
-                        {/* Cards Grid - Renders Filtered List */}
+                        {/* Cards Grid */}
                         <div className="space-y-6">
                             {filteredCards.length > 0 ? (
                                 filteredCards.map((card) => (
@@ -122,11 +123,23 @@ export default function CreditCards() {
                             )}
                         </div>
 
+                         <div className="mt-8 text-center">
+                            <button className="px-8 py-3 bg-white border border-blue-600 text-blue-600 font-bold rounded-lg hover:bg-blue-50 transition-colors">
+                                Show More Cards
+                            </button>
+                        </div>
                     </main>
                 </div>
             </div>
 
-            <CreditCardSavingsCalculator />
+            {/* Calculators Section */}
+            <div className="bg-white py-12 border-t border-gray-200">
+                <div className="max-w-7xl mx-auto px-4 lg:px-8 space-y-16">
+                    <RewardsCalculator />
+                    <CreditCardSavingsCalculator />
+                </div>
+            </div>
+
             <Footer />
         </div>
     );
