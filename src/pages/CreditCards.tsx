@@ -2,8 +2,8 @@ import React from 'react';
 import { CheckCircle, Info, Star, ChevronRight, CreditCard as CardIcon } from 'lucide-react';
 import { creditCards } from '../data/creditCards';
 import { Link } from 'react-router-dom';
-import Navbar from '../components/common/Navbar';
-import Footer from '../components/common/Footer';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 export default function CreditCards() {
     return (
