@@ -424,6 +424,9 @@ const App: React.FC = () => {
                 <Route path="/intellectual-policy" element={<IntellectualPolicy />} />
                 <Route path="/sitemap" element={<SitemapPage />} />
 
+                {/* Financial Products */}
+                <Route path="/credit-cards" element={<CreditCards />} />
+
                 {/* Catch-all route for any undefined paths (404 Not Found) */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
