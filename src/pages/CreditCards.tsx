@@ -22,8 +22,9 @@ export default function CreditCards() {
                 return false;
             }
             if (selectedCategories.length > 0) {
-                // Check if card has ANY of the selected categories
-                const hasCategory = card.categories.some(c => selectedCategories.includes(c));
+                // FIX: Added safe check (card.categories || []) to prevent crash
+                const currentCardCategories = card.categories || []; 
+                const hasCategory = currentCardCategories.some(c => selectedCategories.includes(c));
                 if (!hasCategory) return false;
             }
             return true;
@@ -36,8 +37,14 @@ export default function CreditCards() {
         const categoriesMap = new Map<string, number>();
 
         creditCards.forEach(card => {
-            banksMap.set(card.bankName, (banksMap.get(card.bankName) || 0) + 1);
-            card.categories.forEach(cat => {
+            // Count Banks
+            if (card.bankName) {
+                banksMap.set(card.bankName, (banksMap.get(card.bankName) || 0) + 1);
+            }
+            
+            // FIX: Added safe check (card.categories || []) to prevent crash
+            const currentCardCategories = card.categories || [];
+            currentCardCategories.forEach(cat => {
                 categoriesMap.set(cat, (categoriesMap.get(cat) || 0) + 1);
             });
         });
@@ -66,7 +73,7 @@ export default function CreditCards() {
             <Header />
             <HeroSection />
 
-            {/* Pre-Approved Cards Section (New from Image 4) */}
+            {/* Pre-Approved Cards Section */}
             <div className="bg-white border-b border-gray-200 py-10">
                 <div className="max-w-7xl mx-auto px-4 lg:px-8">
                      <PreApprovedCarousel />
@@ -91,7 +98,7 @@ export default function CreditCards() {
                             <h1 className="text-2xl font-bold text-gray-900">Best Credit Cards in India</h1>
                         </div>
 
-                        {/* Purple Banner (from Image 2) */}
+                        {/* Purple Banner */}
                         <div className="bg-[#48126b] rounded-xl p-4 mb-6 flex items-center justify-between text-white shadow-lg relative overflow-hidden">
                             <div className="relative z-10 flex items-center gap-4">
                                 <div className="bg-green-500/20 p-2 rounded-lg">
@@ -105,7 +112,6 @@ export default function CreditCards() {
                             <button className="bg-white text-[#48126b] px-6 py-2 rounded font-bold text-sm hover:bg-gray-100 transition-colors z-10">
                                 Apply Now {'>'}
                             </button>
-                             {/* Abstract bg shapes */}
                              <div className="absolute right-0 top-0 h-full w-1/3 bg-purple-800/30 skew-x-12"></div>
                         </div>
 
