@@ -125,7 +125,7 @@ export const creditCards: CreditCard[] = [
         name: 'American Express Platinum Travel',
         provider: 'American Express',
         category: 'Travel',
-        image: 'https://icm.aexp-static.com/Internet/internationalcardshop/en_in/images/cards/bold_reserve_in_960x608.png,
+        image: 'https://icm.aexp-static.com/Internet/internationalcardshop/en_in/images/cards/bold_reserve_in_960x608.png',
         badges: ['Premium', 'Travel', 'Milestone Rewards'],
         promoText: 'Bonus 10,000 Points',
         rating: 4.8,
