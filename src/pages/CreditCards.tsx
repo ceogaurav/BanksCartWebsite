@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Navbar from '../components/common/Navbar';
+import Header from '../components/common/Header';
 import Footer from '../components/common/Footer';
 import HeroSection from '../components/credit-cards/HeroSection';
 import FilterSidebar from '../components/credit-cards/FilterSidebar';
@@ -54,7 +54,7 @@ const SavingsCalculator = () => {
 export default function CreditCards() {
     return (
         <div className="min-h-screen bg-gray-50 font-sans text-gray-900">
-            <Navbar />
+            <Header />
 
             <HeroSection />
 
