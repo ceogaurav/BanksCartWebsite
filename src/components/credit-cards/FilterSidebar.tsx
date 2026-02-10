@@ -1,24 +1,13 @@
 import React, { useState } from 'react';
-import { Filter, ChevronDown, ChevronUp } from 'lucide-react';
-
-// Define the shape of a filter option (e.g., { name: 'HDFC', count: 5 })
-interface FilterOption {
-  name: string;
-  count: number;
-}
+import { Filter, ChevronUp } from 'lucide-react';
 
 interface FilterSidebarProps {
-  // The available options to display
-  availableBanks: FilterOption[];
-  availableCategories: FilterOption[];
-
-  // The currently selected items
+  availableBanks: { name: string; count: number }[];
+  availableCategories: { name: string; count: number }[];
   selectedBanks: string[];
   selectedCategories: string[];
-
-  // Functions to update the parent state
-  onBankChange: (bankName: string) => void;
-  onCategoryChange: (categoryName: string) => void;
+  onBankChange: (bank: string) => void;
+  onCategoryChange: (category: string) => void;
   onClearAll: () => void;
 }
 
@@ -33,89 +22,70 @@ export default function FilterSidebar({
 }: FilterSidebarProps) {
   const [showAllBanks, setShowAllBanks] = useState(false);
 
-  // Logic to show only first 5 banks or all of them
-  const displayedBanks = showAllBanks ? availableBanks : availableBanks.slice(0, 5);
-
-  const hasActiveFilters = selectedBanks.length > 0 || selectedCategories.length > 0;
+  // Specific categories seen in screenshot (Lounge, Shopping, etc)
+  // Ensure the sort matches the visual priority if possible
+  const priorityCategories = ['Premium', 'Rewards', 'Lounge Access', 'Shopping', 'Dining', 'Cashback', 'Online Shopping', 'Fuel', 'Lifetime Free', 'Movies'];
+  
+  // Sort available categories based on priority list
+  const sortedCategories = [...availableCategories].sort((a, b) => {
+      const idxA = priorityCategories.indexOf(a.name);
+      const idxB = priorityCategories.indexOf(b.name);
+      return (idxA === -1 ? 99 : idxA) - (idxB === -1 ? 99 : idxB);
+  });
 
   return (
-    <div className="hidden lg:block w-72 flex-shrink-0">
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 sticky top-24 overflow-hidden">
+    <div className="hidden lg:block w-64 flex-shrink-0">
+      <div className="bg-white rounded-lg shadow-sm border border-gray-100 sticky top-24">
 
         {/* Header */}
-        <div className="px-5 py-4 border-b border-gray-100 flex justify-between items-center bg-gray-50">
-          <h3 className="font-bold text-gray-900 flex items-center gap-2">
-            <Filter className="w-4 h-4" /> Filters
+        <div className="px-5 py-4 border-b border-gray-100 flex justify-between items-center">
+          <h3 className="font-bold text-gray-900 flex items-center gap-2 text-lg">
+            Filters
           </h3>
-          <button 
-            onClick={onClearAll}
-            disabled={!hasActiveFilters}
-            className={`text-xs font-semibold ${hasActiveFilters ? 'text-blue-600 hover:text-blue-700 cursor-pointer' : 'text-gray-400 cursor-not-allowed'}`}
-          >
-            Clear All
-          </button>
+          <button onClick={onClearAll} className="text-xs font-semibold text-blue-600 hover:text-blue-700">Clear All</button>
         </div>
 
-        {/* Banks Filter */}
+        {/* Categories Filter (Shown first in screenshot 2) */}
         <div className="p-5 border-b border-gray-100">
-          <h4 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-4">Banks</h4>
+           {/* Note: Screenshot shows categories like Premium, Rewards first */}
           <div className="space-y-3">
-            {displayedBanks.map((bank, i) => (
-              <label key={i} className="flex items-center justify-between cursor-pointer group">
-                <div className="flex items-center gap-3">
-                  <input 
-                    type="checkbox" 
-                    className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-                    checked={selectedBanks.includes(bank.name)}
-                    onChange={() => onBankChange(bank.name)}
-                  />
-                  <span className={`text-sm transition-colors ${selectedBanks.includes(bank.name) ? 'text-blue-700 font-medium' : 'text-gray-700 group-hover:text-blue-600'}`}>
-                    {bank.name}
-                  </span>
-                </div>
-                <span className="text-xs text-gray-400 bg-gray-50 px-1.5 py-0.5 rounded font-mono">
-                  {bank.count}
-                </span>
+            {sortedCategories.map((cat, i) => (
+              <label key={i} className="flex items-center gap-3 cursor-pointer group">
+                <input 
+                  type="checkbox" 
+                  className="rounded border-gray-300 text-blue-600 focus:ring-blue-500 w-4 h-4"
+                  checked={selectedCategories.includes(cat.name)}
+                  onChange={() => onCategoryChange(cat.name)}
+                />
+                <span className="text-sm text-gray-600 group-hover:text-blue-600">{cat.name}</span>
               </label>
             ))}
-            
-            {availableBanks.length > 5 && (
-              <button 
-                onClick={() => setShowAllBanks(!showAllBanks)}
-                className="text-xs font-bold text-blue-600 mt-2 hover:underline flex items-center gap-1"
-              >
-                {showAllBanks ? (
-                    <>Show Less <ChevronUp className="w-3 h-3" /></>
-                ) : (
-                    <>+ Show {availableBanks.length - 5} More</>
-                )}
-              </button>
-            )}
+             <div className="bg-orange-50 text-orange-700 px-2 py-1 text-[10px] rounded inline-flex items-center gap-1 mt-2">
+                <span>!</span> Max. 3 selections allowed
+            </div>
           </div>
         </div>
 
-        {/* Categories Filter */}
+        {/* Banks Filter */}
         <div className="p-5">
-          <h4 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-4">Categories</h4>
+          <h4 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-4">provider</h4>
           <div className="space-y-3">
-            {availableCategories.map((cat, i) => (
-              <label key={i} className="flex items-center justify-between gap-3 cursor-pointer group">
-                <div className="flex items-center gap-3">
-                    <input 
-                      type="checkbox" 
-                      className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-                      checked={selectedCategories.includes(cat.name)}
-                      onChange={() => onCategoryChange(cat.name)}
-                    />
-                    <span className={`text-sm transition-colors ${selectedCategories.includes(cat.name) ? 'text-blue-700 font-medium' : 'text-gray-700 group-hover:text-blue-600'}`}>
-                      {cat.name}
-                    </span>
-                </div>
-                <span className="text-xs text-gray-400 bg-gray-50 px-1.5 py-0.5 rounded font-mono">
-                  {cat.count}
-                </span>
+            {(showAllBanks ? availableBanks : availableBanks.slice(0, 5)).map((bank, i) => (
+              <label key={i} className="flex items-center gap-3 cursor-pointer group">
+                  <input 
+                    type="checkbox" 
+                    className="rounded border-gray-300 text-blue-600 focus:ring-blue-500 w-4 h-4"
+                    checked={selectedBanks.includes(bank.name)}
+                    onChange={() => onBankChange(bank.name)}
+                  />
+                  <span className="text-sm text-gray-600">{bank.name}</span>
               </label>
             ))}
+            {availableBanks.length > 5 && (
+               <button onClick={() => setShowAllBanks(!showAllBanks)} className="text-xs font-bold text-blue-600 mt-2 flex items-center gap-1">
+                 {showAllBanks ? 'Show Less' : '+ Show More'}
+               </button>
+            )}
           </div>
         </div>
 
