@@ -7,7 +7,8 @@ import CreditCardCard from '../components/credit-cards/CreditCardCard';
 import CreditCardSavingsCalculator from '../components/credit-cards/CreditCardSavingsCalculator';
 import { creditCards } from '../data/creditCards';
 
-export function CreditCards() {
+// CHANGED: Added 'default' to the export statement to fix the build error
+export default function CreditCards() {
     return (
         <div className="min-h-screen bg-gray-50 font-sans text-gray-900">
             <Header />
