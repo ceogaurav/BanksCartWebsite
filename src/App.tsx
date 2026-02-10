@@ -105,6 +105,7 @@ import InvestorRelations from './pages/legal/InvestorRelations';
 import Disclaimer from './pages/legal/Disclaimer';
 import IntellectualPolicy from './pages/legal/IntellectualPolicy';
 import SitemapPage from './pages/SitemapPage';
+import CreditCards from './pages/CreditCards';
 
 
 

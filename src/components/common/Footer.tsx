@@ -126,7 +126,7 @@ const Footer: React.FC<FooterProps> = ({ openEligibilityModal }) => {
       {/* Copyright Bar */}
       <div className="bg-[#05080F] py-4 border-t border-slate-900">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] text-slate-500">
-          <p>CIN No. U74900HR2011PTC044581 © Copyright 2014-{currentYear} BanksCart.com. All Rights Reserved.</p>
+          <p> © Copyright 2014-{currentYear} BanksCart.com. All Rights Reserved.</p>
           <div className="flex items-center gap-2">
             <img src="https://upload.wikimedia.org/wikipedia/en/4/41/Flag_of_India.svg" alt="India" className="h-3 w-auto" />
             <span>Built with Love, Made in India</span>
