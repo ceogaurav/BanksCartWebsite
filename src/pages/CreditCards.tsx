@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Wallet, X } from 'lucide-react';
+import { Wallet } from 'lucide-react';
 import Header from '../components/common/Header';
 import Footer from '../components/common/Footer';
 import HeroSection from '../components/credit-cards/HeroSection';
@@ -9,13 +9,14 @@ import CreditCardSavingsCalculator from '../components/credit-cards/CreditCardSa
 import PreApprovedCarousel from '../components/credit-cards/PreApprovedCarousel';
 import RewardsCalculator from '../components/credit-cards/RewardsCalculator';
 import CompareFloatingBar from '../components/credit-cards/CompareFloatingBar';
+import CompareModal from '../components/credit-cards/CompareModal'; // IMPORT ADDED
 import { creditCards } from '../data/creditCards';
 
 export default function CreditCards() {
     const [selectedBanks, setSelectedBanks] = useState<string[]>([]);
     const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-    const [compareList, setCompareList] = useState<string[]>([]); // Store IDs
-    const [showCompareModal, setShowCompareModal] = useState(false);
+    const [compareList, setCompareList] = useState<string[]>([]);
+    const [isCompareModalOpen, setIsCompareModalOpen] = useState(false); // STATE ADDED
 
     // Filter Logic
     const filteredCards = useMemo(() => {
@@ -31,7 +32,7 @@ export default function CreditCards() {
         });
     }, [selectedBanks, selectedCategories]);
 
-    // Facet Calculation (Fixes Sidebar Counts)
+    // Facet Calculation
     const facets = useMemo(() => {
         const banksMap = new Map<string, number>();
         const categoriesMap = new Map<string, number>();
@@ -52,22 +53,21 @@ export default function CreditCards() {
         };
     }, []);
 
-    // Compare Handlers
     const toggleCompare = (id: string) => {
         setCompareList(prev => {
             if (prev.includes(id)) return prev.filter(item => item !== id);
-            if (prev.length >= 3) return prev; // Max 3
+            if (prev.length >= 3) return prev; 
             return [...prev, id];
         });
     };
 
     const clearCompare = () => setCompareList([]);
 
-    // Get card objects for the floating bar
+    // Get card objects for the floating bar and modal
     const selectedCardsForCompare = creditCards.filter(c => compareList.includes(c.id));
 
     return (
-        <div className="min-h-screen bg-gray-50 font-sans text-gray-900 pb-20">
+        <div className="min-h-screen bg-gray-50 font-sans text-gray-900 pb-20 relative">
             <Header />
             <HeroSection />
 
@@ -80,7 +80,6 @@ export default function CreditCards() {
             <div className="max-w-7xl mx-auto px-4 lg:px-8 py-12">
                 <div className="flex gap-8 items-start">
                     
-                    {/* Pass facets correctly here */}
                     <FilterSidebar 
                         availableBanks={facets.banks}
                         availableCategories={facets.categories}
@@ -96,7 +95,7 @@ export default function CreditCards() {
                             <h1 className="text-2xl font-bold text-gray-900">Best Credit Cards in India <span className="text-sm font-normal text-gray-500 ml-2">({filteredCards.length} Found)</span></h1>
                         </div>
 
-                        {/* Purple Banner */}
+                        {/* Banner */}
                         <div className="bg-[#48126b] rounded-xl p-5 mb-6 flex flex-col sm:flex-row items-center justify-between text-white shadow-lg relative overflow-hidden gap-4">
                             <div className="relative z-10 flex items-center gap-4">
                                 <div className="bg-white/10 p-3 rounded-full backdrop-blur-sm">
@@ -127,7 +126,7 @@ export default function CreditCards() {
                             {filteredCards.length === 0 && (
                                 <div className="p-10 text-center bg-white border border-gray-200 rounded-xl">
                                     <p className="text-gray-500">No cards found matching these filters.</p>
-                                    <button onClick={() => {setSelectedBanks([]); setSelectedCategories([]);}} className="text-blue-600 font-bold mt-2">Clear All Filters</button>
+                                    <button onClick={() => {setSelectedBanks([]); setSelectedCategories([]);}} className="text-blue-600 font-bold mt-2 hover:underline">Clear All Filters</button>
                                 </div>
                             )}
                         </div>
@@ -149,7 +148,14 @@ export default function CreditCards() {
                 selectedCards={selectedCardsForCompare}
                 onRemove={toggleCompare}
                 onClear={clearCompare}
-                onCompareNow={() => alert('Compare Modal Opening... (Feature to be implemented)')}
+                onCompareNow={() => setIsCompareModalOpen(true)} // MODIFIED
+            />
+
+            {/* Comparison Modal */}
+            <CompareModal 
+                isOpen={isCompareModalOpen} 
+                onClose={() => setIsCompareModalOpen(false)} 
+                cards={selectedCardsForCompare} 
             />
         </div>
     );
