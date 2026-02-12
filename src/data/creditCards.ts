@@ -231,7 +231,7 @@ export const creditCards: CreditCard[] = [
         bankName: 'Axis Bank',
         category: 'Premium',
         categories: ['Premium', 'Travel', 'Rewards', 'Dining'],
-        image: 'https://www.axisbank.com/images/default-source/revamp-new/cards/credit-cards/magnus-credit-card.png',
+        image: 'https://www.axis.bank.in/images/default-source/magnus/webp/card-front-lg.webp?sfvrsn=a0996d41_1',
         badges: ['Luxury', 'Travel'],
         rating: 4.8,
         features: [
