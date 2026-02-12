@@ -7,7 +7,7 @@ export default function RewardsCalculator() {
     return (
         <div className="w-full">
             <h2 className="text-2xl font-bold text-gray-900 mb-2">Maximize Benefits on Your Credit Cards</h2>
-            <p className="text-gray-500 mb-8">Paisabazaar's Rewards Calculator and RedeemWise help you track, earn, and redeem rewards smartly.</p>
+            <p className="text-gray-500 mb-8">BanksCart's Rewards Calculator and RedeemWise help you track, earn, and redeem rewards smartly.</p>
 
             <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden flex flex-col lg:flex-row">
                 {/* Left Controls */}
