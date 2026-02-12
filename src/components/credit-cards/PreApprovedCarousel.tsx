@@ -8,7 +8,7 @@ export default function PreApprovedCarousel() {
 
     return (
         <div className="w-full">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">Pre-Approved Credit Cards on Paisabazaar</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">Pre-Approved Credit Cards on BanksCart</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {carouselCards.map((card, idx) => (
                     <div key={idx} className="bg-white rounded-xl border border-gray-200 p-5 hover:shadow-lg transition-shadow">
