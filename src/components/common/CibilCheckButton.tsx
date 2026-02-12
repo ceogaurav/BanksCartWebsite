@@ -53,7 +53,7 @@ const CibilCheckButton: React.FC<CibilCheckButtonProps> = ({ openCibilModal }) =
         } as React.CSSProperties}
       >
         <TrendingUp className="h-6 w-6" />
-        CHECK FREE CIBIL SCORE
+        Bankscart by Venkateswarlu Veguru
       </button>
 
       {/* Custom CSS for animation */}
