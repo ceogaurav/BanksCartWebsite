@@ -27,7 +27,7 @@ export const creditCards: CreditCard[] = [
         bankName: 'HDFC Bank',
         category: 'Premium',
         categories: ['Premium', 'Travel', 'Rewards', 'Dining', 'Shopping', 'Metal'],
-        image: 'https://www.hdfcbank.com/content/api/contentstream-id/723fb80a-2dde-42a3-9793-7ae1be57c87f/04c2c553-6251-469b-980b-22c5457ef47f/Personal/Pay/Cards/Credit%20Card/Credit%20Card%20Landing%20Page/Credit%20Cards/Infinia/Infinia-Metal-Edition-Credit-Card-264x167.png',
+        image: 'https://www.cardexpert.in/wp-content/uploads/2021/10/infinia-metal-edition-768x433.jpg',
         badges: ['Invite Only', 'Metal', 'Unlimited Lounge'],
         promoText: '12,500 Reward Points on Joining',
         rating: 5.0,
