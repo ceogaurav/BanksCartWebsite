@@ -12,7 +12,7 @@ export default function HeroSection() {
                 <div className="flex-1 space-y-6 pt-2">
                     <h1 className="text-4xl font-bold text-gray-900">Credit Cards</h1>
                     <p className="text-gray-600 leading-relaxed text-[15px]">
-                        Credit cards come with varied features and benefits tailored to different lifestyles. The key is to choose the one that aligns with your spending preferences. Paisabazaar makes it simple by bringing 100+ cards in one place for you to compare, check eligibility, apply through a completely digital process, and get instant approval.
+                        Credit cards come with varied features and benefits tailored to different lifestyles. The key is to choose the one that aligns with your spending preferences. BanksCart makes it simple by bringing 100+ cards in one place for you to compare, check eligibility, apply through a completely digital process, and get instant approval.
                     </p>
 
                     <div className="space-y-5 pt-2">
