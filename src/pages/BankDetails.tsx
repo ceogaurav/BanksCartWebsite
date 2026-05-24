@@ -1,5 +1,6 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { ExternalLink, MapPin, Phone, Mail, Star, TrendingUp, CheckCircle, Building2 } from 'lucide-react';
 import { banks } from '../data/banks';
 import { loanRates } from '../data/mockData';
@@ -37,6 +38,11 @@ const BankDetails: React.FC<BankDetailsProps> = ({ openEligibilityModal }) => {
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
+      <Helmet>
+        <title>{`${bank.name} - Loan Interest Rates, Customer Reviews & Details | BanksCart`}</title>
+        <meta name="description" content={`Get detailed information about ${bank.name}, including branch network established in ${bank.establishedYear}, customer ratings, IFSC codes, customer care contact details and compare latest interest rates at BanksCart.`} />
+        <link rel="canonical" href={`https://bankscart.com/bank-details/${bankId}`} />
+      </Helmet>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="bg-white rounded-xl shadow-lg p-8 mb-8">

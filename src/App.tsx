@@ -119,6 +119,7 @@ import CibilCheckButton from './components/common/CibilCheckButton';
 import CibilScoreCheckModal from './components/modals/CibilScoreCheckModal';
 import LoanApplyPage from './pages/LoanApply';
 import ChristmasThemeWrapper from './components/common/ChristmasThemeWrapper';
+import SEOManager from './components/common/SEOManager';
 
 // Import the CalculatorPages
 import CarLoanCalculatorPage from './pages/calculators/CarLoanCalculatorPage';
@@ -242,9 +243,9 @@ const App: React.FC = () => {
     };
   }, []);
 
-  return (
     <AuthProvider>
       <Router>
+        <SEOManager />
         <LoginModal />
         <OnboardingModal />
         <ChristmasThemeWrapper>

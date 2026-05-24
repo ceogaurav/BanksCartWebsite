@@ -1,0 +1,11 @@
+# robots.txt for https://bankscart.com
+
+User-agent: *
+Allow: /
+
+# Exclude private/admin pages from search results
+Disallow: /admin/
+Disallow: /profile/
+
+# Declare the sitemap location
+Sitemap: https://bankscart.com/sitemap.xml
