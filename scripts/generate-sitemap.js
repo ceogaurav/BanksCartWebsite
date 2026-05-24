@@ -32,6 +32,8 @@ async function generateSitemap() {
             '/investment',
             '/insurance',
             '/calculators',
+            '/ssy-calculator',
+            '/blogs/Sukanya-Samriddhi-Yojana-Guide',
             '/resources/loan-rates',
             '/eligibility',
             '/resources/ifsc-finder',

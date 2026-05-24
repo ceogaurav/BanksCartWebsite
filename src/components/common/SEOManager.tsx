@@ -99,6 +99,12 @@ const SEO_MAP: Record<string, SEOMetadata> = {
     description: "Calculate your income tax liability for FY 2025-26 (AY 2026-27) under both old and new tax regimes. Save tax with smart planning.",
     keywords: "income tax calculator, new tax regime, old vs new regime, tax planning tool"
   },
+  "/ssy-calculator": {
+    title: "Sukanya Samriddhi Yojana (SSY) Calculator 2026: Maturity Value | BanksCart",
+    description: "Calculate Sukanya Samriddhi Yojana maturity value, yearly compound interest, and total tax savings instantly with our free government-aligned SSY calculator.",
+    keywords: "ssy calculator 2026, sukanya samriddhi yojana calculator, girl child saving scheme calculator"
+  },
+
 
   // Loan Products
   "/plot-construction-loan": {
@@ -249,6 +255,12 @@ const SEO_MAP: Record<string, SEOMetadata> = {
     title: "The Ultimate 2026 Guide to CIBIL Score Mastery: Improve Credit Fast | BanksCart",
     description: "Master your credit profile. Discover critical steps to quickly boost your CIBIL score, rectify errors, and negotiate premium loan rates.",
   },
+  "/blogs/Sukanya-Samriddhi-Yojana-Guide": {
+    title: "Sukanya Samriddhi Yojana (SSY) 2026: Rules, Benefits & Guide | BanksCart",
+    description: "Read the ultimate 2026 guide on Sukanya Samriddhi Yojana. Learn about 8.2% interest rates, triple tax exemptions (EEE), eligibility, and withdrawal rules.",
+    keywords: "sukanya samriddhi scheme rules, ssy eligibility 2026, beti bachao beti padhao scheme tax benefit"
+  },
+
   "/blogs/Best-Credit-Cards": {
     title: "Best Credit Cards in India 2025: Rewards, Cashback & Fees | BanksCart",
     description: "Your ultimate guide to selecting the top credit cards tailored to your lifestyle—from maximum cashback to premium travel benefits.",

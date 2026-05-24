@@ -158,6 +158,8 @@ import LoanAmortizationCalculatorPage from './pages/calculators/LoanAmortization
 import AnnuityCalculatorPage from './pages/calculators/AnnuityCalculatorPage';
 import PensionCalculatorPage from './pages/calculators/PensionCalculatorPage';
 import SocialSecurityCalculatorPage from './pages/calculators/SocialSecurityCalculatorPage';
+import SSYCalculatorPage from './pages/calculators/SSYCalculatorPage';
+import SukanyaSamriddhiYojanaGuide from './pages/blogs/SukanyaSamriddhiYojanaGuide';
 
 
 // A simple 404 Not Found component
@@ -375,6 +377,7 @@ const App: React.FC = () => {
                 <Route path="/annuity-calculator" element={<AnnuityCalculatorPage openApplyModal={openApplyModal} />} />
                 <Route path="/pension-calculator" element={<PensionCalculatorPage openApplyModal={openApplyModal} />} />
                 <Route path="/social-security-calculator" element={<SocialSecurityCalculatorPage openApplyModal={openApplyModal} />} />
+                <Route path="/ssy-calculator" element={<SSYCalculatorPage openApplyModal={openApplyModal} />} />
                 <Route path="/blogs-overview-page" element={<BlogsOverviewPage openApplyModal={openApplyModal} />} />
                 <Route path="/blogs" element={<BlogsOverviewPage openApplyModal={openApplyModal} />} />
                 <Route path="/blogs/what-is-cibil-score" element={<WhatIsCibilScore />} />
@@ -383,6 +386,7 @@ const App: React.FC = () => {
                 <Route path="/blogs/Fixed-Deposit-Guide" element={<FixedDepositGuide />} />
                 <Route path="/blogs/Home-Loan-Guide" element={<HomeLoanGuide />} />
                 <Route path="/blogs/Investment-Plans-Guide" element={<InvestmentPlansGuide openApplyModal={openApplyModal} />} />
+                <Route path="/blogs/Sukanya-Samriddhi-Yojana-Guide" element={<SukanyaSamriddhiYojanaGuide />} />
                 <Route path="/blogs/Loan-Eligibility-Tricks" element={<LoanEligibilityTricks />} />
                 <Route path="/blogs/Secured-Unsecured-Guide" element={<SecuredUnsecuredGuide />} />
                 <Route path="/blogs/Gold-Vs-Personal-Loan" element={<GoldVsPersonalLoan />} />
