@@ -12,6 +12,7 @@ import HeroSection from '../components/home/HeroSection';
 import ProductGrid, { ProductItem } from '../components/home/ProductGrid';
 import FeatureBanner from '../components/home/FeatureBanner';
 import WhyChooseSection from '../components/home/WhyChooseSection';
+import ApprovalChanceMeter from '../components/home/ApprovalChanceMeter';
 
 interface HomeProps {
     openApplyModal: (loanType?: string) => void;
@@ -196,7 +197,7 @@ const Home: React.FC<HomeProps> = ({ openApplyModal, openEligibilityModal, openC
     return (
         <div className="min-h-screen bg-transparent pb-20">
             {/* HERO Section */}
-            <HeroSection />
+            <HeroSection openApplyModal={openApplyModal} openCibilModal={openCibilModal} />
 
             {/* PRODUCT GRIDS */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 relative z-10">
@@ -204,6 +205,9 @@ const Home: React.FC<HomeProps> = ({ openApplyModal, openEligibilityModal, openC
                 <ProductGrid title="Credit Score & Bill Payments" items={creditScoreItems} columns={6} />
                 <ProductGrid title="Investment & Insurance Products" items={investmentItems} columns={6} />
             </div>
+
+            {/* CHANCE OF APPROVAL SIMULATOR */}
+            <ApprovalChanceMeter />
 
             {/* FEATURE BANNERS */}
             <FeatureBanner />
