@@ -33,6 +33,7 @@ const LoanRates: React.FC = () => {
                 </tr>
               </thead>
               <tbody>
+                {[
                   { bank: 'HSBC Bank', rate: '10.15% - 16.00%', fee: 'Up to 2%' },
                   { bank: 'HDFC Bank', rate: '10.90% - 24.00%', fee: 'Rs.6,500 + GST', id: 'hdfc' },
                   { bank: 'IndusInd Bank', rate: '10.49% onwards', fee: 'Up to 3.5% onwards' },
@@ -79,7 +80,7 @@ const LoanRates: React.FC = () => {
                     <td className="px-4 py-2">{row.rate}</td>
                     <td className="px-4 py-2">{row.fee}</td>
                   </motion.tr>
-                ))}
+                )]}
               </tbody>
             </motion.table>
           </div>
