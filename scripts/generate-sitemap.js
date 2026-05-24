@@ -73,6 +73,13 @@ async function generateSitemap() {
             '/blog',
             '/blogs-overview-page',
             '/blogs',
+            // Bank Specific Landing Pages
+            '/bank-details/sbi',
+            '/bank-details/hdfc',
+            '/bank-details/icici',
+            '/bank-details/axis',
+            '/bank-details/kotak',
+            '/bank-details/pnb',
             // Static banking blogs
             '/blogs/what-is-cibil-score',
             '/blogs/Best-Credit-Cards',

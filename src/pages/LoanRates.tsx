@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { loanTypes } from '../data/loanTypes';
 
 const LoanRates: React.FC = () => {
@@ -32,15 +33,14 @@ const LoanRates: React.FC = () => {
                 </tr>
               </thead>
               <tbody>
-                {[
                   { bank: 'HSBC Bank', rate: '10.15% - 16.00%', fee: 'Up to 2%' },
-                  { bank: 'HDFC Bank', rate: '10.90% - 24.00%', fee: 'Rs.6,500 + GST' },
+                  { bank: 'HDFC Bank', rate: '10.90% - 24.00%', fee: 'Rs.6,500 + GST', id: 'hdfc' },
                   { bank: 'IndusInd Bank', rate: '10.49% onwards', fee: 'Up to 3.5% onwards' },
-                  { bank: 'ICICI Bank', rate: '10.85% - 16.65%', fee: 'Up to 2%' },
+                  { bank: 'ICICI Bank', rate: '10.85% - 16.65%', fee: 'Up to 2%', id: 'icici' },
                   { bank: 'Yes Bank', rate: '11.25% - 21%', fee: 'Up to 2.5%' },
-                  { bank: 'Kotak Mahindra Bank', rate: '10.99% and above', fee: 'Up to 5%' },
-                  { bank: 'Axis Bank', rate: '11.25% - 22%', fee: 'Up to 2%' },
-                  { bank: 'SBI', rate: '10.30% - 15.30%', fee: 'Up to 1.50%' },
+                  { bank: 'Kotak Mahindra Bank', rate: '10.99% and above', fee: 'Up to 5%', id: 'kotak' },
+                  { bank: 'Axis Bank', rate: '11.25% - 22%', fee: 'Up to 2%', id: 'axis' },
+                  { bank: 'SBI', rate: '10.30% - 15.30%', fee: 'Up to 1.50%', id: 'sbi' },
                   { bank: 'IDFC First Bank', rate: '10.70% onwards', fee: 'Up to 2%' },
                   { bank: 'Tata Capital', rate: '11.99% - 29.99%', fee: 'Up to 4%' },
                   { bank: 'Home Credit', rate: '19.2% onwards', fee: 'Up to 5%' },
@@ -55,7 +55,7 @@ const LoanRates: React.FC = () => {
                   { bank: 'South Indian Bank', rate: '10.50% - 22.31%', fee: '1% (above 25L)' },
                   { bank: 'Indian Overseas Bank', rate: '10.50% - 13.90%', fee: 'Up to 0.50%' },
                   { bank: 'RBL Bank', rate: '18%', fee: 'Up to 2%' },
-                  { bank: 'PNB', rate: '12.00% - 17.55%', fee: '0.35%' },
+                  { bank: 'PNB', rate: '12.00% - 17.55%', fee: '0.35%', id: 'pnb' },
                   { bank: 'Bank of Maharashtra', rate: '9.50%', fee: 'Up to 1%' },
                   { bank: 'Central Bank of India', rate: '11.65% - 12.40%', fee: 'Up to 1%' },
                   { bank: 'City Union Bank', rate: '11% - 14.95%', fee: '1.25% (min Rs.750)' },
@@ -67,7 +67,15 @@ const LoanRates: React.FC = () => {
                     transition={{ delay: 0.1 + i * 0.03 }}
                     className={i % 2 === 0 ? 'bg-gray-50' : ''}
                   >
-                    <td className="px-4 py-2 font-semibold">{row.bank}</td>
+                    <td className="px-4 py-2 font-semibold">
+                      {row.id ? (
+                        <Link to={`/bank-details/${row.id}`} className="text-blue-600 hover:underline">
+                          {row.bank}
+                        </Link>
+                      ) : (
+                        row.bank
+                      )}
+                    </td>
                     <td className="px-4 py-2">{row.rate}</td>
                     <td className="px-4 py-2">{row.fee}</td>
                   </motion.tr>
