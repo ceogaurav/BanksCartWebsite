@@ -104,6 +104,11 @@ const SEO_MAP: Record<string, SEOMetadata> = {
     description: "Calculate Sukanya Samriddhi Yojana maturity value, yearly compound interest, and total tax savings instantly with our free government-aligned SSY calculator.",
     keywords: "ssy calculator 2026, sukanya samriddhi yojana calculator, girl child saving scheme calculator"
   },
+  "/credit-card-finder": {
+    title: "Best Credit Card Finder: Find Your Perfect Credit Card Online | BanksCart",
+    description: "Find the best credit card suited for your lifestyle in just 2 minutes. Take our interactive Credit Card Finder quiz to compare rewards, cashback, travel and dining benefits.",
+    keywords: "credit card finder, credit card selector quiz, best credit card, find credit card online"
+  },
 
 
   // Loan Products
@@ -481,6 +486,62 @@ export default function SEOManager() {
 
   const currentUrl = `https://bankscart.com${pathname}`;
 
+  // 4. Generate JSON-LD Schema dynamically
+  const jsonLd = React.useMemo(() => {
+    // A. For financial products and calculators
+    if (pathname.startsWith('/loans/') || pathname.startsWith('/cards/') || pathname.startsWith('/ssy-calculator') || pathname.includes('calculator')) {
+      const isCalculator = pathname.includes('calculator') || pathname.startsWith('/ssy-calculator');
+      return {
+        "@context": "https://schema.org",
+        "@type": isCalculator ? "FinancialProduct" : "InvestmentOrDepositProduct",
+        "name": meta?.title || "BanksCart Financial Product",
+        "description": meta?.description || "",
+        "url": currentUrl,
+        "provider": {
+          "@type": "Organization",
+          "name": "BanksCart",
+          "url": "https://bankscart.com"
+        }
+      };
+    }
+
+    // B. For static blog articles
+    if (pathname.startsWith('/blogs/')) {
+      return {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": `What is discussed in this guide about ${meta?.title || 'banking'}?`,
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": meta?.description || ""
+            }
+          }
+        ]
+      };
+    }
+
+    // C. Default Organization Schema for homepage
+    if (pathname === '/') {
+      return {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "BanksCart",
+        "url": "https://bankscart.com",
+        "logo": "https://bankscart.com/favicon-32x32.png",
+        "description": meta?.description || "",
+        "sameAs": [
+          "https://twitter.com/bankscart",
+          "https://facebook.com/bankscart"
+        ]
+      };
+    }
+
+    return null;
+  }, [pathname, meta, currentUrl]);
+
   return (
     <Helmet>
       {/* Standard SEO */}
@@ -503,6 +564,13 @@ export default function SEOManager() {
 
       {/* Canonical Link */}
       <link rel="canonical" href={currentUrl} />
+
+      {/* Dynamic JSON-LD Structured Data Schema */}
+      {jsonLd && (
+        <script type="application/ld+json">
+          {JSON.stringify(jsonLd)}
+        </script>
+      )}
     </Helmet>
   );
 }

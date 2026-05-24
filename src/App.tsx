@@ -160,6 +160,7 @@ import PensionCalculatorPage from './pages/calculators/PensionCalculatorPage';
 import SocialSecurityCalculatorPage from './pages/calculators/SocialSecurityCalculatorPage';
 import SSYCalculatorPage from './pages/calculators/SSYCalculatorPage';
 import SukanyaSamriddhiYojanaGuide from './pages/blogs/SukanyaSamriddhiYojanaGuide';
+import CreditCardFinderPage from './pages/CreditCardFinderPage';
 
 
 // A simple 404 Not Found component
@@ -378,6 +379,7 @@ const App: React.FC = () => {
                 <Route path="/pension-calculator" element={<PensionCalculatorPage openApplyModal={openApplyModal} />} />
                 <Route path="/social-security-calculator" element={<SocialSecurityCalculatorPage openApplyModal={openApplyModal} />} />
                 <Route path="/ssy-calculator" element={<SSYCalculatorPage openApplyModal={openApplyModal} />} />
+                <Route path="/credit-card-finder" element={<CreditCardFinderPage openApplyModal={openApplyModal} />} />
                 <Route path="/blogs-overview-page" element={<BlogsOverviewPage openApplyModal={openApplyModal} />} />
                 <Route path="/blogs" element={<BlogsOverviewPage openApplyModal={openApplyModal} />} />
                 <Route path="/blogs/what-is-cibil-score" element={<WhatIsCibilScore />} />

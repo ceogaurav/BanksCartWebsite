@@ -156,7 +156,8 @@ async function generateSitemap() {
             '/disclaimer',
             '/intellectual-policy',
             '/sitemap',
-            '/credit-cards'
+            '/credit-cards',
+            '/credit-card-finder'
         ];
 
         let sitemap = `<?xml version="1.0" encoding="UTF-8"?>

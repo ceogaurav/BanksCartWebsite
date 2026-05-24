@@ -6,6 +6,11 @@ import {
   PiggyBank, Clock, Coins
 } from 'lucide-react';
 import ApplyButton from '../../components/common/ApplyButton';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Doughnut } from 'react-chartjs-2';
+
+ChartJS.register(ArcElement, Tooltip, Legend);
+
 
 const formatCurrency = (value: number): string => {
   return new Intl.NumberFormat('en-IN', {
@@ -171,6 +176,38 @@ export default function SSYCalculatorPage({ openApplyModal }: { openApplyModal?:
                 <span className="font-bold">21 Years (Pays for 15)</span>
               </div>
             </div>
+
+            {/* Premium Interactive Doughnut Chart */}
+            <div className="w-48 h-48 mt-8 bg-white/10 p-4 rounded-3xl border border-white/20 flex items-center justify-center">
+              <Doughnut
+                data={{
+                  labels: ['Principal Invested', 'Interest Accumulated'],
+                  datasets: [
+                    {
+                      data: [calculations.totalInvested, calculations.interestEarned],
+                      backgroundColor: ['#FFFFFF', '#FCD34D'],
+                      borderWidth: 0,
+                    },
+                  ],
+                }}
+                options={{
+                  plugins: {
+                    legend: {
+                      display: false
+                    },
+                    tooltip: {
+                      callbacks: {
+                        label: function(context) {
+                          return ` ${context.label}: ${formatCurrency(context.raw as number)}`;
+                        }
+                      }
+                    }
+                  },
+                  maintainAspectRatio: false,
+                }}
+              />
+            </div>
+
           </div>
         </div>
 
