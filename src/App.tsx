@@ -243,6 +243,7 @@ const App: React.FC = () => {
     };
   }, []);
 
+  return (
     <AuthProvider>
       <Router>
         <SEOManager />
