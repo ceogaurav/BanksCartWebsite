@@ -80,7 +80,7 @@ const LoanRates: React.FC = () => {
                     <td className="px-4 py-2">{row.rate}</td>
                     <td className="px-4 py-2">{row.fee}</td>
                   </motion.tr>
-                )]}
+                ))}
               </tbody>
             </motion.table>
           </div>
