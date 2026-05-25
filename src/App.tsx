@@ -115,6 +115,7 @@ import Disclaimer from './pages/legal/Disclaimer';
 import IntellectualPolicy from './pages/legal/IntellectualPolicy';
 import SitemapPage from './pages/SitemapPage';
 import CreditCards from './pages/CreditCards';
+import DynamicCreditCardPage from './pages/cards/DynamicCreditCardPage';
 
 
 
@@ -342,6 +343,7 @@ const App: React.FC = () => {
                 <Route path="/credit-score/cibil-score-for-personal-loan" element={<CibilScoreForPersonalLoanPage />} />
                 <Route path="/cibil/how-to-resolve-cibil-dispute" element={<ResolveCibilDisputePage />} />
                 <Route path="/loans/personal/:subPath" element={<DynamicPersonalLoanPage />} />
+                <Route path="/cards/credit/:subPath" element={<DynamicCreditCardPage />} />
                 <Route path="/expert-advice" element={<ExpertAdvicePage openApplyModal={openApplyModal} />} />
 
                 {/* Insurance product specific routes */}

@@ -512,6 +512,20 @@ export default function SEOManager() {
     };
   }
 
+  // 2.6 Check for dynamic credit card sub-paths
+  if (!meta && pathname.startsWith('/cards/credit/')) {
+    const subSlug = pathname.replace('/cards/credit/', '');
+    const cleanName = subSlug === 'rupay' ? 'Rupay Credit Cards' : subSlug
+      .split('-')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+    meta = {
+      title: `${cleanName}: Compare Features & Apply Online | BanksCart`,
+      description: `Compare ${cleanName} features, renewal fees, reward details, and lounge access benefits. Apply online with instant paperless eligibility check.`,
+      keywords: `${subSlug}, ${cleanName} online, apply ${subSlug}, best credit cards`
+    };
+  }
+
   // 3. Fallback to default if still not found
   if (!meta) {
     // Skip dynamic sanity blogs since BlogPost.tsx renders its own Helmet

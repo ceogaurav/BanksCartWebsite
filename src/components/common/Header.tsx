@@ -56,12 +56,27 @@ const Header: React.FC<HeaderProps> = ({ openApplyModal, openEligibilityModal, o
       ]
     },
     {
-      name: 'Cards',
+      name: 'Credit Cards',
       href: '/cards',
       icon: CreditCard,
       submenu: [
-        { name: 'Credit Cards', href: '/cards/credit' },
-        { name: 'Debit Cards', href: '/cards/debit' },
+        { name: 'Credit Card Overview', href: '/cards/credit/overview' },
+        { name: 'Best Credit Cards', href: '/cards/credit/best-cards' },
+        { name: 'Best Forex Cards', href: '/cards/credit/best-forex-cards' },
+        { name: 'CIBIL Score for Credit Card', href: '/cards/credit/cibil-score' },
+        { name: 'Credit Card Eligibility', href: '/cards/credit/eligibility' },
+        { name: 'Compare Credit Cards', href: '/cards/credit/compare' },
+        { name: 'Rupay Credit Cards', href: '/cards/credit/rupay' },
+        { name: 'Secured Credit Cards', href: '/cards/credit/secured' },
+        { name: 'Lifetime Free Credit Cards', href: '/cards/credit/lifetime-free' },
+        { name: 'Rewards Credit Cards', href: '/cards/credit/rewards' },
+        { name: 'Cashback Credit Cards', href: '/cards/credit/cashback' },
+        { name: 'Credit Card Lounge Access', href: '/cards/credit/lounge-access' },
+        { name: 'Virtual Credit Cards', href: '/cards/credit/virtual' },
+        { name: 'Fuel Credit Cards', href: '/cards/credit/fuel' },
+        { name: 'Travel Credit Cards', href: '/cards/credit/travel' },
+        { name: 'International Credit Cards', href: '/cards/credit/international' },
+        { name: 'Zero Forex Markup Credit Cards', href: '/cards/credit/zero-forex' },
       ]
     },
     {
@@ -288,6 +303,52 @@ const Header: React.FC<HeaderProps> = ({ openApplyModal, openEligibilityModal, o
                               </div>
                             </div>
                           )}
+                        </div>
+                      </div>
+                    </div>
+                  ) : item.name === 'Credit Cards' ? (
+                    <div className="absolute top-[90%] left-1/2 -translate-x-[40%] w-[720px] bg-white rounded-2xl shadow-2xl border border-slate-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-1 group-hover:translate-y-0 z-50 p-6 overflow-hidden">
+                      <div className="grid grid-cols-2 gap-8">
+                        {/* Column 1: Overview */}
+                        <div>
+                          <h4 className="font-bold text-xs uppercase tracking-wide text-blue-600 mb-4 flex items-center gap-2">
+                            <span className="p-1.5 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center">
+                              <FileText className="w-4 h-4" />
+                            </span>
+                            Overview
+                          </h4>
+                          <div className="flex flex-col gap-3 text-[13px] font-semibold text-slate-600">
+                            {item.submenu.slice(0, 6).map((sub) => (
+                              <Link
+                                key={sub.name}
+                                to={sub.href}
+                                className="hover:text-blue-600 transition-colors"
+                              >
+                                {sub.name === 'Credit Card Overview' ? 'Credit Card' : sub.name}
+                              </Link>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Column 2: By Category */}
+                        <div>
+                          <h4 className="font-bold text-xs uppercase tracking-wide text-blue-600 mb-4 flex items-center gap-2">
+                            <span className="p-1.5 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center">
+                              <CreditCard className="w-4 h-4" />
+                            </span>
+                            By Category
+                          </h4>
+                          <div className="flex flex-col gap-3 text-[13px] font-semibold text-slate-600">
+                            {item.submenu.slice(6).map((sub) => (
+                              <Link
+                                key={sub.name}
+                                to={sub.href}
+                                className="hover:text-blue-600 transition-colors"
+                              >
+                                {sub.name}
+                              </Link>
+                            ))}
+                          </div>
                         </div>
                       </div>
                     </div>
