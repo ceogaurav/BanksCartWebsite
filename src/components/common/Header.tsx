@@ -84,8 +84,34 @@ const Header: React.FC<HeaderProps> = ({ openApplyModal, openEligibilityModal, o
       href: '/investment',
       icon: TrendingUp,
       submenu: [
-        { name: 'Mutual Funds', href: '/investment/mutual-funds' },
-        { name: 'Fixed Deposit', href: '/investment/fixed-deposit' },
+        // Bonds
+        { name: 'Bonds', href: '/investment/bonds/overview' },
+        { name: 'Corporate Bonds', href: '/investment/bonds/corporate' },
+        { name: 'Government Bonds', href: '/investment/bonds/government' },
+        { name: 'Tax Free Bonds', href: '/investment/bonds/tax-free' },
+        { name: 'Floating Rate Bonds', href: '/investment/bonds/floating-rate' },
+        { name: 'Capital Gain Bonds', href: '/investment/bonds/capital-gain' },
+        { name: 'Zero Coupon Bonds', href: '/investment/bonds/zero-coupon' },
+        { name: 'How to Invest in Bonds', href: '/investment/bonds/how-to-invest' },
+        { name: 'Sovereign Gold Bonds', href: '/investment/bonds/sovereign-gold' },
+        // Fixed Deposit
+        { name: 'Fixed Deposit Interest Rates', href: '/investment/fd/rates' },
+        { name: 'Senior Citizen FD Rates', href: '/investment/fd/senior-citizen' },
+        { name: 'Loan Against Fixed Deposit', href: '/investment/fd/loan-against-fd' },
+        { name: 'FD vs Mutual Funds', href: '/investment/fd/fd-vs-mf' },
+        { name: 'FD vs RD', href: '/investment/fd/fd-vs-rd' },
+        { name: 'Post Office FD Rates', href: '/investment/fd/post-office-rates' },
+        { name: 'Recurring Deposit', href: '/investment/fd/recurring-deposit' },
+        // Mutual Funds
+        { name: 'Mutual Funds', href: '/investment/mutual-funds/overview' },
+        { name: 'Large Cap Mutual Funds', href: '/investment/mutual-funds/large-cap' },
+        { name: 'Mid Cap Mutual Funds', href: '/investment/mutual-funds/mid-cap' },
+        { name: 'Small Cap Mutual Funds', href: '/investment/mutual-funds/small-cap' },
+        { name: 'ELSS Mutual Funds', href: '/investment/mutual-funds/elss' },
+        { name: 'Mutual Fund Investment', href: '/investment/mutual-funds/investment' },
+        { name: 'SWP Mutual Funds', href: '/investment/mutual-funds/swp' },
+        { name: 'Flexi Cap Funds', href: '/investment/mutual-funds/flexi-cap' },
+        { name: 'Liquid Funds', href: '/investment/mutual-funds/liquid' },
       ]
     },
     {
@@ -340,6 +366,73 @@ const Header: React.FC<HeaderProps> = ({ openApplyModal, openEligibilityModal, o
                           </h4>
                           <div className="flex flex-col gap-3 text-[13px] font-semibold text-slate-600">
                             {item.submenu.slice(6).map((sub) => (
+                              <Link
+                                key={sub.name}
+                                to={sub.href}
+                                className="hover:text-blue-600 transition-colors"
+                              >
+                                {sub.name}
+                              </Link>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ) : item.name === 'Investment' ? (
+                    <div className="absolute top-[90%] left-1/2 -translate-x-[50%] w-[960px] bg-white rounded-2xl shadow-2xl border border-slate-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-1 group-hover:translate-y-0 z-50 p-6 overflow-hidden">
+                      <div className="grid grid-cols-3 gap-8">
+                        {/* Column 1: Bonds */}
+                        <div>
+                          <h4 className="font-bold text-xs uppercase tracking-wide text-blue-600 mb-4 flex items-center gap-2">
+                            <span className="p-1.5 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center">
+                              <FileText className="w-4 h-4" />
+                            </span>
+                            Bonds
+                          </h4>
+                          <div className="flex flex-col gap-3 text-[13px] font-semibold text-slate-600">
+                            {item.submenu.slice(0, 9).map((sub) => (
+                              <Link
+                                key={sub.name}
+                                to={sub.href}
+                                className="hover:text-blue-600 transition-colors"
+                              >
+                                {sub.name}
+                              </Link>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Column 2: Fixed Deposit */}
+                        <div>
+                          <h4 className="font-bold text-xs uppercase tracking-wide text-blue-600 mb-4 flex items-center gap-2">
+                            <span className="p-1.5 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center">
+                              <CreditCard className="w-4 h-4" />
+                            </span>
+                            Fixed Deposit
+                          </h4>
+                          <div className="flex flex-col gap-3 text-[13px] font-semibold text-slate-600">
+                            {item.submenu.slice(9, 16).map((sub) => (
+                              <Link
+                                key={sub.name}
+                                to={sub.href}
+                                className="hover:text-blue-600 transition-colors"
+                              >
+                                {sub.name}
+                              </Link>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Column 3: Mutual Funds */}
+                        <div>
+                          <h4 className="font-bold text-xs uppercase tracking-wide text-blue-600 mb-4 flex items-center gap-2">
+                            <span className="p-1.5 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center">
+                              <TrendingUp className="w-4 h-4" />
+                            </span>
+                            Mutual Funds
+                          </h4>
+                          <div className="flex flex-col gap-3 text-[13px] font-semibold text-slate-600">
+                            {item.submenu.slice(16).map((sub) => (
                               <Link
                                 key={sub.name}
                                 to={sub.href}

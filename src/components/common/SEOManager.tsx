@@ -526,6 +526,27 @@ export default function SEOManager() {
     };
   }
 
+  // 2.7 Check for dynamic investment sub-paths
+  if (!meta && pathname.startsWith('/investment/')) {
+    const parts = pathname.replace('/investment/', '').split('/');
+    if (parts.length >= 2) {
+      const categoryType = parts[0];
+      const subSlug = parts[1];
+      
+      const cleanCategory = categoryType === 'fd' ? 'Fixed Deposit' : categoryType === 'mutual-funds' ? 'Mutual Funds' : 'Bonds';
+      const cleanSlug = subSlug === 'fd-vs-mf' ? 'FD vs Mutual Funds' : subSlug === 'fd-vs-rd' ? 'FD vs RD' : subSlug
+        .split('-')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
+        
+      meta = {
+        title: `${cleanSlug}: Compare ${cleanCategory} Returns & Apply | BanksCart`,
+        description: `Check details on ${cleanSlug}. Explore historical yields, interest payouts, lock-in rules, and risk metrics on BanksCart.`,
+        keywords: `${subSlug}, ${cleanSlug} online, buy ${subSlug}, best ${categoryType} options`
+      };
+    }
+  }
+
   // 3. Fallback to default if still not found
   if (!meta) {
     // Skip dynamic sanity blogs since BlogPost.tsx renders its own Helmet
