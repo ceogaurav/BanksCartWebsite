@@ -751,6 +751,98 @@ export default function SEOManager() {
     };
   }
 
+  if (!meta && (pathname === '/financial-directory' || pathname === '/pages-directory')) {
+    meta = {
+      title: "All Financial Services Directories: 100+ Active Portals | BanksCart",
+      description: "Access over 100+ active financial portals, verified loan rates tables, Aadhaar services guides, and scheduled banking directories online.",
+      keywords: "financial directories, bankscart site directory, all loans comparison, all credit cards listings"
+    };
+  }
+
+  if (!meta && pathname.startsWith('/abhyudaya-co-operative-bank')) {
+    const subSlug = pathname.replace('/abhyudaya-co-operative-bank/', '').replace('/abhyudaya-co-operative-bank', '');
+    const cleanName = subSlug
+      ? subSlug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
+      : 'Overview';
+    meta = {
+      title: `Abhyudaya Bank ${cleanName}: Compare Rates & Services | BanksCart`,
+      description: `Check details on Abhyudaya Co-Operative Bank ${cleanName}. Compare savings account yields, fixed deposit rates, retail loan interest slabs, and grievance redressals.`,
+      keywords: `abhyudaya bank ${subSlug}, abhyudaya co-operative bank, scheduling bank india`
+    };
+  }
+
+  if (!meta && pathname.startsWith('/aditya-birla')) {
+    const subSlug = pathname.replace('/aditya-birla/', '').replace('/aditya-birla', '');
+    const cleanName = subSlug
+      ? subSlug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
+      : 'Overview';
+    meta = {
+      title: `Aditya Birla Capital ${cleanName}: Loans, Pensions & Wealth | BanksCart`,
+      description: `Explore ABSLI Sun Life ${cleanName} guidelines. Track historical yields, premium charges, term insurance coverages, and wellness rewards.`,
+      keywords: `aditya birla ${subSlug}, aditya birla capital, sun life insurance pension`
+    };
+  }
+
+  if (!meta && pathname.startsWith('/aditya-birla-sun-life-pension-plans/')) {
+    const subSlug = pathname.replace('/aditya-birla-sun-life-pension-plans/', '');
+    const cleanName = subSlug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+    meta = {
+      title: `${cleanName}: ABSLI Sun Life Pension Annuities | BanksCart`,
+      description: `Analyze tax exemptions, regular premium models, unit investments, and guaranteed additions for ${cleanName} on BanksCart.`,
+      keywords: `absli ${subSlug}, sun life pension plans, single premium retirement`
+    };
+  }
+
+  if (!meta && pathname.startsWith('/banking/')) {
+    const subSlug = pathname.replace('/banking/', '');
+    const cleanName = subSlug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+    meta = {
+      title: `${cleanName}: Compare Domestic Banking Slabs | BanksCart`,
+      description: `Reconcile details on ${cleanName}. Get information on net banking registrations, accounts payable calculations, or regional branch timings.`,
+      keywords: `${subSlug}, domestic banking services, bank timings, net banking logins`
+    };
+  }
+
+  if (!meta && pathname.startsWith('/money-transfer/')) {
+    const subSlug = pathname.replace('/money-transfer/', '');
+    const cleanName = subSlug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+    meta = {
+      title: `${cleanName}: Digital Transfer Limits & Fees | BanksCart`,
+      description: `Discover timelines and daily limits for ${cleanName}. Compare IMPS, NEFT, and RTGS transfer fee slabs.`,
+      keywords: `${subSlug}, account money transfers, domestic transaction charges`
+    };
+  }
+
+  if (!meta && pathname.startsWith('/home-loan/')) {
+    const subSlug = pathname.replace('/home-loan/', '');
+    const cleanName = subSlug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+    meta = {
+      title: `${cleanName}: Compare Home Loan Rates & Mortgage Slabs | BanksCart`,
+      description: `Track interest rates, technical valuations parameters, LTV rules, and customer care boards for ${cleanName}.`,
+      keywords: `${subSlug}, affordable housing finance, home loansNBFC`
+    };
+  }
+
+  if (!meta && pathname.startsWith('/au-small-finance-bank/')) {
+    const subSlug = pathname.replace('/au-small-finance-bank/', '');
+    const cleanName = subSlug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+    meta = {
+      title: `${cleanName}: Small Finance Credit Cards | BanksCart`,
+      description: `Track rewards points, fuel surcharges, travel lounge entries, and cashbacks for ${cleanName} on BanksCart.`,
+      keywords: `${subSlug}, AU small finance bank cards, co-branded credit cards`
+    };
+  }
+
+  if (!meta && pathname.startsWith('/icici-bank/')) {
+    const subSlug = pathname.replace('/icici-bank/', '');
+    const cleanName = subSlug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+    meta = {
+      title: `${cleanName}: Co-branded Travel Credit Cards | BanksCart`,
+      description: `Explore airport duty-free cashbacks, valet parking privileges, and free porter services for ${cleanName} on BanksCart.`,
+      keywords: `${subSlug}, ICICI bank adani cards, luxury signature credit cards`
+    };
+  }
+
   // 3. Fallback to default if still not found
   if (!meta) {
     // Skip dynamic sanity blogs since BlogPost.tsx renders its own Helmet

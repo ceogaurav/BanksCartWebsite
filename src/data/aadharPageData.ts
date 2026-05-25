@@ -227,10 +227,264 @@ export const AADHAAR_PAGE_MAP: Record<string, AadharPageContent> = {
       { q: "What is the fee for NRI Aadhaar enrollment?", a: "First-time enrollment is 100% free of cost at all official government Aadhaar centers." },
       { q: "Can I get my NRI Aadhaar card physically delivered overseas?", a: "No. UIDAI only delivers physical cards to valid pin codes inside India. NRIs must download their E-Aadhaar PDF online to access their card abroad." }
     ]
+  },
+  "aadhar-form": {
+    title: "Aadhaar Card Application Form: Download Official PDF & Guidelines",
+    badge: "Official UIDAI Forms",
+    intro: "The official Aadhaar Card Application Form is a comprehensive document released by UIDAI. It is utilized for both first-time Aadhaar enrollments and demographic or biometric update requests at physical Aadhaar Seva Kendras across India.",
+    moreIntro: "At BanksCart, we provide direct official download links and step-by-step guidelines on how to fill out the form accurately. Providing correct details prevents bank verification delay loops and secures fast biometric clearances.",
+    checklistTitle: "Sections of the Aadhaar Enrollment Form",
+    checklist: [
+      "Select Action Type: Check the box for either 'New Enrollment' or 'Update/Correction'.",
+      "Biometric Details: Specify if you require Fingerprint, Iris, or Photo updates.",
+      "Relationship Slabs: Fill in parent or guardian details (mandatory for Baal Aadhaar applicants under 5).",
+      "Document Verifications: Circle the matching POI, POA, DOB, and POR documents being physically submitted."
+    ],
+    faqs: [
+      { q: "Where can I download the official Aadhaar enrollment form?", a: "You can download the official PDF free of cost from the UIDAI portal, BanksCart, or collect a physical copy at any local Aadhaar center." },
+      { q: "Is the same form used for name or address updates?", a: "Yes. The unified 'Aadhaar Enrolment / Update Form' is used for both fresh enrollments and updating personal records." }
+    ]
+  },
+  "news": {
+    title: "Aadhaar Card Latest News & Policy Amendments 2026",
+    badge: "Official UIDAI Newsroom",
+    intro: "Stay informed on the latest Aadhaar Card news, policy announcements, security circulars, and system upgrades released by UIDAI. The government constantly refines demographic update rules, security systems, and e-KYC guidelines.",
+    moreIntro: "Recent amendments enforce mandatory biometric updates for children crossing age slabs, dynamic OTP linkages for subsidy accounts, and enhanced security layers for virtual identity (VID) cards.",
+    checklistTitle: "Recent Key Aadhaar Policy Highlights",
+    checklist: [
+      "Free Online Updates: UIDAI extends seasonal fee waivers for demographic updates on the myAadhaar portal.",
+      "Document Freshness: Mandatory uploading of fresh proof of identity and address for Aadhaar cards issued over 10 years ago.",
+      "Mobile e-KYC Security: Linked phone numbers now receive alerts for any demographic changes automatically.",
+      "Sovereign Gold & Subsidy Locks: Strict requirements of linked Aadhaar verification to release DBT subsidies."
+    ],
+    faqs: [
+      { q: "Is it compulsory to update Aadhaar details every 10 years?", a: "Yes. UIDAI strongly advises residents who got their Aadhaar card issued over 10 years ago and have never updated it, to upload fresh identity and address proofs online." },
+      { q: "What is the toll-free customer support number?", a: "The official UIDAI toll-free customer care number is 1947, operating 24/7." }
+    ]
+  },
+  "aadhaar-card-password": {
+    title: "Aadhaar Card PDF Password: Open Your E-Aadhaar Securely",
+    badge: "Security & Encryption Guides",
+    intro: "Every downloaded E-Aadhaar PDF file is highly encrypted by UIDAI to protect your sensitive personal details. To open your downloaded e-Aadhaar card letter, you must enter a highly structured 8-character password unique to your identity.",
+    moreIntro: "At BanksCart, we explain the exact password combinations to ensure you can unlock your PDF instantly for bank verifications, online KYC checks, or passport applications.",
+    checklistTitle: "Aadhaar PDF Password Combination Rules",
+    checklist: [
+      "Rule 1 (First 4 Letters): The first four characters of your name exactly as per Aadhaar in CAPITAL letters.",
+      "Rule 2 (Year of Birth): The next four characters are your Year of Birth in YYYY numerical format.",
+      "Special Case (Short Names): If your name is under 4 characters, use your full name in capitals followed by the birth year (e.g. AM1995 for AM).",
+      "Special Case (Name Initials): Spaces in names are omitted; use characters to fill the 4-letter slot."
+    ],
+    faqs: [
+      { q: "What is the password for my downloaded e-Aadhaar PDF?", a: "The password is the first 4 letters of your name in CAPITAL letters, followed by your year of birth (e.g. if name is RAHUL and birth year is 1990, password is RAHU1990)." },
+      { q: "How can I remove the password from my Aadhaar PDF?", a: "You can open the PDF in Google Chrome, enter the password, select 'Print' > 'Save as PDF' to save a decrypted copy without security passwords." }
+    ]
+  },
+  "aadhaar-card-services": {
+    title: "Aadhaar Online Services List: Reconcile E-KYC Slabs",
+    badge: "Unified Service Hub",
+    intro: "UIDAI hosts a vast ecosystem of online and offline services to assist residents. Managing these resources online enables seamless linking of tax IDs, downloading e-cards, locking biometrics, and verifying database records securely.",
+    moreIntro: "At BanksCart, we simplify access by categorizing all digital services in a single high-performance dashboard, helping you verify active parameters in seconds.",
+    checklistTitle: "Categorized Aadhaar Services Chart",
+    checklist: [
+      "Enrollment Services: Book appointments online, check status, locate nearest permanent Seva Kendras.",
+      "Update Services: Online address updates, update request tracking, checking update logs history.",
+      "Verification Services: Verify email and mobile number linkages, retrieve lost EIDs/UIDs online.",
+      "Security Services: Lock/Unlock active biometrics, generate 16-digit Virtual IDs (VID), verify offline QR codes."
+    ],
+    faqs: [
+      { q: "Which Aadhaar services are completely free?", a: "Online downloads, verifying card status, and checking authentication logs are 100% free online." },
+      { q: "Can I update my email address online?", a: "No. Email and mobile number registrations require a one-time biometric verification physically at an authorized center." }
+    ]
+  },
+  "aadhaar-card-update-correction": {
+    title: "Aadhaar Card Update & Correction: Demographic Change Guide",
+    badge: "Official Data Rectification",
+    intro: "Demographic records on your Aadhaar card (Name, address, Date of Birth, Gender) must match your active legal profiles exactly. UIDAI provides structured online and offline correction mechanisms to rectify spelling errors or address changes.",
+    moreIntro: "Ensuring your Aadhaar is fully corrected avoids rejection loops when applying for banking products, personal loans, or government subsidies.",
+    checklistTitle: "Core Demographic Correction Limits",
+    checklist: [
+      "Name Slabs: Allowed to correct or change only twice in a lifetime under valid marriage or gazette proofs.",
+      "Date of Birth: Permitted to correct only once, within a maximum variance limit of 3 years from initial entries.",
+      "Gender Specification: Allowed to rectify only once on system databases.",
+      "Address changes: Unlimited corrections permitted online by uploading valid utility, bank, or rent proofs."
+    ],
+    faqs: [
+      { q: "Can I update my name on my Aadhaar card online?", a: "For security reasons, name and date of birth updates require physical biometric authorization at an Aadhaar Seva Kendra." },
+      { q: "What is the fee for making corrections at a local center?", a: "The official fee is ₹50 for demographic updates (Name/Address/DOB) and ₹100 for complete biometric updates." }
+    ]
+  },
+  "aadhaar-card-verification": {
+    title: "Aadhaar Card Verification: Verify Number Authenticity Online",
+    badge: "Security & Fraud Controls",
+    intro: "Aadhaar Card Verification is a secure lookup service enabling residents and private verifiers (like employers or landlords) to confirm that an Aadhaar number is genuine, active, and registered in the UIDAI database.",
+    moreIntro: "Running verification is a powerful fraud protection tool. It confirms the owner's general age range, gender, home state, and registered mobile digits (masked) instantly.",
+    checklistTitle: "Why Perform Aadhaar Verification Checks?",
+    checklist: [
+      "Detect Fake Numbers: Instantly confirms if a 12-digit code is genuine or forged.",
+      "Check Active Status: Verifies if card is currently active or suspended by UIDAI due to missing updates.",
+      "Masked Mobile Match: Reconciles the registered mobile digits to confirm ownership.",
+      "Prevent Identity Frauds: Ensures high-security checks for hotel check-ins or tenant selections."
+    ],
+    faqs: [
+      { q: "How can I verify if an Aadhaar card is genuine?", a: "Use the 'Verify Aadhaar' tool on the UIDAI portal or BanksCart. Enter the 12-digit number and captcha to see active demographic indicators." },
+      { q: "Will a deactivated Aadhaar card show up in verification?", a: "No. Deactivated numbers return an error state indicating the card is invalid or suspended." }
+    ]
+  },
+  "aadhaar-centre-in-jammu-and-kashmir": {
+    title: "Aadhaar Centers in Jammu & Kashmir: Directory & Booking Guides",
+    badge: "J&K Local Directory",
+    intro: "Locating registered **Aadhaar Centers in Jammu & Kashmir** (J&K) is the first step to processing fresh enrollments or demographic changes. Permanent Seva Kendras operate across Srinagar, Jammu, Anantnag, Baramulla, and other major districts.",
+    moreIntro: "Managed by UIDAI in coordination with local district magistrates, these centers provide biometric and document verifications under strict security parameters.",
+    checklistTitle: "Services Offered at Jammu & Kashmir Centers",
+    checklist: [
+      "Fresh Enrollments: Free registrations for first-time J&K residents.",
+      "Mandatory Biometric Updates: Fingerprints and iris scans for children between 5 and 15 years.",
+      "Mobile Linking: Linking J&K active mobile numbers to receive dynamic OTPs.",
+      "Local address updates: Change addresses under valid domicile or utility bills verification."
+    ],
+    faqs: [
+      { q: "Where is the primary Aadhaar Seva Kendra in Jammu?", a: "The primary SK is located in the central municipal complex, Jammu, with additional hubs in Srinagar district headquarters." },
+      { q: "Do J&K residents need domicile certificates for Aadhaar?", a: "Domicile is a highly valid address proof, though standard passport, PAN, and bank statements are also accepted." }
+    ]
+  },
+  "aadhaar-correction-form": {
+    title: "Aadhaar Correction Form: Download & Instructions",
+    badge: "Official UIDAI Forms",
+    intro: "The Aadhaar Correction Form is a crucial document utilized to request modifications to your existing Aadhaar details. If you change addresses, correct name spellings, or link new mobile numbers, you must submit this filled form at a local center.",
+    moreIntro: "At BanksCart, we provide direct official download links and step-by-step guidance to ensure your form is fully approved by bank verify officers.",
+    checklistTitle: "Guidelines to Fill the Correction Form",
+    checklist: [
+      "Action Type: Must tick the box marked 'Correction/Update'.",
+      "Exact Alphanumeric Details: Write in clear CAPITAL letters matching your supporting POI/POA documents.",
+      "Aadhaar Number: Mandatory to fill in your active 12-digit card number in the designated grids.",
+      "Biometric Details: Explicitly mark checkboxes if seeking fingerprint or iris updates."
+    ],
+    faqs: [
+      { q: "Can I use a single form to correct both name and address?", a: "Yes. You can mark both checkboxes and submit multiple supporting documents under a single correction request." },
+      { q: "Are printouts of the form accepted at Seva Kendras?", a: "Yes. Clean A4 size printouts of the PDF downloaded from BanksCart are fully accepted at all centers." }
+    ]
+  },
+  "aadhaar-kyc": {
+    title: "Aadhaar KYC: e-KYC Slabs & Offline XML Guides",
+    badge: "Paperless Verification",
+    intro: "Aadhaar KYC (Know Your Customer) is a secure, digital method of verifying your identity using UIDAI databases. It replaces physical paperwork, enabling banks, investment companies, and telecom carriers to onboard you in minutes.",
+    moreIntro: "Aadhaar KYC is available in three secure variants: Online Biometric/OTP e-KYC, Offline Paperless XML files, and secure QR code scanning.",
+    checklistTitle: "Variants of Aadhaar KYC Verification",
+    checklist: [
+      "Online e-KYC: OTP or biometric checks directly linking bank accounts in 10 seconds.",
+      "Offline Paperless XML: Sharing a secure, digitally signed, password-protected ZIP file containing demographic details.",
+      "Secure QR Code Scan: Instantly scans photo and identity details offline without sharing card numbers.",
+      "Virtual ID (VID): Generating a temporary 16-digit VID to complete KYC, maintaining card number privacy."
+    ],
+    faqs: [
+      { q: "What is the difference between e-KYC and Offline Aadhaar KYC?", a: "e-KYC is an online process sharing verified data via OTP/Biometrics directly. Offline KYC uses secure local files (XML or QR codes) without internet access." },
+      { q: "Is Aadhaar e-KYC safe?", a: "Yes. e-KYC requires your explicit biometric or OTP authorization and is strictly regulated under national IT and privacy acts." }
+    ]
+  },
+  "aadhaar-card-enrolment-centre": {
+    title: "Aadhaar Enrollment Centers: Locating Permanent Seva Kendras",
+    badge: "Official UIDAI Directory",
+    intro: "UIDAI operates permanent Aadhaar Enrollment Centers at major bank branches, head post offices, and civic centers across the country. Locate authorized points to complete first-time enrollments or biometric updates safely.",
+    moreIntro: "At BanksCart, we optimize your search by mapping official locations, operational hours, and contact details for permanent centers, helping you skip queues.",
+    checklistTitle: "Permanent Enrollment Center Facility Checklist",
+    checklist: [
+      "Permanent Infrastructure: Complete hardware suites for iris scans, fingerprints, and high-def photos.",
+      "Standard Pricing: Strictly charges standard UIDAI-approved fees without administrative markups.",
+      "Certified Operators: Services executed strictly by licensed UIDAI supervisors and operators.",
+      "Appointment Booking: Allows slot pre-bookings online to minimize turnaround waiting times."
+    ],
+    faqs: [
+      { q: "What is the charge for first-time Aadhaar enrollment?", a: "First-time enrollment for any resident of India is 100% free of cost at all official centers." },
+      { q: "Are bank-run Aadhaar centers more secure?", a: "All authorized centers follow equivalent security standards, but banks offer clean, structured appointment slots." }
+    ]
+  },
+  "how-to-fill-aadhaar-enrolment-form": {
+    title: "How to Fill Aadhaar Enrollment Form: Step-by-Step Guidelines",
+    badge: "Demographic Data Formats",
+    intro: "Filling out the Aadhaar Enrollment/Correction form correctly is critical. Errors or spelling differences between the form and your submitted documents can lead to immediate rejection by UIDAI verify systems.",
+    moreIntro: "This blueprint details how to fill each column, select action codes, list parent credentials, and state verifying documents cleanly.",
+    checklistTitle: "Column-by-Column Form Filling Instructions",
+    checklist: [
+      "Capital Letters: Write strictly in block CAPITAL letters to avoid transcription errors.",
+      "Name Spelling: Match name characters exactly with your submitted passport or PAN card.",
+      "Relationship Details: Mandatory for minor applicants; write parent/guardian name and Aadhaar number.",
+      "Proof specifications: State the exact name of documents being attached (e.g. 'SBI Bank Statement' for POA)."
+    ],
+    faqs: [
+      { q: "Can I use white correction fluid on the Aadhaar form?", a: "No. Forms with overwriting or correction fluid are rejected. Always submit a clean, error-free form." },
+      { q: "Do I need to sign the form?", a: "Yes. Signature or thumb impression is mandatory at the bottom of the form before submitting." }
+    ]
+  },
+  "aadhaar-seva-kendra": {
+    title: "Aadhaar Seva Kendra (ASK): Dedicated UIDAI Services Centers",
+    badge: "Official Seva Kendras",
+    intro: "Aadhaar Seva Kendras (ASK) are state-of-the-art dedicated centers operated directly by UIDAI or registered partners. They offer a premium, computerized environment for residents to seek Aadhaar enrollment, update, and related security services.",
+    moreIntro: "ASKs feature high-capacity desks, touch-screen appointment booths, and transparent fee displays, guaranteeing a smooth and hassle-free experience.",
+    checklistTitle: "Advantages of Aadhaar Seva Kendras (ASK)",
+    checklist: [
+      "High Capacity: Multiple processing desks to handle high resident volumes efficiently.",
+      "Aadhaar PVC Card Services: Order and verify plastic durable wallet cards physically.",
+      "Biometric Upgrades: Computerized iris and fingerprint verification with immediate clearance logs.",
+      "Complaints Cell: On-site assistance desks to resolve dispute filings and delayed cards."
+    ],
+    faqs: [
+      { q: "What are the timing of official Aadhaar Seva Kendras?", a: "ASKs are typically open from 09:30 AM to 05:30 PM, including Saturdays." },
+      { q: "Can I book a same-day appointment at an ASK?", a: "Yes, subject to slot availability on the myAadhaar appointment booking portal." }
+    ]
+  },
+  "aadhaar-update-history": {
+    title: "Aadhaar Update History: Reconcile Life-Time Update Logs",
+    badge: "Data Integrity Records",
+    intro: "Aadhaar Update History is a unique privacy service that allows residents to view a complete chronicle of all changes made to their Aadhaar card since its creation. This includes name changes, address updates, DOB corrections, and mobile linkages.",
+    moreIntro: "This historical report is valuable for verifying previous addresses or name changes during high-security background checks or mortgage evaluations.",
+    checklistTitle: "What is logged in your Update History?",
+    checklist: [
+      "Update Request Date: Time stamp of when each request was submitted.",
+      "URN & Transaction ID: Unique identifiers to track individual data entries.",
+      "Demographic Fields: Logs exactly what parameters (Name, DOB, Address) were changed.",
+      "Before/After States: Displays the previous record alongside the revised record for audit."
+    ],
+    faqs: [
+      { q: "How can I view my Aadhaar update history?", a: "Log in to the UIDAI portal, click on 'Aadhaar Update History', verify with your mobile OTP, and download your history statement." },
+      { q: "Is the biometric history visible in this log?", a: "No. This history logs demographic modifications only. Biometric lock/unlock events are audited in authentication history logs." }
+    ]
+  },
+  "aadhar-card-customer-care-number": {
+    title: "Aadhaar Customer Care Number: Toll-Free Helpline 1947",
+    badge: "UIDAI Support Desk",
+    intro: "UIDAI operates a robust, multi-lingual customer support system to assist residents with any queries regarding enrollment, delayed cards, or portal glitches. The primary helpline number is **1947**, reachable toll-free across all states.",
+    moreIntro: "At BanksCart, we provide all customer care contacts, regional office details, email helpdesks, and dispute escalation matrices to help you resolve your Aadhaar grievances fast.",
+    checklistTitle: "UIDAI Official Support Contact Channels",
+    checklist: [
+      "Toll-Free Helpline: Call 1947 to connect with multi-lingual support agents 24/7.",
+      "Official Support Email: Send your grievances and transaction IDs to help@uidai.gov.in.",
+      "Social Media Support: Reach out to official UIDAI handles (@UIDAI) for quick online query answers.",
+      "Regional Grievance Desks: Visit or mail UIDAI Regional Offices located in major state capitals."
+    ],
+    faqs: [
+      { q: "Is the Aadhaar customer care number free of charge?", a: "Yes. 1947 is a 100% toll-free number from all mobile networks inside India." },
+      { q: "How can I check my complaint status?", a: "You can track your case number online via the UIDAI support portal or by quoting it to the helpline agent." }
+    ]
+  },
+  "aadhar-card-signature": {
+    title: "Aadhaar Card Signature: Validate Digital PDF Signatures",
+    badge: "Digital Certificate Guides",
+    intro: "Every downloaded E-Aadhaar PDF contains a digitally signed certificate from UIDAI verifying its authenticity. When opened in standard PDF viewers, this signature often displays as 'Signature Not Verified' with a yellow question mark.",
+    moreIntro: "To submit your E-Aadhaar for official bank verifications, you must validate this digital signature to display a green checkmark indicating the certificate is valid.",
+    checklistTitle: "How to Validate Aadhaar Digital Signature",
+    checklist: [
+      "Open in Adobe Reader: Open your downloaded E-Aadhaar PDF strictly using Adobe Acrobat Reader.",
+      "Click Signature Panel: Click on the signature box displaying 'Signature Not Verified'.",
+      "Access Properties: Go to Signature Properties > Show Signer's Certificate.",
+      "Trust Certificate: Navigate to the 'Trust' tab, click 'Add to Trusted Certificates', and click OK to show the green tick."
+    ],
+    faqs: [
+      { q: "Why does my downloaded e-Aadhaar show a question mark on the signature?", a: "This happens because your PDF reader does not have UIDAI's digital certificate added to its trusted store automatically." },
+      { q: "Is the e-Aadhaar valid if the signature is not validated?", a: "Yes, but banks and passport offices prefer a green checkmark to ensure immediate clearance without manual verifications." }
+    ]
   }
 };
 
-// Procedural Aadhaar Centers generator for 19 cities to guarantee 100% coverage
 export const generateCityCenters = (citySlug: string): AadharCenter[] => {
   const cityName = citySlug
     .split('-')

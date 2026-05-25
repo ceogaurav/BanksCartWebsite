@@ -124,6 +124,10 @@ import DynamicBusinessLoanPage from './pages/business/DynamicBusinessLoanPage';
 import DynamicTaxPage from './pages/tax/DynamicTaxPage';
 import DynamicDebitCardPage from './pages/cards/DynamicDebitCardPage';
 import DynamicSalaryPage from './pages/salary/DynamicSalaryPage';
+import DynamicAbhyudayaBankPage from './pages/banking/DynamicAbhyudayaBankPage';
+import DynamicAdityaBirlaPage from './pages/aditya-birla/DynamicAdityaBirlaPage';
+import DynamicGeneralBankingPage from './pages/banking/DynamicGeneralBankingPage';
+import FinancialDirectory from './pages/FinancialDirectory';
 
 
 
@@ -369,6 +373,39 @@ const App: React.FC = () => {
                 <Route path="/cibil/:subPath" element={<DynamicPersonalLoanPage />} />
                 <Route path="/6-key-insights-know-pre-approved-personal-loans" element={<DynamicPersonalLoanPage />} />
                 <Route path="/expert-advice" element={<ExpertAdvicePage openApplyModal={openApplyModal} />} />
+
+                {/* Abhyudaya Bank Routes */}
+                <Route path="/abhyudaya-co-operative-bank" element={<DynamicAbhyudayaBankPage />} />
+                <Route path="/abhyudaya-co-operative-bank/:subPath" element={<DynamicAbhyudayaBankPage />} />
+                <Route path="/banking/abhyudaya-bank-net-banking" element={<DynamicAbhyudayaBankPage />} />
+                <Route path="/banking/abhyudaya-bank-timings" element={<DynamicAbhyudayaBankPage />} />
+
+                {/* Aditya Birla Routes */}
+                <Route path="/aditya-birla" element={<DynamicAdityaBirlaPage />} />
+                <Route path="/aditya-birla/:subPath" element={<DynamicAdityaBirlaPage />} />
+                <Route path="/aditya-birla-sun-life-pension-plans/:subPath" element={<DynamicAdityaBirlaPage />} />
+                <Route path="/aditya-birla-activ-health" element={<DynamicAdityaBirlaPage />} />
+                <Route path="/absli-wealth-max-plan" element={<DynamicAdityaBirlaPage />} />
+                <Route path="/wealth-secure-plan" element={<DynamicAdityaBirlaPage />} />
+                <Route path="/protector-plus" element={<DynamicAdityaBirlaPage />} />
+                <Route path="/au-small-finance-bank/aditya-birla-finance-au-credit-cards" element={<DynamicAdityaBirlaPage />} />
+
+                {/* Adani Capital, Housing, General Banking, Aaykar Setu & Aadhar Housing */}
+                <Route path="/business-loan/adani-capital" element={<DynamicGeneralBankingPage />} />
+                <Route path="/home-loan/adani-housing-finance" element={<DynamicGeneralBankingPage />} />
+                <Route path="/icici-bank/adani-one-credit-cards" element={<DynamicGeneralBankingPage />} />
+                <Route path="/icici-bank/adani-one-signature-credit-card" element={<DynamicGeneralBankingPage />} />
+                <Route path="/credit-card/add-on-card" element={<DynamicGeneralBankingPage />} />
+                <Route path="/money-transfer/account-to-account-money-transfer" element={<DynamicGeneralBankingPage />} />
+                <Route path="/banking/accounts-payable" element={<DynamicGeneralBankingPage />} />
+                <Route path="/mutual-funds/aditya-birla-amc-launches-aditya-birla-sun-life-psu-equity-fund" element={<DynamicGeneralBankingPage />} />
+                <Route path="/tax/aaykar-setu-income-tax-mobile-app" element={<DynamicGeneralBankingPage />} />
+                <Route path="/home-loan/aadhar-housing-finance-ltd" element={<DynamicGeneralBankingPage />} />
+                <Route path="/home-loan/aadhar-housing-finance-home-loan-customer-care-number" element={<DynamicGeneralBankingPage />} />
+
+                {/* Financial Directories */}
+                <Route path="/pages-directory" element={<FinancialDirectory />} />
+                <Route path="/financial-directory" element={<FinancialDirectory />} />
 
                 {/* Insurance product specific routes */}
                 <Route path="/insurance/health" element={<HealthInsurancePage />} />
