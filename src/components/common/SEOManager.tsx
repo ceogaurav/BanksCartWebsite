@@ -575,6 +575,24 @@ export default function SEOManager() {
     }
   }
 
+  // 2.9 Check for dynamic recharge sub-paths
+  if (!meta && pathname.startsWith('/recharge/')) {
+    const subSlug = pathname.replace('/recharge/', '');
+    const cleanSlug = subSlug === 'dth' ? 'DTH Recharge' : subSlug === 'lpg' ? 'LPG Gas Booking' : subSlug
+      .split('-')
+      .map(word => {
+        if (word.toUpperCase() === 'EMI') return 'EMI';
+        return word.charAt(0).toUpperCase() + word.slice(1);
+      })
+      .join(' ');
+      
+    meta = {
+      title: `${cleanSlug} Online: Settle Instantly | BanksCart`,
+      description: `Pay your ${cleanSlug} online securely at BanksCart. Experience real-time billing logs, zero convenience fees, and secure UPI payment clearances.`,
+      keywords: `${subSlug}, ${cleanSlug} online, pay utility bill, bankscart bill payment`
+    };
+  }
+
   // 3. Fallback to default if still not found
   if (!meta) {
     // Skip dynamic sanity blogs since BlogPost.tsx renders its own Helmet

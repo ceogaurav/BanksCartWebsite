@@ -118,6 +118,7 @@ import CreditCards from './pages/CreditCards';
 import DynamicCreditCardPage from './pages/cards/DynamicCreditCardPage';
 import DynamicInvestmentPage from './pages/investment/DynamicInvestmentPage';
 import DynamicCalculatorPage from './pages/calculators/DynamicCalculatorPage';
+import DynamicRechargePage from './pages/recharge/DynamicRechargePage';
 
 
 
@@ -348,6 +349,7 @@ const App: React.FC = () => {
                 <Route path="/cards/credit/:subPath" element={<DynamicCreditCardPage />} />
                 <Route path="/investment/:type/:subPath" element={<DynamicInvestmentPage />} />
                 <Route path="/calculators/:category/:subPath" element={<DynamicCalculatorPage />} />
+                <Route path="/recharge/:subPath" element={<DynamicRechargePage />} />
                 <Route path="/expert-advice" element={<ExpertAdvicePage openApplyModal={openApplyModal} />} />
 
                 {/* Insurance product specific routes */}

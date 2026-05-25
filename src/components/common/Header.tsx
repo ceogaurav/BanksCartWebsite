@@ -143,6 +143,22 @@ const Header: React.FC<HeaderProps> = ({ openApplyModal, openEligibilityModal, o
       ]
     },
     {
+      name: 'Recharge & Bills',
+      href: '/recharge/overview',
+      icon: Smartphone,
+      submenu: [
+        { name: 'Mobile Recharge', href: '/recharge/mobile' },
+        { name: 'Mobile Postpaid', href: '/recharge/postpaid' },
+        { name: 'Electricity Bill Payment', href: '/recharge/electricity' },
+        { name: 'DTH Recharge', href: '/recharge/dth' },
+        { name: 'FASTag Recharge', href: '/recharge/fastag' },
+        { name: 'LPG Gas Booking', href: '/recharge/lpg' },
+        { name: 'Loan EMI Payment', href: '/recharge/loan-emi' },
+        { name: 'Insurance Premium', href: '/recharge/insurance' },
+        { name: 'Bill Payments', href: '/recharge/overview' },
+      ]
+    },
+    {
       name: 'Insurance',
       href: '/insurance',
       icon: BadgeInfo,
@@ -537,6 +553,28 @@ const Header: React.FC<HeaderProps> = ({ openApplyModal, openEligibilityModal, o
                               </Link>
                             ))}
                           </div>
+                        </div>
+                      </div>
+                    </div>
+                  ) : item.name === 'Recharge & Bills' ? (
+                    <div className="absolute top-[90%] left-1/2 -translate-x-[50%] w-72 bg-white rounded-2xl shadow-2xl border border-slate-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-1 group-hover:translate-y-0 z-50 p-6 overflow-hidden">
+                      <div className="flex flex-col gap-4">
+                        <h4 className="font-bold text-xs uppercase tracking-wide text-blue-600 mb-2 flex items-center gap-2">
+                          <span className="p-1.5 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center">
+                            <CreditCard className="w-4 h-4" />
+                          </span>
+                          By Category
+                        </h4>
+                        <div className="flex flex-col gap-3 text-[13px] font-semibold text-slate-600">
+                          {item.submenu.map((sub) => (
+                            <Link
+                              key={sub.name}
+                              to={sub.href}
+                              className="hover:text-blue-600 transition-colors"
+                            >
+                              {sub.name}
+                            </Link>
+                          ))}
                         </div>
                       </div>
                     </div>
