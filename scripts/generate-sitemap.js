@@ -164,7 +164,14 @@ async function generateSitemap() {
             '/intellectual-policy',
             '/sitemap',
             '/credit-cards',
-            '/credit-card-finder'
+            '/credit-card-finder',
+            // CIBIL Landing Pages
+            '/cibil-credit-report',
+            '/cibil/how-to-check-cibil-score-by-pan-card',
+            '/cibil-report/cibil-score-sbi-loans',
+            '/credit-report/ways-to-improve-your-cibil-score',
+            '/credit-score/cibil-score-for-personal-loan',
+            '/cibil/how-to-resolve-cibil-dispute'
         ];
 
         let sitemap = `<?xml version="1.0" encoding="UTF-8"?>

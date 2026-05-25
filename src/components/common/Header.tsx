@@ -10,7 +10,8 @@ import {
   CreditCard,
   TrendingUp,
   BadgeInfo,
-  FileText
+  FileText,
+  Gauge
 } from 'lucide-react';
 
 interface HeaderProps {
@@ -27,6 +28,19 @@ const Header: React.FC<HeaderProps> = ({ openApplyModal, openEligibilityModal, o
   const isActive = (path: string) => location.pathname.startsWith(path);
 
   const navigation = [
+    {
+      name: 'Credit Score',
+      href: '/credit-score',
+      icon: Gauge,
+      submenu: [
+        { name: 'Credit Score FREE', href: '/cibil-credit-report' },
+        { name: 'CIBIL Score Check by PAN', href: '/cibil/how-to-check-cibil-score-by-pan-card' },
+        { name: 'SBI CIBIL Score', href: '/cibil-report/cibil-score-sbi-loans' },
+        { name: 'How to Increase CIBIL Score', href: '/credit-report/ways-to-improve-your-cibil-score' },
+        { name: 'CIBIL Score for Personal Loan', href: '/credit-score/cibil-score-for-personal-loan' },
+        { name: 'Resolve CIBIL Dispute', href: '/cibil/how-to-resolve-cibil-dispute' },
+      ]
+    },
     {
       name: 'Loans',
       href: '/loans',

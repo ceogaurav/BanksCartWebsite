@@ -101,6 +101,14 @@ import CreditReportTerms from './pages/legal/CreditReportTerms';
 import TermsOfUse from './pages/legal/TermsOfUse';
 import PrivacyPolicy from './pages/legal/PrivacyPolicy';
 import BlogList from './pages/BlogList';
+
+// CIBIL Landing Pages Imports
+import CibilCreditReportPage from './pages/cibil/CibilCreditReportPage';
+import CheckCibilByPanPage from './pages/cibil/CheckCibilByPanPage';
+import SbiCibilScorePage from './pages/cibil/SbiCibilScorePage';
+import WaysToImproveCibilPage from './pages/cibil/WaysToImproveCibilPage';
+import CibilScoreForPersonalLoanPage from './pages/cibil/CibilScoreForPersonalLoanPage';
+import ResolveCibilDisputePage from './pages/cibil/ResolveCibilDisputePage';
 import InvestorRelations from './pages/legal/InvestorRelations';
 import Disclaimer from './pages/legal/Disclaimer';
 import IntellectualPolicy from './pages/legal/IntellectualPolicy';
@@ -326,6 +334,12 @@ const App: React.FC = () => {
                 <Route path="/cards/credit" element={<CreditCardsPage openApplyModal={openApplyModal} />} />
                 <Route path="/cards/debit" element={<DebitCardsPage openApplyModal={openApplyModal} />} />
                 <Route path="/credit-score" element={<CreditScore />} />
+                <Route path="/cibil-credit-report" element={<CibilCreditReportPage />} />
+                <Route path="/cibil/how-to-check-cibil-score-by-pan-card" element={<CheckCibilByPanPage />} />
+                <Route path="/cibil-report/cibil-score-sbi-loans" element={<SbiCibilScorePage />} />
+                <Route path="/credit-report/ways-to-improve-your-cibil-score" element={<WaysToImproveCibilPage />} />
+                <Route path="/credit-score/cibil-score-for-personal-loan" element={<CibilScoreForPersonalLoanPage />} />
+                <Route path="/cibil/how-to-resolve-cibil-dispute" element={<ResolveCibilDisputePage />} />
                 <Route path="/expert-advice" element={<ExpertAdvicePage openApplyModal={openApplyModal} />} />
 
                 {/* Insurance product specific routes */}

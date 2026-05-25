@@ -78,6 +78,38 @@ const SEO_MAP: Record<string, SEOMetadata> = {
     keywords: "banking guides, finance strategy, invest tips"
   },
 
+  // CIBIL Pages SEO Metadata
+  "/cibil-credit-report": {
+    title: "Get Free CIBIL Credit Report & Score Online | BanksCart",
+    description: "Check your CIBIL score & download complete credit report online for free. Get detailed analysis on payment histories, active loans and score trends.",
+    keywords: "free cibil score, cibil credit report, download credit report online, check credit score"
+  },
+  "/cibil/how-to-check-cibil-score-by-pan-card": {
+    title: "How to Check CIBIL Score by PAN Card Online | BanksCart",
+    description: "Learn the step-by-step process to check your CIBIL credit score online using your PAN card. Securely verify active credit profiles and detect fraud.",
+    keywords: "check cibil score by pan card, check credit score with pan, pan card cibil check, verify credit history"
+  },
+  "/cibil-report/cibil-score-sbi-loans": {
+    title: "SBI CIBIL Score Requirements for Home & Personal Loans | BanksCart",
+    description: "Check the minimum CIBIL score required for State Bank of India (SBI) loans. Discover SBI's special interest concessions and concessions for scores above 750.",
+    keywords: "sbi cibil score requirement, sbi home loan minimum cibil, sbi personal loan credit score, sbi cibil concessions"
+  },
+  "/credit-report/ways-to-improve-your-cibil-score": {
+    title: "How to Increase CIBIL Score: 6 Actionable Recovery Tips | BanksCart",
+    description: "Struggling with a low credit score? Discover highly actionable ways to improve your CIBIL score rapidly. Learn tips to manage limits and payment history.",
+    keywords: "how to improve cibil score, increase credit score, boost credit rating, fix poor cibil score"
+  },
+  "/credit-score/cibil-score-for-personal-loan": {
+    title: "Minimum CIBIL Score for Unsecured Personal Loans | BanksCart",
+    description: "Understand the ideal CIBIL score required to get personal loan approvals from top Indian banks. Compare interest rates and approval slabs.",
+    keywords: "cibil score for personal loan, minimum credit score for personal loan, unsecured loan eligibility"
+  },
+  "/cibil/how-to-resolve-cibil-dispute": {
+    title: "How to Resolve CIBIL Dispute Online: Step-by-Step Guide | BanksCart",
+    description: "Spot incorrect entries or fake loans on your credit report? Read our step-by-step guide to raise and resolve CIBIL disputes online in 30 days.",
+    keywords: "resolve cibil dispute, correct credit report error, cibil dispute filing online, rectify credit score"
+  },
+
   // Calculators (Generic/Specific)
   "/personal-loan-emi-calculator": {
     title: "Personal Loan EMI Calculator: Estimate Monthly EMI Instantly | BanksCart",

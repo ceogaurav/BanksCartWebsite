@@ -1,315 +1,138 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { CheckCircle, Loader2, AlertTriangle, User, Mail, Phone, Calendar, CreditCard } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
-import { initializeApp } from 'firebase/app';
-import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from 'firebase/auth';
-import { getFirestore, collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import React from 'react';
+import { ShieldCheck, Flame, TrendingUp, Sparkles } from 'lucide-react';
+import CibilCheckerForm from '../components/common/CibilCheckerForm';
 
-interface CreditScorePageProps {
-  // No props needed for a standalone page, but keeping for consistency if you pass any
-}
-
-const CreditScore: React.FC<CreditScorePageProps> = () => {
-  // Form States
-  const [panNumber, setPanNumber] = useState('');
-  const [fullName, setFullName] = useState('');
-  const [dob, setDob] = useState(''); // Date of Birth (YYYY-MM-DD)
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [email, setEmail] = useState('');
-
-  // UI States
-  const [errors, setErrors] = useState<{ [key: string]: string }>({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submissionSuccess, setSubmissionSuccess] = useState(false);
-  const [submissionError, setSubmissionError] = useState<string | null>(null);
-
-  const navigate = useNavigate(); // Initialize useNavigate for page redirection
-
-  // Firebase setup (using global variables provided by Canvas for deployment, or .env for local)
-  const localFirebaseConfig = {
-    apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-    authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-    projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-    storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-    messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-    appId: import.meta.env.VITE_FIREBASE_APP_ID,
-    measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
-  };
-
-  let firebaseConfig = localFirebaseConfig;
-  if (typeof __firebase_config !== 'undefined' && __firebase_config) {
-    try {
-      const canvasConfig = JSON.parse(__firebase_config);
-      firebaseConfig = { ...localFirebaseConfig, ...canvasConfig };
-    } catch (e) {
-      console.error("Error parsing __firebase_config:", e);
-    }
-  }
-
-  const appId = typeof __app_id !== 'undefined' ? __app_id : firebaseConfig.projectId || 'default-app-id';
-
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-  const auth = getAuth(app);
-
-  const [userId, setUserId] = useState<string | null>(null);
-  const [isAuthReady, setIsAuthReady] = useState(false);
-
-  // Authenticate user on component mount
-  useEffect(() => {
-    const authenticate = async () => {
-      try {
-        if (typeof __initial_auth_token !== 'undefined') {
-          await signInWithCustomToken(auth, __initial_auth_token);
-        } else {
-          await signInAnonymously(auth);
-        }
-      } catch (error) {
-        console.error("Firebase authentication error:", error);
-        setSubmissionError("Failed to authenticate for submission.");
-      }
-    };
-
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUserId(user.uid);
-      } else {
-        setUserId(crypto.randomUUID());
-      }
-      setIsAuthReady(true);
-    });
-
-    authenticate();
-    return () => unsubscribe();
-  }, [auth]);
-
-  // Reset form when component mounts (like a fresh page load)
-  useEffect(() => {
-    setPanNumber('');
-    setFullName('');
-    setDob('');
-    setPhoneNumber('');
-    setEmail('');
-    setErrors({});
-    setIsSubmitting(false);
-    setSubmissionSuccess(false);
-    setSubmissionError(null);
-  }, []); // Empty dependency array ensures this runs only once on mount
-
-  const validateForm = () => {
-    const newErrors: { [key: string]: string } = {};
-
-    // PAN Number validation (basic: 5 letters, 4 digits, 1 letter)
-    if (!panNumber.trim()) {
-      newErrors.panNumber = 'PAN Number is required.';
-    } else if (!/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(panNumber.toUpperCase())) {
-      newErrors.panNumber = 'Invalid PAN Number format (e.g., ABCDE1234F).';
-    }
-
-    if (!fullName.trim()) newErrors.fullName = 'Full Name is required.';
-
-    // DOB validation (basic: YYYY-MM-DD format)
-    if (!dob.trim()) {
-      newErrors.dob = 'Date of Birth is required.';
-    } else if (!/^\d{4}-\d{2}-\d{2}$/.test(dob)) {
-      newErrors.dob = 'DOB must be in YYYY-MM-DD format.';
-    } else {
-      const dobDate = new Date(dob);
-      const today = new Date();
-      if (isNaN(dobDate.getTime()) || dobDate > today) {
-        newErrors.dob = 'Invalid Date of Birth.';
-      }
-    }
-
-    if (!phoneNumber.trim()) {
-      newErrors.phoneNumber = 'Mobile Number is required.';
-    } else if (!/^\d{10}$/.test(phoneNumber)) {
-      newErrors.phoneNumber = 'Mobile Number must be 10 digits.';
-    }
-
-    if (!email.trim()) {
-      newErrors.email = 'Email is required.';
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
-      newErrors.email = 'Email address is invalid.';
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setSubmissionError(null);
-    setSubmissionSuccess(false);
-
-    if (!validateForm()) {
-      return;
-    }
-
-    if (!isAuthReady || !userId) {
-      setSubmissionError("Authentication not ready. Please try again in a moment.");
-      return;
-    }
-
-    setIsSubmitting(true);
-    try {
-      const cibilData = {
-        panNumber: panNumber.toUpperCase(),
-        fullName,
-        dob,
-        phoneNumber,
-        email,
-        userId: userId,
-        timestamp: serverTimestamp(),
-        status: 'CIBIL Check Request',
-      };
-
-      const cibilCollectionRef = collection(db, `artifacts/${appId}/public/data/cibilScoreChecks`);
-      await addDoc(cibilCollectionRef, cibilData);
-
-      setSubmissionSuccess(true);
-      // No automatic redirection here; the user will see the success message on the page
-    } catch (error) {
-      console.error("Error submitting CIBIL check request:", error);
-      setSubmissionError("Failed to submit CIBIL check request. Please try again.");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
+const CreditScore: React.FC = () => {
   return (
-    <div className="min-h-[calc(100vh-80px)] bg-gray-50 flex items-center justify-center p-4 sm:p-6 font-inter">
-      <div className="bg-white rounded-xl shadow-2xl w-full max-w-lg p-6 sm:p-8 relative transform transition-all scale-100 opacity-100">
-        {!submissionSuccess ? (
-          <>
-            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6 text-center">
-              <CreditCard className="inline-block h-8 w-8 mr-2 text-blue-600" /> Check Your FREE CIBIL Score
-            </h2>
-            <p className="text-gray-600 text-center mb-6 text-lg font-medium">
-              Get your credit score instantly and understand your financial health.
-            </p>
-
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <label htmlFor="panNumber" className="block text-sm font-medium text-gray-700 mb-1">
-                  <CreditCard className="inline-block h-4 w-4 mr-1 text-gray-500" /> PAN Number
-                </label>
-                <input
-                  type="text"
-                  id="panNumber"
-                  value={panNumber}
-                  onChange={(e) => setPanNumber(e.target.value.toUpperCase())}
-                  className={`w-full px-4 py-2 border ${errors.panNumber ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors`}
-                  placeholder="ABCDE1234F"
-                  maxLength={10}
-                  required
-                />
-                {errors.panNumber && <p className="text-red-500 text-xs mt-1">{errors.panNumber}</p>}
-              </div>
-
-              <div>
-                <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-1">
-                  <User className="inline-block h-4 w-4 mr-1 text-gray-500" /> Full Name
-                </label>
-                <input
-                  type="text"
-                  id="fullName"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                  className={`w-full px-4 py-2 border ${errors.fullName ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors`}
-                  placeholder="John Doe"
-                  required
-                />
-                {errors.fullName && <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>}
-              </div>
-
-              <div>
-                <label htmlFor="dob" className="block text-sm font-medium text-gray-700 mb-1">
-                  <Calendar className="inline-block h-4 w-4 mr-1 text-gray-500" /> Date of Birth (YYYY-MM-DD)
-                </label>
-                <input
-                  type="date"
-                  id="dob"
-                  value={dob}
-                  onChange={(e) => setDob(e.target.value)}
-                  className={`w-full px-4 py-2 border ${errors.dob ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors`}
-                  required
-                />
-                {errors.dob && <p className="text-red-500 text-xs mt-1">{errors.dob}</p>}
-              </div>
-
-              <div>
-                <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700 mb-1">
-                  <Phone className="inline-block h-4 w-4 mr-1 text-gray-500" /> Mobile Number
-                </label>
-                <input
-                  type="tel"
-                  id="phoneNumber"
-                  value={phoneNumber}
-                  onChange={(e) => {
-                    const value = e.target.value.replace(/\D/g, '');
-                    if (value.length <= 10) {
-                      setPhoneNumber(value);
-                    }
-                  }}
-                  className={`w-full px-4 py-2 border ${errors.phoneNumber ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors`}
-                  placeholder="Enter 10 digits"
-                  maxLength={10}
-                  required
-                />
-                {errors.phoneNumber && <p className="text-red-500 text-xs mt-1">{errors.phoneNumber}</p>}
-              </div>
-
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                  <Mail className="inline-block h-4 w-4 mr-1 text-gray-500" /> Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className={`w-full px-4 py-2 border ${errors.email ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors`}
-                  placeholder="you@example.com"
-                  required
-                />
-                {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
-              </div>
-
-              {submissionError && (
-                <p className="text-red-600 text-center text-sm mt-4">{submissionError}</p>
-              )}
-
-              <button
-                type="submit"
-                className="w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-3 rounded-lg font-semibold text-lg hover:from-blue-600 hover:to-indigo-700 transition-all duration-300 shadow-lg flex items-center justify-center gap-2"
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? (
-                  <>
-                    <Loader2 className="animate-spin h-5 w-5" /> Checking...
-                  </>
-                ) : (
-                  'Get My Free CIBIL Score'
-                )}
-              </button>
-            </form>
-          </>
-        ) : (
-          <div className="text-center py-8">
-            <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
-            <h3 className="text-2xl font-bold text-gray-900 mb-2">Request Submitted!</h3>
-            <p className="text-gray-600 mb-6">
-              Thank you for your CIBIL score request. Our team will process it and get back to you with your free CIBIL score report shortly.
-            </p>
-            <button
-              onClick={() => navigate('/')} // Redirects to home page
-              className="bg-blue-500 text-white py-2 px-6 rounded-lg font-semibold hover:bg-blue-600 transition-colors"
-            >
-              Go to Home
-            </button>
+    <div className="min-h-screen bg-slate-50 pt-24 pb-16 font-sans">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Top Header Block */}
+        <div className="text-center max-w-3xl mx-auto mb-12">
+          <div className="inline-flex items-center gap-2 bg-blue-50 border border-blue-100 rounded-full px-4 py-1.5 text-xs text-blue-700 font-semibold mb-4">
+            <Sparkles className="w-3.5 h-3.5" />
+            Official Credit Bureau Integration
           </div>
-        )}
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-800 tracking-tight leading-tight">
+            Check Your Free <span className="text-blue-600">CIBIL & Credit Score</span> Online
+          </h1>
+          <p className="text-base sm:text-lg text-slate-500 mt-4 leading-relaxed">
+            Get an exhaustive credit analysis report directly from CIBIL and Experian. Free lifetime tracking with monthly automated score refreshes.
+          </p>
+        </div>
+
+        {/* Dynamic Split Grid Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start max-w-6xl mx-auto">
+          {/* Left Column: Visual Highlights */}
+          <div className="lg:col-span-7 space-y-6">
+            <div className="bg-white border border-slate-100 shadow-md rounded-2xl p-6 sm:p-8 hover:shadow-lg transition-all duration-300">
+              <h2 className="text-xl sm:text-2xl font-bold text-slate-800 mb-6 flex items-center gap-2">
+                <span className="w-1.5 h-6 bg-blue-600 rounded-full"></span>
+                Why check your score on BanksCart?
+              </h2>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div className="flex gap-4">
+                  <div className="w-10 h-10 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <ShieldCheck className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-slate-800 text-sm">100% Secure & Private</h3>
+                    <p className="text-slate-500 text-xs mt-1 leading-relaxed">
+                      Your details are encrypted and safe. We never share your credit logs.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex gap-4">
+                  <div className="w-10 h-10 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <Flame className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-slate-800 text-sm">Zero Score Impact</h3>
+                    <p className="text-slate-500 text-xs mt-1 leading-relaxed">
+                      Checks performed are classified as "soft pulls" and do not drop your rating.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex gap-4">
+                  <div className="w-10 h-10 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <TrendingUp className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-slate-800 text-sm">Monthly Auto Refreshes</h3>
+                    <p className="text-slate-500 text-xs mt-1 leading-relaxed">
+                      Score is updated every month so you can track improvements in real-time.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex gap-4">
+                  <div className="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <span className="text-base">🎁</span>
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-slate-800 text-sm">Custom Pre-Approved Offers</h3>
+                    <p className="text-slate-500 text-xs mt-1 leading-relaxed">
+                      Get matched with tailored loan options based on your score bracket.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Visual Credit Score Brackets info */}
+            <div className="bg-white border border-slate-100 shadow-md rounded-2xl p-6 sm:p-8 hover:shadow-lg transition-all duration-300">
+              <h3 className="text-lg font-bold text-slate-800 mb-4">Understanding Your CIBIL Score Ranges</h3>
+              <div className="space-y-3.5">
+                <div>
+                  <div className="flex justify-between text-xs font-semibold mb-1">
+                    <span className="text-emerald-600 uppercase tracking-wide">Excellent (750 - 900)</span>
+                    <span className="text-slate-500">Super fast approvals & lowest interest rates</span>
+                  </div>
+                  <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                    <div className="bg-emerald-500 h-full rounded-full" style={{ width: '90%' }}></div>
+                  </div>
+                </div>
+
+                <div>
+                  <div className="flex justify-between text-xs font-semibold mb-1">
+                    <span className="text-teal-600 uppercase tracking-wide">Good (700 - 749)</span>
+                    <span className="text-slate-500">Very likely approval for most credit cards & loans</span>
+                  </div>
+                  <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                    <div className="bg-teal-500 h-full rounded-full" style={{ width: '75%' }}></div>
+                  </div>
+                </div>
+
+                <div>
+                  <div className="flex justify-between text-xs font-semibold mb-1">
+                    <span className="text-amber-600 uppercase tracking-wide">Fair (650 - 699)</span>
+                    <span className="text-slate-500">Moderate interest rates; approvals require collateral/proofs</span>
+                  </div>
+                  <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                    <div className="bg-amber-500 h-full rounded-full" style={{ width: '60%' }}></div>
+                  </div>
+                </div>
+
+                <div>
+                  <div className="flex justify-between text-xs font-semibold mb-1">
+                    <span className="text-rose-600 uppercase tracking-wide">Poor (300 - 649)</span>
+                    <span className="text-slate-500">Difficult to get approvals; high rate of rejection</span>
+                  </div>
+                  <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                    <div className="bg-rose-500 h-full rounded-full" style={{ width: '35%' }}></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column: Reusable Interactive Checker Card */}
+          <div className="lg:col-span-5 lg:sticky lg:top-24">
+            <CibilCheckerForm sourcePage="Credit Score Page" />
+          </div>
+        </div>
       </div>
     </div>
   );
