@@ -128,6 +128,8 @@ import DynamicAbhyudayaBankPage from './pages/banking/DynamicAbhyudayaBankPage';
 import DynamicAdityaBirlaPage from './pages/aditya-birla/DynamicAdityaBirlaPage';
 import DynamicGeneralBankingPage from './pages/banking/DynamicGeneralBankingPage';
 import FinancialDirectory from './pages/FinancialDirectory';
+import DynamicHealthInsurancePage from './pages/insurance/DynamicHealthInsurancePage';
+import DynamicAegonLifePage from './pages/insurance/DynamicAegonLifePage';
 
 
 
@@ -402,6 +404,57 @@ const App: React.FC = () => {
                 <Route path="/tax/aaykar-setu-income-tax-mobile-app" element={<DynamicGeneralBankingPage />} />
                 <Route path="/home-loan/aadhar-housing-finance-ltd" element={<DynamicGeneralBankingPage />} />
                 <Route path="/home-loan/aadhar-housing-finance-home-loan-customer-care-number" element={<DynamicGeneralBankingPage />} />
+
+                {/* Group Health & Chronic Disease Insurance Routes */}
+                <Route path="/group-active-health" element={<DynamicHealthInsurancePage />} />
+                <Route path="/group-activ-secure" element={<DynamicHealthInsurancePage />} />
+                <Route path="/group-health-insurance" element={<DynamicHealthInsurancePage />} />
+                <Route path="/health-insurance-asthma" element={<DynamicHealthInsurancePage />} />
+                <Route path="/health-insurance-diabetes" element={<DynamicHealthInsurancePage />} />
+                <Route path="/health-insurance-high-blood-pressure" element={<DynamicHealthInsurancePage />} />
+                <Route path="/health-insurance-high-cholesterol" element={<DynamicHealthInsurancePage />} />
+                <Route path="/login-and-registration-process" element={<DynamicHealthInsurancePage />} />
+
+                {/* Aegon Life Insurance Routes */}
+                <Route path="/aegon-life-child-plans" element={<DynamicAegonLifePage />} />
+                <Route path="/aegon-life-customer-care" element={<DynamicAegonLifePage />} />
+                <Route path="/life-easy-protect-insurance-plan" element={<DynamicAegonLifePage />} />
+                <Route path="/future-protect-insurance-plan" element={<DynamicAegonLifePage />} />
+                <Route path="/future-protect-plus-insurance-plan" element={<DynamicAegonLifePage />} />
+                <Route path="/aegon-life-guaranteed-growth-insurance-plan" element={<DynamicAegonLifePage />} />
+                <Route path="/aegon-life-iguarantee-insurance" element={<DynamicAegonLifePage />} />
+                <Route path="/imaximize-insurance-plan" element={<DynamicAegonLifePage />} />
+                <Route path="/imaximize-single-premium-insurance-plan" element={<DynamicAegonLifePage />} />
+                <Route path="/rising-star-insurance-plan" element={<DynamicAegonLifePage />} />
+                <Route path="/pension-plans" element={<DynamicAegonLifePage />} />
+                <Route path="/term-insurance-plans" element={<DynamicAegonLifePage />} />
+
+                {/* Additional Dynamic general pathways */}
+                <Route path="/loan-against-securities/mutual-funds/aditya-birla-finance" element={<DynamicGeneralBankingPage />} />
+                <Route path="/sbi-bank/adtiya-birla-sbi-cards" element={<DynamicGeneralBankingPage />} />
+                <Route path="/sbi-bank/aditya-birla-sbi-card-select" element={<DynamicGeneralBankingPage />} />
+                <Route path="/promotion-councils/apparel-export-promotion-council-aepc" element={<DynamicGeneralBankingPage />} />
+                <Route path="/gold-loan/:subPath" element={<DynamicGeneralBankingPage />} />
+                <Route path="/saving-schemes/:subPath" element={<DynamicGeneralBankingPage />} />
+
+                {/* Specific exact paths for high-quality data rendering */}
+                <Route path="/mutual-funds/aditya-birla-sun-life-flexi-cap-fund-regular-plan-growth" element={<DynamicGeneralBankingPage />} />
+                <Route path="/mutual-funds/aditya-birla-sun-life-mf-launches-nfo-nifty-next-50-etf" element={<DynamicGeneralBankingPage />} />
+                <Route path="/mutual-funds/aditya-birla-sun-life-midcap-fund-regular-plan-growth" element={<DynamicGeneralBankingPage />} />
+                <Route path="/mutual-funds/aditya-birla-sun-life-multi-cap-fund-regular-plan-growth" element={<DynamicGeneralBankingPage />} />
+                <Route path="/mutual-funds/aditya-birla-sun-life-mutual-fund-announces-bal-bhavishya-yojna-nfo" element={<DynamicGeneralBankingPage />} />
+                <Route path="/mutual-funds/birla-sun-life-mutual-fund" element={<DynamicGeneralBankingPage />} />
+                <Route path="/mutual-funds/aditya-birla-sun-life-psu-equity-fund-regular-plan-growth" element={<DynamicGeneralBankingPage />} />
+                <Route path="/mutual-funds/aditya-birla-sun-life-small-cap-fund-regular-plan-growth" element={<DynamicGeneralBankingPage />} />
+                <Route path="/personal-loan/aditya-birla-finance-limited-marriage-loan" element={<DynamicGeneralBankingPage />} />
+                <Route path="/personal-loan/aditya-birla-finance-limited-personal-loan-foreclosure-charges" element={<DynamicGeneralBankingPage />} />
+                <Route path="/personal-loan/agriculture-loan" element={<DynamicGeneralBankingPage />} />
+                <Route path="/personal-loan/agriculture-loan-interest-rates" element={<DynamicGeneralBankingPage />} />
+                <Route path="/business-loan/agarbatti-making-business" element={<DynamicGeneralBankingPage />} />
+                <Route path="/business-loan/agriculture-business-plan" element={<DynamicGeneralBankingPage />} />
+                <Route path="/tax/advance-tax" element={<DynamicGeneralBankingPage />} />
+                <Route path="/credit-card/advantages-and-disadvantages-of-credit-card" element={<DynamicGeneralBankingPage />} />
+                <Route path="/aditya-birla-sun-life-pension-plans" element={<DynamicGeneralBankingPage />} />
 
                 {/* Financial Directories */}
                 <Route path="/pages-directory" element={<FinancialDirectory />} />

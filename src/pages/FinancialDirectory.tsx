@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Search, Sparkles, BookOpen, ChevronRight, Landmark, CreditCard, ShieldCheck, TrendingUp, Calculator, FileText, ArrowUpRight } from 'lucide-react';
+import { Search, Sparkles, BookOpen, ChevronRight, Landmark, CreditCard, ShieldCheck, TrendingUp, Calculator, FileText, ArrowUpRight, AlertCircle, HeartPulse } from 'lucide-react';
 
 interface DirectoryLink {
   name: string;
@@ -83,7 +83,13 @@ const FinancialDirectory: React.FC = () => {
         { name: "Adani Capital SME Loans", href: "/business-loan/adani-capital", desc: "Unsecured micro retail capital and agro vehicle finance." },
         { name: "Adani Housing Finance", href: "/home-loan/adani-housing-finance", desc: "Affordable housing mortgages and flexible self-employed evaluation." },
         { name: "Accounts Payable (AP)", href: "/banking/accounts-payable", desc: "Complete corporate accounting and treasury cash flow guidelines." },
-        { name: "Account to Account Money Transfer", href: "/money-transfer/account-to-account-money-transfer", desc: "Reconcile processing times and limits across IMPS, NEFT, and RTGS." }
+        { name: "Account to Account Money Transfer", href: "/money-transfer/account-to-account-money-transfer", desc: "Reconcile processing times and limits across IMPS, NEFT, and RTGS." },
+        { name: "Apparel Export Promotion Council", href: "/promotion-councils/apparel-export-promotion-council-aepc", desc: "National textile export promotions, subventions, and exporter guide slabs." },
+        { name: "Agarbatti Manufacturing Mudra", href: "/business-loan/agarbatti-making-business", desc: "Start micro Agarbatti trading with collateral-free Mudra credit up to ₹10 Lakhs." },
+        { name: "Agriculture Crop Loan Guide", href: "/personal-loan/agriculture-loan", desc: "Subsidized farm cultivation credits and Kisan Credit Card (KCC) limits." },
+        { name: "Agri-Business Startup Finance", href: "/business-loan/agriculture-business-plan", desc: "Detailed business blueprints for securing NABARD priority sector grants." },
+        { name: "Agriculture Gold Loan Subsidies", href: "/gold-loan/agriculture", desc: "Pledge gold ornaments to receive rapid cultivation cash at flat 7.00% p.a." },
+        { name: "Agri Crop Interest Rates Table", href: "/personal-loan/agriculture-loan-interest-rates", desc: "Compare prompt repayment subventions across public and private banks." }
       ]
     },
     {
@@ -108,7 +114,16 @@ const FinancialDirectory: React.FC = () => {
         { name: "Pre-approved Loan Secrets", href: "/6-key-insights-know-pre-approved-personal-loans", desc: "Master instant pre-approved digital releases and prevent traps." },
         { name: "Low-Salary Home Loans", href: "/blogs/Low-Salary-Home-Loan-Guide", desc: "Co-borrower additions and state subsidies for low salary brackets." },
         { name: "Collateral-Free MSME Credit", href: "/blogs/MSME-Loan-Without-Collateral", desc: "Sovereign CGTMSE guarantees and Udyam paper concessions." },
-        { name: "Startup Loan Blueprint", href: "/blogs/Startup-Loan-Blueprint", desc: "Secure initial debt financing for new ventures." }
+        { name: "Startup Loan Blueprint", href: "/blogs/Startup-Loan-Blueprint", desc: "Secure initial debt financing for new ventures." },
+        { name: "Aditya Birla Marriage Loan", href: "/personal-loan/aditya-birla-finance-limited-marriage-loan", desc: "Instant wedding funding up to ₹15 Lakhs under reducing interest rates." },
+        { name: "Aditya Birla Securities Overdraft", href: "/loan-against-securities/mutual-funds/aditya-birla-finance", desc: "Secure instant overdraft limits by pledging mutual funds and shares." },
+        { name: "Aditya Birla Personal Loan", href: "/aditya-birla/personal-loan", desc: "Flexible unsecured personal credit lines up to ₹50 Lakhs processed digitally." },
+        { name: "Personal Loan Documents Check", href: "/aditya-birla/personal-loan-documents-required", desc: "Complete checklists of KYC, income, and bank statement proofs." },
+        { name: "Aditya Birla Personal Loan EMI", href: "/aditya-birla/personal-loan-emi-calculator", desc: "Simulate EMI amounts and compile reducing interest amortizations." },
+        { name: "Aditya Birla Foreclosure Policy", href: "/personal-loan/aditya-birla-finance-limited-personal-loan-foreclosure-charges", desc: "Track lock-in periods, pre-payment slabs, and interest saving rules." },
+        { name: "Aditya Birla Home Loan mortgage", href: "/aditya-birla/home-loan", desc: "Housing mortgages with flexible LTV up to 90% and tenure up to 30 years." },
+        { name: "Aditya Birla Home Loan Interest", href: "/aditya-birla/home-loan-interest-rates", desc: "Track floating interest matrices for salaried and self-employed applicants." },
+        { name: "Loan Against Property (LAP)", href: "/aditya-birla/loan-against-property", desc: "High-value commercial and residential mortgage credits up to ₹10 Crores." }
       ]
     },
     {
@@ -130,7 +145,17 @@ const FinancialDirectory: React.FC = () => {
         { name: "Activ Health Wellness Shield", href: "/aditya-birla-activ-health", desc: "Earn up to 100% premium cash return through active lifestyle steps." },
         { name: "ABSL PSU Equity Mutual Fund", href: "/mutual-funds/aditya-birla-amc-launches-aditya-birla-sun-life-psu-equity-fund", desc: "High-yield open-ended sectoral mutual fund investing in gov giants." },
         { name: "Fixed Deposits Portal", href: "/investment/fixed-deposit", desc: "Guaranteed locked-in yields comparing top commercial banks." },
-        { name: "Mutual Funds Portal", href: "/investment/mutual-funds", desc: "SIP & lump-sum direct mutual funds from leading asset managers." }
+        { name: "Mutual Funds Portal", href: "/investment/mutual-funds", desc: "SIP & lump-sum direct mutual funds from leading asset managers." },
+        { name: "ABSL Flexi Cap Fund Growth", href: "/mutual-funds/aditya-birla-sun-life-flexi-cap-fund-regular-plan-growth", desc: "Open-ended equity fund investing dynamically across all market caps." },
+        { name: "ABSL Nifty Next 50 ETF NFO", href: "/mutual-funds/aditya-birla-sun-life-mf-launches-nfo-nifty-next-50-etf", desc: "Low-cost index exchange-traded fund tracking high-potential bluechips." },
+        { name: "ABSL Midcap Fund Growth", href: "/mutual-funds/aditya-birla-sun-life-midcap-fund-regular-plan-growth", desc: "Focuses on high-yield mid-sized enterprise compounding over 5+ years." },
+        { name: "ABSL Multi Cap Fund Growth", href: "/mutual-funds/aditya-birla-sun-life-multi-cap-fund-regular-plan-growth", desc: "Mandated 25% distribution across large, mid, and small cap sectors." },
+        { name: "ABSL Bal Bhavishya Yojna NFO", href: "/mutual-funds/aditya-birla-sun-life-mutual-fund-announces-bal-bhavishya-yojna-nfo", desc: "Solution-oriented child savings plan with a 5-year lock-in period." },
+        { name: "Birla Sun Life Mutual Fund Hub", href: "/mutual-funds/birla-sun-life-mutual-fund", desc: "Comprehensive portal listing direct SIP and lump-sum investment schemes." },
+        { name: "ABSL PSU Equity Regular Growth", href: "/mutual-funds/aditya-birla-sun-life-psu-equity-fund-regular-plan-growth", desc: "Government sector monopolies fund offering solid high-dividend yields." },
+        { name: "ABSL Small Cap Fund Growth", href: "/mutual-funds/aditya-birla-sun-life-small-cap-fund-regular-plan-growth", desc: "Aggressive small enterprise portfolio capturing economic expansions." },
+        { name: "ABSL Pension Fund (NPS)", href: "/saving-schemes/aditya-birla-sun-life-pension-fund", desc: "Low-cost National Pension System fund manager under Section 80CCD." },
+        { name: "ABSL Sun Life Pension Portal", href: "/aditya-birla-sun-life-pension-plans", desc: "Retirement annuity plans offering guaranteed regular income payouts." }
       ]
     },
     {
@@ -150,7 +175,11 @@ const FinancialDirectory: React.FC = () => {
         { name: "38th GST Council Resolutions", href: "/tax/38th-gst-council-meeting", desc: "Unified 28% lottery tax votes, long-term lease waivers, and late GSTR-1 cuts." },
         { name: "Aaykar Setu Mobile App", href: "/tax/aaykar-setu-income-tax-mobile-app", desc: "Official income tax app detail guides, TRP locator, and live chat desks." },
         { name: "Income Tax Portal Guide", href: "/resources/income-tax", desc: "Regime analysis, Form 16 guidelines, and filing timelines." },
-        { name: "PPF Account Schemes", href: "/resources/ppf", desc: "Public Provident Fund interest rates compounding and EEE tax benefits." }
+        { name: "PPF Account Schemes", href: "/resources/ppf", desc: "Public Provident Fund interest rates compounding and EEE tax benefits." },
+        { name: "Aditya Birla SBI Credit Cards", href: "/sbi-bank/adtiya-birla-sbi-cards", desc: "Earn double rewards on daily shopping co-branded with SBI." },
+        { name: "Aditya Birla SBI Card Select", href: "/sbi-bank/aditya-birla-sbi-card-select", desc: "Elite lifestyle card offering Priority Pass lounge entries and welcome vouchers." },
+        { name: "Advance Tax Guidelines", href: "/tax/advance-tax", desc: "Direct tax calendars, quarterly percentages, and delay penalties." },
+        { name: "Pros & Cons of Credit Cards", href: "/credit-card/advantages-and-disadvantages-of-credit-card", desc: "Master interest-free cycles, credit utilization limits, and score building." }
       ]
     },
     {
@@ -169,6 +198,36 @@ const FinancialDirectory: React.FC = () => {
         { name: "National IFSC Finder", href: "/resources/ifsc-finder", desc: "Search active RBI IFSC and MICR codes for all banks instantly." },
         { name: "Live Gold Rates Checker", href: "/resources/gold-rates", desc: "Track 22K and 24K market gold rates across major cities in India." },
         { name: "National Pincodes Directory", href: "/resources/pincodes", desc: "Verify city zip codes and localized postal courier coverages." }
+      ]
+    },
+    {
+      id: "life-health-insurance",
+      title: "Life & Health Protection Insurance",
+      desc: "Aegon term plans, iMaximize ULIP savings, group cashless policies, and chronic disease heart & diabetic covers.",
+      icon: <HeartPulse className="w-5 h-5" />,
+      colorClass: "from-rose-950 via-slate-900 to-zinc-950 text-rose-450 border-rose-500/20",
+      accentClass: "bg-rose-500/10 text-rose-400 border-rose-500/30",
+      links: [
+        { name: "Group Active Health Shield", href: "/group-active-health", desc: "Corporate cashless health covers up to 100% premium return rewards." },
+        { name: "Group Activ Secure Shield", href: "/group-activ-secure", desc: "Fixed personal accident and critical illness payouts for corporate staffs." },
+        { name: "Group Health Policy Guide", href: "/group-health-insurance", desc: "Customizable company health insurance including immediate pre-existing covers." },
+        { name: "Asthma Medical Cover", href: "/health-insurance-asthma", desc: "Specialized cashless policies with zero waiting cycles for chronic asthma." },
+        { name: "Diabetes Cashless Care", href: "/health-insurance-diabetes", desc: "Dedicated diabetic insurance protecting outpatient glucose monitoring costs." },
+        { name: "High Blood Pressure Protection", href: "/health-insurance-high-blood-pressure", desc: "Shield cardiovascular diagnostic outgos and regular medicine bills." },
+        { name: "High Cholesterol Health Cover", href: "/health-insurance-high-cholesterol", desc: "Cashless hospitalization shields covering lipid and heart therapies." },
+        { name: "Insurance Login & Tracking", href: "/login-and-registration-process", desc: "Customer digital claims desk, cashless approvals, and certificate downloads." },
+        { name: "Aegon Life Child Plans", href: "/aegon-life-child-plans", desc: "Double benefit child security plans covering academic milestones." },
+        { name: "Aegon Support Helplines", href: "/aegon-life-customer-care", desc: "Toll-free desks, NRI helpdesks, and nominee death claims registers." },
+        { name: "Aegon Life Easy Protect", href: "/life-easy-protect-insurance-plan", desc: "Highly affordable pure term protection designed for young earners." },
+        { name: "Aegon Future Protect Term", href: "/future-protect-insurance-plan", desc: "Sizable sum assured payouts protecting family debts at cheap rates." },
+        { name: "Aegon Future Protect Plus", href: "/future-protect-plus-insurance-plan", desc: "Pure life insurance shield offering 100% return of paid premiums." },
+        { name: "Aegon Guaranteed Growth Saver", href: "/aegon-life-guaranteed-growth-insurance-plan", desc: "Non-linked savings endowment compounding tax-free maturities." },
+        { name: "Aegon Life iGuarantee Plan", href: "/aegon-life-iguarantee-insurance", desc: "High-compounding annual growth returns guaranteed under lock-in terms." },
+        { name: "Aegon iMaximize ULIP Regular", href: "/imaximize-insurance-plan", desc: "Invest regular premiums dynamically across market funds with zero allocation fees." },
+        { name: "Aegon iMaximize Single ULIP", href: "/imaximize-single-premium-insurance-plan", desc: "Deposit single lump-sum in high-equity funds with instant life cover." },
+        { name: "Aegon Retirement Pension Plans", href: "/pension-plans", desc: "Annuity programs guaranteeing post-retirement monthly cash payouts." },
+        { name: "Aegon Rising Star Scholar", href: "/rising-star-insurance-plan", desc: "Child scholar investment ULIP offering premium waiver benefits." },
+        { name: "Aegon Term Cover Catalog", href: "/term-insurance-plans", desc: "Pure term covers shielding home loans and lifestyle liabilities." }
       ]
     }
   ];

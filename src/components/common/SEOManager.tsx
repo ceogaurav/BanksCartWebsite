@@ -753,9 +753,60 @@ export default function SEOManager() {
 
   if (!meta && (pathname === '/financial-directory' || pathname === '/pages-directory')) {
     meta = {
-      title: "All Financial Services Directories: 100+ Active Portals | BanksCart",
-      description: "Access over 100+ active financial portals, verified loan rates tables, Aadhaar services guides, and scheduled banking directories online.",
+      title: "All Financial Services Directories: 150+ Active Portals | BanksCart",
+      description: "Access over 150+ active financial portals, verified loan rates tables, Aadhaar services guides, scheduled banking, Aegon Life, and corporate health directories online.",
       keywords: "financial directories, bankscart site directory, all loans comparison, all credit cards listings"
+    };
+  }
+
+  // Resolvers for Group Health Insurance and Chronic disease policies
+  const healthKeywords = ['group-active-health', 'group-activ-secure', 'group-health-insurance', 'health-insurance-asthma', 'health-insurance-diabetes', 'health-insurance-high-blood-pressure', 'health-insurance-high-cholesterol', 'login-and-registration-process'];
+  const matchingHealthKeyword = healthKeywords.find(keyword => pathname.includes(keyword));
+  if (!meta && matchingHealthKeyword) {
+    const cleanName = matchingHealthKeyword.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+    meta = {
+      title: `ABSLI ${cleanName} Insurance Plan: Cashless Medical Cover | BanksCart`,
+      description: `Track details on ABSLI ${cleanName}. Compare cashless networks, Chronic Care management programs, wellness reward rules, and OPD benefits.`,
+      keywords: `${matchingHealthKeyword}, active health wellness, chronic disease cover`
+    };
+  }
+
+  // Resolvers for Aegon Life Insurance
+  const aegonKeywords = ['aegon-life-child-plans', 'aegon-life-customer-care', 'life-easy-protect-insurance-plan', 'future-protect-insurance-plan', 'future-protect-plus-insurance-plan', 'aegon-life-guaranteed-growth-insurance-plan', 'aegon-life-iguarantee-insurance', 'imaximize-insurance-plan', 'imaximize-single-premium-insurance-plan', 'rising-star-insurance-plan', 'pension-plans', 'term-insurance-plans'];
+  const matchingAegonKeyword = aegonKeywords.find(keyword => pathname.includes(keyword));
+  if (!meta && matchingAegonKeyword) {
+    const cleanName = matchingAegonKeyword.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+    meta = {
+      title: `Aegon Life ${cleanName}: Compare Terms & Payouts | BanksCart`,
+      description: `Analyze Aegon Life ${cleanName} guidelines. Track premium waivers, return of premiums, guaranteed compounding yields, and claim helplines.`,
+      keywords: `${matchingAegonKeyword}, aegon life term insurance, guaranteed savings plans`
+    };
+  }
+
+  // Resolvers for dynamic agricultural, promotion councils, and gold loan pathways
+  if (!meta && pathname.includes('/gold-loan/')) {
+    const subSlug = pathname.replace('/gold-loan/', '').replace('/', '');
+    const cleanName = subSlug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+    meta = {
+      title: `Agriculture Gold Loan ${cleanName}: Subsidized Farm Credit Slabs | BanksCart`,
+      description: `Check details on ${cleanName} Agriculture Gold Loan. Compare subsidized baseline interest rates, gold valuation TATs, and priority sector margins.`,
+      keywords: `gold loan ${subSlug}, agriculture gold loan, farm gold credit`
+    };
+  }
+
+  if (!meta && pathname.includes('/loan-against-securities/')) {
+    meta = {
+      title: "Aditya Birla Loan Against Securities: Pledge Mutual Funds & Stocks | BanksCart",
+      description: "Unlock immediate credit overdrafts up to 80% LTV by pledging shares, mutual funds, or bonds, keeping compounding returns active on BanksCart.",
+      keywords: "loan against securities, pledge shares, mutual fund overdraft limit, aditya birla las"
+    };
+  }
+
+  if (!meta && pathname.includes('/promotion-councils/')) {
+    meta = {
+      title: "Apparel Export Promotion Council (AEPC): SME Textiles Credit | BanksCart",
+      description: "Learn how the AEPC promotion council assists small-scale apparel exporters with capital subsidies, interest subventions, and international trade desks.",
+      keywords: "apparel export promotion council, aepc, textile exporter credit, nabard subsidies"
     };
   }
 

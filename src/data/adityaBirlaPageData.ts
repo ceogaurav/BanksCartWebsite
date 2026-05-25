@@ -169,7 +169,7 @@ export const ADITYA_BIRLA_PAGE_MAP: Record<string, AdityaPageContent> = {
   "aditya-birla-activ-health": {
     title: "Aditya Birla Activ Health: Premium Health return Wellness Shield",
     badge: "Health Protection",
-    intro: "The **Aditya Birla Activ Health** Platinum Enhanced plan is a revolutionary health insurance product designed to reward active healthy lifestyles. Unlike standard plans, this shield offers cash incentives, Chronic Management support, and up to 100% Health Return bonus awards.",
+    intro: "The **Aditya Birla Activ Health** plan is a revolutionary health insurance product designed to reward active healthy lifestyles. Unlike standard plans, this shield offers cash incentives, Chronic Management support, and up to 100% Health Return bonus awards.",
     moreIntro: "At BanksCart, we detail cashless network hospitals, family floater configurations, and wellness incentives. By staying active (verified via smartphone apps), you cut premium costs by half.",
     highlightsTitle: "Highlights of Activ Health Premium Plan",
     highlights: [
@@ -180,6 +180,119 @@ export const ADITYA_BIRLA_PAGE_MAP: Record<string, AdityaPageContent> = {
     faqs: [
       { q: "How do I earn HealthReturns cash incentives?", a: "Download the Activ Health app, track your daily physical steps (e.g. 10,000 steps/day), complete monthly health checks, and earn points redeemable for OPD bills or premium cuts." },
       { q: "Is there any waiting period for pre-existing diseases?", a: "Standard pre-existing diseases carry a 3-year waiting period. However, under the Chronic Management plan, chronic conditions are covered from Day 1." }
+    ]
+  },
+  "grievance-redressal-escalation-matrix": {
+    title: "Aditya Birla Finance Grievance Redressal: Escalation Matrices",
+    badge: "Nodal Grievances",
+    intro: "Aditya Birla Finance Limited (ABFL) is committed to delivering a transparent, fair, and professional lending experience. If you encounter service delays, debit errors, or incorrect bureau entries, the company offers a robust Grievance Redressal and Escalation Matrix.",
+    moreIntro: "At BanksCart, we simplify customer rights. We detail Level-1 branch desks, Level-2 customer service heads, Level-3 Principal Nodal Officers, and direct links to the RBI Integrated Ombudsman to resolve disputes fast.",
+    highlightsTitle: "Escalation Matrix Levels",
+    highlights: [
+      { label: "Level 1: Branch / Support", text: "Log your complaint online or call the customer care line to register a ticket." },
+      { label: "Level 2: Grievance Redressal", text: "Escalate unresolved Level-1 queries to the Grievance Redressal Officer." },
+      { label: "Level 3: Nodal Desk", text: "Submit unresolved disputes directly to the Principal Nodal Officer at central offices." }
+    ],
+    ratesTitle: "Escalation Desk Contact Info",
+    ratesHeaders: ["Department Stage", "Officer Name / Contact Address", "Resolution Turnaround SLA"],
+    ratesRows: [
+      ["Level 1 (General Support)", "Email: care.finance@adityabirlacapital.com | Phone: 1800-270-7000", "7 Working Days"],
+      ["Level 2 (Redressal Head)", "Grievance Officer, ABFL, corporate offices, Mumbai", "7 Working Days"],
+      ["Level 3 (Principal Nodal)", "Nodal Officer: principalnodalofficer.abfl@adityabirlacapital.com", "7 Working Days"],
+      ["Level 4 (Ombudsman)", "RBI Integrated Ombudsman Scheme: https://cms.rbi.org.in", "30 Days Maximum"]
+    ],
+    faqs: [
+      { q: "How long does Aditya Birla Finance take to resolve complaints?", a: "Most retail complaints are resolved in 3 to 7 working days. If unresolved within 30 days, the user can file an appeal with the RBI Ombudsman." }
+    ]
+  },
+  "personal-loan-documents-required": {
+    title: "Aditya Birla Personal Loan Documents Required Checklist",
+    badge: "Application Checklist",
+    intro: "Prepare your application dossier accurately before applying for an Aditya Birla Finance Personal Loan. Having the correct identity, address, and income proofs ready prevents processing delay loops and secures fast digital base-rate clearances.",
+    moreIntro: "At BanksCart, we outline the exact documents required for both salaried and self-employed professionals to ensure 100% successful digital onboarding.",
+    highlightsTitle: "Mandatory Document Checklist",
+    highlights: [
+      { label: "Proof of Identity (POI)", text: "Aadhaar Card, PAN Card, Passport, or Voter ID copy." },
+      { label: "Proof of Address (POA)", text: "Utility bills, active rent agreement, bank statement, or Aadhaar." },
+      { label: "Income Credentials", text: "Past 3 months' salary slips, 2 years' Form 16, and past 6 months' bank statements." }
+    ],
+    faqs: [
+      { q: "Do I need physical document submissions?", a: "No. The entire onboarding can be completed online via secure document upload portals and Aadhaar e-KYC." }
+    ]
+  },
+  "home-loan-interest-rates": {
+    title: "Aditya Birla Home Loan Interest Rates: Compare baseline Slabs",
+    badge: "Mortgages Comparison",
+    intro: "Secure the cheapest borrowing costs by comparing the full baseline spectrum of **Aditya Birla Home Loan Interest Rates**. The company offers highly competitive floating rate brackets linked directly to commercial lending benchmark indicators.",
+    moreIntro: "At BanksCart, we simplify mortgages. We provide real-time updates on active baseline floating rates, processing percentages, and LTV parameters.",
+    highlightsTitle: "Home Loan Rate Highlights",
+    highlights: [
+      { label: "Cheapest Floating Rates", text: "Starting as low as 8.95% p.a. for premium salaried borrowers with excellent credit ratings." },
+      { label: "Extended Tenures", text: "Repay comfortably over structured repayment tenures extending up to 30 years." },
+      { label: "Balance Transfer Concessions", text: "Switch high-interest home loans from other banks to Aditya Birla to drop EMIs." }
+    ],
+    faqs: [
+      { q: "What is the processing fee on home loans?", a: "The processing fee ranges between 0.50% and 1.50% of the loan amount, with special seasonal flat waivers." }
+    ]
+  },
+  "home-loan": {
+    title: "Aditya Birla Home Loan: Low-Interest Housing Mortgages Online",
+    badge: "Housing Finance",
+    intro: "Step into your dream home with an Aditya Birla Housing Finance Home Loan. Offering flexible credit limits, high loan-to-value LTV backing, and extended tenures, the company supports purchasing fresh flats, constructing homes, or renovating existing properties.",
+    moreIntro: "At BanksCart, we optimize your mortgage structure. We compare home loans side-by-side to ensure your property acquisition is simple.",
+    highlightsTitle: "Why Choose Aditya Birla Home Loans?",
+    highlights: [
+      { label: "LTV up to 90%", text: "Secure housing finance covering up to 80% to 90% of the property value." },
+      { label: "Simplified Property check", text: "Fast-track technical and legal checks of properties under pre-approved project panels." },
+      { label: "Sovereign Subsidies", text: "Fully aligned with government interest subsidy schemes for first-time buyers." }
+    ],
+    faqs: [
+      { q: "What is the maximum home loan tenure available?", a: "Aditya Birla Housing Finance offers tenures up to 30 years for salaried individuals." }
+    ]
+  },
+  "loan-against-property": {
+    title: "Aditya Birla Loan Against Property: Unlock Cash from Real Estate",
+    badge: "Secured Funding",
+    intro: "Unlock the hidden monetary value of your residential, commercial, or industrial real estate with an Aditya Birla Loan Against Property (LAP). This high-value secured loan provides substantial capital to expand business empires, fund children's foreign educations, or manage high-ticket personal requirements.",
+    moreIntro: "At BanksCart, we outline property valuation parameters and competitive mortgage base rates. With reducing calculations and flexible tenures, you secure cash without losing asset ownership.",
+    highlightsTitle: "Highlights of Loan Against Property (LAP)",
+    highlights: [
+      { label: "High Funding Limits", text: "Secure funding up to ₹10 Crores based on property market valuations." },
+      { label: "Lower Interest Slabs", text: "LAP rates are significantly cheaper than personal loans, starting at 9.50% p.a." },
+      { label: "Dynamic Asset Usage", text: "Accepts commercial plots, residential self-occupied homes, or rented warehouses as collaterals." }
+    ],
+    faqs: [
+      { q: "What is the maximum LTV (Loan-to-Value) for LAP?", a: "Lenders typically offer up to 60% to 75% of the market value of residential properties and up to 50% for commercial properties." }
+    ]
+  },
+  "personal-loan": {
+    title: "Aditya Birla Personal Loan: Instant Collateral-Free Cash Online",
+    badge: "Instant Liquidity",
+    intro: "An Aditya Birla Finance Personal Loan is an unsecured multi-purpose credit facility designed to help retail customers manage immediate cash requirements. Whether consolidating high-interest debts, funding medical expenses, remodeling homes, or upgrading vehicles, you can access fast capital with competitive interest rates.",
+    moreIntro: "At BanksCart, we optimize your personal application. We compare baseline interest rates to ensure your monthly EMIs are comfortable.",
+    highlightsTitle: "Highlights of Unsecured Personal Loans",
+    highlights: [
+      { label: "High Unsecured Limits", text: "Access personal loans up to ₹15 Lakhs without submitting physical assets as security." },
+      { label: "Digitized Disbursals", text: "Fast-track applications online with digital KYC and clearings under 24 hours." },
+      { label: "Convenient Tenure Slabs", text: "Repay comfortably over tenure grids extending from 12 to 86 months." }
+    ],
+    faqs: [
+      { q: "What is the minimum CIBIL score required for a personal loan?", a: "Aditya Birla Finance prefers a CIBIL rating of 680 and above for fast, digital approvals." }
+    ]
+  },
+  "personal-loan-emi-calculator": {
+    title: "Aditya Birla Personal Loan EMI Calculator: Estimate Payments",
+    badge: "Financial Calculators",
+    intro: "Plan your borrowing accurately using the interactive **Aditya Birla Personal Loan EMI Calculator**. This free online tool helps you estimate monthly EMI payments, total interest payable, and view complete amortization schedules instantly.",
+    moreIntro: "At BanksCart, we simplify financial math. Adjust the principal, interest percentage, and tenure sliders below to select the most comfortable repayment budget.",
+    highlightsTitle: "Benefits of the EMI Calculator",
+    highlights: [
+      { label: "Instant Math Results", text: "See immediate updates to your monthly EMI and interest totals on slider changes." },
+      { label: "Compare Tenure Options", text: "Simulate tenures from 1 to 5 years to find the perfect balance between low EMI and interest." },
+      { label: "Transparent Fee Checks", text: "Accounts for processing administrative fees to display true borrowing totals." }
+    ],
+    faqs: [
+      { q: "How is the personal loan EMI calculated?", a: "EMI is calculated using a monthly reducing balance formula: E = P * r * (1+r)^n / ((1+r)^n - 1)." }
     ]
   }
 };
