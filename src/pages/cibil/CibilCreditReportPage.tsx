@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { HelpCircle, ChevronDown, Check, Star, ShieldAlert, Sparkles, BookOpen, AlertCircle, Info } from 'lucide-react';
+import { HelpCircle, ChevronDown, Check, Star, ShieldAlert, Sparkles, BookOpen, AlertCircle, Info, TrendingUp, Award, Clock, FileText, CheckSquare, XCircle, Play, MessageSquare, ShieldCheck, ArrowRight } from 'lucide-react';
 import CibilCheckerForm from '../../components/common/CibilCheckerForm';
 
 const CibilCreditReportPage: React.FC = () => {
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
+  const [selectedBureau, setSelectedBureau] = useState<'CIBIL' | 'Experian' | 'CRIF' | 'Equifax'>('CIBIL');
 
   const faqs = [
     {
@@ -48,6 +49,64 @@ const CibilCreditReportPage: React.FC = () => {
     }
   ];
 
+  const testimonials = [
+    {
+      name: "Mr. Irfan Sayed",
+      location: "Rajasthan",
+      date: "May 1, 2026",
+      quote: "My credit score was roughly 600. Using the credit building guidelines on BanksCart, my credit score has successfully improved to 700 within months. Highly satisfied with their advisory services!",
+      avatar: "IS"
+    },
+    {
+      name: "Mr. Mohammed Reyaj",
+      location: "Maharashtra",
+      date: "Apr 28, 2026",
+      quote: "I am a businessman, and the requirement for money often arises. Money lending apps affected my CIBIL score. Using BanksCart, in just a month my score started to improve.",
+      avatar: "MR"
+    },
+    {
+      name: "Sindhu Gowda",
+      location: "Karnataka",
+      date: "Jan 16, 2026",
+      quote: "Excellent support for CIBIL report download. The walkthrough team was extremely patient, knowledgeable, and resolved my dispute query within minutes. Highly recommended!",
+      avatar: "SG"
+    },
+    {
+      name: "Alok Bansal",
+      location: "Delhi NCR",
+      date: "Aug 19, 2025",
+      quote: "Score improve hone ke baad yahi se premium credit card apply kiya aur instantly approve ho gaya. Seamless experience, very fast and trusted!",
+      avatar: "AB"
+    }
+  ];
+
+  const articles = [
+    {
+      title: "How to Manage Multiple Loans Without Hurting Your Credit Score",
+      author: "Neha Singh",
+      date: "18 May 2026",
+      avatar: "N"
+    },
+    {
+      title: "How Can Students Build Their Credit Scores Without Income Proof?",
+      author: "Bharti",
+      date: "18 May 2026",
+      avatar: "B"
+    },
+    {
+      title: "How Self-Employed Can Build Credit Score Fast",
+      author: "Rupanshi Thapa",
+      date: "12 May 2026",
+      avatar: "R"
+    },
+    {
+      title: "How Credit Utilization Ratio Works and What Percentage to Maintain",
+      author: "Sushmita Mishra",
+      date: "12 May 2026",
+      avatar: "S"
+    }
+  ];
+
   return (
     <div className="min-h-screen bg-slate-50 pt-24 pb-16 font-sans">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
@@ -62,11 +121,22 @@ const CibilCreditReportPage: React.FC = () => {
               Free Bureau Access
             </span>
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black mt-6 tracking-tight leading-tight">
-              CIBIL Credit Report Online
+              Check Free Credit Score & CIBIL Report
             </h1>
-            <p className="text-blue-100 text-base sm:text-lg mt-4 leading-relaxed max-w-2xl">
-              Download your complete credit bureau history. Spot payment delays, active loan counts, credit utilization ratios, and get custom analytics to improve your credit health.
+            <p className="text-blue-100 text-base sm:text-lg mt-4 leading-relaxed max-w-2xl font-medium">
+              Check your credit score free across all credit bureaus, including CIBIL, only on BanksCart. Get your free credit score online with monthly updates and take steps to become credit healthy.
             </p>
+            
+            {/* Bureau logos & checklist */}
+            <div className="mt-8 flex flex-wrap gap-6 items-center border-t border-white/10 pt-6">
+              <span className="text-xs text-blue-200 uppercase tracking-wider font-bold">Supported Bureaus:</span>
+              <div className="flex gap-4 flex-wrap">
+                <span className="bg-white/15 px-3 py-1 rounded-full text-xs font-semibold">TransUnion CIBIL</span>
+                <span className="bg-white/15 px-3 py-1 rounded-full text-xs font-semibold">Experian</span>
+                <span className="bg-white/15 px-3 py-1 rounded-full text-xs font-semibold">Equifax</span>
+                <span className="bg-white/15 px-3 py-1 rounded-full text-xs font-semibold">CRIF High Mark</span>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -76,240 +146,344 @@ const CibilCreditReportPage: React.FC = () => {
           {/* Left Column: Rich SEO Guide Content */}
           <div className="lg:col-span-7 space-y-10 text-slate-700">
             
-            {/* Guide Introduction */}
+            {/* Checklist Why check on bankscart */}
+            <div className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm">
+              <h2 className="text-lg sm:text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
+                <ShieldCheck className="w-5.5 h-5.5 text-blue-600" />
+                Why Check Credit Score on BanksCart?
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="flex gap-3">
+                  <div className="w-6 h-6 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Check className="w-4.5 h-4.5" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-slate-800 text-sm">4 Bureaus Coverage</h3>
+                    <p className="text-slate-500 text-xs mt-1 leading-relaxed">Check CIBIL, Experian, Equifax, and CRIF scores all in one place.</p>
+                  </div>
+                </div>
+                <div className="flex gap-3">
+                  <div className="w-6 h-6 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Check className="w-4.5 h-4.5" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-slate-800 text-sm">Monthly Updates</h3>
+                    <p className="text-slate-500 text-xs mt-1 leading-relaxed">Track your score monthly with automated bureau refreshes.</p>
+                  </div>
+                </div>
+                <div className="flex gap-3">
+                  <div className="w-6 h-6 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Check className="w-4.5 h-4.5" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-slate-800 text-sm">Zero Score Impact</h3>
+                    <p className="text-slate-500 text-xs mt-1 leading-relaxed">Soft pull queries ensure checking doesn't drop your rating.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* What is Credit Score? */}
             <div className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm">
               <h2 className="text-xl sm:text-2xl font-bold text-slate-800 mb-4 flex items-center gap-2.5">
                 <span className="w-1.5 h-6 bg-blue-600 rounded-full"></span>
-                What is a Credit Report & Why is it Critical?
+                What is a Credit Score?
               </h2>
               <p className="text-sm text-slate-600 leading-relaxed mb-4">
-                A **CIBIL Credit Report** is essentially your financial report card. It is a consolidated report containing credit history sourced from over 5,000+ banks, credit card providers, and non-banking financial companies (NBFCs) operating across India. This report serves as a detailed record of your borrowing and repayment habits, and is compiled by TransUnion CIBIL, the country's pioneer credit information bureau licensed by the Reserve Bank of India (RBI).
+                A **Credit Score** is a 3-digit numeric summary of your credit history, that represents your creditworthiness. Credit Score is commonly known as **CIBIL Score** (provided by TransUnion CIBIL), and ranges between **300 and 900**. Your Credit Score is a measure of your ability to borrow from Banks and NBFCs, determined by your past credit behaviour.
               </p>
               <p className="text-sm text-slate-600 leading-relaxed mb-4">
-                Whenever you apply for a credit card, personal loan, car loan, or home loan, the lender immediately contacts credit bureaus to request your credit report. A high score (typically 750 or above) assures the bank that you have a disciplined repayment record, leading to faster approvals, lower interest rates, and higher loan limits. On the other hand, a low score indicates a higher default risk, which could lead to loan rejections or exorbitant interest rate markups.
+                CIBIL is one of the 4 Credit Bureaus or Credit Information Companies (CICs) in India that calculates and maintains your Credit Score. Your Credit Score is based on the information provided by lenders. It includes payment of EMIs, Credit Card bills, new applications etc.
               </p>
               <p className="text-sm text-slate-600 leading-relaxed">
-                Regularly monitoring your CIBIL report is crucial for maintaining a healthy financial profile. It allows you to check for errors reported by banks, detect identity theft (such as loans opened in your name without authorization), and take corrective measures to rebuild your credit rating.
+                To ensure bureaus have your latest credit information, RBI has mandated all lenders to report the updated credit information to all bureaus every 15 days.
               </p>
             </div>
 
-            {/* In-Depth: Credit Bureau Types in India */}
+            {/* How to Check Credit Score for Free */}
             <div className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm">
-              <h3 className="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
-                <BookOpen className="w-5 h-5 text-blue-600" />
-                Understanding Credit Information Bureaus in India
+              <h3 className="text-lg font-bold text-slate-800 mb-6 flex items-center gap-2">
+                <Clock className="w-5.5 h-5.5 text-blue-600" />
+                How to Check Credit Score for Free with BanksCart?
               </h3>
-              <p className="text-sm text-slate-600 leading-relaxed mb-4">
-                Many consumers use the term "CIBIL Score" and "Credit Score" interchangeably. However, CIBIL is just one of the licensed credit bureaus operating in India. There are four major credit information companies authorized by the RBI:
-              </p>
-              <div className="space-y-4 mt-4">
-                <div className="border-l-4 border-blue-500 pl-4">
-                  <h4 className="font-bold text-slate-800 text-sm">1. TransUnion CIBIL</h4>
-                  <p className="text-xs text-slate-500 mt-1 leading-relaxed">
-                    Established in 2000, TransUnion CIBIL is the oldest and most widely used credit bureau in India. Banks and housing finance companies rely heavily on CIBIL reports for retail credit underwriting.
-                  </p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="bg-slate-50 p-5 rounded-2xl border border-slate-100 text-center">
+                  <div className="w-8 h-8 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-sm mx-auto mb-3">1</div>
+                  <h4 className="font-bold text-slate-800 text-sm">Enter Details</h4>
+                  <p className="text-slate-500 text-xs mt-2 leading-relaxed">Fill in your mobile number and other basic details in the score form.</p>
                 </div>
-                <div className="border-l-4 border-indigo-500 pl-4">
-                  <h4 className="font-bold text-slate-800 text-sm">2. Experian</h4>
-                  <p className="text-xs text-slate-500 mt-1 leading-relaxed">
-                    Experian is a global credit information company with a significant footprint in India. Lenders frequently query Experian scores for credit card underwriting and pre-approved personal loans.
-                  </p>
+                <div className="bg-slate-50 p-5 rounded-2xl border border-slate-100 text-center">
+                  <div className="w-8 h-8 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-sm mx-auto mb-3">2</div>
+                  <h4 className="font-bold text-slate-800 text-sm">Verify OTP</h4>
+                  <p className="text-slate-500 text-xs mt-2 leading-relaxed">Complete OTP verification of your mobile number to establish identity.</p>
                 </div>
-                <div className="border-l-4 border-teal-500 pl-4">
-                  <h4 className="font-bold text-slate-800 text-sm">3. Equifax</h4>
-                  <p className="text-xs text-slate-500 mt-1 leading-relaxed">
-                    Equifax compiles detailed consumer and commercial credit registries. It provides lenders with robust fraud detection modules alongside credit ratings.
-                  </p>
-                </div>
-                <div className="border-l-4 border-purple-500 pl-4">
-                  <h4 className="font-bold text-slate-800 text-sm">4. CRIF High Mark</h4>
-                  <p className="text-xs text-slate-500 mt-1 leading-relaxed">
-                    CRIF High Mark is an Indian credit bureau specializing in microfinance collections, commercial credit segments, and retail lending insights.
-                  </p>
+                <div className="bg-slate-50 p-5 rounded-2xl border border-slate-100 text-center">
+                  <div className="w-8 h-8 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-sm mx-auto mb-3">3</div>
+                  <h4 className="font-bold text-slate-800 text-sm">Track Score</h4>
+                  <p className="text-slate-500 text-xs mt-2 leading-relaxed">Your account will refresh every month so you can track credit health easily.</p>
                 </div>
               </div>
             </div>
 
-            {/* How Credit Score Brackets Define Your Loan Approval Chances */}
+            {/* Interactive Multi-Bureau Score Comparison Grid */}
+            <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-3xl text-white p-6 sm:p-8 shadow-lg">
+              <h3 className="text-lg font-bold text-white mb-2 flex items-center gap-2">
+                <Sparkles className="w-5 h-5 text-amber-400" />
+                Compare your Credit Report across 4 Bureau(s)
+              </h3>
+              <p className="text-xs text-slate-400 mb-6">Exclusively modeled on Prime borrower reports</p>
+              
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="bg-white/5 rounded-2xl p-4 border border-white/10 text-center">
+                  <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">CIBIL</span>
+                  <div className="text-3xl font-black text-emerald-400 mt-2">809</div>
+                  <span className="text-[10px] text-emerald-300 font-semibold block mt-1">✔ Excellent</span>
+                </div>
+                <div className="bg-white/5 rounded-2xl p-4 border border-white/10 text-center">
+                  <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Experian</span>
+                  <div className="text-3xl font-black text-teal-400 mt-2">752</div>
+                  <span className="text-[10px] text-teal-300 font-semibold block mt-1">✔ Good</span>
+                </div>
+                <div className="bg-white/5 rounded-2xl p-4 border border-white/10 text-center">
+                  <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Equifax</span>
+                  <div className="text-3xl font-black text-emerald-400 mt-2">855</div>
+                  <span className="text-[10px] text-emerald-300 font-semibold block mt-1">✔ Excellent</span>
+                </div>
+                <div className="bg-white/5 rounded-2xl p-4 border border-white/10 text-center">
+                  <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">CRIF</span>
+                  <div className="text-3xl font-black text-emerald-400 mt-2">840</div>
+                  <span className="text-[10px] text-emerald-300 font-semibold block mt-1">✔ Excellent</span>
+                </div>
+              </div>
+              <div className="bg-white/5 rounded-xl p-3 border border-white/10 text-[10px] text-slate-300 font-medium mt-5 text-center">
+                🕒 Refresh Cycle: Updated every 15 days under RBI mandates.
+              </div>
+            </div>
+
+            {/* Why is CIBIL Score Important */}
             <div className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm">
-              <h3 className="text-lg font-bold text-slate-800 mb-4">How Credit Score Brackets Define Your Loan Approval Chances</h3>
-              <div className="overflow-x-auto">
+              <h3 className="text-lg font-bold text-slate-800 mb-2">Why is CIBIL Score Important?</h3>
+              <p className="text-sm text-slate-500 mb-6 leading-relaxed">
+                Your credit score is one of the first things that a Bank or NBFC will check while evaluating your loan or credit card application. It shows lenders whether you are reliable or risky in repayment of your EMIs or credit card outstanding.
+              </p>
+              <div className="space-y-4">
+                <div className="flex gap-4 items-start pb-4 border-b border-slate-50">
+                  <div className="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0 font-bold">%</div>
+                  <div>
+                    <h4 className="font-bold text-slate-800 text-sm">Lower Interest Rates</h4>
+                    <p className="text-slate-500 text-xs mt-0.5 leading-relaxed">Many lenders offer lower rate of interest on loans to applicants with a strong credit score (above 750).</p>
+                  </div>
+                </div>
+                <div className="flex gap-4 items-start pb-4 border-b border-slate-50">
+                  <div className="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0 font-bold">✔</div>
+                  <div>
+                    <h4 className="font-bold text-slate-800 text-sm">Higher Loan Limits</h4>
+                    <p className="text-slate-500 text-xs mt-0.5 leading-relaxed">The higher your credit score, the more likely lenders are to approve you for larger credit limits.</p>
+                  </div>
+                </div>
+                <div className="flex gap-4 items-start">
+                  <div className="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0 font-bold">📄</div>
+                  <div>
+                    <h4 className="font-bold text-slate-800 text-sm">Quick Processing</h4>
+                    <p className="text-slate-500 text-xs mt-0.5 leading-relaxed">CIBIL Scores of 760 and above trigger pre-approved paperless offers cleared within seconds.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Reasons for a low credit score */}
+            <div className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm">
+              <h3 className="text-lg font-bold text-slate-800 mb-4">Reasons for a Low Credit Score</h3>
+              <p className="text-sm text-slate-500 mb-6 leading-relaxed">Some of the main factors that can lower your CIBIL score significantly are:</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm font-semibold">
+                <div className="bg-rose-50/50 p-4 border border-rose-100 rounded-xl flex gap-3 text-rose-800">
+                  <span className="text-rose-600">✖</span>
+                  Missed or late payments of credit cards and loan EMIs
+                </div>
+                <div className="bg-rose-50/50 p-4 border border-rose-100 rounded-xl flex gap-3 text-rose-800">
+                  <span className="text-rose-600">✖</span>
+                  Maxing out limits regularly (High Credit Utilisation Ratio)
+                </div>
+                <div className="bg-rose-50/50 p-4 border border-rose-100 rounded-xl flex gap-3 text-rose-800">
+                  <span className="text-rose-600">✖</span>
+                  Errors in your credit report or bureau duplicate logs
+                </div>
+                <div className="bg-rose-50/50 p-4 border border-rose-100 rounded-xl flex gap-3 text-rose-800">
+                  <span className="text-rose-600">✖</span>
+                  Too many simultaneous hard inquiries from multiple banks
+                </div>
+              </div>
+            </div>
+
+            {/* Interactive Credit Score Range and Meaning Table */}
+            <div className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm">
+              <h3 className="text-lg font-bold text-slate-800 mb-2">Credit Score Range and Meaning</h3>
+              <p className="text-sm text-slate-500 mb-6 leading-relaxed">
+                Your credit score ranges from 300 to 900, where the score closer to 900 is considered better for credit approval.
+              </p>
+              
+              <div className="overflow-x-auto mt-4">
                 <table className="w-full text-left border-collapse text-xs sm:text-sm">
                   <thead>
                     <tr className="bg-slate-50 border-b border-slate-100">
-                      <th className="p-3 font-semibold text-slate-700">CIBIL Score</th>
-                      <th className="p-3 font-semibold text-slate-700">Grade Rating</th>
-                      <th className="p-3 font-semibold text-slate-700">Approval Likelihood</th>
-                      <th className="p-3 font-semibold text-slate-700">Impact on Interest Rates</th>
+                      <th className="p-3 font-semibold text-slate-700">Score Range</th>
+                      <th className="p-3 font-semibold text-slate-700">Creditworthiness</th>
+                      <th className="p-3 font-semibold text-slate-700">Chances of Approval</th>
+                      <th className="p-3 font-semibold text-slate-700">Pre-approved Offers</th>
+                      <th className="p-3 font-semibold text-slate-700">Action Required</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr className="border-b border-slate-100 hover:bg-slate-50/50">
-                      <td className="p-3 font-bold text-emerald-600">750 - 900</td>
-                      <td className="p-3"><span className="bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded font-medium text-xs">Excellent</span></td>
-                      <td className="p-3 font-medium text-slate-700">95% (Instant Approval)</td>
-                      <td className="p-3 text-slate-500">Lowest rate packages available</td>
+                    <tr className="border-b border-slate-100">
+                      <td className="p-3 font-bold text-slate-800">801 - 900</td>
+                      <td className="p-3 font-medium text-emerald-600">✔ Yes</td>
+                      <td className="p-3 font-medium text-emerald-600">✔ Yes</td>
+                      <td className="p-3 font-medium text-emerald-600">✔ Yes</td>
+                      <td className="p-3 text-slate-400">✖ No</td>
                     </tr>
-                    <tr className="border-b border-slate-100 hover:bg-slate-50/50">
-                      <td className="p-3 font-bold text-teal-600">700 - 749</td>
-                      <td className="p-3"><span className="bg-teal-50 text-teal-700 px-2 py-0.5 rounded font-medium text-xs">Good</span></td>
-                      <td className="p-3 font-medium text-slate-700">80% Approval Chance</td>
-                      <td className="p-3 text-slate-500">Standard market interest rates</td>
+                    <tr className="border-b border-slate-100">
+                      <td className="p-3 font-bold text-slate-800">761 - 800</td>
+                      <td className="p-3 font-medium text-emerald-600">✔ Yes</td>
+                      <td className="p-3 font-medium text-emerald-600">✔ Yes</td>
+                      <td className="p-3 font-medium text-emerald-600">✔ Yes</td>
+                      <td className="p-3 text-amber-600 font-semibold">⚠ Attention</td>
                     </tr>
-                    <tr className="border-b border-slate-100 hover:bg-slate-50/50">
-                      <td className="p-3 font-bold text-amber-600">650 - 699</td>
-                      <td className="p-3"><span className="bg-amber-50 text-amber-700 px-2 py-0.5 rounded font-medium text-xs">Average</span></td>
-                      <td className="p-3 font-medium text-slate-700">50% Approval Chance</td>
-                      <td className="p-3 text-slate-500">Higher interest rates; extra collateral required</td>
+                    <tr className="border-b border-slate-100">
+                      <td className="p-3 font-bold text-slate-800">701 - 760</td>
+                      <td className="p-3 text-amber-600 font-semibold">⚠ Attention</td>
+                      <td className="p-3 text-amber-600 font-semibold">⚠ Attention</td>
+                      <td className="p-3 text-amber-600 font-semibold">⚠ Attention</td>
+                      <td className="p-3 text-amber-600 font-semibold">⚠ Attention</td>
                     </tr>
-                    <tr className="hover:bg-slate-50/50">
-                      <td className="p-3 font-bold text-rose-600">300 - 649</td>
-                      <td className="p-3"><span className="bg-rose-50 text-rose-700 px-2 py-0.5 rounded font-medium text-xs">Poor</span></td>
-                      <td className="p-3 font-medium text-slate-700">Very Low (&lt;10% approval)</td>
-                      <td className="p-3 text-slate-500">Highly prone to loan rejection</td>
+                    <tr className="border-b border-slate-100">
+                      <td className="p-3 font-bold text-slate-800">601 - 700</td>
+                      <td className="p-3 text-rose-600 font-bold">✖ No</td>
+                      <td className="p-3 text-amber-600 font-semibold">⚠ Attention</td>
+                      <td className="p-3 text-rose-600 font-bold">✖ No</td>
+                      <td className="p-3 font-medium text-emerald-600">✔ Yes</td>
+                    </tr>
+                    <tr>
+                      <td className="p-3 font-bold text-slate-800">300 - 600</td>
+                      <td className="p-3 text-rose-600 font-bold">✖ No</td>
+                      <td className="p-3 text-rose-600 font-bold">✖ No</td>
+                      <td className="p-3 text-rose-600 font-bold">✖ No</td>
+                      <td className="p-3 font-medium text-emerald-600">✔ Yes</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
             </div>
 
-            {/* Deep-Dive: Anatomy of a CIBIL Report */}
+            {/* How is Credit Score Calculated */}
             <div className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm">
               <h3 className="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
-                <Info className="w-5 h-5 text-indigo-600" />
-                Anatomy of a CIBIL Report: Key Sections Decoded
+                <BookOpen className="w-5.5 h-5.5 text-blue-600" />
+                How is Credit Score Calculated?
               </h3>
-              <p className="text-sm text-slate-600 leading-relaxed mb-4">
-                When you download your credit report, it will contain complex financial terminologies. Here is what each section represents in plain English:
+              <p className="text-sm text-slate-500 mb-6 leading-relaxed font-medium">
+                Your credit score depends on several factors that the credit bureaus take into consideration. These factors depict your past credit behaviour:
               </p>
-              <div className="space-y-3 mt-4 text-xs sm:text-sm text-slate-600">
-                <p>
-                  <strong>1. Control Number (CN):</strong> This is a unique 9-digit number generated by CIBIL every time a bank fetches your credit report. It serves as CIBIL's reference key if you raise disputes against errors.
-                </p>
-                <p>
-                  <strong>2. Personal Information:</strong> Contains your full name, date of birth, gender, PAN number, Passport details, or Aadhaar numbers reported by lenders.
-                </p>
-                <p>
-                  <strong>3. Contact Information:</strong> Lists up to 4 addresses (residence and office), mobile numbers, and email addresses provided during previous loan applications.
-                </p>
-                <p>
-                  <strong>4. Employment Information:</strong> Indicates your occupation (salaried or self-employed) and the monthly/annual income declared during credit requests.
-                </p>
-                <p>
-                  <strong>5. Account Information (Most Critical):</strong> Detailed logs of every active and closed loan or credit card in your name. It displays the lender's name, loan type, open date, loan amount, outstanding balance, credit limit, and a month-on-month payment history matrix for up to 36 months.
-                </p>
-                <p>
-                  <strong>6. Enquiry Information:</strong> Logs of every 'Hard Inquiry' conducted by lenders when you applied for fresh credit.
-                </p>
+              
+              <div className="space-y-4">
+                <div className="border border-slate-100 p-4 rounded-xl">
+                  <strong className="text-slate-800 text-sm block">Repayment History (High Impact - 35%)</strong>
+                  <p className="text-xs text-slate-500 mt-1 leading-relaxed">Timely payments boost your score, whereas defaulting on EMIs or card bills severely drops it.</p>
+                </div>
+                <div className="border border-slate-100 p-4 rounded-xl">
+                  <strong className="text-slate-800 text-sm block">Credit Utilization (Moderate Impact - 30%)</strong>
+                  <p className="text-xs text-slate-500 mt-1 leading-relaxed">The ratio of limit spent. Maintain strictly below 30% of your maximum revolving bounds.</p>
+                </div>
+                <div className="border border-slate-100 p-4 rounded-xl">
+                  <strong className="text-slate-800 text-sm block">Duration of Credit History (Moderate Impact - 25%)</strong>
+                  <p className="text-xs text-slate-500 mt-1 leading-relaxed">Age of credit history. A longer stable repayment period signals reliability.</p>
+                </div>
+                <div className="border border-slate-100 p-4 rounded-xl">
+                  <strong className="text-slate-800 text-sm block">Recent Hard Inquiries & Credit Mix (10%)</strong>
+                  <p className="text-xs text-slate-500 mt-1 leading-relaxed">Spike in simultaneous applications dropped scores; balanced credit mix improves ratings.</p>
+                </div>
               </div>
             </div>
 
-            {/* Key factors influencing CIBIL score */}
+            {/* Technology Innovations Preview */}
             <div className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm">
-              <h3 className="text-lg font-bold text-slate-800 mb-6">Key Components Found inside your CIBIL Report</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                
-                <div className="border border-slate-100 rounded-xl p-4 flex gap-3 hover:border-blue-100 transition-colors">
-                  <div className="w-8 h-8 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <Check className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-slate-800 text-sm">Payment History (35%)</h4>
-                    <p className="text-slate-500 text-xs mt-1 leading-relaxed">
-                      Tracks if you pay bills on time. A single payment delay can drag your rating down significantly.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="border border-slate-100 rounded-xl p-4 flex gap-3 hover:border-blue-100 transition-colors">
-                  <div className="w-8 h-8 bg-indigo-50 text-indigo-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <Check className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-slate-800 text-sm">Credit Utilization Ratio (30%)</h4>
-                    <p className="text-slate-500 text-xs mt-1 leading-relaxed">
-                      Measures how much credit limit you consume. Maintain utilization strictly below 30%.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="border border-slate-100 rounded-xl p-4 flex gap-3 hover:border-blue-100 transition-colors">
-                  <div className="w-8 h-8 bg-amber-50 text-amber-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <Star className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-slate-800 text-sm">Credit Age & Mix (25%)</h4>
-                    <p className="text-slate-500 text-xs mt-1 leading-relaxed">
-                      A healthy mix of secured loans (home/car) and unsecured loans (credit cards) increases trust.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="border border-slate-100 rounded-xl p-4 flex gap-3 hover:border-blue-100 transition-colors">
-                  <div className="w-8 h-8 bg-rose-50 text-rose-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <ShieldAlert className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-slate-800 text-sm">Recent Hard Inquiries (10%)</h4>
-                    <p className="text-slate-500 text-xs mt-1 leading-relaxed">
-                      Too many simultaneous loan applications imply desperation, dropping your score.
-                    </p>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-
-            {/* DPD Codes Explained */}
-            <div className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm">
-              <h3 className="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
-                <AlertCircle className="w-5 h-5 text-rose-600" />
-                Decoding CIBIL DPD Codes: What They Represent
+              <h3 className="text-lg font-bold text-slate-800 mb-6 flex items-center gap-2">
+                <Sparkles className="w-5.5 h-5.5 text-blue-600" />
+                Innovative Technology led Credit Health Tools
               </h3>
-              <p className="text-sm text-slate-600 leading-relaxed mb-4">
-                The **Days Past Due (DPD)** column in the Account Information section represents the number of days you delayed paying a specific installment. Understanding these codes is essential:
-              </p>
-              <div className="overflow-x-auto mt-4">
-                <table className="w-full text-left border-collapse text-xs">
-                  <thead>
-                    <tr className="bg-slate-50 border-b border-slate-100">
-                      <th className="p-3 font-semibold text-slate-700">DPD Code</th>
-                      <th className="p-3 font-semibold text-slate-700">Detailed Meaning</th>
-                      <th className="p-3 font-semibold text-slate-700">Impact on Credit Score</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr className="border-b border-slate-100">
-                      <td className="p-3 font-bold text-slate-800">"000" or "STD"</td>
-                      <td className="p-3 text-slate-600">Standard Account. Paid within due dates.</td>
-                      <td className="p-3 text-emerald-600 font-semibold">Positive (Boosts Score)</td>
-                    </tr>
-                    <tr className="border-b border-slate-100">
-                      <td className="p-3 font-bold text-slate-800">"030" / "060" / "090"</td>
-                      <td className="p-3 text-slate-600">Payment delayed by 30 / 60 / 90 days.</td>
-                      <td className="p-3 text-amber-600 font-semibold">Negative (Drops Score)</td>
-                    </tr>
-                    <tr className="border-b border-slate-100">
-                      <td className="p-3 font-bold text-slate-800">"SUB"</td>
-                      <td className="p-3 text-slate-600">Substandard Account. Defaulted past 90 days.</td>
-                      <td className="p-3 text-rose-600 font-semibold">Severe Drop</td>
-                    </tr>
-                    <tr className="border-b border-slate-100">
-                      <td className="p-3 font-bold text-slate-800">"DBT"</td>
-                      <td className="p-3 text-slate-600">Doubtful Account. Unpaid past 12 months.</td>
-                      <td className="p-3 text-rose-700 font-bold">Catastrophic Drop</td>
-                    </tr>
-                    <tr className="border-b border-slate-100">
-                      <td className="p-3 font-bold text-slate-800">"LSS"</td>
-                      <td className="p-3 text-slate-600">Loss Account. Bank marked loan as unrecoverable.</td>
-                      <td className="p-3 text-rose-800 font-black">Permanent Red Flag</td>
-                    </tr>
-                  </tbody>
-                </table>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="border border-slate-100 p-5 rounded-2xl text-center group hover:border-blue-100 transition-colors">
+                  <div className="w-10 h-10 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-3">
+                    <Play className="w-5 h-5" />
+                  </div>
+                  <h4 className="font-bold text-slate-800 text-sm">Video Credit Report</h4>
+                  <p className="text-slate-500 text-xs mt-2 leading-relaxed">Your credit report explained in a personalized, easy video.</p>
+                </div>
+                <div className="border border-slate-100 p-5 rounded-2xl text-center group hover:border-blue-100 transition-colors">
+                  <div className="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-3">
+                    <TrendingUp className="w-5 h-5" />
+                  </div>
+                  <h4 className="font-bold text-slate-800 text-sm">Score Predictor</h4>
+                  <p className="text-slate-500 text-xs mt-2 leading-relaxed">See how various payment actions will impact your score.</p>
+                </div>
+                <div className="border border-slate-100 p-5 rounded-2xl text-center group hover:border-blue-100 transition-colors">
+                  <div className="w-10 h-10 bg-purple-50 text-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-3">
+                    <MessageSquare className="w-5 h-5" />
+                  </div>
+                  <h4 className="font-bold text-slate-800 text-sm">PB Assist AI</h4>
+                  <p className="text-slate-500 text-xs mt-2 leading-relaxed">Get deep, automated credit tips from our trained AI advisor.</p>
+                </div>
               </div>
             </div>
 
-            {/* Detailed Accordion FAQ Section */}
+            {/* Testimonials */}
+            <div className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm">
+              <h3 className="text-lg font-bold text-slate-800 mb-6 flex items-center gap-2">
+                <Star className="w-5 h-5 text-amber-500 fill-amber-500" />
+                What Our Customers Say
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {testimonials.map((t, idx) => (
+                  <div key={idx} className="bg-slate-50 p-5 rounded-2xl border border-slate-100">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-9 h-9 bg-blue-100 text-blue-700 font-bold rounded-full flex items-center justify-center text-xs">
+                        {t.avatar}
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-slate-800 text-xs">{t.name}</h4>
+                        <span className="text-[10px] text-slate-400 font-semibold">{t.location} • {t.date}</span>
+                      </div>
+                    </div>
+                    <p className="text-slate-600 text-xs leading-relaxed font-medium italic">
+                      "{t.quote}"
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Credit Score Articles */}
+            <div className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm">
+              <h3 className="text-lg font-bold text-slate-800 mb-6">Credit Score Articles & Guides</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {articles.map((art, idx) => (
+                  <div key={idx} className="border border-slate-100 p-4 rounded-xl hover:border-blue-100 transition-colors cursor-pointer flex justify-between items-center group">
+                    <div>
+                      <h4 className="font-bold text-slate-800 text-xs group-hover:text-blue-600 transition-colors leading-relaxed">
+                        {art.title}
+                      </h4>
+                      <div className="flex gap-2 text-[10px] text-slate-400 font-semibold mt-2">
+                        <span>By {art.author}</span>
+                        <span>•</span>
+                        <span>{art.date}</span>
+                      </div>
+                    </div>
+                    <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600 group-hover:translate-x-1 transition-all flex-shrink-0" />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* FAQs */}
             <div className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm">
               <h3 className="text-lg font-bold text-slate-800 mb-6 flex items-center gap-2">
                 <HelpCircle className="w-5 h-5 text-blue-600" />
