@@ -115,6 +115,34 @@ const Header: React.FC<HeaderProps> = ({ openApplyModal, openEligibilityModal, o
       ]
     },
     {
+      name: 'Calculators',
+      href: '/calculators',
+      icon: FileText,
+      submenu: [
+        // Investment Calculators
+        { name: 'Fixed Deposit Calculator', href: '/calculators/investment/fixed-deposit' },
+        { name: 'GST Calculator', href: '/calculators/investment/gst' },
+        { name: 'Mutual Fund Calculator', href: '/calculators/investment/mutual-fund' },
+        { name: 'NPS Calculator', href: '/calculators/investment/nps' },
+        { name: 'Post Office FD Calculator', href: '/calculators/investment/post-office-fd' },
+        { name: 'SIP Calculator', href: '/calculators/investment/sip' },
+        // Loan EMI Calculators
+        { name: 'Personal Loan EMI Calculator', href: '/calculators/loan/personal-loan-emi' },
+        { name: 'Home Loan EMI Calculator', href: '/calculators/loan/home-loan-emi' },
+        { name: 'Business Loan EMI Calculator', href: '/calculators/loan/business-loan-emi' },
+        { name: 'Loan Against Property EMI Calculator', href: '/calculators/loan/loan-against-property-emi' },
+        { name: 'Gold Loan EMI Calculator', href: '/calculators/loan/gold-loan-emi' },
+        { name: 'Term Loan EMI Calculator', href: '/calculators/loan/term-loan-emi' },
+        { name: 'Tractor Loan EMI Calculator', href: '/calculators/loan/tractor-loan-emi' },
+        { name: 'Mudra Loan EMI Calculator', href: '/calculators/loan/mudra-loan-emi' },
+        // Loan Eligibility Calculators
+        { name: 'Personal Loan Eligibility Calculator', href: '/calculators/eligibility/personal-loan-eligibility' },
+        { name: 'Home Loan Eligibility Calculator', href: '/calculators/eligibility/home-loan-eligibility' },
+        { name: 'Home Loan Prepayment Calculator', href: '/calculators/prepayment/home-loan-prepayment' },
+        { name: 'Personal Loan Prepayment Calculator', href: '/calculators/prepayment/personal-loan-prepayment' },
+      ]
+    },
+    {
       name: 'Insurance',
       href: '/insurance',
       icon: BadgeInfo,
@@ -433,6 +461,73 @@ const Header: React.FC<HeaderProps> = ({ openApplyModal, openEligibilityModal, o
                           </h4>
                           <div className="flex flex-col gap-3 text-[13px] font-semibold text-slate-600">
                             {item.submenu.slice(16).map((sub) => (
+                              <Link
+                                key={sub.name}
+                                to={sub.href}
+                                className="hover:text-blue-600 transition-colors"
+                              >
+                                {sub.name}
+                              </Link>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ) : item.name === 'Calculators' ? (
+                    <div className="absolute top-[90%] left-1/2 -translate-x-[50%] w-[960px] bg-white rounded-2xl shadow-2xl border border-slate-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-1 group-hover:translate-y-0 z-50 p-6 overflow-hidden">
+                      <div className="grid grid-cols-3 gap-8">
+                        {/* Column 1: Investment Calculators */}
+                        <div>
+                          <h4 className="font-bold text-xs uppercase tracking-wide text-blue-600 mb-4 flex items-center gap-2">
+                            <span className="p-1.5 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center">
+                              <TrendingUp className="w-4 h-4" />
+                            </span>
+                            Investment Calculators
+                          </h4>
+                          <div className="flex flex-col gap-3 text-[13px] font-semibold text-slate-600">
+                            {item.submenu.slice(0, 6).map((sub) => (
+                              <Link
+                                key={sub.name}
+                                to={sub.href}
+                                className="hover:text-blue-600 transition-colors"
+                              >
+                                {sub.name}
+                              </Link>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Column 2: Loan EMI Calculators */}
+                        <div>
+                          <h4 className="font-bold text-xs uppercase tracking-wide text-blue-600 mb-4 flex items-center gap-2">
+                            <span className="p-1.5 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center">
+                              <CreditCard className="w-4 h-4" />
+                            </span>
+                            Loan EMI Calculators
+                          </h4>
+                          <div className="flex flex-col gap-3 text-[13px] font-semibold text-slate-600">
+                            {item.submenu.slice(6, 14).map((sub) => (
+                              <Link
+                                key={sub.name}
+                                to={sub.href}
+                                className="hover:text-blue-600 transition-colors"
+                              >
+                                {sub.name}
+                              </Link>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Column 3: Loan Eligibility Calculators */}
+                        <div>
+                          <h4 className="font-bold text-xs uppercase tracking-wide text-blue-600 mb-4 flex items-center gap-2">
+                            <span className="p-1.5 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center">
+                              <Gauge className="w-4 h-4" />
+                            </span>
+                            Loan Eligibility Calculators
+                          </h4>
+                          <div className="flex flex-col gap-3 text-[13px] font-semibold text-slate-600">
+                            {item.submenu.slice(14).map((sub) => (
                               <Link
                                 key={sub.name}
                                 to={sub.href}

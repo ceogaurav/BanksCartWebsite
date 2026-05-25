@@ -547,6 +547,34 @@ export default function SEOManager() {
     }
   }
 
+  // 2.8 Check for dynamic calculator sub-paths
+  if (!meta && pathname.startsWith('/calculators/')) {
+    const parts = pathname.replace('/calculators/', '').split('/');
+    if (parts.length >= 2) {
+      const categoryType = parts[0];
+      const subSlug = parts[1];
+      
+      const cleanCategory = categoryType === 'loan' ? 'Loan EMI' : categoryType === 'eligibility' ? 'Loan Eligibility' : 'Investment';
+      const cleanSlug = subSlug
+        .split('-')
+        .map(word => {
+          if (word.toUpperCase() === 'EMI') return 'EMI';
+          if (word.toUpperCase() === 'FD') return 'FD';
+          if (word.toUpperCase() === 'GST') return 'GST';
+          if (word.toUpperCase() === 'SIP') return 'SIP';
+          if (word.toUpperCase() === 'NPS') return 'NPS';
+          return word.charAt(0).toUpperCase() + word.slice(1);
+        })
+        .join(' ');
+        
+      meta = {
+        title: `${cleanSlug} Calculator: Calculate Instantly | BanksCart`,
+        description: `Use the free interactive online ${cleanSlug} Calculator to estimate principal deposits, monthly EMIs, and compounding yields instantly.`,
+        keywords: `${subSlug}, ${cleanSlug} online, free calculator, bankscart calculators`
+      };
+    }
+  }
+
   // 3. Fallback to default if still not found
   if (!meta) {
     // Skip dynamic sanity blogs since BlogPost.tsx renders its own Helmet
