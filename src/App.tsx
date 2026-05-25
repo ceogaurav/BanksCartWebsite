@@ -119,6 +119,11 @@ import DynamicCreditCardPage from './pages/cards/DynamicCreditCardPage';
 import DynamicInvestmentPage from './pages/investment/DynamicInvestmentPage';
 import DynamicCalculatorPage from './pages/calculators/DynamicCalculatorPage';
 import DynamicRechargePage from './pages/recharge/DynamicRechargePage';
+import DynamicAadharCardPage from './pages/aadhar/DynamicAadharCardPage';
+import DynamicBusinessLoanPage from './pages/business/DynamicBusinessLoanPage';
+import DynamicTaxPage from './pages/tax/DynamicTaxPage';
+import DynamicDebitCardPage from './pages/cards/DynamicDebitCardPage';
+import DynamicSalaryPage from './pages/salary/DynamicSalaryPage';
 
 
 
@@ -350,6 +355,19 @@ const App: React.FC = () => {
                 <Route path="/investment/:type/:subPath" element={<DynamicInvestmentPage />} />
                 <Route path="/calculators/:category/:subPath" element={<DynamicCalculatorPage />} />
                 <Route path="/recharge/:subPath" element={<DynamicRechargePage />} />
+                <Route path="/aadhar-card" element={<DynamicAadharCardPage />} />
+                <Route path="/aadhar-card/:subPath" element={<DynamicAadharCardPage />} />
+                <Route path="/business-loan/:subPath" element={<DynamicBusinessLoanPage />} />
+                <Route path="/tax/:subPath" element={<DynamicTaxPage />} />
+                <Route path="/debit-card/:subPath" element={<DynamicDebitCardPage />} />
+                <Route path="/salary/:subPath" element={<DynamicSalaryPage />} />
+                <Route path="/bonds/:subPath" element={<DynamicInvestmentPage />} />
+                <Route path="/mutual-funds/:subPath" element={<DynamicInvestmentPage />} />
+                <Route path="/personal-loan/:subPath" element={<DynamicPersonalLoanPage />} />
+                <Route path="/credit-card/:subPath" element={<DynamicCreditCardPage />} />
+                <Route path="/hdfc-bank/:subPath" element={<DynamicCreditCardPage />} />
+                <Route path="/cibil/:subPath" element={<DynamicPersonalLoanPage />} />
+                <Route path="/6-key-insights-know-pre-approved-personal-loans" element={<DynamicPersonalLoanPage />} />
                 <Route path="/expert-advice" element={<ExpertAdvicePage openApplyModal={openApplyModal} />} />
 
                 {/* Insurance product specific routes */}

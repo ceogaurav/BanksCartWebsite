@@ -1,13 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { HelpCircle, ChevronDown, Check, Star, ShieldAlert, Sparkles, BookOpen, AlertCircle, Info, Landmark, Percent, Award, ShieldCheck, ArrowRight, Play, MessageSquare, TrendingUp, CreditCard } from 'lucide-react';
 import CibilCheckerForm from '../../components/common/CibilCheckerForm';
 import { INVESTMENT_PAGE_MAP, InvestmentPageContent, InvestmentRecommendRow } from '../../data/investmentPageData';
 
 const DynamicInvestmentPage: React.FC = () => {
-  const { type, subPath } = useParams<{ type: string; subPath: string }>();
+  const { type: paramType, subPath } = useParams<{ type: string; subPath: string }>();
   const navigate = useNavigate();
+  const location = useLocation();
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
+
+  // Extract type from pathname if not provided in params (supports flat URLs)
+  let type = paramType;
+  if (!type) {
+    if (location.pathname.startsWith('/bonds/')) {
+      type = 'bonds';
+    } else if (location.pathname.startsWith('/mutual-funds/')) {
+      type = 'mutual-funds';
+    } else {
+      type = 'mutual-funds';
+    }
+  }
 
   // Helper to convert slug/subPath to a readable title
   const formatSlug = (slug: string) => {

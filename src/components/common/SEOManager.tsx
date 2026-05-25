@@ -593,6 +593,164 @@ export default function SEOManager() {
     };
   }
 
+  // 2.95 Check for dynamic Aadhaar, Business, Tax, Debit, Salary and flat paths
+  if (!meta && (pathname.startsWith('/aadhar-card/') || pathname === '/aadhar-card')) {
+    const subSlug = pathname.replace('/aadhar-card/', '').replace('/aadhar-card', '');
+    const cleanName = !subSlug ? 'Aadhaar Card Portal' : subSlug
+      .split('-')
+      .map(word => {
+        if (word === 'in' || word === 'of' || word === 'for' || word === 'and') return word;
+        return word.charAt(0).toUpperCase() + word.slice(1);
+      })
+      .join(' ');
+    meta = {
+      title: `${cleanName}: UIDAI Services & Centres | BanksCart`,
+      description: `Complete guide on ${cleanName}. Access secure mock verification tools, download PDF copies, check live status updates, and locate permanent Seva Kendras.`,
+      keywords: `${subSlug || 'aadhaar'}, ${cleanName} online, uidai services, check aadhaar status`
+    };
+  }
+
+  if (!meta && pathname.startsWith('/business-loan/')) {
+    const subSlug = pathname.replace('/business-loan/', '');
+    const cleanName = subSlug
+      .split('-')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+    meta = {
+      title: `${cleanName}: Compare Collateral-Free Rates | BanksCart`,
+      description: `Get quick finance details on ${cleanName}. Compare interest rates, processing fees, MSME options, and verify eligibility for rapid disbursals.`,
+      keywords: `${subSlug}, ${cleanName} online, collateral free business loan, startup finance`
+    };
+  }
+
+  if (!meta && pathname.startsWith('/tax/')) {
+    const subSlug = pathname.replace('/tax/', '');
+    const cleanName = subSlug
+      .split('-')
+      .map(word => {
+        if (word.toUpperCase() === 'GST') return 'GST';
+        return word.charAt(0).toUpperCase() + word.slice(1);
+      })
+      .join(' ');
+    meta = {
+      title: `${cleanName}: GST Council Resolutions & Slabs | BanksCart`,
+      description: `Read official policy decisions, rate changes, compliance calendars, and checklists for ${cleanName} on BanksCart.`,
+      keywords: `${subSlug}, ${cleanName} resolutions, gst rates chart, direct tax updates`
+    };
+  }
+
+  if (!meta && pathname.startsWith('/debit-card/')) {
+    const subSlug = pathname.replace('/debit-card/', '');
+    const cleanName = subSlug
+      .split('-')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+    meta = {
+      title: `${cleanName}: Compare Fees & Cashback | BanksCart`,
+      description: `Compare annual charges, lounge access entries, and reward multipliers for ${cleanName} side-by-side on BanksCart.`,
+      keywords: `${subSlug}, ${cleanName} online, premium debit cards, bank cashback card`
+    };
+  }
+
+  if (!meta && pathname.startsWith('/salary/')) {
+    const subSlug = pathname.replace('/salary/', '');
+    const cleanName = subSlug
+      .split('-')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+    meta = {
+      title: `${cleanName}: Pay Matrix Slabs & Allowances | BanksCart`,
+      description: `Examine the complete base pay grids, fitment factors, HRA tiers, and active DA rate trends for ${cleanName} on BanksCart.`,
+      keywords: `${subSlug}, ${cleanName} pay matrix, central government salary rates`
+    };
+  }
+
+  if (!meta && pathname.startsWith('/bonds/')) {
+    const subSlug = pathname.replace('/bonds/', '');
+    const cleanName = subSlug
+      .split('-')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+    meta = {
+      title: `${cleanName}: Compare Yields & Lock-In Tiers | BanksCart`,
+      description: `Explore fixed income payouts, AAA safety metrics, and trade details for ${cleanName} on BanksCart.`,
+      keywords: `${subSlug}, ${cleanName} bonds, best tax free bonds`
+    };
+  }
+
+  if (!meta && pathname.startsWith('/mutual-funds/')) {
+    const subSlug = pathname.replace('/mutual-funds/', '');
+    const cleanName = subSlug
+      .split('-')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+    meta = {
+      title: `${cleanName}: Top Mutual Fund Schemes & Yields | BanksCart`,
+      description: `Track historical returns, NAV values, direct plan expense ratios, and compound growths for ${cleanName}.`,
+      keywords: `${subSlug}, ${cleanName} mutual funds, invest in ${subSlug}`
+    };
+  }
+
+  if (!meta && pathname.startsWith('/personal-loan/')) {
+    const subSlug = pathname.replace('/personal-loan/', '');
+    const cleanName = subSlug
+      .split('-')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+    meta = {
+      title: `${cleanName}: Compare Personal Loan Rates | BanksCart`,
+      description: `Get quick details on ${cleanName}. Check base interest rates, processing drag, and verify eligibility for rapid disbursals.`,
+      keywords: `${subSlug}, ${cleanName} online, cheap personal loan, instant capital`
+    };
+  }
+
+  if (!meta && pathname.startsWith('/credit-card/')) {
+    const subSlug = pathname.replace('/credit-card/', '');
+    const cleanName = subSlug
+      .split('-')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+    meta = {
+      title: `${cleanName}: Compare Credit Card Reward Perks | BanksCart`,
+      description: `Analyze annual fees, retail cashbacks, lounge access entries, and reward details for ${cleanName} on BanksCart.`,
+      keywords: `${subSlug}, ${cleanName} online, best credit cards, apply card online`
+    };
+  }
+
+  if (!meta && pathname.startsWith('/hdfc-bank/')) {
+    const subSlug = pathname.replace('/hdfc-bank/', '');
+    const cleanName = subSlug
+      .split('-')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+    meta = {
+      title: `${cleanName}: HDFC Card Features & Applications | BanksCart`,
+      description: `Check annual maintenance fees, rewards percentages, and co-branded flight voucher offsets for ${cleanName} on BanksCart.`,
+      keywords: `${subSlug}, HDFC ${subSlug}, co-branded credit cards`
+    };
+  }
+
+  if (!meta && pathname.startsWith('/cibil/')) {
+    const subSlug = pathname.replace('/cibil/', '');
+    const cleanName = subSlug
+      .split('-')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+    meta = {
+      title: `${cleanName}: Tips for Pristine Credit Scores | BanksCart`,
+      description: `Discover step-by-step guidelines and actionable procedures to maintain a healthy CIBIL score above 750 for ${cleanName}.`,
+      keywords: `${subSlug}, ${cleanName} tips, restore low cibil score`
+    };
+  }
+
+  if (!meta && pathname === '/6-key-insights-know-pre-approved-personal-loans') {
+    meta = {
+      title: "6 Key Insights to Know Pre-Approved Personal Loans | BanksCart",
+      description: "Understand the core insights of invite-only pre-approved personal loans. Learn how they get instant 10-second payouts and require zero documents.",
+      keywords: "pre approved personal loan insights, instant personal loans, check pre approved limits"
+    };
+  }
+
   // 3. Fallback to default if still not found
   if (!meta) {
     // Skip dynamic sanity blogs since BlogPost.tsx renders its own Helmet
