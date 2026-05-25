@@ -190,28 +190,28 @@ const Header: React.FC<HeaderProps> = ({ openApplyModal, openEligibilityModal, o
 
   return (
     <header className="fixed top-0 w-full bg-white border-b border-slate-200 z-50 h-16 shadow-sm transition-all font-sans">
-      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 h-full">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-4 xl:px-6 2xl:px-8 h-full">
         <div className="flex justify-between items-center h-full">
           {/* 1. Logo Section */}
           <Link to="/" className="flex-shrink-0 flex items-center gap-2">
             <img
               src="/logos/bankscartlogof.jpg"
               alt="BanksCart"
-              className="h-9 w-auto object-contain"
+              className="h-8 xl:h-9 w-auto object-contain"
             />
           </Link>
 
           {/* 2. Navigation Links (Desktop) */}
-          <nav className="hidden lg:flex items-center gap-8">
+          <nav className="hidden lg:flex items-center gap-3 xl:gap-4 2xl:gap-6">
             {navigation.map((item) => (
               <div key={item.name} className="relative group h-full flex items-center cursor-pointer">
                 <div
-                  className={`flex items-center gap-1.5 text-sm font-medium transition-colors duration-200 ${isActive(item.href) ? 'text-blue-600' : 'text-slate-600 group-hover:text-blue-600'
+                  className={`flex items-center gap-1 text-[13px] 2xl:text-sm font-semibold whitespace-nowrap transition-colors duration-200 ${isActive(item.href) ? 'text-blue-600' : 'text-slate-600 group-hover:text-blue-600'
                     }`}
                 >
                   {item.name}
                   {item.submenu && (
-                    <ChevronDown className="w-3.5 h-3.5 transition-transform duration-200 group-hover:rotate-180 text-slate-400 group-hover:text-blue-600" />
+                    <ChevronDown className="w-3 h-3 transition-transform duration-200 group-hover:rotate-180 text-slate-400 group-hover:text-blue-600 flex-shrink-0" />
                   )}
                 </div>
 
@@ -599,13 +599,13 @@ const Header: React.FC<HeaderProps> = ({ openApplyModal, openEligibilityModal, o
           </nav>
 
           {/* 3. Action Buttons & Profile (Right) */}
-          <div className="hidden lg:flex items-center gap-4">
+          <div className="hidden lg:flex items-center gap-2 xl:gap-3 2xl:gap-4 flex-shrink-0">
 
             {/* Become Partner (Secondary) */}
             <div className="relative group">
               <button
                 onClick={openPartnerModal}
-                className="px-5 py-2.5 text-sm font-medium text-blue-700 bg-white border border-blue-200 rounded-full hover:bg-blue-50 transition-colors"
+                className="px-3 xl:px-4 2xl:px-5 py-2 text-xs xl:text-sm font-medium text-blue-700 bg-white border border-blue-200 rounded-full hover:bg-blue-50 transition-colors whitespace-nowrap"
               >
                 Become Partner
               </button>
@@ -618,30 +618,30 @@ const Header: React.FC<HeaderProps> = ({ openApplyModal, openEligibilityModal, o
             {/* Check Eligibility (Primary) */}
             <button
               onClick={() => openEligibilityModal()}
-              className="px-6 py-2.5 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-full shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200"
+              className="px-4 xl:px-5 2xl:px-6 py-2 text-xs xl:text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-full shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 whitespace-nowrap"
             >
               Check Eligibility
             </button>
 
             {/* User Profile or Sign In */}
-            <div className="pl-2 ml-2 border-l border-gray-200">
+            <div className="pl-1.5 xl:pl-2 ml-1 xl:ml-2 border-l border-gray-200">
               {currentUser ? (
                 <div className="relative group/profile">
-                  <button className="flex items-center gap-3 p-1 hover:bg-slate-50 rounded-full pr-3 transition-colors border border-transparent hover:border-slate-100 cursor-pointer">
-                    <div className="h-9 w-9 bg-blue-100 text-blue-700 rounded-full flex items-center justify-center font-bold text-sm">
+                  <button className="flex items-center gap-2 xl:gap-3 p-1 hover:bg-slate-50 rounded-full pr-2 xl:pr-3 transition-colors border border-transparent hover:border-slate-100 cursor-pointer whitespace-nowrap">
+                    <div className="h-8 w-8 xl:h-9 xl:w-9 bg-blue-100 text-blue-700 rounded-full flex items-center justify-center font-bold text-xs xl:text-sm flex-shrink-0">
                       {userData?.photoURL ? (
-                        <img src={userData.photoURL} alt="Profile" className="h-9 w-9 rounded-full object-cover" />
+                        <img src={userData.photoURL} alt="Profile" className="h-8 w-8 xl:h-9 xl:w-9 rounded-full object-cover" />
                       ) : (
                         userData?.fullName?.charAt(0) || currentUser?.email?.charAt(0) || 'U'
                       )}
                     </div>
                     <div className="flex flex-col items-start leading-none text-left">
-                      <span className="text-sm font-semibold text-slate-700 group-hover/profile:text-blue-700">
+                      <span className="text-xs xl:text-sm font-semibold text-slate-700 group-hover/profile:text-blue-700">
                         {userData?.fullName?.split(' ')[0] || currentUser?.displayName?.split(' ')[0] || 'User'}
                       </span>
-                      <span className="text-[10px] text-slate-500 font-medium uppercase tracking-wide">My Account</span>
+                      <span className="text-[9px] xl:text-[10px] text-slate-500 font-medium uppercase tracking-wide">My Account</span>
                     </div>
-                    <ChevronDown className="w-4 h-4 text-slate-400 group-hover/profile:text-blue-600 transition-transform duration-200 group-hover/profile:rotate-180" />
+                    <ChevronDown className="w-3.5 h-3.5 xl:w-4 xl:h-4 text-slate-400 group-hover/profile:text-blue-600 transition-transform duration-200 group-hover/profile:rotate-180 flex-shrink-0" />
                   </button>
 
                   {/* Profile Dropdown */}
@@ -667,7 +667,7 @@ const Header: React.FC<HeaderProps> = ({ openApplyModal, openEligibilityModal, o
               ) : (
                 <button
                   onClick={openLoginModal}
-                  className="text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded-full transition-colors shadow-sm"
+                  className="text-xs xl:text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 px-4 xl:px-6 py-2 rounded-full transition-colors shadow-sm whitespace-nowrap"
                 >
                   Sign In
                 </button>
