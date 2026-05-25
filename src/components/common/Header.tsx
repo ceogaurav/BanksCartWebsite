@@ -23,6 +23,7 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ openApplyModal, openEligibilityModal, openPartnerModal }) => {
   const { currentUser, openLoginModal, userData } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeLoanTab, setActiveLoanTab] = useState<'personal' | 'business' | 'home' | 'other'>('personal');
   const location = useLocation();
 
   const isActive = (path: string) => location.pathname.startsWith(path);
@@ -131,19 +132,180 @@ const Header: React.FC<HeaderProps> = ({ openApplyModal, openEligibilityModal, o
 
                 {/* Dropdown Menu */}
                 {item.submenu && (
-                  <div className="absolute top-[90%] left-0 w-64 bg-white rounded-lg shadow-xl border border-slate-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-1 group-hover:translate-y-0 z-50 p-2">
-                    <div className="flex flex-col gap-1">
-                      {item.submenu.map((sub) => (
-                        <Link
-                          key={sub.name}
-                          to={sub.href}
-                          className="px-4 py-2.5 text-sm text-slate-600 hover:bg-slate-50 hover:text-blue-600 rounded-md transition-colors font-medium flex justify-between items-center group/item"
-                        >
-                          {sub.name}
-                        </Link>
-                      ))}
+                  item.name === 'Loans' ? (
+                    <div className="absolute top-[90%] left-1/2 -translate-x-[40%] w-[840px] bg-white rounded-2xl shadow-2xl border border-slate-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-1 group-hover:translate-y-0 z-50 overflow-hidden">
+                      <div className="grid grid-cols-12 min-h-[460px]">
+                        {/* Left Sidebar categories */}
+                        <div className="col-span-4 bg-slate-50/50 p-4 border-r border-slate-100 flex flex-col gap-2">
+                          <button
+                            type="button"
+                            onMouseEnter={() => setActiveLoanTab('personal')}
+                            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left text-sm font-semibold transition-all ${
+                              activeLoanTab === 'personal'
+                                ? 'bg-blue-50 text-blue-600 border-l-4 border-blue-600 shadow-sm'
+                                : 'text-slate-600 hover:bg-slate-100'
+                            }`}
+                          >
+                            <span className="text-base">💰</span>
+                            Personal Loan
+                          </button>
+                          <button
+                            type="button"
+                            onMouseEnter={() => setActiveLoanTab('business')}
+                            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left text-sm font-semibold transition-all ${
+                              activeLoanTab === 'business'
+                                ? 'bg-blue-50 text-blue-600 border-l-4 border-blue-600 shadow-sm'
+                                : 'text-slate-600 hover:bg-slate-100'
+                            }`}
+                          >
+                            <span className="text-base">💼</span>
+                            Business Loan
+                          </button>
+                          <button
+                            type="button"
+                            onMouseEnter={() => setActiveLoanTab('home')}
+                            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left text-sm font-semibold transition-all ${
+                              activeLoanTab === 'home'
+                                ? 'bg-blue-50 text-blue-600 border-l-4 border-blue-600 shadow-sm'
+                                : 'text-slate-600 hover:bg-slate-100'
+                            }`}
+                          >
+                            <span className="text-base">🏠</span>
+                            Home Loan
+                          </button>
+                          <button
+                            type="button"
+                            onMouseEnter={() => setActiveLoanTab('other')}
+                            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left text-sm font-semibold transition-all ${
+                              activeLoanTab === 'other'
+                                ? 'bg-blue-50 text-blue-600 border-l-4 border-blue-600 shadow-sm'
+                                : 'text-slate-600 hover:bg-slate-100'
+                            }`}
+                          >
+                            <span className="text-base">💳</span>
+                            Other Loans
+                          </button>
+                        </div>
+
+                        {/* Right Detail content */}
+                        <div className="col-span-8 p-6 bg-white overflow-y-auto">
+                          {activeLoanTab === 'personal' && (
+                            <div className="grid grid-cols-2 gap-x-6 gap-y-6">
+                              <div>
+                                <h4 className="font-bold text-xs uppercase tracking-wide text-blue-600 mb-3 flex items-center gap-1.5">
+                                  <span>📄</span> Overview
+                                </h4>
+                                <div className="flex flex-col gap-2 text-xs font-semibold text-slate-600">
+                                  <Link to="/loans/personal/overview" className="hover:text-blue-600 transition-colors">Personal Loan</Link>
+                                  <Link to="/loans/personal/pre-approved" className="hover:text-blue-600 transition-colors">Pre Approved Personal Loan</Link>
+                                  <Link to="/loans/personal/interest-rates" className="hover:text-blue-600 transition-colors">Personal Loan Interest Rates</Link>
+                                  <Link to="/loans/personal/mobile-app" className="hover:text-blue-600 transition-colors">Personal Loan APP</Link>
+                                  <Link to="/loans/personal/low-cibil-score" className="hover:text-blue-600 transition-colors">Personal Loan Low CIBIL Score</Link>
+                                  <Link to="/loans/personal/balance-transfer" className="hover:text-blue-600 transition-colors">Personal Loan Balance Transfer</Link>
+                                  <Link to="/loans/personal/loan-on-credit-card" className="hover:text-blue-600 transition-colors">Loan on Credit Card</Link>
+                                </div>
+                              </div>
+
+                              <div>
+                                <h4 className="font-bold text-xs uppercase tracking-wide text-blue-600 mb-3 flex items-center gap-1.5">
+                                  <span>💵</span> By Amount
+                                </h4>
+                                <div className="flex flex-col gap-2 text-xs font-semibold text-slate-600">
+                                  <Link to="/loans/personal/5-lakh" className="hover:text-blue-600 transition-colors">5 Lakh Personal Loan</Link>
+                                  <Link to="/loans/personal/10-lakh" className="hover:text-blue-600 transition-colors">10 Lakh Personal Loan</Link>
+                                  <Link to="/loans/personal/20-lakh" className="hover:text-blue-600 transition-colors">20 Lakh Personal Loan</Link>
+                                  <Link to="/loans/personal/30-lakh" className="hover:text-blue-600 transition-colors">30 Lakh Personal Loan</Link>
+                                  <Link to="/loans/personal/40-lakh" className="hover:text-blue-600 transition-colors">40 Lakh Personal Loan</Link>
+                                  <Link to="/loans/personal/50-lakh" className="hover:text-blue-600 transition-colors">50 Lakh Personal Loan</Link>
+                                </div>
+                              </div>
+
+                              <div>
+                                <h4 className="font-bold text-xs uppercase tracking-wide text-blue-600 mb-3 flex items-center gap-1.5">
+                                  <span>👥</span> By Type
+                                </h4>
+                                <div className="flex flex-col gap-2 text-xs font-semibold text-slate-600">
+                                  <Link to="/loans/personal/salaried-employees" className="hover:text-blue-600 transition-colors">Loan for Salaried Employees</Link>
+                                  <Link to="/loans/personal/self-employed" className="hover:text-blue-600 transition-colors">Loan for Self Employed</Link>
+                                  <Link to="/loans/personal/senior-citizens" className="hover:text-blue-600 transition-colors">Loan For Senior Citizens</Link>
+                                  <Link to="/loans/personal/students" className="hover:text-blue-600 transition-colors">Loan for Students</Link>
+                                  <Link to="/loans/personal/doctors" className="hover:text-blue-600 transition-colors">Loan for Doctors</Link>
+                                  <Link to="/loans/personal/women" className="hover:text-blue-600 transition-colors">Loan for Women</Link>
+                                </div>
+                              </div>
+
+                              <div>
+                                <h4 className="font-bold text-xs uppercase tracking-wide text-blue-600 mb-3 flex items-center gap-1.5">
+                                  <span>🎯</span> By Need
+                                </h4>
+                                <div className="flex flex-col gap-2 text-xs font-semibold text-slate-600">
+                                  <Link to="/loans/personal/medical-loan" className="hover:text-blue-600 transition-colors">Medical Loan</Link>
+                                  <Link to="/loans/personal/travel-loan" className="hover:text-blue-600 transition-colors">Travel Loan</Link>
+                                  <Link to="/loans/personal/debt-consolidation" className="hover:text-blue-600 transition-colors">Debt Consolidation Loan</Link>
+                                  <Link to="/loans/personal/wedding-loan" className="hover:text-blue-600 transition-colors">Wedding Loan</Link>
+                                  <Link to="/loans/personal/overdraft-loan" className="hover:text-blue-600 transition-colors">Overdraft Loan</Link>
+                                  <Link to="/loans/personal/flexi-loan" className="hover:text-blue-600 transition-colors">Flexi Loan</Link>
+                                  <Link to="/loans/personal/short-term-loan" className="hover:text-blue-600 transition-colors">Short Term Loan</Link>
+                                  <Link to="/loans/personal/term-loan" className="hover:text-blue-600 transition-colors">Term Loan</Link>
+                                </div>
+                              </div>
+                            </div>
+                          )}
+
+                          {activeLoanTab === 'business' && (
+                            <div className="space-y-6">
+                              <h4 className="font-bold text-xs uppercase tracking-wide text-blue-600 mb-3">💼 Business Credit Products</h4>
+                              <div className="grid grid-cols-2 gap-4 text-xs font-semibold text-slate-600">
+                                <Link to="/loans/business" className="p-3 border border-slate-100 rounded-xl hover:border-blue-100 hover:text-blue-600 transition-all">Business Loan Overview</Link>
+                                <Link to="/loans/business" className="p-3 border border-slate-100 rounded-xl hover:border-blue-100 hover:text-blue-600 transition-all">MSME Secured Lending</Link>
+                                <Link to="/loans/business" className="p-3 border border-slate-100 rounded-xl hover:border-blue-100 hover:text-blue-600 transition-all">Equipment & Plant Finance</Link>
+                                <Link to="/loans/business" className="p-3 border border-slate-100 rounded-xl hover:border-blue-100 hover:text-blue-600 transition-all">Working Capital Lines</Link>
+                              </div>
+                            </div>
+                          )}
+
+                          {activeLoanTab === 'home' && (
+                            <div className="space-y-6">
+                              <h4 className="font-bold text-xs uppercase tracking-wide text-blue-600 mb-3">🏠 Home & Housing Finance</h4>
+                              <div className="grid grid-cols-2 gap-4 text-xs font-semibold text-slate-600">
+                                <Link to="/loans/home" className="p-3 border border-slate-100 rounded-xl hover:border-blue-100 hover:text-blue-600 transition-all">Home Loan Overview</Link>
+                                <Link to="/home-loan-compare" className="p-3 border border-slate-100 rounded-xl hover:border-blue-100 hover:text-blue-600 transition-all">Compare Home Loans</Link>
+                                <Link to="/plot-construction-loan" className="p-3 border border-slate-100 rounded-xl hover:border-blue-100 hover:text-blue-600 transition-all">Plot & Construction Loans</Link>
+                                <Link to="/home-loan-emi-calculator" className="p-3 border border-slate-100 rounded-xl hover:border-blue-100 hover:text-blue-600 transition-all">Home Loan EMI Calculator</Link>
+                              </div>
+                            </div>
+                          )}
+
+                          {activeLoanTab === 'other' && (
+                            <div className="space-y-6">
+                              <h4 className="font-bold text-xs uppercase tracking-wide text-blue-600 mb-3">💳 Consumer & Vehicle Loans</h4>
+                              <div className="grid grid-cols-2 gap-4 text-xs font-semibold text-slate-600">
+                                <Link to="/loans/education" className="p-3 border border-slate-100 rounded-xl hover:border-blue-100 hover:text-blue-600 transition-all">Education Loan</Link>
+                                <Link to="/loans/car" className="p-3 border border-slate-100 rounded-xl hover:border-blue-100 hover:text-blue-600 transition-all">Car Loan</Link>
+                                <Link to="/loans/used-car" className="p-3 border border-slate-100 rounded-xl hover:border-blue-100 hover:text-blue-600 transition-all">Used Car Loan</Link>
+                                <Link to="/loans/two-wheeler" className="p-3 border border-slate-100 rounded-xl hover:border-blue-100 hover:text-blue-600 transition-all">Two Wheeler Loan</Link>
+                                <Link to="/resources/gold-rates" className="p-3 border border-slate-100 rounded-xl hover:border-blue-100 hover:text-blue-600 transition-all">Gold Loan</Link>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </div>
                     </div>
-                  </div>
+                  ) : (
+                    <div className="absolute top-[90%] left-0 w-64 bg-white rounded-lg shadow-xl border border-slate-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-1 group-hover:translate-y-0 z-50 p-2">
+                      <div className="flex flex-col gap-1">
+                        {item.submenu.map((sub) => (
+                          <Link
+                            key={sub.name}
+                            to={sub.href}
+                            className="px-4 py-2.5 text-sm text-slate-600 hover:bg-slate-50 hover:text-blue-600 rounded-md transition-colors font-medium flex justify-between items-center group/item"
+                          >
+                            {sub.name}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  )
                 )}
               </div>
             ))}

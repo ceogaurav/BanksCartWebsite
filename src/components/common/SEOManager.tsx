@@ -498,6 +498,20 @@ export default function SEOManager() {
     }
   }
 
+  // 2.5 Check for dynamic personal loan sub-paths
+  if (!meta && pathname.startsWith('/loans/personal/')) {
+    const subSlug = pathname.replace('/loans/personal/', '');
+    const cleanName = subSlug
+      .split('-')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+    meta = {
+      title: `${cleanName}: Compare Interest Rates & Apply Online | BanksCart`,
+      description: `Get details on ${cleanName}. Compare interest rates, processing fees, dynamic terms, and verify eligibility for paperless approvals.`,
+      keywords: `${subSlug}, ${cleanName} online, apply ${subSlug}, cheap personal loan`
+    };
+  }
+
   // 3. Fallback to default if still not found
   if (!meta) {
     // Skip dynamic sanity blogs since BlogPost.tsx renders its own Helmet

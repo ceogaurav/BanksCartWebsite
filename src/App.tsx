@@ -109,6 +109,7 @@ import SbiCibilScorePage from './pages/cibil/SbiCibilScorePage';
 import WaysToImproveCibilPage from './pages/cibil/WaysToImproveCibilPage';
 import CibilScoreForPersonalLoanPage from './pages/cibil/CibilScoreForPersonalLoanPage';
 import ResolveCibilDisputePage from './pages/cibil/ResolveCibilDisputePage';
+import DynamicPersonalLoanPage from './pages/cibil/DynamicPersonalLoanPage';
 import InvestorRelations from './pages/legal/InvestorRelations';
 import Disclaimer from './pages/legal/Disclaimer';
 import IntellectualPolicy from './pages/legal/IntellectualPolicy';
@@ -340,6 +341,7 @@ const App: React.FC = () => {
                 <Route path="/credit-report/ways-to-improve-your-cibil-score" element={<WaysToImproveCibilPage />} />
                 <Route path="/credit-score/cibil-score-for-personal-loan" element={<CibilScoreForPersonalLoanPage />} />
                 <Route path="/cibil/how-to-resolve-cibil-dispute" element={<ResolveCibilDisputePage />} />
+                <Route path="/loans/personal/:subPath" element={<DynamicPersonalLoanPage />} />
                 <Route path="/expert-advice" element={<ExpertAdvicePage openApplyModal={openApplyModal} />} />
 
                 {/* Insurance product specific routes */}
