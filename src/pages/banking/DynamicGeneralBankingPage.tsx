@@ -4,6 +4,40 @@ import { HelpCircle, ChevronDown, Check, Star, ShieldAlert, Sparkles, BookOpen, 
 import CibilCheckerForm from '../../components/common/CibilCheckerForm';
 import { GENERAL_BANKING_PAGE_MAP, BankingPageContent } from '../../data/generalBankingPageData';
 
+interface EditorialArticle {
+  title: string;
+  content: string[];
+}
+
+const getBankingDetailedArticles = (slug: string, content: BankingPageContent): EditorialArticle[] => {
+  const formatSlug = (s: string) => s.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+  const readableName = formatSlug(slug);
+  
+  return [
+    {
+      title: `Understanding ${content.badge || readableName} in India's Capital Markets`,
+      content: [
+        `Securing optimal financial parameters under the broader spectrum of **${readableName}** is vital to ensure long-term wealth compounding and business liquidity. In a dynamically shifting credit landscape regulated closely by the Reserve Bank of India (RBI) and SEBI, retail borrowers and small-scale entrepreneurs must evaluate baseline rate matrices carefully before committing capital. ${content.intro}`,
+        `Modern commercial banking systems are structured to deliver rapid digital credit clearances while maintaining high solvency metrics. By comparing different interest rates, processing fees, and payment horizons side-by-side on BanksCart, you can align your investments with your personal or business cash flow requirements seamlessly.`
+      ]
+    },
+    {
+      title: `Key Advantages and Compounding Growth Potential`,
+      content: [
+        `When investing or borrowing under these financial portals, several key factors come into play. Standard savings or fixed-yield tools struggle to counter inflation, which is why active capital management is crucial. ${content.moreIntro || 'By leveraging structured credit structures, collateral-free loans, and subsidized interest schemes, individuals and micro-enterprises can multiply their yields and manage outstanding liabilities safely.'}`,
+        `For investment schemes, interest compounds dynamically, while debt products utilize reducing balance models. This guarantees that your monthly EMI or asset yield operates with the highest capital efficiency, protecting your hard-earned wealth from inflation traps.`
+      ]
+    },
+    {
+      title: `Strategic Tax Exemptions & Regulatory Trends (2026)`,
+      content: [
+        `Tax planning is a core pillar of capital management. Most government-backed savings plans qualify for high tax exemptions of up to ₹1.5 Lakhs under Section 80C, while maturity returns remain 100% tax-free under Section 10(10D). For listed commercial bonds and securities, long-term capital gains (LTCG) are taxed at highly efficient rates of just 12.5%.`,
+        `Furthermore, recent SEBI and CBDT guidelines for 2026 have introduced smaller denominations (as low as ₹10,000 for private corporate bonds) to encourage retail participation in the debt market, offering unparalleled security and flexible exit options for retail investors.`
+      ]
+    }
+  ];
+};
+
 const DynamicGeneralBankingPage: React.FC = () => {
   const { subPath } = useParams<{ subPath: string }>();
   const location = useLocation();
@@ -28,6 +62,7 @@ const DynamicGeneralBankingPage: React.FC = () => {
   }
 
   const pageContent = GENERAL_BANKING_PAGE_MAP[currentSlug] || GENERAL_BANKING_PAGE_MAP['accounts-payable'];
+  const detailedArticles = getBankingDetailedArticles(currentSlug, pageContent);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -65,9 +100,27 @@ const DynamicGeneralBankingPage: React.FC = () => {
             {/* More Intro if present */}
             {pageContent.moreIntro && (
               <div className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm">
-                <p className="text-sm text-slate-600 leading-relaxed font-sans font-medium">
+                <p className="text-sm text-slate-650 leading-relaxed font-sans font-medium">
                   {pageContent.moreIntro}
                 </p>
+              </div>
+            )}
+            {/* Detailed Editorial Sections - Rich Data like the Zero Coupon Bonds Sample */}
+            {detailedArticles.length > 0 && (
+              <div className="space-y-8">
+                {detailedArticles.map((art, idx) => (
+                  <div key={idx} className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm space-y-4 hover:shadow-md transition-shadow">
+                    <h3 className="text-xl font-bold text-slate-800 flex items-center gap-2 border-b border-slate-100 pb-3">
+                      <span className="w-1.5 h-6 bg-slate-700 rounded-full"></span>
+                      {art.title}
+                    </h3>
+                    {art.content.map((p, pIdx) => (
+                      <p key={pIdx} className="text-slate-650 text-sm leading-relaxed font-sans font-medium text-justify">
+                        {p}
+                      </p>
+                    ))}
+                  </div>
+                ))}
               </div>
             )}
 
