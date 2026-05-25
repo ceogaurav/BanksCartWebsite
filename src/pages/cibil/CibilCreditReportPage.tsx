@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { HelpCircle, ChevronDown, Check, Star, ShieldAlert } from 'lucide-react';
+import { HelpCircle, ChevronDown, Check, Star, ShieldAlert, Sparkles, BookOpen, AlertCircle, Info } from 'lucide-react';
 import CibilCheckerForm from '../../components/common/CibilCheckerForm';
 
 const CibilCreditReportPage: React.FC = () => {
@@ -21,6 +21,30 @@ const CibilCreditReportPage: React.FC = () => {
     {
       q: "Does checking my CIBIL report reduce my score?",
       a: "No. Checking your own CIBIL report on authorized websites like BanksCart is classified as a 'Soft Inquiry'. Soft inquiries have absolutely zero impact on your credit score, regardless of how many times you check. In contrast, bank-initiated searches during application are 'Hard Inquiries' and can affect scores."
+    },
+    {
+      q: "What does 'Settled' status mean in a credit report?",
+      a: "A 'Settled' status in your CIBIL report indicates that you and the lender reached a mutual agreement where the lender accepted an amount lower than the actual outstanding due to your inability to pay. While the account is closed, a 'Settled' label remains a major red flag on your report for up to 7 years, dropping approval chances for future retail loans."
+    },
+    {
+      q: "How does a co-applicant's bad CIBIL score affect my loan application?",
+      a: "In joint loan applications, lenders evaluate the creditworthiness of both applicants. If your co-applicant has a poor CIBIL score, the loan will likely be rejected or attract higher interest rates, even if your individual CIBIL score is excellent (e.g., above 780)."
+    },
+    {
+      q: "Does opening multiple credit cards lower my CIBIL score?",
+      a: "Yes. Every time you submit an application for a credit card, the issuing bank requests your credit report from the bureau, generating a 'Hard Inquiry'. Opening multiple cards in a short period triggers multiple hard inquiries, signaling credit hunger and high credit risk, which drops your score."
+    },
+    {
+      q: "How can I check my credit history if I have never taken a loan or credit card?",
+      a: "If you have never utilized any credit products, your CIBIL score will show as '-1' or 'NH' (No History). This is a clean slate and is not a negative rating. To build a credit history, you can start by getting a credit card against a Fixed Deposit (FD) or taking a minor consumer durable loan."
+    },
+    {
+      q: "What is the Credit Utilization Ratio (CUR) and why is it important?",
+      a: "The Credit Utilization Ratio (CUR) measures the amount of revolving credit you consume compared to your total available credit limit (e.g., spending ₹30,000 on a card with a ₹1,00,000 limit equals a 30% CUR). Keeping your CUR strictly below 30% indicates low credit dependence and directly boosts your score."
+    },
+    {
+      q: "Can a closed loan account continue to show as active in my report?",
+      a: "Yes. This occurs due to administrative reporting delays between the lender and the credit bureau. If you closed a loan but it still appears active, you should procure a 'No Dues Certificate' (NOC) from the bank and file an online CIBIL dispute to get your record corrected."
     }
   ];
 
@@ -50,7 +74,7 @@ const CibilCreditReportPage: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
           
           {/* Left Column: Rich SEO Guide Content */}
-          <div className="lg:col-span-7 space-y-10">
+          <div className="lg:col-span-7 space-y-10 text-slate-700">
             
             {/* Guide Introduction */}
             <div className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm">
@@ -59,14 +83,54 @@ const CibilCreditReportPage: React.FC = () => {
                 What is a Credit Report & Why is it Critical?
               </h2>
               <p className="text-sm text-slate-600 leading-relaxed mb-4">
-                A **CIBIL Credit Report** is essentially your financial report card. It is a consolidated report containing credit history sourced from over 5,000+ banks, credit card providers, and non-banking financial companies (NBFCs) operating across India.
+                A **CIBIL Credit Report** is essentially your financial report card. It is a consolidated report containing credit history sourced from over 5,000+ banks, credit card providers, and non-banking financial companies (NBFCs) operating across India. This report serves as a detailed record of your borrowing and repayment habits, and is compiled by TransUnion CIBIL, the country's pioneer credit information bureau licensed by the Reserve Bank of India (RBI).
+              </p>
+              <p className="text-sm text-slate-600 leading-relaxed mb-4">
+                Whenever you apply for a credit card, personal loan, car loan, or home loan, the lender immediately contacts credit bureaus to request your credit report. A high score (typically 750 or above) assures the bank that you have a disciplined repayment record, leading to faster approvals, lower interest rates, and higher loan limits. On the other hand, a low score indicates a higher default risk, which could lead to loan rejections or exorbitant interest rate markups.
               </p>
               <p className="text-sm text-slate-600 leading-relaxed">
-                Whenever you apply for a credit card, personal loan, car loan, or home loan, the lender immediately contacts credit bureaus to request your credit report. A high score (typically 750 or above) assures the bank that you have a disciplined repayment record, leading to faster approvals, lower interest rates, and higher loan limits.
+                Regularly monitoring your CIBIL report is crucial for maintaining a healthy financial profile. It allows you to check for errors reported by banks, detect identity theft (such as loans opened in your name without authorization), and take corrective measures to rebuild your credit rating.
               </p>
             </div>
 
-            {/* Comprehensive Table Matrix */}
+            {/* In-Depth: Credit Bureau Types in India */}
+            <div className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm">
+              <h3 className="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                <BookOpen className="w-5 h-5 text-blue-600" />
+                Understanding Credit Information Bureaus in India
+              </h3>
+              <p className="text-sm text-slate-600 leading-relaxed mb-4">
+                Many consumers use the term "CIBIL Score" and "Credit Score" interchangeably. However, CIBIL is just one of the licensed credit bureaus operating in India. There are four major credit information companies authorized by the RBI:
+              </p>
+              <div className="space-y-4 mt-4">
+                <div className="border-l-4 border-blue-500 pl-4">
+                  <h4 className="font-bold text-slate-800 text-sm">1. TransUnion CIBIL</h4>
+                  <p className="text-xs text-slate-500 mt-1 leading-relaxed">
+                    Established in 2000, TransUnion CIBIL is the oldest and most widely used credit bureau in India. Banks and housing finance companies rely heavily on CIBIL reports for retail credit underwriting.
+                  </p>
+                </div>
+                <div className="border-l-4 border-indigo-500 pl-4">
+                  <h4 className="font-bold text-slate-800 text-sm">2. Experian</h4>
+                  <p className="text-xs text-slate-500 mt-1 leading-relaxed">
+                    Experian is a global credit information company with a significant footprint in India. Lenders frequently query Experian scores for credit card underwriting and pre-approved personal loans.
+                  </p>
+                </div>
+                <div className="border-l-4 border-teal-500 pl-4">
+                  <h4 className="font-bold text-slate-800 text-sm">3. Equifax</h4>
+                  <p className="text-xs text-slate-500 mt-1 leading-relaxed">
+                    Equifax compiles detailed consumer and commercial credit registries. It provides lenders with robust fraud detection modules alongside credit ratings.
+                  </p>
+                </div>
+                <div className="border-l-4 border-purple-500 pl-4">
+                  <h4 className="font-bold text-slate-800 text-sm">4. CRIF High Mark</h4>
+                  <p className="text-xs text-slate-500 mt-1 leading-relaxed">
+                    CRIF High Mark is an Indian credit bureau specializing in microfinance collections, commercial credit segments, and retail lending insights.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* How Credit Score Brackets Define Your Loan Approval Chances */}
             <div className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm">
               <h3 className="text-lg font-bold text-slate-800 mb-4">How Credit Score Brackets Define Your Loan Approval Chances</h3>
               <div className="overflow-x-auto">
@@ -106,6 +170,37 @@ const CibilCreditReportPage: React.FC = () => {
                     </tr>
                   </tbody>
                 </table>
+              </div>
+            </div>
+
+            {/* Deep-Dive: Anatomy of a CIBIL Report */}
+            <div className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm">
+              <h3 className="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                <Info className="w-5 h-5 text-indigo-600" />
+                Anatomy of a CIBIL Report: Key Sections Decoded
+              </h3>
+              <p className="text-sm text-slate-600 leading-relaxed mb-4">
+                When you download your credit report, it will contain complex financial terminologies. Here is what each section represents in plain English:
+              </p>
+              <div className="space-y-3 mt-4 text-xs sm:text-sm text-slate-600">
+                <p>
+                  <strong>1. Control Number (CN):</strong> This is a unique 9-digit number generated by CIBIL every time a bank fetches your credit report. It serves as CIBIL's reference key if you raise disputes against errors.
+                </p>
+                <p>
+                  <strong>2. Personal Information:</strong> Contains your full name, date of birth, gender, PAN number, Passport details, or Aadhaar numbers reported by lenders.
+                </p>
+                <p>
+                  <strong>3. Contact Information:</strong> Lists up to 4 addresses (residence and office), mobile numbers, and email addresses provided during previous loan applications.
+                </p>
+                <p>
+                  <strong>4. Employment Information:</strong> Indicates your occupation (salaried or self-employed) and the monthly/annual income declared during credit requests.
+                </p>
+                <p>
+                  <strong>5. Account Information (Most Critical):</strong> Detailed logs of every active and closed loan or credit card in your name. It displays the lender's name, loan type, open date, loan amount, outstanding balance, credit limit, and a month-on-month payment history matrix for up to 36 months.
+                </p>
+                <p>
+                  <strong>6. Enquiry Information:</strong> Logs of every 'Hard Inquiry' conducted by lenders when you applied for fresh credit.
+                </p>
               </div>
             </div>
 
@@ -162,6 +257,55 @@ const CibilCreditReportPage: React.FC = () => {
                   </div>
                 </div>
 
+              </div>
+            </div>
+
+            {/* DPD Codes Explained */}
+            <div className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm">
+              <h3 className="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                <AlertCircle className="w-5 h-5 text-rose-600" />
+                Decoding CIBIL DPD Codes: What They Represent
+              </h3>
+              <p className="text-sm text-slate-600 leading-relaxed mb-4">
+                The **Days Past Due (DPD)** column in the Account Information section represents the number of days you delayed paying a specific installment. Understanding these codes is essential:
+              </p>
+              <div className="overflow-x-auto mt-4">
+                <table className="w-full text-left border-collapse text-xs">
+                  <thead>
+                    <tr className="bg-slate-50 border-b border-slate-100">
+                      <th className="p-3 font-semibold text-slate-700">DPD Code</th>
+                      <th className="p-3 font-semibold text-slate-700">Detailed Meaning</th>
+                      <th className="p-3 font-semibold text-slate-700">Impact on Credit Score</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr className="border-b border-slate-100">
+                      <td className="p-3 font-bold text-slate-800">"000" or "STD"</td>
+                      <td className="p-3 text-slate-600">Standard Account. Paid within due dates.</td>
+                      <td className="p-3 text-emerald-600 font-semibold">Positive (Boosts Score)</td>
+                    </tr>
+                    <tr className="border-b border-slate-100">
+                      <td className="p-3 font-bold text-slate-800">"030" / "060" / "090"</td>
+                      <td className="p-3 text-slate-600">Payment delayed by 30 / 60 / 90 days.</td>
+                      <td className="p-3 text-amber-600 font-semibold">Negative (Drops Score)</td>
+                    </tr>
+                    <tr className="border-b border-slate-100">
+                      <td className="p-3 font-bold text-slate-800">"SUB"</td>
+                      <td className="p-3 text-slate-600">Substandard Account. Defaulted past 90 days.</td>
+                      <td className="p-3 text-rose-600 font-semibold">Severe Drop</td>
+                    </tr>
+                    <tr className="border-b border-slate-100">
+                      <td className="p-3 font-bold text-slate-800">"DBT"</td>
+                      <td className="p-3 text-slate-600">Doubtful Account. Unpaid past 12 months.</td>
+                      <td className="p-3 text-rose-700 font-bold">Catastrophic Drop</td>
+                    </tr>
+                    <tr className="border-b border-slate-100">
+                      <td className="p-3 font-bold text-slate-800">"LSS"</td>
+                      <td className="p-3 text-slate-600">Loss Account. Bank marked loan as unrecoverable.</td>
+                      <td className="p-3 text-rose-800 font-black">Permanent Red Flag</td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
 

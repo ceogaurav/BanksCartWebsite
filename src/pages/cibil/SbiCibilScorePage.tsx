@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { HelpCircle, ChevronDown, Percent, Award, BookOpen } from 'lucide-react';
+import { HelpCircle, ChevronDown, Percent, Award, BookOpen, CreditCard, Landmark, CheckCircle, HelpCircle as HelpIcon } from 'lucide-react';
 import CibilCheckerForm from '../../components/common/CibilCheckerForm';
 
 const SbiCibilScorePage: React.FC = () => {
@@ -21,6 +21,30 @@ const SbiCibilScorePage: React.FC = () => {
     {
       q: "How does SBI handle a 'No History' (NH) or '-1' CIBIL score?",
       a: "A CIBIL score of '-1' or 'NH' means you have no active or historical credit footprint. SBI does not reject these loans out of hand. Instead, they evaluate your financial profile using traditional banking histories, bank statement behaviors, and salary stabilities, standardizing the loan terms under basic slabs."
+    },
+    {
+      q: "Does SBI check other bureaus besides TransUnion CIBIL?",
+      a: "Yes. While SBI primarily pulls TransUnion CIBIL reports, they also query Experian or CRIF High Mark to double-check record consistencies. A substantial mismatch or default listed on any of the four bureaus will trigger loan rejection."
+    },
+    {
+      q: "How much processing fee discount does SBI offer prime score borrowers?",
+      a: "For borrowers with a CIBIL score of 750 or above, SBI frequently waives 50% to 100% of standard home loan processing charges during seasonal campaigns (such as festive loan offers)."
+    },
+    {
+      q: "Can a settled card account block SBI personal loan approvals?",
+      a: "Yes. SBI has very conservative retail lending policies. Any account marked as 'Settled', 'Written Off', or 'Post Write-Off Settled' indicates previous payment failures and will trigger immediate personal loan rejection, even if your current CIBIL score has rebounded to 700."
+    },
+    {
+      q: "Will an outstanding credit card balance on another bank affect my SBI loan approval?",
+      a: "Yes. When SBI checks your CIBIL report, they calculate your Debt-to-Income (DTI) ratio. If you have huge outstanding revolving balances (even if payments are made on time), SBI will classify you as a high-leverage borrower and may reduce your eligible loan amount."
+    },
+    {
+      q: "Does a high CIBIL score reduce the down payment margin for SBI Home Loans?",
+      a: "No. The down payment margin is strictly governed by RBI loan-to-value (LTV) rules based on the property agreement value (e.g., 10% to 20% down payment). However, a high CIBIL score ensures SBI approves the maximum allowable loan bracket under those LTV rules without hesitation."
+    },
+    {
+      q: "Can I dispute my CIBIL score records directly through an SBI branch?",
+      a: "No. Branch managers cannot edit your credit report. If your CIBIL report displays wrong loan info reported by SBI, you must request the branch manager to submit an internal correction ticket to SBI's credit operations desk, or file an online dispute directly on TransUnion CIBIL's portal."
     }
   ];
 
@@ -50,7 +74,7 @@ const SbiCibilScorePage: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
           
           {/* Left Column Content */}
-          <div className="lg:col-span-7 space-y-10">
+          <div className="lg:col-span-7 space-y-10 text-slate-700">
             
             {/* Bank Intro */}
             <div className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm">
@@ -59,17 +83,26 @@ const SbiCibilScorePage: React.FC = () => {
                 SBI Credit Policy: CIBIL Score Linkage
               </h2>
               <p className="text-sm text-slate-600 leading-relaxed mb-4">
-                As India's largest public sector lender, the **State Bank of India (SBI)** has pioneer guidelines linking retail lending interest rates directly to an applicant's credit score. Under SBI's Risk-Focused Interest Rate structure, your CIBIL rating decides the exact percentage rate you pay on home and auto loans.
+                As India's largest public sector lender, the **State Bank of India (SBI)** has pioneer guidelines linking retail lending interest rates directly to an applicant's credit score. Under SBI's Risk-Focused Interest Rate structure, your CIBIL rating decides the exact percentage rate you pay on home, auto, and personal loans.
+              </p>
+              <p className="text-sm text-slate-600 leading-relaxed mb-4">
+                Rather than offering flat standard interest rates, SBI utilizes the Repo Linked Lending Rate (RLLR) as a baseline. They then apply markups based on the borrower's credit score tier. By maintaining a credit score above 750, you qualify as a prime borrower. This enables you to demand the lowest interest rates, waiver of administrative fees, and faster processing timelines.
               </p>
               <p className="text-sm text-slate-600 leading-relaxed">
-                By maintaining a credit score above 750, you qualify as a prime borrower. This enables you to demand the lowest interest rates, waiver of administrative fees, and faster processing timelines.
+                Conversely, applicants with credit scores below 700 face higher markups. This can translate into home loan rates that are 0.40% to 0.80% higher. Over a standard 20-year home loan tenure, this minor variance results in additional interest expenditures totaling lakhs of rupees.
               </p>
             </div>
 
             {/* Matrix Table: SBI Loan Types vs CIBIL requirement */}
             <div className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm">
-              <h3 className="text-lg font-bold text-slate-800 mb-4">SBI Retail Loans: CIBIL Score Slabs & Pricing</h3>
-              <div className="overflow-x-auto">
+              <h3 className="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                <Landmark className="w-5 h-5 text-blue-700" />
+                SBI Retail Loans: CIBIL Score Slabs & Pricing
+              </h3>
+              <p className="text-sm text-slate-600 leading-relaxed mb-4">
+                Here is a breakdown of SBI's retail loan requirements and typical preferred brackets:
+              </p>
+              <div className="overflow-x-auto mt-4">
                 <table className="w-full text-left border-collapse text-xs sm:text-sm">
                   <thead>
                     <tr className="bg-slate-50 border-b border-slate-100">
@@ -109,6 +142,35 @@ const SbiCibilScorePage: React.FC = () => {
               </div>
             </div>
 
+            {/* In-depth: Home Loan Pricing slabs */}
+            <div className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm">
+              <h3 className="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                <Percent className="w-5 h-5 text-blue-700" />
+                SBI Home Loan Interest Markups Decoded
+              </h3>
+              <p className="text-sm text-slate-600 leading-relaxed mb-4">
+                To understand how credit scores translate to home loan rates, check SBI's standard markup slabs linked to scores:
+              </p>
+              <div className="space-y-3.5 mt-4 text-xs sm:text-sm text-slate-600">
+                <div className="flex justify-between items-center border-b border-slate-100 pb-2">
+                  <span className="font-semibold text-slate-800">CIBIL Score &gt;= 750:</span>
+                  <span className="text-emerald-600 font-bold">Lowest Interest Slab (Base RLLR + 0% Markup)</span>
+                </div>
+                <div className="flex justify-between items-center border-b border-slate-100 pb-2">
+                  <span className="font-semibold text-slate-800">CIBIL Score 700 - 749:</span>
+                  <span className="text-slate-700">Standard Interest Slab (Base RLLR + 0.10% Markup)</span>
+                </div>
+                <div className="flex justify-between items-center border-b border-slate-100 pb-2">
+                  <span className="font-semibold text-slate-800">CIBIL Score 650 - 699:</span>
+                  <span className="text-amber-600">Premium Interest Slab (Base RLLR + 0.30% Markup)</span>
+                </div>
+                <div className="flex justify-between items-center pb-2">
+                  <span className="font-semibold text-slate-800">CIBIL Score 550 - 649:</span>
+                  <span className="text-rose-600 font-bold">Substandard Slab (Base RLLR + 0.50% to 0.80% Markup)</span>
+                </div>
+              </div>
+            </div>
+
             {/* Perks for prime borrowers */}
             <div className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm">
               <h3 className="text-lg font-bold text-slate-800 mb-6">Perks of Having 750+ CIBIL Score for SBI Loans</h3>
@@ -145,10 +207,21 @@ const SbiCibilScorePage: React.FC = () => {
               </div>
             </div>
 
+            {/* How SBI handles NH/-1 */}
+            <div className="bg-blue-50/50 border border-blue-100 rounded-2xl p-6 sm:p-8 shadow-sm">
+              <h3 className="text-lg font-bold text-blue-800 mb-3 flex items-center gap-2">
+                <CheckCircle className="w-5 h-5" />
+                Borrowing from SBI as a Credit-First Applicant (NH / -1 Score)
+              </h3>
+              <p className="text-sm text-blue-700 leading-relaxed">
+                If you have a blank credit history, SBI does not reject your loan application. For **Home Loans**, SBI places NH/-1 applicants in a standardized pricing bracket, usually equal to standard borrowers with credit scores of 700 to 749. For **Personal Loans**, they will require salary routing through an SBI savings account or corporate salary package agreements to offset risk.
+              </p>
+            </div>
+
             {/* FAQs */}
             <div className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm">
               <h3 className="text-lg font-bold text-slate-800 mb-6 flex items-center gap-2">
-                <HelpCircle className="w-5 h-5 text-blue-800" />
+                <HelpIcon className="w-5 h-5 text-blue-800" />
                 Frequently Asked Questions
               </h3>
               <div className="space-y-4">

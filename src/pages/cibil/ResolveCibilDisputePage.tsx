@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { HelpCircle, ChevronDown, Check, AlertOctagon, HelpCircle as HelpIcon } from 'lucide-react';
+import { HelpCircle, ChevronDown, Check, AlertOctagon, HelpCircle as HelpIcon, FileSpreadsheet, ShieldAlert, Award } from 'lucide-react';
 import CibilCheckerForm from '../../components/common/CibilCheckerForm';
 
 const ResolveCibilDisputePage: React.FC = () => {
@@ -21,6 +21,30 @@ const ResolveCibilDisputePage: React.FC = () => {
     {
       q: "Does filing a dispute cost any money?",
       a: "No. Raising a dispute online with TransUnion CIBIL or other credit bureaus is completely free of charge. You do not need to pay any brokers or third-party advisors."
+    },
+    {
+      q: "What is a CIBIL Control Number and where do I find it?",
+      a: "The Control Number (CN) is a unique 9-digit number printed at the top-right corner of your official CIBIL report. Every time a bank fetches your score, a fresh CN is generated. You must cite this number when filing a dispute to help CIBIL identify the exact report version."
+    },
+    {
+      q: "Can a bank refuse to correct an error on my report?",
+      a: "A bank can only refuse correction if they have valid documented proof that the reported debt or payment delay is legitimate. If they refuse despite you having cleared the dues, you can escalate the matter to the bank's internal principal nodal officer or the RBI Banking Ombudsman."
+    },
+    {
+      q: "Will my CIBIL score increase immediately after a dispute is resolved?",
+      a: "Yes. Once the bureau receives corrected logs from the bank, they update your registry within 1-3 business days. If a false delay mark or fraudulent loan account is successfully wiped out, your CIBIL score will rebound upward instantly."
+    },
+    {
+      q: "Can I file multiple disputes simultaneously?",
+      a: "Yes. CIBIL's online dispute form allows you to select and dispute multiple fields (such as address spellings, loan balances, and payment history columns) within a single dispute submission."
+    },
+    {
+      q: "What is the Credit Information Companies (CIC) Act and how does it protect me?",
+      a: "The CIC Act of 2005 regulates credit reporting in India. It mandates that credit bureaus and banks must ensure data accuracy, protect consumer privacy, and legally resolve all consumer dispute requests within a strict 30-day window."
+    },
+    {
+      q: "How do I dispute a fraudulent loan application inquiry?",
+      a: "If your report displays 'Hard Inquiries' that you never authorized, you should contact the respective bank's customer service or grievance desk immediately. Ask them to confirm if an application was submitted under your identity, and request them to trigger a 'withdrawal/correction request' to CIBIL."
     }
   ];
 
@@ -50,7 +74,7 @@ const ResolveCibilDisputePage: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
           
           {/* Left Column Content */}
-          <div className="lg:col-span-7 space-y-10">
+          <div className="lg:col-span-7 space-y-10 text-slate-700">
             
             {/* Guide intro */}
             <div className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm">
@@ -59,32 +83,41 @@ const ResolveCibilDisputePage: React.FC = () => {
                 Rectify Report Errors to Safeguard Your Score
               </h2>
               <p className="text-sm text-slate-600 leading-relaxed mb-4">
-                Occasionally, due to manual bank entries or technical bugs, lenders submit wrong data to credit bureaus. When an account you have already paid off continues to show outstanding dues or late flags, your CIBIL score tanks.
+                Occasionally, due to manual bank entries, operational lags, or technical glitches, lenders submit wrong data to credit bureaus. When a loan account you have already paid off continues to show outstanding dues or late flags, your CIBIL score tanks. This can happen despite you having cleared all dues and obtained the bank's 'No Dues Certificate' (NOC).
+              </p>
+              <p className="text-sm text-slate-600 leading-relaxed mb-4">
+                By proactively raising a **CIBIL dispute**, you instruct the bureau to verify the discrepancy with the lender. Once verified, the entry is deleted or updated, resulting in an immediate boost to your credit score. Under RBI guidelines and the Credit Information Companies (CIC) Act of 2005, both banks and bureaus are legally mandated to correct errors within a strict 30-day window.
               </p>
               <p className="text-sm text-slate-600 leading-relaxed">
-                By proactively raising a **CIBIL dispute**, you instruct the bureau to verify the discrepancy with the lender. Once verified, the entry is deleted or updated, resulting in an immediate boost to your credit score.
+                Regularly auditing your credit history on BanksCart helps you spot these errors early. You can then gather bank clearance NOCs and file online disputes, ensuring your rating stays pristine for future loan requests.
               </p>
             </div>
 
             {/* How to raise a dispute - Step by Step */}
             <div className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm">
-              <h3 className="text-lg font-bold text-slate-800 mb-6">Step-by-Step Guide: Filing an Online CIBIL Dispute</h3>
-              <div className="space-y-6">
+              <h3 className="text-lg font-bold text-slate-800 mb-6 flex items-center gap-2">
+                <FileSpreadsheet className="w-5 h-5 text-rose-600" />
+                Step-by-Step Guide: Filing an Online CIBIL Dispute
+              </h3>
+              <p className="text-sm text-slate-600 leading-relaxed mb-4">
+                Filing a dispute online is completely free. Here is the detailed step-by-step procedure:
+              </p>
+              <div className="space-y-6 mt-4">
                 
                 <div className="flex gap-4">
-                  <div className="w-8 h-8 rounded-full bg-rose-50 text-rose-700 flex items-center justify-center font-bold text-sm flex-shrink-0">
+                  <div className="w-8 h-8 rounded-full bg-rose-50 text-rose-700 flex items-center justify-center font-bold text-sm flex-shrink-0 mt-0.5">
                     1
                   </div>
                   <div>
                     <h4 className="font-bold text-slate-800 text-sm">Download your CIBIL Report</h4>
                     <p className="text-slate-500 text-xs mt-1 leading-relaxed">
-                      First, check your report on BanksCart to identify the exact error. Note down the unique 9-digit **Control Number** printed on the top of the report.
+                      First, check your report on BanksCart to identify the exact error. Note down the unique 9-digit **Control Number** printed on the top-right corner of the report.
                     </p>
                   </div>
                 </div>
 
                 <div className="flex gap-4">
-                  <div className="w-8 h-8 rounded-full bg-rose-50 text-rose-700 flex items-center justify-center font-bold text-sm flex-shrink-0">
+                  <div className="w-8 h-8 rounded-full bg-rose-50 text-rose-700 flex items-center justify-center font-bold text-sm flex-shrink-0 mt-0.5">
                     2
                   </div>
                   <div>
@@ -96,7 +129,7 @@ const ResolveCibilDisputePage: React.FC = () => {
                 </div>
 
                 <div className="flex gap-4">
-                  <div className="w-8 h-8 rounded-full bg-rose-50 text-rose-700 flex items-center justify-center font-bold text-sm flex-shrink-0">
+                  <div className="w-8 h-8 rounded-full bg-rose-50 text-rose-700 flex items-center justify-center font-bold text-sm flex-shrink-0 mt-0.5">
                     3
                   </div>
                   <div>
@@ -108,7 +141,7 @@ const ResolveCibilDisputePage: React.FC = () => {
                 </div>
 
                 <div className="flex gap-4">
-                  <div className="w-8 h-8 rounded-full bg-rose-50 text-rose-700 flex items-center justify-center font-bold text-sm flex-shrink-0">
+                  <div className="w-8 h-8 rounded-full bg-rose-50 text-rose-700 flex items-center justify-center font-bold text-sm flex-shrink-0 mt-0.5">
                     4
                   </div>
                   <div>
@@ -119,6 +152,66 @@ const ResolveCibilDisputePage: React.FC = () => {
                   </div>
                 </div>
 
+              </div>
+            </div>
+
+            {/* Table of Dispute Cycle Milestones */}
+            <div className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm">
+              <h3 className="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                <Award className="w-5 h-5 text-rose-600" />
+                The CIBIL Dispute Lifecycle & Timelines
+              </h3>
+              <p className="text-sm text-slate-600 leading-relaxed mb-4">
+                Here is the sequence of events that occurs once you submit an online dispute:
+              </p>
+              <div className="overflow-x-auto mt-4">
+                <table className="w-full text-left border-collapse text-xs">
+                  <thead>
+                    <tr className="bg-slate-50 border-b border-slate-100">
+                      <th className="p-3 font-semibold text-slate-700">Lifecycle Stage</th>
+                      <th className="p-3 font-semibold text-slate-700">Process Action</th>
+                      <th className="p-3 font-semibold text-slate-700">Turnaround Time (TAT)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr className="border-b border-slate-100">
+                      <td className="p-3 font-bold text-slate-800">1. Dispute Filing</td>
+                      <td className="p-3 text-slate-600">User submits the online dispute form citing control numbers.</td>
+                      <td className="p-3 text-emerald-600 font-semibold">Immediate (Instant)</td>
+                    </tr>
+                    <tr className="border-b border-slate-100">
+                      <td className="p-3 font-bold text-slate-800">2. Bureau Validation</td>
+                      <td className="p-3 text-slate-600">CIBIL audits the dispute and forwards details to the lender bank.</td>
+                      <td className="p-3 text-emerald-600 font-semibold">1 - 3 business days</td>
+                    </tr>
+                    <tr className="border-b border-slate-100">
+                      <td className="p-3 font-bold text-slate-800">3. Bank Verification</td>
+                      <td className="p-3 text-slate-600">The bank checks internal records to verify or dispute the claim.</td>
+                      <td className="p-3 text-emerald-600 font-bold">Up to 15 business days</td>
+                    </tr>
+                    <tr className="border-b border-slate-100">
+                      <td className="p-3 font-bold text-slate-800">4. Bureau Update</td>
+                      <td className="p-3 text-slate-600">CIBIL receives the bank's correction update and alters your profile.</td>
+                      <td className="p-3 text-emerald-600 font-semibold">2 - 3 business days</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* Escalation to RBI Ombudsman */}
+            <div className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm">
+              <h3 className="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                <ShieldAlert className="w-5 h-5 text-rose-600" />
+                Dispute Delayed? How to Escalate to the RBI Nodal Officer
+              </h3>
+              <p className="text-sm text-slate-600 leading-relaxed mb-4">
+                If the reporting bank fails to coordinate or delays resolving your dispute beyond the legal 30-day window, you have strong legal protections under RBI guidelines:
+              </p>
+              <div className="bg-slate-50 border border-slate-100 rounded-xl p-4 text-xs sm:text-sm text-slate-600 space-y-2 leading-relaxed">
+                <p><strong>Step A: Contact Nodal Officers:</strong> Obtain the email address of your bank's Principal Nodal Officer (available on the bank's website) and submit a formal grievance citing your dispute ticket.</p>
+                <p><strong>Step B: File Complaint on RBI CMS:</strong> If the bank does not reply within 30 days or rejects your request unfairly, visit the RBI Complaint Management System (CMS) portal (`cms.rbi.org.in`) and file a complaint against the bank.</p>
+                <p><strong>Step C: Claim Compensations:</strong> Under recent RBI rules, banks can be fined ₹100 per day for delays in correcting credit registry errors past 30 days of filing.</p>
               </div>
             </div>
 
