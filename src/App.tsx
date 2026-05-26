@@ -402,6 +402,65 @@ const App: React.FC = () => {
                 <Route path="/premium-calculator" element={<DynamicHealthInsurancePage />} />
                 <Route path="/optima-restore-plan" element={<DynamicHealthInsurancePage />} />
 
+                {/* 133+ New Wildcards & Flat Routes */}
+                <Route path="/au-small-finance-bank" element={<DynamicCreditCardPage />} />
+                <Route path="/au-small-finance-bank/:subPath" element={<DynamicCreditCardPage />} />
+                <Route path="/axis-bank" element={<DynamicCreditCardPage />} />
+                <Route path="/avanse" element={<DynamicGeneralBankingPage />} />
+                <Route path="/avanse/:subPath" element={<DynamicGeneralBankingPage />} />
+                <Route path="/arohan-financial-inclusion-limited" element={<DynamicGeneralBankingPage />} />
+                <Route path="/arohan-financial-inclusion-limited/:subPath" element={<DynamicGeneralBankingPage />} />
+                <Route path="/commercial-insurance/:subPath" element={<DynamicHealthInsurancePage />} />
+                <Route path="/bobcard/:subPath" element={<DynamicCreditCardPage />} />
+                <Route path="/atm-finder" element={<DynamicGeneralBankingPage />} />
+                <Route path="/atm-near-me" element={<DynamicGeneralBankingPage />} />
+                <Route path="/atm-network" element={<DynamicGeneralBankingPage />} />
+                <Route path="/fixed-deposit/:subPath" element={<DynamicGeneralBankingPage />} />
+                <Route path="/current-account/:subPath" element={<DynamicGeneralBankingPage />} />
+                <Route path="/authors" element={<DynamicGeneralBankingPage />} />
+                <Route path="/extra-cover" element={<DynamicAegonLifePage />} />
+
+                {/* Bank of Baroda & Bobcard Routes */}
+                <Route path="/bank-of-baroda" element={<DynamicGeneralBankingPage />} />
+                <Route path="/bank-of-baroda/:subPath" element={<DynamicGeneralBankingPage />} />
+
+                {/* Bandhan Bank Routes */}
+                <Route path="/bandhan-bank" element={<DynamicGeneralBankingPage />} />
+                <Route path="/bandhan-bank/:subPath" element={<DynamicGeneralBankingPage />} />
+
+                {/* Bank of India Routes */}
+                <Route path="/bank-of-india" element={<DynamicGeneralBankingPage />} />
+                <Route path="/bank-of-india/:subPath" element={<DynamicGeneralBankingPage />} />
+
+                {/* Bajaj Finserv & Allianz Routes */}
+                <Route path="/bajaj-finserv" element={<DynamicGeneralBankingPage />} />
+                <Route path="/bajaj-finserv/:subPath" element={<DynamicGeneralBankingPage />} />
+                <Route path="/bajaj-allianz-extra-care-plus-policy" element={<DynamicHealthInsurancePage />} />
+                <Route path="/bajaj-allianz-tax-gain-health-insurance-plan" element={<DynamicHealthInsurancePage />} />
+                <Route path="/global-personal-guard-policy" element={<DynamicHealthInsurancePage />} />
+                <Route path="/silver-health-plan-senior-citizens" element={<DynamicHealthInsurancePage />} />
+                <Route path="/women-specific-critical-illness-insurance" element={<DynamicHealthInsurancePage />} />
+
+                {/* Ayefin Routes */}
+                <Route path="/ayefin" element={<DynamicGeneralBankingPage />} />
+                <Route path="/ayefin/:subPath" element={<DynamicGeneralBankingPage />} />
+
+                {/* Aviva Plans Flat Routes */}
+                <Route path="/annuity-plus-plan" element={<DynamicAegonLifePage />} />
+                <Route path="/aviva-dhan-nirman-plan" element={<DynamicAegonLifePage />} />
+                <Route path="/aviva-i-growth-plan" element={<DynamicAegonLifePage />} />
+                <Route path="/aviva-i-life-plan" element={<DynamicAegonLifePage />} />
+                <Route path="/aviva-shield-plan" element={<DynamicAegonLifePage />} />
+                <Route path="/aviva-life-bond-advantage-plan" element={<DynamicAegonLifePage />} />
+                <Route path="/aviva-life-term-insurance" element={<DynamicAegonLifePage />} />
+                <Route path="/aviva-lifeshield-advantage" element={<DynamicAegonLifePage />} />
+                <Route path="/aviva-lifeshield-platinum" element={<DynamicAegonLifePage />} />
+                <Route path="/new-family-income-builder-plan" element={<DynamicAegonLifePage />} />
+                <Route path="/next-innings-pension-plan" element={<DynamicAegonLifePage />} />
+                <Route path="/aviva-wealth-builder-plan" element={<DynamicAegonLifePage />} />
+                <Route path="/young-scholar-advantage" element={<DynamicAegonLifePage />} />
+                <Route path="/young-scholar-secure-plan" element={<DynamicAegonLifePage />} />
+
                 <Route path="/expert-advice" element={<ExpertAdvicePage openApplyModal={openApplyModal} />} />
 
                 {/* Abhyudaya Bank Routes */}

@@ -3,6 +3,8 @@ import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { HelpCircle, ChevronDown, Check, Star, ShieldAlert, Sparkles, BookOpen, AlertCircle, Info, Landmark, Percent, Award, ShieldCheck, ArrowRight, Play, MessageSquare, TrendingUp, CreditCard } from 'lucide-react';
 import CibilCheckerForm from '../../components/common/CibilCheckerForm';
 import { INVESTMENT_PAGE_MAP, InvestmentPageContent, InvestmentRecommendRow } from '../../data/investmentPageData';
+import { getNewPageDetailedContent } from '../../data/newPagesDetailedData';
+
 
 interface EditorialArticle {
   title: string;
@@ -215,9 +217,32 @@ const DynamicInvestmentPage: React.FC = () => {
     };
   };
 
-  const currentSlug = `${type}/${subPath}`;
-  const pageContent = INVESTMENT_PAGE_MAP[currentSlug] || generateFallbackContent(type || 'mutual-funds', subPath || 'overview');
-  const detailedArticles = getInvestmentDetailedArticles(type || 'mutual-funds', subPath || 'overview');
+  const newPageData = getNewPageDetailedContent(location.pathname);
+
+  const pageContent = newPageData ? {
+    title: newPageData.title,
+    badge: newPageData.badge,
+    intro: newPageData.intro,
+    moreIntro: newPageData.moreIntro || '',
+    keyFeaturesTitle: newPageData.highlightsTitle,
+    keyFeatures: newPageData.highlights,
+    recommendTitle: newPageData.ratesTitle,
+    recommendHeaders: newPageData.ratesHeaders,
+    recommendDetails: newPageData.ratesRows.map(row => ({
+      name: row[0],
+      issuer: row[1],
+      returns: row[2],
+      lockIn: row[3] || 'No Lock-in'
+    })),
+    checklistTitle: newPageData.checklistTitle,
+    checklist: newPageData.checklist,
+    faqs: newPageData.faqs
+  } : (INVESTMENT_PAGE_MAP[currentSlug] || generateFallbackContent(type || 'mutual-funds', subPath || 'overview'));
+
+  const detailedArticles = newPageData?.detailedArticles
+    ? newPageData.detailedArticles
+    : getInvestmentDetailedArticles(type || 'mutual-funds', subPath || 'overview');
+
 
   // Scroll to top on path parameter change
   useEffect(() => {

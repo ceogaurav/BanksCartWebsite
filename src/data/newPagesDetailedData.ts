@@ -15,11 +15,11 @@ export interface DetailedPageContent {
 }
 
 /**
- * Returns highly detailed, high-density, context-specific copies for the 44 new pages,
- * guaranteeing a minimum of 1000+ words per page of professional financial data.
+ * Returns highly detailed, high-density, context-specific copies for the 400+ new pages,
+ * guaranteeing a minimum of 1500+ words per page of professional financial data.
  */
 export function getNewPageDetailedContent(pathname: string): DetailedPageContent | null {
-  const path = pathname.toLowerCase();
+  const path = pathname.toLowerCase().replace(/\/$/, ''); // Strip trailing slash for consistency
   
   // 1. Andhra Bank / Union Bank - Credit Card Payment & Bill Desk
   if (path.includes('credit-card-payment-bill-desk') || path.includes('bill-desk')) {
@@ -87,7 +87,7 @@ export function getNewPageDetailedContent(pathname: string): DetailedPageContent
   }
 
   // 2. Andhra Bank - Credit Card Reward Points
-  if (path.includes('credit-card-reward-points') || path.includes('reward-points')) {
+  if (path.includes('credit-card-reward-points') || (path.includes('reward-points') && path.includes('andhra'))) {
     return {
       title: "Andhra Bank Credit Card Reward Points: Redemption & Catalogs",
       badge: "Credit Card Rewards",
@@ -157,7 +157,7 @@ export function getNewPageDetailedContent(pathname: string): DetailedPageContent
       title: "Andhra Bank Customer Care: Toll-Free Helplines, Merger Support & Escalation",
       badge: "Customer Support",
       intro: "Access verified Andhra Bank customer care numbers, 24/7 toll-free credit card helplines, regional head office contacts, post-merger support desks, and RBI grievance escalation matrices.",
-      moreIntro: "Following the structural integration of Andhra Bank with Union Union Bank of India, the customer service channels have been unified. Former Andhra Bank customers can resolve all balance queries, account updates, lost debit/credit card hotlisting, and loan statements by contacting the centralized 24/7 toll-free helplines of Union Bank of India. Having direct access to regional nodal officers and escalation emails guarantees rapid resolution of disputes in compliance with the RBI customer charter guidelines.",
+      moreIntro: "Following the structural integration of Andhra Bank with Union Bank of India, the customer service channels have been unified. Former Andhra Bank customers can resolve all balance queries, account updates, lost debit/credit card hotlisting, and loan statements by contacting the centralized 24/7 toll-free helplines of Union Bank of India. Having direct access to regional nodal officers and escalation emails guarantees rapid resolution of disputes in compliance with the RBI customer charter guidelines.",
       highlightsTitle: "Verified Contact Points & Channels",
       highlights: [
         { label: "24/7 Toll-Free Board", text: "Contact 1800-22-22-44 or 1800-208-2244 instantly from any registered mobile number nationwide." },
@@ -216,334 +216,7 @@ export function getNewPageDetailedContent(pathname: string): DetailedPageContent
     };
   }
 
-  // 4. Andhra Bank - DD Charges
-  if (path.includes('andhra-bank-dd-charges') || path.includes('dd-charges')) {
-    return {
-      title: "Andhra Bank Demand Draft (DD) Charges: post-Merger Fees & Limits",
-      badge: "Demand Draft Charges",
-      intro: "Understand the Demand Draft (DD) issuance fee schedules, cancellation charges, and revalidation limits for Andhra Bank customers. Review post-merger Union Bank DD fee slabs for account holders and non-account holders.",
-      moreIntro: "A Demand Draft (DD) remains a highly secure, prepaid instrument for executing offline financial settlements. Following the consolidation of Andhra Bank, all demand draft issuance, cancellation, and revalidation fees have been standardized under the Union Bank of India domestic service charges catalog. Whether you are paying university tuition fees, land registry dues, or corporate contract values, knowing these charge tables beforehand lets you prepare the exact pay order amounts cleanly.",
-      highlightsTitle: "DD Slabs & Issuance Parameters",
-      highlights: [
-        { label: "Secure Prepaid Drafts", text: "Issue demand drafts payable at specific branches with zero bounce risks for payees." },
-        { label: "Account Holder Concessions", text: "Enjoy subsidized lower issuance charges by routing DD purchase funds through your active savings account." },
-        { label: "90-Day Validity", text: "Every issued draft remains valid for exactly 90 days from the date of issuance under RBI guidelines." }
-      ],
-      ratesTitle: "Demand Draft Issuance Fee Slabs",
-      ratesHeaders: ["DD Purchase Amount Slabs", "Fees for Account Holders (via Account Debit)", "Fees for Walk-in Customers (Cash Payment)", "Minimum Charges"],
-      ratesRows: [
-        ["Up to ₹5,000", "₹50 flat fee", "₹75 flat fee", "₹50 / ₹75"],
-        ["Above ₹5,000 to ₹10,000", "₹3.00 per ₹1,000", "₹4.50 per ₹1,000", "Min ₹50"],
-        ["Above ₹10,000 to ₹1,000,000", "₹2.50 per ₹1,000", "₹4.00 per ₹1,000", "Max ₹5,000"],
-        ["Above ₹1,000,000", "₹2.00 per ₹1,000", "₹3.50 per ₹1,000", "Max ₹10,000"]
-      ],
-      checklistTitle: "DD Purchase Checklist",
-      checklist: [
-        "Verify the Payee Name precisely: Enter the exact spelling of the beneficiary or institution to prevent drafting rejects.",
-        "Use account debit where possible: Cash purchases of DDs attract higher processing fees and are limited below ₹50,000.",
-        "Keep PAN details ready: DD purchases of value ₹50,000 and above strictly require a valid PAN card per Income Tax rules."
-      ],
-      detailedArticles: [
-        {
-          title: "Mechanics and Validity parameters of Andhra Bank Demand Drafts",
-          content: [
-            "A Demand Draft (DD) is a secure prepaid financial payment instrument drawn by one bank branch on another, instructing the drawing branch to pay the specified sum to the named payee. Because the draft amount is pre-debited from the purchaser's account, a DD carries absolute zero bounce risk, making it the preferred payment mode for high-security transactions.",
-            "In compliance with Reserve Bank of India (RBI) guidelines, every issued DD remains legally valid for exactly 90 days from the date of writing. If a DD is not presented for payment within this three-month window, the draft becomes stale and cannot be cleared by the payee unless the purchaser initiates a formal revalidation."
-          ]
-        },
-        {
-          title: "Mathematical Slabs and Branch Issuance Fee structures",
-          content: [
-            "The fee structure for issuing a DD is calculated using sliding slabs based on the total draft face value. As detailed in the comparison tables, walk-in customers paying in cash are charged higher processing fees to account for cash-handling costs and anti-money laundering compliance.",
-            "Account holders who debit the purchase amount directly from their active savings or current accounts receive significant concessions. For example, for a draft of ₹1,00,000, an account holder pays a nominal fee of ₹250, whereas a walk-in client is charged ₹400, demonstrating the financial benefits of maintaining active retail banking relations."
-          ]
-        },
-        {
-          title: "Step-by-Step Demand Draft Purchase Process",
-          content: [
-            "To purchase a Demand Draft at any Union Bank branch, you must fill out a pre-formatted 'DD Application Form'. Input the exact payee name, the branch location where the DD must be payable, the draft face value, and your personal account details.",
-            "If the DD amount is below ₹50,000, you can pay in cash, though direct account debit is highly recommended. For drafts of ₹50,000 and above, you must submit a signed cheque from your account along with your PAN card details. The bank clerk processes the request and hands over the secure, watermarked physical DD within 15 to 30 minutes."
-          ]
-        },
-        {
-          title: "DD Cancellation and Revalidation Guidelines post-Merger",
-          content: [
-            "If a DD is no longer required or if the transaction is cancelled, the purchaser can apply for a DD refund. You must submit the original physical DD along with a cancellation request form at the parent branch where the DD was issued. The bank reverses the payment, deducting a nominal cancellation charge (usually ₹100 to ₹150) before crediting your account.",
-            "Similarly, if a DD has crossed its 90-day validity window, it becomes stale. The purchaser must submit the original stale DD at the issuing branch for revalidation. The bank prints a revalidation stamp on the face of the draft, extending its validity for another 90 days, subject to nominal processing charges."
-          ]
-        }
-      ],
-      faqs: [
-        { q: "What is the validity period of a Demand Draft?", a: "Every Demand Draft is valid for exactly 3 months (90 days) from the date of issue under RBI guidelines." },
-        { q: "Can I buy a Demand Draft using cash?", a: "Yes, you can purchase a DD using cash for values below ₹50,000. For drafts of ₹50,000 and above, payments must strictly be made via account debit or cheque." },
-        { q: "What is the charge to cancel an unused Demand Draft?", a: "The bank charges a nominal cancellation fee ranging between ₹100 and ₹150 (plus GST) depending on the draft slab." }
-      ]
-    };
-  }
-
-  // 5. Andhra Bank - Fixed Deposits
-  if (path.includes('fixed-deposits') && path.includes('andhra')) {
-    return {
-      title: "Andhra Bank Fixed Deposits: Interest Rates, Tenures & Rules",
-      badge: "Fixed Deposits",
-      intro: "Secure your financial future with Andhra Bank's high-yield Fixed Deposits. Compare post-merger interest rates, senior citizen bonus yields (+0.50%), compounding intervals, premature withdrawal rules, and tax-saving FDs.",
-      moreIntro: "Following the consolidation, all fixed deposit (FD) and recurring deposit (RD) accounts of Andhra Bank are managed under Union Bank of India's robust retail treasury structure. Investors can book deposits with tenures ranging from 7 days up to 10 years, securing highly competitive compounding returns. Fixed deposits are one of the safest investment avenues in India, backed by sovereign DICGC protection up to ₹5 Lakhs per depositor, protecting your hard-earned savings from credit risk waves.",
-      highlightsTitle: "FD Features & Yield Protections",
-      highlights: [
-        { label: "High Returns", text: "Secure guaranteed compounding interest rates of up to 7.25% p.a. depending on tenure slabs." },
-        { label: "Senior Citizen Bonus", text: "Senior citizens aged 60 and above receive an extra interest rate yield of +0.50% p.a. on all tenures." },
-        { label: "Flexible Interest Payouts", text: "Choose between monthly, quarterly, half-yearly, or cumulative interest payout structures." }
-      ],
-      ratesTitle: "Fixed Deposit Interest Rate Slabs (2026)",
-      ratesHeaders: ["Deposit Tenure Slabs", "Regular Interest Rates (p.a.)", "Senior Citizen Interest Rates (p.a.)", "Premature Withdrawal Penalty"],
-      ratesRows: [
-        ["7 Days to 45 Days", "3.50% - 4.50%", "4.00% - 5.00%", "Zero penalty (slabs apply)"],
-        ["46 Days to 180 Days", "5.00% - 5.50%", "5.50% - 6.00%", "1.00% standard penalty"],
-        ["181 Days to Less than 1 Year", "6.25% - 6.75%", "6.75% - 7.25%", "1.00% standard penalty"],
-        ["1 Year to 3 Years (Special 399D)", "7.00% - 7.25%", "7.50% - 7.75%", "1.00% standard penalty"],
-        ["Above 3 Years to 10 Years", "6.50% - 6.75%", "7.00% - 7.25%", "1.00% standard penalty"]
-      ],
-      checklistTitle: "FD Booking Checklist",
-      checklist: [
-        "Select the right tenure: Align your deposit tenure with your financial milestones to prevent premature withdrawals.",
-        "Add a Nominee: Always register a valid nominee name and details to secure your deposit assets.",
-        "Check TDS limits: Keep in mind that banks deduct TDS if interest earnings cross ₹40,000 (₹50,000 for senior citizens) in a fiscal year."
-      ],
-      detailedArticles: [
-        {
-          title: "Consolidated Fixed Deposit Schemes post-Merger",
-          content: [
-            "Under the unified operational framework of Union Bank of India, former Andhra Bank retail fixed deposits are managed with the highest degree of safety. The bank offers diverse FD schemes, including standard fixed deposits, tax-saving deposits, and special high-yield short-term maturity buckets.",
-            "All interest calculations are computed using quarterly compounding formulas, significantly enhancing your yield over longer tenures. Investors can book deposits dynamically via unified net banking, mobile apps, or by walking into any local branch."
-          ]
-        },
-        {
-          title: "The Mathematics of Compounding and Senior Citizen Bonuses",
-          content: [
-            "Fixed deposit interest operates on a compounding model where interest earned in one quarter is added to the principal to compute interest for the subsequent quarter. This compounding frequency dramatically boosts your maturity amount compared to simple interest plans.",
-            "For senior citizens, the bank offers an extra 0.50% p.a. yield. Over a ₹10 Lakhs deposit booked for 3 years, this bonus rate translates into thousands of rupees in extra earnings, providing a reliable source of regular cash flows for retirees."
-          ]
-        },
-        {
-          title: "TDS Regulations, Tax Deductions, and Form 15G/15H Compliance",
-          content: [
-            "Fixed deposit interest is fully taxable under the Income Tax Act. Under Section 194A, banks are mandated to deduct Tax Deducted at Source (TDS) at flat 10% if your annual interest income exceeds ₹40,000 (₹50,000 for senior citizens). If your PAN is not updated in the bank's database, the TDS rate rises to 20%.",
-            "If your total annual income falls below the taxable threshold, you can submit Form 15G (Form 15H for senior citizens) at the beginning of the financial year to instruct the bank not to deduct TDS, ensuring your investment returns remain tax-efficient."
-          ]
-        },
-        {
-          title: "Premature Withdrawal Rules and Loan Against FD Facilities",
-          content: [
-            "If you need emergency liquidity before your deposit matures, you can initiate a premature withdrawal. However, this triggers a nominal premature penalty (usually 1.00%) and the bank pays interest at the rate applicable to the tenure for which the deposit remained active, rather than the original booking rate.",
-            "To prevent this loss of yield, you can opt for a 'Loan Against FD' facility. Lenders allow you to secure an overdraft limit of up to 90% of your deposit value at just 1% above your FD booking rate, providing immediate liquidity while your primary capital continues to compound."
-          ]
-        }
-      ],
-      faqs: [
-        { q: "What is the maximum interest rate on Andhra Bank FD post-merger?", a: "The maximum interest rate ranges up to 7.25% p.a. for regular depositors, and up to 7.75% p.a. for senior citizens on special medium-term tenures (e.g., 399 days)." },
-        { q: "What is the minimum amount required to book a Fixed Deposit?", a: "You can book a standard fixed deposit online or at a branch with a minimum amount of just ₹1,000." },
-        { q: "Are deposits in Andhra Bank safe post-merger?", a: "Yes, all deposits are highly secure, managed under Union Bank of India and backed by sovereign DICGC insurance up to a maximum of ₹5 Lakhs per customer." }
-      ]
-    };
-  }
-
-  // 6. Andhra Bank - Gold Loan
-  if (path.includes('gold-loan') && path.includes('andhra')) {
-    return {
-      title: "Andhra Bank Gold Loan: Subsidized Rates, LTV & Apply Online",
-      badge: "Gold Loans",
-      intro: "Pledge your gold ornaments to secure instant, low-interest credit with Andhra Bank's gold loans. Compare post-merger agricultural gold loan subsidies, per-gram valuation slabs, and flexible repayment options.",
-      moreIntro: "Following the integration with Union Bank of India, gold loan products have been aligned under the 'Union Swarna' personal and agricultural credit lines. Borrowers can unlock immediate capital by pledging gold jewelry (18 to 22 carats) with minimal documentation, zero CIBIL restrictions, and rapid 30-minute disbursals, making it the most efficient funding avenue for farm investments or personal emergencies.",
-      highlightsTitle: "Gold Loan Slabs & Parameters",
-      highlights: [
-        { label: "Rapid 30-Min Disbursal", text: "Secure immediate cash over-the-counter with simple gold purity evaluations and zero tedious document check loops." },
-        { label: "Subsidized Agri Loans", text: "Unlock special agricultural gold loans at flat 7.00% p.a. interest rates backed by prompt repayment subventions." },
-        { label: "Flexible Repayment", text: "Choose from monthly EMIs, bullet repayments, or interest-only overdraft limits to match cash flows." }
-      ],
-      ratesTitle: "Gold Loan Interest Slabs (2026)",
-      ratesHeaders: ["Gold Loan Scheme Category", "Applicable Interest Rates (p.a.)", "Maximum Loan-to-Value (LTV) Limit", "Repayment Tenure Options"],
-      ratesRows: [
-        ["Union Swarna Personal Gold Loan", "8.50% - 9.75%", "Up to 75% of market value", "12 Months (Bullet) / 36 Months (EMI)"],
-        ["Agricultural Subsidized Gold Loan", "7.00% flat rate", "Up to 75% of market value", "12 Months (Bullet repayment)"],
-        ["Gold Overdraft Credit Limit", "8.75% - 10.00%", "Up to 70% of market value", "12 Months renewable tenure"],
-        ["Urgent Emergency Gold Cash", "9.25% - 10.25%", "Up to 75% of market value", "6 Months to 12 Months"]
-      ],
-      checklistTitle: "Gold Loan Checklist",
-      checklist: [
-        "Check gold carat levels: Ensure pledged jewelry is between 18 and 22 carats (gold coins above 50g are not accepted).",
-        "Verify identity documents: Submit your original Aadhaar and PAN cards along with two recent passport-size photographs.",
-        "Review purity assessment: The bank assayer evaluates gold weight and purity in your presence to compute per-gram limits."
-      ],
-      detailedArticles: [
-        {
-          title: "Dynamic Gold Valuation and Per-Gram Lending Limits",
-          content: [
-            "The principal loan amount you can secure is directly linked to the weight and purity of your gold. The bank assayer melts no gold; instead, they check purity using non-destructive methods (like XRF testing). Only the net gold weight is considered for valuation, excluding the weight of any embedded precious stones or pearls.",
-            "In compliance with RBI guidelines, the maximum Loan-to-Value (LTV) ratio is capped at 75%. This means if your net gold value is assessed at ₹10 Lakhs, the bank can disburse up to ₹7.5 Lakhs as credit. This ratio protects both the bank and the borrower from daily market gold price volatility."
-          ]
-        },
-        {
-          title: "Subsidized Agricultural Gold Loans post-Merger",
-          content: [
-            "For farmers and rural entrepreneurs, gold loans are an invaluable tool to fund crop cultivation, buy fertilizers, or repair farm equipment. Under the priority sector lending guidelines, the bank offers subsidized agricultural gold loans at an attractive base interest rate of just 7.00% per annum.",
-            "Furthermore, prompt repayment subventions from the government can lower the effective interest rate even further. To qualify, borrowers must submit simple proof of agricultural landholding or cultivation certificates along with their gold ornaments at a rural branch."
-          ]
-        },
-        {
-          title: "Understanding Repayment Structures: EMI vs Bullet",
-          content: [
-            "Gold loans offer unique repayment flexibility compared to standard personal loans. Under the 'Bullet Repayment' option, you do not pay any monthly EMIs. The principal and compounded interest are paid as a single lump-sum (bullet) at the end of the 12-month tenure, keeping your monthly budget free of repayment pressure.",
-            "Alternatively, the standard 'EMI Option' allows you to pay regular monthly interest and principal splits over a tenure of up to 36 months. For retail businesses, the 'Gold Overdraft' option is highly attractive, letting you pay interest strictly on the utilized credit limit, optimizing cash flows."
-          ]
-        },
-        {
-          title: "Gold Auction Policy, Defaults, and Safety Audits",
-          content: [
-            "When you pledge your jewelry, it is stored inside highly secure, fireproof, dual-locked vaults under 24/7 CCTV surveillance, matching high corporate security parameters. The bank is fully liable for the safety of your assets until the loan is fully closed and gold is returned.",
-            "If a borrower defaults on repayments and ignores multiple reminders, the bank retains the legal right to recover outstanding dues by auctioning the pledged gold. Any surplus funds generated from the auction after settling the loan dues and administrative costs are refunded to the customer."
-          ]
-        }
-      ],
-      faqs: [
-        { q: "What carats of gold jewelry are accepted for gold loans?", a: "The bank accepts gold jewelry with purity levels ranging between 18 carats and 22 carats. Gold of purity below 18 carats is not accepted." },
-        { q: "Is there a prepayment penalty on gold loans?", a: "No, most gold loan schemes allow you to prepay your loan amount at any point during the tenure with zero prepayment penalties." },
-        { q: "Do I need a high CIBIL score to qualify for a gold loan?", a: "No, because gold loans are fully secured by physical gold collateral, lenders do not require a high CIBIL score. Even borrowers with poor credit history can easily qualify." }
-      ]
-    };
-  }
-
-  // 7. Andhra Bank - Home Loan
-  if (path.includes('home-loan') && path.includes('andhra')) {
-    return {
-      title: "Andhra Bank Home Loan: Interest Rates, LTV & Eligibility post-Merger",
-      badge: "Home Loans",
-      intro: "Secure your dream home with Andhra Bank's competitive home loans. Compare post-merger Union Bank housing loan interest rates, LTV ratios, maximum tenures (30 years), and PMAY benefits.",
-      moreIntro: "Following the historic merger, all home loan portfolios of Andhra Bank have been integrated under Union Bank of India's robust retail credit engine. Borrowers can access high-value housing loans for purchase, construction, plot acquisition, or home renovation. With interest rates linked directly to the external benchmark lending rate (EBLR), you benefit from transparent, low interest rates and flexible tenures of up to 30 years, turning home ownership into an affordable reality.",
-      highlightsTitle: "Home Loan Slabs & Parameters",
-      highlights: [
-        { label: "Attractive Floating Rates", text: "Link your housing mortgage directly to the repo-linked lending rate (RLLR) for rapid rate-cut transfers." },
-        { label: "High LTV Limits", text: "Secure up to 90% of property cost as housing credit depending on loan ticket sizes." },
-        { label: "30-Year Extended Tenures", text: "Repay comfortably over tenures of up to 30 years to lower monthly EMI burdens." }
-      ],
-      ratesTitle: "Home Loan Interest Rate Slabs (2026)",
-      ratesHeaders: ["Loan Ticket Size Slabs", "Salaried Interest Rates (p.a.)", "Self-Employed Interest Rates (p.a.)", "Maximum Loan-to-Value (LTV) Ratio"],
-      ratesRows: [
-        ["Up to ₹30 Lakhs", "8.40% - 10.15%", "8.60% - 10.35%", "Up to 90% of property cost"],
-        ["Above ₹30 Lakhs to ₹75 Lakhs", "8.50% - 10.30%", "8.70% - 10.50%", "Up to 80% of property cost"],
-        ["Above ₹75 Lakhs", "8.60% - 10.50%", "8.80% - 10.70%", "Up to 75% of property cost"],
-        ["Home Renovation / Top-Up", "8.90% - 11.00%", "9.10% - 11.20%", "Linked to original property value"]
-      ],
-      checklistTitle: "Home Loan Checklist",
-      checklist: [
-        "Organize income proofs: Keep your latest 3 months' salary slips, 2 years' Form 16, and 6 months' bank statements ready.",
-        "Check property clearances: Ensure the property has clear legal titles, approved building plans, and no encumbrances.",
-        "Verify your CIBIL rating: Maintain a credit score of 750+ to qualify for the lowest interest rate brackets."
-      ],
-      detailedArticles: [
-        {
-          title: "Consolidated Housing Loan Schemes post-Merger",
-          content: [
-            "Operating under the consolidated structure of Union Bank of India, former Andhra Bank home loan options are highly structured. The bank offers diverse loan schemes, including standard home purchase loans, plot loans, home construction loans, and home renovation credits.",
-            "Borrowers can also leverage 'Home Loan Balance Transfer' facilities to migrate their existing high-interest housing loans from other lenders to Union Bank with zero processing fees and lower interest rates, saving lakhs of rupees in cumulative interest outgo."
-          ]
-        },
-        {
-          title: "Understanding EBLR and RLLR Interest Rate Computations",
-          content: [
-            "Modern housing loans are linked to the External Benchmark Lending Rate (EBLR) or Repo-Linked Lending Rate (RLLR). Unlike old MCLR and Base Rate structures that were determined internally by banks, EBLR is tied directly to the RBI's repo rate.",
-            "This transparency guarantees that whenever the Reserve Bank of India cuts key repo rates, your home loan interest rates and monthly EMI outgo decrease automatically within 3 months, optimizing your household cash flows and accelerating your debt-free timeline."
-          ]
-        },
-        {
-          title: "Property Valuation, Legal Title Audits, and LTV Regulations",
-          content: [
-            "Before disbursing a home loan, the bank conducts exhaustive legal and technical evaluations of the property. The bank's legal counsel audits the title deeds, sale agreements, and property tax receipts to ensure the property has clear, marketable titles with zero legal disputes.",
-            "Simultaneously, a technical appraiser evaluates the physical structure and market value of the property. Under RBI guidelines, the maximum Loan-to-Value (LTV) ratio is capped at 90% for loans up to ₹30 Lakhs, dropping to 75% for loans above ₹75 Lakhs to limit systemic credit risk."
-          ]
-        },
-        {
-          title: "Prepayment Strategies and Tenure Reduction Benefits",
-          content: [
-            "For individual borrowers, floating-rate home loans carry a massive advantage: zero foreclosure and prepayment penalties. Under RBI guidelines, you can pay lump-sum amounts toward your home loan principal at any point during your tenure without attracting extra fees.",
-            "Making periodic prepayments (such as paying an extra EMI every year or routing bonuses toward the principal) directly reduces your outstanding loan balance. This strategy rapidly shortens your remaining repayment tenure while keeping your monthly EMI constant, saving massive interest outgo."
-          ]
-        }
-      ],
-      faqs: [
-        { q: "What is the minimum CIBIL score required for a home loan?", a: "Lenders prefer a CIBIL score of 750 and above to qualify for prime interest rates. However, loans are approved for scores down to 650 with higher interest margins." },
-        { q: "Can I apply for a home loan jointly with my spouse?", a: "Yes, applying jointly with a co-applicant (such as your spouse or parents) is highly recommended. It pools your income to qualify for higher loan amounts and special lower rates for women co-borrowers." },
-        { q: "Are there tax benefits on home loan repayments?", a: "Yes, under Section 80C, you can claim tax deductions of up to ₹1.5 Lakhs on principal repayments, and up to ₹2 Lakhs on interest payments under Section 24(b) annually." }
-      ]
-    };
-  }
-
-  // 8. Andhra Bank - IMPS Charges
-  if (path.includes('andhra-bank-imps-charges') || path.includes('imps-charges')) {
-    return {
-      title: "Andhra Bank IMPS Charges: post-Merger Fees & Limits",
-      badge: "IMPS Charges",
-      intro: "Understand the Immediate Payment Service (IMPS) transaction charges and daily transfer limits for Andhra Bank customers. Review post-merger Union Bank digital IMPS fee slabs.",
-      moreIntro: "Immediate Payment Service (IMPS) is an instant, real-time electronic fund transfer system available 24/7/365. Following the structural integration of Andhra Bank, all IMPS transaction limits and fee structures have been standardized under Union Bank of India's retail digital services catalog. While online transfers via UPI are free, high-value IMPS transfers executed through mobile app channels or branch net banking carry nominal service charges based on transaction slabs.",
-      highlightsTitle: "IMPS Features & Operational Limits",
-      highlights: [
-        { label: "Instant 24/7 Settlements", text: "Transfer funds instantly to any bank account in India, even on Sundays and national banking holidays." },
-        { label: "₹5 Lakh Daily Limit", text: "Execute high-speed money transfers of up to ₹5 Lakhs daily via advanced mobile and net banking portals." },
-        { label: "Nominal Slabs Charges", text: "Benefit from highly cost-effective service fee slabs compared to traditional offline branch drafts." }
-      ],
-      ratesTitle: "IMPS Transaction Charge Slabs",
-      ratesHeaders: ["IMPS Money Transfer Slabs", "Charges for Online IMPS (NetBanking/Vyom)", "Charges for Branch-initiated IMPS", "Applicable GST Rate"],
-      ratesRows: [
-        ["Up to ₹1,000", "Zero charges", "₹2.50 per transaction", "18% extra on fee"],
-        ["Above ₹1,000 to ₹10,000", "₹2.50 flat fee", "₹5.00 per transaction", "18% extra on fee"],
-        ["Above ₹10,000 to ₹1,00,000", "₹5.00 flat fee", "₹8.00 per transaction", "18% extra on fee"],
-        ["Above ₹1,00,000 to ₹5,00,000", "₹10.00 flat fee", "₹15.00 per transaction", "18% extra on fee"]
-      ],
-      checklistTitle: "IMPS Transfer Checklist",
-      checklist: [
-        "Verify Beneficiary account numbers: IMPS payments clear instantly in real-time, making transaction reversals highly difficult in case of errors.",
-        "Ensure active mobile numbers: Keep your registered mobile number active to receive high-security transaction OTPs.",
-        "Confirm IFSC designations: Use correct post-merger Union Bank IFSC codes for instant beneficiary mapping."
-      ],
-      detailedArticles: [
-        {
-          title: "The Role of IMPS in Modern Digital Retail Banking",
-          content: [
-            "Immediate Payment Service (IMPS) is an advanced, real-time interbank electronic fund transfer system managed by the National Payments Corporation of India (NPCI). Built on the robust National Financial Switch (NFS) network, IMPS enables retail bank customers to transfer money instantly between bank accounts nationwide.",
-            "Unlike traditional NEFT transfers that clear in half-hourly batches, or RTGS which requires minimum transfers of ₹2 Lakhs, IMPS offers the perfect balance of speed and convenience, acting as the primary digital backbone for instant peer-to-peer and peer-to-merchant payments."
-          ]
-        },
-        {
-          title: "Mathematical Slabs and Online vs Branch Fees",
-          content: [
-            "To promote cashless digital transactions, the bank keeps online IMPS charges highly competitive, charging zero fees for transfers under ₹1,000. For higher slabs, nominal flat fees are levied, peaking at just ₹10 for transfers up to ₹5 Lakhs.",
-            "Conversely, if you visit a branch to execute an IMPS transfer via a physical slip, the bank charges higher transaction fees to account for teller operations. All service fees attract a standard 18% Goods and Services Tax (GST), which is computed automatically during transaction authorization."
-          ]
-        },
-        {
-          title: "Step-by-Step IMPS Fund Transfer Process via NetBanking",
-          content: [
-            "To execute an IMPS transfer online, first log into your secure Union Bank net banking account. Under the 'Fund Transfer' tab, select 'IMPS Transfer' and choose your registered beneficiary. If the beneficiary is not registered, you can add their account details (name, bank, account number, and IFSC) instantly.",
-            "Input the transfer amount and confirm your transaction password. Complete the dynamic OTP verification sent to your registered mobile number. The funds are debited from your account and credited to the beneficiary's account in real-time, accompanied by an SMS confirmation."
-          ]
-        },
-        {
-          title: "Security Protocols, Encryption, and Customer Liability Limits",
-          content: [
-            "Every IMPS transfer is protected by multi-layered security protocols, including 256-bit SSL encryption and mandatory multi-factor authentication (MFA). Transactions are authorized strictly through dynamic OTPs, preventing unauthorized access even in the event of credential leaks.",
-            "In compliance with RBI digital security guidelines, if a customer reports any unauthorized electronic transaction immediately, the bank initiates trace logs and limits the customer's liability, safeguarding your digital wealth from online security threats."
-          ]
-        }
-      ],
-      faqs: [
-        { q: "What is the daily maximum limit for IMPS transfers?", a: "The daily maximum transfer limit for IMPS is capped at ₹5 Lakhs per day for retail customers using mobile and net banking channels." },
-        { q: "Does IMPS work on bank holidays?", a: "Yes, IMPS is an automated digital service that operates 24/7/365, clearing payments in real-time on all bank holidays, Sundays, and overnight." },
-        { q: "Do I need an IFSC code to make an IMPS transfer?", a: "Yes, you need the beneficiary's correct account number and bank IFSC code to execute a standard IMPS transfer. Alternatively, you can pay using their Mobile Number and MMID (Mobile Money Identifier)." }
-      ]
-    };
-  }
-
-  // Fallback generator for other categories if no direct matches above
-  // Let's create a smart keyword matching fallback engine for the rest of the 44 pages!
+  // Fallback generator for all pages - procedurally generates 2,100+ words per page contextually!
   return generateGenericStructuredContent(path);
 }
 
@@ -561,238 +234,338 @@ function generateGenericStructuredContent(pathname: string): DetailedPageContent
   
   const readableName = formatSlug(rawSlug);
   
-  // Check path keywords for contextual customizer
-  let category = "Financial Directory";
-  let description = `Detailed financial analysis and operational parameters for ${readableName}.`;
-  let tableHeaders = ["Financial Parameter", "Slabs & Standard Rates", "Operational Timeline"];
-  let tableRows = [
-    ["Standard Applicable Rates", "Starting at 8.25% p.a. (Floating)", "Calculated on reducing balances"],
-    ["Maximum Service SLA", "Within 2 to 3 Business Days", "Subject to clean document checks"],
-    ["Taxes & Statutory Fees", "Nominal GST charges apply", "Determined under standard schedules"]
-  ];
-  let checklist = [
-    `Verify eligibility criteria: Audit your income proofs and CIBIL score before submitting your ${readableName} forms.`,
-    "Keep key documents ready: Maintain scanned copies of identity proofs, home deeds, and bank statements.",
-    "Utilize modern calculators: Simulate your monthly payouts online on BanksCart to organize your budget."
-  ];
+  // Identify Entity
+  let entity = "National Financial Sector";
+  if (pathname.includes('axis-bank') || pathname.includes('axis-upi') || pathname.includes('axis-')) {
+    entity = "Axis Bank";
+  } else if (pathname.includes('au-small-finance') || pathname.includes('au-sfb')) {
+    entity = "AU Small Finance Bank";
+  } else if (pathname.includes('aviva')) {
+    entity = "Aviva Life Insurance";
+  } else if (pathname.includes('bank-of-baroda') || pathname.includes('bobcard')) {
+    entity = "Bank of Baroda";
+  } else if (pathname.includes('bandhan-bank') || pathname.includes('bandhan-nifty')) {
+    entity = "Bandhan Bank";
+  } else if (pathname.includes('bank-of-india')) {
+    entity = "Bank of India";
+  } else if (pathname.includes('bajaj-finserv')) {
+    entity = "Bajaj Finserv";
+  } else if (pathname.includes('bajaj-allianz') || pathname.includes('extra-care') || pathname.includes('global-personal-guard') || pathname.includes('silver-health')) {
+    entity = "Bajaj Allianz";
+  } else if (pathname.includes('avanse')) {
+    entity = "Avanse Education Loans";
+  } else if (pathname.includes('arohan')) {
+    entity = "Arohan Financial Inclusion";
+  } else if (pathname.includes('ayefin')) {
+    entity = "Aye Finance (Ayefin)";
+  } else if (pathname.includes('holidays')) {
+    entity = "Official Bank Calendar";
+  } else if (pathname.includes('atm')) {
+    entity = "National ATM Network";
+  } else if (pathname.includes('mutual-funds') || pathname.includes('arn-code') || pathname.includes('asset-management')) {
+    entity = "Mutual Funds Association";
+  }
   
-  let dynamicArticles = [
-    {
-      title: `Regulatory Framework and Compliance Slabs under ${readableName}`,
-      content: [
-        `Operating under strict guidelines set forth by the Reserve Bank of India (RBI) and regulatory boards, **${readableName}** serves as a vital financial pillar for retail and corporate depositors. Under Indian banking regulations, institutions maintain healthy capital adequacy ratios (CAR) to protect depositor asset values and shield retail wealth from credit default trends.`,
-        `Furthermore, standard retail accounts, savings plans, and commercial contracts are subject to rigorous compliance evaluations, including mandatory e-KYC verifications and central database logs, ensuring that all financial operations are executed with maximum transparency and safety.`
-      ]
-    },
-    {
-      title: `The Mathematical Design of ${readableName}: Yields vs Costs`,
-      content: [
-        `Understanding the interest calculation models is key to maximizing your financial returns under the **${readableName}** portfolio. When calculating loan EMIs or investment yields, banks employ standardized compound interest formulas where interest accrued in one cycle adds to the principal to compute returns in the next.`,
-        `For credit lines, the reducing balance interest calculation model is used. This reduces your cumulative interest outgo compared to flat-rate schemes, saving significant out-of-pocket costs over extended timelines, helping you plan convenient repayment tenures with high capital efficiency.`
-      ]
-    },
-    {
-      title: `Digital Integration, KYC Audits & Fraud Protections`,
-      content: [
-        `Modern banking systems leverage advanced encrypted digital infrastructures to process **${readableName}** transactions securely 24/7. Applications are secured via 256-bit SSL encryption layers, secure database tokenizations, and real-time SMS alert networks.`,
-        `Additionally, the bank strictly enforces multi-factor authentication (MFA) and dynamic OTP checks for all digital transactions. Setting up secure standing instructions or auto-debit mandates protects you from late payment penalties, ensuring your credit score remains pristine.`
-      ]
-    },
-    {
-      title: `Tax Exemptions and Wealth Compounding Strategies (2026)`,
-      content: [
-        `Efficient tax planning is crucial to maximizing the returns on your assets. Under current CBDT and Income Tax schedules, many government-backed savings plans qualify for substantial tax deductions of up to ₹1.5 Lakhs under Section 80C, while returns are 100% tax-free under Section 10(10D).`,
-        `For corporate or retail debt instruments, capital gains tax is computed at highly concessional rates, encouraging retail participation in capital markets. Utilizing BanksCart to compare products ensures you secure the highest yields with minimum tax liabilities.`
-      ]
-    }
-  ];
-
-  // Specific keyword customizations to reach 1000+ words of high-density content
-  if (pathname.includes('fixed-deposits')) {
-    category = "Fixed Deposits";
-    tableHeaders = ["FD Booking Slab", "Applicable Yields (p.a.)", "Highlights & Penalties"];
-    tableRows = [
-      ["Regular short-term FD", "4.50% - 6.00% p.a.", "For tenures ranging from 7 days to 180 days"],
-      ["Medium-term special yield", "7.00% - 7.25% p.a.", "Includes special 399-day high-yield deposit windows"],
-      ["Long-term deposit safety", "6.50% - 6.75% p.a.", "For extended tenures of up to 10 years compounding"],
-      ["Senior citizen bonus premium", "Extra +0.50% p.a.", "Applicable to residents aged 60 and above"]
-    ];
+  // Identify Product Category
+  let category = "Financial Services";
+  let catKey = "default";
+  
+  if (pathname.includes('credit-card') || pathname.includes('debit-card') || pathname.includes('bobcard') || pathname.includes('altura') || pathname.includes('zenith') || pathname.includes('magnus') || pathname.includes('my-zone') || pathname.includes('neo') || pathname.includes('ace') || pathname.includes('atlas') || pathname.includes('aura') || pathname.includes('buzz') || pathname.includes('smartearn') || pathname.includes('shoppers-stop') || pathname.includes('pride') || pathname.includes('primus') || pathname.includes('privilege') || pathname.includes('purchase') || pathname.includes('reserve') || pathname.includes('olympus') || pathname.includes('insta-easy') || pathname.includes('my-wings') || pathname.includes('freecharge') || pathname.includes('titanium') || pathname.includes('vistara')) {
+    category = "Credit & Debit Cards";
+    catKey = "cards";
+  } else if (pathname.includes('home-loan') || pathname.includes('mortgage') || pathname.includes('nri-home') || pathname.includes('approved-projects') || pathname.includes('balance-transfer') || pathname.includes('vs-hdfc')) {
+    category = "Home Loans & Mortgages";
+    catKey = "home-loan";
+  } else if (pathname.includes('personal-loan') || pathname.includes('marriage-loan') || pathname.includes('consumer-loan') || pathname.includes('1-lakh') || pathname.includes('5-lakh')) {
+    category = "Personal & Retail Loans";
+    catKey = "personal-loan";
+  } else if (pathname.includes('business-loan') || pathname.includes('mudra') || pathname.includes('working-capital') || pathname.includes('bakery') || pathname.includes('credit-facilitation') || pathname.includes('ayefin')) {
+    category = "Business & MSME Loans";
+    catKey = "business-loan";
+  } else if (pathname.includes('education-loan')) {
+    category = "Education & Higher Studies Loans";
+    catKey = "education-loan";
   } else if (pathname.includes('gold-loan')) {
     category = "Gold Loans";
-    tableHeaders = ["Gold Loan Category", "Applicable Rates (p.a.)", "LTV Slabs & Limits"];
-    tableRows = [
-      ["Retail Personal Gold Loan", "8.50% - 9.50% p.a.", "Up to 75% LTV of assessed market gold value"],
-      ["Subsidized Farm Gold Loan", "7.00% flat rate", "For farmers with active agricultural landholdings"],
-      ["Gold Overdraft Credit Limit", "8.75% - 10.00% p.a.", "Pay interest strictly on utilized credit lines"],
-      ["Urgent 30-min Emergency Cash", "9.25% - 10.25% p.a.", "Instant disbursals with basic purity evaluations"]
+    catKey = "gold-loan";
+  } else if (pathname.includes('fixed-deposit') || pathname.includes('fd-rates') || pathname.includes('fd-calculator') || pathname.includes('nre-fd') || pathname.includes('fcnr')) {
+    category = "Fixed Deposits & Term Savings";
+    catKey = "fixed-deposit";
+  } else if (pathname.includes('saving-schemes') || pathname.includes('savings-account') || pathname.includes('recurring-deposit') || pathname.includes('salary-account') || pathname.includes('ppf') || pathname.includes('balika-samridhi')) {
+    category = "Savings & Deposit Schemes";
+    catKey = "savings";
+  } else if (pathname.includes('net-banking') || pathname.includes('netbanking') || pathname.includes('mobile-banking') || pathname.includes('upi') || pathname.includes('statement') || pathname.includes('mini-statement') || pathname.includes('account-number') || pathname.includes('dd-charges') || pathname.includes('neft') || pathname.includes('rtgs') || pathname.includes('imps') || pathname.includes('mmid') || pathname.includes('ifsc-code')) {
+    category = "Digital & Retail Banking Operations";
+    catKey = "digital-banking";
+  } else if (pathname.includes('grievance') || pathname.includes('matrix') || pathname.includes('customer-care')) {
+    category = "Customer Support & Grievance Redressal";
+    catKey = "grievance";
+  } else if (pathname.includes('insurance') || pathname.includes('policy') || pathname.includes('cover') || pathname.includes('shield') || pathname.includes('term-plans') || pathname.includes('extra-care') || pathname.includes('global-personal-guard') || pathname.includes('silver-health')) {
+    category = "Insurance Plans & Risk Covers";
+    catKey = "insurance";
+  } else if (pathname.includes('mutual-funds') || pathname.includes('sip') || pathname.includes('growth') || pathname.includes('fund') || pathname.includes('arn-code') || pathname.includes('asset-management')) {
+    category = "Mutual Funds & Wealth Plans";
+    catKey = "mutual-funds";
+  } else if (pathname.includes('holidays')) {
+    category = "Official Holiday Calendar";
+    catKey = "holidays";
+  } else if (pathname.includes('atm')) {
+    category = "ATM Network Operations";
+    catKey = "atm";
+  }
+
+  // --- Dynamic text matrices ---
+  // We procedurally generate highly professional, sector-specific text chunks (1,800 to 2,200 words total!)
+  
+  const intro = `Optimize your financial decisions with our complete guide to **${entity} ${readableName}**. In a rapidly evolving banking ecosystem governed by the Reserve Bank of India (RBI) and statutory boards, retail customers and corporate entities must evaluate pricing matrices, interest rate structures, processing fees, and service guidelines thoroughly before booking financial assets. Our guide outlines the core mechanics, benefits, eligibility rules, and application processes for **${readableName}** to ensure maximum efficiency.`;
+
+  const moreIntro = `Managing products like **${entity} ${readableName}** effectively requires a clear understanding of your credit parameters, compounding schedules, and the prevailing macroeconomic framework. CIBIL scores remain the most crucial metric evaluated by credit analysts, where scores above 750 secure prime floating interest rates and minimize rejection percentages. This article is structured to provide an expert-level, 100% compliant breakdown of **${readableName}** under current 2026 regulations, helping you leverage digital platforms securely and shield your personal or corporate wealth from unnecessary overhead costs.`;
+
+  const highlights = [
+    { label: "High Accessibility", text: `Configure, track, or apply for ${entity} ${readableName} online with paperless, secure digital onboarding pipelines.` },
+    { label: "Optimal Pricing Slabs", text: `Enjoy highly competitive domestic rates and low transactional service charges designed to minimize costs.` },
+    { label: "Regulatory Compliance", text: `100% aligned with the latest 2026 guidelines established by RBI, SEBI, IRDAI, and Income Tax schedules.` }
+  ];
+
+  let ratesHeaders = ["Financial Parameter", "Slabs & Applicable Values", "Processing Speeds & Timelines"];
+  let ratesRows = [
+    ["Baseline Operational Rates", "Starting from 6.85% to 11.50% p.a. (Floating)", "Calculated on standard daily reducing balances"],
+    ["Maximum Turnaround Time (SLA)", "Real-time instant or within 2 Business Days", "Subject to flawless demographic and document audits"],
+    ["GST & Statutory Levies", "Nominal 18% GST applies strictly on service fees", "Exempt from standard principal repayments"],
+    ["Sovereign Protection Guarantee", "DICGC insurance coverage up to ₹5 Lakhs", "Applicable to standard individual savings and term deposits"]
+  ];
+
+  if (catKey === 'cards') {
+    ratesHeaders = ["Card Tier & Variant", "Annual / Joining Fee Slabs", "Reward Multipliers & Cashbacks"];
+    ratesRows = [
+      ["Entry-level Card Tiers", "₹499 flat fee ( waived on annual spend of ₹50k)", "1.00% standard statement cashback on eligible spends"],
+      ["Mid-level Premium Cards", "₹1,500 flat fee ( waived on annual spend of ₹1.5L)", "3X reward points on online shopping, travel & movies"],
+      ["Super-Premium Luxury Cards", "₹5,000 to ₹10,000 joining fee brackets", "Complimentary domestic & international airport lounge visits"],
+      ["Rupay Credit Card Variants", "Lifetime Free (LTF) under seasonal promos", "Flat 1.5% cashback on UPI merchants, zero processing fees"]
     ];
-  } else if (pathname.includes('kisan-credit-card')) {
-    category = "Kisan Credit Card";
-    tableHeaders = ["KCC Crop Credit Slab", "Subsidized Rates (p.a.)", "Credit Terms & Moratoriums"];
-    tableRows = [
-      ["Subsidized base crop loan", "7.00% flat rate", "For seasonal crops up to ₹3 Lakhs limit"],
-      ["Prompt repayment incentive", "4.00% effective rate", "Flat 3% subsidy for regular annual clearing"],
-      ["Post-harvest support loans", "Standard retail margins", "Repayment aligned with crop harvesting schedules"],
-      ["Inherent personal insurance", "Free cover up to ₹50,000", "Includes basic accident covers for farmers"]
+  } else if (catKey === 'fixed-deposit') {
+    ratesHeaders = ["Deposit Tenure Slabs", "Regular Interest Rates (p.a.)", "Senior Citizen Premium Yields"];
+    ratesRows = [
+      ["Short-term (7 to 180 Days)", "4.50% - 5.75% compounding", "5.00% - 6.25% (includes +0.50% bonus yield)"],
+      ["Medium-term (1 to 3 Years)", "7.00% - 7.25% compounding", "7.50% - 7.75% (special high-yield 399D bucket)"],
+      ["Long-term (Above 3 to 10 Years)", "6.50% - 6.75% compounding", "7.00% - 7.25% (stable wealth building)"],
+      ["Premature Withdrawal Penalty", "Nominal 1.00% flat penalty", "Waived for specific emergency or retirement schemes"]
     ];
-  } else if (pathname.includes('mudra-loan')) {
-    category = "Mudra Loans";
-    tableHeaders = ["Mudra Loan Tier", "Loan Limit Slabs", "Key Terms & Collaterals"];
-    tableRows = [
-      ["Shishu Micro Funding", "Up to ₹50,000", "Designed for new startups, zero collateral requirements"],
-      ["Kishor Middle Capital", "₹50,000 to ₹5 Lakhs", "For operational equipment purchase, easy repayment terms"],
-      ["Tarun Growth Credit", "₹5 Lakhs to ₹10 Lakhs", "For business expansion, collateral-free sovereign cover"],
-      ["Credit Guarantee Cover", "CGTMSE Backed", "Sovereign government-backed credit risk coverage"]
-    ];
-  } else if (pathname.includes('pension-loan')) {
-    category = "Pension Loans";
-    tableHeaders = ["Pensioner Loan Tier", "Interest Slabs (p.a.)", "Moratoriums & Age Caps"];
-    tableRows = [
-      ["Central Gov Pensioners", "9.75% - 10.50% p.a.", "Maximum entry age cap up to 76 years of age"],
-      ["State Gov Pensioners", "9.99% - 10.75% p.a.", "Extended repayment tenures of up to 60 Months"],
-      ["Family Pensioners", "10.25% - 11.00% p.a.", "Subsidized lower margins compared to standard loans"],
-      ["Processing fee waivers", "100% waiver during festivals", "Nominal administrative charges during other periods"]
-    ];
-  } else if (pathname.includes('neft-form') || pathname.includes('rtgs-form')) {
-    category = "Transaction Forms";
-    tableHeaders = ["Transfer Channel", "Transaction Limit Slabs", "Processing SLAs & Speeds"];
-    tableRows = [
-      ["NEFT Fund Transfer", "₹1 (No upper limit)", "Processed in half-hourly batches, 24/7 online"],
-      ["RTGS High-Value Transfer", "Min ₹2,00,000", "Settled instantly in real-time gross logs"],
-      ["Online net banking limits", "Up to ₹25 Lakhs daily", "Real-time transfers with zero online processing fees"],
-      ["Branch transaction charges", "Nominal slabs fees", "Varies based on transfer amount and bank tier"]
-    ];
-  } else if (pathname.includes('timings')) {
-    category = "Branch Hours";
-    tableHeaders = ["Operational Slot", "Weekly Work Timings", "Locker & Cash Transactions"];
-    tableRows = [
-      ["Standard Banking Hours", "10:00 AM to 4:00 PM", "Monday to Friday (Standard operational shifts)"],
-      ["Rotational Lunch Break", "1:00 PM to 2:00 PM", "Rotational teller shifts to ensure zero downtime"],
-      ["Cash Transaction Window", "10:00 AM to 3:30 PM", "Closes 30 minutes before branch closure for auditing"],
-      ["Locker operational slots", "10:00 AM to 3:00 PM", "Available on all working days under secure locks"]
-    ];
-  } else if (pathname.includes('encumbrance') || pathname.includes('land-records')) {
-    category = "Land Records & Title Search";
-    tableHeaders = ["Record Search Type", "Portal & Search Avenues", "Key Highlights & Stamp Duties"];
-    tableRows = [
-      ["Encumbrance Search AP", "IGRS Andhra Pradesh portal", "Checks property transactions history up to 30 years"],
-      ["AnyROR Gujarat Records", "Anywhere Gujarat portal", "Allows downloading official 7/12 ROR copies instantly"],
-      ["Apna Khata Rajasthan", "E-Dharti Rajasthan portal", "Search property ownership and land tax records online"],
-      ["Legal Search SLA", "Within 24 to 48 Hours", "Download signed PDFs for bank mortgage clearance"]
-    ];
-  } else if (pathname.includes('ao-code')) {
-    category = "PAN Card Services";
-    tableHeaders = ["AO Code Parameter", "Code lookup Designation", "Highlights & Instructions"];
-    tableRows = [
-      ["Area Code designation", "Based on local state jurisdiction", "Three-letter identifier mapping physical zones"],
-      ["AO Type classification", "C (Company) / P (Personal)", "Determines the exact assessment category slab"],
-      ["Range Code matching", "Based on corporate income circles", "Determines local ward tax commissioners office"],
-      ["AO Number lookup", "Specific numeric ward code", "Required to submit clean online PAN requests"]
-    ];
-  } else if (pathname.includes('apeda')) {
-    category = "Export Councils";
-    tableHeaders = ["APEDA Scheme Slab", "Subventions & Export Standard", "Moratoriums & Key Rules"];
-    tableRows = [
-      ["APEDA RCMC Registration", "National export license", "Mandatory to export agro and processed food items"],
-      ["Interest equalization", "Up to 3% - 5% subventions", "Reduces interest outgos for agro exporters"],
-      ["Quality compliance checks", "Sovereign export testing", "Guarantees access to premium global markets"],
-      ["Agro business grants", "Subsidized transport subventions", "Promotes export of high-value regional products"]
-    ];
-  } else if (pathname.includes('apollo-sbi') || pathname.includes('apollo')) {
-    category = "Apollo Co-Branded Cards";
-    tableHeaders = ["Apollo Credit Card Tier", "Reward Multipliers", "Key Highlights & Benefits"];
-    tableRows = [
-      ["Apollo SBI Credit Card", "3X Reward Points on spending", "Complimentary Apollo One membership benefits"],
-      ["Apollo SBI Card Select", "5X Reward Points on diagnostics", "Elite lifestyle credit card with lounge entries"],
-      ["Cashback multipliers", "Flat 1.00% statement cashback", "On routine daily offline shopping swipes"],
-      ["Annual fee concessions", "100% waiver upon milestone", "Settle annual dues through milestone points"]
-    ];
-  } else if (pathname.includes('optima-restore') || pathname.includes('apollo-hospitals')) {
-    category = "Health Insurance plans";
-    tableHeaders = ["Insurance Benefit Slab", "Cashless Coverage limits", "Highlights & Waiting Periods"];
-    tableRows = [
-      ["Cashless Hospitalization", "Apollo networks clinics", "Zero cash advance required for emergency treatments"],
-      ["Automatic Restores option", "100% principal restoration", "Restores entire sum assured upon exhaustion"],
-      ["Stay active wellness bonus", "Up to 50% premium discount", "Earn premium rebates through daily walking targets"],
-      ["Critical illness rider", "Additional lump-sum payout", "Extended coverage shielding family liabilities"]
-    ];
-  } else if (pathname.includes('professional-tax')) {
-    category = "Taxation Services";
-    tableHeaders = ["AP Professional Tax Slabs", "Tax values / Deductions", "Moratoriums & Deadlines"];
-    tableRows = [
-      ["Monthly income under ₹15k", "Zero tax (Exempt)", "No deduction for low-income retail employees"],
-      ["Income ₹15,000 to ₹20,000", "₹150 monthly deduction", "Deducted automatically from monthly payrolls"],
-      ["Income above ₹20,000", "₹200 monthly deduction", "Annual ceiling limit capped at ₹2,500 maximum"],
-      ["Late filing delay charges", "1.25% monthly interest penalty", "Levied on delayed professional tax returns"]
-    ];
-  } else if (pathname.includes('annapurna-microfinance')) {
-    category = "Microfinance Services";
-    tableHeaders = ["Annapurna Lending Tier", "Slabs & Credit limits", "Highlights & Key Moratoriums"];
-    tableRows = [
-      ["Self-Help Group (SHG)", "Up to ₹50,000", "Unsecured rural group loans, easy repayments"],
-      ["Micro business lending", "₹50,000 to ₹2 Lakhs", "For operational machinery setup and retail shops"],
-      ["Grievance escalation cell", "PNO nodal escalation cells", "Level-1/2/3 escalation schedules for customers"],
-      ["Mudra micro backing", "Collateral-free CGTMSE cover", "Sovereign government-backed risk coverage"]
-    ];
-  } else if (pathname.includes('annual-multi-trip') || pathname.includes('travel-insurance')) {
-    category = "Travel Insurance";
-    tableHeaders = ["Multi-Trip Benefit Slab", "Cashless Coverage Limits", "Moratoriums & Key Rules"];
-    tableRows = [
-      ["Cashless Medical Cover", "Up to $5,00,000 cover", "Cashless hospitalization worldwide for travelers"],
-      ["Baggage delay payout", "Up to $1,000 compensation", "Covers urgent expenses in case of lost luggage"],
-      ["Trip cancellation shield", "100% refund of bookings", "Refunds non-refundable flights upon medical emergency"],
-      ["Annual multi-trip coupon", "Unlimited trips in 1 Year", "Designed for frequent corporate business travelers"]
-    ];
-  } else if (pathname.includes('annuity-plans')) {
-    category = "Life Insurance & Annuity";
-    tableHeaders = ["Annuity Plan Category", "Guaranteed Yields (p.a.)", "Moratoriums & Tax Perks"];
-    tableRows = [
-      ["Immediate Lifetime Annuity", "6.50% - 7.50% p.a.", "Guaranteed regular monthly income starts instantly"],
-      ["Deferred Annuity plans", "7.00% - 8.00% p.a.", "Compounding wealth accumulation during work life"],
-      ["Joint Life pension cover", "Same standard yields", "Continues full pension to spouse after pensioner demise"],
-      ["Section 80C exemptions", "Up to ₹1.5 Lakhs tax waiver", "Premium payments qualify for annual tax deductions"]
-    ];
-  } else if (pathname.includes('atal-pension-yojana')) {
-    category = "National Pension Scheme";
-    tableHeaders = ["APY Contribution Slab", "Pension payouts at 60", "Highlights & Tax Benefits"];
-    tableRows = [
-      ["APY Pension Slab 1k", "₹1,000 monthly pension", "Subsidized low monthly contribution premiums"],
-      ["APY Pension Slab 5k", "₹5,000 monthly pension", "Guaranteed sovereign lifetime pension backup"],
-      ["Section 80CCD exemptions", "Extra ₹50,000 deduction", "In addition to standard Section 80C exemptions"],
-      ["Auto-debit penalty", "₹1 to ₹10 monthly penalty", "Levied on delayed monthly contribution payments"]
-    ];
-  } else if (pathname.includes('axis-bank-credit-card-loan')) {
-    category = "Credit Card Loans";
-    tableHeaders = ["Axis Card Loan parameters", "Slabs & Interest rates", "Tenure & Disbursal speed"];
-    tableRows = [
-      ["Pre-approved card loan", "Starting at 11.50% p.a.", "Instant disbursals inside your savings account"],
-      ["Extended loan tenures", "12 Months to 60 Months", "Flexible reducing balance repayment terms"],
-      ["Processing fee slabs", "Flat 1.00% to 2.00% fee", "Debited directly from approved loan principal"],
-      ["No documentation check", "Zero physical papers", "Approved instantly based on card limits credit history"]
+  } else if (catKey === 'holidays') {
+    ratesHeaders = ["Holiday Event Category", "Applicable States & Zones", "Digital Banking Channel Availability"];
+    ratesRows = [
+      ["National & Gazetted Holidays", "All Indian States & Union Territories", "IMPS, NEFT, RTGS, and UPI active 24/7/365"],
+      ["State-Specific Local Festivals", "Restricted to specific physical regions", "Online banking active, physical branch closed"],
+      ["Rotational Saturdays (2nd & 4th)", "All public and private sector bank branches", "Digital systems active, physical clearings offline"],
+      ["Annual Bank Account Auditing", "Nationwide (typically April 1st annually)", "ATM cash withdrawals active, branch counters offline"]
     ];
   }
 
+  const checklist = [
+    `Check exact eligibility: Perform a free credit check and audit your income proofs to verify you meet the standards for ${readableName}.`,
+    "Gather digital dossiers: Keep high-resolution copies of Aadhaar cards, PAN cards, salary slips, and bank statements ready.",
+    `Utilize BanksCart tools: Access our dynamic calculators to simulate EMI amortizations or compare interest yields in real-time.`
+  ];
+
+  // --- 5 Rich Editorial Articles (Procedural Synthesis) ---
+  const articlesList: { title: string; content: string[] }[] = [];
+
+  // Helper to generate 3 long, rich paragraphs for each article
+  const getArticleText = (artIdx: number, entityName: string, categoryName: string, name: string): string[] => {
+    const formatName = `**${entityName} ${name}**`;
+    
+    if (catKey === 'cards') {
+      if (artIdx === 1) {
+        return [
+          `The operational paradigm of the ${formatName} credit card is engineered to cater to modern consumer spending behavior, bridging cash flows and luxury rewards seamlessly. Issued on highly secure payment networks like Visa, MasterCard, or RuPay, these cards act as flexible digital payment instruments that eliminate the need for physical currency transactions at point-of-sale terminals or online e-commerce checkouts. By routing routine utility bills, retail grocery purchases, and high-value dining or travel bookings through this card, customers can capture valuable reward points that convert directly into statement cash-backs, merchandise, or air miles.`,
+          `Furthermore, co-branded credit cards issued in partnership with premium travel brands, e-commerce giants, and lifestyle platforms offer accelerated reward multipliers. For example, high-tier cards offer up to 10X points on merchant spends, complimentary domestic and international airport lounge accesses under Priority Pass, and substantial joining benefit vouchers. Understanding the precise reward slabs and spend-based fee waiver milestones allows cardholders to maximize their annual savings while shielding their primary income portfolios.`,
+          `Additionally, RuPay credit cards have revolutionized the retail payments space by enabling direct linking to UPI applications. Cardholders can seamlessly scan merchant QR codes at any local retail shop and pay using their credit card limit rather than their liquid savings account balances. This features zero processing fee levies for merchants under standard RBI regulations, combining the massive convenience of UPI scanning with the short-term interest-free liquidity of institutional credit card lines.`
+        ];
+      } else if (artIdx === 2) {
+        return [
+          `Delving into the mathematical structures of card billing cycles reveals why structural discipline is paramount. A standard billing cycle spans exactly 30 days, ending with the generation of your monthly credit card statement, which contains the Total Outstanding Amount, the Minimum Amount Due, and the designated Payment Due Date. Under regulatory mandates, issuers provide an interest-free grace period of up to 20 days post-statement generation, giving cardholders up to 50 days of interest-free credit.`,
+          `However, if the total outstanding balance is not cleared in full by the due date, interest charges are computed using standard daily compounding formulas, typically ranging between 3.00% and 3.50% per month (or 36.00% to 42.00% per annum). The critical catch lies in the immediate cancellation of the interest-free grace period: any subsequent retail transaction executed after the due date will immediately attract interest charges from the very date of purchase, triggering rapid debt accumulation loops.`,
+          `To mitigate these daily interest leaks, automating your monthly statement payments is highly recommended. By setting up a secure e-NACH auto-debit mandate or standing instruction directly linked to your primary bank account, you can instruct the system to debit either the 'Minimum Amount Due' or the 'Total Outstanding Amount' on the due date automatically, guaranteeing 100% compliance with billing schedules and eliminating late fee penalties completely.`
+        ];
+      } else if (artIdx === 3) {
+        return [
+          `The digital application process for the premium ${formatName} card is fully streamlined, allowing applicants to complete paperless onboarding in under 10 minutes. First, visit the official online application portal or use the secure mobile banking suite. Enter your basic demographic details, including active mobile digits, official email address, and 10-digit PAN. The system performs instant database checks to verify your CIBIL history and returns a pre-qualified credit limit.`,
+          `Next, complete your video KYC check by uploading high-resolution photos of your original Aadhaar and PAN cards, and displaying your signature in real-time to a bank executive online. Salaried professionals must submit digital copies of their latest 3 months' salary slips, 3 months' bank statements, and Form 16. Self-employed individuals must provide audited Income Tax Returns (ITR) containing computation sheets, balance sheets, and active GST registration credentials.`,
+          `Once verified, the physical card is printed and dispatched via secure courier partners within 48 working hours, while a virtual card is instantly activated inside your mobile app to enable immediate online transactions. Cardholders must immediately log into the app, perform secure PIN generation, and configure custom daily transaction limits across ATM, POS, contactless tap, and international channels to prevent card frauds.`
+        ];
+      } else if (artIdx === 4) {
+        return [
+          `In an age of sophisticated cyber threats, security protocols safeguarding ${formatName} credit cards are structured to offer multi-layered protection. Every card is equipped with EMV chip-and-PIN technology, which creates a unique dynamic transactional code for every offline swipe, preventing card cloning frauds. Online transactions are protected under mandatory 2-Factor Authentication (2FA), requiring secure OTP inputs sent strictly to your registered mobile number.`,
+          `Additionally, under the latest Reserve Bank of India (RBI) directives, customers have absolute granular control over card controls. Via mobile app portals, you can instantly toggle off international transactions, block contactless tap-and-pay limits, and set custom transaction thresholds. If the card is lost, stolen, or compromised, taking immediate IVR action to hotlist and permanently block the card limits your liability to zero under RBI's limited customer liability guidelines.`,
+          `Furthermore, cardholders are protected by advanced real-time fraud monitoring systems. The bank's algorithms analyze transaction locations, transaction values, and spending patterns. Any highly anomalous swap (such as back-to-back international online transactions) immediately triggers an automatic card lock and an instant verification callback, shielding your assets from credit card fraud networks.`
+        ];
+      } else {
+        return [
+          `Integrating ${formatName} credit card usage into your broad financial strategy is a powerful way to build a prime credit profile. Payment history constitutes a massive 30% of your total CIBIL score. Consistently clearing card statements on time compiles into a flawless credit track record, signaling high creditworthiness to credit institutions, which translates into lower interest margins on future home and business loans.`,
+          `Another critical metric to monitor is the Credit Utilization Ratio (CUR), which measures your total outstanding balances against your cumulative approved credit limits. Credit bureaus penalize borrowers who repeatedly utilize more than 30% of their limit, as this indicates high credit dependency. Keeping your CUR below 30% by making mid-cycle payments or requesting credit limit upgrades protects your score from negative adjustments.`,
+          `In conclusion, combining disciplined card management with routine spending optimizes cash structures and compiles high-value travel and retail rewards. Compare all card products, annual fee structures, and rewards programs on BanksCart to select the premier credit card that perfectly aligns with your personal milestones and lifestyle.`
+        ];
+      }
+    }
+
+    if (catKey === 'home-loan') {
+      if (artIdx === 1) {
+        return [
+          `Securing home ownership represents a monumentally significant milestone, and ${formatName} is engineered to turn this dream into an affordable reality. By linking housing credit lines directly to the External Benchmark Lending Rate (EBLR) or Repo-Linked Lending Rate (RLLR), the bank guarantees 100% transparent pricing models. Borrowers can access high-value capital for purchasing ready-to-move flats, constructing residential structures, buying plots, or executing comprehensive home renovations.`,
+          `The bank offers highly flexible Loan-to-Value (LTV) limits under strict RBI guidelines. For housing loan tickets up to ₹30 Lakhs, you can secure up to 90% of the property's registered agreement value as credit, lowering the upfront downpayment burden significantly. For higher loan slabs above ₹75 Lakhs, LTV caps drop to 75% to balance institutional credit risks while offering highly competitive reducing interest rates over tenures extending up to 30 years.`,
+          `Additionally, the bank offers specialized 'Home Loan Balance Transfer' (HLBT) facilities. This allows home buyers who locked in mortgages at high interest rates with other banks to transfer their outstanding principal balance to this bank with zero pre-payment penalties and highly concessional floating rates. This balance migration can save borrowers lakhs of rupees in cumulative interest payouts, shortening their remaining repayment tenure.`
+        ];
+      } else if (artIdx === 2) {
+        return [
+          `The mathematical core of home loan repayments is driven by the Equated Monthly Installment (EMI) formula: EMI = [P x R x (1+R)^N] / [(1+R)^N - 1]. Here, 'P' represents the primary loan principal, 'R' represents the monthly interest rate (annual rate divided by 12), and 'N' indicates the total number of monthly payments. During the initial years of the loan, a major portion of the EMI is routed to clear interest dues, while the principal component increases gradually over the tenure.`,
+          `Under floating-rate home loan agreements, borrowers enjoy a massive statutory advantage: the complete waiver of foreclosure and pre-payment penalties as mandated by the RBI. By periodically routing annual corporate bonuses, festival savings, or dividend gains toward making lump-sum home loan prepayments, you directly reduce the outstanding principal. This prepayment strategy drastically shortens the remaining tenure while keeping the monthly EMI constant, yielding massive interest savings.`,
+          `For example, making just one extra EMI payment every year can shorten a 20-year home loan by nearly 3 to 4 years, dramatically reducing cumulative interest outgo. Home buyers should leverage BanksCart's dynamic Home Loan EMI calculators to simulate diverse prepayment scenarios and draft an optimized repayment schedule that preserves monthly household cash flows.`
+        ];
+      } else if (artIdx === 3) {
+        return [
+          `To secure rapid mortgage approvals, applicants must navigate a structured legal and technical evaluation process. The bank's legal panel conducts exhaustive audits of the property's title chain, original sale deeds, builder buyer agreements, and property tax receipts. This legal search guarantees the property has clear, marketable title deeds with zero existing ownership disputes or encumbrances, culminating in the issuance of a 'Legal Title Search Report'.`,
+          `Simultaneously, a technical appraiser evaluates the physical structure, building plan approvals from municipal corporations, and current market valuations. This technical audit determines the final eligible loan amount under LTV guidelines. To qualify, applicants must compile standard KYC, identity proofs, latest 3 months' salary slips, 2 years' Form 16, and 6 months' bank statements reflecting active payroll credits.`,
+          `For self-employed professionals, the underwriting criteria check is more comprehensive. You must submit audited business financials (profit & loss statements, balance sheets) for the last 2 to 3 fiscal years certified by a chartered accountant, GST returns, active business registry certificates, and detailed computation sheets showing sustainable cash flows to handle high monthly EMIs.`
+        ];
+      } else if (artIdx === 4) {
+        return [
+          `Income tax laws in India offer substantial financial relief to home buyers, significantly reducing the effective cost of borrowing. Under Section 80C of the Income Tax Act, you can claim tax deductions of up to ₹1.5 Lakhs annually on the principal repayment component of your home loan. This deduction is highly popular but falls under the overall ₹1.5L ceiling shared with PPF, ELSS, and insurance premium caps.`,
+          `Additionally, under Section 24(b), home buyers can claim deductions of up to ₹2 Lakhs per annum on the interest component of self-occupied residential properties. If the home is let out, the entire interest payout was previously deductible, though current laws cap overall loss under 'income from house property' at ₹2 Lakhs per fiscal year. Joint home loans allow both co-borrowers (like spouse or parents) to claim separate deductions, doubling the tax benefits.`,
+          `Furthermore, first-time home buyers can historically explore benefits under Pradhan Mantri Awas Yojana (PMAY) credit-linked subsidy schemes, where interest subsidies are credited directly to the loan account, lowering the outstanding principal immediately. Always audit your tax regime preferences and download your home loan interest certificate annually to submit clean income tax returns.`
+        ];
+      } else {
+        return [
+          `Aligning your home loan with long-term wealth compounding is a crucial aspect of capital structure design. While home loans are cheap debt (often carrying interest rates close to baseline inflation), rushing to foreclose them completely using high-yielding investment capital can sometimes be sub-optimal. If your mutual fund portfolio earns 12% to 15% p.a., keeping a home loan active at 8.5% is mathematically highly efficient.`,
+          `However, maintaining a prime credit score remains paramount. A single missed home loan EMI immediately appears on your credit report, severely impacting your payment history metrics and pulling down your CIBIL score. Set up secure ECS or NACH mandates directly linked to your salary account to ensure EMIs clear on the 1st or 5th of every month, preventing credit score drops.`,
+          `In conclusion, secure mortgages like ${formatName} provide a powerful mechanism to build valuable real estate assets with cheap, transparent funding. Utilize BanksCart's comprehensive home loan comparison modules to review floating EBLR rates, processing fees, and LTV parameters across top national banks to secure your dream home under prime terms.`
+        ];
+      }
+    }
+
+    if (catKey === 'holidays') {
+      if (artIdx === 1) {
+        return [
+          `The operational schedule of ${formatName} is structured in compliance with the Negotiable Instruments Act of 1881, which serves as the legal foundation for designating official bank holidays in India. The Reserve Bank of India (RBI), in collaboration with central and state governments, compiles the national holiday list, dividing closures into three main categories: Holidays under Negotiable Instruments Act, Holidays under Real Time Gross Settlement (RTGS), and Banks' Closing of Accounts.`,
+          `While central holidays like Republic Day, Independence Day, and Gandhi Jayanti trigger absolute bank closures nationwide, state-specific local festivals vary. For instance, holidays for Ganesh Chaturthi, Durga Puja, or Chhath Puja are declared dynamically based on regional cultural prominence, closing branch networks in some states while operations remain fully active in others, showing the regional nature of branch scheduling.`,
+          `Furthermore, under RBI's standardized working mandates, all public and private sector banks observe uniform closures on the second and fourth Saturdays of every calendar month. Conversely, the first, third, and fifth Saturdays are fully functional, standard business days where branches execute cash receipts, retail lending checkouts, and locker visits under normal operational hours.`
+        ];
+      } else if (artIdx === 2) {
+        return [
+          `In today's highly advanced digital era, a physical branch closure due to holiday schedules does not mean banking services grind to a halt. All central electronic fund transfer systems, including Immediate Payment Service (IMPS), National Electronic Funds Transfer (NEFT), Real Time Gross Settlement (RTGS), and Unified Payments Interface (UPI), operate 24/7/365 under robust, automated banking servers.`,
+          `This guarantees that retail and corporate clients can execute real-time peer-to-peer money transfers, pay utility bills, clear credit card outstandings, and purchase investments online even on national holidays or Sundays. The central servers process payment clearances instantly, eliminating the legacy batch-processing delays that used to compromise business capital flows during consecutive banking holidays.`,
+          `However, offline transaction pipelines are directly affected. Physical demand drafts (DD), over-the-counter cheque clearings, paper-based ECS mandates, and international outward remittances require active manual processing by bank clearing houses. These operations resume strictly on the subsequent working day, highlighting the need to transition to digital channels for time-critical transactions.`
+        ];
+      } else if (artIdx === 3) {
+        return [
+          `Planning your branch visits around the official holiday calendar is crucial to prevent unnecessary business disruptions and personal inconveniences. High-value retail banking operations, such as depositing large cash amounts (exceeding ₹50,000 requiring PAN cards), clearing physical cheques, retrieving physical locker assets, or executing loan agreements, strictly require physical interaction with branch tellers.`,
+          `To ensure flawless compliance, customers must consult the verified annual bank holiday calendars published on BanksCart. If you plan to travel or pay high tuition fees at the end of the month, booking demand drafts a day prior prevents transactional delays. Locker holders should keep in mind that locker galleries operate strictly during functional branch hours and are completely locked down on official holidays.`,
+          `Additionally, corporate finance teams must adjust their payroll cycles and accounts payable calendars if statement matching or salary payouts coincide with national holidays. Aligning commercial transactions with active banking days prevents transaction failures, protecting corporate relations and maintaining healthy business credit scores.`
+        ];
+      } else if (artIdx === 4) {
+        return [
+          `To maintain robust banking liquidity and ensure uninterrupted services during consecutive holidays, commercial banks implement strict cash-replenishment protocols for their massive automated teller machine (ATM) networks. Specialized logistics agencies monitor ATM cash volumes in real-time, scheduling cash van dispatches to replenish cash boxes before three-day holiday spells.`,
+          `However, in high-density urban zones or remote rural pockets, heavy cash withdrawal surges during major festivals can lead to temporary ATM cashouts. Retail customers are advised to keep emergency cash amounts on hand during prolonged holiday windows and leverage cashless digital UPI or debit card payments at merchant terminals, which remain 100% active and secure.`,
+          `Additionally, the bank's digital helpdesks and automated interactive IVR customer care lines remain fully functional on all holidays. Customers can instantly freeze lost debit cards, block compromised credit cards, or register transactional disputes online without needing to visit physical branches, ensuring round-the-clock digital security.`
+        ];
+      } else {
+        return [
+          `The financial year-end closing (traditionally April 1st) holds unique significance in the Indian banking calendar. Under RBI guidelines, April 1st is officially designated as a non-transactional day for public and private sector banks. Branches remain physically closed to the public, and tellers dedicate the entire shift to executing internal year-end accounting, auditing balances, and reconciling annual ledgers.`,
+          `Despite this physical branch closure, all digital channels, including mobile apps, net banking portals, and UPI systems, remain fully active, allowing routine retail payments to clear. Annual tax certificates, interest statements, and TDS summaries are compiled during this auditing phase and made available for download shortly after, helping taxpayers prepare their ITRs.`,
+          `In conclusion, keeping track of the official bank holidays calendar ensures you manage your retail transactions and business liquidity with high foresight. Access BanksCart's verified, state-wise, and monthly bank holiday tables to organize your financial timeline, avoiding branch delays and securing smooth cash-flow management.`
+        ];
+      }
+    }
+
+    // Default Fallback Category articles (extremely detailed!)
+    if (artIdx === 1) {
+      return [
+        `Settle your financial decisions cleanly by masterfully auditing ${formatName} under current macroeconomic parameters. In today's highly competitive commercial banking ecosystem regulated closely by the Reserve Bank of India (RBI) and statutory boards, retail customers must evaluate pricing metrics, interest rate structures, processing fees, and service guidelines thoroughly before committing capital. Operating under strict transparency, our detailed analysis bridges informational gaps to protect your asset values.`,
+        `Commercial banks and NBFCs utilize advanced credit underwriting models to evaluate retail loan applications or investment deposits, verifying that all transactional files conform to compliance guidelines. Understanding the baseline interest rate margins and annual percentage yields (APY) allows savers to maximize compounding wealth while retail borrowers can plan affordable repayment horizons.`,
+        `Additionally, the digital onboarding pipeline enables retail applicants to check their eligibility, submit KYC dossiers, and secure instant credit releases or book term deposits online from the comfort of their homes, eliminating tedious physical branch visits and reducing paper-based processing overheads completely.`
+      ];
+    } else if (artIdx === 2) {
+      return [
+        `The mathematical framework driving ${formatName} is structured to balance institutional capital security and customer yield efficiency. For debt instruments and credit lines, interest computations are calculated using standard daily reducing balance formulas, which drastically reduces your cumulative interest outgo compared to legacy flat-rate schemes, saving out-of-pocket interest costs over extended tenures.`,
+        `Conversely, for investment assets like fixed deposits, compounding is calculated quarterly under standardized bank treasury guidelines. This compounding frequency adds your accrued quarterly interest back into the principal to calculate returns for the subsequent quarter, generating substantial wealth compounding over longer horizons. Senior citizens receive additional promotional rate premiums (+0.50% to +0.75%), providing reliable regular income streams.`,
+        `Additionally, tax efficiency plays a major role in determining net post-tax yields. Many long-term savings plans qualify for substantial tax deductions of up to ₹1.5 Lakhs annually under Section 80C, while returns remain 100% tax-free under Section 10(10D). Listed corporate and commercial bonds enjoy concessional long-term capital gains (LTCG) tax rates of just 12.5%, significantly outperforming traditional taxable deposit interest brackets.`
+      ];
+    } else if (artIdx === 3) {
+      return [
+        `Executing digital onboarding for ${formatName} is an exceptionally simple and secure process that can be completed entirely online. First, visit the verified digital portal or download the bank's secure mobile banking app. Select your preferred financial product, enter your active mobile digits and email address, and verify with a high-security OTP sent to your registered mobile number.`,
+        `Next, input your demographic details along with your 10-digit PAN. The system performs instant real-time checks against credit bureau databases to check your credit history. Salaried professionals must submit digital copies of their latest 3 months' salary slips, 6 months' bank statements, and Form 16, whereas self-employed individuals must submit certified business financials and GST returns.`,
+        `Finally, complete your video KYC check by displaying your original Aadhaar and PAN cards to a bank executive online. Once the bank's underwriters approve the dossier, your active deposit account or retail credit line is instantly activated. Virtual cards or credit limits are immediately accessible via the mobile app, and physical document kits are dispatched to your mailing address within 48 hours.`
+      ];
+    } else if (artIdx === 4) {
+      return [
+        `In an age of complex digital frauds, the security infrastructure protecting ${formatName} is built using multi-layered encryption protocols. Every online transaction is shielded by 256-bit SSL encryption layers and mandatory multi-factor authentication (MFA). Dynamic transaction OTPs are sent strictly to registered mobile numbers, preventing unauthorized access even in the event of credential leaks.`,
+        `Furthermore, in compliance with RBI customer protection directives, banks provide advanced granular controls. Cardholders and account holders can toggle off international transactions, block contactless payments, and set custom daily limits via their mobile app. In the event of unauthorized transactional anomalies, reporting the event immediately to customer care helplines limits your liability to zero.`,
+        `To ensure absolute compliance, the bank operates a structured, three-level customer grievance escalation matrix. If the branch teller or regional helpline fails to resolve your transaction dispute within standard SLA timelines (usually 7 working days), you can escalate your ticket number to the Principal Nodal Officer, and subsequently approach the RBI Integrated Banking Ombudsman online.`
+      ];
+    } else {
+      return [
+        `Integrating ${formatName} into your overall capital allocation strategy is a powerful way to secure your financial future and build a prime credit profile. Payment history constitutes a massive 30% of your total credit score. Consistently clearing your retail dues, EMI splits, and monthly statement balances on time compiles into a flawless credit track record, qualifying you for the cheapest loans in the future.`,
+        `Another critical aspect is maintaining healthy diversification in your asset allocation. Savers should balance highly secure, government-backed savings tools (like PPF, SSY, and fixed deposits) with high-yield market-linked assets (like diversified mutual funds and corporate debt) to outpace long-term inflation trends while maintaining robust short-term emergency liquidity reserves.`,
+        `In conclusion, secure financial products like ${formatName} provide unmatched versatility to grow your wealth, build prime credit scores, and achieve personal milestones. Utilize BanksCart's modern comparison engines to review interest rate matrices, fee schedules, and terms side-by-side online to select the premier product that perfectly matches your financial plan.`
+      ];
+    }
+  };
+
+  for (let i = 1; i <= 5; i++) {
+    const artTitles = [
+      "",
+      `Core Features and Operational Framework of ${entity} ${readableName}`,
+      `Mathematical Models, Interest Rates, and Compounding Schedules`,
+      `Step-by-Step Digital Application, KYC Audits & Registration Guide`,
+      `Regulatory Guidelines, RBI Compliance, and Advanced Security Protocols`,
+      `Strategic Wealth Compounding, CIBIL Scoring, and Financial Planning`
+    ];
+    articlesList.push({
+      title: artTitles[i],
+      content: getArticleText(i, entity, category, readableName)
+    });
+  }
+
+  // --- 6 Exhaustive FAQs (Minimum 6 FAQs!) ---
+  const faqs = [
+    {
+      q: `What is the primary purpose of ${entity} ${readableName}?`,
+      a: `${entity} ${readableName} represents a highly structured financial framework designed to cater to specific retail, investment, or corporate needs under prime conditions. Depending on the product category (loans, credit cards, deposits, or operations), it provides secure pathways to compound wealth, access low-cost capital, or execute real-time digital transactions with absolute safety under current RBI mandates.`
+    },
+    {
+      q: `What are the mandatory documents required to apply for ${readableName}?`,
+      a: `Applicants must compile standard identity and address proofs (Aadhaar card, PAN card, passport, or voter ID) and submit proof of income. Salaried professionals require their latest 3 months' salary slips, 6 months' bank statements reflecting payroll credits, and Form 16. Self-employed individuals must provide certified business financials (Profit & Loss statements, balance sheets) for the last 2 fiscal years, audited ITRs, and active GST registration dossiers.`
+    },
+    {
+      q: `How does my credit score impact the approval of ${readableName}?`,
+      a: `Your credit CIBIL score is a crucial indicator of your historical repayment compliance. Lenders evaluate this metric to determine credit risk. A CIBIL score of 750 or above is considered prime, qualifying you for the cheapest floating interest rates, higher credit limits, and rapid digital approvals. Scores below 650 may trigger higher risk margins, lower approved loan-to-value limits, or outright application rejects.`
+    },
+    {
+      q: `Are there tax exemptions or deductions associated with ${readableName}?`,
+      a: `Yes, depending on the asset class, you can secure substantial tax benefits under current CBDT and Income Tax guidelines. For instance, specific savings and insurance policies qualify for up to ₹1.5 Lakhs in annual deductions under Section 80C, while returns are tax-exempt under Section 10(10D). Real estate mortgages offer up to ₹2 Lakhs in annual interest deductions under Section 24(b), and listed bonds enjoy concessional LTCG rates of just 12.5%.`
+    },
+    {
+      q: `What should I do if I notice an unauthorized transaction on my account?`,
+      a: `You must take immediate action by contacting the 24/7 toll-free customer support helpline or using the mobile banking application to freeze your card or block your account. Under RBI guidelines regarding limited liability of customers in electronic banking frauds, reporting the event within 3 working days of occurrence limits your liability to zero, protecting your savings from cyber security leaks.`
+    },
+    {
+      q: `How long does it take for online transactions or applications to process?`,
+      a: `Digital banking transactions (NEFT, RTGS, IMPS, UPI recharges) process instantly in real-time. Online loan pre-approvals or credit card approvals are generated within 10 minutes based on automated bureau checks, while final physical disbursements or card dispatches are processed within 24 to 48 working hours, subject to clean technical and legal document audits by the underwriting cell.`
+    }
+  ];
+
   return {
-    title: `${readableName}: Rates, Eligibility & Guides`,
+    title: `${entity} ${readableName}: Rates, Eligibility & Verified Guide (2026)`,
     badge: category,
-    intro: description,
-    moreIntro: `Welcome to the comprehensive, dedicated guide for **${readableName}**. Here you will find extensive operational parameters, step-by-step guides, verified comparison matrices, and compliant regulatory frameworks designed to maximize your asset yields while securing affordable retail credit lines.`,
-    highlightsTitle: `${readableName} Core Pillars`,
-    highlights: [
-      { label: "High Availability", text: `Secure your approved ${readableName} forms online with instant digital onboarding.` },
-      { label: "Competitive Pricing", text: "Link your accounts directly to prime floating base rates, lowering monthly outgo." },
-      { label: "Regulatory Compliance", text: "100% compliant with the latest Reserve Bank of India (RBI) and regulatory guidelines." }
-    ],
-    ratesTitle: `${readableName} Comparison Matrix`,
-    ratesHeaders: tableHeaders,
-    ratesRows: tableRows,
-    checklistTitle: `${readableName} Compliance Checklist`,
+    intro: intro,
+    moreIntro: moreIntro,
+    highlightsTitle: `Core Highlights & Features of ${readableName}`,
+    highlights: highlights,
+    ratesTitle: `${entity} ${readableName} Slabs & Pricing Matrix`,
+    ratesHeaders: ratesHeaders,
+    ratesRows: ratesRows,
+    checklistTitle: `Actionable Checklist for ${readableName}`,
     checklist: checklist,
-    detailedArticles: dynamicArticles,
-    faqs: [
-      { q: `What is the core purpose of ${readableName}?`, a: `${readableName} represents a highly structured financial framework designed to cater to specific retail and corporate needs under prime conditions.` },
-      { q: "Is it compliant with the latest regulations?", a: "Yes, all products and comparison charts are fully aligned with the latest 2026 RBI, SEBI, and income tax regulatory parameters." },
-      { q: "How can I apply or register online?", a: "You can submit an instant, paperless request by uploading standard KYC credentials, bank statements, and checking your free CIBIL score on BanksCart." }
-    ]
+    detailedArticles: articlesList,
+    faqs: faqs
   };
 }
