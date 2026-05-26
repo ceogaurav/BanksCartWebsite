@@ -89,7 +89,41 @@ const FinancialDirectory: React.FC = () => {
         { name: "Agriculture Crop Loan Guide", href: "/personal-loan/agriculture-loan", desc: "Subsidized farm cultivation credits and Kisan Credit Card (KCC) limits." },
         { name: "Agri-Business Startup Finance", href: "/business-loan/agriculture-business-plan", desc: "Detailed business blueprints for securing NABARD priority sector grants." },
         { name: "Agriculture Gold Loan Subsidies", href: "/gold-loan/agriculture", desc: "Pledge gold ornaments to receive rapid cultivation cash at flat 7.00% p.a." },
-        { name: "Agri Crop Interest Rates Table", href: "/personal-loan/agriculture-loan-interest-rates", desc: "Compare prompt repayment subventions across public and private banks." }
+        { name: "Agri Crop Interest Rates Table", href: "/personal-loan/agriculture-loan-interest-rates", desc: "Compare prompt repayment subventions across public and private banks." },
+        // Allahabad bank subpages
+        { name: "Allahabad Bank Profile", href: "/allahabad-bank", desc: "Access official financial details, merger updates, and retail accounts for Allahabad Bank." },
+        { name: "Allahabad Bank Account Number Format", href: "/banking/allahabad-bank-account-number", desc: "Detailed specs on Allahabad Bank retail and corporate account structures." },
+        { name: "Allahabad Bank Balance Enquiry", href: "/banking/allahabad-bank-balance-enquiry-number", desc: "Give a missed call or send an SMS to check your Allahabad account balance instantly." },
+        { name: "Allahabad Bank Car Loan Rates", href: "/allahabad-bank/car-loan", desc: "Secure affordable car loans under reducing interest rate slabs." },
+        { name: "Allahabad Bank Card Bill Payment", href: "/allahabad-bank/credit-card-bill-payment", desc: "Pay your credit card outstanding statement balance securely online." },
+        { name: "Allahabad Bank Customer Support", href: "/allahabad-bank/customer-care", desc: "Toll-free helplines, board lines, lost card hotlisting, and Nodal Officers." },
+        { name: "Allahabad Bank Education Loans", href: "/allahabad-bank/education-loan", desc: "Fund higher education in India or abroad with post-study moratoriums." },
+        { name: "Allahabad Bank Fixed Deposits", href: "/allahabad-bank/fixed-deposits", desc: "Book cumulative and non-cumulative deposits up to 7.30% p.a." },
+        { name: "Allahabad Bank Gold Loans Desk", href: "/allahabad-bank/gold-loan", desc: "Pledge gold ornaments to receive immediate credit with minimal paperwork." },
+        { name: "Allahabad Bank Kisan Credit Card", href: "/allahabad-bank/kisan-credit-card", desc: "Subsidized priority sector cultivation crop credits for farmers." },
+        { name: "Allahabad Bank Mudra MSME Credits", href: "/allahabad-bank/mudra-loan", desc: "Collateral-free government-backed MSME business loans up to ₹10 Lakhs." },
+        { name: "Allahabad Bank NEFT Form Download", href: "/banking/allahabad-bank-neft-form", desc: "Official PDF forms and transaction guides for branch money transfers." },
+        { name: "Allahabad Bank NetBanking Setup", href: "/banking/allahabad-bank-net-banking-registration", desc: "Step-by-step self-registration guide for retail net banking portals." },
+        { name: "Allahabad Bank Net Banking Login", href: "/banking/allahabad-bank-netbanking", desc: "Access accounts securely 24/7, reset passwords, and manage funds online." },
+        { name: "Allahabad Bank Passbook Printing", href: "/banking/allahabad-bank-passbook", desc: "Automatic passbook printing kiosks, transaction statements, and e-Passbooks." },
+        { name: "Allahabad Bank Application Status", href: "/allahabad-bank/status", desc: "Track pending retail credit applications and document verifications online." },
+        { name: "Allahabad Bank RTGS Form Download", href: "/banking/allahabad-bank-rtgs-form", desc: "Secure high-value domestic payment forms and transfer limits." },
+        { name: "Allahabad Bank Working Hours", href: "/banking/allahabad-bank-timings", desc: "Verified branch operational times, locker slots, and lunch breaks." },
+        { name: "Allahabad Bank Corporate Banking", href: "/banking/allahabad-corporate-net-banking", desc: "Treasury management, high-limit transactions, and multi-user setups." },
+        { name: "Allahabad Bank Savings Account", href: "/savings-account/allahabad-bank-normal-savings-account", desc: "Traditional savings accounts, interest margins, and free RuPay cards." },
+        // Andhra bank subpages
+        { name: "Andhra Bank Profile", href: "/andhra-bank", desc: "Access official financial details, merger updates, and retail accounts for Andhra Bank." },
+        { name: "Andhra Bank Account Digit specs", href: "/banking/andhra-bank-account-number", desc: "Locate account formats and IFSC designations post-merger." },
+        { name: "Andhra Bank Balance Enquiry", href: "/banking/andhra-bank-balance-enquiry", desc: "Instant missed call helplines to check Andhra Bank statement details." },
+        { name: "Andhra Bank Business Loans", href: "/andhra-bank/business-loan", desc: "SME finance, cash credits, and machinery loans with easy approvals." },
+        { name: "Andhra Bank Car Loan Rates", href: "/andhra-bank/car-loan", desc: "Finance new or used vehicles with long tenures and low EMIs." },
+        { name: "Andhra Bank Classic Card Tiers", href: "/andhra-bank/classic-credit-card", desc: "Low-fee premium classic credit cards with robust domestic rewards." },
+        { name: "Andhra Bank Credit Cards Hub", href: "/andhra-bank/credit-card", desc: "Compare classic, gold, and platinum cards from Andhra Bank." },
+        { name: "Andhra Bank Card Helpline", href: "/andhra-bank/credit-card-customer-care-number", desc: "Dedicated card blocking lines and grievance resolution matrices." },
+        { name: "Andhra Bank Card Bill Payment", href: "/andhra-bank/credit-card-bill-payment", desc: "Pay credit card statement outstanding balances securely online." },
+        // Other banking subpages
+        { name: "Savings Account Comparison", href: "/savings-account/all-banks", desc: "Compare savings account interest rates and balance slabs across all major Indian banks." },
+        { name: "Airtel Money Wallet App Guide", href: "/airtel-money-wallet-app", desc: "Wallet spending limits, video-KYC upgrades, and utility cashbacks." }
       ]
     },
     {
@@ -123,7 +157,9 @@ const FinancialDirectory: React.FC = () => {
         { name: "Aditya Birla Foreclosure Policy", href: "/personal-loan/aditya-birla-finance-limited-personal-loan-foreclosure-charges", desc: "Track lock-in periods, pre-payment slabs, and interest saving rules." },
         { name: "Aditya Birla Home Loan mortgage", href: "/aditya-birla/home-loan", desc: "Housing mortgages with flexible LTV up to 90% and tenure up to 30 years." },
         { name: "Aditya Birla Home Loan Interest", href: "/aditya-birla/home-loan-interest-rates", desc: "Track floating interest matrices for salaried and self-employed applicants." },
-        { name: "Loan Against Property (LAP)", href: "/aditya-birla/loan-against-property", desc: "High-value commercial and residential mortgage credits up to ₹10 Crores." }
+        { name: "Loan Against Property (LAP)", href: "/aditya-birla/loan-against-property", desc: "High-value commercial and residential mortgage credits up to ₹10 Crores." },
+        { name: "Ambit Business Loans Portal", href: "/business-loan/ambit", desc: "Expedited digital clearances for commercial SME credits and cash flows." },
+        { name: "ATUFS Textile Credit Scheme", href: "/business-loan/amended-technology-upgradation-fund-scheme-atufs", desc: "Sovereign textile machine upgrade capital and interest equalizer guides." }
       ]
     },
     {
@@ -155,7 +191,9 @@ const FinancialDirectory: React.FC = () => {
         { name: "ABSL PSU Equity Regular Growth", href: "/mutual-funds/aditya-birla-sun-life-psu-equity-fund-regular-plan-growth", desc: "Government sector monopolies fund offering solid high-dividend yields." },
         { name: "ABSL Small Cap Fund Growth", href: "/mutual-funds/aditya-birla-sun-life-small-cap-fund-regular-plan-growth", desc: "Aggressive small enterprise portfolio capturing economic expansions." },
         { name: "ABSL Pension Fund (NPS)", href: "/saving-schemes/aditya-birla-sun-life-pension-fund", desc: "Low-cost National Pension System fund manager under Section 80CCD." },
-        { name: "ABSL Sun Life Pension Portal", href: "/aditya-birla-sun-life-pension-plans", desc: "Retirement annuity plans offering guaranteed regular income payouts." }
+        { name: "ABSL Sun Life Pension Portal", href: "/aditya-birla-sun-life-pension-plans", desc: "Retirement annuity plans offering guaranteed regular income payouts." },
+        { name: "Value Research Fund Ratings", href: "/mutual-funds/value-research-mutual-fund-rating", desc: "Analyze historical ratings, risk matrices, and asset allocation tiers." },
+        { name: "Alternative Investment Fund Guide", href: "/mutual-funds/alternative-investment-fund", desc: "High-value hedge funds, infrastructure funds, and venture assets guide." }
       ]
     },
     {
@@ -179,7 +217,32 @@ const FinancialDirectory: React.FC = () => {
         { name: "Aditya Birla SBI Credit Cards", href: "/sbi-bank/adtiya-birla-sbi-cards", desc: "Earn double rewards on daily shopping co-branded with SBI." },
         { name: "Aditya Birla SBI Card Select", href: "/sbi-bank/aditya-birla-sbi-card-select", desc: "Elite lifestyle card offering Priority Pass lounge entries and welcome vouchers." },
         { name: "Advance Tax Guidelines", href: "/tax/advance-tax", desc: "Direct tax calendars, quarterly percentages, and delay penalties." },
-        { name: "Pros & Cons of Credit Cards", href: "/credit-card/advantages-and-disadvantages-of-credit-card", desc: "Master interest-free cycles, credit utilization limits, and score building." }
+        { name: "Pros & Cons of Credit Cards", href: "/credit-card/advantages-and-disadvantages-of-credit-card", desc: "Master interest-free cycles, credit utilization limits, and score building." },
+        { name: "Air India SBI Platinum Card", href: "/sbi-bank/air-india-sbi-platinum-credit-cards", desc: "Compare Air India SBI Platinum welcome miles and travel multipliers." },
+        { name: "Air India SBI Signature Card", href: "/sbi-bank/air-india-sbi-signature-credit-cards", desc: "HNW signature card offering Centurion lounges and premium miles." },
+        { name: "Airtel Axis Credit Card Guide", href: "/axis-bank/airtel-axis-bank-credit-card", desc: "Get flat 25% cashback on utility payments and 10% on Swiggy/Zomato." },
+        { name: "Amex Escalation Matrix", href: "/amex-bank/grievance-redressal-escalation-matrix", desc: "Raise billing disputes and grievances to the Nodal Officer in Gurgaon." },
+        { name: "Amex Application Status Tracker", href: "/credit-card/amex-credit-card-application-status", desc: "Track your pending Amex credit card approval and dispatch online." },
+        { name: "Amex Card Bill Payment Avenues", href: "/amex-bank/credit-card-bill-payment", desc: "Settle your Amex card statement online via UPI or secure e-mandates." },
+        { name: "Amex Eligibility Criteria Check", href: "/amex-bank/credit-card-eligibility", desc: "Verify score, age, and minimum salary criteria for Amex credit cards." },
+        { name: "Amex PIN Generation Tutorial", href: "/amex-bank/credit-card-pin-generation", desc: "Generate secure 4-digit transaction PINs online or via mobile app." },
+        { name: "Amex Membership Rewards Details", href: "/amex-bank/credit-card-reward-points", desc: "Redeem points for flight bookings, hotels, and the Gold Collection." },
+        { name: "Amex Membership Rewards Card", href: "/amex-bank/membership-rewards-credit-card", desc: "Get 1,000 monthly bonus points for routine monthly card transactions." },
+        { name: "Amex SmartEarn Credit Card", href: "/amex-bank/smartearn-credit-card", desc: "Massive 10X points multiplier on e-commerce partners for millennials." },
+        { name: "Amex Card Products Catalog", href: "/amex-bank/credit-card", desc: "Compare charge cards, travel cards, and shopping rewards from Amex." },
+        { name: "Amex Easy EMI Conversion Slabs", href: "/amex-bank/credit-card-emi", desc: "Convert single swipes above ₹2,500 into low-interest monthly installments." },
+        { name: "Amex Cashback & Lifestyle Offers", href: "/amex-bank/credit-card-offers", desc: "Activate curated shopping and dining discounts inside your Amex account." },
+        { name: "Amex General Customer Helpline", href: "/amex-bank/customer-care", desc: "Toll-free helplines, card hotlisting, and digital support desks." },
+        { name: "Amex Gold Charge Card Guide", href: "/amex-bank/american-express-gold-credit-card", desc: "Charge card with no pre-set limits and high rewards multiplier." },
+        { name: "Amex Platinum Metal Card specs", href: "/amex-bank/american-express-platinum-card", desc: "Centurion lounge access, elite hotel statuses & Taj vouchers." },
+        { name: "Amex Platinum Reserve Card", href: "/amex-bank/american-express-platinum-reserve-credit-cards", desc: "Luxury lifestyle card offering golf rounds and wellness benefits." },
+        { name: "Amex Platinum Travel Card", href: "/amex-bank/american-express-platinum-travel-credit-cards", desc: "Milestone-based travel rewards offering free hotel vouchers." },
+        { name: "Amex Bank Profile Overview", href: "/amex-bank", desc: "Detailed summary of American Express cards, net banking, and supports." },
+        { name: "Amex Bank Gift Card in India", href: "/credit-card/amex-bank-gift-card-in-india", desc: "Prepaid luxury gift cards with secure offline transaction protections." },
+        { name: "Federal Amplifi Fi Card", href: "/federal-bank/amplifi-fi-federal-credit-card", desc: "Co-branded credit card offering zero forex markups and unlimited Fi-coins." },
+        { name: "Ajio Credit Card Offers", href: "/credit-card/ajio-credit-card-offers", desc: "Verify e-commerce shopping brand deals and instant cashbacks." },
+        { name: "Income Tax Login Portal", href: "/tax/income-tax-login", desc: "E-filing login instructions, ITR verifications, and refund tracking." },
+        { name: "Salary Allowance Guidelines", href: "/salary/allowances", desc: "7th Pay Commission allowance lists, dear allowances, and exemptions." }
       ]
     },
     {
@@ -197,7 +260,12 @@ const FinancialDirectory: React.FC = () => {
         { name: "Comprehensive Mortgage Calculator", href: "/MortgageCalculatorPage", desc: "Advanced property evaluation tool including taxes and insurance." },
         { name: "National IFSC Finder", href: "/resources/ifsc-finder", desc: "Search active RBI IFSC and MICR codes for all banks instantly." },
         { name: "Live Gold Rates Checker", href: "/resources/gold-rates", desc: "Track 22K and 24K market gold rates across major cities in India." },
-        { name: "National Pincodes Directory", href: "/resources/pincodes", desc: "Verify city zip codes and localized postal courier coverages." }
+        { name: "National Pincodes Directory", href: "/resources/pincodes", desc: "Verify city zip codes and localized postal courier coverages." },
+        { name: "Airtel Prepaid Mobile Recharge", href: "/prepaid-mobile-recharge/airtel", desc: "Secure prepaid recharge gateway for unlimited plans and data packs." },
+        { name: "Airtel Postpaid Bill Settle", href: "/mobile-postpaid-bill-payment/airtel", desc: "Clear monthly Airtel postpaid bills securely via BBPS networks." },
+        { name: "HDFC Term Insurance Premium Calculator", href: "/life-insurance/term-insurance/hdfc-term-insurance-premium-calculator", desc: "Calculate sum assured payouts and term premiums under tax waivers." },
+        { name: "Personal Loan Amortization Calculator", href: "/personal-loan/amortization-calculator", desc: "Compute detailed monthly payment plans and principal/interest splits." },
+        { name: "Loan Amortization Schedule Planner", href: "/personal-loan/amortization-schedule", desc: "Generate complete year-by-year reducing balance loan logs." }
       ]
     },
     {

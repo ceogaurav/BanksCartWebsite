@@ -532,5 +532,53 @@ export const GENERAL_BANKING_PAGE_MAP: Record<string, BankingPageContent> = {
     faqs: [
       { q: "How can I avoid paying interest on my credit card?", a: "You must pay the full 'Total Amount Due' shown on your monthly statement on or before the due date. Paying only the 'Minimum Amount Due' triggers revolving interest charges." }
     ]
+  },
+  "all-banks": {
+    title: "Savings Account Comparison: Interest Rates & Benefits Across All Banks",
+    badge: "Savings Directory",
+    intro: "A Savings Account is the foundational cornerstone of personal finance, offering a secure vault to store liquid capital while earning steady compounding interest. By comparing interest rates, minimum average balance (MAB) requirements, and digital banking facilities across all major Indian banks, you can maximize your passive earnings.",
+    moreIntro: "At BanksCart, we compile and analyze retail savings accounts from public sector giants, premier private lenders, and agile small finance banks. Whether you seek zero-balance convenience, premium high-yield structures (up to 7.5% p.a.), or free high-limit debit cards, we help you make an informed choice completely online.",
+    highlightsTitle: "Savings Account Core Parameters",
+    highlights: [
+      { label: "High Compounding Yields", text: "Small finance banks offer premium interest rates up to 7.00% - 7.50% p.a. compounding quarterly." },
+      { label: "MAB / Balance Slabs", text: "Verify minimum balance requirements ranging from nil (Zero Balance) to ₹10,000 for urban premium tiers." },
+      { label: "Complimentary Debit Cards", text: "Enjoy free Visa, MasterCard, or RuPay debit cards with high daily withdrawal limits and cashbacks." }
+    ],
+    ratesTitle: "Compare Top Bank Savings Accounts 2026",
+    ratesHeaders: ["Bank Category / Name", "Interest Rates (p.a.)", "Minimum Average Balance", "Debit Card Benefits"],
+    ratesRows: [
+      ["State Bank of India (SBI)", "2.70% p.a.", "Nil (Zero MAB Waiver)", "Free Classic RuPay card, standard ATM slots"],
+      ["HDFC Bank & ICICI Bank", "3.00% - 3.50% p.a.", "₹10,000 (Metro/Urban)", "Premium Visa/MC with airport lounge entries"],
+      ["AU Small Finance Bank", "Up to 7.25% p.a.", "₹2,000 - ₹5,000", "High cashback on monthly brand purchases"],
+      ["Equitas Small Finance Bank", "Up to 7.50% p.a.", "₹1,000 - ₹10,000", "Free platinum cards with contactless locks"]
+    ],
+    faqs: [
+      { q: "What is the sweep-in facility in savings accounts?", a: "A sweep-in facility automatically transfers surplus funds above a threshold from your savings account to a high-yield Fixed Deposit, earning higher interest while keeping capital liquid." },
+      { q: "Is the interest earned on savings accounts taxable?", a: "Under Section 80TTA, interest income up to ₹10,000 per year from savings accounts is completely tax-exempt. For senior citizens, Section 80TTB offers exemptions up to ₹50,000." }
+    ]
+  },
+  "airtel-money-wallet-app": {
+    title: "Airtel Money Wallet App: Secure Digital Payments & Wallet Limits",
+    badge: "Digital Wallet",
+    intro: "Airtel Money Wallet (Airtel Payments Bank Wallet) is a premier RBI-authorized mobile prepaid payment instrument designed to simplify daily utility payments, merchant scans, and instant peer-to-peer (P2P) transfers. Integrated inside the Airtel Thanks ecosystem, it serves as a secure pocket vault for swift digital transactions.",
+    moreIntro: "At BanksCart, we detail wallet registration steps, monthly transaction limits, wallet-to-bank transfer fees, and exclusive cashbacks to help you maximize digital payment savings safely.",
+    highlightsTitle: "Airtel Money Wallet Features",
+    highlights: [
+      { label: "Dual Verification Locks", text: "Protected by Airtel Safe Pay network protocols and secure 4-digit mPIN verifications." },
+      { label: "Instant Utility Cashbacks", text: "Earn up to 10% - 15% cashback on prepaid recharges, DTH, and electricity payments." },
+      { label: "Flexible KYC Tiers", text: "Start instantly with Min-KYC capped at ₹10,000, or upgrade to Full-KYC for ₹1,20,000 limits." }
+    ],
+    ratesTitle: "Airtel Wallet Limits & Transaction Slabs",
+    ratesHeaders: ["Parameter / Tier", "Monthly Spending Cap", "Wallet Balance Limits", "Transfer / Funding Fees"],
+    ratesRows: [
+      ["Minimum KYC Wallet", "Up to ₹10,000", "Maximum ₹10,050", "Free debit card/UPI funding (Credit Card: nominal fee)"],
+      ["Full KYC Wallet Account", "Up to ₹2,00,000", "Maximum ₹1,20,000", "Direct free bank syncs and instant transfer slots"],
+      ["Wallet-to-Bank Transfer", "Capped at ₹5,000 daily", "Included in limits", "Standard charge of 1.00% to 3.00% applicable"]
+    ],
+    faqs: [
+      { q: "How can I upgrade my Airtel Money Wallet to Full KYC?", a: "You can complete a paperless video-KYC directly inside the Airtel Thanks app using your Aadhaar and PAN card, or visit an authorized Airtel retail outlet." },
+      { q: "Can I transfer Airtel Wallet money directly to a bank account?", a: "Yes. Using the 'Send Money' tab inside the wallet, you can input any bank account number and IFSC to execute a real-time transfer." }
+    ]
   }
 };
+

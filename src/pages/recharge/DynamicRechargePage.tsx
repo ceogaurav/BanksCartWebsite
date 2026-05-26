@@ -1,25 +1,78 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { HelpCircle, ChevronDown, Check, Star, ShieldAlert, Sparkles, BookOpen, AlertCircle, Info, Landmark, Percent, Award, ShieldCheck, ArrowRight, Play, MessageSquare, TrendingUp, CreditCard, Smartphone, Zap, Tv, Receipt } from 'lucide-react';
 import CibilCheckerForm from '../../components/common/CibilCheckerForm';
 import { RECHARGE_PAGE_MAP, RechargePageContent } from '../../data/rechargePageData';
 
+interface EditorialArticle {
+  title: string;
+  content: string[];
+}
+
+const getRechargeDetailedArticles = (slug: string): EditorialArticle[] => {
+  const formatSlug = (s: string) => {
+    if (s === 'dth') return 'DTH Recharge';
+    if (s === 'lpg') return 'LPG Gas Booking';
+    return s
+      .split('-')
+      .map(word => {
+        if (word.toUpperCase() === 'EMI') return 'EMI';
+        if (word.toUpperCase() === 'BBPS') return 'BBPS';
+        if (word.toUpperCase() === 'UPI') return 'UPI';
+        return word.charAt(0).toUpperCase() + word.slice(1);
+      })
+      .join(' ');
+  };
+  const readableName = formatSlug(slug);
+
+  return [
+    {
+      title: `The Architecture of Digital Payment Settlements under the Bharat Bill Payment System (BBPS)`,
+      content: [
+        `Settling your monthly statements under the broader **${readableName}** framework represents a core administrative necessity for maintaining uninterrupted services and shielding your credit rating. Operating under strict guidelines set by the National Payments Corporation of India (NPCI), the Bharat Bill Payment System (BBPS) provides a unified, highly interoperable, and fully regulated network. This secure digital infrastructure ensures that payments made online are instantly matched against billing accounts in real-time.`,
+        `By leveraging BanksCart's instant utility clearance gateway, you can bypass manual queues and manage your payments in seconds. Our direct bank-to-merchant API interfaces fetch the exact billing outstanding, confirm account name details, and generate secure digital receipt files, eliminating the risks of missing due dates or paying late fees.`
+      ]
+    },
+    {
+      title: `Security Auditing and Encrypted Gateways: Protecting Your Digital Transactions`,
+      content: [
+        `Consumer safety is paramount within the **${readableName}** digital payments ecosystem. To shield against phishing, fraudulent billing notifications, or payment redirections, all transactions utilize state-of-the-art encryption protocols (SSL/TLS 256-bit keys) and multi-factor UPI security. The two-tier authentication (UPI Pin and mobile OTPs) guarantees that payments are authorized solely by the verified cardholder.`,
+        `Furthermore, our system implements proactive transaction status tracking. In the rare event of a network timeout or auto-debit failure, the deducted money is held securely in escrow and automatically credited back to your original source account within 2 to 3 working days. Settle your statements with absolute peace of mind, fully backed by RBI-regulated banking security.`
+      ]
+    },
+    {
+      title: `Tax Slabs, Billing Invoices, and Commercial Deductions on Utilities`,
+      content: [
+        `For corporate taxpayers and sole proprietors, utility payments under **${readableName}** carry substantial tax benefits and operational savings. As per Indian direct and indirect tax codes, electricity bills, commercial mobile postpaid connections, and LPG transactions are fully deductible as legitimate business operational expenses (OPEX). This standard accounting allowance reduces your net taxable income and boosts annual profitability.`,
+        `To optimize your claims, businesses must secure valid GST invoices containing their active GSTIN. This enables registered entities to claim Input Tax Credit (ITC) on the GST paid for commercial utility bills. Consistently archiving your digital payment receipts and bank statements on BanksCart ensures you compile perfect audit logs and maximize compliance margins.`
+      ]
+    }
+  ];
+};
+
 const DynamicRechargePage: React.FC = () => {
   const { subPath } = useParams<{ subPath: string }>();
   const navigate = useNavigate();
+  const location = useLocation();
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
 
   // Helper to convert slug/subPath to a readable title
   const formatSlug = (slug: string) => {
-    if (slug === 'dth') return 'DTH Recharge';
-    if (slug === 'lpg') return 'LPG Gas Booking';
-    return slug
+    let name = slug
       .split('-')
       .map(word => {
         if (word.toUpperCase() === 'EMI') return 'EMI';
         return word.charAt(0).toUpperCase() + word.slice(1);
       })
       .join(' ');
+    
+    if (location.pathname.includes('prepaid-mobile-recharge')) {
+      return `${name} Prepaid Mobile Recharge`;
+    }
+    if (location.pathname.includes('mobile-postpaid-bill-payment')) {
+      return `${name} Mobile Postpaid Bill Payment`;
+    }
+    return name;
   };
 
   // Safe fallback procedural configurations for 100% dynamic paths coverage
@@ -30,10 +83,10 @@ const DynamicRechargePage: React.FC = () => {
     let numPlaceholder = "Enter consumer account number";
     let operatorsList = ["National Utility Operator A", "National Utility Operator B", "Regional Power Board C", "Public Service Board D"];
     
-    if (slug.includes('mobile') || slug.includes('postpaid')) {
+    if (slug.includes('mobile') || slug.includes('postpaid') || slug === 'airtel') {
       numLabel = "10-Digit Mobile Number";
       numPlaceholder = "Enter 10-digit mobile number";
-      operatorsList = ["Reliance Jio", "Bharti Airtel", "Vodafone Idea (Vi)", "BSNL"];
+      operatorsList = ["Bharti Airtel", "Reliance Jio", "Vodafone Idea (Vi)", "BSNL"];
     } else if (slug.includes('dth')) {
       numLabel = "DTH Subscriber ID / Smart Card Number";
       numPlaceholder = "Enter DTH subscriber ID";
@@ -57,6 +110,30 @@ const DynamicRechargePage: React.FC = () => {
       { q: "What is an automated bill scheduler?", a: "An upcoming feature that automatically notifies you and schedules payments 48 hours before active utility bills reach their due date." }
     ];
 
+    if (slug === 'airtel') {
+      const isPrepaid = location.pathname.includes('prepaid-mobile-recharge');
+      const isPostpaid = location.pathname.includes('mobile-postpaid-bill-payment');
+      
+      if (isPrepaid) {
+        numLabel = "10-Digit Airtel Mobile Number";
+        numPlaceholder = "Enter 10-digit Airtel prepaid mobile number";
+        operatorsList = ["Bharti Airtel"];
+        customFAQs = [
+          { q: "What is Airtel Prepaid Mobile Recharge?", a: "Airtel Prepaid Mobile Recharge is a simple digital gateway that allows you to buy internet data packs, unlimited calling plans, and talktime vouchers instantly using UPI or card networks on BanksCart." },
+          { q: "What are the most popular Airtel prepaid plans?", a: "Popular packs include the ₹299 plan (1.5GB/day, 28 days), the ₹839 plan (2GB/day, 84 days), and the annual ₹2999 pack offering 2GB/day with unlimited calls." },
+          { q: "How long does the recharge credit take to arrive?", a: "Recharges are processed instantly by Airtel's server, and you will receive an SMS confirmation in under 5 seconds." }
+        ];
+      } else if (isPostpaid) {
+        numLabel = "10-Digit Airtel Postpaid Mobile Number";
+        numPlaceholder = "Enter 10-digit Airtel postpaid billing number";
+        operatorsList = ["Bharti Airtel"];
+        customFAQs = [
+          { q: "What is Airtel Mobile Postpaid Bill Payment?", a: "Airtel Mobile Postpaid Bill Payment is a secure gateway to clear your monthly postpaid statement dues using BBPS on BanksCart." },
+          { q: "How do I claim GST input tax credits on Airtel bills?", a: "Ensure your active corporate GSTIN is mapped to your Airtel billing profile. You can retrieve invoices showing the GST split to claim input tax credits." }
+        ];
+      }
+    }
+
     return {
       title: `${readableSlug} Online: Compare & Settle Instantly`,
       badge: "Utility Payments Hub",
@@ -76,6 +153,7 @@ const DynamicRechargePage: React.FC = () => {
 
   const currentSlug = subPath || 'overview';
   const config = RECHARGE_PAGE_MAP[currentSlug] || generateFallbackConfig(currentSlug);
+  const detailedArticles = getRechargeDetailedArticles(currentSlug);
 
   // Real-Time Interactive Payment Mock States
   const [consumerNum, setConsumerNum] = useState<string>('');
@@ -278,6 +356,25 @@ const DynamicRechargePage: React.FC = () => {
                     Print Receipt
                   </button>
                 </div>
+              </div>
+            )}
+
+            {/* Detailed Editorial Sections - Rich Data like the Zero Coupon Bonds Sample */}
+            {detailedArticles.length > 0 && (
+              <div className="space-y-8 mb-8">
+                {detailedArticles.map((art, idx) => (
+                  <div key={idx} className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm space-y-4 hover:shadow-md transition-shadow">
+                    <h3 className="text-xl font-bold text-slate-800 flex items-center gap-2 border-b border-slate-100 pb-3">
+                      <span className="w-1.5 h-6 bg-blue-600 rounded-full"></span>
+                      {art.title}
+                    </h3>
+                    {art.content.map((p, pIdx) => (
+                      <p key={pIdx} className="text-slate-600 text-sm leading-relaxed font-sans font-medium text-justify">
+                        {p}
+                      </p>
+                    ))}
+                  </div>
+                ))}
               </div>
             )}
 

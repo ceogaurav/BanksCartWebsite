@@ -4,6 +4,43 @@ import { HelpCircle, ChevronDown, Check, Star, ShieldAlert, Sparkles, BookOpen, 
 import CibilCheckerForm from '../../components/common/CibilCheckerForm';
 import { CARD_PAGE_MAP, CardPageContent, CardRecommendRow } from '../../data/cardPageData';
 
+interface EditorialArticle {
+  title: string;
+  content: string[];
+}
+
+const getCreditCardDetailedArticles = (slug: string): EditorialArticle[] => {
+  const formatSlug = (s: string) => {
+    if (s === 'rupay') return 'Rupay Credit Cards';
+    return s.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+  };
+  const readableName = formatSlug(slug);
+
+  return [
+    {
+      title: `Maximizing Purchases: Value Optimization Slabs under ${readableName}`,
+      content: [
+        `Utilizing a premium payment tool like **${readableName}** is the single most effective method to optimize your daily transaction parameters and secure high-value cashbacks. Under the broader credit cards spectrum regulated by the Reserve Bank of India (RBI), banks offer tailored reward systems mapping out shopping categories, luxury dining, utility payments, and global travels.`,
+        `By utilizing BanksCart's side-by-side card comparators, you can evaluate annual maintenance charges, joining welcome vouchers (often up to ₹5,000 in shopping vouchers or airline miles), and reward tiers side-by-side. This ensures your card choice perfectly matches your spending patterns, turning routine expenses into rich compounding benefits.`
+      ]
+    },
+    {
+      title: `The UPI Multiplier: How Rupay & Digital Scans Accelerate Rewards`,
+      content: [
+        `For cardholders operating under **${readableName}** variants (especially NPCI Rupay card models), direct integration with the Unified Payments Interface (UPI) represents a massive operational boost. Traditionally, credit cards could only be swiped at physical PoS terminals or keyed in on websites, incurring merchant discount rates (MDR).`,
+        `Rupay cards completely bypass this by linking directly to popular UPI apps (GPay, PhonePe, BHIM). Cardholders can scan any local merchant QR code to execute credit line payments instantly, enjoying up to 50 days of interest-free credit on routine grocery runs and local merchant spending.`
+      ]
+    },
+    {
+      title: `Understanding Credit utilization and APR: Protecting Your CIBIL Bureau Trail`,
+      content: [
+        `While credit cards under **${readableName}** provide robust liquid leverage, maintaining disciplined repayment habits is critical to protect your credit bureau standing. Banks charge an Annual Percentage Rate (APR) ranging between 36% and 42% p.a. on revolving unpaid statement totals, which is the most expensive debt class.`,
+        `Consistently paying only the 'Minimum Due Amount' triggers massive interest rolls on your remaining balance. Setting up e-NACH auto-debits to pay statements in full, and maintaining a Credit Utilization Ratio (CUR) below 30% of your total limit, guarantees steady credit score growth.`
+      ]
+    }
+  ];
+};
+
 const DynamicCreditCardPage: React.FC = () => {
   const { subPath } = useParams<{ subPath: string }>();
   const navigate = useNavigate();
@@ -20,7 +57,7 @@ const DynamicCreditCardPage: React.FC = () => {
 
   // Safe fallback procedural content generator for 100% coverage of all 17 paths
   const generateFallbackContent = (slug: string): CardPageContent => {
-    const readableTitle = formatSlug(slug);
+    let readableTitle = formatSlug(slug);
     
     // Custom parameters based on the slug group
     let customIntro = `A ${readableTitle} represents a premium payment tool designed to offer cardholders maximal reward leverage, high convenience, and robust spending protections. At BanksCart, we compare card features across prime networks to secure your perfect card match.`;
@@ -79,6 +116,151 @@ const DynamicCreditCardPage: React.FC = () => {
       ];
     } else if (slug.includes('cashback') || slug.includes('rewards') || slug.includes('free') || slug.includes('lounge')) {
       customIntro = `A **${readableTitle}** is a specialized credit card designed to maximize your savings. Whether you want to earn direct statement cashbacks on utility spending, accumulate high-value rewards for luxury vouchers, bypass annual renewal fees, or enjoy complimentary airport lounge accesses, this card offers maximum value.`;
+    } else if (slug.includes('amex') || slug.includes('american-express')) {
+      let amexTitle = "American Express Credit Cards";
+      let amexIntro = "American Express (Amex) represents the pinnacle of premium card networks worldwide, offering unmatched luxury, world-class Membership Rewards points, and dedicated concierge support desks. Known for elite travel vouchers and unique partner promotions, Amex cards elevate cardholders' lifestyles.";
+      let features = [
+        { label: "Accelerated Membership Rewards", text: "Earn flexible Membership Rewards (MR) points that never expire, redeemable for flights, hotels, and the 18/24 Karat Gold Collection." },
+        { label: "Elite Airport Lounges", text: "Enjoy access to premium domestic lounges and ultra-exclusive Centurion lounges worldwide." },
+        { label: "Amex Offers program", text: "Save thousands annually via curated dining, shopping, and lodging cashback deals activated inside the app." }
+      ];
+      let recs = [
+        { name: "Amex Platinum Travel", bank: "American Express", fees: "₹5,000 + GST", benefit: "Get 40,000 bonus MR points + ₹10,000 Taj voucher on milestones" },
+        { name: "Amex Gold Card", bank: "American Express", fees: "₹1,000 + GST", benefit: "Earn 5X MR points on Reward Multiplier + monthly bonus points" },
+        { name: "Amex SmartEarn Card", bank: "American Express", fees: "₹495 + GST", benefit: "10X points on Zomato, Flipkart, Uber, and major spend platforms" },
+        { name: "Amex Membership Rewards Card", bank: "American Express", fees: "₹1,500 + GST", benefit: "1,000 bonus points monthly for executing 4 swipes above ₹1,000" }
+      ];
+      let checklist = [
+        "Verify eligibility criteria: Salaried applicants require a minimum income of ₹6 Lakhs p.a. (₹3 Lakhs p.a. for select student/LTF slots).",
+        "Check pin generation: Generate secure 4-digit PINs instantly via the online Amex portal or Amex Mobile App.",
+        "Track billing cycles: Bills are generated monthly with a standard 15 to 20-day interest-free grace window."
+      ];
+      let faqs = [
+        { q: "What are Membership Rewards points?", a: "Membership Rewards (MR) points are Amex's high-value reward currency. They never expire and can be transferred to leading airlines (Vistara, British Airways) and hotel programs (Marriott Bonvoy, Hilton)." },
+        { q: "How do I resolve Amex credit card grievances?", a: "Amex operates an direct escalation desk. Disputes are addressed within a strict 30-day resolution timeline. Grievances can be escalated directly to the Nodal Officer in Gurgaon or online." },
+        { q: "Is Amex widely accepted in India?", a: "Yes. Amex acceptance has expanded rapidly across both large corporate retail chains and online e-commerce platforms (Amazon, Flipkart, Swiggy) utilizing secure e-mandates." }
+      ];
+
+      if (slug.includes('gold')) {
+        amexTitle = "American Express Gold Card";
+        amexIntro = "The **American Express Gold Card** is Amex's iconic charge card, offering unmatched reward multipliers and premium lifestyle advantages. Charge cards have no pre-set spending limits, giving you absolute purchasing flexibility.";
+      } else if (slug.includes('platinum-card')) {
+        amexTitle = "American Express Platinum Card";
+        amexIntro = "The **American Express Platinum Card** represents the absolute pinnacle of metal credit cards, offering unlimited Centurion lounge entries, Taj vouchers worth ₹45,000, 24/7 global concierge desks, and elite hotel statuses.";
+        recs = [
+          { name: "Amex Platinum Metal Card", bank: "American Express", fees: "₹60,000 + GST", benefit: "Centurion lounge access, elite hotel statuses & Taj vouchers" }
+        ];
+      } else if (slug.includes('platinum-travel')) {
+        amexTitle = "American Express Platinum Travel Credit Card";
+        amexIntro = "The **American Express Platinum Travel Credit Card** is a milestone-based card designed to make your vacations rewarding. By hitting spend targets, you can secure free domestic flights and Taj hotel stays.";
+      } else if (slug.includes('smartearn')) {
+        amexTitle = "American Express SmartEarn Credit Card";
+        amexIntro = "The **American Express SmartEarn Credit Card** is Amex's entry-level credit card, custom-designed for millennial shoppers to earn massive reward multipliers on their daily online spendings.";
+      } else if (slug.includes('membership-rewards')) {
+        amexTitle = "American Express Membership Rewards Credit Card (MRCC)";
+        amexIntro = "The **American Express Membership Rewards Credit Card (MRCC)** is one of the most popular cards in India for monthly compounding rewards, offering recurring bonus points for routine swipes.";
+      } else if (slug.includes('pin-generation')) {
+        amexTitle = "Amex Credit Card PIN Generation & Setup Guide";
+        amexIntro = "Secure your premium card account by activating your card and generating your transaction PIN. RBI mandates require credit card PIN setup to execute physical POS merchant swipes.";
+      } else if (slug.includes('grievance') || slug.includes('escalation')) {
+        amexTitle = "Amex Grievance Redressal & Escalation Matrix";
+        amexIntro = "American Express is committed to world-class service. If you encounter card disputes, billing errors, or fraud leaks, Amex provides a transparent escalation matrix to resolve complaints immediately.";
+      } else if (slug.includes('eligibility')) {
+        amexTitle = "American Express Credit Card Eligibility & Document Check";
+        amexIntro = "Verify Amex's credit and income criteria before submitting your application. A strong CIBIL score of 750+ and a stable annual income are preferred for seamless approvals.";
+      } else if (slug.includes('bill-payment')) {
+        amexTitle = "Amex Credit Card Bill Payment Channels & Slabs";
+        amexIntro = "Pay your monthly American Express statements easily. Amex supports multiple payment avenues, including UPI, net banking, NACH auto-debits, and NEFT clearances.";
+      } else if (slug.includes('reward-points')) {
+        amexTitle = "American Express Membership Rewards Points Catalog";
+        amexIntro = "Explore how to maximize and redeem your Amex Membership Rewards points. Learn about point transfers, 18/24 Karat gold collection options, and online travel bookings.";
+      }
+
+      customIntro = amexIntro;
+      keyFeaturesList = features;
+      recommendList = recs;
+      checklistList = checklist;
+      customFAQs = faqs;
+      readableTitle = amexTitle;
+
+    } else if (slug.includes('air-india-sbi')) {
+      let cardTitle = "Air India SBI Credit Card";
+      let cardIntro = "The **Air India SBI Credit Card** (available in Platinum and Signature variants) is the ultimate travel card for frequent flyers. Developed in co-branding with State Bank of India and Air India, it offers massive welcome air miles and unmatched reward multipliers on airline ticket purchases.";
+      let recs = [
+        { name: "Air India SBI Signature", bank: "SBI Card", fees: "₹4,999 + GST", benefit: "Get 20,000 reward miles + 30 Reward Points per ₹100 spent on Air India tickets" },
+        { name: "Air India SBI Platinum", bank: "SBI Card", fees: "₹1,499 + GST", benefit: "Get 5,000 reward miles + 15 Reward Points per ₹100 spent on Air India tickets" }
+      ];
+      let features = [
+        { label: "Accelerated Flying Miles", text: "Convert card reward points directly into Air India Flying Returns miles on a flat 1:1 ratio." },
+        { label: "Complimentary Lounge access", text: "Enjoy multiple free domestic and international airport lounge visits every calendar year." },
+        { label: "Supermile Milestones", text: "Earn up to 100,000 bonus Air India supermiles annually on hitting key milestone spend levels." }
+      ];
+      let checklist = [
+        "Link your Air India Frequent Flyer ID: Ensure your Flying Returns account number is mapped to your card to receive reward miles.",
+        "Calculate annual fee offsets: Signature welcomes you with 20,000 miles (worth ₹20,000), completely offsetting the annual fee.",
+        "Track base spendings: Card yields 4 base reward points per ₹100 on standard retail purchases."
+      ];
+      let faqs = [
+        { q: "How can I redeem my Air India SBI card reward points?", a: "Points are converted monthly into Air India Flying Returns miles on a 1:1 ratio. You can redeem these miles online for free domestic or international airline tickets." },
+        { q: "What is the primary difference between Platinum and Signature variants?", a: "The Signature card offers higher welcome miles (20,000 vs 5,000), higher reward points on Air India tickets (30 vs 15 per ₹100), and international lounge access via Priority Pass." }
+      ];
+
+      if (slug.includes('signature')) {
+        cardTitle = "Air India SBI Signature Credit Card";
+        cardIntro = "Step into a world of luxury travel with the **Air India SBI Signature Credit Card**. Crafted for high-flying corporate executives, this card delivers an elite 20,000 welcome miles and unmatched 30X rewards on Air India flight bookings.";
+      } else if (slug.includes('platinum')) {
+        cardTitle = "Air India SBI Platinum Credit Card";
+        cardIntro = "The **Air India SBI Platinum Credit Card** offers the perfect balance of premium travel rewards and affordable annual fees, welcoming you with 5,000 Flying Returns miles and 15X ticket purchase rewards.";
+      }
+
+      customIntro = cardIntro;
+      keyFeaturesList = features;
+      recommendList = recs;
+      checklistList = checklist;
+      customFAQs = faqs;
+      readableTitle = cardTitle;
+
+    } else if (slug.includes('airtel-axis')) {
+      readableTitle = "Airtel Axis Bank Credit Card";
+      customIntro = "The **Airtel Axis Bank Credit Card** is widely regarded as one of the best cashback credit cards in India. Designed to deliver massive savings on utility recharges and lifestyle spending, it offers unmatched monthly cashback percentages directly credited to your statement.";
+      keyFeaturesList = [
+        { label: "25% Cashback on Utilities", text: "Get an outstanding 25% cashback on Airtel mobile, broadband, and DTH bill payments via the Airtel Thanks App." },
+        { label: "10% Lifestyle Cashbacks", text: "Enjoy 10% cashback on online spending partners: Zomato, Swiggy, and BigBasket." },
+        { label: "Complimentary Lounge visits", text: "Access premium domestic airport lounges free of charge 4 times every calendar year." }
+      ];
+      recommendList = [
+        { name: "Airtel Axis Credit Card", bank: "Axis Bank", fees: "₹500 + GST", benefit: "25% cashback on Airtel bills + 10% on Zomato/Swiggy/BigBasket" }
+      ];
+      checklistList = [
+        "Download the Airtel Thanks App: All 25% utility cashbacks are tracked and processed strictly for payments made via the Thanks App.",
+        "Check monthly cashback caps: Utility cashbacks are capped at ₹300 per month; food/grocery cashbacks are capped at ₹500 per month.",
+        "Track general spends: Card yields a flat 1% cashback on all general retail spends with zero caps."
+      ];
+      customFAQs = [
+        { q: "Is the Airtel Axis Credit Card lifetime free?", a: "No. The card has a joining and annual fee of ₹500 + GST. However, the annual fee is completely waived if card spends exceed ₹2 Lakhs in the card year." },
+        { q: "How is the card cashback credited?", a: "The accumulated cashback is automatically credited directly into your next month's credit card statement as a reduction in outstanding balance." }
+      ];
+
+    } else if (slug.includes('amplifi') || slug.includes('federal') || slug.includes('fi-federal')) {
+      readableTitle = "Amplifi Fi Federal Credit Card";
+      customIntro = "The **Amplifi Fi Federal Credit Card** is a premium co-branded card designed in partnership with Fi Money and Federal Bank. Engineered for tech-savvy millennial savers, it offers a digital-first interface, unlimited cashback multipliers (Fi-Coins), and zero forex markups.";
+      keyFeaturesList = [
+        { label: "Unlimited 3% Fi-Coins", text: "Earn up to 3% cashback value in Fi-Coins on all online merchant purchases." },
+        { label: "Zero Forex Markup", text: "Pay zero foreign exchange markup charges on international swipes, saving up to 3.5% on overseas trips." },
+        { label: "Lounge & Movie Offers", text: "Enjoy complimentary domestic airport lounge access and BookMyShow ticket discounts." }
+      ];
+      recommendList = [
+        { name: "Fi Federal Credit Card", bank: "Federal Bank", fees: "₹2,000 (Waived)", benefit: "Zero forex markup + unlimited Fi-Coins cashback on all swipes" }
+      ];
+      checklistList = [
+        "Install the Fi Money App: Manage your credit card, track spends, and redeem Fi-Coins instantly via the sleek digital app.",
+        "Track joining fee waivers: The joining fee is completely waived if you are a pre-approved Fi user or open an account against a deposit.",
+        "Redeem coins easily: Convert accumulated Fi-Coins online for direct cash vouchers, brand discounts, or gold tokens."
+      ];
+      customFAQs = [
+        { q: "What is zero forex markup?", a: "Standard cards charge a markup fee of 3.5% + taxes on international payments. The Fi Federal card waives this fee, enabling cost-effective overseas shopping and online subscriptions." },
+        { q: "How do I redeem Fi-Coins?", a: "You can redeem Fi-Coins inside the Fi app for cash directly credited to your savings account, or choose from a wide range of top brand vouchers." }
+      ];
     }
 
     return {
@@ -98,6 +280,7 @@ const DynamicCreditCardPage: React.FC = () => {
 
   const currentSlug = subPath || 'overview';
   const pageContent = CARD_PAGE_MAP[currentSlug] || generateFallbackContent(currentSlug);
+  const detailedArticles = getCreditCardDetailedArticles(currentSlug);
 
   // Scroll to top on slug change
   useEffect(() => {
@@ -136,9 +319,28 @@ const DynamicCreditCardPage: React.FC = () => {
             {/* More Intro if present */}
             {pageContent.moreIntro && (
               <div className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm">
-                <p className="text-sm text-slate-600 leading-relaxed">
+                <p className="text-sm text-slate-650 leading-relaxed font-sans font-medium">
                   {pageContent.moreIntro}
                 </p>
+              </div>
+            )}
+
+            {/* Detailed Editorial Sections - Rich Data like the Zero Coupon Bonds Sample */}
+            {detailedArticles.length > 0 && (
+              <div className="space-y-8">
+                {detailedArticles.map((art, idx) => (
+                  <div key={idx} className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm space-y-4 hover:shadow-md transition-shadow">
+                    <h3 className="text-xl font-bold text-slate-800 flex items-center gap-2 border-b border-slate-100 pb-3">
+                      <span className="w-1.5 h-6 bg-blue-600 rounded-full"></span>
+                      {art.title}
+                    </h3>
+                    {art.content.map((p, pIdx) => (
+                      <p key={pIdx} className="text-slate-600 text-sm leading-relaxed font-sans font-medium text-justify">
+                        {p}
+                      </p>
+                    ))}
+                  </div>
+                ))}
               </div>
             )}
 

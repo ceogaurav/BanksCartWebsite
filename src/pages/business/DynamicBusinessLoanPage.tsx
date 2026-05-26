@@ -184,6 +184,47 @@ const BUSINESS_LOAN_MAP: Record<string, BusinessPageContent> = {
   }
 };
 
+interface EditorialArticle {
+  title: string;
+  content: string[];
+}
+
+const getBusinessLoanDetailedArticles = (slug: string): EditorialArticle[] => {
+  const formatSlug = (s: string) => s.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+  const readableName = formatSlug(slug);
+
+  return [
+    {
+      title: `MSME Scale and Growth: Leveraged Unsecured Funding under ${readableName}`,
+      content: [
+        `Maintaining optimal working capital levels and scaling active business capacity is a primary operational requirement for micro, small, and medium enterprises (MSMEs). Under the broader category of **${readableName}**, registered business entities can secure high-fidelity commercial loans completely collateral-free. Traditional banking channels historically demanded physical asset pledges (like commercial property deeds, factory assets, or gold reserves) before clearing business credit lines, leaving young firms capital-starved.`,
+        `Modern commercial banking systems and registered NBFCs bypass these physical bottlenecks by leveraging cash-flow based credit evaluations. By comparing commercial loan products side-by-side on BanksCart, SME owners can evaluate reducing interest rate slabs (starting from competitive margins), upfront processing fees, and convenient tenure plans to match their dynamic sales patterns.`
+      ]
+    },
+    {
+      title: `Term Loans vs Cash Credits: Choosing the Optimal ${readableName} Mechanism`,
+      content: [
+        `Selecting the correct commercial credit model under **${readableName}** is vital to ensure long-term treasury health. Business owners must distinguish between structured Term Loans and revolving Cash Credit (CC) or Overdraft limits. A term loan provides a lump-sum payout to purchase manufacturing equipment, office assets, or expand infrastructure, which is then repaid under scheduled monthly EMIs.`,
+        `Conversely, a Cash Credit account allows businesses to draw funds up to a approved overdraft limit based on active inventory levels and book debts. CC interest is computed strictly on the used amount, making it the perfect vehicle to handle seasonal inventory spikes or bridge short-term cash deficits from debtors.`
+      ]
+    },
+    {
+      title: `CGTMSE Guarantee and Mudra Scheme Slabs: Sovereign Collateral Substitutes`,
+      content: [
+        `To encourage retail micro-enterprise lending, the Government of India has introduced several sovereign credit guarantee schemes that act as collateral substitutes under the **${readableName}** catalog. The CGTMSE (Credit Guarantee Fund Trust for Micro and Small Enterprises) backs default risks for unsecured loans up to ₹50 Lakhs, providing essential lender confidence.`,
+        `Additionally, first-generation entrepreneurs can tap into the Pradhan Mantri MUDRA Yojana, offering tailored credit tiers under Shishu (up to ₹50,000), Kishore (₹50,001 to ₹5 Lakhs), and Tarun (₹5 Lakhs to ₹10 Lakhs) categories to scale courier networks, retail hubs, and digital startup firms safely.`
+      ]
+    },
+    {
+      title: `Securing Low-Rate Clearances: Bank Statements & GST Audit Guidelines`,
+      content: [
+        `To lock in the cheapest interest rates and fast approvals for **${readableName}**, organizing a clean financial package is essential. Lenders audit your primary business current account bank statements for the past 6 to 12 months, checking for consistent cash balances and looking for unpaid direct debits or cheque bounces.`,
+        `Providing valid GST filings (GSTR-3B) and active Udyam MSME certificates directly proves sales stability, reducing bank credit risk margins and speeding up e-sign payouts under 48 hours.`
+      ]
+    }
+  ];
+};
+
 const DynamicBusinessLoanPage: React.FC = () => {
   const { subPath } = useParams<{ subPath: string }>();
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
@@ -231,6 +272,7 @@ const DynamicBusinessLoanPage: React.FC = () => {
 
   const currentSlug = subPath || 'overview';
   const pageContent = BUSINESS_LOAN_MAP[currentSlug] || generateFallbackContent(currentSlug);
+  const detailedArticles = getBusinessLoanDetailedArticles(currentSlug);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -268,9 +310,28 @@ const DynamicBusinessLoanPage: React.FC = () => {
             {/* More Intro details */}
             {pageContent.moreIntro && (
               <div className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm">
-                <p className="text-sm text-slate-600 leading-relaxed font-sans">
+                <p className="text-sm text-slate-650 leading-relaxed font-sans font-medium">
                   {pageContent.moreIntro}
                 </p>
+              </div>
+            )}
+
+            {/* Detailed Editorial Sections - Rich Data like the Zero Coupon Bonds Sample */}
+            {detailedArticles.length > 0 && (
+              <div className="space-y-8">
+                {detailedArticles.map((art, idx) => (
+                  <div key={idx} className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm space-y-4 hover:shadow-md transition-shadow">
+                    <h3 className="text-xl font-bold text-slate-800 flex items-center gap-2 border-b border-slate-100 pb-3">
+                      <span className="w-1.5 h-6 bg-blue-600 rounded-full"></span>
+                      {art.title}
+                    </h3>
+                    {art.content.map((p, pIdx) => (
+                      <p key={pIdx} className="text-slate-600 text-sm leading-relaxed font-sans font-medium text-justify">
+                        {p}
+                      </p>
+                    ))}
+                  </div>
+                ))}
               </div>
             )}
 

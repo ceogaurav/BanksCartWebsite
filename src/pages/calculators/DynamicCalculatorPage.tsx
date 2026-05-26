@@ -4,6 +4,53 @@ import { HelpCircle, ChevronDown, Check, Star, ShieldAlert, Sparkles, BookOpen, 
 import CibilCheckerForm from '../../components/common/CibilCheckerForm';
 import { CALCULATOR_PAGE_MAP, CalculatorPageContent } from '../../data/calculatorPageData';
 
+interface EditorialArticle {
+  title: string;
+  content: string[];
+}
+
+const getCalculatorDetailedArticles = (category: string, slug: string): EditorialArticle[] => {
+  const formatSlug = (s: string) => {
+    return s
+      .split('-')
+      .map(word => {
+        if (word.toUpperCase() === 'EMI') return 'EMI';
+        if (word.toUpperCase() === 'FD') return 'FD';
+        if (word.toUpperCase() === 'GST') return 'GST';
+        if (word.toUpperCase() === 'SIP') return 'SIP';
+        if (word.toUpperCase() === 'NPS') return 'NPS';
+        return word.charAt(0).toUpperCase() + word.slice(1);
+      })
+      .join(' ');
+  };
+  const readableName = formatSlug(slug);
+  const readableCat = formatSlug(category);
+
+  return [
+    {
+      title: `The Mathematics of Financial Amortization and Compounding under ${readableName}`,
+      content: [
+        `Executing financial simulations under the broader **${readableCat}** segment requires a solid grasp of modern banking arithmetic and compounding timelines. Our interactive **${readableName} Calculator** utilizes state-of-the-art reducing balance and periodic compounding algorithms to deliver precise projections. By letting you adjust principal sizes, annual interest yields, and tenure slabs in real time, it helps you visualize how even minor rate variances compound into massive cash flow differences.`,
+        `Whether simulating reducing loan EMIs (using the standard formula EMI = [P * r * (1 + r)^n] / [(1 + r)^n - 1]) or calculating the future value of a Systematic Investment Plan (SIP) annuity, having immediate digital clarity ensures you bypass complex manual bookkeeping and secure maximum control over your wealth.`
+      ]
+    },
+    {
+      title: `Strategic Asset Allocation: Balancing Unsecured Liabilities with High-Yield Assets`,
+      content: [
+        `From an enterprise or individual wealth perspective, utilizing the **${readableName} Calculator** is key to optimizing your financial leverage and debt-to-income balances. When evaluating debt avenues, lenders closely analyze your Fixed Income to Debt Ratio (FOIR). Keeping your monthly loan commitments strictly below 45% to 50% of your net income is essential to maintain high credit scores (CIBIL targets of 750+) and qualify for premium unsecured credit rates.`,
+        `Simultaneously, offsetting debt liabilities by investing surplus working capital in high-compounding SIPs or quarterly compounding Fixed Deposits builds robust cash flow cushions. This balanced approach protects you against premature foreclosure penalties and secures a steady path toward long-term wealth accumulation.`
+      ]
+    },
+    {
+      title: `Tax Optimization and Compliance Slabs for ${readableName}`,
+      content: [
+        `Beyond basic interest payouts, tax compliance slabs play a huge role in determining your real, inflation-adjusted net returns. Under current regulatory tax guidelines, different asset categories carry unique direct and indirect tax implications. For example, cumulative fixed deposit yields are subject to upfront TDS deductions if annual earnings cross ₹40,000, unless declared via Form 15G/15H, whereas equity-linked mutual fund SIPs enjoy long-term capital gains tax (LTCG) concessions on profits up to ₹1.25 Lakh.`,
+        `By mapping your calculations side-by-side on BanksCart's dashboard, you can estimate your post-tax maturity value under both old and new tax regimes. This comprehensive mapping helps you prepare perfect audit logs, maximize Section 80C compliance margins, and make highly informed financial decisions.`
+      ]
+    }
+  ];
+};
+
 const DynamicCalculatorPage: React.FC = () => {
   const { category, subPath } = useParams<{ category: string; subPath: string }>();
   const navigate = useNavigate();
@@ -131,6 +178,7 @@ const DynamicCalculatorPage: React.FC = () => {
 
   const currentSlug = `${category}/${subPath}`;
   const config = CALCULATOR_PAGE_MAP[currentSlug] || generateFallbackConfig(category || 'investment', subPath || 'fixed-deposit');
+  const detailedArticles = getCalculatorDetailedArticles(category || 'investment', subPath || 'fixed-deposit');
 
   // Interactive Live Math States
   const [principal, setPrincipal] = useState<number>(config.pDefault);
@@ -439,6 +487,25 @@ const DynamicCalculatorPage: React.FC = () => {
               </div>
             </div>
 
+            {/* Detailed Editorial Sections - Rich Data like the Zero Coupon Bonds Sample */}
+            {detailedArticles.length > 0 && (
+              <div className="space-y-8">
+                {detailedArticles.map((art, idx) => (
+                  <div key={idx} className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm space-y-4 hover:shadow-md transition-shadow">
+                    <h3 className="text-xl font-bold text-slate-800 flex items-center gap-2 border-b border-slate-100 pb-3">
+                      <span className="w-1.5 h-6 bg-indigo-600 rounded-full"></span>
+                      {art.title}
+                    </h3>
+                    {art.content.map((p, pIdx) => (
+                      <p key={pIdx} className="text-slate-600 text-sm leading-relaxed font-sans font-medium text-justify">
+                        {p}
+                      </p>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            )}
+
             {/* Calculations and formulas info */}
             <div className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm">
               <h3 className="text-base font-bold text-slate-800 mb-4 flex items-center gap-2">
@@ -448,7 +515,7 @@ const DynamicCalculatorPage: React.FC = () => {
               <div className="bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4 text-center">
                 <code className="text-xs sm:text-sm font-bold text-indigo-900 font-mono">{config.formulaText}</code>
               </div>
-              <p className="text-xs text-slate-500 leading-relaxed font-semibold">
+              <p className="text-xs text-slate-500 leading-relaxed font-semibold font-sans">
                 Our calculators strictly conform to standard banking compound equations. By tracking reducing balances and periodic compound accruals daily, BanksCart guarantees that your calculations match real market approvals.
               </p>
             </div>

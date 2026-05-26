@@ -4,6 +4,52 @@ import { HelpCircle, ChevronDown, Check, Star, ShieldAlert, Sparkles, BookOpen, 
 import CibilCheckerForm from '../../components/common/CibilCheckerForm';
 import { AADHAAR_PAGE_MAP, AadharPageContent, generateCityAadharPage } from '../../data/aadharPageData';
 
+interface EditorialArticle {
+  title: string;
+  content: string[];
+}
+
+const getAadharDetailedArticles = (slug: string): EditorialArticle[] => {
+  const formatSlug = (s: string) => {
+    return s
+      .split('-')
+      .map(word => {
+        if (word.toUpperCase() === 'NRI') return 'NRI';
+        if (word.toUpperCase() === 'KYC') return 'KYC';
+        if (word.toUpperCase() === 'UIDAI') return 'UIDAI';
+        if (word.toUpperCase() === 'PDF') return 'PDF';
+        if (word.toUpperCase() === 'XML') return 'XML';
+        return word.charAt(0).toUpperCase() + word.slice(1);
+      })
+      .join(' ');
+  };
+  const readableName = formatSlug(slug);
+
+  return [
+    {
+      title: `Strategic Digital Identity and Administrative Frameworks under ${readableName}`,
+      content: [
+        `Under the statutory mandates of the Unique Identification Authority of India (UIDAI), managing your credentials under **${readableName}** is a critical operational process for individual residents, businesses, and compliance professionals. Aadhaar has evolved from a simple identity proof into the cornerstone of India's digital economy. The Aadhaar Act of 2016 establishes a robust legal framework ensuring that these random 12-digit numbers are securely backed by multi-layered biometric deduplication (10 fingerprints and dual iris scans).`,
+        `Linking your primary identity assets across modern financial sectors ensures uninterrupted access to Direct Benefit Transfer (DBT) subsidies, NRE/NRO banking structures, and corporate salary disbursements. By eliminating administrative barriers, BanksCart's UIDAI guide provides residents with clear, step-by-step strategies to verify number authenticity, lock biometrics against unauthorized database lookups, and execute online corrections seamlessly.`
+      ]
+    },
+    {
+      title: `Privacy Safeguards & Biometric Locks: Preventing Identity Theft & Frauds`,
+      content: [
+        `Data security represents the foremost priority within the **${readableName}** infrastructure. To prevent phishing, fraudulent SIM card generation, or unauthorized bank database queries, UIDAI has implemented state-of-the-art cryptographic safeguards. A prime example is the 'Biometric Lock/Unlock' feature, which allows residents to freeze their fingerprint and iris records digitally via the myAadhaar portal.`,
+        `When biometrics are locked, any external e-KYC query returns a strict deactivation alert, completely neutralizing potential fraud attempts. Residents can temporarily unlock their biometrics via secure OTP approvals whenever completing physical KYC at bank branches. Additionally, opting for 'Masked Aadhaar' downloads (which hide the first 8 digits) ensures high-grade privacy during hotel check-ins or transport verifications.`
+      ]
+    },
+    {
+      title: `Offline Verification Slabs: Harnessing Secure QR Codes & Paperless XML`,
+      content: [
+        `For institutions and service providers validating identities under the **${readableName}** rules, offline verification modules offer a lightweight, highly secure, and compliant alternative to active database hits. UIDAI provides digitally signed secure QR codes embedded inside every e-Aadhaar PDF. By scanning this QR code via certified offline readers, organizations can instantly verify an applicant's photo, name, date of birth, and address without needing internet access or collecting raw Aadhaar numbers.`,
+        `Similarly, the 'Offline Paperless e-KYC' generates an encrypted XML/ZIP file protected by a user-defined 4-digit share code. This secure file format allows residents to share their verified demographic details with complete peace of mind, fully complying with national IT security policies and safeguarding personal data integrity.`
+      ]
+    }
+  ];
+};
+
 const DynamicAadharCardPage: React.FC = () => {
   const { subPath } = useParams<{ subPath: string }>();
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
@@ -25,6 +71,8 @@ const DynamicAadharCardPage: React.FC = () => {
   const pageContent = isCityPage 
     ? generateCityAadharPage(currentSlug) 
     : (AADHAAR_PAGE_MAP[currentSlug] || AADHAAR_PAGE_MAP["overview"]);
+
+  const detailedArticles = getAadharDetailedArticles(currentSlug);
 
   // Scroll to top on route changes
   useEffect(() => {
@@ -369,9 +417,28 @@ const DynamicAadharCardPage: React.FC = () => {
             {/* Main Page Article/Details */}
             {pageContent.moreIntro && (
               <div className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm">
-                <p className="text-sm text-slate-600 leading-relaxed">
+                <p className="text-sm text-slate-650 leading-relaxed font-sans font-medium text-justify">
                   {pageContent.moreIntro}
                 </p>
+              </div>
+            )}
+
+            {/* Detailed Editorial Sections - Rich Data like the Zero Coupon Bonds Sample */}
+            {detailedArticles.length > 0 && (
+              <div className="space-y-8">
+                {detailedArticles.map((art, idx) => (
+                  <div key={idx} className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm space-y-4 hover:shadow-md transition-shadow">
+                    <h3 className="text-xl font-bold text-slate-800 flex items-center gap-2 border-b border-slate-100 pb-3">
+                      <span className="w-1.5 h-6 bg-indigo-600 rounded-full"></span>
+                      {art.title}
+                    </h3>
+                    {art.content.map((p, pIdx) => (
+                      <p key={pIdx} className="text-slate-600 text-sm leading-relaxed font-sans font-medium text-justify">
+                        {p}
+                      </p>
+                    ))}
+                  </div>
+                ))}
               </div>
             )}
 

@@ -4,6 +4,93 @@ import { HelpCircle, ChevronDown, Check, Star, ShieldAlert, Sparkles, BookOpen, 
 import CibilCheckerForm from '../../components/common/CibilCheckerForm';
 import { INVESTMENT_PAGE_MAP, InvestmentPageContent, InvestmentRecommendRow } from '../../data/investmentPageData';
 
+interface EditorialArticle {
+  title: string;
+  content: string[];
+}
+
+const getInvestmentDetailedArticles = (categoryType: string, slug: string): EditorialArticle[] => {
+  const formatSlug = (s: string) => {
+    if (s === 'fd') return 'Fixed Deposit';
+    if (s === 'mf' || s === 'mutual-funds') return 'Mutual Funds';
+    return s.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+  };
+  const readableName = formatSlug(slug);
+  const readableCategory = formatSlug(categoryType);
+
+  // If zero-coupon-bonds is selected, load the complete, rich zero-coupon bonds article to match sample!
+  if (slug === 'zero-coupon-bonds') {
+    return [
+      {
+        title: "What are Zero Coupon Bonds in India?",
+        content: [
+          "Zero-coupon bonds (ZCB), as the name suggests, do not pay any coupon interest payments to the bondholders during the active lifecycle of the debt. These bonds are also known as discount bonds as they are issued at a price lower than the face value (or par value) and are repaid in full at face value on their maturity dates. The return to the investor is strictly the difference between the face value of the bond and its purchase price.",
+          "For instance, if you purchase a zero-coupon bond in India having a face value of ₹20,000 at a discounted booking price of ₹18,000, then on its maturity date, you will receive the full ₹20,000. The ₹2,000 differential represents your absolute tax-efficient returns on the bond. This guide outlines how zero-coupon bonds work, their benefits, risks, and how they differ from regular coupon-paying bonds."
+        ]
+      },
+      {
+        title: "How to Calculate the Yield to Maturity (YTM) of Zero Coupon Bonds?",
+        content: [
+          "The Yield to Maturity (YTM) represents the annualized rate of return received if an investor purchases a bond and holds it strictly until maturity. For zero-coupon bonds, the formula for YTM calculations is straightforward since there are no periodic coupon receipts to reinvest:",
+          "YTM = (FV / PV) ^ (1 / t) - 1. Here, 'FV' represents the future value (face value) of the bond, 'PV' indicates the present value (discounted purchase price) of the bond, and 't' represents the number of compounding periods or years to maturity. By calculating YTM, investors can compare ZCB yields side-by-side with commercial fixed deposits and corporate bonds."
+        ]
+      },
+      {
+        title: "Why Invest in Zero Coupon Bonds in India?",
+        content: [
+          "Compounded Growth: As zero-coupon bonds are issued at a discount and fully redeemed at face value on the maturity date, investors benefit from compounded growth because of no periodic interest payments. Reinvestment risk refers to the possibility of the investor not being able to reinvest coupon payments at a rate equivalent to their current rate of return. Since ZCBs carry zero periodic payouts, all returns compound automatically, eliminating reinvestment risks.",
+          "Predictable Returns & Tax Efficiency: These bonds offer a fixed payout on their maturity dates, allowing retail savers to easily align investments with long-term financial goals. Additionally, returns generated from ZCBs are derived solely from capital gains, not interest income. As long-term capital gains (LTCG) on listed bonds are taxed at highly efficient rates of just 12.5%, zero-coupon bonds offer significantly higher post-tax yields than standard FDs for taxpayers in the high 30% slabs."
+        ]
+      },
+      {
+        title: "Understanding Risks: Interest Rates, Liquidity, and Credit Ratings",
+        content: [
+          "Interest Rate & Liquidity Risks: Bond prices are inversely related to market interest rates. If interest rates rise, the value of the zero-coupon bond may fall in the secondary market. However, investors can eliminate this risk completely by holding the bond until maturity. Liquidity risk refers to the difficulty of finding enough buyers on public exchanges if you need early exits.",
+          "Credit Risk Mitigation: Credit risk refers to the possibility of the bond issuer defaulting on its final redemption repayments. Before investing, savers should check credit ratings assigned by SEBI-registered rating agencies (like CRISIL, ICRA) to evaluate the creditworthiness of corporate issuances."
+        ]
+      },
+      {
+        title: "Zero Coupon Bonds vs Coupon Paying Bonds",
+        content: [
+          "Interest Payments: ZCBs have no periodic coupon payments, while coupon-paying bonds pay periodic interest (monthly, quarterly, or annually). ZCBs are always issued at a discount to face value, whereas coupon bonds can be issued at face value, discount, or premium.",
+          "Reinvestment risk applies heavily on the periodic coupon payments of regular bonds, whereas ZCBs completely bypass this risk by locking in all compounding returns until the final redemption date."
+        ]
+      },
+      {
+        title: "Market & Regulation Trends: Corporate Placements & STRIPS",
+        content: [
+          "Under recent SEBI and CBDT guidelines for 2026, leading public undertakings like NABARD and HUDCO have notified massive zero-coupon bond issues to raise capital for agricultural and infrastructure developments. SEBI now permits issuers to issue zero-coupon bonds in smaller denominations of ₹10,000 on a private placement basis, broadening retail participation in the debt market.",
+          "Role of STRIPS: Separate Trading of Registered Interest and Principal of Securities (STRIPS) is a process where the final principal and periodic interest cash flows of standard bonds are separated into individual securities. These separated cash flows are then sold as independent zero-coupon bonds on secondary exchanges, providing highly flexible wealth-building tools."
+        ]
+      }
+    ];
+  }
+
+  return [
+    {
+      title: `Understanding ${readableName} under the ${readableCategory} Asset Class`,
+      content: [
+        `Securing stable growth and protecting accumulated capital under the broader spectrum of **${readableName}** is vital to ensure long-term wealth compounding. In a dynamically shifting macroeconomic landscape regulated closely by SEBI and the Reserve Bank of India (RBI), retail investors must compare baseline rate matrices carefully before committing capital. Unlike volatile equity shares, ${readableCategory} products provide a structured framework to grow your wealth with balanced risks.`,
+        `By utilizing BanksCart's modern side-by-side comparison engine, you can review current annual yields (starting from competitive baseline interest brackets), lock-in tenures, and security credit ratings across India's top public and private sector issuers. This digital onboarding process allows you to configure automated monthly SIPs or lump-sum deposits online with complete transparency.`
+      ]
+    },
+    {
+      title: `Compounding and Asset Allocation: Maximizing Long-Term Yields`,
+      content: [
+        `When allocating capital to **${readableName}**, understanding the difference between simple interest and compounded growth is essential. Standard savings bank accounts struggle to outpace inflation, which is why disciplined compounding is crucial. Debt mutual funds and fixed deposits reinvest interest at regular intervals (typically quarterly), compounding your capital over time.`,
+        `For market-linked mutual funds, active portfolio managers distribute assets across diversified baskets of blue-chip stocks and AAA-rated corporate bonds. This broad diversification minimizes single-company default risks, helping savers achieve specific lifecycle milestones (like retirement funds or college admissions) with high predictability.`
+      ]
+    },
+    {
+      title: `Strategic Tax Exemptions under Section 80C and 10(10D)`,
+      content: [
+        `Tax efficiency is a key pillar of professional wealth management. Several government-backed savings plans under the **${readableName}** category qualify for 100% tax deductions of up to ₹1.5 Lakhs annually under Section 80C of the Income Tax Act. More importantly, long-term capital gains on listed bonds and debt securities are taxed at highly efficient rates of just 12.5%, significantly outperforming taxable interest slabs.`,
+        `Additionally, specific tax-saving fixed deposits and pension funds qualify for tax-exempt withdrawals at maturity under Section 10(10D), offering high post-tax yields that make them the premier choice for taxpayers in the high income slabs.`
+      ]
+    }
+  ];
+};
+
 const DynamicInvestmentPage: React.FC = () => {
   const { type: paramType, subPath } = useParams<{ type: string; subPath: string }>();
   const navigate = useNavigate();
@@ -37,7 +124,7 @@ const DynamicInvestmentPage: React.FC = () => {
     const readableCategory = formatSlug(categoryType);
     const readableSlug = formatSlug(slug);
     
-    let customIntro = `Investing in **${readableSlug}** offers a structured mechanism to compound your hard-earned wealth. Under the broader spectrum of **${readableCategory}** investments, this asset represents a core addition to ensure stable capital growth and secure financial objectives.`;
+    let customIntro = `Investing in **${readableSlug}** offers a structured mechanism to compound your hard-earned wealth. Under the broader spectrum of **${readableCategory}** investments, this asset represents a core addition to ensure stable capital growth and secure financial objectives. ${categoryType === 'bonds' && slug === 'zero-coupon-bonds' ? 'Zero-coupon bonds are issued at a discount and redeemed at face value, with returns generated solely from the price differential.' : ''}`;
     
     let keyFeaturesList = [
       { label: "Yield Potential", text: `Secure top-tier market interest or dividend payouts by choosing highly rated ${readableCategory} assets.` },
@@ -130,6 +217,7 @@ const DynamicInvestmentPage: React.FC = () => {
 
   const currentSlug = `${type}/${subPath}`;
   const pageContent = INVESTMENT_PAGE_MAP[currentSlug] || generateFallbackContent(type || 'mutual-funds', subPath || 'overview');
+  const detailedArticles = getInvestmentDetailedArticles(type || 'mutual-funds', subPath || 'overview');
 
   // Scroll to top on path parameter change
   useEffect(() => {
@@ -168,9 +256,28 @@ const DynamicInvestmentPage: React.FC = () => {
             {/* More Intro if present */}
             {pageContent.moreIntro && (
               <div className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm">
-                <p className="text-sm text-slate-600 leading-relaxed font-medium">
+                <p className="text-sm text-slate-650 leading-relaxed font-sans font-medium">
                   {pageContent.moreIntro}
                 </p>
+              </div>
+            )}
+
+            {/* Detailed Editorial Sections - Rich Data like the Zero Coupon Bonds Sample */}
+            {detailedArticles.length > 0 && (
+              <div className="space-y-8">
+                {detailedArticles.map((art, idx) => (
+                  <div key={idx} className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm space-y-4 hover:shadow-md transition-shadow">
+                    <h3 className="text-xl font-bold text-slate-800 flex items-center gap-2 border-b border-slate-100 pb-3">
+                      <span className="w-1.5 h-6 bg-indigo-600 rounded-full"></span>
+                      {art.title}
+                    </h3>
+                    {art.content.map((p, pIdx) => (
+                      <p key={pIdx} className="text-slate-600 text-sm leading-relaxed font-sans font-medium text-justify">
+                        {p}
+                      </p>
+                    ))}
+                  </div>
+                ))}
               </div>
             )}
 

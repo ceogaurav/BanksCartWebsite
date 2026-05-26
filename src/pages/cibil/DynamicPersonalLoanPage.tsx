@@ -4,6 +4,47 @@ import { HelpCircle, ChevronDown, Check, Star, ShieldAlert, Sparkles, BookOpen, 
 import CibilCheckerForm from '../../components/common/CibilCheckerForm';
 import { LOAN_PAGE_MAP, LoanPageContent, LoanRepaymentRow } from '../../data/loanPageData';
 
+interface EditorialArticle {
+  title: string;
+  content: string[];
+}
+
+const getPersonalLoanDetailedArticles = (slug: string): EditorialArticle[] => {
+  const formatSlug = (s: string) => s.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+  const readableName = formatSlug(slug);
+
+  return [
+    {
+      title: `Securing High-Fidelity Capital under the ${readableName} Framework`,
+      content: [
+        `Securing optimal financial parameters under the broader spectrum of **${readableName}** is vital to ensure long-term cash flow flexibility and personal liquidity. In a dynamically shifting credit landscape regulated closely by the Reserve Bank of India (RBI), retail borrowers must evaluate baseline rate matrices carefully before committing capital. Unlike secured loans that require pledging physical assets (like gold or real estate deeds), unsecured personal credit provides instant financial backup based strictly on your income stability and credit bureau standing.`,
+        `By utilizing BanksCart's modern side-by-side comparison engine, you can review interest rates (starting as low as 10.49% p.a.), upfront processing fees, and repayment timelines across India's leading public and private sector banks. This digital onboarding process bypasses tedious physical document loops, allowing you to secure immediate approvals online with zero upfront transaction friction.`
+      ]
+    },
+    {
+      title: `Reducing Balance vs Flat Rates: The Mathematical Reality of ${readableName}`,
+      content: [
+        `When comparing personal financing options under the **${readableName}** category, understanding the mathematical interest calculation model is critical. Traditional flat interest models compute interest based on the entire original loan principal throughout the tenure, leading to exceptionally high cumulative interest payments. Conversely, the reducing balance model recalculates interest monthly or quarterly strictly on the remaining outstanding principal.`,
+        `This reducing model dramatically lowers your total cost of borrowing, saving thousands of rupees over a standard 5-year tenure. At BanksCart, we ensure all pre-approved offers are presented using transparent reducing balance metrics, letting you plan monthly budgets and choose convenient tenure options (ranging from 12 to 72 months) with complete clarity.`
+      ]
+    },
+    {
+      title: `Prerequisites for Prime Pricing: CIBIL Score & DTI Ratio Optimization`,
+      content: [
+        `To secure the lowest interest rates and premium borrower benefits under the **${readableName}** catalog, maintaining a pristine credit history is essential. Lenders evaluate your creditworthiness using your CIBIL rating, where scores of 750 and above qualify you for lowest base rate markups, waived processing charges, and pre-approved limits. Borrowers with scores between 600 and 700 can still qualify but are often charged higher risk margins.`,
+        `Additionally, lenders audit your Debt-to-Income (DTI) ratio, representing the percentage of your monthly salary routed toward active EMIs. Keeping your DTI ratio below 45% demonstrates high repayment capacities and lowers default risks. Organizing clean bank statements showing zero unpaid direct debits or cheque bounces before submitting your final request guarantees rapid approvals.`
+      ]
+    },
+    {
+      title: `Compliance and Auto-Debit Setup: Securing Your Credit Profile`,
+      content: [
+        `Once your application under **${readableName}** is approved, configuring automated repayment channels is a vital step to preserve your credit rating. Setting up secure e-NACH auto-debit mandates ensures monthly EMIs clear on schedule, preventing daily late fee penalties (often up to 42% p.a.) and avoiding default flags reported to major bureaus.`,
+        `Consistent, on-time repayments compile into a positive credit payment history, directly boosting your CIBIL score for future high-ticket borrowing like housing loans or business capital, establishing an ironclad wealth-building cycle.`
+      ]
+    }
+  ];
+};
+
 const DynamicPersonalLoanPage: React.FC = () => {
   const { subPath } = useParams<{ subPath: string }>();
   const navigate = useNavigate();
@@ -83,6 +124,7 @@ const DynamicPersonalLoanPage: React.FC = () => {
 
   const currentSlug = subPath || 'overview';
   const pageContent = LOAN_PAGE_MAP[currentSlug] || generateFallbackContent(currentSlug);
+  const detailedArticles = getPersonalLoanDetailedArticles(currentSlug);
 
   // Scroll to top on slug change
   useEffect(() => {
@@ -121,9 +163,28 @@ const DynamicPersonalLoanPage: React.FC = () => {
             {/* More Intro if present */}
             {pageContent.moreIntro && (
               <div className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm">
-                <p className="text-sm text-slate-600 leading-relaxed">
+                <p className="text-sm text-slate-650 leading-relaxed font-medium font-sans">
                   {pageContent.moreIntro}
                 </p>
+              </div>
+            )}
+
+            {/* Detailed Editorial Sections - Rich Data like the Zero Coupon Bonds Sample */}
+            {detailedArticles.length > 0 && (
+              <div className="space-y-8">
+                {detailedArticles.map((art, idx) => (
+                  <div key={idx} className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm space-y-4 hover:shadow-md transition-shadow">
+                    <h3 className="text-xl font-bold text-slate-800 flex items-center gap-2 border-b border-slate-100 pb-3">
+                      <span className="w-1.5 h-6 bg-blue-600 rounded-full"></span>
+                      {art.title}
+                    </h3>
+                    {art.content.map((p, pIdx) => (
+                      <p key={pIdx} className="text-slate-600 text-sm leading-relaxed font-sans font-medium text-justify">
+                        {p}
+                      </p>
+                    ))}
+                  </div>
+                ))}
               </div>
             )}
 

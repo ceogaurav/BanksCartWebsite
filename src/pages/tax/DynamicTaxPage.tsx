@@ -113,6 +113,48 @@ const TAX_PAGE_MAP: Record<string, TaxPageContent> = {
   }
 };
 
+interface EditorialArticle {
+  title: string;
+  content: string[];
+}
+
+const getTaxDetailedArticles = (slug: string): EditorialArticle[] => {
+  const formatSlug = (s: string) => {
+    return s
+      .split('-')
+      .map(word => {
+        if (word.toUpperCase() === 'GST') return 'GST';
+        return word.charAt(0).toUpperCase() + word.slice(1);
+      })
+      .join(' ');
+  };
+  const readableName = formatSlug(slug);
+
+  return [
+    {
+      title: `Indirect Compliance & Regulatory Landmarks under ${readableName}`,
+      content: [
+        `Navigating direct and indirect tax codes in India is a critical administrative pillar to ensure enterprise compliance and safeguard individual wealth. Under the broader framework of **${readableName}**, taxpayers and corporate accountants must analyze shifting rate slabs, threshold limits, and dynamic compliance timelines. Regulated closely by the Central Board of Direct Taxes (CBDT) and the GST Council, India's taxation model is continuously re-aligned to stimulate industrial productivity and reduce manual friction.`,
+        `By leveraging BanksCart's high-density calculators, you can compare the net tax impacts of recent amendments side-by-side. Bypassing complicated legal jargon, we translate official notifications into clear, actionable guidelines, helping you avoid penal interest rates and manage working capital budgets seamlessly.`
+      ]
+    },
+    {
+      title: `Input Tax Credit (ITC) Optimization: Mitigating the Cascading Effect`,
+      content: [
+        `For businesses filing under the **${readableName}** catalog, optimizing Input Tax Credit (ITC) represents a primary cash-flow saving strategy. ITC permits registered business entities to reduce their final tax liability on outward sales by subtracting the GST already paid on raw input goods or business services. This fundamental mechanism eliminates the cascading 'tax on tax' effect, boosting commercial margins.`,
+        `However, claiming credit requires strict discipline. Taxpayers must proactively reconcile purchase ledgers with supplier data shown in automated GSTR-2B logs. Under recent anti-evasion directives, provisional ITC claims are tightly restricted, and discrepancies can trigger temporary portal blocks, making monthly matching audits highly essential.`
+      ]
+    },
+    {
+      title: `Grievance Resolution and Ombudsman Desks: Protecting Taxpayer Rights`,
+      content: [
+        `A key resolution of recent regulatory meetings under **${readableName}** is the establishment of structured dispute resolution portals. The government has mandated regional Grievance Redressal Committees consisting of both central and state commissioners to address systemic portal glitches and credit disputes.`,
+        `This robust regulatory framework guarantees complete consumer protection. Honest taxpayers have direct escalation channels to independent tax ombudsmen, securing quick resolutions without requiring expensive litigation loops.`
+      ]
+    }
+  ];
+};
+
 const DynamicTaxPage: React.FC = () => {
   const { subPath } = useParams<{ subPath: string }>();
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
@@ -155,6 +197,7 @@ const DynamicTaxPage: React.FC = () => {
 
   const currentSlug = subPath || 'overview';
   const pageContent = TAX_PAGE_MAP[currentSlug] || generateFallbackContent(currentSlug);
+  const detailedArticles = getTaxDetailedArticles(currentSlug);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -192,9 +235,28 @@ const DynamicTaxPage: React.FC = () => {
             {/* More Intro if present */}
             {pageContent.moreIntro && (
               <div className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm">
-                <p className="text-sm text-slate-600 leading-relaxed font-sans">
+                <p className="text-sm text-slate-650 leading-relaxed font-sans font-medium">
                   {pageContent.moreIntro}
                 </p>
+              </div>
+            )}
+
+            {/* Detailed Editorial Sections - Rich Data like the Zero Coupon Bonds Sample */}
+            {detailedArticles.length > 0 && (
+              <div className="space-y-8">
+                {detailedArticles.map((art, idx) => (
+                  <div key={idx} className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm space-y-4 hover:shadow-md transition-shadow">
+                    <h3 className="text-xl font-bold text-slate-800 flex items-center gap-2 border-b border-slate-100 pb-3">
+                      <span className="w-1.5 h-6 bg-teal-650 rounded-full"></span>
+                      {art.title}
+                    </h3>
+                    {art.content.map((p, pIdx) => (
+                      <p key={pIdx} className="text-slate-600 text-sm leading-relaxed font-sans font-medium text-justify">
+                        {p}
+                      </p>
+                    ))}
+                  </div>
+                ))}
               </div>
             )}
 

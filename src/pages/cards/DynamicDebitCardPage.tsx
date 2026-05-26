@@ -74,6 +74,40 @@ const DEBIT_CARD_PAGE_MAP: Record<string, DebitCardPageContent> = {
   }
 };
 
+interface EditorialArticle {
+  title: string;
+  content: string[];
+}
+
+const getDebitCardDetailedArticles = (slug: string): EditorialArticle[] => {
+  const formatSlug = (s: string) => s.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+  const readableName = formatSlug(slug);
+
+  return [
+    {
+      title: `Direct Moneyback Optimization: Yield Slabs under ${readableName}`,
+      content: [
+        `Earning direct financial yields on routine retail transactions is a highly efficient cash-saving strategy under **${readableName}**. Linked directly to your primary bank savings account, cashback and premium rewards debit cards let you secure direct monetary return percentages (often up to 5%) on utility payments, daily dining bills, and online shopping without standard interest charges.`,
+        `By presenting cards like HDFC Millennia and Axis Liberty side-by-side at BanksCart, we outline annual maintenance fee slabs, cash return limits, and minimum average balance (AMB) thresholds. This helps savers select card setups that completely offset maintenance fees and maximize net cash savings annually.`
+      ]
+    },
+    {
+      title: `Complimentary Airport Lounge Entries on Rupay & Visa Platinum`,
+      content: [
+        `Beyond routine cashback benefits, premium debit cards under **${readableName}** deliver high-value travel privileges. Visa Platinum, World Mastercard, and Rupay Platinum cards offer complimentary domestic airport lounge access (typically 1 access per calendar quarter) by simply swiping your active card at entry desks.`,
+        `This travel boost, coupled with fuel surcharge waivers (typically 1% for fuel spends between ₹400 and ₹4,000) and BookMyShow movie ticket discounts, adds hundreds of rupees of value to your basic retail checking account without extra costs.`
+      ]
+    },
+    {
+      title: `Built-In Accidental Insurance & Contactless Tap-and-Pay Limits`,
+      content: [
+        ` debit products under **${readableName}** offer advanced payment security features. Cardholders can instantly toggle transaction limits, block international spends, and activate contactless NFC tap-and-pay structures (supporting pin-free transactions up to ₹5,000) directly via their bank's mobile app.`,
+        `Additionally, premium card classes automatically bundle complimentary personal air accident insurance and purchase protection covers. This acts as a robust financial shield, protecting cardholder families against accidental emergencies seamlessly.`
+      ]
+    }
+  ];
+};
+
 const DynamicDebitCardPage: React.FC = () => {
   const { subPath } = useParams<{ subPath: string }>();
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
@@ -118,6 +152,7 @@ const DynamicDebitCardPage: React.FC = () => {
 
   const currentSlug = subPath || 'overview';
   const pageContent = DEBIT_CARD_PAGE_MAP[currentSlug] || generateFallbackContent(currentSlug);
+  const detailedArticles = getDebitCardDetailedArticles(currentSlug);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -155,9 +190,28 @@ const DynamicDebitCardPage: React.FC = () => {
             {/* More Intro if present */}
             {pageContent.moreIntro && (
               <div className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm">
-                <p className="text-sm text-slate-600 leading-relaxed font-sans">
+                <p className="text-sm text-slate-650 leading-relaxed font-sans font-medium">
                   {pageContent.moreIntro}
                 </p>
+              </div>
+            )}
+
+            {/* Detailed Editorial Sections - Rich Data like the Zero Coupon Bonds Sample */}
+            {detailedArticles.length > 0 && (
+              <div className="space-y-8">
+                {detailedArticles.map((art, idx) => (
+                  <div key={idx} className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm space-y-4 hover:shadow-md transition-shadow">
+                    <h3 className="text-xl font-bold text-slate-800 flex items-center gap-2 border-b border-slate-100 pb-3">
+                      <span className="w-1.5 h-6 bg-emerald-600 rounded-full"></span>
+                      {art.title}
+                    </h3>
+                    {art.content.map((p, pIdx) => (
+                      <p key={pIdx} className="text-slate-600 text-sm leading-relaxed font-sans font-medium text-justify">
+                        {p}
+                      </p>
+                    ))}
+                  </div>
+                ))}
               </div>
             )}
 

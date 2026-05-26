@@ -16,6 +16,50 @@ interface PayMatrixRow {
   allowances: string;
 }
 
+interface EditorialArticle {
+  title: string;
+  content: string[];
+}
+
+const getSalaryDetailedArticles = (slug: string): EditorialArticle[] => {
+  const formatSlug = (s: string) => {
+    return s
+      .split('-')
+      .map(word => {
+        if (word.toUpperCase() === 'CPC') return 'CPC';
+        if (word.toUpperCase() === 'DA') return 'DA';
+        if (word.toUpperCase() === 'HRA') return 'HRA';
+        return word.charAt(0).toUpperCase() + word.slice(1);
+      })
+      .join(' ');
+  };
+  const readableName = formatSlug(slug);
+
+  return [
+    {
+      title: `The Structural Fitment Factor and Wage Harmonization in Government Sectors under ${readableName}`,
+      content: [
+        `Analyzing public sector wage guidelines under the statutory updates of **${readableName}** is a critical task for central and state government employees, administrative officers, and mortgage planners. The implementation of modern pay commissions represents a landmark effort to standardize and simplify complex grade pay grids. By utilizing a uniform fitment multiplier (standardized at 2.57x for the 7th Pay Commission), the government successfully mapped historical basic salaries directly to a transparent, 18-level pay matrix.`,
+        `This unified matrix system eliminates individual grade pay disputes and ensures complete transparency in annual career progressions. Understanding where your career profile lands within these levels is highly essential, as lenders and financial portals use these basic entry salary slabs as primary verification benchmarks when structuring credit approvals.`
+      ]
+    },
+    {
+      title: `Allowance Slabs and Inflation Indexing: Reconciling DA Hikes and HRA Allocations`,
+      content: [
+        `A key pillar of public sector salary grids under **${readableName}** is the dynamic indexing of allowance benefits designed to offset inflationary rises. Chief among these is the Dearness Allowance (DA), which is calculated directly as a percentage of your basic entry pay and revised bi-annually by the cabinet based on the All-India Consumer Price Index (AICPI).`,
+        `Simultaneously, the House Rent Allowance (HRA) is structured to offer localized relief, classified neatly by city categories: Metros (Class X at 24% to 27%), major cities (Class Y at 16% to 18%), and smaller municipalities (Class Z at 8% to 9%). To protect real purchasing power, public directives mandate that HRA slabs automatically step up when the active DA threshold crosses 50%, providing necessary cash flow buffers.`
+      ]
+    },
+    {
+      title: `Credit Appraisals and Leverage Multipliers for Salaried Personnel`,
+      content: [
+        `For government employees earning under the **${readableName}** guidelines, holding a verified pay matrix level offers massive leverage when accessing credit markets. Lenders view central and state government salary paychecks as the gold standard of job security and payment reliability. This excellent risk profile translates directly into special low-interest concessions, processing fee waivers, and accelerated biometric clearances.`,
+        `By maintaining a debt-to-income balance strictly below 45% (adhering to FOIR guidelines), salaried employees can borrow high-capacity home loans or personal loans with low default probabilities. Comparing your eligibility parameters on BanksCart's calculators ensures you optimize your leverage and secure prime interest rates.`
+      ]
+    }
+  ];
+};
+
 interface SalaryPageContent {
   title: string;
   badge: string;
@@ -118,6 +162,7 @@ const DynamicSalaryPage: React.FC = () => {
 
   const currentSlug = subPath || 'overview';
   const pageContent = SALARY_PAGE_MAP[currentSlug] || generateFallbackContent(currentSlug);
+  const detailedArticles = getSalaryDetailedArticles(currentSlug);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -155,9 +200,28 @@ const DynamicSalaryPage: React.FC = () => {
             {/* More Intro if present */}
             {pageContent.moreIntro && (
               <div className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm">
-                <p className="text-sm text-slate-600 leading-relaxed font-sans">
+                <p className="text-sm text-slate-650 leading-relaxed font-sans font-medium text-justify">
                   {pageContent.moreIntro}
                 </p>
+              </div>
+            )}
+
+            {/* Detailed Editorial Sections - Rich Data like the Zero Coupon Bonds Sample */}
+            {detailedArticles.length > 0 && (
+              <div className="space-y-8">
+                {detailedArticles.map((art, idx) => (
+                  <div key={idx} className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm space-y-4 hover:shadow-md transition-shadow">
+                    <h3 className="text-xl font-bold text-slate-800 flex items-center gap-2 border-b border-slate-100 pb-3">
+                      <span className="w-1.5 h-6 bg-cyan-600 rounded-full"></span>
+                      {art.title}
+                    </h3>
+                    {art.content.map((p, pIdx) => (
+                      <p key={pIdx} className="text-slate-600 text-sm leading-relaxed font-sans font-medium text-justify">
+                        {p}
+                      </p>
+                    ))}
+                  </div>
+                ))}
               </div>
             )}
 

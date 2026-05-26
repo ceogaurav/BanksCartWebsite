@@ -374,6 +374,24 @@ const App: React.FC = () => {
                 <Route path="/hdfc-bank/:subPath" element={<DynamicCreditCardPage />} />
                 <Route path="/cibil/:subPath" element={<DynamicPersonalLoanPage />} />
                 <Route path="/6-key-insights-know-pre-approved-personal-loans" element={<DynamicPersonalLoanPage />} />
+                
+                {/* 60+ New Mapped Routes */}
+                <Route path="/sbi-bank/:subPath" element={<DynamicCreditCardPage />} />
+                <Route path="/axis-bank/:subPath" element={<DynamicCreditCardPage />} />
+                <Route path="/federal-bank/:subPath" element={<DynamicCreditCardPage />} />
+                <Route path="/amex-bank" element={<DynamicCreditCardPage />} />
+                <Route path="/amex-bank/:subPath" element={<DynamicCreditCardPage />} />
+                <Route path="/prepaid-mobile-recharge/:subPath" element={<DynamicRechargePage />} />
+                <Route path="/mobile-postpaid-bill-payment/:subPath" element={<DynamicRechargePage />} />
+                <Route path="/airtel-money-wallet-app" element={<DynamicGeneralBankingPage />} />
+                <Route path="/savings-account/:subPath" element={<DynamicGeneralBankingPage />} />
+                <Route path="/life-insurance/term-insurance/:subPath" element={<DynamicAegonLifePage />} />
+                <Route path="/allahabad-bank" element={<DynamicAbhyudayaBankPage />} />
+                <Route path="/allahabad-bank/:subPath" element={<DynamicAbhyudayaBankPage />} />
+                <Route path="/andhra-bank" element={<DynamicAbhyudayaBankPage />} />
+                <Route path="/andhra-bank/:subPath" element={<DynamicAbhyudayaBankPage />} />
+                <Route path="/banking/:subPath" element={<DynamicAbhyudayaBankPage />} />
+
                 <Route path="/expert-advice" element={<ExpertAdvicePage openApplyModal={openApplyModal} />} />
 
                 {/* Abhyudaya Bank Routes */}

@@ -16,6 +16,34 @@ const client = createClient({
     apiVersion: '2023-05-03',
 });
 
+// Helper to extract pages dynamically from FinancialDirectory.tsx to prevent duplication
+// and guarantee all newly created dynamic/static routes are fully captured in the sitemap.
+function extractDirectoryPages() {
+    try {
+        const filePath = path.resolve(__dirname, '../src/pages/FinancialDirectory.tsx');
+        if (!fs.existsSync(filePath)) {
+            console.log('FinancialDirectory.tsx not found, skipping dynamic page extraction.');
+            return [];
+        }
+        const content = fs.readFileSync(filePath, 'utf8');
+        // Match href: "/some-path" or href: '/some-path'
+        const hrefRegex = /href:\s*["']([^"']+)["']/g;
+        const pages = [];
+        let match;
+        while ((match = hrefRegex.exec(content)) !== null) {
+            const page = match[1];
+            if (page.startsWith('/') && !pages.includes(page)) {
+                pages.push(page);
+            }
+        }
+        console.log(`Extracted ${pages.length} unique pages dynamically from FinancialDirectory.tsx`);
+        return pages;
+    } catch (e) {
+        console.error('Error extracting directory pages:', e);
+        return [];
+    }
+}
+
 async function generateSitemap() {
     console.log('Fetching posts for sitemap...');
     try {
@@ -24,7 +52,7 @@ async function generateSitemap() {
 
         const baseUrl = 'https://bankscart.com';
 
-        // Core pages - add more as needed
+        // Core and legacy static pages
         const staticPages = [
             '',
             '/loans',
@@ -274,14 +302,172 @@ async function generateSitemap() {
             '/cibil-report/cibil-score-sbi-loans',
             '/credit-report/ways-to-improve-your-cibil-score',
             '/credit-score/cibil-score-for-personal-loan',
-            '/cibil/how-to-resolve-cibil-dispute'
+            '/cibil/how-to-resolve-cibil-dispute',
+
+            // --- 60+ New Mapped Routes ---
+            // SBI Air India cards
+            '/sbi-bank/air-india-sbi-platinum-credit-cards',
+            '/sbi-bank/air-india-sbi-signature-credit-cards',
+            // Airtel prepaid/postpaid recharges & wallet
+            '/prepaid-mobile-recharge/airtel',
+            '/mobile-postpaid-bill-payment/airtel',
+            '/axis-bank/airtel-axis-bank-credit-card',
+            '/airtel-money-wallet-app',
+            // Ajio, Income tax, all-banks savings, HDFC term, value research MF, allowances, alternative funds
+            '/credit-card/ajio-credit-card-offers',
+            '/tax/income-tax-login',
+            '/savings-account/all-banks',
+            '/life-insurance/term-insurance/hdfc-term-insurance-premium-calculator',
+            '/mutual-funds/value-research-mutual-fund-rating',
+            '/salary/allowances',
+            '/mutual-funds/alternative-investment-fund',
+            '/business-loan/ambit',
+            '/business-loan/amended-technology-upgradation-fund-scheme-atufs',
+            // Amex cards
+            '/amex-bank',
+            '/amex-bank/grievance-redressal-escalation-matrix',
+            '/credit-card/amex-credit-card-application-status',
+            '/amex-bank/credit-card-bill-payment',
+            '/amex-bank/credit-card-eligibility',
+            '/amex-bank/credit-card-pin-generation',
+            '/amex-bank/credit-card-reward-points',
+            '/amex-bank/membership-rewards-credit-card',
+            '/amex-bank/smartearn-credit-card',
+            '/amex-bank/credit-card',
+            '/amex-bank/credit-card-emi',
+            '/amex-bank/credit-card-offers',
+            '/amex-bank/customer-care',
+            '/amex-bank/american-express-gold-credit-card',
+            '/amex-bank/american-express-platinum-card',
+            '/amex-bank/american-express-platinum-reserve-credit-cards',
+            '/amex-bank/american-express-platinum-travel-credit-cards',
+            '/credit-card/amex-bank-gift-card-in-india',
+            // Amortizations, Federal Fi, Andhra Bank, Allahabad Bank directories
+            '/personal-loan/amortization-calculator',
+            '/personal-loan/amortization-schedule',
+            '/federal-bank/amplifi-fi-federal-credit-card',
+            // Allahabad Bank
+            '/allahabad-bank',
+            '/banking/allahabad-bank-account-number',
+            '/banking/allahabad-bank-balance-enquiry-number',
+            '/allahabad-bank/car-loan',
+            '/allahabad-bank/credit-card-bill-payment',
+            '/allahabad-bank/customer-care',
+            '/allahabad-bank/education-loan',
+            '/allahabad-bank/fixed-deposits',
+            '/allahabad-bank/gold-loan',
+            '/allahabad-bank/kisan-credit-card',
+            '/allahabad-bank/mudra-loan',
+            '/banking/allahabad-bank-neft-form',
+            '/banking/allahabad-bank-net-banking-registration',
+            '/banking/allahabad-bank-netbanking',
+            '/savings-account/allahabad-bank-normal-savings-account',
+            '/banking/allahabad-bank-passbook',
+            '/allahabad-bank/status',
+            '/banking/allahabad-bank-rtgs-form',
+            '/banking/allahabad-bank-timings',
+            '/banking/allahabad-corporate-net-banking',
+            // Andhra Bank
+            '/andhra-bank',
+            '/banking/andhra-bank-account-number',
+            '/banking/andhra-bank-balance-enquiry',
+            '/andhra-bank/business-loan',
+            '/andhra-bank/car-loan',
+            '/andhra-bank/classic-credit-card',
+            '/andhra-bank/credit-card',
+            '/andhra-bank/credit-card-customer-care-number',
+            '/andhra-bank/credit-card-bill-payment',
+            // Abhyudaya Bank
+            '/abhyudaya-co-operative-bank',
+            '/abhyudaya-co-operative-bank/customer-care',
+            '/abhyudaya-co-operative-bank/education-loan',
+            '/abhyudaya-co-operative-bank/fixed-deposits',
+            '/abhyudaya-co-operative-bank/grievance-redressal-escalation-matrix',
+            '/abhyudaya-co-operative-bank/personal-loan',
+            '/abhyudaya-co-operative-bank/savings-account',
+            '/abhyudaya-co-operative-bank/business-loan',
+            '/abhyudaya-co-operative-bank/home-loan',
+            '/abhyudaya-co-operative-bank/home-loan-customer-care',
+            '/banking/abhyudaya-bank-net-banking',
+            '/banking/abhyudaya-bank-timings',
+            // Aditya Birla
+            '/aditya-birla',
+            '/aditya-birla/business-loan',
+            '/aditya-birla/business-loan-interest-rate',
+            '/aditya-birla-sun-life-pension-plans/empower-pension-sp-plan',
+            '/aditya-birla-sun-life-pension-plans/absli-empower-pension-plan',
+            '/absli-wealth-max-plan',
+            '/wealth-secure-plan',
+            '/protector-plus',
+            '/aditya-birla-activ-health',
+            '/mutual-funds/aditya-birla-amc-launches-aditya-birla-sun-life-psu-equity-fund',
+            '/mutual-funds/aditya-birla-sun-life-flexi-cap-fund-regular-plan-growth',
+            '/mutual-funds/aditya-birla-sun-life-mf-launches-nfo-nifty-next-50-etf',
+            '/mutual-funds/aditya-birla-sun-life-midcap-fund-regular-plan-growth',
+            '/mutual-funds/aditya-birla-sun-life-multi-cap-fund-regular-plan-growth',
+            '/mutual-funds/aditya-birla-sun-life-mutual-fund-announces-bal-bhavishya-yojna-nfo',
+            '/mutual-funds/birla-sun-life-mutual-fund',
+            '/mutual-funds/aditya-birla-sun-life-psu-equity-fund-regular-plan-growth',
+            '/mutual-funds/aditya-birla-sun-life-small-cap-fund-regular-plan-growth',
+            '/saving-schemes/aditya-birla-sun-life-pension-fund',
+            '/aditya-birla-sun-life-pension-plans',
+            '/icici-bank/adani-one-credit-cards',
+            '/icici-bank/adani-one-signature-credit-card',
+            '/au-small-finance-bank/aditya-birla-finance-au-credit-cards',
+            '/credit-card/add-on-card',
+            '/tax/37th-gst-council-meeting',
+            '/tax/38th-gst-council-meeting',
+            '/tax/aaykar-setu-income-tax-mobile-app',
+            '/sbi-bank/adtiya-birla-sbi-cards',
+            '/sbi-bank/aditya-birla-sbi-card-select',
+            '/tax/advance-tax',
+            '/credit-card/advantages-and-disadvantages-of-credit-card',
+            '/personal-loan/aditya-birla-finance-limited-marriage-loan',
+            '/loan-against-securities/mutual-funds/aditya-birla-finance',
+            '/aditya-birla/personal-loan',
+            '/aditya-birla/personal-loan-documents-required',
+            '/aditya-birla/personal-loan-emi-calculator',
+            '/personal-loan/aditya-birla-finance-limited-personal-loan-foreclosure-charges',
+            '/aditya-birla/home-loan',
+            '/aditya-birla/home-loan-interest-rates',
+            '/aditya-birla/loan-against-property',
+            '/group-active-health',
+            '/group-activ-secure',
+            '/group-health-insurance',
+            '/health-insurance-asthma',
+            '/health-insurance-diabetes',
+            '/health-insurance-high-blood-pressure',
+            '/health-insurance-high-cholesterol',
+            '/login-and-registration-process',
+            '/aegon-life-child-plans',
+            '/aegon-life-customer-care',
+            '/life-easy-protect-insurance-plan',
+            '/future-protect-insurance-plan',
+            '/future-protect-plus-insurance-plan',
+            '/aegon-life-guaranteed-growth-insurance-plan',
+            '/aegon-life-iguarantee-insurance',
+            '/imaximize-insurance-plan',
+            '/imaximize-single-premium-insurance-plan',
+            '/pension-plans',
+            '/rising-star-insurance-plan',
+            '/term-insurance-plans',
+            '/pages-directory',
+            '/financial-directory'
         ];
+
+        // Extract dynamically defined pages in the directories component to keep sitemap fully synchronised
+        const directoryPages = extractDirectoryPages();
+
+        // Merge both hardcoded list and dynamically extracted list, ensuring 100% deduplication
+        const allPages = Array.from(new Set([...staticPages, ...directoryPages]));
+
+        console.log(`Unified sitemap target has ${allPages.length} unique pages`);
 
         let sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`;
 
         // Add static pages
-        staticPages.forEach(page => {
+        allPages.forEach(page => {
             sitemap += `
   <url>
     <loc>${baseUrl}${page}</loc>
@@ -311,7 +497,8 @@ async function generateSitemap() {
         }
 
         fs.writeFileSync(path.join(publicDir, 'sitemap.xml'), sitemap);
-        console.log(`Sitemap generated with ${posts.length} posts at public/sitemap.xml`);
+        console.log(`Sitemap generated with ${posts.length} dynamic posts at public/sitemap.xml`);
+        console.log(`Total URLs registered in sitemap: ${allPages.length + posts.length}`);
 
     } catch (error) {
         console.error('Error generating sitemap:', error);
