@@ -497,6 +497,74 @@ const App: React.FC = () => {
                 <Route path="/sbm-bank/:subPath" element={<DynamicCreditCardPage />} />
                 <Route path="/rbl-bank/:subPath" element={<DynamicCreditCardPage />} />
 
+                {/* Central Bank of India Routes */}
+                <Route path="/central-bank-of-india" element={<DynamicGeneralBankingPage />} />
+                <Route path="/central-bank-of-india/:subPath" element={<DynamicGeneralBankingPage />} />
+
+                {/* Citibank Routes */}
+                <Route path="/citibank" element={<DynamicGeneralBankingPage />} />
+                <Route path="/citibank/:subPath" element={<DynamicGeneralBankingPage />} />
+
+                {/* City Union Bank Routes */}
+                <Route path="/city-union-bank" element={<DynamicGeneralBankingPage />} />
+                <Route path="/city-union-bank/:subPath" element={<DynamicGeneralBankingPage />} />
+
+                {/* Chaitanya Godavari Grameena Bank Routes */}
+                <Route path="/chaitanya-godavari-grameena-bank" element={<DynamicGeneralBankingPage />} />
+                <Route path="/chaitanya-godavari-grameena-bank/:subPath" element={<DynamicGeneralBankingPage />} />
+
+                {/* Clix Capital Routes */}
+                <Route path="/clix-capital" element={<DynamicGeneralBankingPage />} />
+                <Route path="/clix-capital/:subPath" element={<DynamicGeneralBankingPage />} />
+
+                {/* Cosmos Bank Routes */}
+                <Route path="/cosmos-bank" element={<DynamicGeneralBankingPage />} />
+                <Route path="/cosmos-bank/:subPath" element={<DynamicGeneralBankingPage />} />
+
+                {/* Credila Financial Routes */}
+                <Route path="/credila-financial-services" element={<DynamicGeneralBankingPage />} />
+                <Route path="/credila-financial-services/:subPath" element={<DynamicGeneralBankingPage />} />
+
+                {/* CSB Bank Routes */}
+                <Route path="/csb-bank" element={<DynamicGeneralBankingPage />} />
+                <Route path="/csb-bank/:subPath" element={<DynamicGeneralBankingPage />} />
+
+                {/* DBS Bank Routes */}
+                <Route path="/dbs-bank" element={<DynamicGeneralBankingPage />} />
+                <Route path="/dbs-bank/:subPath" element={<DynamicGeneralBankingPage />} />
+
+                {/* Credit Saison Routes */}
+                <Route path="/credit-saison-india" element={<DynamicGeneralBankingPage />} />
+                <Route path="/credit-saison-india/:subPath" element={<DynamicGeneralBankingPage />} />
+
+                {/* Citifinancial Routes */}
+                <Route path="/citifinancial" element={<DynamicGeneralBankingPage />} />
+
+                {/* Chola MS Insurance Flat Routes */}
+                <Route path="/chola-classic-health-individual" element={<DynamicHealthInsurancePage />} />
+                <Route path="/chola-classic-health-family-floater" element={<DynamicHealthInsurancePage />} />
+                <Route path="/chola-healthline" element={<DynamicHealthInsurancePage />} />
+                <Route path="/chola-hospital-cash-healthline-revision" element={<DynamicHealthInsurancePage />} />
+                <Route path="/family-healthline-insurance" element={<DynamicHealthInsurancePage />} />
+                <Route path="/individual-healthline-insurance" element={<DynamicHealthInsurancePage />} />
+                <Route path="/chola-ms-swasth-parivar-insurance" element={<DynamicHealthInsurancePage />} />
+                <Route path="/chola-tax-plus-healthline" element={<DynamicHealthInsurancePage />} />
+                <Route path="/chola-ms-tax-plus-healthline" element={<DynamicHealthInsurancePage />} />
+                <Route path="/chola-super-topup-insurance" element={<DynamicHealthInsurancePage />} />
+
+                {/* Lifestyle Protection & ProHealth Group Insurance */}
+                <Route path="/lifestyle-protection-group-policy" element={<DynamicHealthInsurancePage />} />
+                <Route path="/prohealth-group-insurance-policy" element={<DynamicHealthInsurancePage />} />
+                <Route path="/lifestyle-protection-accident-care" element={<DynamicHealthInsurancePage />} />
+                <Route path="/lifestyle-protection-critical-care" element={<DynamicHealthInsurancePage />} />
+                <Route path="/prohealth-cash" element={<DynamicHealthInsurancePage />} />
+                <Route path="/prohealth-select" element={<DynamicHealthInsurancePage />} />
+
+                {/* General Wildcards */}
+                <Route path="/rbi/:subPath" element={<DynamicGeneralBankingPage />} />
+                <Route path="/rural-insurance/:subPath" element={<DynamicHealthInsurancePage />} />
+                <Route path="/company-registration/:subPath" element={<DynamicGeneralBankingPage />} />
+
                 <Route path="/expert-advice" element={<ExpertAdvicePage openApplyModal={openApplyModal} />} />
 
                 {/* Abhyudaya Bank Routes */}
