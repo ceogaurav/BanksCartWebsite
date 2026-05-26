@@ -3,6 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { HelpCircle, ChevronDown, Check, Star, ShieldAlert, Sparkles, BookOpen, AlertCircle, Info, Landmark, Percent, Award, ShieldCheck, ArrowRight, Play, MessageSquare, TrendingUp } from 'lucide-react';
 import CibilCheckerForm from '../../components/common/CibilCheckerForm';
 import { LOAN_PAGE_MAP, LoanPageContent, LoanRepaymentRow } from '../../data/loanPageData';
+import { getNewPageDetailedContent } from '../../data/newPagesDetailedData';
+
 
 interface EditorialArticle {
   title: string;
@@ -123,8 +125,33 @@ const DynamicPersonalLoanPage: React.FC = () => {
   };
 
   const currentSlug = subPath || 'overview';
-  const pageContent = LOAN_PAGE_MAP[currentSlug] || generateFallbackContent(currentSlug);
-  const detailedArticles = getPersonalLoanDetailedArticles(currentSlug);
+  const newPageData = getNewPageDetailedContent(window.location.pathname);
+
+  const pageContent = newPageData
+    ? {
+        title: newPageData.title,
+        badge: newPageData.badge,
+        intro: newPageData.intro,
+        moreIntro: newPageData.moreIntro,
+        keyFeaturesTitle: newPageData.highlightsTitle,
+        keyFeatures: newPageData.highlights,
+        repaymentDetailsTitle: newPageData.ratesTitle,
+        repaymentHeaders: newPageData.ratesHeaders,
+        repaymentDetails: newPageData.ratesRows.map(row => ({
+          col1: row[0],
+          col2: row[1],
+          col3: row[2],
+          col4: row[3] || "N/A"
+        })),
+        boostTipsTitle: newPageData.checklistTitle,
+        boostTips: newPageData.checklist,
+        faqs: newPageData.faqs
+      }
+    : (LOAN_PAGE_MAP[currentSlug] || generateFallbackContent(currentSlug));
+
+  const detailedArticles = newPageData?.detailedArticles
+    ? newPageData.detailedArticles
+    : getPersonalLoanDetailedArticles(currentSlug);
 
   // Scroll to top on slug change
   useEffect(() => {

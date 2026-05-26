@@ -3,6 +3,8 @@ import { useParams, useLocation } from 'react-router-dom';
 import { HelpCircle, ChevronDown, Check, Star, ShieldAlert, Sparkles, BookOpen, AlertCircle, Info, Landmark, Percent, Award, ShieldCheck, ArrowRight, Play, MessageSquare, TrendingUp, CreditCard, Send, Pocket } from 'lucide-react';
 import CibilCheckerForm from '../../components/common/CibilCheckerForm';
 import { GENERAL_BANKING_PAGE_MAP, BankingPageContent } from '../../data/generalBankingPageData';
+import { getNewPageDetailedContent } from '../../data/newPagesDetailedData';
+
 
 interface EditorialArticle {
   title: string;
@@ -61,8 +63,28 @@ const DynamicGeneralBankingPage: React.FC = () => {
     currentSlug = matchingKey || 'accounts-payable';
   }
 
-  const pageContent = GENERAL_BANKING_PAGE_MAP[currentSlug] || GENERAL_BANKING_PAGE_MAP['accounts-payable'];
-  const detailedArticles = getBankingDetailedArticles(currentSlug, pageContent);
+  const newPageData = getNewPageDetailedContent(location.pathname);
+
+  const pageContent = newPageData
+    ? {
+        title: newPageData.title,
+        badge: newPageData.badge,
+        intro: newPageData.intro,
+        moreIntro: newPageData.moreIntro,
+        highlightsTitle: newPageData.highlightsTitle,
+        highlights: newPageData.highlights,
+        ratesTitle: newPageData.ratesTitle,
+        ratesHeaders: newPageData.ratesHeaders,
+        ratesRows: newPageData.ratesRows,
+        checklistTitle: newPageData.checklistTitle,
+        checklist: newPageData.checklist,
+        faqs: newPageData.faqs
+      }
+    : (GENERAL_BANKING_PAGE_MAP[currentSlug] || GENERAL_BANKING_PAGE_MAP['accounts-payable']);
+
+  const detailedArticles = newPageData?.detailedArticles
+    ? newPageData.detailedArticles
+    : getBankingDetailedArticles(currentSlug, pageContent);
 
   useEffect(() => {
     window.scrollTo(0, 0);

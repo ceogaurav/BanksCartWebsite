@@ -3,6 +3,8 @@ import { useParams, useLocation } from 'react-router-dom';
 import { HelpCircle, ChevronDown, Check, Star, ShieldAlert, Sparkles, BookOpen, AlertCircle, Info, Landmark, Percent, Award, ShieldCheck, ArrowRight, Play, MessageSquare, TrendingUp, CreditCard, Heart, Activity, Shield } from 'lucide-react';
 import CibilCheckerForm from '../../components/common/CibilCheckerForm';
 import { HEALTH_INSURANCE_PAGE_MAP, HealthPageContent } from '../../data/healthInsurancePageData';
+import { getNewPageDetailedContent } from '../../data/newPagesDetailedData';
+
 
 interface EditorialArticle {
   title: string;
@@ -234,8 +236,28 @@ const DynamicHealthInsurancePage: React.FC = () => {
     currentSlug = 'login-and-registration-process';
   }
 
-  const pageContent = HEALTH_INSURANCE_PAGE_MAP[currentSlug] || HEALTH_INSURANCE_PAGE_MAP['group-health-insurance'];
-  const detailedArticles = getHealthDetailedArticles(currentSlug);
+  const newPageData = getNewPageDetailedContent(location.pathname);
+
+  const pageContent = newPageData
+    ? {
+        title: newPageData.title,
+        badge: newPageData.badge,
+        intro: newPageData.intro,
+        moreIntro: newPageData.moreIntro,
+        highlightsTitle: newPageData.highlightsTitle,
+        highlights: newPageData.highlights,
+        ratesTitle: newPageData.ratesTitle,
+        ratesHeaders: newPageData.ratesHeaders,
+        ratesRows: newPageData.ratesRows,
+        checklistTitle: newPageData.checklistTitle,
+        checklist: newPageData.checklist,
+        faqs: newPageData.faqs
+      }
+    : (HEALTH_INSURANCE_PAGE_MAP[currentSlug] || HEALTH_INSURANCE_PAGE_MAP['group-health-insurance']);
+
+  const detailedArticles = newPageData?.detailedArticles
+    ? newPageData.detailedArticles
+    : getHealthDetailedArticles(currentSlug);
 
   useEffect(() => {
     window.scrollTo(0, 0);

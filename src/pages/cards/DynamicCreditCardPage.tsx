@@ -3,6 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { HelpCircle, ChevronDown, Check, Star, ShieldAlert, Sparkles, BookOpen, AlertCircle, Info, Landmark, Percent, Award, ShieldCheck, ArrowRight, Play, MessageSquare, TrendingUp, CreditCard } from 'lucide-react';
 import CibilCheckerForm from '../../components/common/CibilCheckerForm';
 import { CARD_PAGE_MAP, CardPageContent, CardRecommendRow } from '../../data/cardPageData';
+import { getNewPageDetailedContent } from '../../data/newPagesDetailedData';
+
 
 interface EditorialArticle {
   title: string;
@@ -279,8 +281,33 @@ const DynamicCreditCardPage: React.FC = () => {
   };
 
   const currentSlug = subPath || 'overview';
-  const pageContent = CARD_PAGE_MAP[currentSlug] || generateFallbackContent(currentSlug);
-  const detailedArticles = getCreditCardDetailedArticles(currentSlug);
+  const newPageData = getNewPageDetailedContent(window.location.pathname);
+
+  const pageContent = newPageData
+    ? {
+        title: newPageData.title,
+        badge: newPageData.badge,
+        intro: newPageData.intro,
+        moreIntro: newPageData.moreIntro,
+        keyFeaturesTitle: newPageData.highlightsTitle,
+        keyFeatures: newPageData.highlights,
+        recommendTitle: newPageData.ratesTitle,
+        recommendHeaders: newPageData.ratesHeaders,
+        recommendDetails: newPageData.ratesRows.map(row => ({
+          col1: row[0],
+          col2: row[1],
+          col3: row[2],
+          col4: row[3] || "N/A"
+        })),
+        checklistTitle: newPageData.checklistTitle,
+        checklist: newPageData.checklist,
+        faqs: newPageData.faqs
+      }
+    : (CARD_PAGE_MAP[currentSlug] || generateFallbackContent(currentSlug));
+
+  const detailedArticles = newPageData?.detailedArticles
+    ? newPageData.detailedArticles
+    : getCreditCardDetailedArticles(currentSlug);
 
   // Scroll to top on slug change
   useEffect(() => {

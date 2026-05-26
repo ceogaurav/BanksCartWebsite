@@ -3,6 +3,8 @@ import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { HelpCircle, ChevronDown, Check, Star, ShieldAlert, Sparkles, BookOpen, AlertCircle, Info, Landmark, Percent, Award, ShieldCheck, ArrowRight, Play, MessageSquare, TrendingUp, CreditCard, Clock, Phone, MapPin } from 'lucide-react';
 import CibilCheckerForm from '../../components/common/CibilCheckerForm';
 import { ABHYUDAYA_PAGE_MAP, AbhyudayaPageContent } from '../../data/abhyudayaPageData';
+import { getNewPageDetailedContent } from '../../data/newPagesDetailedData';
+
 
 interface EditorialArticle {
   title: string;
@@ -260,11 +262,28 @@ const DynamicAbhyudayaBankPage: React.FC = () => {
     currentSlug = 'timings';
   }
 
-  const isCustomBank = location.pathname.includes('allahabad') || location.pathname.includes('andhra');
+  const isCustomBank = location.pathname.includes('allahabad') || location.pathname.includes('andhra') || location.pathname.includes('banking/andhra');
 
-  const pageContent = isCustomBank || !ABHYUDAYA_PAGE_MAP[currentSlug]
-    ? generateBankFallbackContent(currentSlug, location.pathname)
-    : (ABHYUDAYA_PAGE_MAP[currentSlug] || ABHYUDAYA_PAGE_MAP['overview']);
+  const newPageData = getNewPageDetailedContent(location.pathname);
+
+  const pageContent = newPageData
+    ? {
+        title: newPageData.title,
+        badge: newPageData.badge,
+        intro: newPageData.intro,
+        moreIntro: newPageData.moreIntro,
+        highlightsTitle: newPageData.highlightsTitle,
+        highlights: newPageData.highlights,
+        ratesTitle: newPageData.ratesTitle,
+        ratesHeaders: newPageData.ratesHeaders,
+        ratesRows: newPageData.ratesRows,
+        checklistTitle: newPageData.checklistTitle,
+        checklist: newPageData.checklist,
+        faqs: newPageData.faqs
+      }
+    : (isCustomBank || !ABHYUDAYA_PAGE_MAP[currentSlug]
+        ? generateBankFallbackContent(currentSlug, location.pathname)
+        : (ABHYUDAYA_PAGE_MAP[currentSlug] || ABHYUDAYA_PAGE_MAP['overview']));
 
   const getCustomDetailedArticles = (slug: string, content: AbhyudayaPageContent): EditorialArticle[] => {
     const bankName = content.title.split(':')[0] || "Scheduled Bank";
@@ -293,9 +312,11 @@ const DynamicAbhyudayaBankPage: React.FC = () => {
     ];
   };
 
-  const detailedArticles = isCustomBank || !ABHYUDAYA_PAGE_MAP[currentSlug]
-    ? getCustomDetailedArticles(currentSlug, pageContent)
-    : getAbhyudayaDetailedArticles(currentSlug);
+  const detailedArticles = newPageData?.detailedArticles
+    ? newPageData.detailedArticles
+    : (isCustomBank || !ABHYUDAYA_PAGE_MAP[currentSlug]
+        ? getCustomDetailedArticles(currentSlug, pageContent)
+        : getAbhyudayaDetailedArticles(currentSlug));
 
   // Scroll to top on route change
   useEffect(() => {

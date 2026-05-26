@@ -391,6 +391,16 @@ const App: React.FC = () => {
                 <Route path="/andhra-bank" element={<DynamicAbhyudayaBankPage />} />
                 <Route path="/andhra-bank/:subPath" element={<DynamicAbhyudayaBankPage />} />
                 <Route path="/banking/:subPath" element={<DynamicAbhyudayaBankPage />} />
+                <Route path="/home-loan/:subPath" element={<DynamicGeneralBankingPage />} />
+                <Route path="/annapurna-microfinance" element={<DynamicGeneralBankingPage />} />
+                <Route path="/annapurna-microfinance/:subPath" element={<DynamicGeneralBankingPage />} />
+                <Route path="/travel-insurance/:subPath" element={<DynamicHealthInsurancePage />} />
+                <Route path="/life-insurance/:subPath" element={<DynamicAegonLifePage />} />
+                <Route path="/pan-card/:subPath" element={<DynamicGeneralBankingPage />} />
+                <Route path="/promotion-councils/:subPath" element={<DynamicGeneralBankingPage />} />
+                <Route path="/health-insurance/:subPath" element={<DynamicHealthInsurancePage />} />
+                <Route path="/premium-calculator" element={<DynamicHealthInsurancePage />} />
+                <Route path="/optima-restore-plan" element={<DynamicHealthInsurancePage />} />
 
                 <Route path="/expert-advice" element={<ExpertAdvicePage openApplyModal={openApplyModal} />} />
 

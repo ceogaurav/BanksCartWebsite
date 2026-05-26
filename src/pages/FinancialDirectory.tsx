@@ -123,7 +123,29 @@ const FinancialDirectory: React.FC = () => {
         { name: "Andhra Bank Card Bill Payment", href: "/andhra-bank/credit-card-bill-payment", desc: "Pay credit card statement outstanding balances securely online." },
         // Other banking subpages
         { name: "Savings Account Comparison", href: "/savings-account/all-banks", desc: "Compare savings account interest rates and balance slabs across all major Indian banks." },
-        { name: "Airtel Money Wallet App Guide", href: "/airtel-money-wallet-app", desc: "Wallet spending limits, video-KYC upgrades, and utility cashbacks." }
+        { name: "Airtel Money Wallet App Guide", href: "/airtel-money-wallet-app", desc: "Wallet spending limits, video-KYC upgrades, and utility cashbacks." },
+        { name: "Andhra Credit Card Payment Desk", href: "/andhra-bank/credit-card-payment-bill-desk", desc: "Pay your Andhra Bank credit card bills online via BillDesk securely." },
+        { name: "Andhra Card Reward Points", href: "/andhra-bank/credit-card-reward-points", desc: "Redeem accumulated Andhra Bank credit card reward points on the catalog." },
+        { name: "Andhra Bank Customer Care", href: "/andhra-bank/customer-care", desc: "Escalate card billing, retail balance queries, and disputes to toll-free boards." },
+        { name: "Andhra DD Issuance Charges", href: "/banking/andhra-bank-dd-charges", desc: "Review Demand Draft fee slabs, cancellations, and revalidation rules." },
+        { name: "Andhra High-Yield FDs", href: "/andhra-bank/fixed-deposits", desc: "Book cumulative fixed deposits up to 7.75% p.a. under DICGC security." },
+        { name: "Andhra Bank Gold Loans", href: "/andhra-bank/gold-loan", desc: "Pledge gold jewelry to secure instant agricultural or personal funding." },
+        { name: "Andhra Bank Home Loans", href: "/andhra-bank/home-loan", desc: "Floating rate housing mortgages with tenures extending up to 30 years." },
+        { name: "Andhra IMPS Transfer Charges", href: "/banking/andhra-bank-imps-charges", desc: "Track digital transaction fees and processing limits for IMPS." },
+        { name: "Andhra Kisan Credit Card", href: "/andhra-bank/kisan-credit-card", desc: "Subsidized seasonal crop cultivation credits at flat 4% p.a." },
+        { name: "Andhra Bank Mudra Credits", href: "/andhra-bank/mudra-loan", desc: "Collateral-free commercial loans up to ₹10 Lakhs under sovereign cover." },
+        { name: "Andhra NEFT Transfer Charges", href: "/banking/andhra-bank-neft-charges", desc: "Review RBI online transaction limits and branch NEFT charges." },
+        { name: "Andhra Bank NEFT PDF Form", href: "/banking/andhra-bank-neft-form", desc: "Download physical branch transaction challans for NEFT transfers." },
+        { name: "Andhra NetBanking Login Desk", href: "/banking/andhra-bank-net-banking-login", desc: "Access retail and corporate online banking securely using dynamic OTPs." },
+        { name: "Andhra NetBanking Registration", href: "/banking/andhra-bank-netbanking", desc: "Step-by-step registration instructions to activate digital banking online." },
+        { name: "Andhra Pensioner Personal Loan", href: "/andhra-bank/pension-loan", desc: "Concessional credit lines for retired state and central government employees." },
+        { name: "Andhra Loan Application Status", href: "/andhra-bank/status", desc: "Track pending retail credit applications and property verifications." },
+        { name: "Andhra Platinum Credit Card", href: "/andhra-bank/andhra-bank-platinum-credit-card", desc: "Verify rewards, dining deals, and annual fee waivers on Platinum cards." },
+        { name: "Andhra Bank RTGS PDF Form", href: "/banking/andhra-bank-rtgs-form", desc: "Download high-value domestic transfer challan slips for branches." },
+        { name: "Andhra Signature Credit Card", href: "/andhra-bank/signature-credit-card", desc: "HNW cards offering premium airport lounge access and golf rounds." },
+        { name: "Andhra Account e-Statements", href: "/banking/andhra-bank-statement", desc: "Download monthly bank ledger lists, e-passbooks, and account audits." },
+        { name: "Andhra Bank Branch Timings", href: "/banking/andhra-bank-timings", desc: "Check post-merger branch hours, teller schedules, and locker timings." },
+        { name: "Open Digital Bank Account", href: "/banking/apply-for-bank-account-online", desc: "Open high-yield savings accounts online instantly via video KYC." }
       ]
     },
     {
@@ -159,7 +181,18 @@ const FinancialDirectory: React.FC = () => {
         { name: "Aditya Birla Home Loan Interest", href: "/aditya-birla/home-loan-interest-rates", desc: "Track floating interest matrices for salaried and self-employed applicants." },
         { name: "Loan Against Property (LAP)", href: "/aditya-birla/loan-against-property", desc: "High-value commercial and residential mortgage credits up to ₹10 Crores." },
         { name: "Ambit Business Loans Portal", href: "/business-loan/ambit", desc: "Expedited digital clearances for commercial SME credits and cash flows." },
-        { name: "ATUFS Textile Credit Scheme", href: "/business-loan/amended-technology-upgradation-fund-scheme-atufs", desc: "Sovereign textile machine upgrade capital and interest equalizer guides." }
+        { name: "ATUFS Textile Credit Scheme", href: "/business-loan/amended-technology-upgradation-fund-scheme-atufs", desc: "Sovereign textile machine upgrade capital and interest equalizer guides." },
+        { name: "Andhra PL EMI Calculator", href: "/personal-loan/andhra-bank-personal-loan-emi-calculator", desc: "Simulate monthly reducing balance personal loan payouts and amortizations." },
+        { name: "Andhra Loan Pre-closure Fees", href: "/personal-loan/andhra-bank-personal-loan-pre-closure-charges", desc: "Verify prepayment lock-in terms and foreclosure penalties." },
+        { name: "Annapurna Micro Escalation", href: "/annapurna-microfinance/grievance-redressal-escalation-matrix", desc: "Track microfinance complaint resolution pipelines and Nodal Officers." },
+        { name: "Annapurna Microfinance Hub", href: "/annapurna-microfinance", desc: "Access rural development loans, self-help groups, and agricultural credits." },
+        { name: "AP IGRS Encumbrance Search", href: "/home-loan/igrs-andhra-pradesh-encumbrance-certificate", desc: "Search property encumbrances and title deeds on Andhra Pradesh's IGRS portal." },
+        { name: "Gujarat AnyROR Land Records", href: "/home-loan/anyror-anywhere-gujarat-land-records", desc: "Download official 7/12 ROR property records online in Gujarat." },
+        { name: "Rajasthan Jamabandi Land Records", href: "/home-loan/apna-khata-rajasthan-land-records", desc: "Access property ownership titles on Rajasthan's Apna Khata portal." },
+        { name: "Aptus Housing Finance Care", href: "/home-loan/aptus-housing-finance-home-loan-customer-care", desc: "Secure housing interest certificates, statements, and support numbers." },
+        { name: "Aptus Affordable Home Mortgages", href: "/home-loan/aptus-housing-finance", desc: "Finance low-cost residential acquisitions and home construction limits." },
+        { name: "₹5 Lakh Personal Credit Line", href: "/personal-loan/5-lakh", desc: "Compare low-interest ₹5 Lakh unsecured personal loan slabs online." },
+        { name: "Axis Credit Card Loan Desk", href: "/personal-loan/axis-bank-credit-card-loan", desc: "Access pre-approved instant cash loans on your active Axis credit card limit." }
       ]
     },
     {
@@ -193,7 +226,8 @@ const FinancialDirectory: React.FC = () => {
         { name: "ABSL Pension Fund (NPS)", href: "/saving-schemes/aditya-birla-sun-life-pension-fund", desc: "Low-cost National Pension System fund manager under Section 80CCD." },
         { name: "ABSL Sun Life Pension Portal", href: "/aditya-birla-sun-life-pension-plans", desc: "Retirement annuity plans offering guaranteed regular income payouts." },
         { name: "Value Research Fund Ratings", href: "/mutual-funds/value-research-mutual-fund-rating", desc: "Analyze historical ratings, risk matrices, and asset allocation tiers." },
-        { name: "Alternative Investment Fund Guide", href: "/mutual-funds/alternative-investment-fund", desc: "High-value hedge funds, infrastructure funds, and venture assets guide." }
+        { name: "Alternative Investment Fund Guide", href: "/mutual-funds/alternative-investment-fund", desc: "High-value hedge funds, infrastructure funds, and venture assets guide." },
+        { name: "Atal Pension Yojana (APY)", href: "/saving-schemes/atal-pension-yojana", desc: "Guaranteed monthly micro pension schemes for unorganized sectors." }
       ]
     },
     {
@@ -242,7 +276,12 @@ const FinancialDirectory: React.FC = () => {
         { name: "Federal Amplifi Fi Card", href: "/federal-bank/amplifi-fi-federal-credit-card", desc: "Co-branded credit card offering zero forex markups and unlimited Fi-coins." },
         { name: "Ajio Credit Card Offers", href: "/credit-card/ajio-credit-card-offers", desc: "Verify e-commerce shopping brand deals and instant cashbacks." },
         { name: "Income Tax Login Portal", href: "/tax/income-tax-login", desc: "E-filing login instructions, ITR verifications, and refund tracking." },
-        { name: "Salary Allowance Guidelines", href: "/salary/allowances", desc: "7th Pay Commission allowance lists, dear allowances, and exemptions." }
+        { name: "Salary Allowance Guidelines", href: "/salary/allowances", desc: "7th Pay Commission allowance lists, dear allowances, and exemptions." },
+        { name: "PAN Card AO Code Locator", href: "/pan-card/ao-code-pan", desc: "Find your PAN card AO Code using Area Code, AO Type, Range and Ward." },
+        { name: "APEDA Export Promotion Hub", href: "/promotion-councils/apeda", desc: "Agricultural & Processed Food Products Export Development Authority guides." },
+        { name: "Apollo SBI Card Select Elite", href: "/sbi-bank/apollo-sbi-card-select", desc: "Co-branded health cards with premium diagnostics and health multipliers." },
+        { name: "Apollo SBI Co-branded Card", href: "/sbi-bank/apollo-sbi-credit-card", desc: "Earn healthcare reward multipliers at Apollo hospital networks." },
+        { name: "AP Professional Tax Slabs", href: "/tax/appt-professional-tax-andhra-pradesh", desc: "Verify monthly professional tax deductions and filing deadlines in AP." }
       ]
     },
     {
@@ -295,7 +334,12 @@ const FinancialDirectory: React.FC = () => {
         { name: "Aegon iMaximize Single ULIP", href: "/imaximize-single-premium-insurance-plan", desc: "Deposit single lump-sum in high-equity funds with instant life cover." },
         { name: "Aegon Retirement Pension Plans", href: "/pension-plans", desc: "Annuity programs guaranteeing post-retirement monthly cash payouts." },
         { name: "Aegon Rising Star Scholar", href: "/rising-star-insurance-plan", desc: "Child scholar investment ULIP offering premium waiver benefits." },
-        { name: "Aegon Term Cover Catalog", href: "/term-insurance-plans", desc: "Pure term covers shielding home loans and lifestyle liabilities." }
+        { name: "Aegon Term Cover Catalog", href: "/term-insurance-plans", desc: "Pure term covers shielding home loans and lifestyle liabilities." },
+        { name: "Annual Multi-Trip Travel Cover", href: "/travel-insurance/annual-multi-trip-travel-insurance", desc: "Secure unlimited cashless global medical shields for frequent travelers." },
+        { name: "Guaranteed Annuity Pension Plans", href: "/life-insurance/annuity-plans", desc: "Access high-yield regular income annuity plans under Section 80C." },
+        { name: "Apollo Hospitals Cashless Care", href: "/health-insurance/apollo-hospitals", desc: " cash-free medical diagnostics and corporate policies at Apollo hospitals." },
+        { name: "Cashless Premium Calculator", href: "/premium-calculator", desc: "Compare medical cashless policies, age slabs, and stays deductibles." },
+        { name: "Optima Restore Health Shield", href: "/optima-restore-plan", desc: "HDFC Ergo Optima Restore policy with 100% instant sum assured restores." }
       ]
     }
   ];

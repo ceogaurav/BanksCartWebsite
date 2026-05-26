@@ -3,6 +3,8 @@ import { useParams, useLocation } from 'react-router-dom';
 import { HelpCircle, ChevronDown, Check, Star, ShieldAlert, Sparkles, BookOpen, AlertCircle, Info, Landmark, Percent, Award, ShieldCheck, ArrowRight, Play, MessageSquare, TrendingUp, CreditCard, Heart, Shield, Lock } from 'lucide-react';
 import CibilCheckerForm from '../../components/common/CibilCheckerForm';
 import { AEGON_LIFE_PAGE_MAP, AegonPageContent } from '../../data/aegonLifePageData';
+import { getNewPageDetailedContent } from '../../data/newPagesDetailedData';
+
 
 interface EditorialArticle {
   title: string;
@@ -345,8 +347,28 @@ const DynamicAegonLifePage: React.FC = () => {
     currentSlug = 'term-insurance-plans';
   }
 
-  const pageContent = AEGON_LIFE_PAGE_MAP[currentSlug] || AEGON_LIFE_PAGE_MAP['aegon-life-child-plans'];
-  const detailedArticles = getAegonDetailedArticles(currentSlug);
+  const newPageData = getNewPageDetailedContent(location.pathname);
+
+  const pageContent = newPageData
+    ? {
+        title: newPageData.title,
+        badge: newPageData.badge,
+        intro: newPageData.intro,
+        moreIntro: newPageData.moreIntro,
+        highlightsTitle: newPageData.highlightsTitle,
+        highlights: newPageData.highlights,
+        ratesTitle: newPageData.ratesTitle,
+        ratesHeaders: newPageData.ratesHeaders,
+        ratesRows: newPageData.ratesRows,
+        checklistTitle: newPageData.checklistTitle,
+        checklist: newPageData.checklist,
+        faqs: newPageData.faqs
+      }
+    : (AEGON_LIFE_PAGE_MAP[currentSlug] || AEGON_LIFE_PAGE_MAP['aegon-life-child-plans']);
+
+  const detailedArticles = newPageData?.detailedArticles
+    ? newPageData.detailedArticles
+    : getAegonDetailedArticles(currentSlug);
 
   useEffect(() => {
     window.scrollTo(0, 0);

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { HelpCircle, ChevronDown, Check, Star, ShieldAlert, Sparkles, BookOpen, AlertCircle, Info, Landmark, Percent, Award, ShieldCheck, ArrowRight, Play, MessageSquare, TrendingUp, CreditCard } from 'lucide-react';
 import CibilCheckerForm from '../../components/common/CibilCheckerForm';
+import { getNewPageDetailedContent } from '../../data/newPagesDetailedData';
+
 
 interface TaxFAQ {
   q: string;
@@ -196,8 +198,25 @@ const DynamicTaxPage: React.FC = () => {
   };
 
   const currentSlug = subPath || 'overview';
-  const pageContent = TAX_PAGE_MAP[currentSlug] || generateFallbackContent(currentSlug);
-  const detailedArticles = getTaxDetailedArticles(currentSlug);
+  const newPageData = getNewPageDetailedContent(window.location.pathname);
+
+  const pageContent = newPageData
+    ? {
+        title: newPageData.title,
+        badge: newPageData.badge,
+        intro: newPageData.intro,
+        moreIntro: newPageData.moreIntro,
+        resolutionsTitle: newPageData.highlightsTitle,
+        resolutions: newPageData.highlights,
+        guidelinesTitle: newPageData.checklistTitle,
+        guidelines: newPageData.checklist,
+        faqs: newPageData.faqs
+      }
+    : (TAX_PAGE_MAP[currentSlug] || generateFallbackContent(currentSlug));
+
+  const detailedArticles = newPageData?.detailedArticles
+    ? newPageData.detailedArticles
+    : getTaxDetailedArticles(currentSlug);
 
   useEffect(() => {
     window.scrollTo(0, 0);
