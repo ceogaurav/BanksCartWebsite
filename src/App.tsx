@@ -461,6 +461,42 @@ const App: React.FC = () => {
                 <Route path="/young-scholar-advantage" element={<DynamicAegonLifePage />} />
                 <Route path="/young-scholar-secure-plan" element={<DynamicAegonLifePage />} />
 
+                {/* Bank of Maharashtra Routes */}
+                <Route path="/bank-of-maharashtra" element={<DynamicGeneralBankingPage />} />
+                <Route path="/bank-of-maharashtra/:subPath" element={<DynamicGeneralBankingPage />} />
+
+                {/* Canara Bank Routes */}
+                <Route path="/canara-bank" element={<DynamicGeneralBankingPage />} />
+                <Route path="/canara-bank/:subPath" element={<DynamicGeneralBankingPage />} />
+
+                {/* Baroda Gujarat Gramin Bank Routes */}
+                <Route path="/baroda-gujarat-gramin-bank" element={<DynamicGeneralBankingPage />} />
+                <Route path="/baroda-gujarat-gramin-bank/:subPath" element={<DynamicGeneralBankingPage />} />
+
+                {/* Become DSA Partner */}
+                <Route path="/become-dsa-partner-paisabazaar" element={<DynamicGeneralBankingPage />} />
+
+                {/* BSS Microfinance */}
+                <Route path="/bss-microfinance" element={<DynamicGeneralBankingPage />} />
+
+                {/* Bharat Financial Inclusion Routes */}
+                <Route path="/bharat-financial-inclusion-limited" element={<DynamicGeneralBankingPage />} />
+                <Route path="/bharat-financial-inclusion-limited/:subPath" element={<DynamicGeneralBankingPage />} />
+
+                {/* Bharti AXA Flat & Wildcard Routes */}
+                <Route path="/bharti-axa-life-insurance-ulip-plans" element={<DynamicAegonLifePage />} />
+                <Route path="/bharti-axa-term-plans" element={<DynamicAegonLifePage />} />
+                <Route path="/bharti-axa-life-ulip" element={<DynamicAegonLifePage />} />
+                <Route path="/bharti-axa-motor-insurance" element={<DynamicHealthInsurancePage />} />
+                <Route path="/smart-health-insurance-plan" element={<DynamicHealthInsurancePage />} />
+                <Route path="/bharti-axa-two-wheeler-insurance" element={<DynamicHealthInsurancePage />} />
+
+                {/* Dynamic Saving and Money Transfer Wildcards */}
+                <Route path="/saving-schemes/:subPath" element={<DynamicGeneralBankingPage />} />
+                <Route path="/money-transfer/:subPath" element={<DynamicGeneralBankingPage />} />
+                <Route path="/sbm-bank/:subPath" element={<DynamicCreditCardPage />} />
+                <Route path="/rbl-bank/:subPath" element={<DynamicCreditCardPage />} />
+
                 <Route path="/expert-advice" element={<ExpertAdvicePage openApplyModal={openApplyModal} />} />
 
                 {/* Abhyudaya Bank Routes */}

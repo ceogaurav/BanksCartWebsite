@@ -242,12 +242,20 @@ function generateGenericStructuredContent(pathname: string): DetailedPageContent
     entity = "AU Small Finance Bank";
   } else if (pathname.includes('aviva')) {
     entity = "Aviva Life Insurance";
-  } else if (pathname.includes('bank-of-baroda') || pathname.includes('bobcard')) {
+  } else if (pathname.includes('bank-of-baroda')) {
     entity = "Bank of Baroda";
+  } else if (pathname.includes('bobcard') || pathname.includes('bob-credit-card')) {
+    entity = "BOBCARD (Bank of Baroda)";
   } else if (pathname.includes('bandhan-bank') || pathname.includes('bandhan-nifty')) {
     entity = "Bandhan Bank";
-  } else if (pathname.includes('bank-of-india')) {
+  } else if (pathname.includes('bank-of-india') || pathname.includes('boi-')) {
     entity = "Bank of India";
+  } else if (pathname.includes('bank-of-maharashtra') || pathname.includes('maharashtra')) {
+    entity = "Bank of Maharashtra";
+  } else if (pathname.includes('canara-bank') || pathname.includes('canara')) {
+    entity = "Canara Bank";
+  } else if (pathname.includes('baroda-gujarat-gramin-bank') || pathname.includes('gramin')) {
+    entity = "Baroda Gujarat Gramin Bank";
   } else if (pathname.includes('bajaj-finserv')) {
     entity = "Bajaj Finserv";
   } else if (pathname.includes('bajaj-allianz') || pathname.includes('extra-care') || pathname.includes('global-personal-guard') || pathname.includes('silver-health')) {
@@ -258,6 +266,16 @@ function generateGenericStructuredContent(pathname: string): DetailedPageContent
     entity = "Arohan Financial Inclusion";
   } else if (pathname.includes('ayefin')) {
     entity = "Aye Finance (Ayefin)";
+  } else if (pathname.includes('bharti-axa') || pathname.includes('smart-health-insurance')) {
+    entity = "Bharti AXA Life & General Insurance";
+  } else if (pathname.includes('cashe')) {
+    entity = "CASHe Personal Loans";
+  } else if (pathname.includes('bharat-financial') || pathname.includes('bss-microfinance')) {
+    entity = "Bharat Financial Inclusion (BSS)";
+  } else if (pathname.includes('bmtpc')) {
+    entity = "Building Materials & Technology Promotion Council (BMTPC)";
+  } else if (pathname.includes('bhulekh-odisha')) {
+    entity = "Bhulekh Odisha Land Records";
   } else if (pathname.includes('holidays')) {
     entity = "Official Bank Calendar";
   } else if (pathname.includes('atm')) {
@@ -270,48 +288,54 @@ function generateGenericStructuredContent(pathname: string): DetailedPageContent
   let category = "Financial Services";
   let catKey = "default";
   
-  if (pathname.includes('credit-card') || pathname.includes('debit-card') || pathname.includes('bobcard') || pathname.includes('altura') || pathname.includes('zenith') || pathname.includes('magnus') || pathname.includes('my-zone') || pathname.includes('neo') || pathname.includes('ace') || pathname.includes('atlas') || pathname.includes('aura') || pathname.includes('buzz') || pathname.includes('smartearn') || pathname.includes('shoppers-stop') || pathname.includes('pride') || pathname.includes('primus') || pathname.includes('privilege') || pathname.includes('purchase') || pathname.includes('reserve') || pathname.includes('olympus') || pathname.includes('insta-easy') || pathname.includes('my-wings') || pathname.includes('freecharge') || pathname.includes('titanium') || pathname.includes('vistara')) {
+  if (pathname.includes('credit-card') || pathname.includes('debit-card') || pathname.includes('bobcard') || pathname.includes('altura') || pathname.includes('zenith') || pathname.includes('magnus') || pathname.includes('my-zone') || pathname.includes('neo') || pathname.includes('ace') || pathname.includes('atlas') || pathname.includes('aura') || pathname.includes('buzz') || pathname.includes('smartearn') || pathname.includes('shoppers-stop') || pathname.includes('pride') || pathname.includes('primus') || pathname.includes('privilege') || pathname.includes('purchase') || pathname.includes('reserve') || pathname.includes('olympus') || pathname.includes('insta-easy') || pathname.includes('my-wings') || pathname.includes('freecharge') || pathname.includes('titanium') || pathname.includes('vistara') || pathname.includes('airline-credit-card') || pathname.includes('lounge-access') || pathname.includes('grocery-credit-card') || pathname.includes('onecard') || pathname.includes('bettr-card') || pathname.includes('play-credit-card')) {
     category = "Credit & Debit Cards";
     catKey = "cards";
-  } else if (pathname.includes('home-loan') || pathname.includes('mortgage') || pathname.includes('nri-home') || pathname.includes('approved-projects') || pathname.includes('balance-transfer') || pathname.includes('vs-hdfc')) {
+  } else if (pathname.includes('home-loan') || pathname.includes('mortgage') || pathname.includes('nri-home') || pathname.includes('approved-projects') || pathname.includes('balance-transfer') || pathname.includes('vs-hdfc') || pathname.includes('builder-floor') || pathname.includes('bhulekh') || pathname.includes('canfin') || pathname.includes('bridge-loan')) {
     category = "Home Loans & Mortgages";
     catKey = "home-loan";
-  } else if (pathname.includes('personal-loan') || pathname.includes('marriage-loan') || pathname.includes('consumer-loan') || pathname.includes('1-lakh') || pathname.includes('5-lakh')) {
+  } else if (pathname.includes('personal-loan') || pathname.includes('marriage-loan') || pathname.includes('consumer-loan') || pathname.includes('1-lakh') || pathname.includes('5-lakh') || pathname.includes('cashe') || pathname.includes('instant-cash-loan')) {
     category = "Personal & Retail Loans";
     catKey = "personal-loan";
-  } else if (pathname.includes('business-loan') || pathname.includes('mudra') || pathname.includes('working-capital') || pathname.includes('bakery') || pathname.includes('credit-facilitation') || pathname.includes('ayefin')) {
+  } else if (pathname.includes('business-loan') || pathname.includes('mudra') || pathname.includes('working-capital') || pathname.includes('bakery') || pathname.includes('credit-facilitation') || pathname.includes('ayefin') || pathname.includes('business-plan') || pathname.includes('business-ideas') || pathname.includes('business-model') || pathname.includes('bill-discounting') || pathname.includes('bhartiya-mahila')) {
     category = "Business & MSME Loans";
     catKey = "business-loan";
-  } else if (pathname.includes('education-loan')) {
+  } else if (pathname.includes('education-loan') || pathname.includes('scholar')) {
     category = "Education & Higher Studies Loans";
     catKey = "education-loan";
   } else if (pathname.includes('gold-loan')) {
     category = "Gold Loans";
     catKey = "gold-loan";
-  } else if (pathname.includes('fixed-deposit') || pathname.includes('fd-rates') || pathname.includes('fd-calculator') || pathname.includes('nre-fd') || pathname.includes('fcnr')) {
+  } else if (pathname.includes('fixed-deposit') || pathname.includes('fd-rates') || pathname.includes('fd-calculator') || pathname.includes('nre-fd') || pathname.includes('fcnr') || pathname.includes('sbm-fd')) {
     category = "Fixed Deposits & Term Savings";
     catKey = "fixed-deposit";
-  } else if (pathname.includes('saving-schemes') || pathname.includes('savings-account') || pathname.includes('recurring-deposit') || pathname.includes('salary-account') || pathname.includes('ppf') || pathname.includes('balika-samridhi')) {
+  } else if (pathname.includes('saving-schemes') || pathname.includes('savings-account') || pathname.includes('recurring-deposit') || pathname.includes('salary-account') || pathname.includes('ppf') || pathname.includes('balika-samridhi') || pathname.includes('beti-bachao') || pathname.includes('bhamashah-yojana')) {
     category = "Savings & Deposit Schemes";
     catKey = "savings";
-  } else if (pathname.includes('net-banking') || pathname.includes('netbanking') || pathname.includes('mobile-banking') || pathname.includes('upi') || pathname.includes('statement') || pathname.includes('mini-statement') || pathname.includes('account-number') || pathname.includes('dd-charges') || pathname.includes('neft') || pathname.includes('rtgs') || pathname.includes('imps') || pathname.includes('mmid') || pathname.includes('ifsc-code')) {
+  } else if (pathname.includes('net-banking') || pathname.includes('netbanking') || pathname.includes('mobile-banking') || pathname.includes('upi') || pathname.includes('statement') || pathname.includes('mini-statement') || pathname.includes('account-number') || pathname.includes('dd-charges') || pathname.includes('neft') || pathname.includes('rtgs') || pathname.includes('imps') || pathname.includes('mmid') || pathname.includes('ifsc-code') || pathname.includes('branch-locator') || pathname.includes('recharge') || pathname.includes('bill-payment') || pathname.includes('bhim-app') || pathname.includes('login') || pathname.includes('balance-check') || pathname.includes('balance-enquiry') || pathname.includes('pin') || pathname.includes('fees-charges')) {
     category = "Digital & Retail Banking Operations";
     catKey = "digital-banking";
   } else if (pathname.includes('grievance') || pathname.includes('matrix') || pathname.includes('customer-care')) {
     category = "Customer Support & Grievance Redressal";
     catKey = "grievance";
-  } else if (pathname.includes('insurance') || pathname.includes('policy') || pathname.includes('cover') || pathname.includes('shield') || pathname.includes('term-plans') || pathname.includes('extra-care') || pathname.includes('global-personal-guard') || pathname.includes('silver-health')) {
+  } else if (pathname.includes('insurance') || pathname.includes('policy') || pathname.includes('cover') || pathname.includes('shield') || pathname.includes('term-plans') || pathname.includes('extra-care') || pathname.includes('global-personal-guard') || pathname.includes('silver-health') || pathname.includes('critical-illness') || pathname.includes('motor-insurance') || pathname.includes('two-wheeler')) {
     category = "Insurance Plans & Risk Covers";
     catKey = "insurance";
-  } else if (pathname.includes('mutual-funds') || pathname.includes('sip') || pathname.includes('growth') || pathname.includes('fund') || pathname.includes('arn-code') || pathname.includes('asset-management')) {
+  } else if (pathname.includes('mutual-funds') || pathname.includes('sip') || pathname.includes('growth') || pathname.includes('fund') || pathname.includes('arn-code') || pathname.includes('asset-management') || pathname.includes('balanced-fund') || pathname.includes('arbitrage') || pathname.includes('debt-fund') || pathname.includes('elss') || pathname.includes('index-fund') || pathname.includes('liquid-fund') || pathname.includes('money-market') || pathname.includes('swp') || pathname.includes('etf')) {
     category = "Mutual Funds & Wealth Plans";
     catKey = "mutual-funds";
-  } else if (pathname.includes('holidays')) {
-    category = "Official Holiday Calendar";
+  } else if (pathname.includes('holidays') || pathname.includes('timings')) {
+    category = "Official Holiday & Timings Calendar";
     catKey = "holidays";
   } else if (pathname.includes('atm')) {
     category = "ATM Network Operations";
     catKey = "atm";
+  } else if (pathname.includes('tax') || pathname.includes('income-tax') || pathname.includes('property-tax')) {
+    category = "Taxation & Property Levies";
+    catKey = "tax";
+  } else if (pathname.includes('salary') || pathname.includes('bonus')) {
+    category = "Salary Structures & Benefits";
+    catKey = "salary";
   }
 
   // --- Dynamic text matrices ---
