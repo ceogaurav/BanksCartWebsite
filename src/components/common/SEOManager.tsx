@@ -1,6 +1,7 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import { getNewPageDetailedContent } from '../../data/newPagesDetailedData';
 
 // Structure for SEO Metadata
 interface SEOMetadata {
@@ -483,6 +484,18 @@ export default function SEOManager() {
   
   // 1. Check for exact path match
   let meta = SEO_MAP[pathname];
+
+  // 1.5 Check for new dynamic pages metadata
+  if (!meta) {
+    const dynamicPage = getNewPageDetailedContent(pathname);
+    if (dynamicPage) {
+      meta = {
+        title: dynamicPage.title,
+        description: dynamicPage.intro,
+        keywords: `${dynamicPage.badge.toLowerCase()}, bankscart directories, ${dynamicPage.title.toLowerCase()}`
+      };
+    }
+  }
 
   // 2. If no exact match, check for calculators (which all end in '-calculator' or contain 'calculator')
   if (!meta) {
