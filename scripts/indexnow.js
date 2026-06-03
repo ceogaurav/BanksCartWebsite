@@ -25,7 +25,7 @@ async function submitIndexNow() {
 
         console.log(`Extracted ${urls.length} URLs from sitemap.`);
 
-        const key = 'f6a40a5e840a4309a4714b1bb0e9b921';
+        const key = '9e1d84fa0c1c4e7fb2a4d34f0d3a5a7c';
         const payload = {
             host: 'bankscart.com',
             key: key,
