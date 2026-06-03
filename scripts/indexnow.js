@@ -20,16 +20,18 @@ async function submitIndexNow() {
         const urls = [];
         let match;
         while ((match = locRegex.exec(sitemapContent)) !== null) {
-            urls.push(match[1]);
+            // Replace non-www with www for IndexNow compatibility
+            const url = match[1].replace('https://bankscart.com', 'https://www.bankscart.com');
+            urls.push(url);
         }
 
         console.log(`Extracted ${urls.length} URLs from sitemap.`);
 
         const key = '9e1d84fa0c1c4e7fb2a4d34f0d3a5a7c';
         const payload = {
-            host: 'bankscart.com',
+            host: 'www.bankscart.com',
             key: key,
-            keyLocation: `https://bankscart.com/${key}.txt`,
+            keyLocation: `https://www.bankscart.com/${key}.txt`,
             urlList: urls
         };
 
