@@ -286,7 +286,6 @@ async function generateSitemap() {
             '/social-security-calculator',
             // Legal
             '/about',
-            '/about-us',
             '/credit-report-terms',
             '/terms-of-use',
             '/privacy-policy',

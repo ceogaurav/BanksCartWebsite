@@ -12,6 +12,9 @@ export default function SEOManager() {
   if (canonicalPath === '/blogs' || canonicalPath === '/blogs-overview-page') {
     canonicalPath = '/blog';
   }
+  if (canonicalPath === '/about-us') {
+    canonicalPath = '/about';
+  }
   const currentUrl = `https://www.bankscart.com${canonicalPath}`;
 
   // Generate dynamic JSON-LD Schema

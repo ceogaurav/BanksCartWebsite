@@ -612,7 +612,7 @@ function generatePreRenderedBody(cleanPath, meta) {
   }
 
     // 1b. About Us Dedicated Pre-rendering
-  if (cleanPath === '/about' || cleanPath === '/about-us') {
+  if (cleanPath === '/about') {
     return `
     <div class="min-h-screen bg-slate-50 text-slate-800 font-sans antialiased">
       <header class="bg-white border-b border-slate-200 py-4 px-6 sticky top-0 z-50 shadow-sm">
@@ -1098,25 +1098,29 @@ for (const urlPath of urls) {
   const cleanPath = urlPath === '/' ? '' : urlPath.replace(/\/$/, '');
   const meta = resolveSEO(cleanPath || '/');
   let canonicalUrl = `https://www.bankscart.com${cleanPath}`;
-  if (cleanPath === '/about-us') {
-    canonicalUrl = 'https://www.bankscart.com/about';
-  } else if (cleanPath === '/blogs' || cleanPath === '/blogs-overview-page') {
+  if (cleanPath === '/blogs' || cleanPath === '/blogs-overview-page') {
     canonicalUrl = 'https://www.bankscart.com/blog';
+  } else if (cleanPath === '/about-us') {
+    canonicalUrl = 'https://www.bankscart.com/about';
   }
 
-  // 301 Redirect Pages for legacy /blogs and /blogs-overview-page
-  if (cleanPath === '/blogs' || cleanPath === '/blogs-overview-page') {
+  // 301 Redirect Pages for legacy /blogs, /blogs-overview-page, and /about-us
+  if (cleanPath === '/blogs' || cleanPath === '/blogs-overview-page' || cleanPath === '/about-us') {
+    const target = cleanPath === '/about-us' ? '/about' : '/blog';
+    const redirectTitle = cleanPath === '/about-us' 
+      ? 'About BanksCart: Our Mission, Leadership &amp; Lending Partners'
+      : 'BanksCart Financial Blog &amp; News: Expert Guides, Loan Tips &amp; Analysis';
     const redirectHtml = `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="0;url=/blog">
-  <link rel="canonical" href="https://www.bankscart.com/blog" />
-  <title>BanksCart Financial Blog &amp; News: Expert Guides, Loan Tips &amp; Analysis</title>
-  <script>window.location.replace('/blog');</script>
+  <meta http-equiv="refresh" content="0;url=${target}">
+  <link rel="canonical" href="https://www.bankscart.com${target}" />
+  <title>${redirectTitle}</title>
+  <script>window.location.replace('${target}');</script>
 </head>
 <body>
-  <p>Moved Permanently. Redirecting to <a href="/blog">https://www.bankscart.com/blog</a>...</p>
+  <p>Moved Permanently. Redirecting to <a href="${target}">https://www.bankscart.com${target}</a>...</p>
 </body>
 </html>`;
     const targetDir = path.join(distDir, cleanPath.replace(/^\//, ''));
@@ -1183,10 +1187,11 @@ for (const urlPath of urls) {
 }
 
 
-// Explicit generation of legacy redirect pages (guarantees dist/blogs and dist/blogs-overview-page exist even when excluded from sitemap.xml)
+// Explicit generation of legacy redirect pages (guarantees dist/blogs, dist/blogs-overview-page, and dist/about-us exist even when excluded from sitemap.xml)
 const legacyRedirects = [
-  { path: '/blogs', target: '/blog' },
-  { path: '/blogs-overview-page', target: '/blog' }
+  { path: '/blogs', target: '/blog', title: 'BanksCart Financial Blog &amp; News: Expert Guides, Loan Tips &amp; Analysis' },
+  { path: '/blogs-overview-page', target: '/blog', title: 'BanksCart Financial Blog &amp; News: Expert Guides, Loan Tips &amp; Analysis' },
+  { path: '/about-us', target: '/about', title: 'About BanksCart: Our Mission, Leadership &amp; Lending Partners' }
 ];
 
 for (const redir of legacyRedirects) {
@@ -1200,7 +1205,7 @@ for (const redir of legacyRedirects) {
   <meta charset="UTF-8">
   <meta http-equiv="refresh" content="0;url=${redir.target}">
   <link rel="canonical" href="https://www.bankscart.com${redir.target}" />
-  <title>BanksCart Financial Blog &amp; News: Expert Guides, Loan Tips &amp; Analysis</title>
+  <title>${redir.title}</title>
   <script>window.location.replace('${redir.target}');</script>
 </head>
 <body>

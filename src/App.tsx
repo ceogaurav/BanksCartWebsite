@@ -754,7 +754,7 @@ const App: React.FC = () => {
 
                 {/* Legal Pages */}
                 <Route path="/about" element={<AboutUs />} />
-                <Route path="/about-us" element={<AboutUs />} />
+                <Route path="/about-us" element={<Navigate to="/about" replace />} />
                 <Route path="/credit-report-terms" element={<CreditReportTerms />} />
                 <Route path="/terms-of-use" element={<TermsOfUse />} />
                 <Route path="/privacy-policy" element={<PrivacyPolicy />} />
