@@ -174,7 +174,7 @@ const Header: React.FC<HeaderProps> = ({ openApplyModal, openEligibilityModal, o
       icon: FileText,
       submenu: [
         { name: 'Calculators', href: '/calculators' },
-        { name: 'Blogs', href: '/blogs-overview-page' },
+        { name: 'Blogs', href: '/blog' },
         { name: 'Expert Advice', href: '/expert-advice' },
         { name: 'Gold Rates', href: '/resources/gold-rates' },
         { name: 'IFSC Finder', href: '/resources/ifsc-finder' },

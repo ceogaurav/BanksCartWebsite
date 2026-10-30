@@ -49,7 +49,7 @@ const SitemapPage: React.FC = () => {
                 { name: "Gold Rates", href: "/resources/gold-rates" },
                 { name: "Income Tax", href: "/resources/income-tax" },
                 { name: "PPF", href: "/resources/ppf" },
-                { name: "Blogs", href: "/blogs" },
+                { name: "Blogs", href: "/blog" },
             ]
         },
         {

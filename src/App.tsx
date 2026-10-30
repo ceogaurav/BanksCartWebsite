@@ -665,7 +665,7 @@ const App: React.FC = () => {
                 <Route path="/resources/income-tax" element={<IncomeTaxPage openApplyModal={openApplyModal} />} />
                 <Route path="/bank-details/:bankId" element={<BankDetails openEligibilityModal={openEligibilityModal} />} />
                 <Route path="/loan-apply" element={<LoanApplyPage />} />
-                <Route path="/blog" element={<BlogList />} />
+                <Route path="/blog" element={<BlogsOverviewPage openApplyModal={openApplyModal} />} />
 
                 {/* NEW: Routes for the Calculator Pages (assuming they are in src/pages/calculators/) */}
                 <Route path="/car-loan-calculator" element={<CarLoanCalculatorPage openApplyModal={openApplyModal} />} />
@@ -706,8 +706,8 @@ const App: React.FC = () => {
                 <Route path="/social-security-calculator" element={<SocialSecurityCalculatorPage openApplyModal={openApplyModal} />} />
                 <Route path="/ssy-calculator" element={<SSYCalculatorPage openApplyModal={openApplyModal} />} />
                 <Route path="/credit-card-finder" element={<CreditCardFinderPage openApplyModal={openApplyModal} />} />
-                <Route path="/blogs-overview-page" element={<BlogsOverviewPage openApplyModal={openApplyModal} />} />
-                <Route path="/blogs" element={<BlogsOverviewPage openApplyModal={openApplyModal} />} />
+                <Route path="/blogs-overview-page" element={<Navigate to="/blog" replace />} />
+                <Route path="/blogs" element={<Navigate to="/blog" replace />} />
                 <Route path="/blogs/what-is-cibil-score" element={<WhatIsCibilScore />} />
                 <Route path="/blogs/Best-Credit-Cards" element={<BestCreditCards />} />
                 <Route path="/blogs/Business-Loan-Guide" element={<BusinessLoanGuide />} />

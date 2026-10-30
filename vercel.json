@@ -1,6 +1,20 @@
+{
+  "redirects": [
     {
-      "rewrites": [
-        { "source": "/(.*)", "destination": "/index.html" }
-      ]
+      "source": "/blogs",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blogs-overview-page",
+      "destination": "/blog",
+      "permanent": true
     }
-    
+  ],
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}

@@ -173,8 +173,6 @@ async function generateSitemap() {
             '/resources/income-tax',
             '/loan-apply',
             '/blog',
-            '/blogs-overview-page',
-            '/blogs',
             // Bank Specific Landing Pages
             '/bank-details/sbi',
             '/bank-details/hdfc',

@@ -8,7 +8,11 @@ export default function SEOManager() {
 
   // Resolve tailored metadata from centralized registry
   const meta = getSEOMetadata(pathname);
-  const currentUrl = `https://www.bankscart.com${pathname === '/' ? '' : pathname.replace(/\/$/, '')}`;
+  let canonicalPath = pathname === '/' ? '' : pathname.replace(/\/$/, '');
+  if (canonicalPath === '/blogs' || canonicalPath === '/blogs-overview-page') {
+    canonicalPath = '/blog';
+  }
+  const currentUrl = `https://www.bankscart.com${canonicalPath}`;
 
   // Generate dynamic JSON-LD Schema
   const jsonLd = React.useMemo(() => {

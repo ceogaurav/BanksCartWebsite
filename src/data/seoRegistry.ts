@@ -317,14 +317,14 @@ export const SEO_MAP: Record<string, SEOMetadata> = {
     keywords: "bankscart blog, finance articles, credit score tips, investment guides"
   },
   "/blogs-overview-page": {
-    title: "BanksCart Banking & Financial Guides | BanksCart",
-    description: "Explore comprehensive guides on banking, credit cards, loans, investments, and personal finance strategies.",
-    keywords: "banking guides, finance strategy, invest tips"
+    title: "BanksCart Financial Blog & News: Expert Guides, Loan Tips & Analysis",
+    description: "Read the latest finance articles, loan comparison guides, credit score tips, banking reviews, and investment insights on BanksCart.",
+    keywords: "bankscart blog, finance articles, credit score tips, investment guides"
   },
   "/blogs": {
-    title: "BanksCart Banking & Financial Guides | BanksCart",
-    description: "Explore comprehensive guides on banking, credit cards, loans, investments, and personal finance strategies.",
-    keywords: "banking guides, finance strategy, invest tips"
+    title: "BanksCart Financial Blog & News: Expert Guides, Loan Tips & Analysis",
+    description: "Read the latest finance articles, loan comparison guides, credit score tips, banking reviews, and investment insights on BanksCart.",
+    keywords: "bankscart blog, finance articles, credit score tips, investment guides"
   },
 
   // Hub Pages
@@ -727,7 +727,7 @@ export function getSEOMetadata(pathname: string): SEOMetadata {
     return SEO_MAP['/cards'];
   }
   if (cleanPath === '/blogs' || cleanPath === '/blogs-overview-page' || cleanPath === '/blog') {
-    return SEO_MAP['/blogs'];
+    return SEO_MAP['/blog'];
   }
   if (cleanPath === '/aadhar-card') {
     return SEO_MAP['/aadhar-card'];

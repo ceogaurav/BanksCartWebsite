@@ -271,12 +271,8 @@ const STATIC_SEO_MAP = {
     title: "Compare & Apply for Best Credit & Debit Cards Online | BanksCart",
     description: "Explore top credit and debit cards in India. Compare rewards, cashback, travel lounge access, and lifetime free options."
   },
-  "/blogs": {
+  "/blog": {
     title: "BanksCart Financial Blog & News: Expert Guides, Loan Tips & Analysis",
-    description: "Explore comprehensive guides on banking, credit cards, loans, investments, and personal finance strategies."
-  },
-  "/blogs-overview-page": {
-    title: "BanksCart Banking & Financial Guides | BanksCart",
     description: "Explore comprehensive guides on banking, credit cards, loans, investments, and personal finance strategies."
   },
   "/blog": {
@@ -517,7 +513,7 @@ function generatePreRenderedBody(cleanPath, meta) {
               <a href="/cards" class="hover:text-blue-600 transition-colors">Credit Cards</a>
               <a href="/calculators" class="hover:text-blue-600 transition-colors">Calculators</a>
               <a href="/credit-score" class="hover:text-blue-600 transition-colors">Credit Score</a>
-              <a href="/blogs" class="hover:text-blue-600 transition-colors">Financial Guides</a>
+              <a href="/blog" class="hover:text-blue-600 transition-colors">Financial Guides</a>
             </nav>
           </div>
         </header>
@@ -627,7 +623,7 @@ function generatePreRenderedBody(cleanPath, meta) {
             <a href="/cards" class="hover:text-blue-600 transition-colors">Credit Cards</a>
             <a href="/calculators" class="hover:text-blue-600 transition-colors">Calculators</a>
             <a href="/credit-score" class="hover:text-blue-600 transition-colors">Credit Score</a>
-            <a href="/blogs" class="hover:text-blue-600 transition-colors">Financial Guides</a>
+            <a href="/blog" class="hover:text-blue-600 transition-colors">Financial Guides</a>
           </nav>
         </div>
       </header>
@@ -728,6 +724,112 @@ function generatePreRenderedBody(cleanPath, meta) {
     `;
   }
 
+    // 1c. Blog Hub Dedicated Pre-rendering (/blog)
+  if (cleanPath === '/blog') {
+    return `
+    <div class="min-h-screen bg-slate-50 text-slate-800 font-sans antialiased">
+      <header class="bg-white border-b border-slate-200 py-4 px-6 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+          <a href="/" class="text-2xl font-bold tracking-tight text-blue-900">BanksCart</a>
+          <nav class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
+            <a href="/loans" class="hover:text-blue-600 transition-colors">Loans</a>
+            <a href="/cards" class="hover:text-blue-600 transition-colors">Credit Cards</a>
+            <a href="/calculators" class="hover:text-blue-600 transition-colors">Calculators</a>
+            <a href="/credit-score" class="hover:text-blue-600 transition-colors">Credit Score</a>
+            <a href="/blog" class="text-blue-600 font-semibold transition-colors">Financial Guides</a>
+          </nav>
+        </div>
+      </header>
+
+      <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+        <nav aria-label="Breadcrumb" class="text-sm text-slate-500">
+          <ol class="flex items-center space-x-2">
+            <li><a href="/" class="hover:text-blue-600">Home</a></li>
+            <li><span>/</span></li>
+            <li class="text-slate-800 font-medium" aria-current="page">Blog & Financial Guides</li>
+          </ol>
+        </nav>
+
+        <section class="bg-white rounded-2xl p-8 lg:p-12 border border-slate-200 shadow-sm space-y-6 text-center">
+          <span class="inline-block px-3 py-1 bg-blue-50 text-blue-700 text-xs font-semibold uppercase tracking-wider rounded-full border border-blue-200">Expert Financial Insights</span>
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">BanksCart Financial Blog & News</h1>
+          <p class="text-lg text-slate-600 leading-relaxed max-w-3xl mx-auto">Master your personal finances with verified guides on loans, credit cards, investment strategies, credit scores, and regulatory updates in India.</p>
+        </section>
+
+        <section class="space-y-6">
+          <h2 class="text-2xl font-bold text-slate-900 tracking-tight text-center">Popular Categories</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm text-center">
+              <h3 class="text-lg font-semibold text-slate-900 mb-2">Banking Guides</h3>
+              <p class="text-slate-600 text-sm">Step-by-step walk-throughs for savings accounts, deposits, and banking rules.</p>
+            </div>
+            <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm text-center">
+              <h3 class="text-lg font-semibold text-slate-900 mb-2">Loan & EMI Tips</h3>
+              <p class="text-slate-600 text-sm">Actionable advice to lower interest burdens and speed up loan approvals.</p>
+            </div>
+            <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm text-center">
+              <h3 class="text-lg font-semibold text-slate-900 mb-2">Credit Card Insights</h3>
+              <p class="text-slate-600 text-sm">Max out rewards points, cashback categories, and airport lounge perks.</p>
+            </div>
+            <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm text-center">
+              <h3 class="text-lg font-semibold text-slate-900 mb-2">Investment Strategies</h3>
+              <p class="text-slate-600 text-sm">Long-term wealth building with Mutual Funds, FDs, PPF, and Gold Bonds.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-6">
+          <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Featured Financial Articles</h2>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <article class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-3">
+              <span class="text-xs font-semibold text-blue-600 uppercase">Credit Rating</span>
+              <h3 class="text-lg font-bold text-slate-900"><a href="/blogs/what-is-cibil-score" class="hover:text-blue-600">The Ultimate Guide to CIBIL Score Mastery</a></h3>
+              <p class="text-sm text-slate-600">Learn how your credit score is calculated and actionable steps to reach a 750+ score fast.</p>
+              <a href="/blogs/what-is-cibil-score" class="text-sm font-medium text-blue-600 hover:text-blue-700 inline-block">Read Article &rarr;</a>
+            </article>
+
+            <article class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-3">
+              <span class="text-xs font-semibold text-blue-600 uppercase">Cards</span>
+              <h3 class="text-lg font-bold text-slate-900"><a href="/blogs/Best-Credit-Cards" class="hover:text-blue-600">Best Credit Cards in India Ranked</a></h3>
+              <p class="text-sm text-slate-600">Compare top rewards cards, cashback benefits, fuel waivers, and airport lounge access.</p>
+              <a href="/blogs/Best-Credit-Cards" class="text-sm font-medium text-blue-600 hover:text-blue-700 inline-block">Read Article &rarr;</a>
+            </article>
+
+            <article class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-3">
+              <span class="text-xs font-semibold text-blue-600 uppercase">Business Finance</span>
+              <h3 class="text-lg font-bold text-slate-900"><a href="/blogs/Business-Loan-Guide" class="hover:text-blue-600">The Ultimate Business Loan Guide</a></h3>
+              <p class="text-sm text-slate-600">Everything entrepreneurs need to know about MSME credit, CGTMSE schemes, and collateral-free funding.</p>
+              <a href="/blogs/Business-Loan-Guide" class="text-sm font-medium text-blue-600 hover:text-blue-700 inline-block">Read Article &rarr;</a>
+            </article>
+
+            <article class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-3">
+              <span class="text-xs font-semibold text-blue-600 uppercase">Fixed Income</span>
+              <h3 class="text-lg font-bold text-slate-900"><a href="/blogs/Fixed-Deposit-Guide" class="hover:text-blue-600">Fixed Deposit (FD) Complete Blueprint</a></h3>
+              <p class="text-sm text-slate-600">Compare latest bank FD interest rates, cumulative options, and senior citizen returns.</p>
+              <a href="/blogs/Fixed-Deposit-Guide" class="text-sm font-medium text-blue-600 hover:text-blue-700 inline-block">Read Article &rarr;</a>
+            </article>
+
+            <article class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-3">
+              <span class="text-xs font-semibold text-blue-600 uppercase">Government Schemes</span>
+              <h3 class="text-lg font-bold text-slate-900"><a href="/blogs/Sukanya-Samriddhi-Yojana-Guide" class="hover:text-blue-600">Sukanya Samriddhi Yojana (SSY) Rules</a></h3>
+              <p class="text-sm text-slate-600">Complete guide to EEE tax exemption, 8.2% government interest, and girl child savings.</p>
+              <a href="/blogs/Sukanya-Samriddhi-Yojana-Guide" class="text-sm font-medium text-blue-600 hover:text-blue-700 inline-block">Read Article &rarr;</a>
+            </article>
+
+            <article class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-3">
+              <span class="text-xs font-semibold text-blue-600 uppercase">Mortgage & Loans</span>
+              <h3 class="text-lg font-bold text-slate-900"><a href="/blogs/Home-Loan-Guide" class="hover:text-blue-600">Step-by-Step Home Loan Approval Blueprint</a></h3>
+              <p class="text-sm text-slate-600">Navigate property legal verification, interest rate options, and Section 24 tax benefits.</p>
+              <a href="/blogs/Home-Loan-Guide" class="text-sm font-medium text-blue-600 hover:text-blue-700 inline-block">Read Article &rarr;</a>
+            </article>
+          </div>
+        </section>
+      </main>
+      ${renderFooter()}
+    </div>
+    `;
+  }
+
   // 2. Directory Services (Company registration, Aadhaar, Credit Rectification, etc.)
   if (directoryLinks[cleanPath]) {
     const entry = directoryLinks[cleanPath];
@@ -744,7 +846,7 @@ function generatePreRenderedBody(cleanPath, meta) {
             <a href="/cards" class="hover:text-blue-600 transition-colors">Credit Cards</a>
             <a href="/calculators" class="hover:text-blue-600 transition-colors">Calculators</a>
             <a href="/credit-score" class="hover:text-blue-600 transition-colors">Credit Score</a>
-            <a href="/blogs" class="hover:text-blue-600 transition-colors">Financial Guides</a>
+            <a href="/blog" class="hover:text-blue-600 transition-colors">Financial Guides</a>
           </nav>
         </div>
       </header>
@@ -845,7 +947,7 @@ function generatePreRenderedBody(cleanPath, meta) {
           <a href="/cards" class="hover:text-blue-600 transition-colors">Credit Cards</a>
           <a href="/calculators" class="hover:text-blue-600 transition-colors">Calculators</a>
           <a href="/credit-score" class="hover:text-blue-600 transition-colors">Credit Score</a>
-          <a href="/blogs" class="hover:text-blue-600 transition-colors">Financial Guides</a>
+          <a href="/blog" class="hover:text-blue-600 transition-colors">Financial Guides</a>
         </nav>
       </div>
     </header>
@@ -959,7 +1061,36 @@ let pagesGenerated = 0;
 for (const urlPath of urls) {
   const cleanPath = urlPath === '/' ? '' : urlPath.replace(/\/$/, '');
   const meta = resolveSEO(cleanPath || '/');
-  const canonicalUrl = cleanPath === '/about-us' ? 'https://www.bankscart.com/about' : `https://www.bankscart.com${cleanPath}`;
+  let canonicalUrl = `https://www.bankscart.com${cleanPath}`;
+  if (cleanPath === '/about-us') {
+    canonicalUrl = 'https://www.bankscart.com/about';
+  } else if (cleanPath === '/blogs' || cleanPath === '/blogs-overview-page') {
+    canonicalUrl = 'https://www.bankscart.com/blog';
+  }
+
+  // 301 Redirect Pages for legacy /blogs and /blogs-overview-page
+  if (cleanPath === '/blogs' || cleanPath === '/blogs-overview-page') {
+    const redirectHtml = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="refresh" content="0;url=/blog">
+  <link rel="canonical" href="https://www.bankscart.com/blog" />
+  <title>BanksCart Financial Blog &amp; News: Expert Guides, Loan Tips &amp; Analysis</title>
+  <script>window.location.replace('/blog');</script>
+</head>
+<body>
+  <p>Moved Permanently. Redirecting to <a href="/blog">https://www.bankscart.com/blog</a>...</p>
+</body>
+</html>`;
+    const targetDir = path.join(distDir, cleanPath.replace(/^\//, ''));
+    if (!fs.existsSync(targetDir)) {
+      fs.mkdirSync(targetDir, { recursive: true });
+    }
+    fs.writeFileSync(path.join(targetDir, 'index.html'), redirectHtml, 'utf8');
+    pagesGenerated++;
+    continue;
+  }
 
   // Generate semantic pre-rendered body content
   const prerenderedBody = generatePreRenderedBody(cleanPath || '/', meta);
@@ -1013,6 +1144,34 @@ for (const urlPath of urls) {
     fs.writeFileSync(targetFile, pageHtml, 'utf8');
     pagesGenerated++;
   }
+}
+
+
+// Explicit generation of legacy redirect pages (guarantees dist/blogs and dist/blogs-overview-page exist even when excluded from sitemap.xml)
+const legacyRedirects = [
+  { path: '/blogs', target: '/blog' },
+  { path: '/blogs-overview-page', target: '/blog' }
+];
+
+for (const redir of legacyRedirects) {
+  const targetDir = path.join(distDir, redir.path.replace(/^\//, ''));
+  if (!fs.existsSync(targetDir)) {
+    fs.mkdirSync(targetDir, { recursive: true });
+  }
+  const redirectHtml = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="refresh" content="0;url=${redir.target}">
+  <link rel="canonical" href="https://www.bankscart.com${redir.target}" />
+  <title>BanksCart Financial Blog &amp; News: Expert Guides, Loan Tips &amp; Analysis</title>
+  <script>window.location.replace('${redir.target}');</script>
+</head>
+<body>
+  <p>Moved Permanently. Redirecting to <a href="${redir.target}">https://www.bankscart.com${redir.target}</a>...</p>
+</body>
+</html>`;
+  fs.writeFileSync(path.join(targetDir, 'index.html'), redirectHtml, 'utf8');
 }
 
 console.log(`Successfully pre-rendered ${pagesGenerated} static HTML pages in dist/ with rich semantic HTML (eliminating 0-word empty client shells).`);

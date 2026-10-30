@@ -1,4 +1,5 @@
 import React from "react";
+import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 // FIX: Splitting imports across multiple lines to resolve parser limits (Rollup error)
 import { PenSquare, FileText, Lightbulb, Newspaper } from "lucide-react";
@@ -139,6 +140,16 @@ const BlogsOverviewPage = () => {
   };
 
   return (
+    <>
+      <Helmet>
+        <title>BanksCart Financial Blog & News: Expert Guides, Loan Tips & Analysis</title>
+        <meta name="description" content="Read the latest finance articles, loan comparison guides, credit score tips, banking reviews, and investment insights on BanksCart." />
+        <link rel="canonical" href="https://www.bankscart.com/blog" />
+        <meta property="og:title" content="BanksCart Financial Blog & News: Expert Guides, Loan Tips & Analysis" />
+        <meta property="og:description" content="Read the latest finance articles, loan comparison guides, credit score tips, banking reviews, and investment insights on BanksCart." />
+        <meta property="og:url" content="https://www.bankscart.com/blog" />
+        <meta property="og:type" content="website" />
+      </Helmet>
     <motion.div
       className="min-h-screen bg-gradient-to-br from-white/60 to-blue-50/80 py-12 px-4 md:px-12 font-inter"
       variants={pageVariants}
@@ -239,6 +250,7 @@ const BlogsOverviewPage = () => {
         )}
       </motion.section>
     </motion.div>
+    </>
   );
 };
 

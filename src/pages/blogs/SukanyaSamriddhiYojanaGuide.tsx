@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 const ARTICLE_TITLE = "Sukanya Samriddhi Yojana (SSY) 2026: Complete Rules, Benefits, and Calculator Guide";
 const ARTICLE_SUBTITLE = "The ultimate handbook on the Government's premier scheme for the girl child: Unraveling the 8.2% interest rate, Triple Tax Exemption (EEE), and withdrawal hacks.";
-const BACK_LINK = "/blogs";
+const BACK_LINK = "/blog";
 
 export default function SukanyaSamriddhiYojanaGuide() {
   return (
