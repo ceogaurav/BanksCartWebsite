@@ -55,6 +55,73 @@ const LoansOverviewPage = () => (
         <LoanCard key={loan.title} {...loan} />
       ))}
     </div>
+
+    {/* Specialized Commercial & Institutional Lending Hubs */}
+    <div className="mt-16 max-w-6xl mx-auto w-full">
+      <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 mb-4 text-center">
+        Specialized Commercial & Institutional Lending Solutions
+      </h2>
+      <p className="text-gray-600 text-center max-w-2xl mx-auto mb-8 text-sm">
+        Explore dedicated institutional credit facilities, regional MSME financing, and credit score recovery solutions.
+      </p>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <a
+          href="/credila-financial-services"
+          className="bg-white p-6 rounded-2xl border border-blue-100 shadow-sm hover:shadow-md hover:border-blue-300 transition-all group block"
+        >
+          <span className="text-xs font-bold text-blue-600 uppercase tracking-wider block mb-2">Institutional Credit</span>
+          <h3 className="font-bold text-gray-900 group-hover:text-blue-600 transition-colors text-base mb-1">
+            Credila Financial Services
+          </h3>
+          <p className="text-xs text-gray-500 leading-relaxed">
+            HDFC Credila specialized education and premier institutional loans with customized tenures and tax advantages.
+          </p>
+          <span className="text-xs text-blue-600 font-semibold mt-3 inline-block group-hover:underline">Explore Credila &rarr;</span>
+        </a>
+
+        <a
+          href="/business-loan/company-registration-in-delhi"
+          className="bg-white p-6 rounded-2xl border border-blue-100 shadow-sm hover:shadow-md hover:border-blue-300 transition-all group block"
+        >
+          <span className="text-xs font-bold text-indigo-600 uppercase tracking-wider block mb-2">Regional MSME</span>
+          <h3 className="font-bold text-gray-900 group-hover:text-blue-600 transition-colors text-base mb-1">
+            Company Registration in Delhi
+          </h3>
+          <p className="text-xs text-gray-500 leading-relaxed">
+            Fast-track corporate incorporation financing, priority MSME credit lines, and working capital in Delhi NCR.
+          </p>
+          <span className="text-xs text-blue-600 font-semibold mt-3 inline-block group-hover:underline">View Delhi Capital &rarr;</span>
+        </a>
+
+        <a
+          href="/business-loan/company-registration-in-chennai"
+          className="bg-white p-6 rounded-2xl border border-blue-100 shadow-sm hover:shadow-md hover:border-blue-300 transition-all group block"
+        >
+          <span className="text-xs font-bold text-indigo-600 uppercase tracking-wider block mb-2">Regional MSME</span>
+          <h3 className="font-bold text-gray-900 group-hover:text-blue-600 transition-colors text-base mb-1">
+            Company Registration in Chennai
+          </h3>
+          <p className="text-xs text-gray-500 leading-relaxed">
+            Industrial commercial loans, seed models, and business setup funding for growing enterprises in Tamil Nadu.
+          </p>
+          <span className="text-xs text-blue-600 font-semibold mt-3 inline-block group-hover:underline">View Chennai Capital &rarr;</span>
+        </a>
+
+        <a
+          href="/credit-score/credit-rectification-service"
+          className="bg-white p-6 rounded-2xl border border-blue-100 shadow-sm hover:shadow-md hover:border-blue-300 transition-all group block"
+        >
+          <span className="text-xs font-bold text-emerald-600 uppercase tracking-wider block mb-2">Bureau Support</span>
+          <h3 className="font-bold text-gray-900 group-hover:text-blue-600 transition-colors text-base mb-1">
+            Credit Rectification Service
+          </h3>
+          <p className="text-xs text-gray-500 leading-relaxed">
+            Dispute erroneous default tags on your CIBIL report and boost credit scores to unlock lower loan interest rates.
+          </p>
+          <span className="text-xs text-blue-600 font-semibold mt-3 inline-block group-hover:underline">Fix Credit Score &rarr;</span>
+        </a>
+      </div>
+    </div>
   </div>
 );
 

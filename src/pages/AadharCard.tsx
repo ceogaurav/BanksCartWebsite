@@ -373,6 +373,20 @@ const AadharCard: React.FC = () => {
             </div>
           </div>
         )}
+      
+        {/* Comprehensive Services Directory Link */}
+        <div className="mt-12 bg-white rounded-2xl p-6 border border-gray-200 shadow-sm text-center max-w-3xl mx-auto">
+          <h3 className="text-lg font-bold text-gray-900 mb-2">Need Direct Portal Access for Official UIDAI Services?</h3>
+          <p className="text-sm text-gray-600 mb-4 leading-relaxed">
+            Browse our comprehensive directory of verified government portals, PVC card request links, and biometric update centers.
+          </p>
+          <a
+            href="/aadhar-card/aadhaar-card-services"
+            className="inline-flex items-center justify-center px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm rounded-lg transition-colors shadow-sm"
+          >
+            Explore All Aadhaar Card Services &rarr;
+          </a>
+        </div>
       </div>
     </div>
   );

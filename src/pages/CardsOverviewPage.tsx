@@ -88,6 +88,61 @@ const CardsOverviewPage: React.FC = () => (
       ))}
     </div>
 
+
+    {/* Credit Bureau Diagnostic & Commercial Registration Portals */}
+    <div className="mt-16 max-w-6xl mx-auto">
+      <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 mb-6 text-center">
+        Credit Health & Commercial Business Solutions
+      </h2>
+      <p className="text-gray-600 text-center max-w-2xl mx-auto mb-8 text-sm">
+        Strengthen your card approval chances with bureau diagnostics, score repair, and corporate trademark protection.
+      </p>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <a
+          href="/credit-health-report-services"
+          className="bg-white p-6 rounded-2xl border border-purple-100 shadow-sm hover:shadow-md hover:border-purple-300 transition-all group block"
+        >
+          <span className="text-xs font-bold text-purple-600 uppercase tracking-wider block mb-2">Card Eligibility</span>
+          <h3 className="font-bold text-gray-900 group-hover:text-purple-600 transition-colors text-base mb-1">
+            Credit Health Report Services
+          </h3>
+          <p className="text-xs text-gray-500 leading-relaxed">
+            Multi-bureau credit audit analyzing credit utilization ratios and payment consistency for premium card pre-approvals.
+          </p>
+          <span className="text-xs text-purple-600 font-semibold mt-3 inline-block group-hover:underline">Check Credit Health &rarr;</span>
+        </a>
+
+        <a
+          href="/credit-score/credit-rectification-service"
+          className="bg-white p-6 rounded-2xl border border-purple-100 shadow-sm hover:shadow-md hover:border-purple-300 transition-all group block"
+        >
+          <span className="text-xs font-bold text-emerald-600 uppercase tracking-wider block mb-2">Bureau Dispute</span>
+          <h3 className="font-bold text-gray-900 group-hover:text-purple-600 transition-colors text-base mb-1">
+            Credit Rectification Service
+          </h3>
+          <p className="text-xs text-gray-500 leading-relaxed">
+            Dispute incorrect overdue records, fix identity anomalies on CIBIL, and qualify for high-limit lifetime free credit cards.
+          </p>
+          <span className="text-xs text-purple-600 font-semibold mt-3 inline-block group-hover:underline">Rectify Credit &rarr;</span>
+        </a>
+
+        <a
+          href="/company-registration/copyright-registration"
+          className="bg-white p-6 rounded-2xl border border-purple-100 shadow-sm hover:shadow-md hover:border-purple-300 transition-all group block"
+        >
+          <span className="text-xs font-bold text-indigo-600 uppercase tracking-wider block mb-2">Corporate IP</span>
+          <h3 className="font-bold text-gray-900 group-hover:text-purple-600 transition-colors text-base mb-1">
+            Copyright Registration Online
+          </h3>
+          <p className="text-xs text-gray-500 leading-relaxed">
+            Protect software, artistic, and literary intellectual property to enhance enterprise valuation and commercial credit standing.
+          </p>
+          <span className="text-xs text-purple-600 font-semibold mt-3 inline-block group-hover:underline">Register Copyright &rarr;</span>
+        </a>
+      </div>
+    </div>
+
+
     <motion.section
       className="text-center mt-16 p-8 bg-gradient-to-r from-purple-600 to-pink-700 rounded-2xl shadow-xl"
       variants={pageVariants}

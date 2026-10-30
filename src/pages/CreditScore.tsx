@@ -132,10 +132,57 @@ const CreditScore: React.FC = () => {
           <div className="lg:col-span-5 lg:sticky lg:top-24">
             <CibilCheckerForm sourcePage="Credit Score Page" />
           </div>
+        
+        {/* Additional Credit Bureau Recovery & Diagnostic Services */}
+        <div className="mt-12 max-w-6xl mx-auto">
+          <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm">
+            <div className="max-w-2xl mb-6">
+              <h2 className="text-xl sm:text-2xl font-bold text-slate-800 tracking-tight">
+                Specialized Credit Bureau Diagnostic & Recovery Services
+              </h2>
+              <p className="text-slate-500 text-xs sm:text-sm mt-1 leading-relaxed">
+                Struggling with low scores or incorrect bureau entries? Take action with verified credit health audits and dispute handling.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <a
+                href="/credit-score/credit-rectification-service"
+                className="p-5 rounded-xl border border-blue-100 bg-blue-50/50 hover:bg-blue-50 hover:border-blue-300 transition-all group block"
+              >
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-bold text-blue-700 uppercase tracking-wider">Dispute & Recovery</span>
+                  <span className="text-blue-600 text-xs font-semibold group-hover:translate-x-1 transition-transform inline-block">&rarr;</span>
+                </div>
+                <h3 className="font-bold text-slate-800 group-hover:text-blue-600 text-base mb-1 transition-colors">
+                  Credit Rectification Service
+                </h3>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  Identify inaccuracies, wrongful default remarks, or identity mismatch errors in your credit file. Work with specialized grievance officers to file formal dispute petitions.
+                </p>
+              </a>
+
+              <a
+                href="/credit-health-report-services"
+                className="p-5 rounded-xl border border-indigo-100 bg-indigo-50/50 hover:bg-indigo-50 hover:border-indigo-300 transition-all group block"
+              >
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-bold text-indigo-700 uppercase tracking-wider">In-Depth Audit</span>
+                  <span className="text-indigo-600 text-xs font-semibold group-hover:translate-x-1 transition-transform inline-block">&rarr;</span>
+                </div>
+                <h3 className="font-bold text-slate-800 group-hover:text-indigo-600 text-base mb-1 transition-colors">
+                  Credit Health Report Services
+                </h3>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  Detailed 360-degree review of your active trade lines, repayment history, FOIR ratios, and credit exposure with custom action plans to reach a 750+ score.
+                </p>
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  );
+  </div>
+);
 };
 
 export default CreditScore;

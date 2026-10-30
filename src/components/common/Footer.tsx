@@ -72,6 +72,101 @@ const Footer: React.FC<FooterProps> = ({ openEligibilityModal }) => {
         </div>
       </div>
 
+
+      {/* High-Value Commercial & Specialized Services Link Cluster */}
+      <div className="bg-[#0e1320] border-t border-slate-800/80 py-8">
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+          <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wider mb-6">
+            Popular Commercial Services & Specialised Solutions
+          </h4>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-xs">
+            <div>
+              <h5 className="font-semibold text-white mb-2.5">Credit & Bureau Solutions</h5>
+              <ul className="space-y-2 text-slate-400">
+                <li>
+                  <Link to="/credit-score/credit-rectification-service" className="hover:text-blue-400 transition-colors">
+                    Credit Rectification Service
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/credit-health-report-services" className="hover:text-blue-400 transition-colors">
+                    Credit Health Report Services
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/credit-score" className="hover:text-blue-400 transition-colors">
+                    Free CIBIL Score & Analysis
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h5 className="font-semibold text-white mb-2.5">Corporate & Incorporation</h5>
+              <ul className="space-y-2 text-slate-400">
+                <li>
+                  <Link to="/business-loan/company-registration-in-delhi" className="hover:text-blue-400 transition-colors">
+                    Company Registration in Delhi
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/business-loan/company-registration-in-chennai" className="hover:text-blue-400 transition-colors">
+                    Company Registration in Chennai
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/company-registration/copyright-registration" className="hover:text-blue-400 transition-colors">
+                    Copyright Registration Online
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h5 className="font-semibold text-white mb-2.5">Specialized & Student Lending</h5>
+              <ul className="space-y-2 text-slate-400">
+                <li>
+                  <Link to="/credila-financial-services" className="hover:text-blue-400 transition-colors">
+                    Credila Financial Services
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/loans/education" className="hover:text-blue-400 transition-colors">
+                    Education Loans in India & Abroad
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/loans/business" className="hover:text-blue-400 transition-colors">
+                    Collateral-Free Business Loans
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h5 className="font-semibold text-white mb-2.5">Government & Citizen Portals</h5>
+              <ul className="space-y-2 text-slate-400">
+                <li>
+                  <Link to="/aadhar-card/aadhaar-card-services" className="hover:text-blue-400 transition-colors">
+                    Aadhaar Card Services Portal
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/blogs/Sukanya-Samriddhi-Yojana-Guide" className="hover:text-blue-400 transition-colors">
+                    Sukanya Samriddhi Yojana (SSY) Guide
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/pan-card" className="hover:text-blue-400 transition-colors">
+                    PAN Card Verification & Linking
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Middle Bar: Quick Links & Social */}
       <div className="bg-[#111521] border-t border-slate-800 border-b">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-4">

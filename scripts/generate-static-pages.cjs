@@ -1046,6 +1046,42 @@ function renderFooter() {
           <li><a href="/sitemap" class="hover:text-white">Sitemap</a></li>
         </ul>
       </div>
+
+    <div class="border-t border-slate-800 pt-8 mt-8">
+      <h4 class="font-semibold text-white mb-4 text-xs uppercase tracking-wider">Popular Commercial Services & Specialized Portals</h4>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs">
+        <div>
+          <span class="text-slate-300 font-medium block mb-2">Credit Solutions</span>
+          <ul class="space-y-1.5 text-slate-400">
+            <li><a href="/credit-score/credit-rectification-service" class="hover:text-white">Credit Rectification Service</a></li>
+            <li><a href="/credit-health-report-services" class="hover:text-white">Credit Health Report Services</a></li>
+          </ul>
+        </div>
+        <div>
+          <span class="text-slate-300 font-medium block mb-2">Business Incorporation</span>
+          <ul class="space-y-1.5 text-slate-400">
+            <li><a href="/business-loan/company-registration-in-delhi" class="hover:text-white">Company Registration in Delhi</a></li>
+            <li><a href="/business-loan/company-registration-in-chennai" class="hover:text-white">Company Registration in Chennai</a></li>
+            <li><a href="/company-registration/copyright-registration" class="hover:text-white">Copyright Registration</a></li>
+          </ul>
+        </div>
+        <div>
+          <span class="text-slate-300 font-medium block mb-2">Institutional Lending</span>
+          <ul class="space-y-1.5 text-slate-400">
+            <li><a href="/credila-financial-services" class="hover:text-white">Credila Financial Services</a></li>
+            <li><a href="/loans/education" class="hover:text-white">Education Loans</a></li>
+          </ul>
+        </div>
+        <div>
+          <span class="text-slate-300 font-medium block mb-2">Citizen Services</span>
+          <ul class="space-y-1.5 text-slate-400">
+            <li><a href="/aadhar-card/aadhaar-card-services" class="hover:text-white">Aadhaar Services Hub</a></li>
+            <li><a href="/blogs/Sukanya-Samriddhi-Yojana-Guide" class="hover:text-white">Sukanya Samriddhi (SSY) Guide</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
     </div>
     <div class="max-w-7xl mx-auto mt-8 pt-8 border-t border-slate-800 text-xs text-slate-500 text-center">
       &copy; ${new Date().getFullYear()} BanksCart. All rights reserved.

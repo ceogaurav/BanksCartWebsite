@@ -356,6 +356,8 @@ const App: React.FC = () => {
                 <Route path="/cibil/how-to-check-cibil-score-by-pan-card" element={<CheckCibilByPanPage />} />
                 <Route path="/cibil-report/cibil-score-sbi-loans" element={<SbiCibilScorePage />} />
                 <Route path="/credit-report/ways-to-improve-your-cibil-score" element={<WaysToImproveCibilPage />} />
+                <Route path="/credit-score/credit-rectification-service" element={<DynamicGeneralBankingPage />} />
+                <Route path="/credit-health-report-services" element={<DynamicGeneralBankingPage />} />
                 <Route path="/credit-score/cibil-score-for-personal-loan" element={<CibilScoreForPersonalLoanPage />} />
                 <Route path="/cibil/how-to-resolve-cibil-dispute" element={<ResolveCibilDisputePage />} />
                 <Route path="/loans/personal/overview" element={<PersonalLoanOverviewPage openApplyModal={openApplyModal} openEligibilityModal={openEligibilityModal} openCibilModal={openCibilModal} />} />
