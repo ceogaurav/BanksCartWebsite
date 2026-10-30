@@ -251,6 +251,14 @@ const BONDS_SUBPATHS = {
 
 // Static SEO Map for core hubs
 const STATIC_SEO_MAP = {
+  "/about": {
+    title: "About BanksCart: Our Mission, Leadership & Lending Partners",
+    description: "Learn about BanksCart's mission, leadership team, and institutional partnerships with 30+ top Indian banks. Empowering borrowers with transparent loan comparisons."
+  },
+  "/about-us": {
+    title: "About BanksCart: Our Mission, Leadership & Lending Partners",
+    description: "Learn about BanksCart's mission, leadership team, and institutional partnerships with 30+ top Indian banks. Empowering borrowers with transparent loan comparisons."
+  },
   "/": {
     title: "BanksCart: Compare Loan Interest Rates, Credit Cards & Apply Online",
     description: "Compare and apply for personal loans, home loans, business loans, and credit cards from top Indian banks at BanksCart. Get instant eligibility and best interest rates."
@@ -607,6 +615,119 @@ function generatePreRenderedBody(cleanPath, meta) {
     }
   }
 
+    // 1b. About Us Dedicated Pre-rendering
+  if (cleanPath === '/about' || cleanPath === '/about-us') {
+    return `
+    <div class="min-h-screen bg-slate-50 text-slate-800 font-sans antialiased">
+      <header class="bg-white border-b border-slate-200 py-4 px-6 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+          <a href="/" class="text-2xl font-bold tracking-tight text-blue-900">BanksCart</a>
+          <nav class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
+            <a href="/loans" class="hover:text-blue-600 transition-colors">Loans</a>
+            <a href="/cards" class="hover:text-blue-600 transition-colors">Credit Cards</a>
+            <a href="/calculators" class="hover:text-blue-600 transition-colors">Calculators</a>
+            <a href="/credit-score" class="hover:text-blue-600 transition-colors">Credit Score</a>
+            <a href="/blogs" class="hover:text-blue-600 transition-colors">Financial Guides</a>
+          </nav>
+        </div>
+      </header>
+
+      <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+        <nav aria-label="Breadcrumb" class="text-sm text-slate-500">
+          <ol class="flex items-center space-x-2">
+            <li><a href="/" class="hover:text-blue-600">Home</a></li>
+            <li><span>/</span></li>
+            <li class="text-slate-800 font-medium" aria-current="page">About Us</li>
+          </ol>
+        </nav>
+
+        <section class="bg-white rounded-2xl p-8 lg:p-12 border border-slate-200 shadow-sm space-y-6">
+          <span class="inline-block px-3 py-1 bg-blue-50 text-blue-700 text-xs font-semibold uppercase tracking-wider rounded-full border border-blue-200">About BanksCart</span>
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">Empowering India’s Borrowers with Transparent Financial Choices</h1>
+          <p class="text-lg text-slate-600 leading-relaxed max-w-4xl">BanksCart is India’s premier independent loan comparison and financial marketplace. We partner with over 30 leading scheduled commercial banks and RBI-registered NBFCs to bring total transparency, zero hidden charges, and market-competitive loan products to everyday borrowers and growing businesses.</p>
+          <p class="text-base text-slate-600 leading-relaxed max-w-4xl">From personal loans and home mortgages to collateral-free MSME credit and high-reward credit cards, BanksCart provides data-driven financial tools, algorithmic eligibility checks, and real-time interest comparisons—completely free for consumers.</p>
+          <div class="pt-4 flex flex-wrap gap-4">
+            <a href="/loans/personal/overview" class="inline-flex items-center justify-center px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors shadow">Compare Personal Loans</a>
+            <a href="/credit-score" class="inline-flex items-center justify-center px-6 py-3 bg-slate-100 text-slate-800 font-medium rounded-lg hover:bg-slate-200 transition-colors border border-slate-300">Free Credit Score Check</a>
+          </div>
+        </section>
+
+        <section class="space-y-6">
+          <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Our Core Mission & Values</h2>
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+              <h3 class="text-lg font-semibold text-slate-900 mb-2">100% Unbiased Transparency</h3>
+              <p class="text-slate-600 text-sm leading-relaxed">We present loan offers with complete disclosure of interest rates, processing fees, APRs, and prepayment clauses without hidden markups.</p>
+            </div>
+            <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+              <h3 class="text-lg font-semibold text-slate-900 mb-2">Borrower-Centric Advice</h3>
+              <p class="text-slate-600 text-sm leading-relaxed">Our algorithmic recommendation engine matches applicants to lenders based on genuine qualification criteria to protect credit scores.</p>
+            </div>
+            <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+              <h3 class="text-lg font-semibold text-slate-900 mb-2">Bank-Grade Security</h3>
+              <p class="text-slate-600 text-sm leading-relaxed">256-bit encryption and strict adherence to RBI digital lending guidelines safeguard all applicant data and financial privacy.</p>
+            </div>
+            <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+              <h3 class="text-lg font-semibold text-slate-900 mb-2">PAN-India Accessibility</h3>
+              <p class="text-slate-600 text-sm leading-relaxed">Serving borrowers across 1,000+ Tier-1, Tier-2, and Tier-3 cities with rapid digital application workflows and instant eligibility calculations.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-6 bg-white p-8 rounded-2xl border border-slate-200 shadow-sm">
+          <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Institutional Lending Partners</h2>
+          <p class="text-slate-600 text-sm">We aggregate verified loan offers and credit card products from India's most respected banking institutions:</p>
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 text-center font-medium text-slate-800">State Bank of India</div>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 text-center font-medium text-slate-800">HDFC Bank</div>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 text-center font-medium text-slate-800">ICICI Bank</div>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 text-center font-medium text-slate-800">Axis Bank</div>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 text-center font-medium text-slate-800">Kotak Mahindra Bank</div>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 text-center font-medium text-slate-800">Punjab National Bank</div>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 text-center font-medium text-slate-800">Bank of Baroda</div>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 text-center font-medium text-slate-800">Bajaj Finserv</div>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 text-center font-medium text-slate-800">Tata Capital</div>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 text-center font-medium text-slate-800">Aditya Birla Capital</div>
+          </div>
+        </section>
+
+        <section class="space-y-6 bg-slate-900 text-white p-8 rounded-2xl shadow-sm">
+          <h2 class="text-2xl font-bold tracking-tight">Our Trust Milestones</h2>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+            <div>
+              <div class="text-3xl font-extrabold text-blue-400">₹5,000 Cr+</div>
+              <div class="text-sm text-slate-300 mt-1">Loan Inquiries Facilitated</div>
+            </div>
+            <div>
+              <div class="text-3xl font-extrabold text-blue-400">30+</div>
+              <div class="text-sm text-slate-300 mt-1">Partner Lenders</div>
+            </div>
+            <div>
+              <div class="text-3xl font-extrabold text-blue-400">1,000+</div>
+              <div class="text-sm text-slate-300 mt-1">Cities & Towns Covered</div>
+            </div>
+            <div>
+              <div class="text-3xl font-extrabold text-blue-400">99.2%</div>
+              <div class="text-sm text-slate-300 mt-1">Customer Satisfaction</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-6 bg-white p-8 rounded-2xl border border-slate-200 shadow-sm">
+          <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Regulatory Compliance & Editorial Standards</h2>
+          <p class="text-slate-600 text-sm leading-relaxed">BanksCart operates strictly within the framework of digital lending guidelines issued by the Reserve Bank of India (RBI). As an aggregator and comparison platform, we do not charge borrowers any advance fees for loan comparisons or eligibility inquiries. All interest rates, loan amounts, tenures, processing fees, and documentation mandates displayed on our platform are verified regularly against official bank schedules and lending terms.</p>
+          <div class="pt-4 flex flex-wrap gap-4 text-xs text-slate-500">
+            <span>Corporate Address: BanksCart Financial Technologies, New Delhi, India</span>
+            <span>&bull;</span>
+            <span>Contact: support@bankscart.com</span>
+          </div>
+        </section>
+      </main>
+      ${renderFooter()}
+    </div>
+    `;
+  }
+
   // 2. Directory Services (Company registration, Aadhaar, Credit Rectification, etc.)
   if (directoryLinks[cleanPath]) {
     const entry = directoryLinks[cleanPath];
@@ -838,7 +959,7 @@ let pagesGenerated = 0;
 for (const urlPath of urls) {
   const cleanPath = urlPath === '/' ? '' : urlPath.replace(/\/$/, '');
   const meta = resolveSEO(cleanPath || '/');
-  const canonicalUrl = `https://www.bankscart.com${cleanPath}`;
+  const canonicalUrl = cleanPath === '/about-us' ? 'https://www.bankscart.com/about' : `https://www.bankscart.com${cleanPath}`;
 
   // Generate semantic pre-rendered body content
   const prerenderedBody = generatePreRenderedBody(cleanPath || '/', meta);

@@ -287,6 +287,8 @@ async function generateSitemap() {
             '/pension-calculator',
             '/social-security-calculator',
             // Legal
+            '/about',
+            '/about-us',
             '/credit-report-terms',
             '/terms-of-use',
             '/privacy-policy',

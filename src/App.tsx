@@ -111,6 +111,7 @@ import CibilScoreForPersonalLoanPage from './pages/cibil/CibilScoreForPersonalLo
 import ResolveCibilDisputePage from './pages/cibil/ResolveCibilDisputePage';
 import DynamicPersonalLoanPage from './pages/cibil/DynamicPersonalLoanPage';
 import PersonalLoanOverviewPage from './pages/PersonalLoanOverviewPage';
+import AboutUs from './pages/AboutUs';
 import InvestorRelations from './pages/legal/InvestorRelations';
 import Disclaimer from './pages/legal/Disclaimer';
 import IntellectualPolicy from './pages/legal/IntellectualPolicy';
@@ -750,6 +751,8 @@ const App: React.FC = () => {
                 <Route path="/blog/:slug" element={<BlogPost />} />
 
                 {/* Legal Pages */}
+                <Route path="/about" element={<AboutUs />} />
+                <Route path="/about-us" element={<AboutUs />} />
                 <Route path="/credit-report-terms" element={<CreditReportTerms />} />
                 <Route path="/terms-of-use" element={<TermsOfUse />} />
                 <Route path="/privacy-policy" element={<PrivacyPolicy />} />

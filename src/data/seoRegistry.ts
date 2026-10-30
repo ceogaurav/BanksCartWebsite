@@ -666,6 +666,16 @@ export const SEO_MAP: Record<string, SEOMetadata> = {
   },
 
   // Legal Pages
+  "/about": {
+    title: "About BanksCart: Our Mission, Leadership & Lending Partners",
+    description: "Learn about BanksCart's mission, leadership team, and institutional partnerships with 30+ top Indian banks. Empowering borrowers with transparent loan comparisons.",
+    keywords: "about bankscart, bankscart mission, loan comparison company, bankscart partners, financial marketplace india"
+  },
+  "/about-us": {
+    title: "About BanksCart: Our Mission, Leadership & Lending Partners",
+    description: "Learn about BanksCart's mission, leadership team, and institutional partnerships with 30+ top Indian banks. Empowering borrowers with transparent loan comparisons.",
+    keywords: "about bankscart, bankscart mission, loan comparison company"
+  },
   "/credit-report-terms": {
     title: "Credit Report Terms & Conditions | BanksCart",
     description: "Review BanksCart's terms and conditions regarding free credit score checks, CIBIL reports, and data privacy policies.",
