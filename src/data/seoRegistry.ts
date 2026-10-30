@@ -37,7 +37,7 @@ export function formatSlug(slug: string): string {
 // Subpaths for /loans/personal/:subPath with tailored value propositions
 export const PERSONAL_LOAN_SUBPATHS: Record<string, { title: string; description: string }> = {
   'overview': {
-    title: "Personal Loans in India: Compare Interest Rates, Eligibility & EMIs | BanksCart",
+    title: "Personal Loans Overview: In-Depth Comparison & Eligibility Guide | BanksCart",
     description: "Compare personal loans from 30+ top banks and NBFCs in India. Check eligibility, lowest interest rates starting from 10.50%, EMI calculations, and apply online."
   },
   'pre-approved': {
@@ -384,12 +384,12 @@ export const SEO_MAP: Record<string, SEOMetadata> = {
     keywords: "aadhaar card, uidai portal, download aadhaar, update aadhaar address"
   },
   "/pages-directory": {
-    title: "All Financial Services Directories: 1000+ Active Portals | BanksCart",
+    title: "Site Pages Directory: Browse All Banking & Loan Portals | BanksCart",
     description: "Access over 1000+ active financial portals, verified loan rates tables, Aadhaar services guides, scheduled banking, and corporate health directories online.",
-    keywords: "financial directory, bankscart directory, banking portals, loan directories"
+    keywords: "site pages directory, bankscart directory, banking portals, loan directories"
   },
   "/financial-directory": {
-    title: "All Financial Services Directories: 1000+ Active Portals | BanksCart",
+    title: "Financial Services Directory: 1,000+ Active Financial Portals | BanksCart",
     description: "Access over 1000+ active financial portals, verified loan rates tables, Aadhaar services guides, scheduled banking, and corporate health directories online.",
     keywords: "financial directory, bankscart directory, banking portals, loan directories"
   },
@@ -401,12 +401,12 @@ export const SEO_MAP: Record<string, SEOMetadata> = {
     keywords: "home loans, home loan interest rates, lowest home loan rate, apply home loan online"
   },
   "/loans/personal": {
-    title: "Personal Loans in India: Compare Interest Rates, Eligibility & EMIs | BanksCart",
+    title: "Apply for Personal Loans Online: Compare Rates from 30+ Top Banks | BanksCart",
     description: "Compare personal loans from 30+ top banks and NBFCs in India. Check eligibility, lowest interest rates starting from 10.50%, EMI calculations, and apply online.",
     keywords: "personal loan, instant personal loan, compare personal loan interest rates, personal loan emi calculator"
   },
   "/loans/personal/overview": {
-    title: "Personal Loans in India: Compare Interest Rates, Eligibility & EMIs | BanksCart",
+    title: "Personal Loans Overview: In-Depth Comparison & Eligibility Guide | BanksCart",
     description: "Comprehensive personal loan comparison across top Indian lenders. Compare interest rates, processing fees, documentation, and calculate repayments instantly.",
     keywords: "personal loan overview, personal loan comparison, best personal loan india"
   },
@@ -809,7 +809,20 @@ export function getSEOMetadata(pathname: string): SEOMetadata {
   // 7. Check Directory links dictionary (1000 verified pages)
   if (directoryLinks[cleanPath]) {
     const entry = directoryLinks[cleanPath];
-    const titleName = entry.name;
+    let titleName = entry.name;
+    const parts = cleanPath.split('/').filter(Boolean);
+    if (parts.length >= 2) {
+      const parentFormatted = formatSlug(parts[0]);
+      const pLower = parentFormatted.toLowerCase();
+      const nLower = titleName.toLowerCase();
+      if (!nLower.includes(pLower)) {
+        if (nLower.includes('loan') || nLower.includes('card') || nLower.includes('insurance') || nLower.includes('eligibility') || nLower.includes('rates') || nLower.includes('calculator') || nLower.includes('points')) {
+          titleName = `${parentFormatted} ${titleName}`;
+        } else {
+          titleName = `${titleName} ${parentFormatted}`;
+        }
+      }
+    }
     let title = '';
     if (titleName.toLowerCase().includes('registration')) {
       title = `${titleName} - Apply Online | BanksCart`;
@@ -858,7 +871,7 @@ export function getSEOMetadata(pathname: string): SEOMetadata {
     const mid = formatSlug(parts[1]);
     const leaf = formatSlug(parts[2]);
     return {
-      title: `${leaf} (${mid}): ${parent} Guide & Apply Online | BanksCart`,
+      title: `${mid} ${leaf}: ${parent} Guide & Apply Online | BanksCart`,
       description: `Complete guide on ${leaf} for ${mid} under ${parent}. Compare features, interest rates, and apply online on BanksCart.`,
       keywords: `${parts[2]}, ${parts[1]}, ${parts[0]}`
     };

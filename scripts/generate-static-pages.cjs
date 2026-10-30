@@ -28,7 +28,7 @@ while ((match = urlRegex.exec(sitemapContent)) !== null) {
 // Subpaths for Personal Loans with distinct value propositions
 const PERSONAL_LOAN_SUBPATHS = {
   'overview': {
-    title: "Personal Loans in India: Compare Interest Rates, Eligibility & EMIs | BanksCart",
+    title: "Personal Loans Overview: In-Depth Comparison & Eligibility Guide | BanksCart",
     description: "Compare personal loans from 30+ top banks and NBFCs in India. Check eligibility, lowest interest rates starting from 10.50%, EMI calculations, and apply online."
   },
   'pre-approved': {
@@ -296,11 +296,11 @@ const STATIC_SEO_MAP = {
     description: "Complete official UIDAI guide to dynamic identity services. Check enrolment status, download e-Aadhaar, and update address online."
   },
   "/pages-directory": {
-    title: "All Financial Services Directories: 1000+ Active Portals | BanksCart",
+    title: "Site Pages Directory: Browse All Banking & Loan Portals | BanksCart",
     description: "Access over 1000+ active financial portals, verified loan rates tables, Aadhaar services guides, scheduled banking, and corporate health directories online."
   },
   "/financial-directory": {
-    title: "All Financial Services Directories: 1000+ Active Portals | BanksCart",
+    title: "Financial Services Directory: 1,000+ Active Financial Portals | BanksCart",
     description: "Access over 1000+ active financial portals, verified loan rates tables, Aadhaar services guides, scheduled banking, and corporate health directories online."
   },
   "/loans/home": {
@@ -308,11 +308,11 @@ const STATIC_SEO_MAP = {
     description: "Compare home loan interest rates from top banks like SBI, HDFC, ICICI, and Axis. Check eligibility, calculate EMI, and apply online with zero processing fees."
   },
   "/loans/personal": {
-    title: "Personal Loans in India: Compare Interest Rates, Eligibility & EMIs | BanksCart",
+    title: "Apply for Personal Loans Online: Compare Rates from 30+ Top Banks | BanksCart",
     description: "Compare personal loans from 30+ top banks and NBFCs in India. Check eligibility, lowest interest rates starting from 10.50%, EMI calculations, and apply online."
   },
   "/loans/personal/overview": {
-    title: "Personal Loans in India: Compare Interest Rates, Eligibility & EMIs | BanksCart",
+    title: "Personal Loans Overview: In-Depth Comparison & Eligibility Guide | BanksCart",
     description: "Comprehensive personal loan comparison across top Indian lenders. Compare interest rates, processing fees, documentation, and calculate repayments instantly."
   },
   "/loans/business": {
@@ -419,7 +419,20 @@ function resolveSEO(pathname) {
   // Directory links dictionary (1000 pages)
   if (directoryLinks[cleanPath]) {
     const entry = directoryLinks[cleanPath];
-    const titleName = entry.name;
+    let titleName = entry.name;
+    const parts = cleanPath.split('/').filter(Boolean);
+    if (parts.length >= 2) {
+      const parentFormatted = formatSlug(parts[0]);
+      const pLower = parentFormatted.toLowerCase();
+      const nLower = titleName.toLowerCase();
+      if (!nLower.includes(pLower)) {
+        if (nLower.includes('loan') || nLower.includes('card') || nLower.includes('insurance') || nLower.includes('eligibility') || nLower.includes('rates') || nLower.includes('calculator') || nLower.includes('points')) {
+          titleName = `${parentFormatted} ${titleName}`;
+        } else {
+          titleName = `${titleName} ${parentFormatted}`;
+        }
+      }
+    }
     let title = '';
     if (titleName.toLowerCase().includes('registration')) {
       title = `${titleName} - Apply Online | BanksCart`;
@@ -447,7 +460,7 @@ function resolveSEO(pathname) {
     const mid = formatSlug(parts[1]);
     const leaf = formatSlug(parts[2]);
     return {
-      title: `${leaf} (${mid}): ${parent} Guide & Apply Online | BanksCart`,
+      title: `${mid} ${leaf}: ${parent} Guide & Apply Online | BanksCart`,
       description: `Complete guide on ${leaf} for ${mid} under ${parent}. Compare features, interest rates, and apply online on BanksCart.`
     };
   } else if (parts.length === 2) {
@@ -1107,16 +1120,14 @@ for (const urlPath of urls) {
   // 301 Redirect Pages for legacy /blogs, /blogs-overview-page, and /about-us
   if (cleanPath === '/blogs' || cleanPath === '/blogs-overview-page' || cleanPath === '/about-us') {
     const target = cleanPath === '/about-us' ? '/about' : '/blog';
-    const redirectTitle = cleanPath === '/about-us' 
-      ? 'About BanksCart: Our Mission, Leadership &amp; Lending Partners'
-      : 'BanksCart Financial Blog &amp; News: Expert Guides, Loan Tips &amp; Analysis';
     const redirectHtml = `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="refresh" content="0;url=${target}">
+  <meta name="robots" content="noindex, follow" />
   <link rel="canonical" href="https://www.bankscart.com${target}" />
-  <title>${redirectTitle}</title>
+  <title>Redirecting ${cleanPath} to ${target} | BanksCart</title>
   <script>window.location.replace('${target}');</script>
 </head>
 <body>
@@ -1189,9 +1200,9 @@ for (const urlPath of urls) {
 
 // Explicit generation of legacy redirect pages (guarantees dist/blogs, dist/blogs-overview-page, and dist/about-us exist even when excluded from sitemap.xml)
 const legacyRedirects = [
-  { path: '/blogs', target: '/blog', title: 'BanksCart Financial Blog &amp; News: Expert Guides, Loan Tips &amp; Analysis' },
-  { path: '/blogs-overview-page', target: '/blog', title: 'BanksCart Financial Blog &amp; News: Expert Guides, Loan Tips &amp; Analysis' },
-  { path: '/about-us', target: '/about', title: 'About BanksCart: Our Mission, Leadership &amp; Lending Partners' }
+  { path: '/blogs', target: '/blog' },
+  { path: '/blogs-overview-page', target: '/blog' },
+  { path: '/about-us', target: '/about' }
 ];
 
 for (const redir of legacyRedirects) {
@@ -1204,8 +1215,9 @@ for (const redir of legacyRedirects) {
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="refresh" content="0;url=${redir.target}">
+  <meta name="robots" content="noindex, follow" />
   <link rel="canonical" href="https://www.bankscart.com${redir.target}" />
-  <title>${redir.title}</title>
+  <title>Redirecting ${redir.path} to ${redir.target} | BanksCart</title>
   <script>window.location.replace('${redir.target}');</script>
 </head>
 <body>
