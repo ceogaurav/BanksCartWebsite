@@ -8,7 +8,7 @@ import { getAllPostsPaginated } from "../../../lib/posts";
 export default function BlogsPage({ posts, currentPage, totalPages }) {
   return (
     <>
-      <BlogMeta title={`Bankscart Blog — Page ${currentPage}`} description="Bankscart — guides, product comparisons and tips." url={`https://bankscart.com/blogs/page/${currentPage}`} />
+      <BlogMeta title={`Bankscart Blog — Page ${currentPage}`} description="Bankscart — guides, product comparisons and tips." url={`https://www.bankscart.com/blogs/page/${currentPage}`} />
       <main className="max-w-6xl mx-auto py-12 px-4">
         <h1 className="text-3xl font-bold mb-6">Blog — Page {currentPage}</h1>
         <BlogList posts={posts} />

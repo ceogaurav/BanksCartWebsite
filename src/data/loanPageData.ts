@@ -11,6 +11,8 @@ export interface LoanRepaymentRow {
 }
 
 export interface LoanPageContent {
+  defaultAmount?: number;
+  editorialArticles?: { title: string; content: string[] }[];
   title: string;
   badge: string;
   intro: string;
@@ -290,6 +292,963 @@ export const LOAN_PAGE_MAP: Record<string, LoanPageContent> = {
       { q: "Can I convert single large card purchases into EMIs?", a: "Yes. Most banks allow you to convert transactions above ₹2,500 into easy monthly EMIs directly via their mobile app." },
       { q: "What happens if I default on my EMIs?", a: "Defaulting triggers high late payment fees and interest rates (up to 42% p.a.) on the outstanding balance, severely dropping your CIBIL score." },
       { q: "How do I apply?", a: "You can apply instantly via your bank's mobile app, NetBanking portal, or customer service." }
+    ]
+  }
+,
+  "5-lakh": {
+    "title": "₹5 Lakh Personal Loan: Interest Rates, Monthly EMI & Eligibility",
+    "badge": "Most Popular Amount",
+    "defaultAmount": 500000,
+    "intro": "A ₹5 Lakh Personal Loan is the most popular borrowing bracket in India. Ideal for wedding ceremonies, home remodeling, medical procedures, or consolidating multiple credit cards, a ₹5,00,000 personal loan is available with 100% paperless verification for salaried and self-employed applicants.",
+    "moreIntro": "At interest rates starting from 10.25% p.a., monthly EMIs for a ₹5 Lakh loan start as low as ₹10,680 for a 5-year tenure (60 months) or ₹16,190 for a 3-year tenure (36 months). Salaried individuals with a monthly income of ₹20,000 to ₹25,000 and a CIBIL score of 720+ can get instant digital sanction from top lenders like SBI, HDFC, and ICICI.",
+    "keyFeaturesTitle": "Key Highlights of ₹5 Lakh Personal Loan",
+    "keyFeatures": [
+      {
+        "label": "Affordable EMI Slabs",
+        "text": "Repay comfortably with monthly EMIs starting at ₹10,680 across flexible tenures from 12 to 60 months."
+      },
+      {
+        "label": "Zero Collateral Required",
+        "text": "No hypothecation of property, gold, or shares needed for eligible salaried borrowers."
+      },
+      {
+        "label": "Same-Day Disbursal",
+        "text": "Pre-approved applicants can get ₹5,00,000 credited directly to their bank account in under 4 hours."
+      }
+    ],
+    "repaymentDetailsTitle": "Compare Top Banks for ₹5 Lakh Personal Loan",
+    "repaymentHeaders": [
+      "Lender Bank",
+      "Interest Rate (p.a.)",
+      "Estimated EMI (5 Yrs)",
+      "Processing Fee"
+    ],
+    "repaymentDetails": [
+      {
+        "col1": "State Bank of India (SBI)",
+        "col2": "10.30% - 13.60%",
+        "col3": "₹10,695 /mo",
+        "col4": "0.50% - 1.00% + GST"
+      },
+      {
+        "col1": "HDFC Bank",
+        "col2": "10.50% - 14.50%",
+        "col3": "₹10,747 /mo",
+        "col4": "Up to 1.50% + GST"
+      },
+      {
+        "col1": "ICICI Bank",
+        "col2": "10.65% - 14.99%",
+        "col3": "₹10,786 /mo",
+        "col4": "Up to 1.50% + GST"
+      },
+      {
+        "col1": "Axis Bank",
+        "col2": "10.49% - 15.00%",
+        "col3": "₹10,744 /mo",
+        "col4": "1.00% - 2.00% + GST"
+      },
+      {
+        "col1": "Bajaj Finserv",
+        "col2": "11.00% - 20.00%",
+        "col3": "₹10,871 /mo",
+        "col4": "Up to 2.50% + GST"
+      }
+    ],
+    "boostTipsTitle": "₹5 Lakh Loan Eligibility Checklist",
+    "boostTips": [
+      "Check CIBIL score: A credit score above 720 ensures the lowest interest margin (10.25% - 10.50%).",
+      "Salary requirement: Minimum take-home pay of ₹20,000 per month (metro cities ₹25,000).",
+      "Keep documents ready: PAN, Aadhaar for DigiLocker e-KYC, and past 3 months' salary slips."
+    ],
+    "faqs": [
+      {
+        "q": "What is the monthly EMI for a ₹5 Lakh personal loan?",
+        "a": "For a ₹5 Lakh personal loan at 10.50% p.a., the EMI is approximately ₹16,250 for 3 years (36 months) and ₹10,750 for 5 years (60 months)."
+      },
+      {
+        "q": "What minimum salary is required for a ₹5 Lakh loan?",
+        "a": "Most scheduled banks require a net monthly income of ₹20,000 to ₹25,000, depending on the applicant's city of residence."
+      },
+      {
+        "q": "How quickly can ₹5 Lakhs be disbursed?",
+        "a": "Pre-approved applicants receive funds within minutes. Standard online digital applications are disbursed within 24 to 48 hours."
+      },
+      {
+        "q": "Can I prepay my ₹5 Lakh loan before 5 years?",
+        "a": "Yes. In accordance with RBI guidelines, zero foreclosure fees apply on floating rate loans for individuals after the lock-in period."
+      },
+      {
+        "q": "Is a co-applicant needed for ₹5 Lakhs?",
+        "a": "No, a co-applicant is not needed if your monthly salary and credit score meet the lender's individual criteria."
+      }
+    ],
+    "editorialArticles": [
+      {
+        "title": "Understanding Repayment Costs for a ₹5 Lakh Personal Loan",
+        "content": [
+          "Borrowing ₹5,00,000 represents a manageable balance between financial liquidity and monthly budget impact. When planning repayments, borrowers must compare the trade-off between shorter tenures (which carry higher monthly EMIs but drastically cut total interest) and longer tenures (which keep EMIs under ₹11,000 but increase cumulative interest).",
+          "At an average reducing interest rate of 10.50% p.a., choosing a 3-year tenure results in total interest outgo of approximately ₹85,000. Extending the term to 5 years increases total interest to roughly ₹1,44,000. Borrowers should select the shortest tenure that keeps the monthly installment below 40% of their net disposable income."
+        ]
+      },
+      {
+        "title": "Salary and CIBIL Benchmarks for ₹5 Lakh Sanction",
+        "content": [
+          "Banks assess repayment capacity using Fixed Obligation to Income Ratio (FOIR). For an applicant earning ₹40,000 per month with no existing debts, an EMI of ₹10,750 represents an obligation ratio of around 27%, which comfortably qualifies for prime interest rates.",
+          "A CIBIL score of 720+ unlocks benchmark rates from tier-1 lenders. Applicants with scores between 650 and 719 can still secure approval from partner NBFCs, though interest rates may be priced 2% to 4% higher."
+        ]
+      }
+    ]
+  },
+  "10-lakh": {
+    "title": "₹10 Lakh Personal Loan: Compare Rates, EMI & Online Eligibility",
+    "badge": "Mid-Ticket Personal Loan",
+    "defaultAmount": 1000000,
+    "intro": "A ₹10 Lakh Personal Loan provides substantial unsecured liquidity for major life milestones—such as complete home renovation, overseas higher education expenses, funding a destination wedding, or consolidating multiple existing debts into one single manageable EMI.",
+    "moreIntro": "At prime interest rates starting around 10.25% to 10.50% p.a., a ₹10,00,000 personal loan translates to a monthly EMI of approximately ₹21,370 over 60 months or ₹32,380 over 36 months. Top scheduled commercial banks like SBI, HDFC, and ICICI offer fast digital processing for individuals earning ₹35,000+ per month with a CIBIL score of 720 or higher.",
+    "keyFeaturesTitle": "Key Highlights of ₹10 Lakh Personal Loan",
+    "keyFeatures": [
+      {
+        "label": "Manageable High-Ticket Credit",
+        "text": "Borrow up to ₹10 Lakhs without pledging property deeds or fixed deposit collateral."
+      },
+      {
+        "label": "Flexible Repayment Tenures",
+        "text": "Tenures from 12 to 72 months let you balance monthly cash flow against interest costs."
+      },
+      {
+        "label": "Paperless Verification",
+        "text": "Complete e-KYC and bank statement verification entirely online in minutes."
+      }
+    ],
+    "repaymentDetailsTitle": "Compare Top Banks for ₹10 Lakh Personal Loan",
+    "repaymentHeaders": [
+      "Lender Bank",
+      "Interest Rate (p.a.)",
+      "Estimated EMI (5 Yrs)",
+      "Processing Fee"
+    ],
+    "repaymentDetails": [
+      {
+        "col1": "State Bank of India (SBI)",
+        "col2": "10.30% - 13.60%",
+        "col3": "₹21,390 /mo",
+        "col4": "0.50% - 1.00% + GST"
+      },
+      {
+        "col1": "HDFC Bank",
+        "col2": "10.50% - 14.50%",
+        "col3": "₹21,494 /mo",
+        "col4": "Up to 1.50% + GST"
+      },
+      {
+        "col1": "ICICI Bank",
+        "col2": "10.65% - 14.99%",
+        "col3": "₹21,571 /mo",
+        "col4": "Up to 1.50% + GST"
+      },
+      {
+        "col1": "Axis Bank",
+        "col2": "10.49% - 15.00%",
+        "col3": "₹21,489 /mo",
+        "col4": "1.00% - 2.00% + GST"
+      },
+      {
+        "col1": "Kotak Mahindra Bank",
+        "col2": "10.99% - 16.99%",
+        "col3": "₹21,745 /mo",
+        "col4": "Up to 2.00% + GST"
+      }
+    ],
+    "boostTipsTitle": "Checklist for ₹10 Lakh Loan Approval",
+    "boostTips": [
+      "Maintain CIBIL 720+: Higher credit tiers secure base interest rates, saving over ₹50,000 in interest.",
+      "Monthly salary threshold: Net monthly take-home salary should ideally be ₹35,000 or above.",
+      "Keep FOIR below 40%: Ensure current credit card balances and existing EMIs are low before applying."
+    ],
+    "faqs": [
+      {
+        "q": "What is the monthly EMI on a ₹10 Lakh personal loan?",
+        "a": "At 10.50% p.a., the EMI is approximately ₹32,500 for a 3-year tenure and ₹21,490 for a 5-year tenure."
+      },
+      {
+        "q": "How much monthly salary do I need for a ₹10 Lakh loan?",
+        "a": "Lenders typically require a minimum net monthly salary of ₹35,000 to ₹45,000 for a ₹10 Lakh personal loan sanction."
+      },
+      {
+        "q": "Can I get a ₹10 Lakh loan without collateral?",
+        "a": "Yes, personal loans on BanksCart are 100% unsecured, meaning no assets, property deeds, or gold are required."
+      },
+      {
+        "q": "Is tax exemption available on a ₹10 Lakh personal loan?",
+        "a": "Personal loans used for home renovation or business investment may qualify for tax deductions under Section 24(b) or Section 37(1) with appropriate auditor certification."
+      }
+    ],
+    "editorialArticles": [
+      {
+        "title": "Repayment Strategy & Cost Analysis for ₹10 Lakhs",
+        "content": [
+          "Securing a ₹10 Lakh personal loan requires careful tenure selection. On a 5-year tenure at 10.50% interest, total interest amounts to approximately ₹2.89 Lakhs. By shortening the repayment window to 4 years (48 months), the monthly installment increases from ₹21,490 to ₹25,600, but saves over ₹60,000 in cumulative interest outgo.",
+          "Borrowers should verify that their total monthly EMI burden does not breach the 45% FOIR threshold recommended by the Reserve Bank of India."
+        ]
+      }
+    ]
+  },
+  "20-lakh": {
+    "title": "₹20 Lakh Personal Loan: Interest Rates, EMIs & High Limit Approval",
+    "badge": "High-Ticket Borrowing",
+    "defaultAmount": 2000000,
+    "intro": "A ₹20 Lakh Personal Loan offers high-ticket capital without pledging property, fixed deposits, or gold as collateral. It is specifically structured for mid-to-senior corporate professionals, entrepreneurs, and doctors requiring substantial capital for large expenses.",
+    "moreIntro": "For a ₹20,00,000 personal loan at 10.50% p.a., the estimated monthly installment is approximately ₹42,740 for a 5-year tenure or ₹38,125 for a 6-year tenure (72 months). Eligible borrowers typically need a net monthly take-home salary of ₹60,000+ and a clean CIBIL repayment history of 740+.",
+    "keyFeaturesTitle": "Key Highlights of ₹20 Lakh Personal Loan",
+    "keyFeatures": [
+      {
+        "label": "High Unsecured Limit",
+        "text": "Access ₹20 Lakhs in liquid funds with zero asset hypothecation or mortgage."
+      },
+      {
+        "label": "Extended 72-Month Tenure",
+        "text": "Spread monthly repayments over up to 6 years to keep installments manageable."
+      },
+      {
+        "label": "Competitive Prime Pricing",
+        "text": "High-ticket borrowers qualify for tier-1 corporate partner interest rates."
+      }
+    ],
+    "repaymentDetailsTitle": "Compare Top Banks for ₹20 Lakh Personal Loan",
+    "repaymentHeaders": [
+      "Lender Bank",
+      "Interest Rate (p.a.)",
+      "Estimated EMI (5 Yrs)",
+      "Processing Fee"
+    ],
+    "repaymentDetails": [
+      {
+        "col1": "State Bank of India (SBI)",
+        "col2": "10.30% - 13.60%",
+        "col3": "₹42,780 /mo",
+        "col4": "0.50% - 1.00% + GST"
+      },
+      {
+        "col1": "HDFC Bank",
+        "col2": "10.50% - 14.50%",
+        "col3": "₹42,987 /mo",
+        "col4": "Up to 1.50% + GST"
+      },
+      {
+        "col1": "ICICI Bank",
+        "col2": "10.65% - 14.99%",
+        "col3": "₹43,142 /mo",
+        "col4": "Up to 1.50% + GST"
+      },
+      {
+        "col1": "Axis Bank",
+        "col2": "10.49% - 15.00%",
+        "col3": "₹42,977 /mo",
+        "col4": "1.00% - 2.00% + GST"
+      }
+    ],
+    "boostTipsTitle": "Checklist for ₹20 Lakh Loan Approval",
+    "boostTips": [
+      "Credit rating: A CIBIL score of 740 or higher is strongly recommended.",
+      "Monthly income: Net monthly take-home pay should ideally exceed ₹60,000 to ₹75,000.",
+      "Employment stability: Minimum 2 to 3 years total experience, with 1 year at current employer."
+    ],
+    "faqs": [
+      {
+        "q": "What is the monthly EMI for a ₹20 Lakh personal loan?",
+        "a": "At 10.50% p.a., the monthly EMI is approximately ₹42,990 for a 5-year tenure and ₹38,125 for a 6-year tenure."
+      },
+      {
+        "q": "What minimum salary is required for ₹20 Lakhs?",
+        "a": "Lenders look for a net monthly salary of ₹60,000 to ₹80,000 with a low FOIR ratio."
+      }
+    ]
+  },
+  "30-lakh": {
+    "title": "₹30 Lakh Personal Loan: Compare Rates, EMIs & High Limit Approval",
+    "badge": "Executive Financing",
+    "defaultAmount": 3000000,
+    "intro": "Securing an unsecured ₹30 Lakh Personal Loan requires a strong financial profile and low debt obligations. Banks extend this tier of credit to senior corporate executives, government Gazetted officers, and established business owners without demanding physical collateral.",
+    "moreIntro": "Monthly EMIs for a ₹30,00,000 personal loan at a benchmark rate of 10.50% p.a. hover around ₹64,110 for a 5-year term and ₹57,185 for an extended 6-year term. Lenders evaluate your Fixed Obligation to Income Ratio (FOIR), ensuring total monthly debt liabilities remain under 40% to 50% of net monthly earnings (typically ₹90,000+ per month).",
+    "keyFeaturesTitle": "Key Highlights of ₹30 Lakh Personal Loan",
+    "keyFeatures": [
+      {
+        "label": "Executive Borrowing Tier",
+        "text": "Substantial capital for high-ticket debt restructuring, weddings, or overseas tuition."
+      },
+      {
+        "label": "Tenures up to 72 Months",
+        "text": "Comfortable amortization schedules with flexible foreclosure terms."
+      },
+      {
+        "label": "Fast Digital Processing",
+        "text": "Approved via NetBanking statements and instant DigiLocker e-KYC."
+      }
+    ],
+    "repaymentDetailsTitle": "Compare Top Banks for ₹30 Lakh Personal Loan",
+    "repaymentHeaders": [
+      "Lender Bank",
+      "Interest Rate (p.a.)",
+      "Estimated EMI (5 Yrs)",
+      "Processing Fee"
+    ],
+    "repaymentDetails": [
+      {
+        "col1": "HDFC Bank",
+        "col2": "10.50% - 14.50%",
+        "col3": "₹64,481 /mo",
+        "col4": "Up to 1.50% + GST"
+      },
+      {
+        "col1": "ICICI Bank",
+        "col2": "10.65% - 14.99%",
+        "col3": "₹64,714 /mo",
+        "col4": "Up to 1.50% + GST"
+      },
+      {
+        "col1": "Axis Bank",
+        "col2": "10.49% - 15.00%",
+        "col3": "₹64,466 /mo",
+        "col4": "1.00% - 2.00% + GST"
+      },
+      {
+        "col1": "Bajaj Finserv",
+        "col2": "11.00% - 18.00%",
+        "col3": "₹65,227 /mo",
+        "col4": "Up to 2.50% + GST"
+      }
+    ],
+    "boostTipsTitle": "Checklist for ₹30 Lakh Loan Approval",
+    "boostTips": [
+      "Credit rating: CIBIL score of 750+ is mandatory for prime rate slabs.",
+      "Income proof: Net monthly take-home salary of ₹90,000 to ₹1,10,000.",
+      "Clean bank records: Six months' bank statements free from un-cleared direct debits."
+    ],
+    "faqs": [
+      {
+        "q": "What is the monthly EMI on a ₹30 Lakh loan?",
+        "a": "For a ₹30 Lakh personal loan at 10.50% p.a., the EMI is approximately ₹64,480 for 5 years and ₹57,190 for 6 years."
+      },
+      {
+        "q": "What salary is required for ₹30 Lakhs?",
+        "a": "Applicants generally require a net monthly income of ₹90,000 to ₹1,20,000."
+      }
+    ]
+  },
+  "40-lakh": {
+    "title": "₹40 Lakh Personal Loan: Check Bank Rates, EMIs & Slabs",
+    "badge": "Maximum Retail Cap",
+    "defaultAmount": 4000000,
+    "intro": "A ₹40 Lakh Personal Loan represents the standard maximum unsecured limit offered by leading Indian private sector banks including HDFC Bank, Axis Bank, and Bajaj Finserv. It provides premium liquidity for extensive home renovation, funding children's international education, or high-capital emergency expenditures.",
+    "moreIntro": "At an indicative base rate of 10.50% p.a., the monthly EMI for a ₹40,00,000 personal loan is approximately ₹85,480 across 60 months. Approval requires a net monthly salary of ₹1.2 Lakhs or above, a verified CIBIL score of 750+, and minimum 3 years of total professional experience.",
+    "keyFeaturesTitle": "Key Highlights of ₹40 Lakh Personal Loan",
+    "keyFeatures": [
+      {
+        "label": "Top-Tier Unsecured Limit",
+        "text": "Maximum borrowing limit under retail unsecured lending norms in India."
+      },
+      {
+        "label": "Custom Repayment Slabs",
+        "text": "Flexible tenures ranging from 12 up to 84 months with select lenders."
+      },
+      {
+        "label": "No Co-Signer Required",
+        "text": "Approved based purely on personal earning strength and professional standing."
+      }
+    ],
+    "repaymentDetailsTitle": "Compare Top Banks for ₹40 Lakh Personal Loan",
+    "repaymentHeaders": [
+      "Lender Bank",
+      "Interest Rate (p.a.)",
+      "Estimated EMI (5 Yrs)",
+      "Processing Fee"
+    ],
+    "repaymentDetails": [
+      {
+        "col1": "HDFC Bank",
+        "col2": "10.50% - 14.50%",
+        "col3": "₹85,975 /mo",
+        "col4": "Up to 1.50% + GST"
+      },
+      {
+        "col1": "Axis Bank",
+        "col2": "10.49% - 15.00%",
+        "col3": "₹85,955 /mo",
+        "col4": "1.00% - 2.00% + GST"
+      },
+      {
+        "col1": "Bajaj Finserv",
+        "col2": "11.00% - 18.00%",
+        "col3": "₹86,969 /mo",
+        "col4": "Up to 2.50% + GST"
+      },
+      {
+        "col1": "ICICI Bank",
+        "col2": "10.65% - 14.99%",
+        "col3": "₹86,285 /mo",
+        "col4": "Up to 1.50% + GST"
+      }
+    ],
+    "boostTipsTitle": "Checklist for ₹40 Lakh Loan Approval",
+    "boostTips": [
+      "Credit track: A score of 750+ with extensive credit history.",
+      "Salary bracket: Net monthly salary of ₹1,20,000 to ₹1,50,000.",
+      "Employer tier: Corporate category Super-A or top MNC status ensures fast approval."
+    ],
+    "faqs": [
+      {
+        "q": "What is the monthly EMI for ₹40 Lakhs?",
+        "a": "At 10.50% p.a. over 60 months, the EMI is approximately ₹85,975 per month."
+      },
+      {
+        "q": "Which banks offer ₹40 Lakhs personal loans?",
+        "a": "HDFC Bank, Axis Bank, ICICI Bank, and Bajaj Finserv extend unsecured personal loans up to ₹40 Lakhs."
+      }
+    ]
+  },
+  "50-lakh": {
+    "title": "₹50 Lakh Personal Loan: Super-Premium Unsecured Credit in India",
+    "badge": "Super-Premium Facility",
+    "defaultAmount": 5000000,
+    "intro": "A ₹50 Lakh Personal Loan is the highest unsecured borrowing bracket available in India, extended primarily by select tier-1 banks like ICICI Bank to high-net-worth individuals, top CXOs, practicing specialized doctors, and tech leads with impeccable credit standing.",
+    "moreIntro": "A ₹50,00,000 personal loan carries a monthly EMI of approximately ₹1,06,850 for a 5-year repayment schedule or ₹95,310 over 6 years (72 months). Applicants require an unblemished credit history (CIBIL 760+), net monthly income exceeding ₹1.5 Lakhs, and zero un-cleared obligations.",
+    "keyFeaturesTitle": "Key Highlights of ₹50 Lakh Personal Loan",
+    "keyFeatures": [
+      {
+        "label": "Pinnacle Unsecured Credit",
+        "text": "Maximum ceiling available in India for unsecured retail borrowing."
+      },
+      {
+        "label": "Dedicated Relationship Desk",
+        "text": "White-glove digital onboarding with bespoke rate negotiations."
+      },
+      {
+        "label": "Zero Asset Collateral",
+        "text": "Approved on verified high earning potential without property mortgage."
+      }
+    ],
+    "repaymentDetailsTitle": "Compare Top Banks for ₹50 Lakh Personal Loan",
+    "repaymentHeaders": [
+      "Lender Bank",
+      "Interest Rate (p.a.)",
+      "Estimated EMI (5 Yrs)",
+      "Processing Fee"
+    ],
+    "repaymentDetails": [
+      {
+        "col1": "ICICI Bank",
+        "col2": "10.65% - 14.99%",
+        "col3": "₹1,07,856 /mo",
+        "col4": "Up to 1.50% + GST"
+      },
+      {
+        "col1": "HDFC Bank (Select HNIs)",
+        "col2": "10.50% - 14.50%",
+        "col3": "₹1,07,469 /mo",
+        "col4": "Up to 1.50% + GST"
+      },
+      {
+        "col1": "Axis Bank (Burgundy Tier)",
+        "col2": "10.49% - 15.00%",
+        "col3": "₹1,07,443 /mo",
+        "col4": "1.00% - 2.00% + GST"
+      }
+    ],
+    "boostTipsTitle": "Checklist for ₹50 Lakh Loan Approval",
+    "boostTips": [
+      "Credit profile: CIBIL score must be 760 or above with clean multi-year repayment history.",
+      "Salary requirement: Net monthly salary must exceed ₹1.5 Lakhs to ₹2.0 Lakhs.",
+      "Low FOIR: Existing EMIs must not exceed 40% of net monthly earnings."
+    ],
+    "faqs": [
+      {
+        "q": "Can I get a ₹50 Lakh personal loan without security?",
+        "a": "Yes, select lenders approve ₹50 Lakhs unsecured loans for top corporate earners and doctors."
+      },
+      {
+        "q": "What is the EMI on a ₹50 Lakh personal loan?",
+        "a": "At 10.50% p.a., the EMI is approximately ₹1,07,470 for 5 years and ₹95,310 for 6 years."
+      }
+    ]
+  },
+  "salaried-employees": {
+    "title": "Personal Loan for Salaried Employees: Lowest Rates & Instant Approval",
+    "badge": "Corporate Salaried",
+    "defaultAmount": 500000,
+    "intro": "Salaried employees enjoy the lowest interest rates, highest approval certainty, and fastest disbursal turnarounds in the personal loan segment. Indian banks categorize corporate employers into Super-Cat A, Cat A, and Cat B tiers, extending exclusive rate discounts to confirmed staff.",
+    "moreIntro": "Interest rates for salaried employees start at 10.25% p.a. with digital salary verification via Account Aggregator or net-banking PDF statements. Employees with a minimum salary of ₹15,000 to ₹25,000 per month and 6 months in current employment can access credit lines up to ₹40–50 Lakhs with zero physical branch visits.",
+    "keyFeaturesTitle": "Benefits for Salaried Borrowers",
+    "keyFeatures": [
+      {
+        "label": "Prime Interest Rates",
+        "text": "Starting as low as 10.25% p.a. for employees of recognized companies."
+      },
+      {
+        "label": "Speed of Disbursal",
+        "text": "Salary accounts facilitate automated underwriting with payouts in hours."
+      },
+      {
+        "label": "Minimal Documentation",
+        "text": "KYC + last 3 months' salary slips and 6 months' bank statements."
+      }
+    ],
+    "repaymentDetailsTitle": "Compare Top Banks for Salaried Personal Loans",
+    "repaymentHeaders": [
+      "Lender Bank",
+      "Interest Rate (p.a.)",
+      "Minimum Salary",
+      "Processing Fee"
+    ],
+    "repaymentDetails": [
+      {
+        "col1": "State Bank of India (SBI)",
+        "col2": "10.30% - 13.60%",
+        "col3": "₹15,000 /mo",
+        "col4": "0.50% - 1.00% + GST"
+      },
+      {
+        "col1": "HDFC Bank",
+        "col2": "10.50% - 14.50%",
+        "col3": "₹25,000 /mo",
+        "col4": "Up to 1.50% + GST"
+      },
+      {
+        "col1": "ICICI Bank",
+        "col2": "10.65% - 14.99%",
+        "col3": "₹25,000 /mo",
+        "col4": "Up to 1.50% + GST"
+      },
+      {
+        "col1": "Axis Bank",
+        "col2": "10.49% - 15.00%",
+        "col3": "₹20,000 /mo",
+        "col4": "1.00% - 2.00% + GST"
+      }
+    ],
+    "boostTipsTitle": "Checklist for Salaried Employees",
+    "boostTips": [
+      "Confirm permanent status: Completed probation period increases approval odds significantly.",
+      "Salary account advantage: Applying through your salary credit bank unlocks pre-approved discounts.",
+      "Maintain CIBIL 720+: Guarantees lowest interest tier and zero processing fee campaigns."
+    ],
+    "faqs": [
+      {
+        "q": "What is the minimum salary for a salaried personal loan?",
+        "a": "Most leading banks require a minimum monthly salary of ₹15,000 for government staff and ₹25,000 for private corporate employees."
+      },
+      {
+        "q": "Can I get a loan if I recently switched jobs?",
+        "a": "Yes, provided you have at least 1 year of total work experience and have received at least 1 or 2 salary credits at your current employer."
+      }
+    ]
+  },
+  "self-employed": {
+    "title": "Personal Loan for Self-Employed: Simple Documentation & Fast Approval",
+    "badge": "Business & Traders",
+    "defaultAmount": 500000,
+    "intro": "A Personal Loan for Self-Employed individuals is tailored for entrepreneurs, proprietors, freelance consultants, and traders who need rapid working capital or personal funding without pledging business assets.",
+    "moreIntro": "Unlike salaried loans that rely on payslips, self-employed loans are assessed based on Income Tax Returns (ITR with computation for past 2 years), banking turnover of the primary current/savings account, and minimum business vintage of 2 to 3 years. Interest rates range from 11.00% to 22.00% p.a. with loan amounts up to ₹40 Lakhs.",
+    "keyFeaturesTitle": "Benefits for Self-Employed Applicants",
+    "keyFeatures": [
+      {
+        "label": "Collateral-Free Capital",
+        "text": "No mortgage of business machinery, shop deeds, or inventory needed."
+      },
+      {
+        "label": "Dual Purpose Use",
+        "text": "Funds can be utilized for business cash flow or personal family needs."
+      },
+      {
+        "label": "Higher Sanction Limits",
+        "text": "Borrow up to ₹40 Lakhs based on annual business profit and cash turnover."
+      }
+    ],
+    "repaymentDetailsTitle": "Compare Top Lenders for Self-Employed Loans",
+    "repaymentHeaders": [
+      "Lender Bank / NBFC",
+      "Interest Rate (p.a.)",
+      "Minimum Business Vintage",
+      "Max Loan Cap"
+    ],
+    "repaymentDetails": [
+      {
+        "col1": "HDFC Bank",
+        "col2": "11.00% - 16.50%",
+        "col3": "2 Years",
+        "col4": "Up to ₹40 Lakhs"
+      },
+      {
+        "col1": "Bajaj Finserv",
+        "col2": "11.50% - 22.00%",
+        "col3": "2 Years",
+        "col4": "Up to ₹40 Lakhs"
+      },
+      {
+        "col1": "Axis Bank",
+        "col2": "11.25% - 17.50%",
+        "col3": "3 Years",
+        "col4": "Up to ₹40 Lakhs"
+      },
+      {
+        "col1": "Tata Capital",
+        "col2": "11.75% - 20.00%",
+        "col3": "2 Years",
+        "col4": "Up to ₹35 Lakhs"
+      }
+    ],
+    "boostTipsTitle": "Checklist for Self-Employed Borrowers",
+    "boostTips": [
+      "File ITR regularly: Ensure last 2 assessment years have audited computations showing positive net profit.",
+      "Maintain active banking turnover: Healthy average monthly balance in current accounts improves approval odds.",
+      "GST registration proof: Active GSTIN certificate establishes official business vintage."
+    ],
+    "faqs": [
+      {
+        "q": "Can a self-employed person get a personal loan without ITR?",
+        "a": "Most banks require 2 years' ITR. However, some digital NBFCs approve smaller loans based on 6-12 months of active bank account turnover."
+      },
+      {
+        "q": "What is the minimum annual income needed?",
+        "a": "Lenders look for annual gross total income / net profit of ₹3 Lakhs to ₹5 Lakhs in the latest ITR."
+      }
+    ]
+  },
+  "senior-citizens": {
+    "title": "Personal Loan for Senior Citizens: Pensioners Loan & Low EMIs",
+    "badge": "Pensioners & Seniors",
+    "defaultAmount": 300000,
+    "intro": "Personal and Pension Loans for Senior Citizens provide crucial financial support for retirees, defense personnel, and senior citizens managing medical bills, family weddings, or house repairs on a fixed pension income.",
+    "moreIntro": "Public sector banks like SBI, PNB, and Bank of Baroda offer dedicated pension loans up to ₹10 Lakhs to ₹14 Lakhs for retirees up to the age of 76 years. Interest rates are concessional (typically 10.30% to 12.50% p.a.) with repayments directly linked to the monthly pension credit account.",
+    "keyFeaturesTitle": "Benefits of Senior Citizen Pension Loans",
+    "keyFeatures": [
+      {
+        "label": "Concessional Rates",
+        "text": "Low interest rates from 10.30% p.a. specifically structured for senior citizens."
+      },
+      {
+        "label": "Extended Age Slabs",
+        "text": "Eligible for seniors up to 76 years of age at loan sanction."
+      },
+      {
+        "label": "Simple Deduction",
+        "text": "EMI deducted automatically from the monthly pension credit account."
+      }
+    ],
+    "repaymentDetailsTitle": "Compare Top Pension Loan Providers in India",
+    "repaymentHeaders": [
+      "Lender Bank",
+      "Interest Rate (p.a.)",
+      "Max Age at Maturity",
+      "Max Loan Cap"
+    ],
+    "repaymentDetails": [
+      {
+        "col1": "State Bank of India (Pension)",
+        "col2": "10.30% - 11.80%",
+        "col3": "76 Years",
+        "col4": "Up to ₹14 Lakhs"
+      },
+      {
+        "col1": "Punjab National Bank",
+        "col2": "10.40% - 12.00%",
+        "col3": "75 Years",
+        "col4": "Up to ₹10 Lakhs"
+      },
+      {
+        "col1": "Bank of Baroda",
+        "col2": "10.65% - 12.50%",
+        "col3": "75 Years",
+        "col4": "Up to ₹10 Lakhs"
+      }
+    ],
+    "boostTipsTitle": "Checklist for Senior Citizen Borrowers",
+    "boostTips": [
+      "Pension account relationship: Apply through the bank branch where your monthly pension is credited.",
+      "Spouse guarantee: Adding your spouse (family pensioner) fulfills security requirements easily.",
+      "Pension payment order: Keep your PPO (Pension Payment Order) copy and pension slip ready."
+    ],
+    "faqs": [
+      {
+        "q": "Can a senior citizen get a personal loan after age 60?",
+        "a": "Yes. Government, defense, and corporate pensioners can secure pension personal loans up to the age of 76 years."
+      },
+      {
+        "q": "What is the maximum repayment tenure for pensioners?",
+        "a": "Tenures typically range from 24 to 60 months, depending on the applicant's age at the time of application."
+      }
+    ]
+  },
+  "students": {
+    "title": "Personal Loan for Students: Funding Education, Laptops & Living Costs",
+    "badge": "Student Financial Aid",
+    "defaultAmount": 150000,
+    "intro": "Personal loans for students help cover laptop purchases, skill-upgradation bootcamps, exam fees, relocation deposits, and short-term study expenses that traditional education loans do not cover.",
+    "moreIntro": "College students aged 18+ can apply with a working parent or guardian as a co-applicant to qualify for low interest rates and flexible tenures. Specialized digital student apps also offer micro-credit lines from ₹5,000 to ₹50,000 with student ID verification.",
+    "keyFeaturesTitle": "Benefits of Student Personal Loans",
+    "keyFeatures": [
+      {
+        "label": "Broad Coverage",
+        "text": "Use funds for laptops, hostel deposits, tuition fees, or certification bootcamps."
+      },
+      {
+        "label": "Co-Borrower Advantage",
+        "text": "Parent co-applicant ensures approval at prime banking interest rates."
+      },
+      {
+        "label": "Micro-Credit Options",
+        "text": "Instant pocket money loans from ₹1,000 to ₹30,000 for college students."
+      }
+    ],
+    "repaymentDetailsTitle": "Compare Student Loan Options in India",
+    "repaymentHeaders": [
+      "Lender / Platform",
+      "Loan Bracket",
+      "Interest Rate / Cost",
+      "Eligibility Criteria"
+    ],
+    "repaymentDetails": [
+      {
+        "col1": "SBI (Student with Co-applicant)",
+        "col2": "Up to ₹5 Lakhs",
+        "col3": "10.50% - 13.00%",
+        "col4": "Parent Income Proof"
+      },
+      {
+        "col1": "mPokket",
+        "col2": "₹500 - ₹30,000",
+        "col3": "24.00% - 36.00%",
+        "col4": "College ID + Aadhaar"
+      },
+      {
+        "col1": "KreditBee",
+        "col2": "₹1,000 - ₹50,000",
+        "col3": "18.00% - 29.95%",
+        "col4": "Aadhaar + PAN"
+      }
+    ],
+    "boostTipsTitle": "Checklist for Student Applicants",
+    "boostTips": [
+      "Add an earning parent as co-borrower: Unlocks bank rates starting from 10.50% p.a.",
+      "College enrollment proof: Keep valid college identity card and semester admission receipt.",
+      "Repay on time: Early repayment builds your CIBIL score before you graduate."
+    ],
+    "faqs": [
+      {
+        "q": "Can an 18-year-old student get a personal loan?",
+        "a": "Yes. Students can get loans either with an earning parent as a co-applicant or through certified digital student micro-lending apps."
+      },
+      {
+        "q": "What documents are required for a student loan?",
+        "a": "Student ID card, Aadhaar, PAN card, and co-applicant's salary slips or bank statements."
+      }
+    ]
+  },
+  "doctors": {
+    "title": "Personal Loan for Doctors: Special Rates & Pre-Approved ₹50 Lakhs",
+    "badge": "Medical Professionals",
+    "defaultAmount": 1000000,
+    "intro": "Personal loans for doctors (MBBS, MD, MS, BDS, MDS) offer exclusive high-limit pre-approvals up to ₹50 Lakhs with minimum financial documentation, reflecting doctors' exceptional earning stability and low credit risk.",
+    "moreIntro": "Leading banks provide specialized professional loan desks with interest rates starting at 10.25% p.a., nil foreclosure charges in select corporate programs, and flexible tenure up to 72 months without requiring clinic or hospital asset hypothecation.",
+    "keyFeaturesTitle": "Exclusive Privileges for Doctors",
+    "keyFeatures": [
+      {
+        "label": "High Limits up to ₹50 Lakhs",
+        "text": "Highest unsecured loan limits approved based on medical council registration."
+      },
+      {
+        "label": "Preferential Interest Rates",
+        "text": "Starting as low as 10.25% p.a. with expedited green-channel clearance."
+      },
+      {
+        "label": "Minimal Documentation",
+        "text": "Medical registration certificate + degree certificate + 6 months' bank statements."
+      }
+    ],
+    "repaymentDetailsTitle": "Compare Special Doctor Loan Programs",
+    "repaymentHeaders": [
+      "Lender Bank",
+      "Interest Rate (p.a.)",
+      "Maximum Loan Limit",
+      "Processing Fee"
+    ],
+    "repaymentDetails": [
+      {
+        "col1": "State Bank of India (Doctors)",
+        "col2": "10.25% - 12.50%",
+        "col3": "Up to ₹50 Lakhs",
+        "col4": "0.50% + GST"
+      },
+      {
+        "col1": "HDFC Bank (Doctor's Credit)",
+        "col2": "10.40% - 13.50%",
+        "col3": "Up to ₹50 Lakhs",
+        "col4": "Flat ₹2,500 + GST"
+      },
+      {
+        "col1": "ICICI Bank (Doctor Care)",
+        "col2": "10.50% - 13.75%",
+        "col3": "Up to ₹50 Lakhs",
+        "col4": "Up to 1.00% + GST"
+      },
+      {
+        "col1": "Bajaj Finserv (Doctor Loan)",
+        "col2": "11.00% - 16.00%",
+        "col3": "Up to ₹40 Lakhs",
+        "col4": "Up to 1.50% + GST"
+      }
+    ],
+    "boostTipsTitle": "Checklist for Medical Practitioners",
+    "boostTips": [
+      "Medical Council registration: Keep your State Medical Council or MCI/NMC registration number ready.",
+      "Educational credentials: MBBS/BDS/MD certificate is the primary qualification document.",
+      "Banking track: 6 months' bank statements showing continuous professional consultation fees or hospital salary."
+    ],
+    "faqs": [
+      {
+        "q": "What is the maximum personal loan a doctor can get?",
+        "a": "Leading banks sanction up to ₹50 Lakhs unsecured loan for doctors without collateral."
+      },
+      {
+        "q": "Can BAMS or BHMS doctors qualify for special doctor loans?",
+        "a": "Yes, many lenders extend doctor loan schemes to recognized Ayurvedic and Homeopathic practitioners with valid state council registration."
+      }
+    ]
+  },
+  "women": {
+    "title": "Personal Loan for Women: Special Rate Discounts & Fast Online Approval",
+    "badge": "Women Empowerment",
+    "defaultAmount": 500000,
+    "intro": "Personal loans for women offer special interest rate concessions, lower processing fees, and relaxed eligibility thresholds across leading Indian banks and financial institutions.",
+    "moreIntro": "Several public and private sector lenders offer a 0.25% to 0.50% interest rate rebate for female primary applicants. Whether funding an entrepreneurial venture, higher education, wedding celebrations, or emergency medical costs, women can access loans from ₹50,000 to ₹40 Lakhs with 100% digital e-KYC.",
+    "keyFeaturesTitle": "Privileges of Personal Loans for Women",
+    "keyFeatures": [
+      {
+        "label": "Interest Rate Concessions",
+        "text": "Enjoy 0.25% to 0.50% lower interest rates from leading public sector banks."
+      },
+      {
+        "label": "Reduced Processing Fees",
+        "text": "Special discounts on administrative charges during festival and women campaigns."
+      },
+      {
+        "label": "100% Paperless Onboarding",
+        "text": "Complete application online via Aadhaar OTP and instant bank statement verification."
+      }
+    ],
+    "repaymentDetailsTitle": "Compare Top Personal Loans for Women",
+    "repaymentHeaders": [
+      "Lender Bank",
+      "Interest Rate (p.a.)",
+      "Special Women Concession",
+      "Max Loan Cap"
+    ],
+    "repaymentDetails": [
+      {
+        "col1": "State Bank of India (SBI)",
+        "col2": "10.25% - 13.35%",
+        "col3": "0.25% Rate Rebate",
+        "col4": "Up to ₹20 Lakhs"
+      },
+      {
+        "col1": "HDFC Bank",
+        "col2": "10.50% - 14.50%",
+        "col3": "Discounted Processing Fee",
+        "col4": "Up to ₹40 Lakhs"
+      },
+      {
+        "col1": "ICICI Bank",
+        "col2": "10.65% - 14.99%",
+        "col3": "Instant Pre-Approved Offers",
+        "col4": "Up to ₹50 Lakhs"
+      }
+    ],
+    "boostTipsTitle": "Checklist for Women Borrowers",
+    "boostTips": [
+      "Primary applicant status: Ensure the woman is listed as the primary borrower to unlock concessional pricing.",
+      "Employment stability: Salaried women with 6+ months in current job qualify for prime corporate brackets.",
+      "Credit rating: Maintaining a CIBIL score of 720+ secures lowest base rate markups."
+    ],
+    "faqs": [
+      {
+        "q": "Do women get cheaper interest rates on personal loans?",
+        "a": "Yes. Public sector banks like SBI often offer a 0.25% interest rate discount for female primary borrowers."
+      },
+      {
+        "q": "Can homemakers apply for a personal loan?",
+        "a": "Homemakers can apply with an earning spouse or family member as a co-applicant."
+      }
+    ]
+  },
+  "medical-loan": {
+    "title": "Emergency Medical Loan: Instant Cash for Hospital Bills & Surgeries",
+    "badge": "Emergency Healthcare",
+    "defaultAmount": 300000,
+    "intro": "An Emergency Medical Loan provides immediate, collateral-free funds to cover unplanned hospitalization bills, critical illness treatments, elective surgeries, and medication costs not fully covered by health insurance.",
+    "moreIntro": "With paperless instant approvals and 2-to-4 hour emergency disbursals, medical personal loans ensure your family receives vital healthcare without delaying treatment or prematurely liquidating investments. Loan amounts range from ₹50,000 up to ₹25 Lakhs with repayment tenures up to 60 months.",
+    "keyFeaturesTitle": "Benefits of Emergency Medical Loans",
+    "keyFeatures": [
+      {
+        "label": "Rapid Emergency Disbursal",
+        "text": "Approved funds credited directly to your bank account in 2 to 4 hours."
+      },
+      {
+        "label": "Zero Collateral Required",
+        "text": "No pledging of family gold, fixed deposits, or property deeds."
+      },
+      {
+        "label": "Covers All Treatments",
+        "text": "Can be used for hospitalization, surgery, dental work, or post-operative therapy."
+      }
+    ],
+    "repaymentDetailsTitle": "Compare Top Medical Loan Providers in India",
+    "repaymentHeaders": [
+      "Lender Bank / NBFC",
+      "Interest Rate (p.a.)",
+      "Disbursal Turnaround",
+      "Max Loan Cap"
+    ],
+    "repaymentDetails": [
+      {
+        "col1": "HDFC Bank (Medical Urgent)",
+        "col2": "10.50% - 14.50%",
+        "col3": "Under 4 Hours",
+        "col4": "Up to ₹40 Lakhs"
+      },
+      {
+        "col1": "ICICI Bank (Express Health)",
+        "col2": "10.65% - 14.99%",
+        "col3": "Under 4 Hours",
+        "col4": "Up to ₹50 Lakhs"
+      },
+      {
+        "col1": "Tata Capital",
+        "col2": "11.25% - 18.00%",
+        "col3": "Same Day",
+        "col4": "Up to ₹25 Lakhs"
+      },
+      {
+        "col1": "Bajaj Finserv",
+        "col2": "11.00% - 20.00%",
+        "col3": "Under 2 Hours",
+        "col4": "Up to ₹35 Lakhs"
+      }
+    ],
+    "boostTipsTitle": "Checklist for Medical Loan Disbursal",
+    "boostTips": [
+      "Keep hospital estimate ready: Doctor's treatment estimate or hospital admission slip speeds up underwriting.",
+      "Use NetBanking verification: Instant digital bank verification bypasses manual branch checks.",
+      "Check health insurance shortfall: Borrow only the gap amount between hospital billing and insurance claim approval."
+    ],
+    "faqs": [
+      {
+        "q": "How fast is an emergency medical loan disbursed?",
+        "a": "Pre-approved and digital applications are typically disbursed within 2 to 4 hours."
+      },
+      {
+        "q": "Can I use a medical loan for elective treatments?",
+        "a": "Yes, medical personal loans can be used for any medical expense, including cosmetic procedures, dental surgery, or fertility treatments."
+      }
     ]
   }
 };

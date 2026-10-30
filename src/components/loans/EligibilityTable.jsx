@@ -1,69 +1,114 @@
 import React from "react";
 
-const icons = [
-  (
-    <svg className="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 14c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 0v6m0-6c-4.418 0-8 1.79-8 4v2h16v-2c0-2.21-3.582-4-8-4z" /></svg>
-  ),
-  (
-    <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 8c-1.657 0-3 1.343-3 3 0 1.657 1.343 3 3 3s3-1.343 3-3c0-1.657-1.343-3-3-3zm0 0V4m0 10v6m8-8a8 8 0 11-16 0 8 8 0 0116 0z" /></svg>
-  ),
-  (
-    <svg className="w-5 h-5 text-teal-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M17 9V7a5 5 0 00-10 0v2a2 2 0 00-2 2v7a2 2 0 002 2h10a2 2 0 002-2v-7a2 2 0 00-2-2z" /></svg>
-  ),
-  (
-    <svg className="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3" /><circle cx="12" cy="12" r="10" /></svg>
-  ),
-  (
-    <svg className="w-5 h-5 text-purple-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2" /><path d="M16 3v4M8 3v4" /></svg>
-  ),
-];
-
 const criteria = [
-  { label: "Age", value: "18 - 60 years" },
-  { label: "Salary (Salaried)", value: "₹15,000+ per month" },
-  { label: "Income (Self-employed)", value: "₹5 lakh+ per annum" },
-  { label: "Credit Score", value: "725+ preferred" },
-  { label: "Employment Stability", value: "At least 6 Months with current employer/business" },
+  {
+    label: "Age Range",
+    salaried: "21 – 60 years",
+    selfEmployed: "23 – 65 years",
+    notes: "Must not exceed retirement age at loan maturity.",
+  },
+  {
+    label: "Minimum Monthly Income",
+    salaried: "₹15,000 – ₹25,000/month",
+    selfEmployed: "Annual turnover / ITR > ₹3.5 – ₹5 Lakhs",
+    notes: "Tier-1 cities (Mumbai, Bengaluru, Delhi-NCR) typically require higher minimum salary.",
+  },
+  {
+    label: "Credit Score (CIBIL)",
+    salaried: "720+ preferred",
+    selfEmployed: "720+ preferred",
+    notes: "Scores between 650–719 may be considered with higher interest rate or co-applicant.",
+  },
+  {
+    label: "Employment Stability",
+    salaried: "Minimum 1 year total, 6 months with current employer",
+    selfEmployed: "Minimum 2–3 years of continuous business vintage",
+    notes: "Salaried in confirmed permanent employment.",
+  },
+  {
+    label: "Fixed Obligation to Income (FOIR)",
+    salaried: "Below 40% – 50%",
+    selfEmployed: "Below 45% – 50%",
+    notes: "Total monthly debt obligations (including new EMI) should not exceed 50% of take-home pay.",
+  },
 ];
 
-const EligibilityTable = () => (
-  <section className="my-12 bg-gradient-to-br from-blue-50 via-white to-teal-50 rounded-2xl shadow-xl border border-blue-100 p-6 md:p-12">
-    <h2 className="text-3xl font-extrabold mb-7 text-gray-900 text-center tracking-tight drop-shadow-sm">
-      Eligibility Criteria
-    </h2>
-    <div className="overflow-x-auto animate-fadeIn">
-      <table className="min-w-full bg-white rounded-2xl shadow-lg border border-blue-100">
-        <thead>
-          <tr>
-            <th className="px-6 py-4 bg-gradient-to-r from-blue-100 to-teal-100 text-left text-sm font-bold text-gray-700 uppercase tracking-wider rounded-tl-2xl">Criteria</th>
-            <th className="px-6 py-4 bg-gradient-to-r from-blue-100 to-teal-100 text-left text-sm font-bold text-gray-700 uppercase tracking-wider rounded-tr-2xl">Details</th>
-          </tr>
-        </thead>
-        <tbody>
-          {criteria.map((row, i) => (
-            <tr key={row.label} className={i % 2 === 0 ? "bg-white" : "bg-blue-50/60"}>
-              <td className="px-6 py-4 text-gray-800 font-semibold flex items-center gap-2">
-                <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-gradient-to-br from-blue-100 to-teal-100 shadow-inner mr-2">
-                  {icons[i]}
-                </span>
-                {row.label}
-              </td>
-              <td className="px-6 py-4 text-gray-600 text-base">{row.value}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-    <style>{`
-      @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(30px); }
-        to { opacity: 1; transform: none; }
-      }
-      .animate-fadeIn {
-        animation: fadeIn 0.7s cubic-bezier(.4,0,.2,1) both;
-      }
-    `}</style>
-  </section>
-);
+const EligibilityTable = ({ openEligibilityModal }) => {
+  return (
+    <section className="my-14">
+      <div className="text-center max-w-3xl mx-auto mb-10">
+        <span className="inline-block bg-teal-50 text-teal-700 text-xs sm:text-sm font-semibold px-3 py-1 rounded-full uppercase tracking-wider mb-2">
+          Approval Slabs
+        </span>
+        <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
+          Personal Loan Eligibility Criteria
+        </h2>
+        <p className="text-gray-600 text-sm sm:text-base mt-2">
+          Detailed benchmarks required by major Indian banks and NBFCs for salaried and self-employed applicants.
+        </p>
+      </div>
+
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="min-w-full divide-y divide-gray-200 text-left text-sm">
+            <thead className="bg-slate-50">
+              <tr>
+                <th scope="col" className="px-6 py-4 font-bold text-gray-900 w-1/4">
+                  Eligibility Factor
+                </th>
+                <th scope="col" className="px-6 py-4 font-bold text-teal-800 w-1/4">
+                  Salaried Applicants
+                </th>
+                <th scope="col" className="px-6 py-4 font-bold text-blue-800 w-1/4">
+                  Self-Employed Individuals
+                </th>
+                <th scope="col" className="px-6 py-4 font-bold text-gray-700 w-1/4">
+                  Key Notes & Exceptions
+                </th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-100">
+              {criteria.map((item, idx) => (
+                <tr
+                  key={item.label}
+                  className={idx % 2 === 0 ? "bg-white" : "bg-slate-50/50"}
+                >
+                  <td className="px-6 py-4 font-semibold text-gray-900 align-top">
+                    {item.label}
+                  </td>
+                  <td className="px-6 py-4 text-gray-700 font-medium align-top">
+                    {item.salaried}
+                  </td>
+                  <td className="px-6 py-4 text-gray-700 font-medium align-top">
+                    {item.selfEmployed}
+                  </td>
+                  <td className="px-6 py-4 text-gray-500 text-xs leading-relaxed align-top">
+                    {item.notes}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {openEligibilityModal && (
+          <div className="p-4 sm:p-6 bg-gradient-to-r from-teal-50 to-blue-50 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="text-sm text-gray-700 text-center sm:text-left">
+              <strong className="text-gray-900 font-semibold block">Not sure if you qualify?</strong>
+              Check your personalized approval odds across 15+ partner lenders without impacting your CIBIL score.
+            </div>
+            <button
+              type="button"
+              onClick={openEligibilityModal}
+              className="shrink-0 bg-teal-600 hover:bg-teal-700 text-white font-bold py-2.5 px-6 rounded-xl text-sm shadow-sm transition-all"
+            >
+              Check My Free Eligibility
+            </button>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+};
 
 export default EligibilityTable;

@@ -1,115 +1,207 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const offers = [
   {
     bank: "HDFC Bank",
     logo: "/images/hdfc.png",
-    maxAmount: 20000000,
-    tenure: "12-72 months",
-    processingFee: "Up to 1%",
-    interestRate: "10.5% - 13.99%",
-    badges: ["10 Second Disbursal", "100% Digital Process"],
-    color: "teal",
+    maxAmount: 4000000,
+    tenure: "12 - 72 months",
+    processingFee: "Up to 1.5% + GST",
+    interestRate: "10.50% - 14.50%",
+    badges: ["Instant Digital Disbursal", "Top Corporate Rates"],
     featured: true,
+    slug: "hdfc-bank",
+  },
+  {
+    bank: "State Bank of India",
+    logo: "/images/sbi.png",
+    maxAmount: 2000000,
+    tenure: "12 - 72 months",
+    processingFee: "0.50% - 1.00% + GST",
+    interestRate: "10.30% - 13.60%",
+    badges: ["Lowest Benchmark Rates", "PSU Stability"],
+    featured: false,
+    slug: "sbi-bank",
   },
   {
     bank: "ICICI Bank",
     logo: "/images/icici.png",
-    maxAmount: 50000000,
-    tenure: "12-84 months",
-    processingFee: "Up to 1%",
-    interestRate: "10.5% - 13.99%",
-    badges: ["Low Processing Fee", "100% Digital Process"],
-    color: "green",
-  },
-  {
-    bank: "Bajaj Finserv",
-    logo: "/images/bajaj.png",
     maxAmount: 5000000,
-    tenure: "12-96 months",
-    processingFee: "Up to 2%",
-    interestRate: "11% - 24%",
-    badges: ["100% Digital Process"],
-    color: "blue",
+    tenure: "12 - 84 months",
+    processingFee: "Up to 1.5% + GST",
+    interestRate: "10.65% - 14.99%",
+    badges: ["Pre-approved Offers", "3-Second Approval"],
+    featured: false,
+    slug: "icici-bank",
   },
   {
     bank: "Axis Bank",
     logo: "/images/axis.png",
     maxAmount: 4000000,
-    tenure: "12-84 months",
-    processingFee: "Up to 2%",
-    interestRate: "9.99% - 14%",
-    badges: ["10 Second Disbursal", "Low Processing Fee"],
-    color: "orange",
+    tenure: "12 - 84 months",
+    processingFee: "1.0% - 2.0% + GST",
+    interestRate: "10.49% - 15.00%",
+    badges: ["Quick Turnaround", "Flexible Repayment"],
+    featured: false,
+    slug: "axis-bank",
+  },
+  {
+    bank: "Kotak Mahindra Bank",
+    logo: "/images/kotak.png",
+    maxAmount: 3500000,
+    tenure: "12 - 60 months",
+    processingFee: "Up to 2.0% + GST",
+    interestRate: "10.99% - 16.99%",
+    badges: ["100% Online KYC", "Zero Hidden Charges"],
+    featured: false,
+    slug: "kotak-bank",
+  },
+  {
+    bank: "Bajaj Finserv",
+    logo: "/images/bajaj.png",
+    maxAmount: 4000000,
+    tenure: "12 - 96 months",
+    processingFee: "Up to 2.5% + GST",
+    interestRate: "11.00% - 22.00%",
+    badges: ["Flexi Loan Option", "High Loan Cap"],
+    featured: false,
+    slug: "bajaj-finserv",
   },
 ];
 
-const badgeColors = {
-  teal: "bg-gradient-to-r from-teal-200 to-teal-400 text-teal-900 shadow-sm",
-  green: "bg-gradient-to-r from-green-200 to-green-400 text-green-900 shadow-sm",
-  blue: "bg-gradient-to-r from-blue-200 to-blue-400 text-blue-900 shadow-sm",
-  orange: "bg-gradient-to-r from-orange-200 to-orange-400 text-orange-900 shadow-sm",
-};
+const LoanOffersGrid = ({ openApplyModal, openEligibilityModal }) => {
+  return (
+    <section id="offers-grid" className="my-14 scroll-mt-24">
+      <div className="text-center max-w-3xl mx-auto mb-10">
+        <span className="inline-block bg-blue-50 text-blue-700 text-xs sm:text-sm font-semibold px-3 py-1 rounded-full uppercase tracking-wider mb-2">
+          Lender Comparison
+        </span>
+        <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
+          Compare Top Personal Loan Offers in India
+        </h2>
+        <p className="text-gray-600 text-sm sm:text-base mt-2">
+          Compare verified interest rates, processing charges, and borrowing limits from leading banks and NBFCs.
+        </p>
+      </div>
 
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {offers.map((offer) => (
+          <div
+            key={offer.bank}
+            className={`relative bg-white rounded-2xl p-6 sm:p-7 shadow-sm border transition-all duration-300 hover:shadow-xl hover:-translate-y-1 flex flex-col justify-between ${
+              offer.featured
+                ? "border-teal-400 ring-1 ring-teal-200"
+                : "border-gray-200 hover:border-blue-300"
+            }`}
+          >
+            {offer.featured && (
+              <div className="absolute -top-3 left-6 bg-gradient-to-r from-teal-600 to-emerald-600 text-white px-3 py-0.5 rounded-full text-xs font-bold shadow-sm uppercase tracking-wider">
+                ★ Best Match
+              </div>
+            )}
 
-const LoanOffersGrid = ({ openApplyModal }) => (
-  <section className="my-12 bg-gradient-to-br from-gray-50 via-white to-gray-100 py-10 px-2 rounded-2xl shadow-inner">
-    <h2 className="text-3xl font-extrabold mb-6 text-gray-900 text-center tracking-tight drop-shadow-sm">
-      Compare Personal Loan Offers
-    </h2>
-    <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-      {offers.map((offer, idx) => (
-        <div
-          key={offer.bank}
-          className={`relative bg-white rounded-2xl shadow-lg border-2 border-transparent hover:border-${offer.color}-400 hover:scale-[1.03] hover:shadow-2xl transition-all duration-300 p-7 flex flex-col items-center animate-fadeIn`}
-          style={{ animationDelay: `${idx * 80}ms`, animationFillMode: 'backwards' }}
-        >
-          {offer.featured && (
-            <div className="absolute -top-3 -left-3 bg-gradient-to-r from-yellow-400 to-yellow-300 text-yellow-900 px-3 py-1 rounded-tr-xl rounded-bl-xl text-xs font-bold shadow-md z-10">
-              ★ Featured
+            <div>
+              <div className="flex items-center justify-between gap-4 mb-4">
+                <div>
+                  <h3 className="font-extrabold text-xl text-gray-900 tracking-tight">
+                    {offer.bank}
+                  </h3>
+                  <div className="text-xs text-teal-700 font-semibold mt-0.5">
+                    Starting at {offer.interestRate.split("-")[0].trim()} p.a.
+                  </div>
+                </div>
+                <div className="w-14 h-14 bg-gray-50 border border-gray-100 rounded-xl p-2 flex items-center justify-center shrink-0">
+                  <img
+                    src={offer.logo}
+                    alt={`${offer.bank} logo`}
+                    className="max-h-full max-w-full object-contain"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+
+              {/* Badges */}
+              <div className="flex flex-wrap gap-1.5 mb-5">
+                {offer.badges.map((badge) => (
+                  <span
+                    key={badge}
+                    className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium bg-blue-50 text-blue-800 border border-blue-100"
+                  >
+                    {badge}
+                  </span>
+                ))}
+              </div>
+
+              {/* Data Table */}
+              <div className="space-y-2.5 text-xs sm:text-sm text-gray-600 border-t border-b border-gray-100 py-4 mb-6">
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-500">Max Loan Amount</span>
+                  <span className="font-bold text-gray-900">
+                    ₹{offer.maxAmount.toLocaleString("en-IN")}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-500">Interest Rate Range</span>
+                  <span className="font-semibold text-gray-800">
+                    {offer.interestRate}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-500">Processing Fee</span>
+                  <span className="font-medium text-gray-800">
+                    {offer.processingFee}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-500">Tenure</span>
+                  <span className="font-medium text-gray-800">{offer.tenure}</span>
+                </div>
+              </div>
             </div>
-          )}
-          <img src={offer.logo} alt={offer.bank} className="h-12 mb-4 drop-shadow-md" />
-          <div className="font-extrabold text-xl text-gray-800 mb-2 tracking-wide text-center">{offer.bank}</div>
-          <div className="flex flex-wrap gap-2 mb-4 justify-center">
-            {offer.badges.map((badge, i) => (
-              <span
-                key={badge}
-                className={`px-3 py-1 rounded-full text-xs font-semibold shadow ${badgeColors[offer.color]} border border-white/60`}
-              >
-                {badge}
-              </span>
-            ))}
+
+            {/* Action Buttons */}
+            <div className="space-y-2 pt-2">
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  onClick={() => openApplyModal && openApplyModal(`Personal Loan - ${offer.bank}`)}
+                  className="flex-1 bg-teal-600 hover:bg-teal-700 text-white font-bold py-2.5 px-3 rounded-xl shadow-sm transition-colors text-sm flex items-center justify-center gap-1.5"
+                >
+                  <span>Apply Now</span>
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </button>
+
+                {openEligibilityModal && (
+                  <button
+                    type="button"
+                    onClick={openEligibilityModal}
+                    className="bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold py-2.5 px-3 rounded-xl transition-colors text-xs sm:text-sm"
+                  >
+                    Eligibility
+                  </button>
+                )}
+              </div>
+
+              <div className="text-center">
+                <Link
+                  to="/loans/personal/overview"
+                  className="text-xs text-blue-600 hover:text-blue-800 font-medium hover:underline inline-flex items-center gap-1"
+                >
+                  <span>View comprehensive {offer.bank} breakdown</span>
+                  <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </Link>
+              </div>
+            </div>
           </div>
-          <div className="w-full text-sm text-gray-700 mb-3 space-y-1">
-            <div className="flex justify-between"><span className="font-medium">Max Amount:</span> <span className="font-bold text-gray-900">₹{offer.maxAmount.toLocaleString()}</span></div>
-            <div className="flex justify-between"><span className="font-medium">Tenure:</span> <span>{offer.tenure}</span></div>
-            <div className="flex justify-between"><span className="font-medium">Processing Fee:</span> <span>{offer.processingFee}</span></div>
-            <div className="flex justify-between"><span className="font-medium">Interest Rate:</span> <span>{offer.interestRate}</span></div>
-          </div>
-          <div className="flex gap-2 mt-auto w-full">
-            <button
-              onClick={() => openApplyModal(`Personal Loan - ${offer.bank}`)}
-              className="flex-1 bg-gradient-to-r from-teal-500 to-teal-700 hover:from-teal-600 hover:to-teal-800 text-white py-2 rounded-lg font-bold shadow-md transition flex items-center justify-center gap-2 group"
-            >
-              <svg className="w-4 h-4 text-white group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
-              Apply Now
-            </button>
-            <a href="#" className="flex-1 text-blue-600 hover:underline text-center py-2 font-semibold rounded-lg bg-blue-50 hover:bg-blue-100 transition">Explore</a>
-          </div>
-        </div>
-      ))}
-    </div>
-    <style>{`
-      @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(30px); }
-        to { opacity: 1; transform: none; }
-      }
-      .animate-fadeIn {
-        animation: fadeIn 0.7s cubic-bezier(.4,0,.2,1) both;
-      }
-    `}</style>
-  </section>
-);
+        ))}
+      </div>
+    </section>
+  );
+};
 
 export default LoanOffersGrid;

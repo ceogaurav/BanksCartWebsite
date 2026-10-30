@@ -1,62 +1,134 @@
 import React from "react";
 
 const loanTypes = [
-  { name: "Wedding Loan", desc: "For marriage expenses and ceremonies." },
-  { name: "Medical Loan", desc: "For medical emergencies and treatments." },
-  { name: "Travel Loan", desc: "For vacations and travel plans." },
-  { name: "Home Renovation Loan", desc: "For home improvement and repairs." },
-  { name: "Education Loan", desc: "For higher studies and skill development." },
-  { name: "Debt Consolidation", desc: "To combine multiple debts into one." },
-  { name: "Personal Use", desc: "For any other personal financial need." },
+  {
+    title: "Debt Consolidation",
+    desc: "Merge high-cost credit cards and multiple smaller loans into one single lower-interest EMI.",
+    tag: "High Savings",
+  },
+  {
+    title: "Medical & Healthcare",
+    desc: "Immediate funds for unexpected medical emergencies, hospital bills, or elective procedures.",
+    tag: "Instant Disbursal",
+  },
+  {
+    title: "Home Renovation",
+    desc: "Finance home repairs, interior furnishing, painting, or solar rooftop installations without mortgaging property.",
+    tag: "No Property Hypothecation",
+  },
+  {
+    title: "Wedding & Celebrations",
+    desc: "Cover banquet venue bookings, catering, jewelry, and ceremony costs stress-free.",
+    tag: "Flexible Repayment",
+  },
+  {
+    title: "Travel & Vacations",
+    desc: "Fund domestic or international holiday trips, flight bookings, and holiday packages.",
+    tag: "Fast Approval",
+  },
+  {
+    title: "Higher Education & Skill Upgrade",
+    desc: "Pay upfront certification, executive courses, coding bootcamps, or relocation fees.",
+    tag: "Career Boost",
+  },
 ];
 
 const benefits = [
-  { icon: <svg className="w-6 h-6 text-teal-600" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2" /></svg>, text: "Collateral-free loan" },
-  { icon: <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 0V4m0 16v-4" /></svg>, text: "No end-use restriction" },
-  { icon: <svg className="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M17 9V7a5 5 0 0 0-10 0v2" /><rect x="5" y="9" width="14" height="10" rx="2" /></svg>, text: "Loan amount up to ₹5 cr" },
-  { icon: <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2" /><path d="M16 3v4M8 3v4" /></svg>, text: "Repayment tenure up to 60 months" },
-  { icon: <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" /></svg>, text: "Top-up loan availability" },
-  { icon: <svg className="w-6 h-6 text-pink-600" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2" /></svg>, text: "Minimal documentation" },
-  { icon: <svg className="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 8v4l3 3" /><circle cx="12" cy="12" r="10" /></svg>, text: "Quick disbursals" },
+  {
+    title: "100% Collateral-Free",
+    desc: "No need to pledge fixed deposits, gold, or property deeds as security.",
+  },
+  {
+    title: "No End-Use Restrictions",
+    desc: "Use the sanctioned funds for any legitimate personal, family, or emergency expense.",
+  },
+  {
+    title: "High Loan Cap Up to ₹50 Lakhs",
+    desc: "Substantial borrowing limits tailored to your income level and credit track record.",
+  },
+  {
+    title: "Tenure Flexibility up to 72 Months",
+    desc: "Choose monthly repayment schedules from 1 to 6 years matching your cash flow.",
+  },
+  {
+    title: "Transparent Fixed / Floating Rates",
+    desc: "Clear reducing-balance interest calculations with zero hidden maintenance overheads.",
+  },
+  {
+    title: "Fast Paperless Disbursals",
+    desc: "Pre-approved applicants can receive direct bank transfers in as little as a few hours.",
+  },
 ];
 
 const LoanTypesBenefits = () => (
-  <section className="my-12 rounded-xl bg-gradient-to-br from-blue-50 via-white to-teal-50 shadow-lg px-4 py-10 md:px-10 lg:px-20">
-    <h2 className="text-3xl font-extrabold mb-6 text-gray-900 flex items-center gap-3">
-      <svg className="w-8 h-8 text-teal-600" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /><path d="M8 12l2 2 4-4" /></svg>
-      Types & Benefits of Personal Loan
-    </h2>
-    <div className="mb-8">
-      <div className="font-bold text-gray-800 mb-3 flex items-center gap-2 text-lg">
-        <svg className="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2" /></svg>
-        Personal Loan Types
-      </div>
-      <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-gray-700 text-base">
-        {loanTypes.map(type => (
-          <li key={type.name} className="bg-white/80 hover:bg-blue-100 transition rounded-xl px-5 py-4 flex flex-col shadow group border border-blue-100">
-            <span className="font-semibold text-blue-700 group-hover:text-teal-700 text-lg mb-1">{type.name}</span>
-            <span className="text-xs text-gray-500">{type.desc}</span>
-          </li>
+  <section className="my-14">
+    <div className="text-center max-w-3xl mx-auto mb-10">
+      <span className="inline-block bg-teal-50 text-teal-700 text-xs sm:text-sm font-semibold px-3 py-1 rounded-full uppercase tracking-wider mb-2">
+        Versatility
+      </span>
+      <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
+        Personal Loan Types & Core Benefits
+      </h2>
+      <p className="text-gray-600 text-sm sm:text-base mt-2">
+        Tailored financial solutions designed to support every milestone with complete peace of mind.
+      </p>
+    </div>
+
+    {/* Loan Types Grid */}
+    <div className="mb-12">
+      <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+        <span className="w-2.5 h-2.5 rounded-full bg-teal-500" />
+        Popular Personal Loan Categories
+      </h3>
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {loanTypes.map((type) => (
+          <div
+            key={type.title}
+            className="bg-white rounded-2xl p-5 shadow-sm border border-gray-200 hover:border-teal-400 hover:shadow-md transition-all duration-200 flex flex-col justify-between"
+          >
+            <div>
+              <div className="flex items-center justify-between gap-2 mb-2">
+                <h4 className="font-bold text-gray-900 text-base">
+                  {type.title}
+                </h4>
+                <span className="text-[10px] font-semibold text-teal-700 bg-teal-50 px-2 py-0.5 rounded-full shrink-0">
+                  {type.tag}
+                </span>
+              </div>
+              <p className="text-xs text-gray-600 leading-relaxed">
+                {type.desc}
+              </p>
+            </div>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
-    <div className="flex items-center gap-3 my-8">
-      <span className="flex-1 h-px bg-gradient-to-r from-blue-200 via-gray-300 to-teal-200" />
-      <span className="text-gray-400 font-semibold text-sm tracking-widest">BENEFITS</span>
-      <span className="flex-1 h-px bg-gradient-to-l from-blue-200 via-gray-300 to-teal-200" />
+
+    {/* Benefits Grid */}
+    <div>
+      <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+        <span className="w-2.5 h-2.5 rounded-full bg-blue-500" />
+        Why Choose an Unsecured Personal Loan?
+      </h3>
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {benefits.map((b) => (
+          <div
+            key={b.title}
+            className="bg-gradient-to-br from-slate-50 to-blue-50/40 rounded-2xl p-5 border border-blue-100 flex items-start gap-3.5"
+          >
+            <div className="w-8 h-8 rounded-xl bg-teal-600 text-white flex items-center justify-center shrink-0 shadow-sm mt-0.5">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <div>
+              <h4 className="font-bold text-gray-900 text-sm mb-1">{b.title}</h4>
+              <p className="text-xs text-gray-600 leading-relaxed">{b.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
-    <div className="font-bold text-gray-800 mb-3 flex items-center gap-2 text-lg">
-      <svg className="w-6 h-6 text-green-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" /></svg>
-      Key Benefits
-    </div>
-    <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {benefits.map((b, i) => (
-        <li key={b.text} className="flex items-center gap-4 bg-white/90 rounded-xl shadow-md p-4 border border-teal-100 hover:scale-[1.03] hover:shadow-lg transition">
-          <span className="shrink-0">{b.icon}</span>
-          <span className="text-gray-700 font-semibold text-base">{b.text}</span>
-        </li>
-      ))}
-    </ul>
   </section>
 );
 

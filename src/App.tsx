@@ -110,6 +110,7 @@ import WaysToImproveCibilPage from './pages/cibil/WaysToImproveCibilPage';
 import CibilScoreForPersonalLoanPage from './pages/cibil/CibilScoreForPersonalLoanPage';
 import ResolveCibilDisputePage from './pages/cibil/ResolveCibilDisputePage';
 import DynamicPersonalLoanPage from './pages/cibil/DynamicPersonalLoanPage';
+import PersonalLoanOverviewPage from './pages/PersonalLoanOverviewPage';
 import InvestorRelations from './pages/legal/InvestorRelations';
 import Disclaimer from './pages/legal/Disclaimer';
 import IntellectualPolicy from './pages/legal/IntellectualPolicy';
@@ -356,7 +357,8 @@ const App: React.FC = () => {
                 <Route path="/credit-report/ways-to-improve-your-cibil-score" element={<WaysToImproveCibilPage />} />
                 <Route path="/credit-score/cibil-score-for-personal-loan" element={<CibilScoreForPersonalLoanPage />} />
                 <Route path="/cibil/how-to-resolve-cibil-dispute" element={<ResolveCibilDisputePage />} />
-                <Route path="/loans/personal/:subPath" element={<DynamicPersonalLoanPage />} />
+                <Route path="/loans/personal/overview" element={<PersonalLoanOverviewPage openApplyModal={openApplyModal} openEligibilityModal={openEligibilityModal} openCibilModal={openCibilModal} />} />
+                <Route path="/loans/personal/:subPath" element={<DynamicPersonalLoanPage openApplyModal={openApplyModal} openEligibilityModal={openEligibilityModal} openCibilModal={openCibilModal} />} />
                 <Route path="/cards/credit/:subPath" element={<DynamicCreditCardPage />} />
                 <Route path="/investment/:type/:subPath" element={<DynamicInvestmentPage />} />
                 <Route path="/calculators/:category/:subPath" element={<DynamicCalculatorPage />} />
@@ -369,7 +371,7 @@ const App: React.FC = () => {
                 <Route path="/salary/:subPath" element={<DynamicSalaryPage />} />
                 <Route path="/bonds/:subPath" element={<DynamicInvestmentPage />} />
                 <Route path="/mutual-funds/:subPath" element={<DynamicInvestmentPage />} />
-                <Route path="/personal-loan/:subPath" element={<DynamicPersonalLoanPage />} />
+                <Route path="/personal-loan/:subPath" element={<DynamicPersonalLoanPage openApplyModal={openApplyModal} openEligibilityModal={openEligibilityModal} openCibilModal={openCibilModal} />} />
                 <Route path="/credit-card/:subPath" element={<DynamicCreditCardPage />} />
                 <Route path="/hdfc-bank/:subPath" element={<DynamicCreditCardPage />} />
                 <Route path="/cibil/:subPath" element={<DynamicPersonalLoanPage />} />

@@ -8,7 +8,7 @@ import { getAllPostsPaginated } from "../../lib/posts";
 export default function BlogsIndex({ posts, currentPage, totalPages }) {
   return (
     <>
-      <BlogMeta title="Banking & Finance Blogs" description="Bankscart — guides, comparisons and tips for banking, credit cards, and investments." url="https://bankscart.com/blogs" />
+      <BlogMeta title="Banking & Finance Blogs" description="Bankscart — guides, comparisons and tips for banking, credit cards, and investments." url="https://www.bankscart.com/blogs" />
       <main className="max-w-6xl mx-auto py-12 px-4">
         <h1 className="text-4xl font-extrabold mb-6">Bankscart Blog</h1>
         <p className="text-gray-600 mb-8">Latest guides, product comparisons and finance tips.</p>

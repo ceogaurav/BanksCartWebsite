@@ -41,7 +41,7 @@ const BankDetails: React.FC<BankDetailsProps> = ({ openEligibilityModal }) => {
       <Helmet>
         <title>{`${bank.name} - Loan Interest Rates, Customer Reviews & Details | BanksCart`}</title>
         <meta name="description" content={`Get detailed information about ${bank.name}, including branch network established in ${bank.establishedYear}, customer ratings, IFSC codes, customer care contact details and compare latest interest rates at BanksCart.`} />
-        <link rel="canonical" href={`https://bankscart.com/bank-details/${bankId}`} />
+        <link rel="canonical" href={`https://www.bankscart.com/bank-details/${bankId}`} />
       </Helmet>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}

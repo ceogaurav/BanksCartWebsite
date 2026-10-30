@@ -1,4 +1,4 @@
-# robots.txt for https://bankscart.com
+# robots.txt for https://www.bankscart.com
 
 User-agent: *
 Allow: /
@@ -8,4 +8,4 @@ Disallow: /admin/
 Disallow: /profile/
 
 # Declare the sitemap location
-Sitemap: https://bankscart.com/sitemap.xml
+Sitemap: https://www.bankscart.com/sitemap.xml

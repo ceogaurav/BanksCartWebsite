@@ -2,103 +2,77 @@ import React from "react";
 
 const features = [
   {
+    title: "Side-by-Side Comparison",
+    desc: "Compare real APRs, processing charges, and tenure options across 15+ top scheduled banks and NBFCs transparently.",
     icon: (
-      <svg
-        className="w-8 h-8 text-teal-600"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        viewBox="0 0 24 24"
-      >
-        <path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 0V4m0 16v-4m8-4h-4m-8 0H4" />
+      <svg className="w-6 h-6 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
       </svg>
     ),
-    title: "Compare & Choose the Best Offer",
-    desc: "Easily compare offers from top banks and NBFCs to find the best deal for your needs.",
   },
   {
+    title: "Zero Credit Impact Check",
+    desc: "Check your loan eligibility and personalized loan quotes with soft credit checks that never hurt your CIBIL score.",
     icon: (
-      <svg
-        className="w-8 h-8 text-blue-600"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        viewBox="0 0 24 24"
-      >
-        <path d="M9 12l2 2 4-4" />
-        <circle cx="12" cy="12" r="10" />
+      <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
       </svg>
     ),
-    title: "Pre-approved Offers with Instant Disbursals",
-    desc: "Get access to pre-approved personal loan offers and enjoy quick, hassle-free disbursals.",
   },
   {
+    title: "100% Digital & Paperless",
+    desc: "Experience end-to-end digital processing with Aadhaar DigiLocker e-KYC and electronic e-NACH mandate registration.",
     icon: (
-      <svg
-        className="w-8 h-8 text-orange-500"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        viewBox="0 0 24 24"
-      >
-        <path d="M12 8v4l3 3" />
-        <circle cx="12" cy="12" r="10" />
+      <svg className="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
       </svg>
     ),
-    title: "Know Your Chances of Approval",
-    desc: "Check your eligibility instantly and improve your chances of loan approval.",
   },
   {
+    title: "Fast Disbursal Guarantee",
+    desc: "Pre-approved applicants can get funds credited to their verified bank accounts in as fast as 4 to 24 hours.",
     icon: (
-      <svg
-        className="w-8 h-8 text-green-600"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        viewBox="0 0 24 24"
-      >
-        <rect x="3" y="7" width="18" height="13" rx="2" />
-        <path d="M16 3v4M8 3v4" />
+      <svg className="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
       </svg>
     ),
-    title: "End-to-End Digital Process",
-    desc: "Experience a seamless, paperless application process from start to finish.",
   },
 ];
 
 const WhyChooseUs = () => (
-  <section className="my-12 bg-gradient-to-br from-blue-50 via-white to-teal-50 rounded-2xl shadow-xl border border-blue-100 p-6 md:p-12">
-    <h2 className="text-3xl font-extrabold mb-10 text-gray-900 text-center tracking-tight drop-shadow-sm">
-      Why Choose Bankscart?
-    </h2>
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-      {features.map((f, idx) => (
+  <section className="my-14">
+    <div className="text-center max-w-3xl mx-auto mb-10">
+      <span className="inline-block bg-blue-50 text-blue-700 text-xs sm:text-sm font-semibold px-3 py-1 rounded-full uppercase tracking-wider mb-2">
+        Why Choose BanksCart
+      </span>
+      <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
+        Smarter Borrowing with Complete Confidence
+      </h2>
+      <p className="text-gray-600 text-sm sm:text-base mt-2">
+        We empower borrowers across India with impartial rate comparisons, verified lending partners, and seamless digital onboarding.
+      </p>
+    </div>
+
+    <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {features.map((f) => (
         <div
           key={f.title}
-          className="flex flex-col items-center text-center bg-white rounded-2xl p-8 shadow-lg border border-blue-100 hover:shadow-2xl hover:-translate-y-1.5 hover:border-teal-300 transition-all duration-300 animate-fadeIn"
-          style={{ animationDelay: `${idx * 100}ms`, animationFillMode: 'backwards' }}
+          className="bg-white rounded-2xl p-6 shadow-sm border border-gray-200 hover:border-teal-400 hover:shadow-lg transition-all duration-300 flex flex-col justify-between"
         >
-          <div className="mb-4 flex items-center justify-center">
-            <span className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-teal-100 via-blue-50 to-white shadow-inner mb-2">
+          <div>
+            <div className="w-12 h-12 rounded-xl bg-slate-50 border border-gray-100 flex items-center justify-center mb-4">
               {f.icon}
-            </span>
+            </div>
+            <h3 className="font-bold text-gray-900 text-base mb-2">
+              {f.title}
+            </h3>
+            <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
+              {f.desc}
+            </p>
           </div>
-          <div className="font-bold text-lg mb-2 text-gray-800 tracking-wide">
-            {f.title}
-          </div>
-          <div className="text-gray-600 text-base leading-relaxed">{f.desc}</div>
         </div>
       ))}
     </div>
-    <style>{`
-      @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(30px); }
-        to { opacity: 1; transform: none; }
-      }
-      .animate-fadeIn {
-        animation: fadeIn 0.7s cubic-bezier(.4,0,.2,1) both;
-      }
-    `}</style>
   </section>
 );
 

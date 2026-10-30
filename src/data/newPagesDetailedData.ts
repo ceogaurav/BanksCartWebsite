@@ -217,6 +217,9 @@ export function getNewPageDetailedContent(pathname: string): DetailedPageContent
   }
 
   // Fallback generator for all pages - procedurally generates 4,500+ words per page contextually!
+  if (path === '/loans/personal/overview' || path.endsWith('/loans/personal/overview')) {
+    return null;
+  }
   return generateGenericStructuredContent(path);
 }
 

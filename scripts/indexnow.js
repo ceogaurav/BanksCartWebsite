@@ -39,16 +39,8 @@ async function submitIndexNow() {
 
         const key = 'a7b9c6d3e8f2a1b4c7d0e3f6a9b2c5d8';
 
-        // Prepare submissions for both apex (non-www) and www hosts
+        // Prepare submissions for canonical www host
         const submissions = [
-            {
-                host: 'bankscart.com',
-                keyLocation: `https://bankscart.com/${key}.txt`,
-                urls: rawUrls.map(url => {
-                    const mapped = url.replace('https://www.bankscart.com', 'https://bankscart.com');
-                    return mapped;
-                })
-            },
             {
                 host: 'www.bankscart.com',
                 keyLocation: `https://www.bankscart.com/${key}.txt`,

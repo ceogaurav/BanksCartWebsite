@@ -7,7 +7,7 @@ import ReactMarkdown from "react-markdown";
 export default function PostPage({ post }) {
   return (
     <>
-      <BlogMeta title={post.title} description={post.excerpt} url={`https://bankscart.com/blogs/${post.slug}`} image={post.ogImage} datePublished={post.date} author={post.author} />
+      <BlogMeta title={post.title} description={post.excerpt} url={`https://www.bankscart.com/blogs/${post.slug}`} image={post.ogImage} datePublished={post.date} author={post.author} />
       <main className="max-w-3xl mx-auto py-12 px-4">
         <h1 className="text-3xl font-extrabold mb-2">{post.title}</h1>
         <p className="text-sm text-gray-500 mb-6">{post.date} • {post.readingTime}</p>

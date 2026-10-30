@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { X, CheckCircle, Loader2, AlertTriangle, User, Mail, Phone, Calendar, MapPin, DollarSign, Clock } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { initializeApp } from 'firebase/app';
+import { initializeApp, getApps, getApp } from 'firebase/app';
 import { getFirestore, collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { useAuth } from '../../context/AuthContext'; // Import useAuth
 
@@ -58,7 +58,7 @@ const PartnerApplicationModal: React.FC<PartnerApplicationModalProps> = ({ isOpe
   const appId = typeof __app_id !== 'undefined' ? __app_id : firebaseConfig.projectId || 'default-app-id';
 
   // Initialize Firebase (Firestore only needed here as Auth is via context)
-  const app = initializeApp(firebaseConfig);
+  const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
   const db = getFirestore(app);
 
   // Reset form and timer when modal opens

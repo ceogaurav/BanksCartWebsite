@@ -50,7 +50,7 @@ async function generateSitemap() {
         const query = `*[_type == "post"] { "slug": slug.current, publishedAt }`;
         const posts = await client.fetch(query);
 
-        const baseUrl = 'https://bankscart.com';
+        const baseUrl = 'https://www.bankscart.com';
 
         // Core and legacy static pages
         const staticPages = [
@@ -497,6 +497,10 @@ async function generateSitemap() {
         }
 
         fs.writeFileSync(path.join(publicDir, 'sitemap.xml'), sitemap);
+        const distDir = path.resolve(__dirname, '../dist');
+        if (fs.existsSync(distDir)) {
+            fs.writeFileSync(path.join(distDir, 'sitemap.xml'), sitemap);
+        }
         console.log(`Sitemap generated with ${posts.length} dynamic posts at public/sitemap.xml`);
         console.log(`Total URLs registered in sitemap: ${allPages.length + posts.length}`);
 
