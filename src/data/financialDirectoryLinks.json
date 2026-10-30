@@ -4502,7 +4502,7 @@
   },
   "/mutual-funds/aditya-birla-sun-life-flexi-cap-fund-regular-plan-growth": {
     "name": "ABSL Flexi Cap Fund Growth",
-    "desc": "Open-ended equity fund investing dynamically across all market caps.",
+    "desc": "Aditya Birla Sun Life Flexi Cap Fund (Regular Growth): Open-ended dynamic equity scheme investing across large, mid, and small cap stocks.",
     "category": "Wealth, Investments & Pension Portals",
     "categoryId": "wealth-insurance",
     "badge": ""
@@ -4516,7 +4516,7 @@
   },
   "/mutual-funds/aditya-birla-sun-life-midcap-fund-regular-plan-growth": {
     "name": "ABSL Midcap Fund Growth",
-    "desc": "Focuses on high-yield mid-sized enterprise compounding over 5+ years.",
+    "desc": "Aditya Birla Sun Life Midcap Fund: Capitalizing on emerging mid-sized market leaders with high compound earnings potential.",
     "category": "Wealth, Investments & Pension Portals",
     "categoryId": "wealth-insurance",
     "badge": ""
@@ -4607,7 +4607,7 @@
   },
   "/mutual-funds/axis-flexi-cap-fund-regular-plan-growth": {
     "name": "Axis Flexi Cap Fund Growth",
-    "desc": "Open-ended equity fund investing dynamically across all market caps.",
+    "desc": "Axis Flexi Cap Fund (Regular Growth): High-conviction multi-cap portfolio targeting diversified long-term wealth creation.",
     "category": "Wealth, Investments & Pension Portals",
     "categoryId": "wealth-insurance",
     "badge": ""
@@ -4621,7 +4621,7 @@
   },
   "/mutual-funds/axis-mid-cap-fund-regular-plan-growth": {
     "name": "Axis Mid Cap Fund Growth",
-    "desc": "Focuses on high-yield mid-sized enterprise compounding over 5+ years.",
+    "desc": "Axis Mid Cap Fund: Focused investment strategy in high-growth mid-sized Indian companies over 5+ year horizons.",
     "category": "Wealth, Investments & Pension Portals",
     "categoryId": "wealth-insurance",
     "badge": ""

@@ -385,12 +385,12 @@ export const SEO_MAP: Record<string, SEOMetadata> = {
   },
   "/pages-directory": {
     title: "Site Pages Directory: Browse All Banking & Loan Portals | BanksCart",
-    description: "Access over 1000+ active financial portals, verified loan rates tables, Aadhaar services guides, scheduled banking, and corporate health directories online.",
+    description: "Browse the comprehensive directory of BanksCart site pages, personal loan schemes, calculators, and banking information portals across India.",
     keywords: "site pages directory, bankscart directory, banking portals, loan directories"
   },
   "/financial-directory": {
     title: "Financial Services Directory: 1,000+ Active Financial Portals | BanksCart",
-    description: "Access over 1000+ active financial portals, verified loan rates tables, Aadhaar services guides, scheduled banking, and corporate health directories online.",
+    description: "Access over 1,000+ active financial service directories, verified loan interest tables, Aadhaar guides, and commercial banking portals online.",
     keywords: "financial directory, bankscart directory, banking portals, loan directories"
   },
 
@@ -837,9 +837,13 @@ export function getSEOMetadata(pathname: string): SEOMetadata {
     } else {
       title = `${titleName} - Online Guide & Updates | BanksCart`;
     }
+    let d = entry.desc;
+    if (!d.toLowerCase().includes(titleName.toLowerCase())) {
+      d = `${titleName}: ${d}`;
+    }
     return {
       title,
-      description: `${entry.desc} Check verified information and apply online with BanksCart.`,
+      description: `${d} Check verified information and apply online with BanksCart.`,
       keywords: `${entry.categoryId}, ${entry.name.toLowerCase()}, bankscart services`
     };
   }

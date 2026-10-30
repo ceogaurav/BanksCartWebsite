@@ -297,11 +297,11 @@ const STATIC_SEO_MAP = {
   },
   "/pages-directory": {
     title: "Site Pages Directory: Browse All Banking & Loan Portals | BanksCart",
-    description: "Access over 1000+ active financial portals, verified loan rates tables, Aadhaar services guides, scheduled banking, and corporate health directories online."
+    description: "Browse the comprehensive directory of BanksCart site pages, personal loan schemes, calculators, and banking information portals across India."
   },
   "/financial-directory": {
     title: "Financial Services Directory: 1,000+ Active Financial Portals | BanksCart",
-    description: "Access over 1000+ active financial portals, verified loan rates tables, Aadhaar services guides, scheduled banking, and corporate health directories online."
+    description: "Access over 1,000+ active financial service directories, verified loan interest tables, Aadhaar guides, and commercial banking portals online."
   },
   "/loans/home": {
     title: "Home Loans in India: Apply Online at Lowest Interest Rates | BanksCart",
@@ -447,9 +447,13 @@ function resolveSEO(pathname) {
     } else {
       title = `${titleName} - Online Guide & Updates | BanksCart`;
     }
+    let d = entry.desc;
+    if (!d.toLowerCase().includes(titleName.toLowerCase())) {
+      d = `${titleName}: ${d}`;
+    }
     return {
       title,
-      description: `${entry.desc} Check verified information and apply online with BanksCart.`
+      description: `${d} Check verified information and apply online with BanksCart.`
     };
   }
 
