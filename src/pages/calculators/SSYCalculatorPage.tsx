@@ -6,6 +6,8 @@ import {
   PiggyBank, Clock, Coins
 } from 'lucide-react';
 import ApplyButton from '../../components/common/ApplyButton';
+import EmbedModal from '../../components/common/EmbedModal';
+import { Code } from 'lucide-react';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 
@@ -32,6 +34,7 @@ export default function SSYCalculatorPage({ openApplyModal }: { openApplyModal?:
   const [yearlyContribution, setYearlyContribution] = useState<number>(100000);
   const [girlAge, setGirlAge] = useState<number>(5);
   const [openFAQIndex, setOpenFAQIndex] = useState<number | null>(null);
+  const [isEmbedModalOpen, setIsEmbedModalOpen] = useState<boolean>(false);
 
   const calculations = useMemo(() => {
     const P = yearlyContribution;
@@ -94,6 +97,14 @@ export default function SSYCalculatorPage({ openApplyModal }: { openApplyModal?:
           <p className="text-lg text-rose-100 max-w-3xl mx-auto mb-6">
             Secure your daughter's future. Calculate maturity amounts, interest earned, and plan her higher studies and marriage with our high-precision SSY calculator.
           </p>
+          <div className="flex justify-center mt-4">
+            <button
+              onClick={() => setIsEmbedModalOpen(true)}
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/20 hover:bg-white/30 backdrop-blur-md rounded-full text-white text-sm font-semibold transition-all border border-white/30 shadow-lg cursor-pointer"
+            >
+              <Code className="w-4 h-4" /> Embed this Calculator on Your Site
+            </button>
+          </div>
         </motion.div>
 
         {/* CALCULATOR PANEL */}
@@ -247,6 +258,13 @@ export default function SSYCalculatorPage({ openApplyModal }: { openApplyModal?:
             </div>
           </section>
         </div>
+              <EmbedModal
+          isOpen={isEmbedModalOpen}
+          onClose={() => setIsEmbedModalOpen(false)}
+          title="Sukanya Samriddhi Yojana (SSY) Calculator"
+          embedUrl="https://www.bankscart.com/embed/ssy-calculator"
+          canonicalUrl="https://www.bankscart.com/ssy-calculator"
+        />
       </div>
     </div>
   );

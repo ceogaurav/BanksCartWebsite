@@ -197,6 +197,9 @@ const Header: React.FC<HeaderProps> = ({ openApplyModal, openEligibilityModal, o
             <img
               src="/logos/bankscartlogof.jpg"
               alt="BanksCart"
+              width="160"
+              height="36"
+              style={{ aspectRatio: "160/36" }}
               className="h-8 xl:h-9 w-auto object-contain"
             />
           </Link>
@@ -630,7 +633,7 @@ const Header: React.FC<HeaderProps> = ({ openApplyModal, openEligibilityModal, o
                   <button className="flex items-center gap-2 xl:gap-3 p-1 hover:bg-slate-50 rounded-full pr-2 xl:pr-3 transition-colors border border-transparent hover:border-slate-100 cursor-pointer whitespace-nowrap">
                     <div className="h-8 w-8 xl:h-9 xl:w-9 bg-blue-100 text-blue-700 rounded-full flex items-center justify-center font-bold text-xs xl:text-sm flex-shrink-0">
                       {userData?.photoURL ? (
-                        <img src={userData.photoURL} alt="Profile" className="h-8 w-8 xl:h-9 xl:w-9 rounded-full object-cover" />
+                        <img src={userData.photoURL} alt="Profile" width="36" height="36" style={{ aspectRatio: "1/1" }} className="h-8 w-8 xl:h-9 xl:w-9 rounded-full object-cover" />
                       ) : (
                         userData?.fullName?.charAt(0) || currentUser?.email?.charAt(0) || 'U'
                       )}

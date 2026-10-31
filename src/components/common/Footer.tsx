@@ -34,6 +34,7 @@ const Footer: React.FC<FooterProps> = ({ openEligibilityModal }) => {
               <li><Link to="/careers" className="hover:text-blue-400 transition-colors">Careers</Link></li>
               <li><Link to="/contact" className="hover:text-blue-400 transition-colors">Contact Us</Link></li>
               <li><Link to="/partners" className="hover:text-blue-400 transition-colors">Partners</Link></li>
+              <li><Link to="/research/borrowing-sentiment-report-q1-2026" className="hover:text-blue-400 transition-colors">Research & Reports</Link></li>
             </ul>
           </div>
 

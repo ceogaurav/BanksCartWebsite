@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import EmbedModal from '../components/common/EmbedModal';
+import { Code } from 'lucide-react';
 
 const formatCurrency = (value: number) =>
   value.toLocaleString('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).replace('₹', '₹ ');
@@ -182,6 +184,7 @@ const HomeLoanEMICalculator: React.FC<HomeLoanEMICalculatorProps> = ({ openApply
   const [amount, setAmount] = useState(SLIDER_CONFIG.amount.default);
   const [rate, setRate] = useState(SLIDER_CONFIG.rate.default);
   const [tenure, setTenure] = useState(SLIDER_CONFIG.tenure.default);
+  const [isEmbedModalOpen, setIsEmbedModalOpen] = useState(false);
   const [fee, setFee] = useState(SLIDER_CONFIG.fee.default);
 
   const { schedule, totalInterest, emi } = getAmortization(amount, rate, tenure, fee);
@@ -189,9 +192,17 @@ const HomeLoanEMICalculator: React.FC<HomeLoanEMICalculatorProps> = ({ openApply
   return (
     <div className="bg-[#f8f9fa] min-h-screen py-8">
       <div className="max-w-5xl mx-auto px-4">
-        <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Home Loan EMI Calculator - Calculate Monthly EMI Online</h1>
+        <div className="flex flex-wrap items-center justify-between gap-4 mb-3">
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900">Home Loan EMI Calculator - Calculate Monthly EMI Online</h1>
+          <button
+            onClick={() => setIsEmbedModalOpen(true)}
+            className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg shadow-sm transition-colors cursor-pointer"
+          >
+            <Code className="w-4 h-4" /> Embed Calculator
+          </button>
+        </div>
         <h2 className="text-xl font-semibold text-gray-800 mb-2">What is a Home Loan EMI Calculator?</h2>
-        <p className="text-gray-700 mb-6">BankBazaar's free Home Loan EMI Calculator helps you estimate your monthly payments and plan your loan repayment. Simply enter your desired loan amount, home loan interest rate, and loan tenure. The calculator will then instantly display your precise monthly EMI amount, allowing you to effectively budget for the long term. Estimating your EMI with a home loan EMI calculator is crucial for any prospective borrower.</p>
+        <p className="text-gray-700 mb-6">BanksCart's free Home Loan EMI Calculator helps you estimate your monthly payments and plan your loan repayment. Simply enter your desired loan amount, home loan interest rate, and loan tenure. The calculator will then instantly display your precise monthly EMI amount, allowing you to effectively budget for the long term. Estimating your EMI with a home loan EMI calculator is crucial for any prospective borrower.</p>
         <div className="flex flex-col md:flex-row gap-8 mb-8">
           {/* Left Panel - Inputs */}
           <div className="bg-white rounded-2xl shadow-lg p-6 flex-1 min-w-[320px]">

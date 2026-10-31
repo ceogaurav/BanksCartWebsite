@@ -59,6 +59,10 @@ const BannerCard: React.FC<BannerProps> = ({ badge, title, titleSuffix, highligh
                     <img
                         src={imageSrc}
                         alt={imageAlt}
+                        width="128"
+                        height="128"
+                        style={{ aspectRatio: "1/1" }}
+                        loading="lazy"
                         className="w-full h-full object-contain drop-shadow-2xl"
                     />
                 </div>

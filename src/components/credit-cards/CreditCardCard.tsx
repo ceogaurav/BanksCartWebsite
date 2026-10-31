@@ -23,7 +23,7 @@ export default function CreditCardCard({ card, onToggleCompare, isSelectedForCom
                         <img
                             src={card.image}
                             alt={card.name}
-                            className="w-full h-full object-contain drop-shadow-lg"
+                            width="200" height="120" style={{ aspectRatio: "5/3" }} loading="lazy" className="w-full h-full object-contain drop-shadow-lg"
                             onError={(e) => {
                                 (e.target as HTMLImageElement).src = 'https://placehold.co/300x190/f1f5f9/94a3b8?text=Card+Image';
                             }}

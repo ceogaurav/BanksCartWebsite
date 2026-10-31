@@ -54,6 +54,7 @@ async function generateSitemap() {
 
         // Core and legacy static pages
         const staticPages = [
+            '/research/borrowing-sentiment-report-q1-2026',
             '',
             '/about',
             '/editorial-policy',

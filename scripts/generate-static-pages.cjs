@@ -29,6 +29,8 @@ const childSitemaps = [
   'sitemap-services.xml'
 ];
 const urlsSet = new Set([
+  '/embed/ssy-calculator',
+  '/embed/home-loan-emi-calculator',
   '/',
   '/about',
   '/contact',
@@ -290,6 +292,18 @@ const BONDS_SUBPATHS = {
 
 // Static SEO Map for core hubs
 const STATIC_SEO_MAP = {
+  "/research/borrowing-sentiment-report-q1-2026": {
+    title: "BanksCart Indian Consumer Borrowing & Interest Rate Sentiment Report Q1 2026",
+    description: "Original research report analyzing 150,000+ Indian loan inquiries across 45 cities. Macro insights on repo rate transmission, Tier 2 borrowing, and credit score dynamics."
+  },
+  "/embed/ssy-calculator": {
+    title: "Sukanya Samriddhi Yojana (SSY) Calculator Widget | BanksCart",
+    description: "Interactive embeddable Sukanya Samriddhi Yojana calculator for webmasters and finance blogs."
+  },
+  "/embed/home-loan-emi-calculator": {
+    title: "Home Loan EMI Calculator Widget | BanksCart",
+    description: "Interactive embeddable Home Loan EMI calculator for real estate and finance blogs."
+  },
   "/about": {
     title: "About BanksCart: India's Trusted Financial Services & Loan Comparison Platform",
     description: "Learn about BanksCart's mission, leadership team, and editorial integrity in helping Indian borrowers compare loans, credit cards, and banking services objectively."
@@ -733,6 +747,94 @@ function escapeHtml(str) {
 function generatePreRenderedBody(cleanPath, meta) {
   const title = escapeHtml(meta.title);
   const desc = escapeHtml(meta.description);
+
+  
+  
+  // =========================================================================
+  // EMBEDDABLE CALCULATOR WIDGETS
+  // =========================================================================
+  if (cleanPath.startsWith('/embed/')) {
+    return `
+    <div class="bg-white p-4 font-sans text-gray-800 antialiased min-h-screen">
+      <div class="max-w-xl mx-auto border border-gray-200 rounded-xl p-6 shadow-sm">
+        <h1 class="text-xl font-bold text-gray-900 mb-2">${title}</h1>
+        <p class="text-xs text-gray-500 mb-4">${desc}</p>
+        <div class="p-4 bg-blue-50 rounded-lg text-sm text-blue-900 font-medium">
+          Loading interactive calculation engine...
+        </div>
+        <div class="mt-4 pt-3 border-t text-xs text-gray-500 flex justify-between">
+          <span>Calculation engine powered by BanksCart</span>
+          <a href="https://www.bankscart.com" target="_blank" rel="noopener" class="text-blue-600 font-semibold">Visit BanksCart</a>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  // =========================================================================
+  // RESEARCH / DIGITAL PR REPORT
+  // =========================================================================
+  if (cleanPath === '/research/borrowing-sentiment-report-q1-2026') {
+    return `
+    <div class="min-h-screen bg-slate-50 text-slate-800 font-sans antialiased">
+      <header class="bg-white border-b border-slate-200 py-4 px-6 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+          <a href="/" class="text-2xl font-bold tracking-tight text-blue-900">BanksCart</a>
+          <nav class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
+            <a href="/loans/personal-loan" class="hover:text-blue-600">Personal Loans</a>
+            <a href="/loans/home-loan" class="hover:text-blue-600">Home Loans</a>
+            <a href="/cards/credit-cards" class="hover:text-blue-600">Credit Cards</a>
+            <a href="/research/borrowing-sentiment-report-q1-2026" class="text-blue-600 font-bold">Research</a>
+          </nav>
+        </div>
+      </header>
+
+      <section class="bg-slate-900 text-white py-16 px-6">
+        <div class="max-w-4xl mx-auto text-center">
+          <span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-300 text-xs font-semibold rounded-full uppercase tracking-wider mb-4 border border-blue-400/30">Official Market Research Report · Q1 2026</span>
+          <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-6">${title}</h1>
+          <p class="text-lg text-slate-300 leading-relaxed max-w-3xl mx-auto mb-4">${desc}</p>
+          <div class="flex justify-center gap-6 text-xs text-slate-400 mt-6 border-t border-slate-800 pt-6">
+            <span>Sample: 152,480 Inquiries</span>
+            <span>Geography: 45 Indian Cities</span>
+            <span>Period: Oct 2025 - Jan 2026</span>
+          </div>
+        </div>
+      </section>
+
+      <main class="max-w-4xl mx-auto px-6 py-12">
+        <article class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 space-y-6">
+          <h2 class="text-2xl font-bold text-slate-900">Executive Summary & Key Findings</h2>
+          <p class="text-slate-600 leading-relaxed">
+            Based on empirical data from over 150,000 retail loan inquiries across 45 Indian cities, the BanksCart Q1 2026 report illuminates shifting consumer sentiment around repo rate transmission, Tier 2/3 credit appetite, and credit health dynamics.
+          </p>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 my-6">
+            <div class="bg-blue-50 p-4 rounded-xl border border-blue-100 text-center">
+              <div class="text-2xl font-bold text-blue-700">54.2%</div>
+              <div class="text-xs text-slate-600 mt-1">Tier 2/3 City Inquiries</div>
+            </div>
+            <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-100 text-center">
+              <div class="text-2xl font-bold text-emerald-700">71.4%</div>
+              <div class="text-xs text-slate-600 mt-1">Balance Transfer Searches</div>
+            </div>
+            <div class="bg-indigo-50 p-4 rounded-xl border border-indigo-100 text-center">
+              <div class="text-2xl font-bold text-indigo-700">748</div>
+              <div class="text-xs text-slate-600 mt-1">Median CIBIL Score</div>
+            </div>
+          </div>
+
+          <h3 class="text-xl font-bold text-slate-900 mt-8">Press Citation Guidelines</h3>
+          <p class="text-slate-600 leading-relaxed">
+            Journalists and personal finance writers (Livemint, The Economic Times, Financial Express, Business Standard, YourStory, Inc42) may cite data from this report with attribution to <strong>BanksCart</strong>.
+          </p>
+          <div class="bg-slate-100 p-4 rounded-lg font-mono text-xs text-slate-700">
+            Source: &lt;a href="https://www.bankscart.com/research/borrowing-sentiment-report-q1-2026"&gt;BanksCart Indian Consumer Borrowing & Interest Rate Sentiment Report Q1 2026&lt;/a&gt;
+          </div>
+        </article>
+      </main>
+      ${renderFooter()}
+    </div>`;
+  }
 
   // =========================================================================
   // BLUEPRINT TEMPLATE 1: HOMEPAGE (/)

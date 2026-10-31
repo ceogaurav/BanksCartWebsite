@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate, Link, useParams } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, Link, useParams, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -16,6 +16,9 @@ import AdminGuard from './components/auth/AdminGuard';
 
 // Import your pages and components
 import Home from './pages/Home';
+import BorrowingSentimentReport2026 from './pages/research/BorrowingSentimentReport2026';
+import SSYCalculatorEmbed from './pages/embed/SSYCalculatorEmbed';
+import HomeLoanEMIEmbed from './pages/embed/HomeLoanEMIEmbed';
 import PersonalLoanPage from './pages/PersonalLoanPage';
 import CreditRectificationPage from './pages/CreditRectificationPage';
 import HomeLoanPage from './pages/HomeLoanPage';
@@ -137,6 +140,9 @@ import DynamicGeneralBankingPage from './pages/banking/DynamicGeneralBankingPage
 import FinancialDirectory from './pages/FinancialDirectory';
 import DynamicHealthInsurancePage from './pages/insurance/DynamicHealthInsurancePage';
 import DynamicAegonLifePage from './pages/insurance/DynamicAegonLifePage';
+import HomeLoanEMIEmbed from './pages/embed/HomeLoanEMIEmbed';
+import SSYCalculatorEmbed from './pages/embed/SSYCalculatorEmbed';
+import BorrowingSentimentReport2026 from './pages/research/BorrowingSentimentReport2026';
 
 
 
@@ -310,19 +316,31 @@ const App: React.FC = () => {
         <SEOManager />
         <LoginModal />
         <OnboardingModal />
-        <ChristmasThemeWrapper>
-          <div className="flex flex-col min-h-screen font-inter bg-transparent">
-            {/* Header component, visible on all pages, passing modal open functions */}
-            <div className="print:hidden">
-              <Header
-                openApplyModal={openApplyModal}
-                openEligibilityModal={openEligibilityModal}
-                openPartnerModal={openPartnerModal}
-              />
-            </div>
-            <main className="flex-grow">
-              {/* Routes component renders the first matching Route */}
-              <Routes>
+        <MainLayout
+          openApplyModal={openApplyModal}
+          openEligibilityModal={openEligibilityModal}
+          openPartnerModal={openPartnerModal}
+          openCibilModal={openCibilModal}
+          isApplyModalOpen={isApplyModalOpen}
+          closeApplyModal={closeApplyModal}
+          currentLoanType={currentLoanType}
+          isEligibilityModalOpen={isEligibilityModalOpen}
+          closeEligibilityModal={closeEligibilityModal}
+          currentEligibilityLoanType={currentEligibilityLoanType}
+          isPartnerModalOpen={isPartnerModalOpen}
+          closePartnerModal={closePartnerModal}
+          isCibilModalOpen={isCibilModalOpen}
+          closeCibilModal={closeCibilModal}
+        >
+          <Routes>
+            {/* Research & Digital PR */}
+            <Route path="/research" element={<Navigate to="/research/borrowing-sentiment-report-q1-2026" replace />} />
+            <Route path="/research/borrowing-sentiment-report-q1-2026" element={<BorrowingSentimentReport2026 />} />
+
+            {/* Embeddable Calculator Widgets */}
+            <Route path="/embed/ssy-calculator" element={<SSYCalculatorEmbed />} />
+            <Route path="/embed/home-loan-emi-calculator" element={<HomeLoanEMIEmbed />} />
+
                 {/* Public Routes */}
                 {/* <Route path="/login" element={<Login />} /> Login is now a modal */}
 
@@ -837,6 +855,9 @@ const App: React.FC = () => {
                 <Route path="/disclaimer" element={<Disclaimer />} />
                 <Route path="/intellectual-policy" element={<IntellectualPolicy />} />
                 <Route path="/sitemap" element={<SitemapPage />} />
+                <Route path="/embed/home-loan-emi-calculator" element={<HomeLoanEMIEmbed />} />
+                <Route path="/embed/ssy-calculator" element={<SSYCalculatorEmbed />} />
+                <Route path="/research/borrowing-sentiment-report-q1-2026" element={<BorrowingSentimentReport2026 />} />
 
                 {/* Financial Products */}
                 <Route path="/credit-cards" element={<CreditCards />} />
@@ -844,39 +865,7 @@ const App: React.FC = () => {
                 {/* Catch-all route for any undefined paths (404 Not Found) */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
-            </main>
-            {/* Footer component, visible on all pages */}
-            <div className="print:hidden">
-              <Footer openEligibilityModal={openEligibilityModal} />
-            </div>
-
-            {/* Modals */}
-            <LoanApplicationModal
-              isOpen={isApplyModalOpen}
-              onClose={closeApplyModal}
-              initialLoanType={currentLoanType}
-            />
-            <EligibilityCheckModal
-              isOpen={isEligibilityModalOpen}
-              onClose={closeEligibilityModal}
-              initialLoanType={currentEligibilityLoanType}
-            />
-            <PartnerApplicationModal
-              isOpen={isPartnerModalOpen}
-              onClose={closePartnerModal}
-            />
-            {/* NEW: CIBIL Score Check Modal */}
-            <CibilScoreCheckModal
-              isOpen={isCibilModalOpen}
-              onClose={closeCibilModal}
-            />
-
-            {/* NEW: CIBIL Check Sliding Button - Appears on all pages */}
-            <div className="print:hidden">
-              <CibilCheckButton openCibilModal={openCibilModal} />
-            </div>
-          </div>
-        </ChristmasThemeWrapper>
+        </MainLayout>
       </Router>
     </AuthProvider>
   );

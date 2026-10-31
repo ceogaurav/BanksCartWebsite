@@ -260,6 +260,21 @@ export const BONDS_SUBPATHS: Record<string, { title: string; description: string
 
 // Core Static Route SEO Map
 export const SEO_MAP: Record<string, SEOMetadata> = {
+  "/research/borrowing-sentiment-report-q1-2026": {
+    title: "BanksCart Indian Consumer Borrowing & Interest Rate Sentiment Report Q1 2026",
+    description: "Original research report analyzing 150,000+ Indian loan inquiries across 45 cities. Macro insights on repo rate transmission, Tier 2 borrowing, and credit score dynamics.",
+    keywords: "bankscart research, indian borrowing sentiment, loan interest rate trends 2026, cibil score statistics, repo rate transmission"
+  },
+  "/embed/ssy-calculator": {
+    title: "Sukanya Samriddhi Yojana (SSY) Calculator Widget | BanksCart",
+    description: "Interactive embeddable Sukanya Samriddhi Yojana calculator for webmasters and finance blogs.",
+    keywords: "ssy calculator embed, sukanya samriddhi yojana widget"
+  },
+  "/embed/home-loan-emi-calculator": {
+    title: "Home Loan EMI Calculator Widget | BanksCart",
+    description: "Interactive embeddable Home Loan EMI calculator for real estate and finance blogs.",
+    keywords: "home loan emi calculator embed, loan calculator widget"
+  },
   // Core Pages
   "/": {
     title: "BanksCart: Compare Loan Interest Rates, Credit Cards & CIBIL Score Online",
