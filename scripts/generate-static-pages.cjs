@@ -857,6 +857,243 @@ function generatePreRenderedBody(cleanPath, meta) {
   }
 
 
+
+  // =========================================================================
+  // SILO 1: LOANS OVERVIEW HUB (/loans)
+  // =========================================================================
+  if (cleanPath === '/loans') {
+    return `
+    <div class="min-h-screen bg-slate-50 text-slate-800 font-sans antialiased">
+      <header class="bg-white border-b border-slate-200 py-4 px-6 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+          <a href="/" class="text-2xl font-bold tracking-tight text-blue-900">BanksCart</a>
+          <nav class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
+            <a href="/loans/personal-loan" class="hover:text-blue-600">Personal Loans</a>
+            <a href="/loans/home-loan" class="hover:text-blue-600">Home Loans</a>
+            <a href="/business-loan" class="hover:text-blue-600">Business Loans</a>
+            <a href="/cards" class="hover:text-blue-600">Cards</a>
+          </nav>
+        </div>
+      </header>
+
+      <section class="bg-slate-900 text-white py-16 px-6">
+        <div class="max-w-5xl mx-auto text-center space-y-4">
+          <span class="inline-block px-3 py-1 bg-blue-500/20 text-blue-300 text-xs font-semibold rounded-full uppercase tracking-wider border border-blue-400/30">
+            India's Leading Loan Marketplace
+          </span>
+          <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight">${title}</h1>
+          <p class="text-base sm:text-lg text-slate-300 leading-relaxed max-w-3xl mx-auto">${desc}</p>
+        </div>
+      </section>
+
+      <main class="max-w-5xl mx-auto px-6 py-12 space-y-10">
+        <section class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
+          <h2 class="text-2xl font-bold text-slate-900">Core Loan Categories</h2>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="p-6 rounded-2xl bg-blue-50 border border-blue-100 flex flex-col justify-between">
+              <div>
+                <h3 class="font-bold text-lg text-blue-900 mb-2">Personal Loans</h3>
+                <p class="text-xs text-slate-600 mb-4">Instant paperless personal loans starting from 10.25% p.a. with zero physical collateral.</p>
+              </div>
+              <a href="/loans/personal-loan" class="text-xs font-bold text-blue-600 hover:text-blue-800 underline">
+                Compare Personal Loans &rarr;
+              </a>
+            </div>
+
+            <div class="p-6 rounded-2xl bg-indigo-50 border border-indigo-100 flex flex-col justify-between">
+              <div>
+                <h3 class="font-bold text-lg text-indigo-900 mb-2">Home Loans</h3>
+                <p class="text-xs text-slate-600 mb-4">Lowest home loan interest rates starting from 8.35% p.a. with 30-year tenures and balance transfer.</p>
+              </div>
+              <a href="/loans/home-loan" class="text-xs font-bold text-indigo-600 hover:text-indigo-800 underline">
+                Compare Home Loans &rarr;
+              </a>
+            </div>
+
+            <div class="p-6 rounded-2xl bg-teal-50 border border-teal-100 flex flex-col justify-between">
+              <div>
+                <h3 class="font-bold text-lg text-teal-900 mb-2">Business Loans</h3>
+                <p class="text-xs text-slate-600 mb-4">Collateral-free MSME business loans up to ₹75 Lakhs for working capital, machinery, and expansion.</p>
+              </div>
+              <a href="/business-loan" class="text-xs font-bold text-teal-700 hover:text-teal-900 underline">
+                Compare Business Loans &rarr;
+              </a>
+            </div>
+          </div>
+        </section>
+      </main>
+      ${renderFooter()}
+    </div>`;
+  }
+
+  // =========================================================================
+  // SILO 2: CARDS OVERVIEW HUB (/cards) & LIFETIME FREE (/cards/lifetime-free)
+  // =========================================================================
+  if (cleanPath === '/cards' || cleanPath === '/cards/credit') {
+    return `
+    <div class="min-h-screen bg-slate-50 text-slate-800 font-sans antialiased">
+      <header class="bg-white border-b border-slate-200 py-4 px-6 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+          <a href="/" class="text-2xl font-bold tracking-tight text-blue-900">BanksCart</a>
+          <nav class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
+            <a href="/cards/credit-cards" class="hover:text-blue-600">Credit Cards</a>
+            <a href="/cards/lifetime-free" class="hover:text-blue-600">Lifetime Free</a>
+            <a href="/cards/cashback-credit-cards" class="hover:text-blue-600">Cashback Cards</a>
+          </nav>
+        </div>
+      </header>
+
+      <section class="bg-slate-900 text-white py-16 px-6">
+        <div class="max-w-5xl mx-auto text-center space-y-4">
+          <span class="inline-block px-3 py-1 bg-purple-500/20 text-purple-300 text-xs font-semibold rounded-full uppercase tracking-wider border border-purple-400/30">
+            India's Credit Card Catalog
+          </span>
+          <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight">${title}</h1>
+          <p class="text-base sm:text-lg text-slate-300 leading-relaxed max-w-3xl mx-auto">${desc}</p>
+        </div>
+      </section>
+
+      <main class="max-w-5xl mx-auto px-6 py-12 space-y-10">
+        <section class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
+          <h2 class="text-2xl font-bold text-slate-900">Featured Card Categories</h2>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="p-6 rounded-2xl bg-blue-50 border border-blue-100 flex flex-col justify-between">
+              <div>
+                <h3 class="font-bold text-lg text-blue-900 mb-2">All Credit Cards</h3>
+                <p class="text-xs text-slate-600 mb-4">Compare 100+ cards across dining, travel lounge access, rewards, and fuel waivers.</p>
+              </div>
+              <a href="/cards/credit-cards" class="text-xs font-bold text-blue-600 hover:text-blue-800 underline">
+                Browse All Credit Cards &rarr;
+              </a>
+            </div>
+
+            <div class="p-6 rounded-2xl bg-purple-50 border border-purple-100 flex flex-col justify-between">
+              <div>
+                <h3 class="font-bold text-lg text-purple-900 mb-2">Lifetime Free Credit Cards</h3>
+                <p class="text-xs text-slate-600 mb-4">Zero joining fees and no annual renewal charges forever with top reward rates.</p>
+              </div>
+              <a href="/cards/lifetime-free" class="text-xs font-bold text-purple-600 hover:text-purple-800 underline">
+                Explore Lifetime Free Cards &rarr;
+              </a>
+            </div>
+
+            <div class="p-6 rounded-2xl bg-emerald-50 border border-emerald-100 flex flex-col justify-between">
+              <div>
+                <h3 class="font-bold text-lg text-emerald-900 mb-2">Cashback Credit Cards</h3>
+                <p class="text-xs text-slate-600 mb-4">Earn up to 5% unlimited real cash refunds on online shopping, groceries, and dining.</p>
+              </div>
+              <a href="/cards/cashback-credit-cards" class="text-xs font-bold text-emerald-700 hover:text-emerald-900 underline">
+                Explore Cashback Cards &rarr;
+              </a>
+            </div>
+          </div>
+        </section>
+      </main>
+      ${renderFooter()}
+    </div>`;
+  }
+
+  if (cleanPath === '/cards/lifetime-free' || cleanPath === '/cards/credit/lifetime-free') {
+    return `
+    <div class="min-h-screen bg-slate-50 text-slate-800 font-sans antialiased">
+      <header class="bg-white border-b border-slate-200 py-4 px-6 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+          <a href="/" class="text-2xl font-bold tracking-tight text-blue-900">BanksCart</a>
+          <nav class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
+            <a href="/cards" class="hover:text-blue-600">Cards</a>
+            <a href="/cards/credit-cards" class="hover:text-blue-600">Credit Cards</a>
+          </nav>
+        </div>
+      </header>
+
+      <main class="max-w-4xl mx-auto px-6 py-12 space-y-8">
+        <article class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
+          <span class="text-xs font-bold text-purple-600 uppercase tracking-wider block">Zero Annual Fee Catalog</span>
+          <h1 class="text-3xl font-extrabold text-slate-900">${title}</h1>
+          <p class="text-slate-600 text-sm leading-relaxed">${desc}</p>
+          <div class="p-6 bg-purple-50 rounded-2xl border border-purple-200 flex items-center justify-between">
+            <div>
+              <h3 class="font-bold text-purple-900 text-sm">Best Lifetime Free Credit Cards (2026 Guide)</h3>
+              <p class="text-xs text-purple-700">Detailed reviews of Amazon Pay ICICI, IDFC FIRST Millennia, and HDFC LTF.</p>
+            </div>
+            <a href="/blog/best-lifetime-free-credit-cards" class="px-4 py-2 bg-purple-600 text-white font-bold text-xs rounded-xl shadow">Read Guide &rarr;</a>
+          </div>
+          <div class="pt-4 border-t flex gap-4 text-xs font-bold text-purple-600">
+            <a href="/cards/credit-cards" class="hover:underline">All Credit Cards &rarr;</a>
+            <a href="/blog/best-lifetime-free-credit-cards" class="hover:underline">Best LTF Cards Guide &rarr;</a>
+          </div>
+        </article>
+      </main>
+      ${renderFooter()}
+    </div>`;
+  }
+
+  // =========================================================================
+  // SILO 3: CREDIT SCORE & CIBIL HUB (/credit-score)
+  // =========================================================================
+  if (cleanPath === '/credit-score') {
+    return `
+    <div class="min-h-screen bg-slate-50 text-slate-800 font-sans antialiased">
+      <header class="bg-white border-b border-slate-200 py-4 px-6 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+          <a href="/" class="text-2xl font-bold tracking-tight text-blue-900">BanksCart</a>
+          <nav class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
+            <a href="/credit-score" class="text-blue-600 font-bold">Credit Score</a>
+            <a href="/cibil-credit-report" class="hover:text-blue-600">CIBIL Report</a>
+            <a href="/credit-score/credit-rectification-service" class="hover:text-blue-600">Rectification</a>
+          </nav>
+        </div>
+      </header>
+
+      <section class="bg-slate-900 text-white py-16 px-6">
+        <div class="max-w-5xl mx-auto text-center space-y-4">
+          <span class="inline-block px-3 py-1 bg-emerald-500/20 text-emerald-300 text-xs font-semibold rounded-full uppercase tracking-wider border border-emerald-400/30">
+            Multi-Bureau Credit Score &amp; Dispute Recovery
+          </span>
+          <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight">${title}</h1>
+          <p class="text-base sm:text-lg text-slate-300 leading-relaxed max-w-3xl mx-auto">${desc}</p>
+        </div>
+      </section>
+
+      <main class="max-w-5xl mx-auto px-6 py-12 space-y-10">
+        <section class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
+          <h2 class="text-2xl font-bold text-slate-900">Credit Health &amp; Dispute Recovery Services</h2>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="p-6 rounded-2xl bg-teal-50 border border-teal-100 flex flex-col justify-between">
+              <div>
+                <h3 class="font-bold text-lg text-teal-900 mb-2">CIBIL Credit Report</h3>
+                <p class="text-xs text-slate-600 mb-4">Official CIBIL credit report download with detailed breakdown of trade lines and payment history.</p>
+              </div>
+              <a href="/cibil-credit-report" class="text-xs font-bold text-teal-700 hover:text-teal-900 underline">
+                Check CIBIL Report &rarr;
+              </a>
+            </div>
+
+            <div class="p-6 rounded-2xl bg-blue-50 border border-blue-100 flex flex-col justify-between">
+              <div>
+                <h3 class="font-bold text-lg text-blue-900 mb-2">Credit Rectification Service</h3>
+                <p class="text-xs text-slate-600 mb-4">Identify inaccuracies, overdue tags, and wrongful default remarks with expert legal dispute support.</p>
+              </div>
+              <a href="/credit-score/credit-rectification-service" class="text-xs font-bold text-blue-600 hover:text-blue-800 underline">
+                Credit Rectification &rarr;
+              </a>
+            </div>
+
+            <div class="p-6 rounded-2xl bg-indigo-50 border border-indigo-100 flex flex-col justify-between">
+              <div>
+                <h3 class="font-bold text-lg text-indigo-900 mb-2">Credit Health Report Services</h3>
+                <p class="text-xs text-slate-600 mb-4">360-degree multi-bureau audit with actionable step-by-step guidance to achieve a 750+ score.</p>
+              </div>
+              <a href="/credit-health-report-services" class="text-xs font-bold text-indigo-600 hover:text-indigo-800 underline">
+                Credit Health Report &rarr;
+              </a>
+            </div>
+          </div>
+        </section>
+      </main>
+      ${renderFooter()}
+    </div>`;
+  }
   // =========================================================================
   // SILO 4: COMPANY REGISTRATION & IP HUB (/company-registration)
   // =========================================================================
@@ -1223,6 +1460,7 @@ function generatePreRenderedBody(cleanPath, meta) {
           <div class="pt-2 flex flex-wrap gap-4">
             <a href="#offers-grid" class="inline-flex items-center px-6 py-3 bg-teal-500 hover:bg-teal-600 text-slate-950 font-bold rounded-xl shadow">Compare Bank Rates</a>
             <a href="/personal-loan-emi-calculator" class="inline-flex items-center px-6 py-3 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-xl border border-white/20">Calculate EMI</a>
+            <a href="/blog/sbi-vs-hdfc-personal-loan" class="inline-flex items-center px-6 py-3 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-xl border border-white/20">SBI vs HDFC Comparison</a>
           </div>
         </section>
 
@@ -1403,6 +1641,7 @@ function generatePreRenderedBody(cleanPath, meta) {
           <div class="pt-2 flex flex-wrap gap-4">
             <a href="/credit-score" class="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow">Check Free Credit Score</a>
             <a href="/cibil-credit-report" class="inline-flex items-center px-6 py-3 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-xl border border-white/20">CIBIL Credit Report</a>
+            <a href="/blog/how-to-dispute-cibil-errors" class="inline-flex items-center px-6 py-3 bg-teal-500 hover:bg-teal-600 text-slate-900 font-bold rounded-xl shadow">How to Dispute CIBIL Errors &rarr;</a>
           </div>
         </section>
 
