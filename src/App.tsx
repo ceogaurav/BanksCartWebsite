@@ -17,6 +17,7 @@ import AdminGuard from './components/auth/AdminGuard';
 // Import your pages and components
 import Home from './pages/Home';
 import PersonalLoanPage from './pages/PersonalLoanPage';
+import CreditRectificationPage from './pages/CreditRectificationPage';
 import HomeLoanPage from './pages/HomeLoanPage';
 import CreditCardsPage from './pages/CreditCardsPage';
 import FixedDepositPage from './pages/FixedDepositPage';
@@ -366,9 +367,12 @@ const App: React.FC = () => {
                 <Route path="/loans" element={<LoansOverviewPage />} />              <Route path="/insurance" element={<InsuranceOverviewPage />} /> {/* NEW: Route for the Insurance e */}
                 <Route path="/investment" element={<InvestmentsOverviewPage />} /> {/* NEW: Route for the Investments e */}
                 <Route path="/cards" element={<CardsOverviewPage />} /> {/* NEW: Route for the Cards e */}
-                <Route path="/loans/home" element={<HomeLoanPage openApplyModal={openApplyModal} />} />
+                                <Route path="/loans/home" element={<HomeLoanPage openApplyModal={openApplyModal} />} />
+                <Route path="/loans/home-loan" element={<HomeLoanPage openApplyModal={openApplyModal} />} />
                 <Route path="/loans/personal" element={<PersonalLoanPage openApplyModal={openApplyModal} openEligibilityModal={openEligibilityModal} />} />
+                <Route path="/loans/personal-loan" element={<PersonalLoanPage openApplyModal={openApplyModal} openEligibilityModal={openEligibilityModal} />} />
                 <Route path="/loans/business" element={<BusinessLoanPage openApplyModal={openApplyModal} />} />
+                <Route path="/loans/business-loan" element={<BusinessLoanPage openApplyModal={openApplyModal} />} />
                 <Route path="/loans/car" element={<CarLoanPage openApplyModal={openApplyModal} />} />
                 <Route path="/loans/used-car" element={<UsedCarLoanPage openApplyModal={openApplyModal} openEligibilityModal={openEligibilityModal} openCibilModal={openCibilModal} />} />
                 <Route path="/loans/two-wheeler" element={<TwoWheelerLoanPage openApplyModal={openApplyModal} openCibilModal={openCibilModal} />} />
@@ -387,7 +391,7 @@ const App: React.FC = () => {
                 <Route path="/cibil/how-to-check-cibil-score-by-pan-card" element={<CheckCibilByPanPage />} />
                 <Route path="/cibil-report/cibil-score-sbi-loans" element={<SbiCibilScorePage />} />
                 <Route path="/credit-report/ways-to-improve-your-cibil-score" element={<WaysToImproveCibilPage />} />
-                <Route path="/credit-score/credit-rectification-service" element={<DynamicGeneralBankingPage />} />
+                <Route path="/credit-score/credit-rectification-service" element={<CreditRectificationPage />} />
                 <Route path="/credit-health-report-services" element={<DynamicGeneralBankingPage />} />
                 <Route path="/credit-score/cibil-score-for-personal-loan" element={<CibilScoreForPersonalLoanPage />} />
                 <Route path="/cibil/how-to-resolve-cibil-dispute" element={<ResolveCibilDisputePage />} />

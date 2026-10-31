@@ -9,7 +9,7 @@ const WhyChooseSection: React.FC = () => {
                     {/* Left title */}
                     <div className="lg:w-1/3">
                         <h2 className="text-3xl font-extrabold text-slate-900 leading-snug">
-                            Compare, Choose and Apply for personal credit products on BanksCart
+                            How BanksCart Simplifies Financial Decisions
                         </h2>
                         <button className="mt-8 px-6 py-2.5 bg-white border border-blue-600 text-blue-600 font-bold rounded-lg hover:bg-blue-50 transition-colors">
                             READ MORE

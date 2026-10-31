@@ -31,7 +31,7 @@ const Home: React.FC<HomeProps> = ({ openApplyModal, openEligibilityModal, openC
             label: "Personal Loan",
             tag: "Cashback Offer",
             tagColor: "bg-green-100 text-green-700",
-            onClick: () => openApplyModal('Personal Loan')
+            onClick: () => navigate('/loans/personal-loan')
         },
         {
             icon: CreditCard,
@@ -47,13 +47,13 @@ const Home: React.FC<HomeProps> = ({ openApplyModal, openEligibilityModal, openC
             label: "Business Loan",
             tag: "Cashback Offer",
             tagColor: "bg-green-100 text-green-700",
-            onClick: () => openApplyModal('Business Loan')
+            onClick: () => navigate('/loans/business-loan')
         },
         {
             icon: HomeIcon,
             imageSrc: "/icons/home_loan.png",
             label: "Home Loan",
-            onClick: () => openApplyModal('Home Loan')
+            onClick: () => navigate('/loans/home-loan')
         },
         {
             icon: Building,
@@ -201,9 +201,9 @@ const Home: React.FC<HomeProps> = ({ openApplyModal, openEligibilityModal, openC
 
             {/* PRODUCT GRIDS */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 relative z-10">
-                <ProductGrid title="Loans and Cards" items={loansAndCardsItems} columns={6} />
-                <ProductGrid title="Credit Score & Bill Payments" items={creditScoreItems} columns={6} />
-                <ProductGrid title="Investment & Insurance Products" items={investmentItems} columns={6} />
+                <ProductGrid title="Compare Lowest Loan Interest Rates from Top Indian Banks" items={loansAndCardsItems} columns={6} />
+                <ProductGrid title="Free CIBIL Score Check & Credit Health Assessment" items={creditScoreItems} columns={6} />
+                <ProductGrid title="Best Credit Cards in India: Cashbacks, Travel & Rewards" items={investmentItems} columns={6} />
             </div>
 
             {/* CHANCE OF APPROVAL SIMULATOR */}
@@ -214,6 +214,62 @@ const Home: React.FC<HomeProps> = ({ openApplyModal, openEligibilityModal, openC
 
             {/* WHY CHOOSE US */}
             <WhyChooseSection />
+
+            {/* CORE PRODUCT LINKS DIRECTORY */}
+            <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-12">
+              <div className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm">
+                <span className="text-xs font-bold text-blue-600 uppercase tracking-wider block mb-2">Explore Core Financial Services</span>
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 text-center">
+                  <a href="/loans/personal-loan" className="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border border-slate-200 hover:border-blue-300 text-xs font-bold text-slate-800 hover:text-blue-600 transition-all">
+                    Personal Loans
+                  </a>
+                  <a href="/loans/home-loan" className="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border border-slate-200 hover:border-blue-300 text-xs font-bold text-slate-800 hover:text-blue-600 transition-all">
+                    Home Loans
+                  </a>
+                  <a href="/loans/business-loan" className="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border border-slate-200 hover:border-blue-300 text-xs font-bold text-slate-800 hover:text-blue-600 transition-all">
+                    Business Loans
+                  </a>
+                  <a href="/cards" className="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border border-slate-200 hover:border-blue-300 text-xs font-bold text-slate-800 hover:text-blue-600 transition-all">
+                    Credit Cards
+                  </a>
+                  <a href="/credit-score" className="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border border-slate-200 hover:border-blue-300 text-xs font-bold text-slate-800 hover:text-blue-600 transition-all">
+                    Free CIBIL Score
+                  </a>
+                  <a href="/calculators" className="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border border-slate-200 hover:border-blue-300 text-xs font-bold text-slate-800 hover:text-blue-600 transition-all">
+                    EMI Calculators
+                  </a>
+                </div>
+              </div>
+            </section>
+
+            {/* HOMEPAGE FAQ SECTION */}
+            <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-14">
+              <div className="bg-white rounded-3xl p-8 sm:p-12 border border-slate-200 shadow-sm">
+                <span className="text-xs font-bold text-blue-600 uppercase tracking-wider block mb-2">Knowledge Base</span>
+                <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mb-6">
+                  Frequently Asked Questions About Loan Eligibility &amp; Applications
+                </h2>
+                <div className="divide-y divide-slate-100 space-y-4">
+                  <div className="pt-4">
+                    <h3 className="text-base font-bold text-slate-800 mb-1">How does BanksCart compare loan interest rates across Indian banks?</h3>
+                    <p className="text-sm text-slate-600 leading-relaxed">BanksCart algorithmically analyzes verified interest rate tables, processing fees, and Annual Percentage Rates (APR) across 30+ scheduled commercial banks and RBI-registered NBFCs, matching you with the lowest EMI options based on your income and credit profile.</p>
+                  </div>
+                  <div className="pt-4">
+                    <h3 className="text-base font-bold text-slate-800 mb-1">What is the minimum CIBIL score required for instant loan approval?</h3>
+                    <p className="text-sm text-slate-600 leading-relaxed">A CIBIL credit score of 750 or higher qualifies you for prime interest rates starting at 10.25% p.a. for personal loans and 8.35% p.a. for home loans. Borrowers with scores between 650 and 749 can still access pre-approved loans from select NBFC partners.</p>
+                  </div>
+                  <div className="pt-4">
+                    <h3 className="text-base font-bold text-slate-800 mb-1">Does checking my credit score or loan eligibility on BanksCart impact my CIBIL rating?</h3>
+                    <p className="text-sm text-slate-600 leading-relaxed">No. All initial loan eligibility queries, EMI simulations, and credit score retrievals on BanksCart execute as soft inquiries, which do not lower your official credit bureau score in any way.</p>
+                  </div>
+                  <div className="pt-4">
+                    <h3 className="text-base font-bold text-slate-800 mb-1">Are BanksCart comparison and application services free for borrowers?</h3>
+                    <p className="text-sm text-slate-600 leading-relaxed">Yes, BanksCart is 100% free for consumers. We never charge users any processing, application, or consulting fees.</p>
+                  </div>
+                </div>
+              </div>
+            </section>
+
         </div>
     );
 };

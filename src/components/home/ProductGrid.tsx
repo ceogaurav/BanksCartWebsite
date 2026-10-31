@@ -21,9 +21,9 @@ interface ProductGridProps {
 const ProductGrid: React.FC<ProductGridProps> = ({ title, items, columns = 6 }) => {
     return (
         <div className="mb-14 font-inter">
-            <h3 className="text-lg font-black text-slate-800 mb-6 flex items-center gap-2 border-l-4 border-blue-600 pl-3">
+            <h2 className="text-xl sm:text-2xl font-black text-slate-800 mb-6 flex items-center gap-2 border-l-4 border-blue-600 pl-3">
                 {title}
-            </h3>
+            </h2>
 
             <div className={`grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-${columns} gap-5`}>
                 {items.map((item, index) => (

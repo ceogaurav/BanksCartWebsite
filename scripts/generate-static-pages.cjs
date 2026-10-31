@@ -325,8 +325,20 @@ const STATIC_SEO_MAP = {
     description: "Read Neha Verma's author bio. Certified Financial Planner with 9+ years analyzing credit cards, fixed deposits, and retail banking products on BanksCart."
   },
   "/": {
-    title: "BanksCart: Compare Loan Interest Rates, Credit Cards & Apply Online",
-    description: "Compare and apply for personal loans, home loans, business loans, and credit cards from top Indian banks at BanksCart. Get instant eligibility and best interest rates."
+    title: "BanksCart: Compare Loan Interest Rates, Credit Cards & CIBIL Score Online",
+    description: "Compare personal, home, and business loan interest rates from 30+ top Indian banks. Check your CIBIL score for free and apply online with instant approval on BanksCart."
+  },
+  "/loans/personal-loan": {
+    title: "Personal Loan Interest Rates: Compare 30+ Banks & Apply Online | BanksCart",
+    description: "Compare personal loan interest rates starting from 10.25% p.a. Calculate EMIs, check eligibility across top banks, and apply online with zero physical paperwork."
+  },
+  "/loans/home-loan": {
+    title: "Home Loan Interest Rates 2026: Compare Top Banks & Apply | BanksCart",
+    description: "Compare home loan interest rates starting from 8.35% p.a. from SBI, HDFC, ICICI & more. Check eligibility, calculate EMI, and apply online with BanksCart."
+  },
+  "/credit-score/credit-rectification-service": {
+    title: "Credit Rectification Service: Dispute Errors & Improve CIBIL Score | BanksCart",
+    description: "Fix errors on your CIBIL report with expert credit rectification guidance. Resolve wrongful overdue tags, update settlement statuses, and rebuild your credit rating."
   },
   "/loans": {
     title: "Compare Bank Loans in India: Personal, Home, Car & Business Loans | BanksCart",
@@ -702,7 +714,76 @@ function generatePreRenderedBody(cleanPath, meta) {
     }
   }
 
-    // 1b. About Us Dedicated Pre-rendering
+    
+  // 1d. Credit Rectification Dedicated Pre-rendering
+  if (cleanPath === '/credit-score/credit-rectification-service') {
+    return `
+    <div class="min-h-screen bg-slate-50 text-slate-800 font-sans antialiased">
+      <header class="bg-white border-b border-slate-200 py-4 px-6 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+          <a href="/" class="text-2xl font-bold tracking-tight text-blue-900">BanksCart</a>
+          <nav class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
+            <a href="/loans/personal-loan" class="hover:text-blue-600 transition-colors">Personal Loans</a>
+            <a href="/loans/home-loan" class="hover:text-blue-600 transition-colors">Home Loans</a>
+            <a href="/cards" class="hover:text-blue-600 transition-colors">Credit Cards</a>
+            <a href="/credit-score" class="hover:text-blue-600 transition-colors">Credit Score</a>
+            <a href="/calculators" class="hover:text-blue-600 transition-colors">Calculators</a>
+          </nav>
+        </div>
+      </header>
+
+      <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+        <nav aria-label="Breadcrumb" class="text-sm text-slate-500">
+          <ol class="flex items-center space-x-2">
+            <li><a href="/" class="hover:text-blue-600">Home</a></li>
+            <li><span>/</span></li>
+            <li><a href="/credit-score" class="hover:text-blue-600">Credit Score</a></li>
+            <li><span>/</span></li>
+            <li class="text-slate-800 font-medium" aria-current="page">Credit Rectification Service</li>
+          </ol>
+        </nav>
+
+        <section class="bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white rounded-3xl p-8 lg:p-14 shadow-xl space-y-6">
+          <span class="inline-block px-3 py-1 bg-white/10 text-yellow-300 text-xs font-bold uppercase tracking-wider rounded-full border border-white/20">Credit Bureau Recovery</span>
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight text-white">Expert Credit Rectification &amp; CIBIL Dispute Resolution Guidance</h1>
+          <p class="text-base sm:text-lg text-slate-300 max-w-3xl leading-relaxed">Fix errors on your CIBIL report with expert credit rectification guidance. Resolve wrongful overdue tags, update settlement statuses, and rebuild your credit rating under RBI guidelines.</p>
+          <div class="pt-2 flex flex-wrap gap-4">
+            <a href="/credit-score" class="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow">Check Free Credit Score</a>
+            <a href="/cibil-credit-report" class="inline-flex items-center px-6 py-3 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-xl border border-white/20">CIBIL Credit Report</a>
+          </div>
+        </section>
+
+        <section class="bg-white rounded-2xl p-8 lg:p-12 border border-slate-200 shadow-sm space-y-4">
+          <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">What is Credit Rectification &amp; How Does It Help Your CIBIL Score?</h2>
+          <p class="text-slate-600 text-sm sm:text-base leading-relaxed">Credit rectification is the formal process of identifying, disputing, and correcting administrative errors, wrongful default remarks, and misreported payment histories on your credit bureau report. Under RBI guidelines, credit bureaus and lenders must resolve verified disputes within 30 days.</p>
+        </section>
+
+        <section class="bg-white rounded-2xl p-8 lg:p-12 border border-slate-200 shadow-sm space-y-4">
+          <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">Common Credit Report Errors: Identity Theft, Wrongful Overdue &amp; Outdated Balances</h2>
+          <p class="text-slate-600 text-sm sm:text-base leading-relaxed">Common reporting discrepancies include clerical Days Past Due (DPD) errors, accounts belonging to individuals with identical names, fraudulent trade lines opened via identity theft, and closed accounts failing to show zero balances.</p>
+        </section>
+
+        <section class="bg-white rounded-2xl p-8 lg:p-12 border border-slate-200 shadow-sm space-y-4">
+          <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">Step-by-Step CIBIL Online Dispute Resolution Process</h2>
+          <p class="text-slate-600 text-sm sm:text-base leading-relaxed">Borrowers can file a formal dispute on the official bureau website using the 9-digit Enquiry Control Number (ECN). The bureau contacts the lending bank to verify records and recalculates your score upon confirmation.</p>
+        </section>
+
+        <section class="bg-slate-900 text-white rounded-2xl p-8 lg:p-12 shadow-sm space-y-4">
+          <h2 class="text-2xl sm:text-3xl font-bold tracking-tight">Legitimate Credit Repair vs Illegal Score-Fixing Scams: What Borrowers Must Know</h2>
+          <p class="text-slate-300 text-sm sm:text-base leading-relaxed">Legitimate rectification only fixes provable factual errors with lender NOCs. Fraudulent agencies claiming to 'erase genuine defaults' are illegal and violate Indian financial regulations.</p>
+        </section>
+
+        <section class="bg-white rounded-2xl p-8 lg:p-12 border border-slate-200 shadow-sm space-y-4">
+          <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">Frequently Asked Questions on Credit Bureau Rectification Timelines</h2>
+          <p class="text-slate-600 text-sm leading-relaxed">Resolution typically takes 30 days. Successful disputes removing wrongful 90+ DPD default tags can improve scores by 50 to 120 points.</p>
+        </section>
+      </main>
+      ${renderFooter()}
+    </div>
+    `;
+  }
+
+  // 1b. About Us Dedicated Pre-rendering
   if (cleanPath === '/about-us') {
     return `
     <div class="min-h-screen bg-slate-50 text-slate-800 font-sans antialiased">
@@ -1264,7 +1345,32 @@ function generatePreRenderedBody(cleanPath, meta) {
       </section>
 
       <section class="space-y-6">
-        <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Key Features & Services</h2>
+        
+        <section class="space-y-6">
+          <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Compare Lowest Loan Interest Rates from Top Indian Banks</h2>
+          <p class="text-slate-600 text-sm">Compare personal, home, and business loan interest rates from 30+ leading RBI-regulated banks and NBFCs with zero advance fees.</p>
+        </section>
+
+        <section class="space-y-6">
+          <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Best Credit Cards in India: Cashbacks, Travel &amp; Rewards</h2>
+          <p class="text-slate-600 text-sm">Explore top cashback, travel airport lounge, and lifetime-free credit cards with instant digital eligibility checks.</p>
+        </section>
+
+        <section class="space-y-6">
+          <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Free CIBIL Score Check &amp; Credit Health Assessment</h2>
+          <p class="text-slate-600 text-sm">Check your 4-bureau credit rating with zero score impact and access specialized credit rectification services.</p>
+        </section>
+
+        <section class="space-y-6">
+          <h2 class="text-2xl font-bold text-slate-900 tracking-tight">How BanksCart Simplifies Financial Decisions</h2>
+          <p class="text-slate-600 text-sm">Our proprietary algorithmic engine evaluates APRs, processing fee schedules, and tenure slabs to help you choose the best financial product.</p>
+        </section>
+
+        <section class="space-y-6">
+          <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Frequently Asked Questions About Loan Eligibility &amp; Applications</h2>
+          <p class="text-slate-600 text-sm">Find answers on CIBIL cut-offs, paperless e-KYC documents, loan balance transfers, and interest rate calculation formulas.</p>
+        </section>
+
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
             <h3 class="text-lg font-semibold text-slate-900 mb-2">Verified Comparisons</h3>

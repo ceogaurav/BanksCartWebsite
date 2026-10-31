@@ -262,8 +262,8 @@ export const BONDS_SUBPATHS: Record<string, { title: string; description: string
 export const SEO_MAP: Record<string, SEOMetadata> = {
   // Core Pages
   "/": {
-    title: "BanksCart: Compare Loan Interest Rates, Credit Cards & Apply Online",
-    description: "Compare and apply for personal loans, home loans, business loans, and credit cards from top Indian banks at BanksCart. Get instant eligibility and best interest rates.",
+    title: "BanksCart: Compare Loan Interest Rates, Credit Cards & CIBIL Score Online",
+    description: "Compare personal, home, and business loan interest rates from 30+ top Indian banks. Check your CIBIL score for free and apply online with instant approval on BanksCart.",
     keywords: "bankscart, compare loans, best interest rates, apply credit card, instant loan eligibility"
   },
   "/resources/loan-rates": {
@@ -328,6 +328,31 @@ export const SEO_MAP: Record<string, SEOMetadata> = {
   },
 
   // Hub Pages
+    "/loans/personal-loan": {
+    title: "Personal Loan Interest Rates: Compare 30+ Banks & Apply Online | BanksCart",
+    description: "Compare personal loan interest rates starting from 10.25% p.a. Calculate EMIs, check eligibility across top banks, and apply online with zero physical paperwork.",
+    keywords: "personal loan interest rates, best personal loan in india, instant personal loan online, lowest personal loan emi"
+  },
+  "/loans/personal": {
+    title: "Personal Loan Interest Rates: Compare 30+ Banks & Apply Online | BanksCart",
+    description: "Compare personal loan interest rates starting from 10.25% p.a. Calculate EMIs, check eligibility across top banks, and apply online with zero physical paperwork.",
+    keywords: "personal loan interest rates, best personal loan in india, instant personal loan online, lowest personal loan emi"
+  },
+  "/loans/home-loan": {
+    title: "Home Loan Interest Rates 2026: Compare Top Banks & Apply | BanksCart",
+    description: "Compare home loan interest rates starting from 8.35% p.a. from SBI, HDFC, ICICI & more. Check eligibility, calculate EMI, and apply online with BanksCart.",
+    keywords: "home loan interest rates india, compare home loans, housing loan emi calculator, pmay subsidy"
+  },
+  "/loans/home": {
+    title: "Home Loan Interest Rates 2026: Compare Top Banks & Apply | BanksCart",
+    description: "Compare home loan interest rates starting from 8.35% p.a. from SBI, HDFC, ICICI & more. Check eligibility, calculate EMI, and apply online with BanksCart.",
+    keywords: "home loan interest rates india, compare home loans, housing loan emi calculator, pmay subsidy"
+  },
+  "/credit-score/credit-rectification-service": {
+    title: "Credit Rectification Service: Dispute Errors & Improve CIBIL Score | BanksCart",
+    description: "Fix errors on your CIBIL report with expert credit rectification guidance. Resolve wrongful overdue tags, update settlement statuses, and rebuild your credit rating.",
+    keywords: "credit rectification service india, cibil dispute resolution, fix credit score errors, remove overdue tags from cibil"
+  },
   "/loans": {
     title: "Compare Bank Loans in India: Personal, Home, Car & Business Loans | BanksCart",
     description: "Compare loan interest rates from top Indian banks. Find the lowest EMIs for personal, home, car, and business loans with instant eligibility check.",
@@ -395,16 +420,6 @@ export const SEO_MAP: Record<string, SEOMetadata> = {
   },
 
   // Main Loan Types
-  "/loans/home": {
-    title: "Home Loans in India: Apply Online at Lowest Interest Rates | BanksCart",
-    description: "Compare home loan interest rates from top banks like SBI, HDFC, ICICI, and Axis. Check eligibility, calculate EMI, and apply online with zero processing fees.",
-    keywords: "home loans, home loan interest rates, lowest home loan rate, apply home loan online"
-  },
-  "/loans/personal": {
-    title: "Apply for Personal Loans Online: Compare Rates from 30+ Top Banks | BanksCart",
-    description: "Compare personal loans from 30+ top banks and NBFCs in India. Check eligibility, lowest interest rates starting from 10.50%, EMI calculations, and apply online.",
-    keywords: "personal loan, instant personal loan, compare personal loan interest rates, personal loan emi calculator"
-  },
   "/loans/personal/overview": {
     title: "Personal Loans Overview: In-Depth Comparison & Eligibility Guide | BanksCart",
     description: "Comprehensive personal loan comparison across top Indian lenders. Compare interest rates, processing fees, documentation, and calculate repayments instantly.",

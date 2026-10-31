@@ -43,15 +43,12 @@ export default function HeroSection({ openApplyModal, openCibilModal }: HeroSect
               <Sparkles className="w-4 h-4 text-yellow-400 animate-spin-slow" /> India's No. 1 Comparison Hub
             </div>
             
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.1] text-white">
-              Simplify Your <br className="hidden sm:block" />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-300 to-yellow-300">
-                Financial Decisions
-              </span>
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-[1.15] text-white">
+              Compare Loans, Credit Cards &amp; Banking Products in India
             </h1>
             
             <p className="text-slate-300 text-base sm:text-lg max-w-xl leading-relaxed">
-              Compare personal loans, premium credit cards, fixed deposits, and check your credit score absolutely free. We match you with 40+ leading lenders for the best interest rates.
+              Compare personal, home, and business loan interest rates from 30+ top Reserve Bank of India (RBI) regulated banks and NBFCs. Evaluate Annual Percentage Rates (APR), calculate payments with our EMI Calculator, check your free CIBIL score, and apply online with instant approval.
             </p>
 
             {/* Live Trust Badges */}
