@@ -114,6 +114,8 @@ import DynamicPersonalLoanPage from './pages/cibil/DynamicPersonalLoanPage';
 import PersonalLoanOverviewPage from './pages/PersonalLoanOverviewPage';
 import AboutUs from './pages/AboutUs';
 import ContactUs from './pages/ContactUs';
+import AuthorBioPage from './pages/AuthorBioPage';
+import EditorialPolicy from './pages/legal/EditorialPolicy';
 import InvestorRelations from './pages/legal/InvestorRelations';
 import Disclaimer from './pages/legal/Disclaimer';
 import IntellectualPolicy from './pages/legal/IntellectualPolicy';
@@ -785,9 +787,13 @@ const App: React.FC = () => {
                 {/* Legacy /blogs/:slug Wildcard Redirect */}
                 <Route path="/blogs/:slug" element={<LegacyBlogRedirect />} />
 
-                {/* Legal Pages */}
-                <Route path="/about-us" element={<AboutUs />} />
-                <Route path="/about" element={<Navigate to="/about-us" replace />} />
+                {/* Author Bio Pages */}
+                <Route path="/author/:slug" element={<AuthorBioPage />} />
+
+                {/* Legal & Editorial Policy Pages */}
+                <Route path="/editorial-policy" element={<EditorialPolicy />} />
+                <Route path="/about" element={<AboutUs />} />
+                <Route path="/about-us" element={<Navigate to="/about" replace />} />
                 <Route path="/contact" element={<ContactUs />} />
                 <Route path="/contact-us" element={<Navigate to="/contact" replace />} />
                 <Route path="/credit-report-terms" element={<CreditReportTerms />} />

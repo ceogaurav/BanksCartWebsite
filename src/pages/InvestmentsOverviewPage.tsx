@@ -96,7 +96,46 @@ const InvestmentsOverviewPage: React.FC = () => (
       {investmentTypes.map((investment, index) => (
         <motion.div key={investment.title} variants={itemVariants}>
           <InvestmentCard {...investment} />
-        </motion.div>
+        
+    {/* Government Savings & Tax Savings Resource Block */}
+    <div className="mt-16 max-w-5xl mx-auto bg-white rounded-2xl p-8 border border-slate-200 shadow-sm">
+      <span className="text-xs font-bold text-teal-700 uppercase tracking-wider block mb-1">
+        Government Savings & Tax Savings
+      </span>
+      <h3 className="text-2xl font-bold text-gray-900 mb-3">
+        Government Savings Schemes & Tax Optimization
+      </h3>
+      <p className="text-sm text-gray-650 leading-relaxed mb-6">
+        Maximize sovereign security and triple tax-exempt (EEE) growth through government-backed welfare and retirement avenues. Explore our comprehensive resources:
+      </p>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="p-5 rounded-xl bg-green-50/60 border border-green-200">
+          <h4 className="font-bold text-gray-900 text-base mb-1">Sukanya Samriddhi Yojana (SSY)</h4>
+          <p className="text-xs text-gray-600 mb-3 leading-relaxed">
+            High-interest sovereign savings scheme offering 8.2% p.a. guaranteed returns with Section 80C tax deduction and tax-free maturity for girl children.
+          </p>
+          <a
+            href="/blog/Sukanya-Samriddhi-Yojana-Guide"
+            className="text-xs font-bold text-teal-700 hover:text-teal-800 underline inline-flex items-center"
+          >
+            complete Sukanya Samriddhi Yojana guide &rarr;
+          </a>
+        </div>
+        <div className="p-5 rounded-xl bg-slate-50 border border-slate-200">
+          <h4 className="font-bold text-gray-900 text-base mb-1">SSY Maturity Calculator</h4>
+          <p className="text-xs text-gray-600 mb-3 leading-relaxed">
+            Estimate yearly compounding interest, maturity amount, and tenure timelines with our interactive calculator.
+          </p>
+          <a
+            href="/calculators/ssy-calculator"
+            className="text-xs font-bold text-blue-600 hover:text-blue-700 underline inline-flex items-center"
+          >
+            Calculate SSY Returns &rarr;
+          </a>
+        </div>
+      </div>
+    </div>
+  </motion.div>
       ))}
     </div>
 

@@ -74,9 +74,9 @@ const LoansOverviewPage = () => (
             Credila Financial Services
           </h3>
           <p className="text-xs text-gray-500 leading-relaxed">
-            HDFC Credila specialized education and premier institutional loans with customized tenures and tax advantages.
+            HDFC Credila specialized education and premier institutional loans with customized tenures and tax advantages. Compare <span className="font-semibold text-blue-600 underline">HDFC Credila education loan interest rates</span>.
           </p>
-          <span className="text-xs text-blue-600 font-semibold mt-3 inline-block group-hover:underline">Explore Credila &rarr;</span>
+          <span className="text-xs text-blue-600 font-semibold mt-3 inline-block group-hover:underline">HDFC Credila education loan interest rates &rarr;</span>
         </a>
 
         <a

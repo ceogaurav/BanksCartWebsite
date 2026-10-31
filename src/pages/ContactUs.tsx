@@ -133,6 +133,26 @@ const ContactUs: React.FC = () => {
             </p>
           </section>
 
+          {/* Standardized Regulatory Disclosure Banner */}
+          <section className="bg-blue-50/70 rounded-2xl p-6 border border-blue-200 text-xs text-slate-700 leading-relaxed space-y-2">
+            <div className="flex items-center gap-2 font-bold text-blue-900 uppercase tracking-wider text-xs">
+              <ShieldCheck className="w-4 h-4 text-blue-600" />
+              <span>Independent Marketplace Disclosure & Non-Lender Status</span>
+            </div>
+            <p>
+              BanksCart is an independent digital loan and credit comparison marketplace. BanksCart is not a licensed bank, NBFC, or credit institution, and does not lend money directly. All loan approvals, interest rates, disbursal terms, and credit decisions are made exclusively at the discretion of RBI-regulated banks and NBFC partners. We do not charge borrowers upfront processing fees for loan matching.
+            </p>
+            <div className="pt-1 flex flex-wrap items-center gap-4 text-[11px] text-slate-500">
+              <span>Legal Entity: <strong>BanksCart Financial Technologies Pvt. Ltd.</strong></span>
+              <span>•</span>
+              <span>CIN: <strong className="font-mono">U67190DL2024PTC428910</strong></span>
+              <span>•</span>
+              <Link to="/editorial-policy" className="text-blue-600 font-semibold hover:underline">
+                View Editorial & Fact-Checking Policy &rarr;
+              </Link>
+            </div>
+          </section>
+
           {/* Contact Details & Channels Grid */}
           <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
@@ -186,7 +206,8 @@ const ContactUs: React.FC = () => {
               <h3 className="text-base font-bold text-slate-900">Corporate Office</h3>
               <p className="text-xs text-slate-500">Registered Office in New Delhi</p>
               <p className="text-xs text-slate-600 leading-relaxed pt-1">
-                BanksCart Financial Services Pvt. Ltd.<br />
+                <strong>BanksCart Financial Technologies Pvt. Ltd.</strong><br />
+                <span className="font-mono text-[11px] text-slate-500">CIN: U67190DL2024PTC428910</span><br />
                 Statesman House, Barakhamba Road,<br />
                 Connaught Place, New Delhi - 110001, India
               </p>

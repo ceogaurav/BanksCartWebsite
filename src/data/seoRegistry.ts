@@ -691,6 +691,26 @@ export const SEO_MAP: Record<string, SEOMetadata> = {
     description: "Contact BanksCart customer care, support desk, and grievance redressal officer. Get in touch for loan application assistance, banking partner inquiries, and customer feedback.",
     keywords: "contact bankscart, customer care bankscart, grievance officer bankscart"
   },
+  "/editorial-policy": {
+    title: "Editorial Integrity, Rate Verification & Fact-Checking Policy | BanksCart",
+    description: "Learn how BanksCart verifies loan interest rates, conducts weekly bank audits, maintains 100% editorial independence from lenders, and fact-checks financial guides.",
+    keywords: "editorial policy, rate verification, fact checking policy, bankscart editorial standards, financial integrity"
+  },
+  "/author/raghav-singhal": {
+    title: "Raghav Singhal, FCA & CFP - Lead Financial Analyst Bio | BanksCart",
+    description: "Read Raghav Singhal's author bio. Fellow Chartered Accountant & Certified Financial Planner with 12+ years experience in retail lending and credit debt advisory.",
+    keywords: "raghav singhal, chartered accountant, financial planner, bankscart author"
+  },
+  "/author/amit-khurana": {
+    title: "Amit Khurana, CFA & ex-SBI - Senior Banking Advisor Bio | BanksCart",
+    description: "Read Amit Khurana's reviewer bio. Veteran banker with 18+ years leading credit underwriting at State Bank of India and CFA charterholder on BanksCart.",
+    keywords: "amit khurana, cfa charterholder, sbi banker, banking advisor, bankscart reviewer"
+  },
+  "/author/neha-verma": {
+    title: "Neha Verma, CFP - Senior Personal Finance Specialist Bio | BanksCart",
+    description: "Read Neha Verma's author bio. Certified Financial Planner with 9+ years analyzing credit cards, fixed deposits, and retail banking products on BanksCart.",
+    keywords: "neha verma, certified financial planner, credit card expert, bankscart author"
+  },
   "/credit-report-terms": {
     title: "Credit Report Terms & Conditions | BanksCart",
     description: "Review BanksCart's terms and conditions regarding free credit score checks, CIBIL reports, and data privacy policies.",
@@ -759,6 +779,17 @@ export function getSEOMetadata(pathname: string): SEOMetadata {
   }
   if (cleanPath === '/aadhar-card') {
     return SEO_MAP['/aadhar-card'];
+  }
+
+  // Author Bio Pages
+  if (cleanPath.startsWith('/author/')) {
+    const slug = cleanPath.replace('/author/', '');
+    const name = formatSlug(slug);
+    return {
+      title: `${name} - Verified Financial Author Bio | BanksCart`,
+      description: `Read articles and verified credentials for ${name} on BanksCart. Expert analysis on personal loans, mortgages, and credit scores.`,
+      keywords: `${slug}, ${name}, financial author, bankscart`
+    };
   }
 
   // 3. Specific high-priority service targets (Explicitly cited by user audit)

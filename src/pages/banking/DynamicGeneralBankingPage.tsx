@@ -146,6 +146,23 @@ const DynamicGeneralBankingPage: React.FC = () => {
               </div>
             )}
 
+            {/* Legal & Intellectual Property Service Cluster */}
+            {location.pathname.includes('company-registration') && (
+              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl border border-blue-200 p-6 sm:p-8 shadow-sm">
+                <span className="text-xs font-bold text-blue-700 uppercase tracking-wider block mb-2">Legal & Intellectual Property Service Cluster</span>
+                <h3 className="text-lg font-bold text-slate-800 mb-2">Protect Your Intellectual Property & Software Assets</h3>
+                <p className="text-sm text-slate-600 mb-4 leading-relaxed">
+                  In addition to corporate registration, safeguarding your proprietary source code, artistic content, and literary works is crucial for safeguarding enterprise valuation. Apply directly for our <a href="/company-registration/copyright-registration" className="text-blue-700 font-bold underline hover:text-blue-800">online copyright registration services</a> with end-to-end legal filing support.
+                </p>
+                <a
+                  href="/company-registration/copyright-registration"
+                  className="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium text-xs rounded-lg transition-colors shadow-sm"
+                >
+                  online copyright registration services &rarr;
+                </a>
+              </div>
+            )}
+
             {/* Core Highlights highlights */}
             <div className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm">
               <h3 className="text-lg font-bold text-slate-800 mb-6 flex items-center gap-2">

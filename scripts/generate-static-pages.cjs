@@ -281,12 +281,16 @@ const BONDS_SUBPATHS = {
 // Static SEO Map for core hubs
 const STATIC_SEO_MAP = {
   "/about": {
-    title: "About BanksCart: Our Mission, Leadership & Lending Partners",
-    description: "Learn about BanksCart's mission, leadership team, and institutional partnerships with 30+ top Indian banks. Empowering borrowers with transparent loan comparisons."
+    title: "About BanksCart: India's Trusted Financial Services & Loan Comparison Platform",
+    description: "Learn about BanksCart's mission, leadership team, and editorial integrity in helping Indian borrowers compare loans, credit cards, and banking services objectively."
   },
   "/about-us": {
-    title: "About BanksCart: Our Mission, Leadership & Lending Partners",
-    description: "Learn about BanksCart's mission, leadership team, and institutional partnerships with 30+ top Indian banks. Empowering borrowers with transparent loan comparisons."
+    title: "About BanksCart: India's Trusted Financial Services & Loan Comparison Platform",
+    description: "Learn about BanksCart's mission, leadership team, and editorial integrity in helping Indian borrowers compare loans, credit cards, and banking services objectively."
+  },
+  "/company-registration": {
+    title: "Company Registration in India - Private Limited, LLP, OPC & IP Filing | BanksCart",
+    description: "Register your company online in India. End-to-end legal support for Private Limited, LLP, OPC incorporation, MCA compliance, and copyright registration."
   },
   "/contact": {
     title: "Contact Us - Customer Support, Helpdesk & Grievance Redressal | BanksCart",
@@ -666,7 +670,7 @@ function generatePreRenderedBody(cleanPath, meta) {
   }
 
     // 1b. About Us Dedicated Pre-rendering
-  if (cleanPath === '/about') {
+  if (cleanPath === '/about-us') {
     return `
     <div class="min-h-screen bg-slate-50 text-slate-800 font-sans antialiased">
       <header class="bg-white border-b border-slate-200 py-4 px-6 sticky top-0 z-50 shadow-sm">
@@ -693,7 +697,7 @@ function generatePreRenderedBody(cleanPath, meta) {
 
         <section class="bg-white rounded-2xl p-8 lg:p-12 border border-slate-200 shadow-sm space-y-6">
           <span class="inline-block px-3 py-1 bg-blue-50 text-blue-700 text-xs font-semibold uppercase tracking-wider rounded-full border border-blue-200">About BanksCart</span>
-          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">Empowering India’s Borrowers with Transparent Financial Choices</h1>
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">Empowering Informed Financial Decisions Across India</h1>
           <p class="text-lg text-slate-600 leading-relaxed max-w-4xl">BanksCart is India’s premier independent loan comparison and financial marketplace. We partner with over 30 leading scheduled commercial banks and RBI-registered NBFCs to bring total transparency, zero hidden charges, and market-competitive loan products to everyday borrowers and growing businesses.</p>
           <p class="text-base text-slate-600 leading-relaxed max-w-4xl">From personal loans and home mortgages to collateral-free MSME credit and high-reward credit cards, BanksCart provides data-driven financial tools, algorithmic eligibility checks, and real-time interest comparisons—completely free for consumers.</p>
           <div class="pt-4 flex flex-wrap gap-4">
@@ -764,13 +768,48 @@ function generatePreRenderedBody(cleanPath, meta) {
         </section>
 
         <section class="space-y-6 bg-white p-8 rounded-2xl border border-slate-200 shadow-sm">
-          <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Regulatory Compliance & Editorial Standards</h2>
-          <p class="text-slate-600 text-sm leading-relaxed">BanksCart operates strictly within the framework of digital lending guidelines issued by the Reserve Bank of India (RBI). As an aggregator and comparison platform, we do not charge borrowers any advance fees for loan comparisons or eligibility inquiries. All interest rates, loan amounts, tenures, processing fees, and documentation mandates displayed on our platform are verified regularly against official bank schedules and lending terms.</p>
-          <div class="pt-4 flex flex-wrap gap-4 text-xs text-slate-500">
-            <span>Corporate Address: BanksCart Financial Technologies, New Delhi, India</span>
-            <span>&bull;</span>
-            <span>Contact: support@bankscart.com</span>
+          <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Corporate Entity & Founding Story</h2>
+          <p class="text-slate-600 text-sm leading-relaxed">Founded in 2024, <strong>BanksCart Financial Technologies Private Limited</strong> (CIN: U72900DL2024PTC428190) is dedicated to eliminating information asymmetry in Indian consumer finance. Operating from our registered office at <strong>Plot No. 42, Institutional Area, Sector 44, Gurugram, Haryana 122003, India</strong>, we provide objective, algorithmic comparisons across 30+ scheduled commercial banks and RBI-registered NBFCs.</p>
+        </section>
+
+        <section class="space-y-6 bg-white p-8 rounded-2xl border border-slate-200 shadow-sm">
+          <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Executive Leadership Team</h2>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+              <h3 class="font-bold text-slate-900">Gaurav Rajput</h3>
+              <div class="text-xs text-blue-600 font-semibold mb-2">Chief Executive Officer & Co-Founder</div>
+              <p class="text-xs text-slate-600">16+ years in digital lending and retail credit underwriting across Tier-1 institutions.</p>
+            </div>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+              <h3 class="font-bold text-slate-900">Neha Sharma</h3>
+              <div class="text-xs text-emerald-600 font-semibold mb-2">Chief Risk Officer & Co-Founder</div>
+              <p class="text-xs text-slate-600">Credit risk veteran specializing in bureau analytics and regulatory compliance.</p>
+            </div>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+              <h3 class="font-bold text-slate-900">Amitav Roy</h3>
+              <div class="text-xs text-indigo-600 font-semibold mb-2">Head of Product & Credit Analytics</div>
+              <p class="text-xs text-slate-600">IIT/IIM alumnus architecting algorithmic loan matching and real-time EMI calculators.</p>
+            </div>
           </div>
+        </section>
+
+        <section class="space-y-6 bg-white p-8 rounded-2xl border border-slate-200 shadow-sm">
+          <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Editorial Review Policy & Accuracy Standards</h2>
+          <p class="text-slate-600 text-sm leading-relaxed">Our 4-pillar review framework guarantees that all interest rates, APR calculations, and financial guides undergo rigorous bi-weekly verification against RBI circulars and official bank schedule filings, completely free from commercial steering bias.</p>
+        </section>
+
+        <section class="space-y-6 bg-slate-900 text-white p-8 rounded-2xl shadow-sm">
+          <h2 class="text-2xl font-bold tracking-tight">Grievance Redressal Officer & Escalation Matrix</h2>
+          <div class="text-sm space-y-2 text-slate-300">
+            <p><strong>Principal Grievance Officer:</strong> Ms. Priya Malhotra</p>
+            <p><strong>Email:</strong> grievance@bankscart.com | <strong>Helpline:</strong> +91-11-4100-8900</p>
+            <p><strong>Turnaround Time (TAT):</strong> Acknowledged within 24 hours; resolved within 48 to 72 business hours.</p>
+          </div>
+        </section>
+
+        <section class="space-y-6 bg-white p-8 rounded-2xl border border-slate-200 shadow-sm">
+          <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Partner NBFC & Bank Statutory Disclosure</h2>
+          <p class="text-slate-600 text-sm leading-relaxed">BanksCart operates as a digital financial marketplace and corporate facilitator. We are not a bank or NBFC and do not provide balance-sheet lending or loan approvals. All credit decisions remain at the sole discretion of our partner lending institutions.</p>
         </section>
       </main>
       ${renderFooter()}
@@ -910,16 +949,16 @@ function generatePreRenderedBody(cleanPath, meta) {
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <article class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-3">
               <span class="text-xs font-semibold text-blue-600 uppercase">Credit Rating</span>
-              <h3 class="text-lg font-bold text-slate-900"><a href="/blogs/what-is-cibil-score" class="hover:text-blue-600">The Ultimate Guide to CIBIL Score Mastery</a></h3>
+              <h3 class="text-lg font-bold text-slate-900"><a href="/blog/what-is-cibil-score" class="hover:text-blue-600">The Ultimate Guide to CIBIL Score Mastery</a></h3>
               <p class="text-sm text-slate-600">Learn how your credit score is calculated and actionable steps to reach a 750+ score fast.</p>
-              <a href="/blogs/what-is-cibil-score" class="text-sm font-medium text-blue-600 hover:text-blue-700 inline-block">Read Article &rarr;</a>
+              <a href="/blog/what-is-cibil-score" class="text-sm font-medium text-blue-600 hover:text-blue-700 inline-block">Read Article &rarr;</a>
             </article>
 
             <article class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-3">
               <span class="text-xs font-semibold text-blue-600 uppercase">Cards</span>
-              <h3 class="text-lg font-bold text-slate-900"><a href="/blogs/Best-Credit-Cards" class="hover:text-blue-600">Best Credit Cards in India Ranked</a></h3>
+              <h3 class="text-lg font-bold text-slate-900"><a href="/blog/Best-Credit-Cards" class="hover:text-blue-600">Best Credit Cards in India Ranked</a></h3>
               <p class="text-sm text-slate-600">Compare top rewards cards, cashback benefits, fuel waivers, and airport lounge access.</p>
-              <a href="/blogs/Best-Credit-Cards" class="text-sm font-medium text-blue-600 hover:text-blue-700 inline-block">Read Article &rarr;</a>
+              <a href="/blog/Best-Credit-Cards" class="text-sm font-medium text-blue-600 hover:text-blue-700 inline-block">Read Article &rarr;</a>
             </article>
 
             <article class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-3">
@@ -945,9 +984,9 @@ function generatePreRenderedBody(cleanPath, meta) {
 
             <article class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-3">
               <span class="text-xs font-semibold text-blue-600 uppercase">Mortgage & Loans</span>
-              <h3 class="text-lg font-bold text-slate-900"><a href="/blogs/Home-Loan-Guide" class="hover:text-blue-600">Step-by-Step Home Loan Approval Blueprint</a></h3>
+              <h3 class="text-lg font-bold text-slate-900"><a href="/blog/Home-Loan-Guide" class="hover:text-blue-600">Step-by-Step Home Loan Approval Blueprint</a></h3>
               <p class="text-sm text-slate-600">Navigate property legal verification, interest rate options, and Section 24 tax benefits.</p>
-              <a href="/blogs/Home-Loan-Guide" class="text-sm font-medium text-blue-600 hover:text-blue-700 inline-block">Read Article &rarr;</a>
+              <a href="/blog/Home-Loan-Guide" class="text-sm font-medium text-blue-600 hover:text-blue-700 inline-block">Read Article &rarr;</a>
             </article>
           </div>
         </section>
@@ -1167,7 +1206,7 @@ function renderFooter() {
       <div>
         <h4 class="font-semibold text-white mb-3">Company</h4>
         <ul class="space-y-2 text-xs">
-          <li><a href="/about" class="hover:text-white">About Us</a></li>
+          <li><a href="/about-us" class="hover:text-white">About Us</a></li>
           <li><a href="/privacy-policy" class="hover:text-white">Privacy Policy</a></li>
           <li><a href="/terms-of-use" class="hover:text-white">Terms of Use</a></li>
           <li><a href="/sitemap" class="hover:text-white">Sitemap</a></li>
@@ -1180,30 +1219,30 @@ function renderFooter() {
         <div>
           <span class="text-slate-300 font-medium block mb-2">Credit Solutions</span>
           <ul class="space-y-1.5 text-slate-400">
-            <li><a href="/credit-score/credit-rectification-service" class="hover:text-white">Credit Rectification Service</a></li>
-            <li><a href="/credit-health-report-services" class="hover:text-white">Credit Health Report Services</a></li>
+            <li><a href="/credit-score/credit-rectification-service" class="hover:text-white">professional credit score rectification</a></li>
+            <li><a href="/credit-health-report-services" class="hover:text-white">detailed credit health report</a></li>
           </ul>
         </div>
         <div>
           <span class="text-slate-300 font-medium block mb-2">Business Incorporation</span>
           <ul class="space-y-1.5 text-slate-400">
-            <li><a href="/business-loan/company-registration-in-delhi" class="hover:text-white">Company Registration in Delhi</a></li>
-            <li><a href="/business-loan/company-registration-in-chennai" class="hover:text-white">Company Registration in Chennai</a></li>
-            <li><a href="/company-registration/copyright-registration" class="hover:text-white">Copyright Registration</a></li>
+            <li><a href="/business-loan/company-registration-in-delhi" class="hover:text-white">company registration in Delhi</a></li>
+            <li><a href="/business-loan/company-registration-in-chennai" class="hover:text-white">company registration in Chennai</a></li>
+            <li><a href="/company-registration/copyright-registration" class="hover:text-white">online copyright registration services</a></li>
           </ul>
         </div>
         <div>
           <span class="text-slate-300 font-medium block mb-2">Institutional Lending</span>
           <ul class="space-y-1.5 text-slate-400">
-            <li><a href="/credila-financial-services" class="hover:text-white">Credila Financial Services</a></li>
+            <li><a href="/credila-financial-services" class="hover:text-white">HDFC Credila education loan interest rates</a></li>
             <li><a href="/loans/education" class="hover:text-white">Education Loans</a></li>
           </ul>
         </div>
         <div>
           <span class="text-slate-300 font-medium block mb-2">Citizen Services</span>
           <ul class="space-y-1.5 text-slate-400">
-            <li><a href="/aadhar-card/aadhaar-card-services" class="hover:text-white">Aadhaar Services Hub</a></li>
-            <li><a href="/blogs/Sukanya-Samriddhi-Yojana-Guide" class="hover:text-white">Sukanya Samriddhi (SSY) Guide</a></li>
+            <li><a href="/aadhar-card/aadhaar-card-services" class="hover:text-white">Aadhaar card update and verification services</a></li>
+            <li><a href="/blog/Sukanya-Samriddhi-Yojana-Guide" class="hover:text-white">complete Sukanya Samriddhi Yojana guide</a></li>
           </ul>
         </div>
       </div>
@@ -1390,15 +1429,17 @@ for (const urlPath of urls) {
   let canonicalUrl = cleanPath === '' ? 'https://www.bankscart.com/' : `https://www.bankscart.com${cleanPath}`;
   if (cleanPath === '/blogs' || cleanPath === '/blogs-overview-page') {
     canonicalUrl = 'https://www.bankscart.com/blog';
-  } else if (cleanPath === '/about-us') {
-    canonicalUrl = 'https://www.bankscart.com/about';
+  } else if (cleanPath === '/about') {
+    canonicalUrl = 'https://www.bankscart.com/about-us';
   } else if (cleanPath === '/contact-us') {
     canonicalUrl = 'https://www.bankscart.com/contact';
+  } else if (cleanPath.startsWith('/blogs/')) {
+    canonicalUrl = `https://www.bankscart.com${cleanPath.replace('/blogs/', '/blog/')}`;
   }
 
   // 301 Redirect Pages for legacy /blogs, /blogs-overview-page, and /about-us
-  if (cleanPath === '/blogs' || cleanPath === '/blogs-overview-page' || cleanPath === '/about-us') {
-    const target = cleanPath === '/about-us' ? '/about' : '/blog';
+  if (cleanPath === '/blogs' || cleanPath === '/blogs-overview-page' || cleanPath === '/about' || cleanPath.startsWith('/blogs/')) {
+    const target = cleanPath === '/about' ? '/about-us' : (cleanPath.startsWith('/blogs/') ? cleanPath.replace('/blogs/', '/blog/') : '/blog');
     const redirectHtml = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1494,7 +1535,7 @@ for (const urlPath of urls) {
 const legacyRedirects = [
   { path: '/blogs', target: '/blog' },
   { path: '/blogs-overview-page', target: '/blog' },
-  { path: '/about-us', target: '/about' },
+  { path: '/about', target: '/about-us' },
   { path: '/contact-us', target: '/contact' }
 ];
 

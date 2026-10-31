@@ -218,7 +218,7 @@ export default function SSYCalculatorPage({ openApplyModal }: { openApplyModal?:
               <Lightbulb className="w-6 h-6 mr-3 text-yellow-500" /> Understanding Sukanya Samriddhi Yojana
             </h2>
             <p className="text-lg text-gray-700 leading-relaxed">
-              SSY is currently one of the highest-earning fixed-income saving instruments in India. Backed by the Central Government, it provides a safe, sovereign-guaranteed investment option. Parents can open an account for up to two girl children (three in case of triplets/twins first) before the child turns 10. To read a detailed guide on registration, rules, and withdrawal procedures, check out our comprehensive <a href="/blogs/Sukanya-Samriddhi-Yojana-Guide" className="text-rose-600 font-bold hover:underline">Sukanya Samriddhi Yojana Guide</a>.
+              SSY is currently one of the highest-earning fixed-income saving instruments in India. Backed by the Central Government, it provides a safe, sovereign-guaranteed investment option. Parents can open an account for up to two girl children (three in case of triplets/twins first) before the child turns 10. To read a detailed guide on registration, rules, and withdrawal procedures, check out our comprehensive <a href="/blog/Sukanya-Samriddhi-Yojana-Guide" className="text-rose-600 font-bold hover:underline">complete Sukanya Samriddhi Yojana guide</a>.
             </p>
           </section>
           

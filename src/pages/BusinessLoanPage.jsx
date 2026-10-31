@@ -395,6 +395,49 @@ const BusinessLoanPage = ({ openApplyModal }) => {
           </div>
         </div>
       </section>
+      {/* City-Specific Business Incorporation Cluster */}
+      <section className="py-12 bg-slate-50 border-t border-slate-200">
+        <div className="max-w-6xl mx-auto px-4">
+          <span className="text-xs font-bold text-blue-600 uppercase tracking-wider block text-center mb-1">
+            Regional Corporate Incorporation
+          </span>
+          <h3 className="text-2xl font-bold text-center text-slate-800 mb-4">
+            City-Specific Business Incorporation Cluster
+          </h3>
+          <p className="text-center text-slate-600 max-w-2xl mx-auto mb-8 text-sm">
+            Incorporating a recognized corporate entity is critical for accessing priority MSME credit limits and institutional business loans. Explore fast-track digital incorporation in premier commercial centers:
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:border-blue-300 transition-all">
+              <span className="text-xs font-bold text-blue-600 uppercase tracking-wider block mb-2">Delhi NCR Hub</span>
+              <h4 className="font-bold text-slate-800 text-lg mb-2">National Capital Region Corporate Setup</h4>
+              <p className="text-sm text-slate-600 mb-4 leading-relaxed">
+                Fast-track Private Limited, LLP, and OPC formation in New Delhi. Get complete SPICe+ MCA filing, DIN allotment, and expedited PAN/TAN with <a href="/business-loan/company-registration-in-delhi" className="text-blue-600 font-bold underline hover:text-blue-800">company registration in Delhi</a>.
+              </p>
+              <a
+                href="/business-loan/company-registration-in-delhi"
+                className="text-sm font-semibold text-blue-600 hover:text-blue-700 underline inline-flex items-center"
+              >
+                company registration in Delhi &rarr;
+              </a>
+            </div>
+            <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:border-blue-300 transition-all">
+              <span className="text-xs font-bold text-indigo-600 uppercase tracking-wider block mb-2">Tamil Nadu Hub</span>
+              <h4 className="font-bold text-slate-800 text-lg mb-2">Chennai Commercial & Industrial Setup</h4>
+              <p className="text-sm text-slate-600 mb-4 leading-relaxed">
+                Register manufacturing ventures, export entities, and technology startups in Chennai under Tamil Nadu ROC with complete legal filings and <a href="/business-loan/company-registration-in-chennai" className="text-blue-600 font-bold underline hover:text-blue-800">company registration in Chennai</a>.
+              </p>
+              <a
+                href="/business-loan/company-registration-in-chennai"
+                className="text-sm font-semibold text-blue-600 hover:text-blue-700 underline inline-flex items-center"
+              >
+                company registration in Chennai &rarr;
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <div className="fixed bottom-6 right-6 z-50">
         {/* Floating chat button */}
         <button className="bg-blue-700 text-white rounded-full w-16 h-16 shadow-lg flex items-center justify-center text-3xl animate-bounce">💬</button>

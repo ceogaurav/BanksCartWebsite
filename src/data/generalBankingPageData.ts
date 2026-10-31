@@ -579,6 +579,28 @@ export const GENERAL_BANKING_PAGE_MAP: Record<string, BankingPageContent> = {
       { q: "How can I upgrade my Airtel Money Wallet to Full KYC?", a: "You can complete a paperless video-KYC directly inside the Airtel Thanks app using your Aadhaar and PAN card, or visit an authorized Airtel retail outlet." },
       { q: "Can I transfer Airtel Wallet money directly to a bank account?", a: "Yes. Using the 'Send Money' tab inside the wallet, you can input any bank account number and IFSC to execute a real-time transfer." }
     ]
-  }
+  },
+  "company-registration": {
+    title: "Company Registration in India: Private Limited, LLP, OPC & Legal IP",
+    badge: "Corporate Incorporation & Legal IP",
+    intro: "Incorporate your company in India with end-to-end MCA documentation, digital signature certificates (DSC), DIN allotment, and GST registration. BanksCart helps founders and small enterprises establish legally compliant entities quickly.",
+    moreIntro: "Securing appropriate corporate entity structures and intellectual property safeguards is essential for funding and institutional business loans. We guide enterprises through ROC compliance, annual filings, and intellectual property registration.",
+    highlightsTitle: "Legal & Intellectual Property Service Cluster",
+    highlights: [
+      { label: "Private Limited & LLP", text: "Fast-track incorporation across major industrial states with digital ROC documentation." },
+      { label: "Intellectual Property & Copyright", text: "Safeguard proprietary software, brand assets, and creative works with online copyright registration services." },
+      { label: "Tax & Banking Integration", text: "Instant corporate PAN, TAN, GSTIN, and institutional current account setup." }
+    ],
+    ratesTitle: "Entity Incorporation & Legal Services Overview",
+    ratesHeaders: ["Service Category", "Typical Timeline", "Statutory Filing", "Key Deliverables"],
+    ratesRows: [
+      ["Private Limited Company", "7 - 10 Working Days", "SPICe+ MCA Portal", "COI, PAN, TAN, MOA, AOA"],
+      ["Limited Liability Partnership (LLP)", "10 - 14 Working Days", "FiLLiP Form", "LLP Agreement, COI"],
+      ["Copyright & IP Registration", "15 - 30 Working Days", "Copyright Office India", "Diary Number & ROC Certificate"]
+    ],
+    faqs: [
+      { q: "What documents are required to register a company in India?", a: "PAN card, Aadhaar card or passport, passport-sized photographs, and registered office address utility bills (electricity/water bill)." },
+      { q: "How can I protect my digital and literary intellectual property?", a: "You can apply for online copyright registration services through BanksCart's legal services portal to establish legal ownership and prevent unauthorized infringement." }
+    ]
+  },
 };
-

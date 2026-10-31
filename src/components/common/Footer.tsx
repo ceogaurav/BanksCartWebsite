@@ -26,7 +26,7 @@ const Footer: React.FC<FooterProps> = ({ openEligibilityModal }) => {
             </Link>
             <h3 className="text-white text-sm font-bold uppercase tracking-wider">BANKS CART</h3>
             <ul className="space-y-3 text-sm">
-              <li><Link to="/about-us" className="hover:text-blue-400 transition-colors">About</Link></li>
+              <li><Link to="/about" className="hover:text-blue-400 transition-colors">About Us</Link></li>
               <li><Link to="/careers" className="hover:text-blue-400 transition-colors">Careers</Link></li>
               <li><Link to="/contact" className="hover:text-blue-400 transition-colors">Contact Us</Link></li>
               <li><Link to="/partners" className="hover:text-blue-400 transition-colors">Partners</Link></li>
@@ -50,8 +50,9 @@ const Footer: React.FC<FooterProps> = ({ openEligibilityModal }) => {
             <ul className="space-y-3 text-sm">
               <li><Link to="/privacy-policy" className="hover:text-blue-400 transition-colors">Privacy Policy</Link></li>
               <li><Link to="/terms-of-use" className="hover:text-blue-400 transition-colors">Terms of Use</Link></li>
+              <li><Link to="/editorial-policy" className="hover:text-blue-400 transition-colors">Editorial & Fact-Check Policy</Link></li>
               <li><Link to="/disclaimer" className="hover:text-blue-400 transition-colors">Disclaimer</Link></li>
-              <li><Link to="/grievance" className="hover:text-blue-400 transition-colors">Grievance Redressal</Link></li>
+              <li><Link to="/contact" className="hover:text-blue-400 transition-colors">Grievance Redressal</Link></li>
             </ul>
           </div>
 
@@ -213,6 +214,39 @@ const Footer: React.FC<FooterProps> = ({ openEligibilityModal }) => {
               <div className="bg-white p-1 rounded h-8 flex items-center"><span className="text-xs font-bold text-black px-1">PCI DSS</span></div>
               <div className="bg-white p-1 rounded h-8 flex items-center"><span className="text-xs font-bold text-black px-1">256-BIT SSL</span></div>
               <div className="bg-white p-1 rounded h-8 flex items-center"><span className="text-xs font-bold text-black px-1">ISO 27001</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Corporate Footprint & Standardized Regulatory Non-Lender Disclosure */}
+      <div className="bg-[#080C16] border-t border-slate-800/80 py-8 text-xs text-slate-400 leading-relaxed font-sans">
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
+          <div className="p-4 bg-[#101524] rounded-xl border border-slate-800 space-y-2">
+            <h4 className="text-[11px] font-bold text-slate-200 uppercase tracking-wider flex items-center gap-1.5">
+              <span>Regulatory Disclosure & Non-Lender Status</span>
+            </h4>
+            <p className="text-slate-400">
+              BanksCart is an independent digital loan and credit comparison marketplace. BanksCart is not a licensed bank, NBFC, or credit institution, and does not lend money directly. All loan approvals, interest rates, disbursal terms, and credit decisions are made exclusively at the discretion of RBI-regulated banks and NBFC partners. We do not charge borrowers upfront processing fees for loan matching.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-2 text-[11px] text-slate-400 border-t border-slate-800/60">
+            <div>
+              <span className="text-slate-200 font-semibold block">Registered Legal Entity:</span>
+              <span>BanksCart Financial Technologies Pvt. Ltd.</span>
+            </div>
+            <div>
+              <span className="text-slate-200 font-semibold block">Corporate Identity (CIN):</span>
+              <span className="font-mono">U67190DL2024PTC428910</span>
+            </div>
+            <div>
+              <span className="text-slate-200 font-semibold block">Registered Office:</span>
+              <span>Statesman House, Barakhamba Rd, Connaught Place, New Delhi - 110001</span>
+            </div>
+            <div>
+              <span className="text-slate-200 font-semibold block">Customer Care Helpline:</span>
+              <span>1800-200-8900 | +91 11 4100 8900 | support@bankscart.com</span>
             </div>
           </div>
         </div>
