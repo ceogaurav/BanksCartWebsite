@@ -752,6 +752,7 @@ const App: React.FC = () => {
                 <Route path="/blog/Fixed-Deposit-Guide" element={<FixedDepositGuide />} />
                 <Route path="/blog/Home-Loan-Guide" element={<HomeLoanGuide />} />
                 <Route path="/blog/Investment-Plans-Guide" element={<InvestmentPlansGuide openApplyModal={openApplyModal} />} />
+                <Route path="/blog/sukanya-samriddhi-yojana-guide" element={<SukanyaSamriddhiYojanaGuide />} />
                 <Route path="/blog/Sukanya-Samriddhi-Yojana-Guide" element={<SukanyaSamriddhiYojanaGuide />} />
                 <Route path="/blog/Loan-Eligibility-Tricks" element={<LoanEligibilityTricks />} />
                 <Route path="/blog/Secured-Unsecured-Guide" element={<SecuredUnsecuredGuide />} />

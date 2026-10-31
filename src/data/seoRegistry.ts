@@ -519,6 +519,20 @@ export const SEO_MAP: Record<string, SEOMetadata> = {
     description: "Discover top investment avenues for short-term and long-term goals. Compare Mutual Funds, PPF, NPS, Sovereign Gold Bonds, and Fixed Deposits.",
     keywords: "best investment plans, wealth creation india, mutual funds vs ppf, where to invest"
   },
+  "/blog/sukanya-samriddhi-yojana-guide": {
+    title: "Sukanya Samriddhi Yojana (SSY) 2026: Interest Rate, Rules, Eligibility & Tax Benefits | BanksCart",
+    description: "Complete guide on Sukanya Samriddhi Yojana (SSY) account opening, latest 8.2% interest rates, tenure calculation, and Section 80C tax exemption rules.",
+    keywords: "sukanya samriddhi yojana ssy 2026, ssy interest rate, ssy tax benefits, ssy account opening"
+  },
+  "/blog/Sukanya-Samriddhi-Yojana-Guide": {
+    title: "Sukanya Samriddhi Yojana (SSY) 2026: Interest Rate, Rules, Eligibility & Tax Benefits | BanksCart",
+    description: "Complete guide on Sukanya Samriddhi Yojana (SSY) account opening, latest 8.2% interest rates, tenure calculation, and Section 80C tax exemption rules.",
+    keywords: "sukanya samriddhi yojana ssy 2026, ssy interest rate, ssy tax benefits, ssy account opening"
+  },
+  "/author/priya-sharma": {
+    title: "Priya Sharma: Senior Financial Analyst & Sovereign Savings Specialist | BanksCart",
+    description: "Read Priya Sharma's author bio. Certified Financial Planner with 10+ years specializing in government small savings schemes (SSY, PPF) and tax-saving investments on BanksCart."
+  },
   "/blogs/Sukanya-Samriddhi-Yojana-Guide": {
     title: "Sukanya Samriddhi Yojana (SSY) Complete Guide: Rules & Tax Benefits | BanksCart",
     description: "Learn how to open an SSY account for your daughter. Understand eligibility, current government interest rates, tax-free returns under EEE, and withdrawal rules.",

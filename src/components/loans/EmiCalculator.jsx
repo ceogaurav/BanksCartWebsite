@@ -48,7 +48,7 @@ const EmiCalculator = ({ openApplyModal }) => {
           Interactive Repayment Estimator
         </span>
         <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
-          Personal Loan EMI Calculator
+          Calculate Your Personal Loan Monthly EMI
         </h2>
         <p className="text-gray-600 text-sm sm:text-base mt-2">
           Estimate your monthly installments, total interest cost, and overall borrowing expense based on verified reducing-balance interest rates.

@@ -12,7 +12,9 @@ if (!fs.existsSync(templatePath)) {
   process.exit(0);
 }
 
-const templateHtml = fs.readFileSync(templatePath, 'utf8');
+let templateHtml = fs.readFileSync(templatePath, 'utf8');
+// Clean out any previously injected root content to make templateHtml truly clean and reusable
+templateHtml = templateHtml.replace(/<div id="root">[\s\S]*?<\/body>/i, '<div id="root"></div>\n  </body>');
 const sitemapContent = fs.readFileSync(sitemapPath, 'utf8');
 const directoryLinks = JSON.parse(fs.readFileSync(directoryLinksPath, 'utf8'));
 const loanPageData = JSON.parse(fs.readFileSync(loanDataPath, 'utf8'));
@@ -320,6 +322,18 @@ const STATIC_SEO_MAP = {
     title: "Amit Khurana, CFA & ex-SBI - Senior Banking Advisor Bio | BanksCart",
     description: "Read Amit Khurana's reviewer bio. Veteran banker with 18+ years leading credit underwriting at State Bank of India and CFA charterholder on BanksCart."
   },
+  "/blog/sukanya-samriddhi-yojana-guide": {
+    title: "Sukanya Samriddhi Yojana (SSY) 2026: Interest Rate, Rules, Eligibility & Tax Benefits | BanksCart",
+    description: "Complete guide on Sukanya Samriddhi Yojana (SSY) account opening, latest 8.2% interest rates, tenure calculation, and Section 80C tax exemption rules."
+  },
+  "/blog/Sukanya-Samriddhi-Yojana-Guide": {
+    title: "Sukanya Samriddhi Yojana (SSY) 2026: Interest Rate, Rules, Eligibility & Tax Benefits | BanksCart",
+    description: "Complete guide on Sukanya Samriddhi Yojana (SSY) account opening, latest 8.2% interest rates, tenure calculation, and Section 80C tax exemption rules."
+  },
+  "/author/priya-sharma": {
+    title: "Priya Sharma: Senior Financial Analyst & Sovereign Savings Specialist | BanksCart",
+    description: "Read Priya Sharma's author bio. Certified Financial Planner with 10+ years specializing in government small savings schemes (SSY, PPF) and tax-saving investments on BanksCart."
+  },
   "/author/neha-verma": {
     title: "Neha Verma, CFP - Senior Personal Finance Specialist Bio | BanksCart",
     description: "Read Neha Verma's author bio. Certified Financial Planner with 9+ years analyzing credit cards, fixed deposits, and retail banking products on BanksCart."
@@ -592,6 +606,610 @@ function generatePreRenderedBody(cleanPath, meta) {
   const title = escapeHtml(meta.title);
   const desc = escapeHtml(meta.description);
 
+  // =========================================================================
+  // BLUEPRINT TEMPLATE 1: HOMEPAGE (/)
+  // =========================================================================
+  if (cleanPath === '/' || cleanPath === '') {
+    return `
+    <div class="min-h-screen bg-slate-50 text-slate-800 font-sans antialiased">
+      <header class="bg-white border-b border-slate-200 py-4 px-6 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+          <a href="/" class="text-2xl font-bold tracking-tight text-blue-900">BanksCart</a>
+          <nav class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
+            <a href="/loans/personal-loan" class="hover:text-blue-600 transition-colors">Personal Loans</a>
+            <a href="/loans/home-loan" class="hover:text-blue-600 transition-colors">Home Loans</a>
+            <a href="/loans/business-loan" class="hover:text-blue-600 transition-colors">Business Loans</a>
+            <a href="/cards" class="hover:text-blue-600 transition-colors">Credit Cards</a>
+            <a href="/credit-score" class="hover:text-blue-600 transition-colors">Credit Score</a>
+            <a href="/calculators" class="hover:text-blue-600 transition-colors">Calculators</a>
+          </nav>
+        </div>
+      </header>
+
+      <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+        {/* HERO SECTION */}
+        <section class="bg-gradient-to-br from-blue-900 via-indigo-950 to-slate-900 text-white rounded-3xl p-8 lg:p-14 shadow-xl space-y-6">
+          <span class="inline-block px-3 py-1 bg-white/10 text-teal-300 text-xs font-bold uppercase tracking-wider rounded-full border border-white/20">
+            India's Leading Financial Services &amp; Loan Comparison Portal
+          </span>
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-[1.15] text-white">
+            Compare Loans, Credit Cards &amp; Banking Products in India
+          </h1>
+          <p class="text-base sm:text-lg text-slate-200 max-w-3xl leading-relaxed">
+            Compare personal, home, and business loan interest rates from 30+ top Reserve Bank of India (RBI) regulated banks and NBFCs. Evaluate Annual Percentage Rates (APR), calculate payments with our EMI Calculator, check your free CIBIL score, and apply online with instant approval.
+          </p>
+          <div class="pt-2 flex flex-wrap gap-4">
+            <a href="/loans/personal-loan" class="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow">Compare Personal Loans</a>
+            <a href="/loans/home-loan" class="inline-flex items-center px-6 py-3 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-xl border border-white/20">Compare Home Loans</a>
+            <a href="/credit-score" class="inline-flex items-center px-6 py-3 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-xl border border-white/20">Check Free CIBIL Score</a>
+          </div>
+        </section>
+
+        {/* CORE PRODUCT LINKS DIRECTORY */}
+        <section class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm">
+          <span class="text-xs font-bold text-blue-600 uppercase tracking-wider block mb-3">Explore Core Financial Services</span>
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 text-center">
+            <a href="/loans/personal-loan" class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border border-slate-200 hover:border-blue-300 text-xs font-bold text-slate-800 hover:text-blue-600 transition-all">
+              Personal Loans
+            </a>
+            <a href="/loans/home-loan" class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border border-slate-200 hover:border-blue-300 text-xs font-bold text-slate-800 hover:text-blue-600 transition-all">
+              Home Loans
+            </a>
+            <a href="/loans/business-loan" class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border border-slate-200 hover:border-blue-300 text-xs font-bold text-slate-800 hover:text-blue-600 transition-all">
+              Business Loans
+            </a>
+            <a href="/cards" class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border border-slate-200 hover:border-blue-300 text-xs font-bold text-slate-800 hover:text-blue-600 transition-all">
+              Credit Cards
+            </a>
+            <a href="/credit-score" class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border border-slate-200 hover:border-blue-300 text-xs font-bold text-slate-800 hover:text-blue-600 transition-all">
+              Free CIBIL Score
+            </a>
+            <a href="/calculators" class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border border-slate-200 hover:border-blue-300 text-xs font-bold text-slate-800 hover:text-blue-600 transition-all">
+              EMI Calculators
+            </a>
+          </div>
+        </section>
+
+        {/* H2: Compare Lowest Loan Interest Rates from Top Indian Banks */}
+        <section class="bg-white rounded-2xl p-8 lg:p-12 border border-slate-200 shadow-sm space-y-6">
+          <div class="border-l-4 border-blue-600 pl-4">
+            <h2 class="text-xl sm:text-2xl font-black text-slate-800 tracking-tight">
+              Compare Lowest Loan Interest Rates from Top Indian Banks
+            </h2>
+            <p class="text-slate-600 text-sm mt-1">
+              Compare verified personal, home, and business loan rates starting from 8.35% p.a. across SBI, HDFC Bank, ICICI Bank, Axis Bank, and leading NBFCs.
+            </p>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+            <div class="p-6 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+              <h3 class="font-bold text-slate-900 text-lg">Personal Loans</h3>
+              <p class="text-xs text-slate-600">Starting at 10.25% p.a. Unsecured loans up to ₹50 Lakhs with paperless digital disbursals.</p>
+              <a href="/loans/personal-loan" class="inline-block text-xs font-bold text-blue-600 hover:underline pt-2">Explore Personal Loans →</a>
+            </div>
+            <div class="p-6 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+              <h3 class="font-bold text-slate-900 text-lg">Home Loans</h3>
+              <p class="text-xs text-slate-600">Starting at 8.35% p.a. Finance up to 90% of property value with tenures up to 30 years.</p>
+              <a href="/loans/home-loan" class="inline-block text-xs font-bold text-blue-600 hover:underline pt-2">Explore Home Loans →</a>
+            </div>
+            <div class="p-6 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+              <h3 class="font-bold text-slate-900 text-lg">Business Loans</h3>
+              <p class="text-xs text-slate-600">Collateral-free MSME capital up to ₹75 Lakhs for expanding enterprises and working capital.</p>
+              <a href="/loans/business-loan" class="inline-block text-xs font-bold text-blue-600 hover:underline pt-2">Explore Business Loans →</a>
+            </div>
+          </div>
+        </section>
+
+        {/* H2: Best Credit Cards in India: Cashbacks, Travel & Rewards */}
+        <section class="bg-white rounded-2xl p-8 lg:p-12 border border-slate-200 shadow-sm space-y-6">
+          <div class="border-l-4 border-emerald-600 pl-4">
+            <h2 class="text-xl sm:text-2xl font-black text-slate-800 tracking-tight">
+              Best Credit Cards in India: Cashbacks, Travel &amp; Rewards
+            </h2>
+            <p class="text-slate-600 text-sm mt-1">
+              Find the perfect credit card for fuel savings, complimentary airport lounge visits, online shopping discounts, and lifetime-free privileges.
+            </p>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+            <div class="p-6 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+              <h3 class="font-bold text-slate-900 text-base">Cashback &amp; Shopping Cards</h3>
+              <p class="text-xs text-slate-600">Earn up to 5% flat statement cashback on Amazon, Flipkart, Swiggy, and utility bills.</p>
+            </div>
+            <div class="p-6 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+              <h3 class="font-bold text-slate-900 text-base">Airport Lounge &amp; Travel Cards</h3>
+              <p class="text-xs text-slate-600">Complimentary domestic and international airport lounge access with air mile conversions.</p>
+            </div>
+            <div class="p-6 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+              <h3 class="font-bold text-slate-900 text-base">Lifetime Free Credit Cards</h3>
+              <p class="text-xs text-slate-600">Zero joining fees, zero annual maintenance charges, and instant digital credit limits.</p>
+            </div>
+          </div>
+        </section>
+
+        {/* H2: Free CIBIL Score Check & Credit Health Assessment */}
+        <section class="bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white rounded-2xl p-8 lg:p-12 shadow-md space-y-6">
+          <div class="max-w-3xl space-y-3">
+            <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
+              Free CIBIL Score Check &amp; Credit Health Assessment
+            </h2>
+            <p class="text-sm sm:text-base text-blue-100 leading-relaxed">
+              Check your official credit bureau score online with zero negative impact on your profile. Access specialized credit rectification services to dispute clerical errors, remove wrongful overdue tags, and improve approval odds.
+            </p>
+            <div class="pt-2 flex flex-wrap gap-3">
+              <a href="/credit-score" class="inline-flex items-center text-xs font-bold px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg">Check Free Credit Score</a>
+              <a href="/credit-score/credit-rectification-service" class="inline-flex items-center text-xs font-bold px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg border border-white/20">Credit Rectification Service</a>
+            </div>
+          </div>
+        </section>
+
+        {/* H2: How BanksCart Simplifies Financial Decisions */}
+        <section class="bg-white rounded-2xl p-8 lg:p-12 border border-slate-200 shadow-sm space-y-6">
+          <div class="text-center max-w-3xl mx-auto">
+            <span class="text-xs font-bold text-blue-600 uppercase tracking-wider block mb-1">Our Advantage</span>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+              How BanksCart Simplifies Financial Decisions
+            </h2>
+            <p class="text-slate-600 text-sm mt-2">
+              Our algorithmic comparison engine transparently maps lender APRs, loan processing fees, prepayment charges, and eligibility norms to deliver personalized loan and credit card recommendations.
+            </p>
+          </div>
+        </section>
+
+        {/* H2: Frequently Asked Questions About Loan Eligibility & Applications */}
+        <section class="bg-white rounded-2xl p-8 lg:p-12 border border-slate-200 shadow-sm space-y-6">
+          <div class="text-center max-w-3xl mx-auto">
+            <span class="text-xs font-bold text-blue-600 uppercase tracking-wider block mb-1">Knowledge Base</span>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+              Frequently Asked Questions About Loan Eligibility &amp; Applications
+            </h2>
+            <p class="text-slate-600 text-sm mt-2">Clear answers to help you navigate loan eligibility, interest calculations, and digital applications.</p>
+          </div>
+          <div class="divide-y divide-slate-100 space-y-4 pt-2">
+            <div class="pt-4">
+              <h3 class="text-base font-bold text-slate-800 mb-1">How does BanksCart compare loan interest rates across Indian banks?</h3>
+              <p class="text-sm text-slate-600">BanksCart algorithmically analyzes verified interest rate tables, processing fees, and Annual Percentage Rates (APR) across 30+ scheduled commercial banks and RBI-registered NBFCs, matching you with the lowest EMI options based on your income and credit profile.</p>
+            </div>
+            <div class="pt-4">
+              <h3 class="text-base font-bold text-slate-800 mb-1">What is the minimum CIBIL score required for instant loan approval?</h3>
+              <p class="text-sm text-slate-600">A CIBIL credit score of 750 or higher qualifies you for prime interest rates starting at 10.25% p.a. for personal loans and 8.35% p.a. for home loans. Borrowers with scores between 650 and 749 can still access pre-approved loans from select NBFC partners.</p>
+            </div>
+          </div>
+        </section>
+      </main>
+      ${renderFooter()}
+    </div>
+    `;
+  }
+
+  // =========================================================================
+  // BLUEPRINT TEMPLATE 2: PERSONAL LOAN COMPARISON HUB (/loans/personal-loan)
+  // =========================================================================
+  if (cleanPath === '/loans/personal-loan' || cleanPath === '/loans/personal') {
+    return `
+    <div class="min-h-screen bg-slate-50 text-slate-800 font-sans antialiased">
+      <header class="bg-white border-b border-slate-200 py-4 px-6 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+          <a href="/" class="text-2xl font-bold tracking-tight text-blue-900">BanksCart</a>
+          <nav class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
+            <a href="/loans/personal-loan" class="hover:text-blue-600 transition-colors">Personal Loans</a>
+            <a href="/loans/home-loan" class="hover:text-blue-600 transition-colors">Home Loans</a>
+            <a href="/cards" class="hover:text-blue-600 transition-colors">Credit Cards</a>
+            <a href="/credit-score" class="hover:text-blue-600 transition-colors">Credit Score</a>
+            <a href="/calculators" class="hover:text-blue-600 transition-colors">Calculators</a>
+          </nav>
+        </div>
+      </header>
+
+      <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+        <nav aria-label="Breadcrumb" class="text-sm text-slate-500">
+          <ol class="flex items-center space-x-2">
+            <li><a href="/" class="hover:text-blue-600">Home</a></li>
+            <li><span>/</span></li>
+            <li><a href="/loans" class="hover:text-blue-600">Loans</a></li>
+            <li><span>/</span></li>
+            <li class="text-slate-800 font-medium" aria-current="page">Personal Loan Interest Rates</li>
+          </ol>
+        </nav>
+
+        {/* Hero Section */}
+        <section class="bg-gradient-to-br from-blue-900 via-indigo-950 to-slate-900 text-white rounded-3xl p-8 lg:p-14 shadow-xl space-y-6">
+          <span class="inline-block px-3 py-1 bg-white/10 text-teal-300 text-xs font-bold uppercase tracking-wider rounded-full border border-white/20">
+            India's Most Trusted Personal Loan Marketplace • RBI-Regulated Lenders
+          </span>
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight text-white">
+            Compare Personal Loan Interest Rates &amp; Apply Online in India
+          </h1>
+          <p class="text-base sm:text-lg text-slate-200 max-w-3xl leading-relaxed">
+            Compare lowest personal loan interest rates starting at <strong class="text-white">10.25% p.a.</strong> across 30+ Indian banks. Check your <strong class="text-white">CIBIL cut-off score (750+)</strong>, compare processing fees (0.5%–2.5%), zero pre-closure charges, moratorium options, and instant paperless disbursal for salaried vs self-employed borrowers.
+          </p>
+          <div class="pt-2 flex flex-wrap gap-4">
+            <a href="#offers-grid" class="inline-flex items-center px-6 py-3 bg-teal-500 hover:bg-teal-600 text-slate-950 font-bold rounded-xl shadow">Compare Bank Rates</a>
+            <a href="/personal-loan-emi-calculator" class="inline-flex items-center px-6 py-3 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-xl border border-white/20">Calculate EMI</a>
+          </div>
+        </section>
+
+        {/* H2: Compare Personal Loan Interest Rates & Processing Fees (Updated Monthly) */}
+        <section id="offers-grid" class="bg-white rounded-2xl p-8 lg:p-12 border border-slate-200 shadow-sm space-y-6">
+          <div class="text-center max-w-3xl mx-auto">
+            <span class="text-xs font-bold text-blue-600 uppercase tracking-wider block mb-1">Lender Comparison</span>
+            <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+              Compare Personal Loan Interest Rates &amp; Processing Fees (Updated Monthly)
+            </h2>
+            <p class="text-slate-600 text-sm mt-2">Compare verified interest rates, processing charges, and borrowing limits from leading banks and NBFCs.</p>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
+            <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+              <h3 class="font-bold text-slate-900 text-lg">HDFC Bank Personal Loan</h3>
+              <div class="text-blue-700 font-bold text-base">10.50% - 14.50% p.a.</div>
+              <p class="text-xs text-slate-600">Max amount: ₹40 Lakhs • Processing fee: Up to 1.5% + GST • Instant digital disbursal.</p>
+            </div>
+            <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+              <h3 class="font-bold text-slate-900 text-lg">State Bank of India (SBI)</h3>
+              <div class="text-blue-700 font-bold text-base">10.30% - 13.60% p.a.</div>
+              <p class="text-xs text-slate-600">Max amount: ₹20 Lakhs • Processing fee: 0.50% - 1.00% + GST • Lowest benchmark rates.</p>
+            </div>
+            <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+              <h3 class="font-bold text-slate-900 text-lg">ICICI Bank Personal Loan</h3>
+              <div class="text-blue-700 font-bold text-base">10.65% - 14.99% p.a.</div>
+              <p class="text-xs text-slate-600">Max amount: ₹50 Lakhs • Processing fee: Up to 1.5% + GST • 3-second digital approval.</p>
+            </div>
+          </div>
+        </section>
+
+        {/* H2: Personal Loan Eligibility Criteria for Salaried & Self-Employed Borrowers */}
+        <section class="bg-white rounded-2xl p-8 lg:p-12 border border-slate-200 shadow-sm space-y-6">
+          <div class="text-center max-w-3xl mx-auto">
+            <span class="text-xs font-bold text-teal-600 uppercase tracking-wider block mb-1">Approval Slabs</span>
+            <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+              Personal Loan Eligibility Criteria for Salaried &amp; Self-Employed Borrowers
+            </h2>
+            <p class="text-slate-600 text-sm mt-2">Detailed benchmarks required by major Indian banks and NBFCs for salaried and self-employed applicants.</p>
+          </div>
+          <div class="overflow-x-auto pt-2">
+            <table class="w-full text-left border-collapse text-sm">
+              <thead>
+                <tr class="border-b border-slate-200 bg-slate-50 text-slate-700 font-semibold">
+                  <th class="py-3 px-4">Parameter</th>
+                  <th class="py-3 px-4">Salaried Borrowers</th>
+                  <th class="py-3 px-4">Self-Employed Professionals</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100 text-slate-600">
+                <tr><td class="py-3 px-4 font-medium text-slate-900">Age Range</td><td class="py-3 px-4">21 – 60 years</td><td class="py-3 px-4">23 – 65 years</td></tr>
+                <tr><td class="py-3 px-4 font-medium text-slate-900">Minimum Monthly Income</td><td class="py-3 px-4">₹15,000 – ₹25,000/month</td><td class="py-3 px-4">Annual turnover > ₹3.5 – ₹5 Lakhs</td></tr>
+                <tr><td class="py-3 px-4 font-medium text-slate-900">CIBIL Score Cut-off</td><td class="py-3 px-4">750+ preferred (min 720)</td><td class="py-3 px-4">750+ preferred (min 720)</td></tr>
+                <tr><td class="py-3 px-4 font-medium text-slate-900">FOIR Threshold</td><td class="py-3 px-4">Below 40% – 50% of net take-home</td><td class="py-3 px-4">Below 45% – 50% of profit</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        {/* H2: Mandatory Documents Required for Instant Personal Loan Disbursal */}
+        <section class="bg-white rounded-2xl p-8 lg:p-12 border border-slate-200 shadow-sm space-y-6">
+          <div class="text-center max-w-3xl mx-auto">
+            <span class="text-xs font-bold text-blue-600 uppercase tracking-wider block mb-1">Checklist</span>
+            <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+              Mandatory Documents Required for Instant Personal Loan Disbursal
+            </h2>
+            <p class="text-slate-600 text-sm mt-2">Keep digital copies of these KYC and income proofs ready for 100% paperless instant processing.</p>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+            <div class="p-5 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+              <h3 class="font-bold text-slate-900 text-base">Identity &amp; Residence Proof</h3>
+              <p class="text-xs text-slate-600">PAN Card (Mandatory), Aadhaar Card (for DigiLocker e-KYC), Passport, Voter ID, or registered rent agreement.</p>
+            </div>
+            <div class="p-5 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+              <h3 class="font-bold text-slate-900 text-base">Income &amp; Banking Documents</h3>
+              <p class="text-xs text-slate-600">Last 3 months' salary slips, Form 16, and latest 6 months' bank statements in PDF or via Account Aggregator.</p>
+            </div>
+          </div>
+        </section>
+
+        {/* H2: Calculate Your Personal Loan Monthly EMI */}
+        <section class="bg-white rounded-2xl p-8 lg:p-12 border border-slate-200 shadow-sm space-y-6">
+          <div class="text-center max-w-3xl mx-auto">
+            <span class="text-xs font-bold text-teal-600 uppercase tracking-wider block mb-1">Interactive Repayment Estimator</span>
+            <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+              Calculate Your Personal Loan Monthly EMI
+            </h2>
+            <p class="text-slate-600 text-sm mt-2">Estimate your monthly installments, total interest cost, and overall borrowing expense based on verified reducing-balance interest rates.</p>
+          </div>
+          <div class="p-6 rounded-2xl bg-blue-50/50 border border-blue-100 flex flex-col sm:flex-row items-center justify-between gap-6">
+            <div>
+              <div class="text-lg font-bold text-slate-900">EMI Formula: E = [P x r x (1 + r)^n] / [(1 + r)^n - 1]</div>
+              <p class="text-xs text-slate-600 mt-1">Check loan EMIs across principal amounts from ₹50,000 to ₹50 Lakhs with tenures ranging from 12 to 72 months.</p>
+            </div>
+            <a href="/personal-loan-emi-calculator" class="shrink-0 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow">Open EMI Calculator</a>
+          </div>
+        </section>
+
+        {/* H2: How Your CIBIL Score Affects Your Personal Loan Interest Rate */}
+        <section class="bg-gradient-to-br from-blue-900 via-indigo-900 to-slate-900 text-white rounded-2xl p-8 lg:p-12 shadow-md space-y-6">
+          <div class="max-w-3xl">
+            <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+              How Your CIBIL Score Affects Your Personal Loan Interest Rate
+            </h2>
+            <p class="text-sm sm:text-base text-blue-100 mt-3 leading-relaxed">
+              In India, credit bureaus calculate your credit score between 300 and 900. Lenders use a CIBIL cut-off score of 750+ as the benchmark for prime lending terms. Borrowers above 750 access pre-approved personal loans starting at 10.25% p.a., with fast-track digital verification and zero pre-closure charges on floating-rate loans.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-white/15 flex flex-wrap gap-3">
+            <a href="/personal-loan-emi-calculator" class="inline-flex items-center text-xs font-semibold px-4 py-2 bg-teal-400 hover:bg-teal-500 text-slate-950 rounded-lg transition-colors">Personal Loan EMI Calculator</a>
+            <a href="/credit-score" class="inline-flex items-center text-xs font-semibold px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg border border-white/20">Free CIBIL Score Check</a>
+            <a href="/cibil-credit-report" class="inline-flex items-center text-xs font-semibold px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg border border-white/20">CIBIL Credit Report</a>
+            <a href="/blog/how-to-improve-cibil-score-fast" class="inline-flex items-center text-xs font-semibold px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg border border-white/20">Improve CIBIL Score Fast</a>
+          </div>
+        </section>
+
+        {/* H2: FAQs on Personal Loan Applications, Prepayment & Foreclosure */}
+        <section class="bg-white rounded-2xl p-8 lg:p-12 border border-slate-200 shadow-sm space-y-6">
+          <div class="text-center max-w-3xl mx-auto">
+            <span class="text-xs font-bold text-teal-600 uppercase tracking-wider block mb-1">Clear Answers</span>
+            <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+              FAQs on Personal Loan Applications, Prepayment &amp; Foreclosure
+            </h2>
+            <p class="text-slate-600 text-sm mt-2">Everything you need to know about personal loan eligibility, interest rates, charges, and repayments.</p>
+          </div>
+          <div class="divide-y divide-slate-100 space-y-4 pt-2">
+            <div class="pt-4">
+              <h3 class="text-base font-bold text-slate-900">What is the maximum personal loan amount I can get in India?</h3>
+              <p class="text-sm text-slate-600 mt-1">Leading Indian banks and NBFCs sanction personal loans up to ₹40 Lakhs to ₹50 Lakhs based on your net monthly salary and credit score.</p>
+            </div>
+            <div class="pt-4">
+              <h3 class="text-base font-bold text-slate-900">Can I prepay or foreclose my personal loan before the tenure ends?</h3>
+              <p class="text-sm text-slate-600 mt-1">Per RBI regulations, lenders cannot levy foreclosure penalties or prepayment charges on floating-rate personal loans sanctioned to individuals.</p>
+            </div>
+          </div>
+        </section>
+      </main>
+      ${renderFooter()}
+    </div>
+    `;
+  }
+
+
+  // =========================================================================
+  // BLUEPRINT TEMPLATE 4: CREDIT RECTIFICATION HUB (/credit-score/credit-rectification-service)
+  // =========================================================================
+  if (cleanPath === '/credit-score/credit-rectification-service') {
+    return `
+    <div class="min-h-screen bg-slate-50 text-slate-800 font-sans antialiased">
+      <header class="bg-white border-b border-slate-200 py-4 px-6 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+          <a href="/" class="text-2xl font-bold tracking-tight text-blue-900">BanksCart</a>
+          <nav class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
+            <a href="/loans/personal-loan" class="hover:text-blue-600 transition-colors">Personal Loans</a>
+            <a href="/loans/home-loan" class="hover:text-blue-600 transition-colors">Home Loans</a>
+            <a href="/cards" class="hover:text-blue-600 transition-colors">Credit Cards</a>
+            <a href="/credit-score" class="hover:text-blue-600 transition-colors">Credit Score</a>
+            <a href="/calculators" class="hover:text-blue-600 transition-colors">Calculators</a>
+          </nav>
+        </div>
+      </header>
+
+      <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+        <nav aria-label="Breadcrumb" class="text-sm text-slate-500">
+          <ol class="flex items-center space-x-2">
+            <li><a href="/" class="hover:text-blue-600">Home</a></li>
+            <li><span>/</span></li>
+            <li><a href="/credit-score" class="hover:text-blue-600">Credit Score</a></li>
+            <li><span>/</span></li>
+            <li class="text-slate-800 font-medium" aria-current="page">Credit Rectification Service</li>
+          </ol>
+        </nav>
+
+        <section class="bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white rounded-3xl p-8 lg:p-14 shadow-xl space-y-6">
+          <span class="inline-block px-3 py-1 bg-white/10 text-yellow-300 text-xs font-bold uppercase tracking-wider rounded-full border border-white/20">Credit Bureau Recovery</span>
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight text-white">Expert Credit Rectification &amp; CIBIL Dispute Resolution Guidance</h1>
+          <p class="text-base sm:text-lg text-slate-300 max-w-3xl leading-relaxed">Fix errors on your CIBIL report with expert credit rectification guidance. Resolve wrongful overdue tags, update settlement statuses, and rebuild your credit rating under RBI guidelines.</p>
+          <div class="pt-2 flex flex-wrap gap-4">
+            <a href="/credit-score" class="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow">Check Free Credit Score</a>
+            <a href="/cibil-credit-report" class="inline-flex items-center px-6 py-3 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-xl border border-white/20">CIBIL Credit Report</a>
+          </div>
+        </section>
+
+        <section class="bg-white rounded-2xl p-8 lg:p-12 border border-slate-200 shadow-sm space-y-4">
+          <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">What is Credit Rectification &amp; How Does It Help Your CIBIL Score?</h2>
+          <p class="text-slate-600 text-sm sm:text-base leading-relaxed">Credit rectification is the formal process of identifying, disputing, and correcting administrative errors, wrongful default remarks, and misreported payment histories on your credit bureau report. Under RBI guidelines, credit bureaus and lenders must resolve verified disputes within 30 days.</p>
+        </section>
+
+        <section class="bg-white rounded-2xl p-8 lg:p-12 border border-slate-200 shadow-sm space-y-4">
+          <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">Common Credit Report Errors: Identity Theft, Wrongful Overdue &amp; Outdated Balances</h2>
+          <p class="text-slate-600 text-sm sm:text-base leading-relaxed">Common reporting discrepancies include clerical Days Past Due (DPD) errors, accounts belonging to individuals with identical names, fraudulent trade lines opened via identity theft, and closed accounts failing to show zero balances.</p>
+        </section>
+
+        <section class="bg-white rounded-2xl p-8 lg:p-12 border border-slate-200 shadow-sm space-y-4">
+          <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">Step-by-Step CIBIL Online Dispute Resolution Process</h2>
+          <p class="text-slate-600 text-sm sm:text-base leading-relaxed">Borrowers can file a formal dispute on the official bureau website using the 9-digit Enquiry Control Number (ECN). The bureau contacts the lending bank to verify records and recalculates your score upon confirmation.</p>
+        </section>
+
+        <section class="bg-slate-900 text-white rounded-2xl p-8 lg:p-12 shadow-sm space-y-4">
+          <h2 class="text-2xl sm:text-3xl font-bold tracking-tight">Legitimate Credit Repair vs Illegal Score-Fixing Scams: What Borrowers Must Know</h2>
+          <p class="text-slate-300 text-sm sm:text-base leading-relaxed">Legitimate rectification only fixes provable factual errors with lender NOCs. Fraudulent agencies claiming to 'erase genuine defaults' are illegal and violate Indian financial regulations.</p>
+        </section>
+
+        <section class="bg-white rounded-2xl p-8 lg:p-12 border border-slate-200 shadow-sm space-y-4">
+          <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">Frequently Asked Questions on Credit Bureau Rectification Timelines</h2>
+          <p class="text-slate-600 text-sm leading-relaxed">Resolution typically takes 30 days. Successful disputes removing wrongful 90+ DPD default tags can improve scores by 50 to 120 points.</p>
+        </section>
+      </main>
+      ${renderFooter()}
+    </div>
+    `;
+  }
+
+  // =========================================================================
+  // BLUEPRINT TEMPLATE 3: HOME LOAN HUB (/loans/home-loan)
+  // =========================================================================
+  if (cleanPath === '/loans/home-loan' || cleanPath === '/loans/home') {
+    return `
+    <div class="min-h-screen bg-slate-50 text-slate-800 font-sans antialiased">
+      <header class="bg-white border-b border-slate-200 py-4 px-6 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+          <a href="/" class="text-2xl font-bold tracking-tight text-blue-900">BanksCart</a>
+          <nav class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
+            <a href="/loans/personal-loan" class="hover:text-blue-600 transition-colors">Personal Loans</a>
+            <a href="/loans/home-loan" class="hover:text-blue-600 transition-colors">Home Loans</a>
+            <a href="/cards" class="hover:text-blue-600 transition-colors">Credit Cards</a>
+            <a href="/credit-score" class="hover:text-blue-600 transition-colors">Credit Score</a>
+            <a href="/calculators" class="hover:text-blue-600 transition-colors">Calculators</a>
+          </nav>
+        </div>
+      </header>
+
+      <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+        <nav aria-label="Breadcrumb" class="text-sm text-slate-500">
+          <ol class="flex items-center space-x-2">
+            <li><a href="/" class="hover:text-blue-600">Home</a></li>
+            <li><span>/</span></li>
+            <li><a href="/loans" class="hover:text-blue-600">Loans</a></li>
+            <li><span>/</span></li>
+            <li class="text-slate-800 font-medium" aria-current="page">Home Loan Interest Rates</li>
+          </ol>
+        </nav>
+
+        {/* Hero Section */}
+        <section class="bg-gradient-to-br from-blue-900 via-indigo-950 to-slate-900 text-white rounded-3xl p-8 lg:p-14 shadow-xl space-y-6">
+          <span class="inline-block px-3 py-1 bg-white/10 text-yellow-300 text-xs font-bold uppercase tracking-wider rounded-full border border-white/20">
+            India's Most Trusted Housing Finance Platform
+          </span>
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight text-white">
+            Compare Home Loan Interest Rates &amp; Housing Finance Options
+          </h1>
+          <p class="text-base sm:text-lg text-slate-200 max-w-3xl leading-relaxed">
+            Compare home loan interest rates starting from <strong class="text-white">8.35% p.a.</strong> across SBI, HDFC, ICICI and 20+ top banks. Check LTV ratios (up to 90%), calculate EMI amortizations, evaluate PMAY subsidies, and unlock Section 80C &amp; Section 24(b) tax savings.
+          </p>
+          <div class="pt-2 flex flex-wrap gap-4">
+            <a href="/credit-score" class="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow">Check Free Eligibility</a>
+            <a href="/personal-loan-emi-calculator" class="inline-flex items-center px-6 py-3 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-xl border border-white/20">Calculate EMI</a>
+          </div>
+        </section>
+
+        {/* H2: Compare Home Loan Rates Across Public & Private Banks */}
+        <section class="bg-white rounded-2xl p-8 lg:p-12 border border-slate-200 shadow-sm space-y-6">
+          <div class="text-center max-w-3xl mx-auto">
+            <span class="text-xs font-bold text-blue-600 uppercase tracking-wider block mb-1">Official Partners</span>
+            <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+              Compare Home Loan Rates Across Public &amp; Private Banks
+            </h2>
+            <p class="text-slate-600 text-sm mt-2">Compare verified interest rates, maximum loan limits, and repayment tenures up to 30 years.</p>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
+            <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+              <h3 class="font-bold text-slate-900 text-lg">State Bank of India (SBI)</h3>
+              <div class="text-blue-700 font-bold text-base">8.35% - 9.70% p.a.</div>
+              <p class="text-xs text-slate-600">Max tenure: 30 years • LTV up to 90% • Zero prepayment charges.</p>
+            </div>
+            <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+              <h3 class="font-bold text-slate-900 text-lg">HDFC Bank Home Loan</h3>
+              <div class="text-blue-700 font-bold text-base">8.50% - 9.65% p.a.</div>
+              <p class="text-xs text-slate-600">Max tenure: 30 years • Doorstep documentation • Fast digital processing.</p>
+            </div>
+            <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+              <h3 class="font-bold text-slate-900 text-lg">ICICI Bank Home Loan</h3>
+              <div class="text-blue-700 font-bold text-base">8.60% - 9.80% p.a.</div>
+              <p class="text-xs text-slate-600">Max tenure: 30 years • Pre-approved balance transfer offers.</p>
+            </div>
+          </div>
+        </section>
+
+        {/* H2: Home Loan EMI Calculator & Amortization Schedule */}
+        <section class="bg-white rounded-2xl p-8 lg:p-12 border border-slate-200 shadow-sm space-y-6">
+          <div class="text-center max-w-3xl mx-auto">
+            <span class="text-xs font-bold text-teal-600 uppercase tracking-wider block mb-1">Repayment Schedule</span>
+            <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+              Home Loan EMI Calculator &amp; Amortization Schedule
+            </h2>
+            <p class="text-slate-600 text-sm mt-2">Accurately project your principal repayment and interest outflow across 10 to 30 year repayment terms.</p>
+          </div>
+          <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200 text-center">
+            <p class="text-sm text-slate-600 mb-4">Calculate exact EMIs for loans up to ₹10 Crores with flexible interest rates starting at 8.35%.</p>
+            <a href="/personal-loan-emi-calculator" class="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow">
+              Open Housing EMI Calculator
+            </a>
+          </div>
+        </section>
+
+        {/* H2: Eligibility Requirements for First-Time Homebuyers */}
+        <section class="bg-white rounded-2xl p-8 lg:p-12 border border-slate-200 shadow-sm space-y-6">
+          <div class="text-center max-w-3xl mx-auto">
+            <span class="text-xs font-bold text-blue-600 uppercase tracking-wider block mb-1">Borrower Guide</span>
+            <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+              Eligibility Requirements for First-Time Homebuyers
+            </h2>
+            <p class="text-slate-600 text-sm mt-2">Check the core requirements required by banks for salaried and self-employed first-time buyers.</p>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+            <div class="p-5 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+              <h3 class="font-bold text-slate-900 text-base">Credit Score (750+)</h3>
+              <p class="text-xs text-slate-600">A CIBIL score of 750 or higher qualifies you for the lowest benchmark interest rates (8.35% p.a.).</p>
+            </div>
+            <div class="p-5 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+              <h3 class="font-bold text-slate-900 text-base">Age &amp; Income Stability</h3>
+              <p class="text-xs text-slate-600">Applicants must be between 21 and 65 years with at least 2 years of documented employment or business vintage.</p>
+            </div>
+            <div class="p-5 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+              <h3 class="font-bold text-slate-900 text-base">Property Approval &amp; RERA</h3>
+              <p class="text-xs text-slate-600">The property must have clear legal titles, encumbrance certificates, and RERA registration where applicable.</p>
+            </div>
+          </div>
+        </section>
+
+        {/* H2: Tax Benefits on Home Loan Principal (80C) and Interest (Section 24b) */}
+        <section class="bg-white rounded-2xl p-8 lg:p-12 border border-slate-200 shadow-sm space-y-6">
+          <div class="text-center max-w-3xl mx-auto">
+            <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider block mb-1">Tax Deductions</span>
+            <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+              Tax Benefits on Home Loan Principal (80C) and Interest (Section 24b)
+            </h2>
+            <p class="text-slate-600 text-sm mt-2">Indian tax laws offer substantial tax relief for residential property owners servicing registered housing loans.</p>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+            <div class="p-6 rounded-xl bg-slate-50 border border-slate-200 space-y-3">
+              <div class="text-xs font-bold text-blue-700 uppercase">Section 24(b)</div>
+              <h3 class="text-lg font-bold text-slate-900">Interest Deduction up to ₹2 Lakhs</h3>
+              <p class="text-xs text-slate-600 leading-relaxed">Deduct up to ₹2,00,000 per financial year against total interest paid on a self-occupied property.</p>
+            </div>
+            <div class="p-6 rounded-xl bg-slate-50 border border-slate-200 space-y-3">
+              <div class="text-xs font-bold text-emerald-700 uppercase">Section 80C</div>
+              <h3 class="text-lg font-bold text-slate-900">Principal Deduction up to ₹1.5 Lakhs</h3>
+              <p class="text-xs text-slate-600 leading-relaxed">Claim up to ₹1,50,000 annually for principal repayment, stamp duty, and property registration charges.</p>
+            </div>
+          </div>
+          <div class="pt-4 border-t border-slate-200 flex flex-wrap gap-4 text-xs font-semibold">
+            <a href="/loans/personal-loan" class="text-blue-600 hover:underline">Personal Loans</a>
+            <span class="text-slate-300">•</span>
+            <a href="/credit-score" class="text-blue-600 hover:underline">Free CIBIL Score</a>
+            <span class="text-slate-300">•</span>
+            <a href="/credit-score/credit-rectification-service" class="text-blue-600 hover:underline">Credit Rectification</a>
+          </div>
+        </section>
+
+        {/* H2: Frequently Asked Questions on Balance Transfer & Top-Up Loans */}
+        <section class="bg-white rounded-2xl p-8 lg:p-12 border border-slate-200 shadow-sm space-y-6">
+          <div class="text-center max-w-3xl mx-auto">
+            <span class="text-xs font-bold text-blue-600 uppercase tracking-wider block mb-1">Knowledge Base</span>
+            <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+              Frequently Asked Questions on Balance Transfer &amp; Top-Up Loans
+            </h2>
+            <p class="text-slate-600 text-sm mt-2">Learn how switching your home loan can reduce EMIs and save up to ₹30 Lakhs in interest.</p>
+          </div>
+          <div class="divide-y divide-slate-100 space-y-4 pt-2">
+            <div class="pt-4">
+              <h3 class="text-base font-bold text-slate-900">How does a home loan balance transfer work?</h3>
+              <p class="text-sm text-slate-600 mt-1">A home loan balance transfer allows you to transfer your outstanding loan balance from your existing lender to a new bank offering a lower interest rate, reducing your monthly EMI and overall interest payout.</p>
+            </div>
+            <div class="pt-4">
+              <h3 class="text-base font-bold text-slate-900">What is the maximum LTV (Loan-to-Value) ratio for home loans in India?</h3>
+              <p class="text-sm text-slate-600 mt-1">Per RBI directives, banks can finance up to 90% of property value for loans up to ₹30 Lakhs, up to 80% for loans between ₹30 Lakhs and ₹75 Lakhs, and up to 75% for loans exceeding ₹75 Lakhs.</p>
+            </div>
+          </div>
+        </section>
+      </main>
+      ${renderFooter()}
+    </div>
+    `;
+  }
+
   // 1. Personal Loan Sub-Pages (Render from loanPageData)
   if (cleanPath.startsWith('/loans/personal')) {
     const sub = cleanPath.replace('/loans/personal/', '').replace('/loans/personal', '') || 'overview';
@@ -715,74 +1333,7 @@ function generatePreRenderedBody(cleanPath, meta) {
   }
 
     
-  // 1d. Credit Rectification Dedicated Pre-rendering
-  if (cleanPath === '/credit-score/credit-rectification-service') {
-    return `
-    <div class="min-h-screen bg-slate-50 text-slate-800 font-sans antialiased">
-      <header class="bg-white border-b border-slate-200 py-4 px-6 sticky top-0 z-50 shadow-sm">
-        <div class="max-w-7xl mx-auto flex items-center justify-between">
-          <a href="/" class="text-2xl font-bold tracking-tight text-blue-900">BanksCart</a>
-          <nav class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
-            <a href="/loans/personal-loan" class="hover:text-blue-600 transition-colors">Personal Loans</a>
-            <a href="/loans/home-loan" class="hover:text-blue-600 transition-colors">Home Loans</a>
-            <a href="/cards" class="hover:text-blue-600 transition-colors">Credit Cards</a>
-            <a href="/credit-score" class="hover:text-blue-600 transition-colors">Credit Score</a>
-            <a href="/calculators" class="hover:text-blue-600 transition-colors">Calculators</a>
-          </nav>
-        </div>
-      </header>
-
-      <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
-        <nav aria-label="Breadcrumb" class="text-sm text-slate-500">
-          <ol class="flex items-center space-x-2">
-            <li><a href="/" class="hover:text-blue-600">Home</a></li>
-            <li><span>/</span></li>
-            <li><a href="/credit-score" class="hover:text-blue-600">Credit Score</a></li>
-            <li><span>/</span></li>
-            <li class="text-slate-800 font-medium" aria-current="page">Credit Rectification Service</li>
-          </ol>
-        </nav>
-
-        <section class="bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white rounded-3xl p-8 lg:p-14 shadow-xl space-y-6">
-          <span class="inline-block px-3 py-1 bg-white/10 text-yellow-300 text-xs font-bold uppercase tracking-wider rounded-full border border-white/20">Credit Bureau Recovery</span>
-          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight text-white">Expert Credit Rectification &amp; CIBIL Dispute Resolution Guidance</h1>
-          <p class="text-base sm:text-lg text-slate-300 max-w-3xl leading-relaxed">Fix errors on your CIBIL report with expert credit rectification guidance. Resolve wrongful overdue tags, update settlement statuses, and rebuild your credit rating under RBI guidelines.</p>
-          <div class="pt-2 flex flex-wrap gap-4">
-            <a href="/credit-score" class="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow">Check Free Credit Score</a>
-            <a href="/cibil-credit-report" class="inline-flex items-center px-6 py-3 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-xl border border-white/20">CIBIL Credit Report</a>
-          </div>
-        </section>
-
-        <section class="bg-white rounded-2xl p-8 lg:p-12 border border-slate-200 shadow-sm space-y-4">
-          <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">What is Credit Rectification &amp; How Does It Help Your CIBIL Score?</h2>
-          <p class="text-slate-600 text-sm sm:text-base leading-relaxed">Credit rectification is the formal process of identifying, disputing, and correcting administrative errors, wrongful default remarks, and misreported payment histories on your credit bureau report. Under RBI guidelines, credit bureaus and lenders must resolve verified disputes within 30 days.</p>
-        </section>
-
-        <section class="bg-white rounded-2xl p-8 lg:p-12 border border-slate-200 shadow-sm space-y-4">
-          <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">Common Credit Report Errors: Identity Theft, Wrongful Overdue &amp; Outdated Balances</h2>
-          <p class="text-slate-600 text-sm sm:text-base leading-relaxed">Common reporting discrepancies include clerical Days Past Due (DPD) errors, accounts belonging to individuals with identical names, fraudulent trade lines opened via identity theft, and closed accounts failing to show zero balances.</p>
-        </section>
-
-        <section class="bg-white rounded-2xl p-8 lg:p-12 border border-slate-200 shadow-sm space-y-4">
-          <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">Step-by-Step CIBIL Online Dispute Resolution Process</h2>
-          <p class="text-slate-600 text-sm sm:text-base leading-relaxed">Borrowers can file a formal dispute on the official bureau website using the 9-digit Enquiry Control Number (ECN). The bureau contacts the lending bank to verify records and recalculates your score upon confirmation.</p>
-        </section>
-
-        <section class="bg-slate-900 text-white rounded-2xl p-8 lg:p-12 shadow-sm space-y-4">
-          <h2 class="text-2xl sm:text-3xl font-bold tracking-tight">Legitimate Credit Repair vs Illegal Score-Fixing Scams: What Borrowers Must Know</h2>
-          <p class="text-slate-300 text-sm sm:text-base leading-relaxed">Legitimate rectification only fixes provable factual errors with lender NOCs. Fraudulent agencies claiming to 'erase genuine defaults' are illegal and violate Indian financial regulations.</p>
-        </section>
-
-        <section class="bg-white rounded-2xl p-8 lg:p-12 border border-slate-200 shadow-sm space-y-4">
-          <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">Frequently Asked Questions on Credit Bureau Rectification Timelines</h2>
-          <p class="text-slate-600 text-sm leading-relaxed">Resolution typically takes 30 days. Successful disputes removing wrongful 90+ DPD default tags can improve scores by 50 to 120 points.</p>
-        </section>
-      </main>
-      ${renderFooter()}
-    </div>
-    `;
-  }
-
+  
   // 1b. About Us Dedicated Pre-rendering
   if (cleanPath === '/about-us') {
     return `
@@ -1518,7 +2069,39 @@ function renderFooter() {
 function generateJsonLd(cleanPath, meta, canonicalUrl) {
   const schemas = [];
 
-  // Homepage: WebSite, FinancialService, Organization
+  // 1. Site-Wide Organization & Brand Schema (Present across all pages)
+  const siteWideOrganizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "FinancialService",
+    "name": "BanksCart",
+    "legalName": "BanksCart Financial Services",
+    "url": "https://www.bankscart.com/",
+    "logo": "https://www.bankscart.com/assets/images/bankscart-logo.png",
+    "description": "BanksCart is an online financial comparison platform in India helping consumers compare and apply for personal loans, home loans, business loans, credit cards, and credit score improvement services.",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Connaught Place",
+      "addressLocality": "New Delhi",
+      "addressRegion": "Delhi",
+      "postalCode": "110001",
+      "addressCountry": "IN"
+    },
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+91-11-XXXXXXXX",
+      "contactType": "Customer Support",
+      "areaServed": "IN",
+      "availableLanguage": ["English", "Hindi"]
+    },
+    "sameAs": [
+      "https://www.facebook.com/bankscart",
+      "https://twitter.com/bankscart",
+      "https://www.linkedin.com/company/bankscart"
+    ]
+  };
+  schemas.push(siteWideOrganizationSchema);
+
+  // Homepage: Add WebSite SearchAction Schema
   if (!cleanPath || cleanPath === '/') {
     schemas.push({
       "@context": "https://schema.org",
@@ -1535,31 +2118,6 @@ function generateJsonLd(cleanPath, meta, canonicalUrl) {
         },
         "query-input": "required name=search_term_string"
       }
-    });
-
-    schemas.push({
-      "@context": "https://schema.org",
-      "@type": "FinancialService",
-      "@id": "https://www.bankscart.com/#financialservice",
-      "name": "BanksCart Financial Services",
-      "url": "https://www.bankscart.com/",
-      "logo": "https://www.bankscart.com/favicon-32x32.png",
-      "image": "https://www.bankscart.com/favicon-32x32.png",
-      "description": "Leading digital financial marketplace in India comparing loan interest rates, credit cards, fixed deposits, and credit scores from 30+ scheduled commercial banks.",
-      "telephone": "+91-11-4100-8900",
-      "priceRange": "Free",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "Level 4, Statesman House, Barakhamba Road, Connaught Place",
-        "addressLocality": "New Delhi",
-        "addressRegion": "Delhi",
-        "postalCode": "110001",
-        "addressCountry": "IN"
-      },
-      "sameAs": [
-        "https://twitter.com/bankscart",
-        "https://facebook.com/bankscart"
-      ]
     });
     return schemas;
   }
@@ -1592,46 +2150,48 @@ function generateJsonLd(cleanPath, meta, canonicalUrl) {
     });
   }
 
-  // Blog / Article Schema
+  // Blog / Article Schema (Validated BlogPosting Schema)
   if (cleanPath.startsWith('/blogs/') || cleanPath.startsWith('/blog/')) {
+    const isSSY = cleanPath.toLowerCase().includes('sukanya');
+    const headline = isSSY
+      ? "Sukanya Samriddhi Yojana (SSY) 2026: Interest Rate, Rules, Eligibility & Tax Benefits"
+      : meta.title.replace(/\s*\|\s*BanksCart.*$/i, '');
+    const description = isSSY
+      ? "Complete guide on Sukanya Samriddhi Yojana (SSY) account opening, latest 8.2% interest rates, tenure calculation, and Section 80C tax exemption rules."
+      : meta.description;
+    const image = isSSY
+      ? "https://www.bankscart.com/assets/images/ssy-guide-banner.jpg"
+      : "https://www.bankscart.com/assets/images/bankscart-logo.png";
+    const authorName = isSSY ? "Priya Sharma" : "Raghav Singhal";
+    const authorRole = isSSY ? "Senior Financial Analyst" : "Lead Financial Analyst";
+    const authorUrl = isSSY ? "https://www.bankscart.com/author/priya-sharma" : "https://www.bankscart.com/author/raghav-singhal";
+
     schemas.push({
       "@context": "https://schema.org",
-      "@type": "Article",
+      "@type": "BlogPosting",
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": canonicalUrl
+        "@id": isSSY ? "https://www.bankscart.com/blog/sukanya-samriddhi-yojana-guide" : canonicalUrl
       },
-      "headline": meta.title,
-      "description": meta.description,
-      "image": "https://www.bankscart.com/favicon-32x32.png",
+      "headline": headline,
+      "description": description,
+      "image": image,
       "author": {
-        "@type": "Organization",
-        "name": "BanksCart Financial Research Team",
-        "url": "https://www.bankscart.com"
+        "@type": "Person",
+        "name": authorName,
+        "jobTitle": authorRole,
+        "url": authorUrl
       },
       "publisher": {
         "@type": "Organization",
         "name": "BanksCart",
         "logo": {
           "@type": "ImageObject",
-          "url": "https://www.bankscart.com/favicon-32x32.png"
+          "url": "https://www.bankscart.com/assets/images/bankscart-logo.png"
         }
-      }
-    });
-
-    schemas.push({
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "What is discussed in " + JSON.stringify(meta.title) + "?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": meta.description
-          }
-        }
-      ]
+      },
+      "datePublished": "2026-01-15T09:00:00+05:30",
+      "dateModified": "2026-10-30T10:00:00+05:30"
     });
     return schemas;
   }
@@ -1807,10 +2367,17 @@ for (const urlPath of urls) {
   pageHtml = pageHtml.replace('</head>', jsonLdScripts + '\n  </head>');
 
   // Pre-render semantic body inside <div id="root"></div>
-  pageHtml = pageHtml.replace(
-    '<div id="root"></div>',
-    `<div id="root">${prerenderedBody}</div>`
-  );
+  if (pageHtml.includes('<div id="root"></div>')) {
+    pageHtml = pageHtml.replace(
+      '<div id="root"></div>',
+      `<div id="root">${prerenderedBody}</div>`
+    );
+  } else {
+    pageHtml = pageHtml.replace(
+      /<div id="root">[\s\S]*?<\/div>\s*<script/i,
+      `<div id="root">${prerenderedBody}</div>\n    <script`
+    );
+  }
 
   if (!cleanPath) {
     // Root index.html

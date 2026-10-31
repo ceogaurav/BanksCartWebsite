@@ -56,6 +56,70 @@ const glossary = [
 
 const InfoSections = () => (
   <section className="my-14 space-y-10">
+        {/* CIBIL Score Impact Section with Internal Links */}
+    <div className="bg-gradient-to-br from-blue-900 via-indigo-900 to-slate-900 text-white rounded-2xl p-6 sm:p-8 shadow-md">
+      <div className="flex items-center gap-2 mb-3">
+        <span className="w-2.5 h-2.5 rounded-full bg-teal-400" />
+        <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-white">
+          How Your CIBIL Score Affects Your Personal Loan Interest Rate
+        </h2>
+      </div>
+      <p className="text-sm sm:text-base text-blue-100 leading-relaxed mb-6">
+        In India, credit bureaus calculate your credit score between 300 and 900. Lenders use a <strong className="text-white">CIBIL cut-off score of 750+</strong> as the benchmark for prime lending terms. Borrowers above 750 access pre-approved personal loans starting at 10.25% p.a., with fast-track digital verification and zero pre-closure charges on floating-rate loans. For borrowers with lower scores, risk-based premiums may elevate APRs to 18%–24%.
+      </p>
+
+      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/15">
+          <div className="text-xs text-teal-300 font-bold uppercase">750 - 900 Score</div>
+          <div className="text-lg font-extrabold text-white mt-1">10.25% - 13.50%</div>
+          <p className="text-xs text-blue-200 mt-1">Prime offers, lowest processing fee, 100% digital sanction.</p>
+        </div>
+        <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/15">
+          <div className="text-xs text-blue-300 font-bold uppercase">700 - 749 Score</div>
+          <div className="text-lg font-extrabold text-white mt-1">13.50% - 16.50%</div>
+          <p className="text-xs text-blue-200 mt-1">Standard approvals with income verification &amp; FOIR review.</p>
+        </div>
+        <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/15">
+          <div className="text-xs text-amber-300 font-bold uppercase">650 - 699 Score</div>
+          <div className="text-lg font-extrabold text-white mt-1">16.50% - 21.00%</div>
+          <p className="text-xs text-blue-200 mt-1">Select NBFC approvals; co-borrower may be required.</p>
+        </div>
+        <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/15">
+          <div className="text-xs text-rose-300 font-bold uppercase">Under 650</div>
+          <div className="text-lg font-extrabold text-white mt-1">Dispute / Rectify</div>
+          <p className="text-xs text-blue-200 mt-1">Resolve bureau errors before applying to avoid loan rejection.</p>
+        </div>
+      </div>
+
+      {/* Internal links for Blueprint SEO */}
+      <div className="pt-4 border-t border-white/15 flex flex-wrap gap-3">
+        <Link
+          to="/personal-loan-emi-calculator"
+          className="inline-flex items-center text-xs font-semibold px-4 py-2 bg-teal-500 hover:bg-teal-600 text-slate-900 rounded-lg transition-colors shadow-sm"
+        >
+          Calculate Personal Loan EMI →
+        </Link>
+        <Link
+          to="/credit-score"
+          className="inline-flex items-center text-xs font-semibold px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg border border-white/20 transition-colors"
+        >
+          Free CIBIL Score Check
+        </Link>
+        <Link
+          to="/cibil-credit-report"
+          className="inline-flex items-center text-xs font-semibold px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg border border-white/20 transition-colors"
+        >
+          Download Credit Report
+        </Link>
+        <Link
+          to="/blog/how-to-improve-cibil-score-fast"
+          className="inline-flex items-center text-xs font-semibold px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg border border-white/20 transition-colors"
+        >
+          Improve CIBIL Score Fast
+        </Link>
+      </div>
+    </div>
+
     {/* Tips for Approval */}
     <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-gray-200">
       <div className="flex items-center gap-2 mb-4">

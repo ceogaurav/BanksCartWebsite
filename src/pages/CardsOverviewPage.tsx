@@ -1,4 +1,5 @@
 import React from "react";
+import { Helmet } from "react-helmet-async";
 import CardTypeCard from "../components/Card/CardTypeCard";
 import { motion } from 'framer-motion';
 import { CreditCard, Wallet, IndianRupee, ShieldCheck, Briefcase } from "lucide-react"; // Importing Lucide icons

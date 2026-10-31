@@ -51,25 +51,30 @@ export default function SEOManager() {
       schemas.push({
         "@context": "https://schema.org",
         "@type": "FinancialService",
-        "@id": "https://www.bankscart.com/#financialservice",
-        "name": "BanksCart Financial Services",
+        "name": "BanksCart",
+        "legalName": "BanksCart Financial Services",
         "url": "https://www.bankscart.com/",
-        "logo": "https://www.bankscart.com/favicon-32x32.png",
-        "image": "https://www.bankscart.com/favicon-32x32.png",
-        "description": "Leading digital financial marketplace in India comparing loan interest rates, credit cards, fixed deposits, and credit scores from 30+ scheduled commercial banks.",
-        "telephone": "+91-11-4100-8900",
-        "priceRange": "Free",
+        "logo": "https://www.bankscart.com/assets/images/bankscart-logo.png",
+        "description": "BanksCart is an online financial comparison platform in India helping consumers compare and apply for personal loans, home loans, business loans, credit cards, and credit score improvement services.",
         "address": {
           "@type": "PostalAddress",
-          "streetAddress": "Level 4, Statesman House, Barakhamba Road, Connaught Place",
+          "streetAddress": "Connaught Place",
           "addressLocality": "New Delhi",
           "addressRegion": "Delhi",
           "postalCode": "110001",
           "addressCountry": "IN"
         },
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "telephone": "+91-11-XXXXXXXX",
+          "contactType": "Customer Support",
+          "areaServed": "IN",
+          "availableLanguage": ["English", "Hindi"]
+        },
         "sameAs": [
+          "https://www.facebook.com/bankscart",
           "https://twitter.com/bankscart",
-          "https://facebook.com/bankscart"
+          "https://www.linkedin.com/company/bankscart"
         ]
       });
 
@@ -106,47 +111,50 @@ export default function SEOManager() {
       });
     }
 
-    // 3. Blog & Editorial Schemas
+    // 3. Blog & Editorial Schemas (Validated BlogPosting Schema)
     if (pathname.startsWith('/blogs/') || pathname.startsWith('/blog/')) {
+      const isSSY = canonicalPath.toLowerCase().includes('sukanya');
+      const headline = isSSY
+        ? "Sukanya Samriddhi Yojana (SSY) 2026: Interest Rate, Rules, Eligibility & Tax Benefits"
+        : meta.title.replace(/\s*\|\s*BanksCart.*$/i, '');
+      const description = isSSY
+        ? "Complete guide on Sukanya Samriddhi Yojana (SSY) account opening, latest 8.2% interest rates, tenure calculation, and Section 80C tax exemption rules."
+        : meta.description;
+      const image = isSSY
+        ? "https://www.bankscart.com/assets/images/ssy-guide-banner.jpg"
+        : "https://www.bankscart.com/assets/images/bankscart-logo.png";
+      const authorName = isSSY ? "Priya Sharma" : "Raghav Singhal";
+      const authorRole = isSSY ? "Senior Financial Analyst" : "Lead Financial Analyst";
+      const authorUrl = isSSY ? "https://www.bankscart.com/author/priya-sharma" : "https://www.bankscart.com/author/raghav-singhal";
+
       schemas.push({
         "@context": "https://schema.org",
-        "@type": "Article",
+        "@type": "BlogPosting",
         "mainEntityOfPage": {
           "@type": "WebPage",
-          "@id": currentUrl
+          "@id": isSSY ? "https://www.bankscart.com/blog/sukanya-samriddhi-yojana-guide" : currentUrl
         },
-        "headline": meta.title,
-        "description": meta.description,
-        "image": "https://www.bankscart.com/favicon-32x32.png",
+        "headline": headline,
+        "description": description,
+        "image": image,
         "author": {
-          "@type": "Organization",
-          "name": "BanksCart Financial Research Team",
-          "url": "https://www.bankscart.com"
+          "@type": "Person",
+          "name": authorName,
+          "jobTitle": authorRole,
+          "url": authorUrl
         },
         "publisher": {
           "@type": "Organization",
           "name": "BanksCart",
           "logo": {
             "@type": "ImageObject",
-            "url": "https://www.bankscart.com/favicon-32x32.png"
+            "url": "https://www.bankscart.com/assets/images/bankscart-logo.png"
           }
-        }
+        },
+        "datePublished": "2026-01-15T09:00:00+05:30",
+        "dateModified": "2026-10-30T10:00:00+05:30"
       });
 
-      schemas.push({
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": `What key information is covered in "${meta.title}"?`,
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": meta.description
-            }
-          }
-        ]
-      });
       return schemas;
     }
 

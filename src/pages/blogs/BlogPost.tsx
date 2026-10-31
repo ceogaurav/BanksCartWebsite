@@ -48,6 +48,59 @@ export default function BlogPost() {
         ? new Date(post.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
         : 'October 15, 2026';
 
+    const blogPostingSchema = {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": `https://www.bankscart.com/blog/${slug}`
+        },
+        "headline": post.title,
+        "description": post.seoDescription || `Complete financial guide on ${post.title}. Verified by chartered accountants and ex-banking advisors on BanksCart.`,
+        "image": post.mainImage || "https://www.bankscart.com/assets/images/bankscart-logo.png",
+        "author": {
+            "@type": "Person",
+            "name": "Raghav Singhal",
+            "jobTitle": "Lead Financial Analyst",
+            "url": "https://www.bankscart.com/author/raghav-singhal"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "BanksCart",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://www.bankscart.com/assets/images/bankscart-logo.png"
+            }
+        },
+        "datePublished": post.publishedAt || "2026-01-15T09:00:00+05:30",
+        "dateModified": "2026-10-30T10:00:00+05:30"
+    };
+
+    const breadcrumbSchema = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://www.bankscart.com/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Blog",
+                "item": "https://www.bankscart.com/blog"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": post.title,
+                "item": `https://www.bankscart.com/blog/${slug}`
+            }
+        ]
+    };
+
     return (
         <>
             <Helmet>
@@ -55,6 +108,12 @@ export default function BlogPost() {
                 <meta name="description" content={post.seoDescription || `Complete financial guide on ${post.title}. Verified by chartered accountants and ex-banking advisors on BanksCart.`} />
                 <link rel="canonical" href={`https://www.bankscart.com/blog/${slug}`} />
                 {post.mainImage && <meta property="og:image" content={post.mainImage} />}
+                <script type="application/ld+json">
+                    {JSON.stringify(blogPostingSchema)}
+                </script>
+                <script type="application/ld+json">
+                    {JSON.stringify(breadcrumbSchema)}
+                </script>
             </Helmet>
 
             <article className="max-w-4xl mx-auto py-10 px-4 sm:px-6 lg:px-8 pt-20">

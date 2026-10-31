@@ -35,7 +35,7 @@ const DocumentsTable = () => (
         Checklist
       </span>
       <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
-        Documents Required for Personal Loan Application
+        Mandatory Documents Required for Instant Personal Loan Disbursal
       </h2>
       <p className="text-gray-600 text-sm sm:text-base mt-2">
         Keep digital copies of these KYC and income proofs ready for 100% paperless instant processing.

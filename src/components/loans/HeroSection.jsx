@@ -25,12 +25,12 @@ const HeroSection = ({ openApplyModal, openEligibilityModal }) => {
 
         {/* Primary Heading (H1) */}
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white mb-4 leading-tight">
-          Personal Loans in India: <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-emerald-200 to-cyan-200">Compare & Apply Online</span>
+          Compare Personal Loan Interest Rates &amp; <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-emerald-200 to-cyan-200">Apply Online in India</span>
         </h1>
 
         {/* Subtitle with verified terms */}
         <p className="text-base sm:text-lg md:text-xl text-blue-100/90 max-w-3xl mx-auto mb-8 leading-relaxed font-normal">
-          Get personal loans up to <strong className="text-white font-semibold">₹50 Lakhs</strong> with interest rates starting at <strong className="text-white font-semibold">10.25% p.a.</strong> Enjoy 100% digital paperwork, flexible tenures up to 72 months, and instant disbursal from top banks and NBFCs.
+          Compare lowest personal loan interest rates starting at <strong className="text-white font-semibold">10.25% p.a.</strong> across 30+ Indian banks. Check your <strong className="text-white font-semibold">CIBIL cut-off score (750+)</strong>, compare processing fees (0.5%–2.5%), zero pre-closure charges, moratorium options, and instant paperless disbursal for salaried vs self-employed borrowers.
         </p>
 
         {/* CTAs */}

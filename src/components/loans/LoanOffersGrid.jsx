@@ -78,7 +78,7 @@ const LoanOffersGrid = ({ openApplyModal, openEligibilityModal }) => {
           Lender Comparison
         </span>
         <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
-          Compare Top Personal Loan Offers in India
+          Compare Personal Loan Interest Rates &amp; Processing Fees (Updated Monthly)
         </h2>
         <p className="text-gray-600 text-sm sm:text-base mt-2">
           Compare verified interest rates, processing charges, and borrowing limits from leading banks and NBFCs.

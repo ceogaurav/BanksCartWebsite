@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 // Import icons and animation libraries as needed
 import { Menu, X, Briefcase, CreditCard, Home, Shield, Trophy, Star, Banknote, Lock, Unlock, TrendingUp, Calendar, Phone, FileText, CheckCircle, Users, Settings, PieChart, Mail } from "lucide-react";
 import AOS from 'aos';
@@ -44,6 +45,47 @@ function useBusinessLoanPageAssets() {
 }
 
 const BusinessLoanPage = ({ openApplyModal }) => {
+  const pageTitle = "Collateral-Free Business Loans: Compare Rates & Apply Online | BanksCart";
+  const pageDescription = "Get unsecured MSME and business loans up to ₹75 Lakhs from top banks and NBFCs. Compare interest rates, check eligibility, and apply with fast disbursal.";
+  const canonicalUrl = "https://www.bankscart.com/loans/business-loan";
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://www.bankscart.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Loans",
+        "item": "https://www.bankscart.com/loans"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Business Loan",
+        "item": canonicalUrl
+      }
+    ]
+  };
+
+  const financialProductSchema = {
+    "@context": "https://schema.org",
+    "@type": "FinancialProduct",
+    "name": "Business Loans in India",
+    "description": pageDescription,
+    "url": canonicalUrl,
+    "provider": {
+      "@type": "Organization",
+      "name": "BanksCart",
+      "url": "https://www.bankscart.com"
+    }
+  };
   useBusinessLoanPageAssets();
   useEffect(() => {
     AOS.init({ once: true, duration: 800 });
@@ -60,6 +102,21 @@ const BusinessLoanPage = ({ openApplyModal }) => {
   const [openDropdown, setOpenDropdown] = useState(null);
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-white/60 to-blue-50/80">
+      <Helmet>
+        <title>{pageTitle}</title>
+        <meta name="description" content={pageDescription} />
+        <link rel="canonical" href={canonicalUrl} />
+        <meta property="og:title" content={pageTitle} />
+        <meta property="og:description" content={pageDescription} />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:type" content="website" />
+        <script type="application/ld+json">
+          {JSON.stringify(breadcrumbSchema)}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify(financialProductSchema)}
+        </script>
+      </Helmet>
       <nav className="text-sm text-gray-500 py-2 px-4 md:px-12">
         Home &gt; <span className="text-blue-700 font-medium">Business Loan</span>
       </nav>

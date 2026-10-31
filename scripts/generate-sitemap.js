@@ -60,6 +60,7 @@ async function generateSitemap() {
             '/author/raghav-singhal',
             '/author/amit-khurana',
             '/author/neha-verma',
+            '/author/priya-sharma',
             '/about-us',
             '/company-registration',
             '/contact',
@@ -76,6 +77,7 @@ async function generateSitemap() {
             '/insurance',
             '/calculators',
             '/ssy-calculator',
+            '/blog/sukanya-samriddhi-yojana-guide',
             '/blog/Sukanya-Samriddhi-Yojana-Guide',
             '/resources/loan-rates',
             '/eligibility',
@@ -180,6 +182,7 @@ async function generateSitemap() {
             '/cards/credit',
             '/cards/debit',
             '/credit-score',
+            '/credit-score/credit-rectification-service',
             '/expert-advice',
             '/insurance/health',
             '/insurance/car',
@@ -484,7 +487,7 @@ async function generateSitemap() {
         function categorize(url) {
             const clean = url.toLowerCase();
             const coreSet = new Set([
-                '', '/', '/about', '/about-us', '/contact', '/editorial-policy', '/author/raghav-singhal', '/author/amit-khurana', '/author/neha-verma', '/terms-of-use', '/privacy-policy',
+                '', '/', '/about', '/about-us', '/contact', '/editorial-policy', '/author/raghav-singhal', '/author/amit-khurana', '/author/neha-verma', '/author/priya-sharma', '/terms-of-use', '/privacy-policy',
                 '/disclaimer', '/investor-relations', '/intellectual-policy',
                 '/credit-report-terms', '/become-partner', '/eligibility', '/status',
                 '/loans', '/cards', '/investment', '/insurance', '/calculators',

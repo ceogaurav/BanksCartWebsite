@@ -31,63 +31,56 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
 
-    <!-- Structured Data: Organization, WebSite & FinancialService Schemas -->
+    <!-- Site-Wide Organization & Brand Schema (Injected in Root Layout) -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@graph": [
-        {
-          "@type": "WebSite",
-          "@id": "https://www.bankscart.com/#website",
-          "url": "https://www.bankscart.com/",
-          "name": "BanksCart",
-          "description": "Compare loan interest rates, credit cards, and apply online with instant eligibility check across top Indian banks.",
-          "potentialAction": {
-            "@type": "SearchAction",
-            "target": {
-              "@type": "EntryPoint",
-              "urlTemplate": "https://www.bankscart.com/financial-directory?q={search_term_string}"
-            },
-            "query-input": "required name=search_term_string"
-          }
-        },
-        {
-          "@type": "Organization",
-          "@id": "https://www.bankscart.com/#organization",
-          "name": "BanksCart",
-          "url": "https://www.bankscart.com/",
-          "logo": "https://www.bankscart.com/favicon-32x32.png",
-          "sameAs": [
-            "https://twitter.com/bankscart",
-            "https://facebook.com/bankscart"
-          ],
-          "contactPoint": {
-            "@type": "ContactPoint",
-            "telephone": "+91-11-4100-8900",
-            "contactType": "Customer Support",
-            "email": "support@bankscart.com",
-            "areaServed": "IN"
-          }
-        },
-        {
-          "@type": "FinancialService",
-          "@id": "https://www.bankscart.com/#financialservice",
-          "name": "BanksCart Financial Services",
-          "url": "https://www.bankscart.com/",
-          "logo": "https://www.bankscart.com/favicon-32x32.png",
-          "image": "https://www.bankscart.com/favicon-32x32.png",
-          "description": "Compare and apply for personal loans, home loans, business loans, and credit cards from 30+ top banks in India.",
-          "priceRange": "Free",
-          "address": {
-            "@type": "PostalAddress",
-            "streetAddress": "Level 4, Statesman House, Barakhamba Road, Connaught Place",
-            "addressLocality": "New Delhi",
-            "addressRegion": "Delhi",
-            "postalCode": "110001",
-            "addressCountry": "IN"
-          }
-        }
+      "@type": "FinancialService",
+      "name": "BanksCart",
+      "legalName": "BanksCart Financial Services",
+      "url": "https://www.bankscart.com/",
+      "logo": "https://www.bankscart.com/assets/images/bankscart-logo.png",
+      "description": "BanksCart is an online financial comparison platform in India helping consumers compare and apply for personal loans, home loans, business loans, credit cards, and credit score improvement services.",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Connaught Place",
+        "addressLocality": "New Delhi",
+        "addressRegion": "Delhi",
+        "postalCode": "110001",
+        "addressCountry": "IN"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+91-11-XXXXXXXX",
+        "contactType": "Customer Support",
+        "areaServed": "IN",
+        "availableLanguage": ["English", "Hindi"]
+      },
+      "sameAs": [
+        "https://www.facebook.com/bankscart",
+        "https://twitter.com/bankscart",
+        "https://www.linkedin.com/company/bankscart"
       ]
+    }
+    </script>
+
+    <!-- Sitelinks Searchbox Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "@id": "https://www.bankscart.com/#website",
+      "url": "https://www.bankscart.com/",
+      "name": "BanksCart",
+      "description": "Compare loan interest rates, credit cards, and apply online with instant eligibility check across top Indian banks.",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://www.bankscart.com/financial-directory?q={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
     }
     </script>
   </head>

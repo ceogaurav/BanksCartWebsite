@@ -18,9 +18,9 @@ import InfoSections from "../components/loans/InfoSections";
 import FaqSection from "../components/loans/FaqSection";
 
 function PersonalLoanPage({ openApplyModal, openEligibilityModal }) {
-  const pageTitle = "Personal Loans in India: Compare Interest Rates, Eligibility & Apply Online | BanksCart";
-  const pageDescription = "Compare personal loan interest rates starting from 10.25% p.a., check eligibility criteria, calculate monthly EMIs, and apply online with instant disbursal on BanksCart.";
-  const canonicalUrl = "https://www.bankscart.com/loans/personal";
+  const pageTitle = "Personal Loan Interest Rates: Compare 30+ Banks & Apply Online | BanksCart";
+  const pageDescription = "Compare personal loan interest rates starting from 10.25% p.a. Calculate EMIs, check eligibility across top banks, and apply online with zero physical paperwork.";
+  const canonicalUrl = "https://www.bankscart.com/loans/personal-loan";
 
   // Structured Data Schemas
   const breadcrumbSchema = {

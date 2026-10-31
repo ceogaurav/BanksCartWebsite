@@ -38,7 +38,7 @@ const FaqSection = () => {
           Clear Answers
         </span>
         <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
-          Frequently Asked Questions
+          FAQs on Personal Loan Applications, Prepayment &amp; Foreclosure
         </h2>
         <p className="text-gray-600 text-sm sm:text-base mt-2">
           Everything you need to know about personal loan eligibility, interest rates, charges, and repayments.

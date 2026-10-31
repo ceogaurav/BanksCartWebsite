@@ -41,7 +41,7 @@ const EligibilityTable = ({ openEligibilityModal }) => {
           Approval Slabs
         </span>
         <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
-          Personal Loan Eligibility Criteria
+          Personal Loan Eligibility Criteria for Salaried &amp; Self-Employed Borrowers
         </h2>
         <p className="text-gray-600 text-sm sm:text-base mt-2">
           Detailed benchmarks required by major Indian banks and NBFCs for salaried and self-employed applicants.

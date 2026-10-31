@@ -116,6 +116,40 @@ export const AUTHORS_DATA: Record<string, AuthorProfile> = {
     avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&h=400&q=80',
     articlesCount: 64,
     reviewsCount: 88
+  },
+
+  'priya-sharma': {
+    slug: 'priya-sharma',
+    name: 'Priya Sharma',
+    role: 'Senior Financial Analyst',
+    credentials: 'MBA (Finance) • Certified Financial Planner (CFP)',
+    shortBio: 'Senior financial analyst specializing in government small savings schemes, Sukanya Samriddhi Yojana (SSY), PPF, and tax-saving investments.',
+    fullBio: [
+      'Priya Sharma is a Senior Financial Analyst at BanksCart, specializing in sovereign savings schemes, long-term wealth compounding, and retirement instruments.',
+      'With over 10 years of experience in personal finance advisory and tax planning, Priya helps Indian families navigate small savings schemes including SSY, PPF, and NPS.',
+      'She holds an MBA in Finance and is a Certified Financial Planner (CFP) recognized by FPSB India.'
+    ],
+    experienceYears: 10,
+    education: [
+      'MBA (Finance) – Institute of Management Technology (IMT), Ghaziabad',
+      'B.Com (Honours) – Hansraj College, University of Delhi',
+      'Certified Financial Planner (CFP) – FPSB India'
+    ],
+    certifications: [
+      'Certified Financial Planner (FPSB India #CFP-IND-62891)',
+      'NISM-Series-X-A: Investment Adviser Level 1',
+      'NSE Academy Certified Market Professional (NCMP)'
+    ],
+    areasOfExpertise: [
+      'Government Small Savings Schemes (SSY, PPF, SCSS)',
+      'Section 80C Tax Planning & Exemptions',
+      'Long-Term Wealth Planning for Children\'s Education',
+      'Sovereign Gold Bonds & Fixed Income'
+    ],
+    linkedin: 'https://www.linkedin.com/in/priya-sharma-bankscart',
+    avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=400&h=400&q=80',
+    articlesCount: 52,
+    reviewsCount: 74
   }
 };
 

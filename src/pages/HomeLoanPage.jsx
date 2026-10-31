@@ -1,3 +1,5 @@
+import { Helmet } from "react-helmet-async";
+import { Link } from "react-router-dom";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { motion, useAnimation } from "framer-motion";
@@ -383,6 +385,93 @@ const LeadForm = () => {
 };
 
 const HomeLoanPage = ({ openApplyModal }) => {
+  const pageTitle = "Home Loan Interest Rates 2026: Compare Top Banks & Apply | BanksCart";
+  const pageDescription = "Compare home loan interest rates starting from 8.35% p.a. from SBI, HDFC, ICICI & more. Check eligibility, calculate EMI, and apply online with BanksCart.";
+  const canonicalUrl = "https://www.bankscart.com/loans/home-loan";
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://www.bankscart.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Loans",
+        "item": "https://www.bankscart.com/loans"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Home Loan",
+        "item": canonicalUrl
+      }
+    ]
+  };
+
+  const financialProductSchema = {
+    "@context": "https://schema.org",
+    "@type": "FinancialProduct",
+    "name": "Home Loans in India",
+    "description": pageDescription,
+    "url": canonicalUrl,
+    "provider": {
+      "@type": "Organization",
+      "name": "BanksCart",
+      "url": "https://www.bankscart.com"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "INR"
+    },
+    "feesAndCommissionsSpecification": "Processing fee ranging from 0.25% to 0.50% + GST. Zero prepayment penalties on floating rate home loans per RBI guidelines."
+  };
+
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What are current home loan interest rates in India?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Home loan interest rates for 2026 start from 8.35% p.a. from public sector lenders like SBI and leading private banks including HDFC Bank, ICICI Bank, and Kotak Mahindra Bank for borrowers with CIBIL scores of 750 and above."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What tax deductions can I claim on my home loan under Section 80C and Section 24b?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Under Section 24(b) of the Income Tax Act, borrowers can claim up to ₹2,00,000 per financial year against interest paid on a self-occupied property. Under Section 80C, principal repayments qualify for deductions up to ₹1,50,000 annually."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does a home loan balance transfer work?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A home loan balance transfer allows you to transfer your outstanding loan balance from your existing lender to a new bank offering a lower interest rate, reducing your monthly EMI and overall interest payout."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the maximum LTV (Loan-to-Value) ratio for home loans in India?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Per RBI directives, banks can finance up to 90% of property value for loans up to ₹30 Lakhs, up to 80% for loans between ₹30 Lakhs and ₹75 Lakhs, and up to 75% for loans exceeding ₹75 Lakhs."
+        }
+      }
+    ]
+  };
+
   const [showAllBanks, setShowAllBanks] = useState(false);
   const [bankFilter, setBankFilter] = useState("");
   const visibleBanks = showAllBanks ? bankLogos : bankLogos.slice(0, 8);
@@ -391,6 +480,28 @@ const HomeLoanPage = ({ openApplyModal }) => {
 
   return (
     <main className="bg-gradient-to-b from-[#F8FAFC] to-white min-h-screen font-sans w-full text-navy-900">
+      <Helmet>
+        <title>{pageTitle}</title>
+        <meta name="description" content={pageDescription} />
+        <meta name="keywords" content="home loan interest rates india, compare home loans, housing loan emi calculator, pmay subsidy, home loan tax benefits" />
+        <link rel="canonical" href={canonicalUrl} />
+
+        <meta property="og:title" content={pageTitle} />
+        <meta property="og:description" content={pageDescription} />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:type" content="website" />
+
+        <script type="application/ld+json">
+          {JSON.stringify(breadcrumbSchema)}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify(financialProductSchema)}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify(faqSchema)}
+        </script>
+      </Helmet>
+
 
       {/* Hero Section - Enhanced */}
       <section className="relative bg-gradient-to-br from-[#1B365D] to-[#2563EB] text-white py-20 px-4 flex flex-col items-center w-full overflow-hidden min-h-[600px]">
@@ -425,17 +536,14 @@ const HomeLoanPage = ({ openApplyModal }) => {
               4.9/5 Google Reviews
             </motion.div>
             <motion.h1
-              className="text-4xl md:text-6xl font-extrabold mb-5 drop-shadow-xl leading-tight relative"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold mb-5 drop-shadow-xl leading-tight relative"
               initial={{ opacity: 0, x: -40 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2, duration: 0.7 }}
               tabIndex={0}
             >
-              <span className="bg-gradient-to-r from-blue-200 via-blue-100 to-white bg-clip-text text-transparent">Unlock Your Dream Home</span>
-              <br />
-              <span className="inline-block relative">
-                with <span className="bg-gradient-to-r from-blue-400 to-blue-200 bg-clip-text text-transparent">Easy Home Loans</span>
-                <span className="absolute left-0 -bottom-2 w-full h-2 bg-gradient-to-r from-blue-300/60 to-blue-100/60 rounded-full blur-sm opacity-80" />
+              <span className="bg-gradient-to-r from-blue-200 via-blue-100 to-white bg-clip-text text-transparent">
+                Compare Home Loan Interest Rates &amp; Housing Finance Options
               </span>
             </motion.h1>
             <motion.p
@@ -517,7 +625,7 @@ const HomeLoanPage = ({ openApplyModal }) => {
           transition={{ duration: 1.2, delay: 0.1 }}
         />
         <div className="max-w-4xl mx-auto text-center relative z-10">
-          <h2 className="text-3xl md:text-4xl font-extrabold mb-2 tracking-tight text-blue-900">How it works?</h2>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-2 tracking-tight text-blue-900">Eligibility Requirements for First-Time Homebuyers</h2>
           <div className="text-blue-500 font-semibold mb-10 text-lg">Your home loan journey in 3 simple steps</div>
         </div>
         <div className="flex flex-col md:flex-row justify-center items-stretch gap-8 max-w-5xl mx-auto relative z-10">
@@ -672,14 +780,14 @@ const HomeLoanPage = ({ openApplyModal }) => {
 
       {/* Offerings Section */}
       <section className="py-16 bg-white w-full">
-        <h2 className="text-3xl font-bold text-center mb-2">OUR OFFERINGS</h2>
+        <h2 className="text-2xl sm:text-3xl font-bold text-center mb-2 tracking-tight text-slate-900">Home Loan EMI Calculator &amp; Amortization Schedule</h2>
         <div className="text-center text-gray-500 mb-8">What are you looking for?</div>
         <LoanCalculator openApplyModal={openApplyModal} />
       </section>
 
       {/* Bank Partners Section */}
       <section className="py-16 bg-[#F8FAFC] w-full">
-        <h2 className="text-3xl font-bold text-center mb-2">TOP BANKS, BEST OFFERS</h2>
+        <h2 className="text-2xl sm:text-3xl font-bold text-center mb-2 tracking-tight text-slate-900">Compare Home Loan Rates Across Public &amp; Private Banks</h2>
         <div className="text-center text-gray-500 mb-8">Our Official Partners</div>
         <div className="max-w-5xl mx-auto mb-8">
           <input
@@ -771,6 +879,74 @@ const HomeLoanPage = ({ openApplyModal }) => {
         </div>
       </section>
 
+      
+      {/* Home Loan Tax Benefits Blueprint Section */}
+      <section className="py-16 bg-white w-full border-t border-b border-slate-100">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          <div className="text-center max-w-3xl mx-auto mb-10">
+            <span className="inline-block bg-blue-50 text-blue-700 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider mb-2">
+              Tax Optimization Guide
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+              Tax Benefits on Home Loan Principal (80C) and Interest (Section 24b)
+            </h2>
+            <p className="text-slate-600 text-sm sm:text-base mt-2">
+              Indian tax laws offer substantial tax relief for residential property owners servicing registered housing loans.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="bg-slate-50 border border-slate-200 rounded-2xl p-6 sm:p-8 space-y-4">
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-bold uppercase tracking-wider">
+                Section 24(b)
+              </div>
+              <h3 className="text-xl font-bold text-slate-900">Interest Payment Deduction: Up to ₹2 Lakhs</h3>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                Under Section 24(b) of the Income Tax Act, you can claim a deduction of up to ₹2,00,000 per financial year on home loan interest paid for a self-occupied residential property. For let-out properties, the entire interest amount can be claimed as a deduction subject to set-off loss limits.
+              </p>
+              <div className="pt-2 border-t border-slate-200 text-xs text-slate-500">
+                Applicable for completed residential constructions.
+              </div>
+            </div>
+
+            <div className="bg-slate-50 border border-slate-200 rounded-2xl p-6 sm:p-8 space-y-4">
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-100 text-emerald-800 rounded-full text-xs font-bold uppercase tracking-wider">
+                Section 80C
+              </div>
+              <h3 className="text-xl font-bold text-slate-900">Principal Repayment Deduction: Up to ₹1.5 Lakhs</h3>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                Repayment of the principal component of your home loan qualifies for deduction under Section 80C up to an annual limit of ₹1,50,000. Additionally, stamp duty and property registration charges paid during the year of purchase can also be claimed under this section.
+              </p>
+              <div className="pt-2 border-t border-slate-200 text-xs text-slate-500">
+                Property must not be sold within 5 years of possession.
+              </div>
+            </div>
+          </div>
+
+          {/* Internal links bar */}
+          <div className="mt-8 p-4 bg-blue-50/70 border border-blue-100 rounded-xl flex flex-wrap items-center justify-between gap-4">
+            <span className="text-xs font-bold text-slate-700">Explore Related Financial Portals:</span>
+            <div className="flex flex-wrap gap-2">
+              <Link to="/personal-loan-emi-calculator" className="text-xs font-semibold text-blue-600 hover:underline">
+                EMI Calculator
+              </Link>
+              <span className="text-slate-300">•</span>
+              <Link to="/credit-score" className="text-xs font-semibold text-blue-600 hover:underline">
+                Check CIBIL Score
+              </Link>
+              <span className="text-slate-300">•</span>
+              <Link to="/loans/personal-loan" className="text-xs font-semibold text-blue-600 hover:underline">
+                Personal Loans
+              </Link>
+              <span className="text-slate-300">•</span>
+              <Link to="/credit-score/credit-rectification-service" className="text-xs font-semibold text-blue-600 hover:underline">
+                Credit Rectification
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Balance Transfer Section */}
       <section className="py-16 bg-white w-full">
         <h2 className="text-3xl font-bold text-center mb-2">What we also do</h2>
@@ -800,7 +976,9 @@ const HomeLoanPage = ({ openApplyModal }) => {
 
       {/* FAQ Section */}
       <section id="faq" className="py-16 bg-white w-full">
-        <h2 className="text-3xl font-bold text-center mb-8">Frequently Asked Questions</h2>
+        <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8 tracking-tight text-slate-900">
+          Frequently Asked Questions on Balance Transfer &amp; Top-Up Loans
+        </h2>
         <div className="max-w-3xl mx-auto">
           <FAQAccordion faqs={faqs} />
         </div>

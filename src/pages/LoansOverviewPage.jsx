@@ -1,4 +1,5 @@
 import React from "react";
+import { Helmet } from "react-helmet-async";
 import LoanCard from "../components/loans/LoanCard";
 import { Home, User, Briefcase, Car, Bike, GraduationCap } from "lucide-react";
 
@@ -47,8 +48,35 @@ const loanTypes = [
   },
 ];
 
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://www.bankscart.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Loans",
+      "item": "https://www.bankscart.com/loans"
+    }
+  ]
+};
+
 const LoansOverviewPage = () => (
   <div className="min-h-screen bg-gradient-to-br from-white/60 to-blue-50/80 py-12 px-4 md:px-12">
+    <Helmet>
+      <title>Compare Bank Loans in India: Personal, Home, Car & Business Loans | BanksCart</title>
+      <meta name="description" content="Compare loan interest rates from top Indian banks. Find the lowest EMIs for personal, home, car, and business loans with instant eligibility check." />
+      <link rel="canonical" href="https://www.bankscart.com/loans" />
+      <script type="application/ld+json">
+        {JSON.stringify(breadcrumbSchema)}
+      </script>
+    </Helmet>
     <h1 className="text-4xl font-extrabold text-gray-900 mb-8 text-center drop-shadow-lg">All Loans Overview</h1>
     <div className="flex flex-wrap gap-8 justify-center items-stretch">
       {loanTypes.map((loan) => (
