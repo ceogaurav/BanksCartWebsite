@@ -144,7 +144,25 @@ const CreditScore: React.FC = () => {
                 Struggling with low scores or incorrect bureau entries? Take action with verified credit health audits and dispute handling.
               </p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="p-5 rounded-xl border border-teal-100 bg-teal-50/50 hover:bg-teal-50 hover:border-teal-300 transition-all block">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-bold text-teal-700 uppercase tracking-wider">Free Bureau Check</span>
+                  <span className="text-teal-600 text-xs font-semibold">&rarr;</span>
+                </div>
+                <h3 className="font-bold text-slate-800 text-base mb-1">
+                  CIBIL Credit Report
+                </h3>
+                <p className="text-xs text-slate-600 leading-relaxed mb-3">
+                  Instant free access to your official CIBIL credit report. Check score factors, open loan accounts, and payment history with zero credit score impact. Access your <a href="/cibil-credit-report" className="text-teal-600 font-bold underline hover:text-teal-800">official CIBIL credit report</a>.
+                </p>
+                <a
+                  href="/cibil-credit-report"
+                  className="text-xs font-bold text-teal-600 hover:text-teal-800 underline inline-flex items-center"
+                >
+                  check CIBIL credit report &rarr;
+                </a>
+              </div>
               <div className="p-5 rounded-xl border border-blue-100 bg-blue-50/50 hover:bg-blue-50 hover:border-blue-300 transition-all block">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-xs font-bold text-blue-700 uppercase tracking-wider">Dispute & Recovery</span>

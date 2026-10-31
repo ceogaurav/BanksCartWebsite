@@ -215,28 +215,30 @@ const Home: React.FC<HomeProps> = ({ openApplyModal, openEligibilityModal, openC
             {/* WHY CHOOSE US */}
             <WhyChooseSection />
 
-            {/* CORE PRODUCT LINKS DIRECTORY */}
+            {/* TOPICAL SILO HUBS DIRECTORY */}
             <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-12">
-              <div className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm">
-                <span className="text-xs font-bold text-blue-600 uppercase tracking-wider block mb-2">Explore Core Financial Services</span>
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 text-center">
-                  <a href="/loans/personal-loan" className="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border border-slate-200 hover:border-blue-300 text-xs font-bold text-slate-800 hover:text-blue-600 transition-all">
-                    Personal Loans
+              <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm">
+                <span className="text-xs font-bold text-blue-600 uppercase tracking-wider block mb-3">Core Topical Hubs &amp; Marketplaces</span>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-center">
+                  <a href="/loans" className="p-5 rounded-2xl bg-gradient-to-br from-blue-50 to-slate-50 border border-blue-100 hover:border-blue-300 hover:shadow-md transition-all flex flex-col items-center justify-center gap-1 group">
+                    <span className="text-blue-700 font-extrabold text-base group-hover:text-blue-800">Loans Hub</span>
+                    <span className="text-xs text-slate-500 font-medium">Personal, Home &amp; Business Loans</span>
+                    <span className="text-xs text-blue-600 font-bold mt-2">Explore Loans &rarr;</span>
                   </a>
-                  <a href="/loans/home-loan" className="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border border-slate-200 hover:border-blue-300 text-xs font-bold text-slate-800 hover:text-blue-600 transition-all">
-                    Home Loans
+                  <a href="/cards" className="p-5 rounded-2xl bg-gradient-to-br from-purple-50 to-slate-50 border border-purple-100 hover:border-purple-300 hover:shadow-md transition-all flex flex-col items-center justify-center gap-1 group">
+                    <span className="text-purple-700 font-extrabold text-base group-hover:text-purple-800">Cards Hub</span>
+                    <span className="text-xs text-slate-500 font-medium">Credit, Lifetime Free &amp; Cashback</span>
+                    <span className="text-xs text-purple-600 font-bold mt-2">Explore Cards &rarr;</span>
                   </a>
-                  <a href="/loans/business-loan" className="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border border-slate-200 hover:border-blue-300 text-xs font-bold text-slate-800 hover:text-blue-600 transition-all">
-                    Business Loans
+                  <a href="/credit-score" className="p-5 rounded-2xl bg-gradient-to-br from-emerald-50 to-slate-50 border border-emerald-100 hover:border-emerald-300 hover:shadow-md transition-all flex flex-col items-center justify-center gap-1 group">
+                    <span className="text-emerald-700 font-extrabold text-base group-hover:text-emerald-800">Credit Score Hub</span>
+                    <span className="text-xs text-slate-500 font-medium">Free CIBIL Report &amp; Rectification</span>
+                    <span className="text-xs text-emerald-600 font-bold mt-2">Check Score &rarr;</span>
                   </a>
-                  <a href="/cards" className="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border border-slate-200 hover:border-blue-300 text-xs font-bold text-slate-800 hover:text-blue-600 transition-all">
-                    Credit Cards
-                  </a>
-                  <a href="/credit-score" className="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border border-slate-200 hover:border-blue-300 text-xs font-bold text-slate-800 hover:text-blue-600 transition-all">
-                    Free CIBIL Score
-                  </a>
-                  <a href="/calculators" className="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border border-slate-200 hover:border-blue-300 text-xs font-bold text-slate-800 hover:text-blue-600 transition-all">
-                    EMI Calculators
+                  <a href="/company-registration" className="p-5 rounded-2xl bg-gradient-to-br from-indigo-50 to-slate-50 border border-indigo-100 hover:border-indigo-300 hover:shadow-md transition-all flex flex-col items-center justify-center gap-1 group">
+                    <span className="text-indigo-700 font-extrabold text-base group-hover:text-indigo-800">Incorporation Hub</span>
+                    <span className="text-xs text-slate-500 font-medium">Delhi, Chennai &amp; Copyright IP</span>
+                    <span className="text-xs text-indigo-600 font-bold mt-2">Incorporate Company &rarr;</span>
                   </a>
                 </div>
               </div>

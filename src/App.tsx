@@ -140,6 +140,9 @@ import DynamicGeneralBankingPage from './pages/banking/DynamicGeneralBankingPage
 import FinancialDirectory from './pages/FinancialDirectory';
 import DynamicHealthInsurancePage from './pages/insurance/DynamicHealthInsurancePage';
 import DynamicAegonLifePage from './pages/insurance/DynamicAegonLifePage';
+import SbiVsHdfcPersonalLoan from './pages/blogs/SbiVsHdfcPersonalLoan';
+import BestLifetimeFreeCreditCards from './pages/blogs/BestLifetimeFreeCreditCards';
+import CompanyRegistrationHub from './pages/legal/CompanyRegistrationHub';
 import HomeLoanEMIEmbed from './pages/embed/HomeLoanEMIEmbed';
 import SSYCalculatorEmbed from './pages/embed/SSYCalculatorEmbed';
 import BorrowingSentimentReport2026 from './pages/research/BorrowingSentimentReport2026';
@@ -409,8 +412,8 @@ const App: React.FC = () => {
                 {/* Card product specific routes */}
                 <Route path="/cards/credit" element={<CreditCardsPage openApplyModal={openApplyModal} />} />
                 <Route path="/cards/credit-cards" element={<CreditCardsPage openApplyModal={openApplyModal} />} />
-                <Route path="/cards/lifetime-free" element={<Navigate to="/cards/credit/lifetime-free" replace />} />
-                <Route path="/cards/cashback-credit-cards" element={<Navigate to="/cards/credit/cashback" replace />} />
+                <Route path="/cards/lifetime-free" element={<DynamicCreditCardPage overrideSlug="lifetime-free" />} />
+                <Route path="/cards/cashback-credit-cards" element={<DynamicCreditCardPage overrideSlug="cashback" />} />
                 <Route path="/cards/secured-credit-card" element={<Navigate to="/cards/credit/secured" replace />} />
                 <Route path="/cards/debit" element={<DebitCardsPage openApplyModal={openApplyModal} />} />
                 <Route path="/credit-score" element={<CreditScore />} />
@@ -427,6 +430,9 @@ const App: React.FC = () => {
                 <Route path="/company-registration/copyright" element={<Navigate to="/company-registration/copyright-registration" replace />} />
                 <Route path="/business-loan/company-reg-delhi" element={<Navigate to="/business-loan/company-registration-in-delhi" replace />} />
                 <Route path="/business-loan/company-reg-blr" element={<Navigate to="/business-loan/company-registration-in-bangalore" replace />} />
+                <Route path="/business-loan/company-registration-in-delhi" element={<DynamicBusinessLoanPage />} />
+                <Route path="/business-loan/company-registration-in-chennai" element={<DynamicBusinessLoanPage />} />
+                <Route path="/company-registration/copyright-registration" element={<DynamicGeneralBankingPage />} />
                 <Route path="/business-loan/collateral-free" element={<DynamicBusinessLoanPage />} />
                 <Route path="/business-loan/msme-scheme" element={<DynamicBusinessLoanPage />} />
                 <Route path="/cibil/how-to-resolve-cibil-dispute" element={<ResolveCibilDisputePage />} />
@@ -639,7 +645,7 @@ const App: React.FC = () => {
                 {/* General Wildcards */}
                 <Route path="/rbi/:subPath" element={<DynamicGeneralBankingPage />} />
                 <Route path="/rural-insurance/:subPath" element={<DynamicHealthInsurancePage />} />
-                <Route path="/company-registration" element={<DynamicGeneralBankingPage />} />
+                <Route path="/company-registration" element={<CompanyRegistrationHub openApplyModal={openApplyModal} />} />
                 <Route path="/company-registration/:subPath" element={<DynamicGeneralBankingPage />} />
 
                 <Route path="/expert-advice" element={<ExpertAdvicePage openApplyModal={openApplyModal} />} />
@@ -782,6 +788,8 @@ const App: React.FC = () => {
                 <Route path="/credit-card-finder" element={<CreditCardFinderPage openApplyModal={openApplyModal} />} />
                 <Route path="/blogs-overview-page" element={<Navigate to="/blog" replace />} />
                 <Route path="/blogs" element={<Navigate to="/blog" replace />} />
+                <Route path="/blog/sbi-vs-hdfc-personal-loan" element={<SbiVsHdfcPersonalLoan />} />
+                <Route path="/blog/best-lifetime-free-credit-cards" element={<BestLifetimeFreeCreditCards />} />
                 <Route path="/blog/what-is-cibil-score" element={<WhatIsCibilScore />} />
                 <Route path="/blog/Best-Credit-Cards" element={<BestCreditCards />} />
                 <Route path="/blog/Business-Loan-Guide" element={<BusinessLoanGuide />} />

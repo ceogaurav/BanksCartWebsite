@@ -312,6 +312,26 @@ const STATIC_SEO_MAP = {
     title: "About BanksCart: India's Trusted Financial Services & Loan Comparison Platform",
     description: "Learn about BanksCart's mission, leadership team, and editorial integrity in helping Indian borrowers compare loans, credit cards, and banking services objectively."
   },
+  "/blog/sbi-vs-hdfc-personal-loan": {
+    title: "SBI vs HDFC Personal Loan 2026: Interest Rates, Fees & Comparison | BanksCart",
+    description: "In-depth side-by-side comparison between SBI and HDFC personal loans. Compare interest rates, processing fees, repayment tenures, eligibility criteria, and calculate your monthly EMI."
+  },
+  "/blog/best-lifetime-free-credit-cards": {
+    title: "Best Lifetime Free Credit Cards in India 2026: Zero Annual Fees | BanksCart",
+    description: "Compare the best lifetime free credit cards in India for 2026. Zero joining fees, no renewal charges, high cashback rates, and airport lounge access."
+  },
+  "/credit-health-report-services": {
+    title: "Credit Health Report Services: Comprehensive Multi-Bureau Analysis | BanksCart",
+    description: "Access an in-depth credit health report across CIBIL, Experian, and Equifax. Analyze credit utilization, active trade lines, and receive actionable score improvement strategies."
+  },
+  "/cards/lifetime-free": {
+    title: "Lifetime Free Credit Cards: Compare Zero Annual Fee Cards | BanksCart",
+    description: "Compare top lifetime free credit cards in India. Zero joining fees, no annual renewal fees, and lifetime reward benefits."
+  },
+  "/cards/cashback-credit-cards": {
+    title: "Best Cashback Credit Cards in India: Up to 5% Unlimited Returns | BanksCart",
+    description: "Compare high-return cashback credit cards. Earn direct cash returns on grocery shopping, dining, online spends, and fuel bills."
+  },
   "/company-registration": {
     title: "Company Registration in India - Private Limited, LLP, OPC & IP Filing | BanksCart",
     description: "Register your company online in India. End-to-end legal support for Private Limited, LLP, OPC incorporation, MCA compliance, and copyright registration."
@@ -836,6 +856,151 @@ function generatePreRenderedBody(cleanPath, meta) {
     </div>`;
   }
 
+
+  // =========================================================================
+  // SILO 4: COMPANY REGISTRATION & IP HUB (/company-registration)
+  // =========================================================================
+  if (cleanPath === '/company-registration') {
+    return `
+    <div class="min-h-screen bg-slate-50 text-slate-800 font-sans antialiased">
+      <header class="bg-white border-b border-slate-200 py-4 px-6 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+          <a href="/" class="text-2xl font-bold tracking-tight text-blue-900">BanksCart</a>
+          <nav class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
+            <a href="/loans" class="hover:text-blue-600">Loans</a>
+            <a href="/cards" class="hover:text-blue-600">Cards</a>
+            <a href="/credit-score" class="hover:text-blue-600">Credit Score</a>
+            <a href="/company-registration" class="text-blue-600 font-bold">Incorporation</a>
+          </nav>
+        </div>
+      </header>
+
+      <section class="bg-slate-900 text-white py-16 px-6">
+        <div class="max-w-5xl mx-auto text-center space-y-4">
+          <span class="inline-block px-3 py-1 bg-teal-500/20 text-teal-300 text-xs font-semibold rounded-full uppercase tracking-wider border border-teal-400/30">
+            MCA Government Portal &amp; Intellectual Property Office
+          </span>
+          <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight">${title}</h1>
+          <p class="text-base sm:text-lg text-slate-300 leading-relaxed max-w-3xl mx-auto">${desc}</p>
+        </div>
+      </section>
+
+      <main class="max-w-5xl mx-auto px-6 py-12 space-y-10">
+        <section class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
+          <h2 class="text-2xl font-bold text-slate-900">Specialized Regional Incorporation &amp; IP Clusters</h2>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="p-6 rounded-2xl bg-blue-50 border border-blue-100 flex flex-col justify-between">
+              <div>
+                <h3 class="font-bold text-lg text-blue-900 mb-2">Company Registration in Delhi</h3>
+                <p class="text-xs text-slate-600 mb-4">Fast-track ROC NCT Delhi &amp; Haryana Private Limited and LLP incorporation with business loan funding.</p>
+              </div>
+              <a href="/business-loan/company-registration-in-delhi" class="text-xs font-bold text-blue-600 hover:text-blue-800 underline">
+                Explore Delhi Company Registration &rarr;
+              </a>
+            </div>
+
+            <div class="p-6 rounded-2xl bg-indigo-50 border border-indigo-100 flex flex-col justify-between">
+              <div>
+                <h3 class="font-bold text-lg text-indigo-900 mb-2">Company Registration in Chennai</h3>
+                <p class="text-xs text-slate-600 mb-4">Manufacturing, export, and tech startup company registration across Tamil Nadu with MSME credit lines.</p>
+              </div>
+              <a href="/business-loan/company-registration-in-chennai" class="text-xs font-bold text-indigo-600 hover:text-indigo-800 underline">
+                Explore Chennai Company Registration &rarr;
+              </a>
+            </div>
+
+            <div class="p-6 rounded-2xl bg-purple-50 border border-purple-100 flex flex-col justify-between">
+              <div>
+                <h3 class="font-bold text-lg text-purple-900 mb-2">Copyright Registration Online</h3>
+                <p class="text-xs text-slate-600 mb-4">Secure 60-year statutory legal protection for software code, literary works, and creative media.</p>
+              </div>
+              <a href="/company-registration/copyright-registration" class="text-xs font-bold text-purple-600 hover:text-purple-800 underline">
+                Explore Copyright Registration &rarr;
+              </a>
+            </div>
+          </div>
+        </section>
+      </main>
+      ${renderFooter()}
+    </div>`;
+  }
+
+  // =========================================================================
+  // SILO 1 BLOG GUIDE: SBI VS HDFC PERSONAL LOAN (/blog/sbi-vs-hdfc-personal-loan)
+  // =========================================================================
+  if (cleanPath === '/blog/sbi-vs-hdfc-personal-loan') {
+    return `
+    <div class="min-h-screen bg-slate-50 text-slate-800 font-sans antialiased">
+      <header class="bg-white border-b border-slate-200 py-4 px-6 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+          <a href="/" class="text-2xl font-bold tracking-tight text-blue-900">BanksCart</a>
+          <nav class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
+            <a href="/loans/personal-loan" class="text-blue-600 font-bold">Personal Loans</a>
+            <a href="/personal-loan-emi-calculator" class="hover:text-blue-600">EMI Calculator</a>
+          </nav>
+        </div>
+      </header>
+
+      <main class="max-w-4xl mx-auto px-6 py-12 space-y-8">
+        <article class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
+          <span class="text-xs font-bold text-blue-600 uppercase tracking-wider block">Banking Head-to-Head Comparison</span>
+          <h1 class="text-3xl font-extrabold text-slate-900">${title}</h1>
+          <p class="text-slate-600 text-sm leading-relaxed">${desc}</p>
+          <div class="p-6 bg-blue-50 rounded-2xl border border-blue-200 flex items-center justify-between">
+            <div>
+              <h3 class="font-bold text-blue-900 text-sm">Compare 30+ Personal Loan Lenders</h3>
+              <p class="text-xs text-blue-700">Check instant pre-approved loan offers starting from 10.50% p.a.</p>
+            </div>
+            <a href="/loans/personal-loan" class="px-4 py-2 bg-blue-600 text-white font-bold text-xs rounded-xl shadow">Compare Loans &rarr;</a>
+          </div>
+          <div class="pt-4 border-t flex gap-4 text-xs font-bold text-blue-600">
+            <a href="/personal-loan-emi-calculator" class="hover:underline">Personal Loan EMI Calculator &rarr;</a>
+            <a href="/loans/personal-loan" class="hover:underline">Personal Loan Hub &rarr;</a>
+          </div>
+        </article>
+      </main>
+      ${renderFooter()}
+    </div>`;
+  }
+
+  // =========================================================================
+  // SILO 2 BLOG GUIDE: BEST LIFETIME FREE CREDIT CARDS (/blog/best-lifetime-free-credit-cards)
+  // =========================================================================
+  if (cleanPath === '/blog/best-lifetime-free-credit-cards') {
+    return `
+    <div class="min-h-screen bg-slate-50 text-slate-800 font-sans antialiased">
+      <header class="bg-white border-b border-slate-200 py-4 px-6 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+          <a href="/" class="text-2xl font-bold tracking-tight text-blue-900">BanksCart</a>
+          <nav class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
+            <a href="/cards" class="hover:text-blue-600">Cards</a>
+            <a href="/cards/lifetime-free" class="text-purple-600 font-bold">Lifetime Free</a>
+          </nav>
+        </div>
+      </header>
+
+      <main class="max-w-4xl mx-auto px-6 py-12 space-y-8">
+        <article class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
+          <span class="text-xs font-bold text-purple-600 uppercase tracking-wider block">Card Strategy &amp; Reviews</span>
+          <h1 class="text-3xl font-extrabold text-slate-900">${title}</h1>
+          <p class="text-slate-600 text-sm leading-relaxed">${desc}</p>
+          <div class="p-6 bg-purple-50 rounded-2xl border border-purple-200 flex items-center justify-between">
+            <div>
+              <h3 class="font-bold text-purple-900 text-sm">Explore All Zero Annual Fee Cards</h3>
+              <p class="text-xs text-purple-700">Never pay annual card fees again. Compare Amazon Pay ICICI, IDFC FIRST, and HDFC LTF.</p>
+            </div>
+            <a href="/cards/lifetime-free" class="px-4 py-2 bg-purple-600 text-white font-bold text-xs rounded-xl shadow">Explore LTF Cards &rarr;</a>
+          </div>
+          <div class="pt-4 border-t flex gap-4 text-xs font-bold text-purple-600">
+            <a href="/cards/lifetime-free" class="hover:underline">Lifetime Free Cards Hub &rarr;</a>
+            <a href="/cards/credit-cards" class="hover:underline">All Credit Cards &rarr;</a>
+          </div>
+        </article>
+      </main>
+      ${renderFooter()}
+    </div>`;
+  }
+
   // =========================================================================
   // BLUEPRINT TEMPLATE 1: HOMEPAGE (/)
   // =========================================================================
@@ -878,7 +1043,11 @@ function generatePreRenderedBody(cleanPath, meta) {
         {/* CORE PRODUCT LINKS DIRECTORY */}
         <section class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm">
           <span class="text-xs font-bold text-blue-600 uppercase tracking-wider block mb-3">Explore Core Financial Services</span>
-          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 text-center">
+          <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-4 gap-4 text-center">
+            <a href="/loans" class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border border-slate-200 hover:border-blue-300 text-xs font-bold text-blue-900">Loans Marketplace &rarr;</a>
+            <a href="/cards" class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border border-slate-200 hover:border-blue-300 text-xs font-bold text-purple-900">Cards Catalog &rarr;</a>
+            <a href="/credit-score" class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border border-slate-200 hover:border-blue-300 text-xs font-bold text-emerald-900">Credit Score Hub &rarr;</a>
+            <a href="/company-registration" class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border border-slate-200 hover:border-blue-300 text-xs font-bold text-indigo-900">Incorporation Hub &rarr;</a>
             <a href="/loans/personal-loan" class="p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border border-slate-200 hover:border-blue-300 text-xs font-bold text-slate-800 hover:text-blue-600 transition-all">
               Personal Loans
             </a>

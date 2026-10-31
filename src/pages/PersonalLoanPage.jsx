@@ -210,6 +210,60 @@ function PersonalLoanPage({ openApplyModal, openEligibilityModal }) {
         <LoanTypesBenefits />
         <TrustIndicators />
         <PreApprovedOffersTable openApplyModal={openApplyModal} />
+
+        {/* SILO 1: Popular Personal Loan Tools & Comparison Guides */}
+        <section className="my-10 bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6">
+            <div>
+              <span className="text-xs font-bold text-blue-600 uppercase tracking-wider block">Financial Planning & Analysis</span>
+              <h2 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">Essential Personal Loan Tools & Expert Comparisons</h2>
+            </div>
+            <Link to="/loans" className="text-xs font-bold text-blue-600 hover:text-blue-800 inline-flex items-center gap-1">
+              All Loan Types &rarr;
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <Link
+              to="/personal-loan-emi-calculator"
+              className="p-6 rounded-2xl bg-gradient-to-br from-blue-50 to-indigo-50/50 border border-blue-100 hover:border-blue-300 hover:shadow-md transition-all group block"
+            >
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-xs font-extrabold text-blue-700 uppercase tracking-wider bg-blue-100/80 px-2.5 py-1 rounded-md">Interactive Calculator</span>
+                <span className="text-blue-600 text-xs font-bold group-hover:translate-x-1 transition-transform inline-flex items-center">&rarr;</span>
+              </div>
+              <h3 className="font-bold text-slate-900 text-lg group-hover:text-blue-600 transition-colors mb-2">
+                Personal Loan EMI Calculator
+              </h3>
+              <p className="text-xs text-slate-600 leading-relaxed mb-4">
+                Calculate your monthly repayment installments, total interest outgo, and complete month-by-month amortization schedule before applying with banks.
+              </p>
+              <span className="text-xs font-bold text-blue-600 inline-flex items-center gap-1">
+                Open Personal Loan EMI Calculator &rarr;
+              </span>
+            </Link>
+
+            <Link
+              to="/blog/sbi-vs-hdfc-personal-loan"
+              className="p-6 rounded-2xl bg-gradient-to-br from-teal-50 to-emerald-50/50 border border-teal-100 hover:border-teal-300 hover:shadow-md transition-all group block"
+            >
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-xs font-extrabold text-teal-700 uppercase tracking-wider bg-teal-100/80 px-2.5 py-1 rounded-md">Expert Comparison</span>
+                <span className="text-teal-600 text-xs font-bold group-hover:translate-x-1 transition-transform inline-flex items-center">&rarr;</span>
+              </div>
+              <h3 className="font-bold text-slate-900 text-lg group-hover:text-teal-700 transition-colors mb-2">
+                SBI vs HDFC Personal Loan: Full 2026 Comparison
+              </h3>
+              <p className="text-xs text-slate-600 leading-relaxed mb-4">
+                Evaluate interest rate spreads (starting at 10.50%), foreclosure charges, processing fees, and 10-second instant disbursal eligibility between SBI and HDFC.
+              </p>
+              <span className="text-xs font-bold text-teal-700 inline-flex items-center gap-1">
+                Read SBI vs HDFC Guide &rarr;
+              </span>
+            </Link>
+          </div>
+        </section>
+
         <InfoSections />
         <FaqSection />
       </div>

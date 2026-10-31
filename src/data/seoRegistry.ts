@@ -275,6 +275,41 @@ export const SEO_MAP: Record<string, SEOMetadata> = {
     description: "Interactive embeddable Home Loan EMI calculator for real estate and finance blogs.",
     keywords: "home loan emi calculator embed, loan calculator widget"
   },
+  "/blog/sbi-vs-hdfc-personal-loan": {
+    title: "SBI vs HDFC Personal Loan 2026: Interest Rates, Fees & Comparison | BanksCart",
+    description: "In-depth side-by-side comparison between SBI and HDFC personal loans. Compare interest rates, processing fees, repayment tenures, eligibility criteria, and calculate your monthly EMI.",
+    keywords: "sbi vs hdfc personal loan, sbi personal loan interest rate, hdfc personal loan comparison, best personal loan india 2026"
+  },
+  "/blog/best-lifetime-free-credit-cards": {
+    title: "Best Lifetime Free Credit Cards in India 2026: Zero Annual Fees | BanksCart",
+    description: "Compare the best lifetime free credit cards in India for 2026. Zero joining fees, no renewal charges, high cashback rates, and airport lounge access.",
+    keywords: "best lifetime free credit cards, zero annual fee credit cards, ltf credit cards india, amazon pay icici, idfc first millennia"
+  },
+  "/company-registration": {
+    title: "Company Registration in India: Pvt Ltd, LLP, OPC & Copyright Filing | BanksCart",
+    description: "Online company registration services in India. Register Private Limited, LLP, and OPC startups in Delhi, Chennai, and file copyright protection with BanksCart.",
+    keywords: "company registration india, pvt ltd incorporation, llp registration, copyright registration online"
+  },
+  "/credit-health-report-services": {
+    title: "Credit Health Report Services: Comprehensive Multi-Bureau Analysis | BanksCart",
+    description: "Access an in-depth credit health report across CIBIL, Experian, and Equifax. Analyze credit utilization, active trade lines, and receive actionable score improvement strategies.",
+    keywords: "credit health report, credit health audit, cibil score analysis, credit score improvement"
+  },
+  "/business-loan/company-registration-in-delhi": {
+    title: "Company Registration in Delhi NCR: Startup Incorporation & MSME Loans | BanksCart",
+    description: "Fast-track company registration in Delhi NCR. Complete Private Limited incorporation, ROC NCT clearance, Udyam MSME certificate, and startup business loan financing.",
+    keywords: "company registration delhi, pvt ltd registration delhi, startup business loan delhi"
+  },
+  "/business-loan/company-registration-in-chennai": {
+    title: "Company Registration in Chennai: Private Limited & Business Capital | BanksCart",
+    description: "Register your Private Limited or LLP company in Chennai, Tamil Nadu. Complete ROC Chennai incorporation, MSME registration, and commercial business loan assistance.",
+    keywords: "company registration chennai, pvt ltd registration chennai, business loan chennai"
+  },
+  "/company-registration/copyright-registration": {
+    title: "Copyright Registration Online in India: Protect Creative & Software Works | BanksCart",
+    description: "File copyright registration online for literary, artistic, software, and musical works with the Copyright Office of India. End-to-end IP protection.",
+    keywords: "copyright registration online, software copyright india, intellectual property protection"
+  },
   // Core Pages
   "/": {
     title: "BanksCart: Compare Loan Interest Rates, Credit Cards & CIBIL Score Online",
@@ -863,11 +898,7 @@ export const SEO_MAP: Record<string, SEOMetadata> = {
     description: "Learn about BanksCart's mission, leadership team, and editorial integrity in helping Indian borrowers compare loans, credit cards, and banking services objectively.",
     keywords: "about bankscart, bankscart mission, loan comparison company"
   },
-  "/company-registration": {
-    title: "Company Registration in India - Private Limited, LLP, OPC & IP Filing | BanksCart",
-    description: "Register your company online in India. End-to-end legal support for Private Limited, LLP, OPC incorporation, MCA compliance, and copyright registration.",
-    keywords: "company registration india, register private limited company, llp incorporation, copyright registration online"
-  },
+
   "/contact": {
     title: "Contact Us - Customer Support, Helpdesk & Grievance Redressal | BanksCart",
     description: "Contact BanksCart customer care, support desk, and grievance redressal officer. Get in touch for loan application assistance, banking partner inquiries, and customer feedback.",

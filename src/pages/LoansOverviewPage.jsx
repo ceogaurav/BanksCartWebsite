@@ -5,22 +5,22 @@ import { Home, User, Briefcase, Car, Bike, GraduationCap } from "lucide-react";
 
 const loanTypes = [
   {
-    title: "Home Loan",
-    description: "Get the best rates for your dream home. Flexible EMIs, fast approval, and expert support.",
-    icon: Home,
-    to: "/loans/home",
-  },
-  {
     title: "Personal Loan",
     description: "Quick personal loans for your needs. Minimal documentation, instant disbursal, and low interest.",
     icon: User,
-    to: "/loans/personal",
+    to: "/loans/personal-loan",
+  },
+  {
+    title: "Home Loan",
+    description: "Get the best rates for your dream home. Flexible EMIs, fast approval, and expert support.",
+    icon: Home,
+    to: "/loans/home-loan",
   },
   {
     title: "Business Loan",
     description: "Empower your business with tailored loans. High limits, flexible tenure, and easy processing.",
     icon: Briefcase,
-    to: "/loans/business",
+    to: "/business-loan",
   },
   {
     title: "Car Loan",

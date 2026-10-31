@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { HelpCircle, ChevronDown, Check, Star, ShieldAlert, Sparkles, BookOpen, AlertCircle, Info, Landmark, Percent, Award, ShieldCheck, ArrowRight, Play, MessageSquare, TrendingUp, CreditCard } from 'lucide-react';
 import CibilCheckerForm from '../../components/common/CibilCheckerForm';
 import { CARD_PAGE_MAP, CardPageContent, CardRecommendRow } from '../../data/cardPageData';
@@ -412,6 +412,27 @@ const DynamicCreditCardPage: React.FC = () => {
                 </table>
               </div>
             </div>
+
+            {/* SILO 2: LTF -> CCGuide (/blog/best-lifetime-free-credit-cards) */}
+            {(slug === 'lifetime-free' || slug.includes('free')) && (
+              <div className="bg-gradient-to-r from-purple-900 to-indigo-900 text-white rounded-2xl p-6 shadow-md flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div>
+                  <span className="text-[11px] font-extrabold uppercase tracking-wider bg-white/20 px-2.5 py-1 rounded-md text-amber-300 inline-block mb-1">
+                    Editorial Deep Dive
+                  </span>
+                  <h4 className="font-bold text-base text-white">Best Lifetime Free Credit Cards in India (2026 Guide)</h4>
+                  <p className="text-xs text-purple-200 mt-1 leading-relaxed">
+                    Compare zero annual fee waiver perks, welcome gifts, and airport lounge access across ICICI Amazon Pay, IDFC FIRST, and HDFC LTF cards.
+                  </p>
+                </div>
+                <a
+                  href="/blog/best-lifetime-free-credit-cards"
+                  className="px-5 py-2.5 bg-amber-400 hover:bg-amber-300 text-slate-900 font-extrabold text-xs rounded-xl shadow whitespace-nowrap transition-colors"
+                >
+                  Read Full Guide &rarr;
+                </a>
+              </div>
+            )}
 
             {/* Checklist */}
             <div className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm">

@@ -7,6 +7,18 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.bankscart.com/cards/lifetime-free</loc>
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.bankscart.com/cards/cashback-credit-cards</loc>
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.bankscart.com/loans/personal/loan-on-credit-card</loc>
     <lastmod>2026-10-31</lastmod>
     <changefreq>weekly</changefreq>

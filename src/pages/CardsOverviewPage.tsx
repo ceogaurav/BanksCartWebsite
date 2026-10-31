@@ -81,6 +81,65 @@ const CardsOverviewPage: React.FC = () => (
       Discover the perfect card for your financial needs, whether it's for daily spending, rewards, or business management.
     </motion.p>
 
+    {/* SILO 2: High-Intent Cards Clusters */}
+    <div className="max-w-6xl mx-auto mb-12">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <a
+          href="/cards/credit-cards"
+          className="p-6 rounded-2xl bg-gradient-to-br from-blue-500/10 to-indigo-500/5 border border-blue-200 hover:border-blue-400 hover:shadow-lg transition-all group block text-left"
+        >
+          <span className="text-[11px] font-extrabold text-blue-700 uppercase tracking-wider bg-blue-100 px-2.5 py-1 rounded-md block w-fit mb-3">
+            Primary Hub
+          </span>
+          <h2 className="text-lg font-bold text-slate-900 group-hover:text-blue-600 transition-colors mb-2">
+            Compare All Credit Cards
+          </h2>
+          <p className="text-xs text-slate-600 leading-relaxed mb-4">
+            Evaluate reward cards, travel cards, fuel waivers, and pre-approved offers across 30+ top banks in India.
+          </p>
+          <span className="text-xs font-bold text-blue-600 inline-flex items-center gap-1">
+            Browse All Credit Cards &rarr;
+          </span>
+        </a>
+
+        <a
+          href="/cards/lifetime-free"
+          className="p-6 rounded-2xl bg-gradient-to-br from-purple-500/10 to-pink-500/5 border border-purple-200 hover:border-purple-400 hover:shadow-lg transition-all group block text-left"
+        >
+          <span className="text-[11px] font-extrabold text-purple-700 uppercase tracking-wider bg-purple-100 px-2.5 py-1 rounded-md block w-fit mb-3">
+            Zero Annual Fee
+          </span>
+          <h2 className="text-lg font-bold text-slate-900 group-hover:text-purple-600 transition-colors mb-2">
+            Lifetime Free Credit Cards
+          </h2>
+          <p className="text-xs text-slate-600 leading-relaxed mb-4">
+            No joining fees, zero renewal charges, and lifetime free maintenance cards like Amazon Pay ICICI and IDFC FIRST.
+          </p>
+          <span className="text-xs font-bold text-purple-600 inline-flex items-center gap-1">
+            Explore Lifetime Free Cards &rarr;
+          </span>
+        </a>
+
+        <a
+          href="/cards/cashback-credit-cards"
+          className="p-6 rounded-2xl bg-gradient-to-br from-emerald-500/10 to-teal-500/5 border border-emerald-200 hover:border-emerald-400 hover:shadow-lg transition-all group block text-left"
+        >
+          <span className="text-[11px] font-extrabold text-emerald-700 uppercase tracking-wider bg-emerald-100 px-2.5 py-1 rounded-md block w-fit mb-3">
+            High Cash Returns
+          </span>
+          <h2 className="text-lg font-bold text-slate-900 group-hover:text-emerald-700 transition-colors mb-2">
+            Cashback Credit Cards
+          </h2>
+          <p className="text-xs text-slate-600 leading-relaxed mb-4">
+            Earn up to 5% unlimited cash returns on daily grocery, e-commerce shopping, food delivery, and utility bills.
+          </p>
+          <span className="text-xs font-bold text-emerald-700 inline-flex items-center gap-1">
+            Explore Cashback Cards &rarr;
+          </span>
+        </a>
+      </div>
+    </div>
+
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
       {cardTypes.map((card, index) => (
         <motion.div key={card.title} variants={itemVariants}>
