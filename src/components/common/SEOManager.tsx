@@ -200,6 +200,45 @@ export default function SEOManager() {
       return schemas;
     }
 
+    // 7. Editorial Policy Page
+    if (canonicalPath === '/editorial-policy') {
+      schemas.push({
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": meta.title,
+        "description": meta.description,
+        "url": currentUrl,
+        "publisher": {
+          "@type": "Organization",
+          "name": "BanksCart",
+          "url": "https://www.bankscart.com",
+          "logo": "https://www.bankscart.com/favicon-32x32.png"
+        }
+      });
+      return schemas;
+    }
+
+    // 8. Author Bio ProfilePage
+    if (canonicalPath.startsWith('/author/')) {
+      const slug = canonicalPath.replace('/author/', '');
+      const name = formatSlug(slug);
+      schemas.push({
+        "@context": "https://schema.org",
+        "@type": "ProfilePage",
+        "mainEntity": {
+          "@type": "Person",
+          "name": name,
+          "worksFor": {
+            "@type": "Organization",
+            "name": "BanksCart",
+            "url": "https://www.bankscart.com"
+          },
+          "description": meta.description
+        }
+      });
+      return schemas;
+    }
+
     return schemas.length > 0 ? schemas : null;
   }, [pathname, meta, currentUrl, canonicalPath]);
 

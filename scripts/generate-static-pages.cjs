@@ -26,7 +26,15 @@ const childSitemaps = [
   'sitemap-blogs.xml',
   'sitemap-services.xml'
 ];
-const urlsSet = new Set(['/']);
+const urlsSet = new Set([
+  '/',
+  '/about',
+  '/contact',
+  '/editorial-policy',
+  '/author/raghav-singhal',
+  '/author/amit-khurana',
+  '/author/neha-verma'
+]);
 const urlRegex = /<loc>https:\/\/www\.bankscart\.com([^<]*)<\/loc>/g;
 
 for (const smName of childSitemaps) {
@@ -300,6 +308,22 @@ const STATIC_SEO_MAP = {
     title: "Contact Us - Customer Support, Helpdesk & Grievance Redressal | BanksCart",
     description: "Contact BanksCart customer care, support desk, and grievance redressal officer. Get in touch for loan application assistance, banking partner inquiries, and customer feedback."
   },
+  "/editorial-policy": {
+    title: "Editorial Integrity, Rate Verification & Fact-Checking Policy | BanksCart",
+    description: "Learn how BanksCart verifies loan interest rates, conducts weekly bank audits, maintains 100% editorial independence from lenders, and fact-checks financial guides."
+  },
+  "/author/raghav-singhal": {
+    title: "Raghav Singhal, FCA & CFP - Lead Financial Analyst Bio | BanksCart",
+    description: "Read Raghav Singhal's author bio. Fellow Chartered Accountant & Certified Financial Planner with 12+ years experience in retail lending and credit debt advisory."
+  },
+  "/author/amit-khurana": {
+    title: "Amit Khurana, CFA & ex-SBI - Senior Banking Advisor Bio | BanksCart",
+    description: "Read Amit Khurana's reviewer bio. Veteran banker with 18+ years leading credit underwriting at State Bank of India and CFA charterholder on BanksCart."
+  },
+  "/author/neha-verma": {
+    title: "Neha Verma, CFP - Senior Personal Finance Specialist Bio | BanksCart",
+    description: "Read Neha Verma's author bio. Certified Financial Planner with 9+ years analyzing credit cards, fixed deposits, and retail banking products on BanksCart."
+  },
   "/": {
     title: "BanksCart: Compare Loan Interest Rates, Credit Cards & Apply Online",
     description: "Compare and apply for personal loans, home loans, business loans, and credit cards from top Indian banks at BanksCart. Get instant eligibility and best interest rates."
@@ -399,6 +423,15 @@ function resolveSEO(pathname) {
 
   if (STATIC_SEO_MAP[cleanPath]) {
     return STATIC_SEO_MAP[cleanPath];
+  }
+
+  if (cleanPath.startsWith('/author/')) {
+    const slug = cleanPath.replace('/author/', '');
+    const name = formatSlug(slug);
+    return {
+      title: `${name} - Verified Financial Author Bio | BanksCart`,
+      description: `Read articles and verified credentials for ${name} on BanksCart. Expert analysis on personal loans, mortgages, and credit scores.`
+    };
   }
 
   // Explicit High-Priority targets cited by user
@@ -817,6 +850,99 @@ function generatePreRenderedBody(cleanPath, meta) {
     `;
   }
 
+  // 1d. Editorial Policy Dedicated Pre-rendering
+  if (cleanPath === '/editorial-policy') {
+    return `
+    <div class="min-h-screen bg-slate-50 text-slate-800 font-sans antialiased">
+      <header class="bg-white border-b border-slate-200 py-4 px-6 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+          <a href="/" class="text-2xl font-bold tracking-tight text-blue-900">BanksCart</a>
+          <nav class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
+            <a href="/loans" class="hover:text-blue-600">Loans</a>
+            <a href="/cards" class="hover:text-blue-600">Credit Cards</a>
+            <a href="/calculators" class="hover:text-blue-600">Calculators</a>
+            <a href="/credit-score" class="hover:text-blue-600">Credit Score</a>
+            <a href="/blog" class="hover:text-blue-600">Financial Guides</a>
+          </nav>
+        </div>
+      </header>
+
+      <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+        <nav aria-label="Breadcrumb" class="text-sm text-slate-500">
+          <ol class="flex items-center space-x-2">
+            <li><a href="/" class="hover:text-blue-600">Home</a></li>
+            <li><span>/</span></li>
+            <li class="text-slate-800 font-medium" aria-current="page">Editorial Policy</li>
+          </ol>
+        </nav>
+
+        <section class="bg-white rounded-2xl p-8 lg:p-12 border border-slate-200 shadow-sm space-y-4">
+          <span class="inline-block px-3 py-1 bg-blue-50 text-blue-700 text-xs font-semibold uppercase tracking-wider rounded-full border border-blue-200">Financial YMYL Governance & E-E-A-T Standards</span>
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">BanksCart Editorial Integrity & Fact-Checking Policy</h1>
+          <p class="text-base sm:text-lg text-slate-600 leading-relaxed">Because personal loans, mortgages, and credit decisions directly impact your financial well-being (Your Money or Your Life), BanksCart adheres to the highest standards of financial accuracy, author accreditation, and commercial independence.</p>
+        </section>
+
+        <section class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-4">
+          <h2 class="text-2xl font-bold text-slate-900">1. Interest Rate & Fee Verification Methodology</h2>
+          <p class="text-sm text-slate-600 leading-relaxed">Our research desk audits lending rates across 30+ scheduled commercial banks and RBI-registered NBFCs every Monday. Rate models synchronize with RBI Monetary Policy repo rate adjustments within 24 hours.</p>
+        </section>
+
+        <section class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-4">
+          <h2 class="text-2xl font-bold text-slate-900">2. Strict Editorial Independence from Lending Partners</h2>
+          <p class="text-sm text-slate-600 leading-relaxed">Lenders cannot pay to rank higher in our organic comparison algorithms. Our recommendations prioritize the lowest effective APR and consumer savings, never lender commission payouts.</p>
+        </section>
+
+        <section class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-4">
+          <h2 class="text-2xl font-bold text-slate-900">3. Author Bylines & Peer Review by Financial Experts</h2>
+          <p class="text-sm text-slate-600 leading-relaxed">Every guide is drafted by certified professionals (Chartered Accountants, CFPs) and fact-checked by veteran banking officers (ex-SBI/HDFC) or CFA charterholders.</p>
+        </section>
+      </main>
+      ${renderFooter()}
+    </div>
+    `;
+  }
+
+  // 1e. Author Bio Dedicated Pre-rendering
+  if (cleanPath.startsWith('/author/')) {
+    const slug = cleanPath.replace('/author/', '');
+    const name = formatSlug(slug);
+    return `
+    <div class="min-h-screen bg-slate-50 text-slate-800 font-sans antialiased">
+      <header class="bg-white border-b border-slate-200 py-4 px-6 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+          <a href="/" class="text-2xl font-bold tracking-tight text-blue-900">BanksCart</a>
+          <nav class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
+            <a href="/loans" class="hover:text-blue-600">Loans</a>
+            <a href="/cards" class="hover:text-blue-600">Credit Cards</a>
+            <a href="/calculators" class="hover:text-blue-600">Calculators</a>
+            <a href="/credit-score" class="hover:text-blue-600">Credit Score</a>
+            <a href="/blog" class="hover:text-blue-600">Financial Guides</a>
+          </nav>
+        </div>
+      </header>
+
+      <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+        <nav aria-label="Breadcrumb" class="text-sm text-slate-500">
+          <ol class="flex items-center space-x-2">
+            <li><a href="/" class="hover:text-blue-600">Home</a></li>
+            <li><span>/</span></li>
+            <li><a href="/blog" class="hover:text-blue-600">Editorial Team</a></li>
+            <li><span>/</span></li>
+            <li class="text-slate-800 font-medium" aria-current="page">${name}</li>
+          </ol>
+        </nav>
+
+        <section class="bg-white rounded-2xl p-8 border border-slate-200 shadow-sm space-y-4">
+          <span class="inline-block px-3 py-1 bg-emerald-50 text-emerald-800 text-xs font-semibold rounded-full border border-emerald-200">Verified Financial Author & Reviewer</span>
+          <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900">${name}</h1>
+          <p class="text-sm text-slate-600 leading-relaxed">Certified financial contributor to BanksCart. Audits loan schedules, EMI formulas, and CIBIL credit score strategies with complete commercial objectivity.</p>
+        </section>
+      </main>
+      ${renderFooter()}
+    </div>
+    `;
+  }
+
   // 1c. Contact Us Dedicated Pre-rendering
   if (cleanPath === '/contact') {
     return `
@@ -1204,9 +1330,11 @@ function renderFooter() {
         </ul>
       </div>
       <div>
-        <h4 class="font-semibold text-white mb-3">Company</h4>
+        <h4 class="font-semibold text-white mb-3">Company & Legal</h4>
         <ul class="space-y-2 text-xs">
-          <li><a href="/about-us" class="hover:text-white">About Us</a></li>
+          <li><a href="/about" class="hover:text-white">About Us</a></li>
+          <li><a href="/contact" class="hover:text-white">Contact Support</a></li>
+          <li><a href="/editorial-policy" class="hover:text-white">Editorial & Fact-Check Policy</a></li>
           <li><a href="/privacy-policy" class="hover:text-white">Privacy Policy</a></li>
           <li><a href="/terms-of-use" class="hover:text-white">Terms of Use</a></li>
           <li><a href="/sitemap" class="hover:text-white">Sitemap</a></li>
@@ -1249,8 +1377,32 @@ function renderFooter() {
     </div>
 
     </div>
-    <div class="max-w-7xl mx-auto mt-8 pt-8 border-t border-slate-800 text-xs text-slate-500 text-center">
-      &copy; ${new Date().getFullYear()} BanksCart. All rights reserved.
+
+    <!-- Regulatory Disclosure & Corporate Details Strip -->
+    <div class="max-w-7xl mx-auto mt-8 pt-6 border-t border-slate-800 text-xs text-slate-400 space-y-4">
+      <div class="p-4 bg-slate-950/70 rounded-xl border border-slate-800/80 space-y-1.5 text-left">
+        <span class="text-xs font-bold text-slate-200 uppercase tracking-wider block">Regulatory Disclosure & Non-Lender Status</span>
+        <p class="text-[11px] text-slate-400 leading-relaxed">
+          BanksCart is an independent digital loan and credit comparison marketplace. BanksCart is not a licensed bank, NBFC, or credit institution, and does not lend money directly. All loan approvals, interest rates, disbursal terms, and credit decisions are made exclusively at the discretion of RBI-regulated banks and NBFC partners. We do not charge borrowers upfront processing fees for loan matching.
+        </p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-left text-[11px] text-slate-400">
+        <div><strong class="text-slate-300 block">Legal Entity:</strong> BanksCart Financial Technologies Pvt. Ltd.</div>
+        <div><strong class="text-slate-300 block">Corporate Identity (CIN):</strong> <span class="font-mono">U67190DL2024PTC428910</span></div>
+        <div><strong class="text-slate-300 block">Registered Office:</strong> Level 4, Statesman House, Barakhamba Rd, Connaught Place, New Delhi - 110001</div>
+        <div><strong class="text-slate-300 block">Customer Helpline:</strong> 1800-200-8900 | +91 11 4100 8900 | support@bankscart.com</div>
+      </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto mt-6 pt-6 border-t border-slate-800 text-xs text-slate-500 text-center flex flex-col sm:flex-row items-center justify-between gap-3">
+      <span>&copy; ${new Date().getFullYear()} BanksCart Financial Technologies Pvt. Ltd. All rights reserved.</span>
+      <div class="flex items-center gap-4 text-xs">
+        <a href="/editorial-policy" class="hover:text-white">Editorial Policy</a>
+        <a href="/about" class="hover:text-white">About Us</a>
+        <a href="/contact" class="hover:text-white">Contact Us</a>
+        <a href="/privacy-policy" class="hover:text-white">Privacy</a>
+        <a href="/terms-of-use" class="hover:text-white">Terms</a>
+      </div>
     </div>
   </footer>
   `;
@@ -1374,6 +1526,45 @@ function generateJsonLd(cleanPath, meta, canonicalUrl) {
           }
         }
       ]
+    });
+    return schemas;
+  }
+
+  // Editorial Policy Page Schema
+  if (cleanPath === '/editorial-policy') {
+    schemas.push({
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": meta.title,
+      "description": meta.description,
+      "url": canonicalUrl,
+      "publisher": {
+        "@type": "Organization",
+        "name": "BanksCart",
+        "url": "https://www.bankscart.com",
+        "logo": "https://www.bankscart.com/favicon-32x32.png"
+      }
+    });
+    return schemas;
+  }
+
+  // Author Bio ProfilePage Schema
+  if (cleanPath.startsWith('/author/')) {
+    const slug = cleanPath.replace('/author/', '');
+    const name = formatSlug(slug);
+    schemas.push({
+      "@context": "https://schema.org",
+      "@type": "ProfilePage",
+      "mainEntity": {
+        "@type": "Person",
+        "name": name,
+        "worksFor": {
+          "@type": "Organization",
+          "name": "BanksCart",
+          "url": "https://www.bankscart.com"
+        },
+        "description": meta.description
+      }
     });
     return schemas;
   }

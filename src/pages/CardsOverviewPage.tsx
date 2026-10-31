@@ -174,6 +174,22 @@ const CardsOverviewPage: React.FC = () => (
         </button>
       </motion.div>
     </motion.section>
+
+    {/* Standardized Regulatory Disclosure Banner */}
+    <div className="max-w-6xl mx-auto mt-12 p-6 bg-slate-50 rounded-2xl border border-slate-200 text-xs text-slate-600 leading-relaxed font-sans space-y-2">
+      <div className="flex items-center gap-2 font-bold text-slate-800 uppercase tracking-wider text-[11px]">
+        <span>Regulatory Disclosure & Non-Lender Status</span>
+      </div>
+      <p>
+        BanksCart is an independent digital loan and credit comparison marketplace. BanksCart is not a licensed bank, NBFC, or credit institution, and does not lend money directly. All loan approvals, interest rates, disbursal terms, and credit decisions are made exclusively at the discretion of RBI-regulated banks and NBFC partners. We do not charge borrowers upfront processing fees for loan matching.
+      </p>
+      <div className="pt-2 border-t border-slate-200 flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-500">
+        <span>BanksCart Financial Technologies Pvt. Ltd. • CIN: U67190DL2024PTC428910</span>
+        <a href="/editorial-policy" className="text-blue-600 font-semibold hover:underline">
+          Editorial & Verification Standards &rarr;
+        </a>
+      </div>
+    </div>
   </motion.div>
 );
 

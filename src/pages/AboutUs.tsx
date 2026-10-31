@@ -401,8 +401,9 @@ const AboutUs: React.FC = () => {
                   <h3 className="font-semibold text-slate-900 text-base">Registered Office</h3>
                   <p className="text-sm text-slate-600 mt-1 leading-relaxed">
                     <strong>BanksCart Financial Technologies Pvt Ltd</strong><br />
-                    Plot No. 42, Institutional Area, Sector 44<br />
-                    Gurugram, Haryana 122003, India
+                    <span className="font-mono text-xs text-slate-500">CIN: U67190DL2024PTC428910</span><br />
+                    Level 4, Statesman House, Barakhamba Road,<br />
+                    Connaught Place, New Delhi - 110001, India
                   </p>
                 </div>
               </div>

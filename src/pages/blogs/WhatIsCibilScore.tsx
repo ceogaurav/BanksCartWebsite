@@ -1,7 +1,8 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { ArrowLeft, Target, Scale, CheckCircle, HelpCircle, TrendingUp, DollarSign, FileText, Briefcase } from "lucide-react";
-import { Link } from "react-router-dom"; 
+import { Link } from "react-router-dom";
+import { AuthorByline } from "../../components/blog/AuthorByline"; 
 
 // --- CONFIGURATION START ---
 const ARTICLE_TITLE = "The Ultimate 2026 Guide to CIBIL Score Mastery: Improve Your Creditworthiness for Loans";
@@ -98,13 +99,14 @@ const UltimateCIBILGuidePage: React.FC = () => (
         <p className="text-xl text-gray-700 leading-relaxed italic mt-4">
           {ARTICLE_SUBTITLE}
         </p>
-        <div className="flex text-sm text-gray-500 mt-6 space-x-6">
-          <span>By <strong>{AUTHOR}</strong></span>
-          <span>•</span>
-          <span>{DATE}</span>
-          <span>•</span>
-          <span>{READ_TIME}</span>
-        </div>
+        <AuthorByline
+          authorSlug="raghav-singhal"
+          reviewerSlug="amit-khurana"
+          publishedDate="November 18, 2025"
+          updatedDate="October 31, 2026"
+          readTime="45 min read"
+          showBioCard={true}
+        />
       </motion.header>
 
       {/* Article Content */}
