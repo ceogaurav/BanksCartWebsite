@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const formatCurrency = (value: number) =>
@@ -195,10 +195,10 @@ const HomeLoanEMICalculator: React.FC<HomeLoanEMICalculatorProps> = ({ openApply
         <div className="flex flex-col md:flex-row gap-8 mb-8">
           {/* Left Panel - Inputs */}
           <div className="bg-white rounded-2xl shadow-lg p-6 flex-1 min-w-[320px]">
-            <Slider label="Loan Amount" value={amount} setValue={setAmount} min={SLIDER_CONFIG.amount.min} max={SLIDER_CONFIG.amount.max} step={SLIDER_CONFIG.amount.step} unit="" format={formatCurrency} color="#4a90e2" />
-            <Slider label="Interest Rate" value={rate} setValue={setRate} min={SLIDER_CONFIG.rate.min} max={SLIDER_CONFIG.rate.max} step={SLIDER_CONFIG.rate.step} unit="%" format={v => v + '%'} color="#4a90e2" />
-            <Slider label="Loan Tenure" value={tenure} setValue={setTenure} min={SLIDER_CONFIG.tenure.min} max={SLIDER_CONFIG.tenure.max} step={SLIDER_CONFIG.tenure.step} unit="Years" format={v => v + ' Yr'} color="#4a90e2" />
-            <Slider label="Processing Fee" value={fee} setValue={setFee} min={SLIDER_CONFIG.fee.min} max={SLIDER_CONFIG.fee.max} step={SLIDER_CONFIG.fee.step} unit="%" format={v => v + '%'} color="#4a90e2" />
+            <Slider label="Loan Amount" value={displayAmount} setValue={handleAmount} min={SLIDER_CONFIG.amount.min} max={SLIDER_CONFIG.amount.max} step={SLIDER_CONFIG.amount.step} unit="" format={formatCurrency} color="#4a90e2" />
+            <Slider label="Interest Rate" value={displayRate} setValue={handleRate} min={SLIDER_CONFIG.rate.min} max={SLIDER_CONFIG.rate.max} step={SLIDER_CONFIG.rate.step} unit="%" format={v => v + '%'} color="#4a90e2" />
+            <Slider label="Loan Tenure" value={displayTenure} setValue={handleTenure} min={SLIDER_CONFIG.tenure.min} max={SLIDER_CONFIG.tenure.max} step={SLIDER_CONFIG.tenure.step} unit="Years" format={v => v + ' Yr'} color="#4a90e2" />
+            <Slider label="Processing Fee" value={displayFee} setValue={handleFee} min={SLIDER_CONFIG.fee.min} max={SLIDER_CONFIG.fee.max} step={SLIDER_CONFIG.fee.step} unit="%" format={v => v + '%'} color="#4a90e2" />
             <div className="mt-6">
               {openApplyModal ? (
                 <CreditScoreButton onClick={() => openApplyModal('Credit Score Check')} />
@@ -209,7 +209,7 @@ const HomeLoanEMICalculator: React.FC<HomeLoanEMICalculatorProps> = ({ openApply
           </div>
           {/* Right Panel - Results */}
           <div className="flex-1 min-w-[320px] flex flex-col items-center">
-            <ResultBox emi={emi} amount={amount} interest={totalInterest} fee={amount * (fee / 100)} />
+            <ResultBox emi={emi} amount={calcAmount} interest={totalInterest} fee={calcAmount * (calcFee / 100)} />
             {openApplyModal ? (
               <CreditScoreButton onClick={() => openApplyModal('Credit Score Check')} />
             ) : (

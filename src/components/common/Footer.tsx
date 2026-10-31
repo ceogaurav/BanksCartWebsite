@@ -19,8 +19,12 @@ const Footer: React.FC<FooterProps> = ({ openEligibilityModal }) => {
           <div className="space-y-6">
             <Link to="/" className="flex items-center space-x-2">
               <img
-                src="/logos/bankscartlogof.jpg" // Ensure this logo looks good on dark bg, or use a white version
+                src="/logos/bankscartlogof.jpg"
                 alt="BanksCart"
+                width="160"
+                height="40"
+                style={{ aspectRatio: "4/1" }}
+                loading="lazy"
                 className="h-10 w-auto rounded"
               />
             </Link>

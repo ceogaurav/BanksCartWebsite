@@ -37,6 +37,56 @@
       "source": "/blogs-overview-page",
       "destination": "/blog",
       "permanent": true
+    },
+    {
+      "source": "/credit-score/credit-rectification",
+      "destination": "/credit-score/credit-rectification-service",
+      "permanent": true
+    },
+    {
+      "source": "/credit-score/cibil-for-loan",
+      "destination": "/credit-score/cibil-score-for-personal-loan",
+      "permanent": true
+    },
+    {
+      "source": "/cards/lifetime-free",
+      "destination": "/cards/credit/lifetime-free",
+      "permanent": true
+    },
+    {
+      "source": "/cards/cashback-credit-cards",
+      "destination": "/cards/credit/cashback",
+      "permanent": true
+    },
+    {
+      "source": "/cards/secured-credit-card",
+      "destination": "/cards/credit/secured",
+      "permanent": true
+    },
+    {
+      "source": "/company-registration/copyright",
+      "destination": "/company-registration/copyright-registration",
+      "permanent": true
+    },
+    {
+      "source": "/company-registration/pvt-ltd",
+      "destination": "/company-registration",
+      "permanent": true
+    },
+    {
+      "source": "/business-loan/company-reg-delhi",
+      "destination": "/business-loan/company-registration-in-delhi",
+      "permanent": true
+    },
+    {
+      "source": "/business-loan/company-reg-blr",
+      "destination": "/business-loan/company-registration-in-bangalore",
+      "permanent": true
+    },
+    {
+      "source": "/blog/Sukanya-Samriddhi-Yojana",
+      "destination": "/blog/Sukanya-Samriddhi-Yojana-Guide",
+      "permanent": true
     }
   ],
   "rewrites": [

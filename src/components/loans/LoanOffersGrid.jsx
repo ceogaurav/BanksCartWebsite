@@ -85,7 +85,7 @@ const LoanOffersGrid = ({ openApplyModal, openEligibilityModal }) => {
         </p>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 min-h-[580px]">
         {offers.map((offer) => (
           <div
             key={offer.bank}
@@ -115,6 +115,9 @@ const LoanOffersGrid = ({ openApplyModal, openEligibilityModal }) => {
                   <img
                     src={offer.logo}
                     alt={`${offer.bank} logo`}
+                    width="48"
+                    height="48"
+                    style={{ aspectRatio: "1/1" }}
                     className="max-h-full max-w-full object-contain"
                     loading="lazy"
                   />

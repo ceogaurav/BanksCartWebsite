@@ -727,7 +727,7 @@ const HomeLoanPage = ({ openApplyModal }) => {
         <div className="text-center text-gray-500 mb-8">We handle everything for you</div>
         <div className="flex justify-center gap-4 mb-6">
           {teamAvatars.map((src, i) => (
-            <img key={i} src={src} alt="Team Member" className="w-16 h-16 rounded-full border-2 border-blue-200 object-cover" />
+            <img key={i} src={src} alt="Team Member" width="64" height="64" style={{ aspectRatio: "1/1" }} className="w-16 h-16 rounded-full border-2 border-blue-200 object-cover" loading="lazy" />
           ))}
         </div>
         <div className="flex flex-wrap justify-center gap-4">
@@ -744,7 +744,7 @@ const HomeLoanPage = ({ openApplyModal }) => {
         <div className="text-center text-3xl md:text-4xl font-bold mb-2">Don't just take our word for it</div>
         <div className="flex flex-col md:flex-row items-center justify-center gap-8 mt-8">
           <div className="bg-white rounded-xl shadow p-8 flex flex-col items-center max-w-md">
-            <img src={featuredCustomer.photo} alt={featuredCustomer.name} className="w-20 h-20 rounded-full border-4 border-blue-200 mb-4 object-cover" />
+            <img src={featuredCustomer.photo} alt={featuredCustomer.name} width="80" height="80" style={{ aspectRatio: "1/1" }} className="w-20 h-20 rounded-full border-4 border-blue-200 mb-4 object-cover" loading="lazy" />
             <div className="font-bold text-lg mb-1">{featuredCustomer.name}</div>
             <div className="text-blue-500 text-sm mb-2">{featuredCustomer.twitter}</div>
             <div className="italic text-gray-700 text-center">“{featuredCustomer.quote}”</div>
@@ -797,10 +797,10 @@ const HomeLoanPage = ({ openApplyModal }) => {
             onChange={e => setBankFilter(e.target.value)}
             className="w-full md:w-1/2 mx-auto block p-2 border rounded mb-4"
           />
-          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4">
+          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4 min-h-[160px]">
             {visibleBanks.filter(b => b.name.toLowerCase().includes(bankFilter.toLowerCase())).map((bank, i) => (
               <motion.div whileHover={{ scale: 1.05 }} key={i} className="bg-white rounded-lg shadow p-2 flex flex-col items-center transition cursor-pointer">
-                <img src={bank.logo} alt={bank.name} className="w-16 h-10 object-contain mb-1" />
+                <img src={bank.logo} alt={bank.name} width="64" height="40" style={{ aspectRatio: "64/40" }} className="w-16 h-10 object-contain mb-1" loading="lazy" />
                 <span className="text-xs font-semibold text-navy-900 text-center">{bank.name}</span>
               </motion.div>
             ))}
@@ -855,7 +855,7 @@ const HomeLoanPage = ({ openApplyModal }) => {
         <div className="flex flex-col md:flex-row justify-center gap-8 max-w-5xl mx-auto">
           {journeyStages.map((stage, i) => (
             <motion.div whileHover={{ scale: 1.03 }} key={i} className="bg-[#F8FAFC] rounded-xl shadow p-6 flex flex-col items-center">
-              <img src={stage.img} alt={stage.title} className="w-24 h-24 mb-4" />
+              <img src={stage.img} alt={stage.title} width="96" height="96" style={{ aspectRatio: "1/1" }} className="w-24 h-24 mb-4" loading="lazy" />
               <div className="font-bold text-lg mb-1">{stage.title}</div>
               <div className="text-gray-500 text-sm mb-2">{stage.desc}</div>
             </motion.div>
@@ -965,7 +965,7 @@ const HomeLoanPage = ({ openApplyModal }) => {
       {/* Support/CTA Section */}
       <section className="py-16 bg-gradient-to-br from-blue-100 to-blue-50 w-full">
         <div className="flex flex-col md:flex-row items-center justify-center gap-12 max-w-6xl mx-auto">
-          <img src="/images/consultation-hero.svg" alt="Consultation" className="w-64 h-64 object-contain" />
+          <img src="/images/consultation-hero.svg" alt="Consultation" width="256" height="256" style={{ aspectRatio: "1/1" }} className="w-64 h-64 object-contain" loading="lazy" />
           <div>
             <h2 className="text-3xl font-bold mb-2">Confused About Home Loans? We're Here to HELP!</h2>
             <div className="text-gray-500 mb-4">Get detailed answers to the most frequently asked questions, tailored for your peace of mind.</div>

@@ -45,7 +45,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({ title, items, columns = 6 }) 
                         {/* Interactive Image / Lucide Icon Wrapper */}
                         <div className="w-16 h-16 mb-4 flex items-center justify-center transition-all group-hover:scale-110 duration-300">
                           {item.imageSrc ? (
-                            <img src={item.imageSrc} alt={item.label} className="w-full h-full object-contain filter group-hover:brightness-105" />
+                            <img src={item.imageSrc} alt={item.label} width="64" height="64" style={{ aspectRatio: "1/1" }} loading="lazy" className="w-full h-full object-contain filter group-hover:brightness-105" />
                           ) : item.icon ? (
                             <div className="w-12 h-12 bg-blue-50/50 rounded-2xl flex items-center justify-center group-hover:bg-blue-600 transition-all shadow-sm">
                               <item.icon className="w-6 h-6 text-blue-600 group-hover:text-white transition-colors" />

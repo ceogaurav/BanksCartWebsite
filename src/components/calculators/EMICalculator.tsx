@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Calculator } from 'lucide-react';
 import { calculateEMI, calculateTotalAmount, calculateTotalInterest, formatCurrency } from '../../utils/calculations';
 
@@ -31,7 +31,7 @@ const EMICalculator: React.FC = () => {
         <div className="space-y-6">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-3">
-              Loan Amount: {formatCurrency(principal)}
+              Loan Amount: {formatCurrency(displayPrincipal)}
             </label>
             <input
               type="range"
@@ -50,7 +50,7 @@ const EMICalculator: React.FC = () => {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-3">
-              Interest Rate: {rate}% per annum
+              Interest Rate: {displayRate}% per annum
             </label>
             <input
               type="range"
@@ -69,7 +69,7 @@ const EMICalculator: React.FC = () => {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-3">
-              Loan Tenure: {Math.floor(tenure / 12)} years {tenure % 12} months
+              Loan Tenure: {Math.floor(displayTenure / 12)} years {displayTenure % 12} months
             </label>
             <input
               type="range"

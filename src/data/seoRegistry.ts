@@ -296,6 +296,16 @@ export const SEO_MAP: Record<string, SEOMetadata> = {
     description: "Step-by-step guide to apply for new PAN card, make corrections, link Aadhaar with PAN, and track PAN card status online.",
     keywords: "apply pan card online, pan card status, link pan adhaar, pan card correction"
   },
+  "/aadhar-card/aadhaar-card-services": {
+    title: "Aadhaar Card Update Online Status: Address, Phone & Biometrics | BanksCart",
+    description: "Track your Aadhaar card update request status online via UIDAI portal using URN or Enrolment ID. Complete guide on updating address, mobile number, and photos.",
+    keywords: "aadhar card update online status, uidai check status, aadhaar address update"
+  },
+  "/blogs/Sukanya-Samriddhi-Yojana": {
+    title: "Sukanya Samriddhi Yojana (SSY) Scheme Guide 2026: Interest Rate & Rules | BanksCart",
+    description: "Complete guide to Sukanya Samriddhi Yojana (SSY). Check 8.2% interest rate, tax exemption under 80C, account opening eligibility, and maturity calculations.",
+    keywords: "sukanya samriddhi yojana guide, ssy scheme 2026, ssy interest rate"
+  },
   "/resources/aadhar-pan": {
     title: "Link Aadhaar to PAN Card Online: Step-by-Step Guide | BanksCart",
     description: "Complete guide on how to link your Aadhaar card with PAN card online, verify linking status, and check deadlines.",
@@ -328,7 +338,140 @@ export const SEO_MAP: Record<string, SEOMetadata> = {
   },
 
   // Hub Pages
-    "/loans/personal-loan": {
+    // ==========================================
+  // 12-Category Comprehensive Keyword Research Map
+  // ==========================================
+  "/loans/personal-loan/instant": {
+    title: "Instant Personal Loan Online: Apply for Fast Digital Cash Disbursal | BanksCart",
+    description: "Apply for instant personal loans online with digital e-KYC and 10-minute disbursal. Compare lowest interest rates from 10.25% p.a. with zero paperwork.",
+    keywords: "instant personal loan online, fast cash loan, instant loan approval, digital personal loan india"
+  },
+  "/eligibility/personal-loan": {
+    title: "Personal Loan Eligibility Check Online: Salary & CIBIL Calculator | BanksCart",
+    description: "Check your personal loan eligibility online in 2 minutes. Calculate maximum loan borrowing limit based on your monthly salary, age, and CIBIL score.",
+    keywords: "personal loan eligibility check, loan eligibility calculator, check loan eligibility online"
+  },
+  "/loans/personal-loan-low-salary": {
+    title: "Personal Loan for ₹15,000 Low Salary: Instant Approval Lenders | BanksCart",
+    description: "Get personal loans for ₹15,000 monthly take-home salary. Compare top banks and NBFCs offering loans for low-income salaried employees with minimum documentation.",
+    keywords: "low salary personal loan 15000, personal loan for low income, 15k salary loan apply"
+  },
+  "/business-loan": {
+    title: "Business Loan Interest Rates: Compare Collateral-Free MSME Loans | BanksCart",
+    description: "Compare business loan interest rates starting from 11.25% p.a. from top Indian banks and NBFCs. Get collateral-free MSME loans up to ₹75 Lakhs with instant approval.",
+    keywords: "business loan interest rates, compare business loans, msme loan rates india"
+  },
+  "/business-loan/collateral-free": {
+    title: "Collateral-Free Business Loans: Unsecured MSME Capital up to ₹75 Lakhs | BanksCart",
+    description: "Apply for unsecured collateral-free business loans for working capital and machinery. Fast disbursal for MSMEs, startups, and self-employed professionals.",
+    keywords: "collateral free business loans, unsecured business loan, cgtmse loan scheme"
+  },
+  "/business-loan/msme-scheme": {
+    title: "MSME Business Loan Schemes in India: 59-Minute In-Principle Sanction | BanksCart",
+    description: "Complete guide to government MSME loan schemes, PSB 59 minutes loan portal, CGTMSE collateral guarantees, and subsidy schemes for small businesses in India.",
+    keywords: "msme loan scheme 59 minutes, psb loans in 59 minutes, government business loan schemes"
+  },
+  "/blog/best-bank-for-home-loan": {
+    title: "Best Bank for Home Loan in India: Compare Interest Rates & Processing Fees | BanksCart",
+    description: "Discover the best bank for home loans in India for 2026. Compare SBI, HDFC Bank, ICICI Bank, and Axis Bank on interest rates, hidden charges, and customer service.",
+    keywords: "best bank for home loan in india, lowest home loan interest rates, top housing loan lenders"
+  },
+  "/loans/home-loan-balance-transfer": {
+    title: "Home Loan Balance Transfer Interest Rates: Switch Lender & Save EMIs | BanksCart",
+    description: "Transfer your existing home loan to a lower interest rate starting from 8.35% p.a. Reduce monthly EMIs, save up to ₹30 Lakhs in interest, and get top-up loans.",
+    keywords: "home loan balance transfer rates, transfer home loan, lower home loan emi"
+  },
+  "/cards/credit-cards": {
+    title: "Best Credit Cards in India: Compare Rewards, Cashback & Lounge Access | BanksCart",
+    description: "Find the best credit cards in India for 2026. Compare cashback cards, airport lounge cards, travel air miles, and lifetime free credit cards side-by-side.",
+    keywords: "best credit cards in india, compare credit cards, top credit card offers"
+  },
+  "/cards/lifetime-free": {
+    title: "Best Lifetime Free Credit Cards: Zero Joining & Annual Fee Forever | BanksCart",
+    description: "Apply for lifetime free credit cards in India with zero annual maintenance fees. Enjoy complimentary airport lounge access, dining discounts, and reward points.",
+    keywords: "lifetime free credit cards, no annual fee credit card, free credit card apply"
+  },
+  "/cards/cashback-credit-cards": {
+    title: "Best Cashback Credit Cards in India: Up to 5% Flat Cashback Online | BanksCart",
+    description: "Maximize savings on Amazon, Flipkart, Swiggy, and Zomato. Compare the highest earning cashback credit cards with instant digital approvals.",
+    keywords: "best cashback credit card, cashback credit cards india, online shopping cards"
+  },
+  "/cards/secured-credit-card": {
+    title: "Secured Credit Card Against Fixed Deposit (FD): 100% Approval | BanksCart",
+    description: "Get guaranteed approval credit cards against bank fixed deposits with zero income proof. Rebuild your CIBIL score while earning regular FD interest.",
+    keywords: "credit card against fixed deposit, secured credit card india, credit card without income proof"
+  },
+  "/blog/what-is-good-cibil-score": {
+    title: "What is a Good CIBIL Score in India? Score Range & Approval Slabs | BanksCart",
+    description: "Understand CIBIL score ranges from 300 to 900. Learn why a score of 750+ is ideal for instant loan and credit card approvals at lowest interest rates.",
+    keywords: "what is a good cibil score, cibil score range, ideal credit score for loan"
+  },
+  "/credit-score/cibil-for-loan": {
+    title: "Minimum CIBIL Score for Personal Loan Approval: 2026 Bank Cut-Offs | BanksCart",
+    description: "What CIBIL score is required for personal loans? Check bank-wise cut-off scores, prime interest slabs for 750+ ratings, and loan options for low CIBIL scores.",
+    keywords: "cibil score for personal loan, minimum cibil for loan, personal loan credit score cutoff"
+  },
+  "/credit-score/credit-rectification": {
+    title: "Credit Rectification Service: Dispute Errors & Improve CIBIL Score | BanksCart",
+    description: "Fix errors on your CIBIL report with expert credit rectification guidance. Resolve wrongful overdue tags, update settlement statuses, and rebuild your credit rating.",
+    keywords: "credit rectification service, fix cibil score, credit dispute assistance"
+  },
+  "/blog/how-to-dispute-cibil-errors": {
+    title: "How to Dispute CIBIL Report Inaccuracies Online: Step-by-Step Guide | BanksCart",
+    description: "Step-by-step walkthrough on raising an online dispute on CIBIL portal using your Enquiry Control Number (ECN). Resolve wrong overdue tags within 30 days.",
+    keywords: "how to dispute cibil report, dispute cibil errors online, cibil dispute resolution"
+  },
+  "/blog/remove-settled-cibil-tag": {
+    title: "How to Remove 'Settled' Status from CIBIL Report: Convert to 'Closed' | BanksCart",
+    description: "Learn how to negotiate with lenders, pay outstanding principal and interest dues, obtain a No Dues Certificate (NOC), and convert 'Settled' status to 'Closed'.",
+    keywords: "remove settled status from cibil, change settled to closed in cibil, cibil settlement removal"
+  },
+  "/company-registration/pvt-ltd": {
+    title: "Private Limited Company Registration Online: MCA Incorporation in India | BanksCart",
+    description: "Register a Private Limited company online in India. Complete MCA incorporation package including DSC, DIN, SPICe+ filing, PAN, TAN, and Certificate of Incorporation.",
+    keywords: "private limited company reg, pvt ltd incorporation online, register company india"
+  },
+  "/business-loan/company-reg-delhi": {
+    title: "Company Registration in Delhi: Fast Private Limited & LLP Incorporation | BanksCart",
+    description: "Incorporate your company in Delhi-NCR with expert legal assistance. Fast-track MCA filing, registered office compliance, GST registration, and startup funding support.",
+    keywords: "company registration in delhi, pvt ltd registration delhi, startup registration delhi"
+  },
+  "/business-loan/company-reg-blr": {
+    title: "Company Registration in Bangalore: Startup Incorporation Hub | BanksCart",
+    description: "Register your private limited startup in Bangalore (Bengaluru), Karnataka. Complete legal incorporation, MCA clearance, and business loan support.",
+    keywords: "company registration in bangalore, bangalore startup incorporation, pvt ltd registration karnataka"
+  },
+  "/company-registration/copyright": {
+    title: "Copyright Registration Online in India: Protect Creative & Software Works | BanksCart",
+    description: "File copyright registration online for literary, artistic, software, and musical works with the Copyright Office of India. End-to-end IP protection.",
+    keywords: "copyright registration online, register copyright india, intellectual property filing"
+  },
+  "/blog/trademark-vs-copyright": {
+    title: "Trademark vs Copyright in India: Differences, Validity & Registration | BanksCart",
+    description: "Understand the key differences between trademarks and copyrights under Indian IP laws. Learn what each protects, registration fees, validity periods, and infringement remedies.",
+    keywords: "trademark vs copyright in india, difference between trademark and copyright, ip rights india"
+  },
+  "/blog/pm-mudra-loan-online-apply": {
+    title: "PM Mudra Loan Scheme 2026: Apply Online, Interest Rates & Eligibility | BanksCart",
+    description: "Apply for Pradhan Mantri MUDRA Loan online up to ₹10 Lakhs. Compare Shishu, Kishore, and Tarun categories with zero collateral and concessional interest rates.",
+    keywords: "pm mudra loan apply online, mudra loan eligibility, pradhan mantri mudra yojana"
+  },
+  "/blog/pmay-subsidy-status-check": {
+    title: "PMAY Subsidy Status Check Online: Pradhan Mantri Awas Yojana CLSS Tracker | BanksCart",
+    description: "Track your PMAY home loan interest subsidy status online using your Application ID. Check eligibility criteria, subsidy calculation slabs, and CLSS guidelines.",
+    keywords: "pm awas yojana subsidy status, check pmay subsidy online, pmay clss tracker"
+  },
+  "/blog/how-cibil-score-calculated": {
+    title: "CIBIL Score Calculation Formula: How Credit Bureaus Calculate Your 3-Digit Score | BanksCart",
+    description: "Discover the mathematical breakdown behind CIBIL score calculation. Understand the 4 key weights: payment history (35%), credit utilization (30%), credit mix (10%), and inquiries.",
+    keywords: "cibil score calculation formula, how is cibil score calculated, credit score mathematical formula"
+  },
+  "/blog/nbfc-vs-bank-loan-diff": {
+    title: "Difference Between NBFC and Commercial Bank in India: Loan Lending Rules | BanksCart",
+    description: "Understand the regulatory and practical differences between NBFCs and scheduled commercial banks in India regarding loan interest rates, RBI oversight, and approval speed.",
+    keywords: "difference between nbfc and bank, nbfc vs commercial bank, loan from nbfc vs bank"
+  },
+  "/loans/personal-loan": {
     title: "Personal Loan Interest Rates: Compare 30+ Banks & Apply Online | BanksCart",
     description: "Compare personal loan interest rates starting from 10.25% p.a. Calculate EMIs, check eligibility across top banks, and apply online with zero physical paperwork.",
     keywords: "personal loan interest rates, best personal loan in india, instant personal loan online, lowest personal loan emi"

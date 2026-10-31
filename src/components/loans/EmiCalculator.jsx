@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 
 const minAmount = 50000;
@@ -33,13 +33,91 @@ function calculateEMI(P, r, n) {
 }
 
 const EmiCalculator = ({ openApplyModal }) => {
-  const [amount, setAmount] = useState(300000);
-  const [rate, setRate] = useState(10.5);
-  const [tenure, setTenure] = useState(36);
+  // Local immediate slider display values (for 60fps instant UI updates)
+  const [displayAmount, setDisplayAmount] = useState(300000);
+  const [displayRate, setDisplayRate] = useState(10.5);
+  const [displayTenure, setDisplayTenure] = useState(36);
 
-  const emi = calculateEMI(amount, rate, tenure);
-  const totalPayment = emi * tenure;
-  const interestPayable = totalPayment - amount;
+  // Debounced calculation state (minimum 150ms delay to eliminate INP latency bottlenecks)
+  const [calcAmount, setCalcAmount] = useState(300000);
+  const [calcRate, setCalcRate] = useState(10.5);
+  const [calcTenure, setCalcTenure] = useState(36);
+
+  // Asynchronous calculated results
+  const [emi, setEmi] = useState(() => calculateEMI(300000, 10.5, 36));
+  const [totalPayment, setTotalPayment] = useState(() => calculateEMI(300000, 10.5, 36) * 36);
+  const [interestPayable, setInterestPayable] = useState(() => (calculateEMI(300000, 10.5, 36) * 36) - 300000);
+
+  // Timers for 150ms debouncing
+  const amountTimer = useRef(null);
+  const rateTimer = useRef(null);
+  const tenureTimer = useRef(null);
+
+  // Debounced input handlers
+  const handleAmountChange = useCallback((val) => {
+    setDisplayAmount(val);
+    if (amountTimer.current) clearTimeout(amountTimer.current);
+    amountTimer.current = setTimeout(() => {
+      setCalcAmount(val);
+    }, 150);
+  }, []);
+
+  const handleRateChange = useCallback((val) => {
+    setDisplayRate(val);
+    if (rateTimer.current) clearTimeout(rateTimer.current);
+    rateTimer.current = setTimeout(() => {
+      setCalcRate(val);
+    }, 150);
+  }, []);
+
+  const handleTenureChange = useCallback((val) => {
+    setDisplayTenure(val);
+    if (tenureTimer.current) clearTimeout(tenureTimer.current);
+    tenureTimer.current = setTimeout(() => {
+      setCalcTenure(val);
+    }, 150);
+  }, []);
+
+  // Cleanup timers on unmount
+  useEffect(() => {
+    return () => {
+      if (amountTimer.current) clearTimeout(amountTimer.current);
+      if (rateTimer.current) clearTimeout(rateTimer.current);
+      if (tenureTimer.current) clearTimeout(tenureTimer.current);
+    };
+  }, []);
+
+  // Offload amortization recalculation to an asynchronous microtask
+  useEffect(() => {
+    if (typeof queueMicrotask === "function") {
+      queueMicrotask(() => {
+        const calculatedEmi = calculateEMI(calcAmount, calcRate, calcTenure);
+        const total = calculatedEmi * calcTenure;
+        setEmi(calculatedEmi);
+        setTotalPayment(total);
+        setInterestPayable(total - calcAmount);
+      });
+    } else {
+      setTimeout(() => {
+        const calculatedEmi = calculateEMI(calcAmount, calcRate, calcTenure);
+        const total = calculatedEmi * calcTenure;
+        setEmi(calculatedEmi);
+        setTotalPayment(total);
+        setInterestPayable(total - calcAmount);
+      }, 0);
+    }
+  }, [calcAmount, calcRate, calcTenure]);
+
+  // Preset quick chips update both display & calc immediately
+  const handlePresetAmount = (val) => {
+    setDisplayAmount(val);
+    setCalcAmount(val);
+  };
+
+  const handlePresetTenure = (val) => {
+    setDisplayTenure(val);
+    setCalcTenure(val);
+  };
 
   return (
     <section id="emi-calculator" className="my-12 bg-white rounded-3xl shadow-xl border border-blue-100/80 p-6 sm:p-8 md:p-12 scroll-mt-24">
@@ -72,10 +150,10 @@ const EmiCalculator = ({ openApplyModal }) => {
                   min={minAmount}
                   max={maxAmount}
                   step={10000}
-                  value={amount}
+                  value={displayAmount}
                   onChange={(e) => {
                     const val = Number(e.target.value);
-                    if (val >= 0) setAmount(val);
+                    if (val >= 0) handleAmountChange(val);
                   }}
                   className="w-36 pl-7 pr-3 py-1.5 border border-gray-300 rounded-lg text-right font-bold text-gray-900 focus:outline-none focus:ring-2 focus:ring-teal-500 text-sm sm:text-base"
                 />
@@ -86,8 +164,8 @@ const EmiCalculator = ({ openApplyModal }) => {
               min={minAmount}
               max={maxAmount}
               step={10000}
-              value={amount}
-              onChange={(e) => setAmount(Number(e.target.value))}
+              value={displayAmount}
+              onChange={(e) => handleAmountChange(Number(e.target.value))}
               aria-label="Loan Amount Slider"
               className="w-full accent-teal-600 h-2 rounded-lg bg-gray-200 cursor-pointer"
             />
@@ -101,9 +179,9 @@ const EmiCalculator = ({ openApplyModal }) => {
                 <button
                   key={preset.value}
                   type="button"
-                  onClick={() => setAmount(preset.value)}
+                  onClick={() => handlePresetAmount(preset.value)}
                   className={`text-xs px-2.5 py-1 rounded-md font-medium transition-colors ${
-                    amount === preset.value
+                    displayAmount === preset.value
                       ? "bg-teal-600 text-white shadow-sm"
                       : "bg-gray-100 hover:bg-gray-200 text-gray-700"
                   }`}
@@ -127,10 +205,10 @@ const EmiCalculator = ({ openApplyModal }) => {
                   min={minRate}
                   max={maxRate}
                   step={0.1}
-                  value={rate}
+                  value={displayRate}
                   onChange={(e) => {
                     const val = Number(e.target.value);
-                    if (val >= 0) setRate(val);
+                    if (val >= 0) handleRateChange(val);
                   }}
                   className="w-24 px-3 py-1.5 border border-gray-300 rounded-lg text-right font-bold text-gray-900 focus:outline-none focus:ring-2 focus:ring-teal-500 text-sm sm:text-base"
                 />
@@ -141,8 +219,8 @@ const EmiCalculator = ({ openApplyModal }) => {
               min={minRate}
               max={maxRate}
               step={0.05}
-              value={rate}
-              onChange={(e) => setRate(Number(e.target.value))}
+              value={displayRate}
+              onChange={(e) => handleRateChange(Number(e.target.value))}
               aria-label="Interest Rate Slider"
               className="w-full accent-teal-600 h-2 rounded-lg bg-gray-200 cursor-pointer"
             />
@@ -165,10 +243,10 @@ const EmiCalculator = ({ openApplyModal }) => {
                   min={minTenure}
                   max={maxTenure}
                   step={1}
-                  value={tenure}
+                  value={displayTenure}
                   onChange={(e) => {
                     const val = Number(e.target.value);
-                    if (val >= 0) setTenure(val);
+                    if (val >= 0) handleTenureChange(val);
                   }}
                   className="w-24 px-3 py-1.5 border border-gray-300 rounded-lg text-right font-bold text-gray-900 focus:outline-none focus:ring-2 focus:ring-teal-500 text-sm sm:text-base"
                 />
@@ -179,8 +257,8 @@ const EmiCalculator = ({ openApplyModal }) => {
               min={minTenure}
               max={maxTenure}
               step={1}
-              value={tenure}
-              onChange={(e) => setTenure(Number(e.target.value))}
+              value={displayTenure}
+              onChange={(e) => handleTenureChange(Number(e.target.value))}
               aria-label="Loan Tenure Slider"
               className="w-full accent-teal-600 h-2 rounded-lg bg-gray-200 cursor-pointer"
             />
@@ -194,9 +272,9 @@ const EmiCalculator = ({ openApplyModal }) => {
                 <button
                   key={preset.value}
                   type="button"
-                  onClick={() => setTenure(preset.value)}
+                  onClick={() => handlePresetTenure(preset.value)}
                   className={`text-xs px-2.5 py-1 rounded-md font-medium transition-colors ${
-                    tenure === preset.value
+                    displayTenure === preset.value
                       ? "bg-teal-600 text-white shadow-sm"
                       : "bg-gray-100 hover:bg-gray-200 text-gray-700"
                   }`}
@@ -225,7 +303,7 @@ const EmiCalculator = ({ openApplyModal }) => {
           <div className="space-y-3 border-t border-white/10 pt-4 text-sm">
             <div className="flex justify-between items-center py-1">
               <span className="text-blue-200">Principal Amount</span>
-              <span className="font-bold text-white">₹{amount.toLocaleString("en-IN")}</span>
+              <span className="font-bold text-white">₹{calcAmount.toLocaleString("en-IN")}</span>
             </div>
             <div className="flex justify-between items-center py-1">
               <span className="text-teal-300">Total Interest Payable</span>
@@ -241,7 +319,7 @@ const EmiCalculator = ({ openApplyModal }) => {
             {openApplyModal ? (
               <button
                 type="button"
-                onClick={() => openApplyModal(`Personal Loan - ₹${amount.toLocaleString("en-IN")}`)}
+                onClick={() => openApplyModal(`Personal Loan - ₹${calcAmount.toLocaleString("en-IN")}`)}
                 className="w-full bg-gradient-to-r from-teal-400 to-emerald-400 hover:from-teal-500 hover:to-emerald-500 text-slate-950 font-bold py-3 px-4 rounded-xl shadow-md transition-all flex items-center justify-center gap-2"
               >
                 <span>Apply for this Loan</span>

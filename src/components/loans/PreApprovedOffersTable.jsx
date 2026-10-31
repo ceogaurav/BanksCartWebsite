@@ -66,7 +66,7 @@ const PreApprovedOffersTable = ({ openApplyModal }) => (
       </p>
     </div>
 
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+    <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden min-h-[420px]">
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200 text-left text-sm">
           <thead className="bg-slate-50">
@@ -100,6 +100,9 @@ const PreApprovedOffersTable = ({ openApplyModal }) => (
                       <img
                         src={offer.logo}
                         alt={offer.bank}
+                        width="40"
+                        height="40"
+                        style={{ aspectRatio: "1/1" }}
                         className="max-h-full max-w-full object-contain"
                         loading="lazy"
                       />

@@ -13,7 +13,7 @@ export default function PreApprovedCarousel() {
                 {carouselCards.map((card, idx) => (
                     <div key={idx} className="bg-white rounded-xl border border-gray-200 p-5 hover:shadow-lg transition-shadow">
                         <div className="flex gap-4 mb-4">
-                            <img src={card.image} alt={card.name} className="w-16 h-10 object-contain" />
+                            <img src={card.image} alt={card.name} width="64" height="40" style={{ aspectRatio: "64/40" }} loading="lazy" className="w-16 h-10 object-contain" />
                             <div>
                                 <h3 className="font-bold text-gray-900 text-sm leading-tight line-clamp-2">{card.name}</h3>
                                 <div className="mt-1 inline-block bg-gray-100 px-2 py-0.5 rounded text-[10px] font-medium text-gray-600">

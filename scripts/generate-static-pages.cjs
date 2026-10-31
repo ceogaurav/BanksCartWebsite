@@ -342,6 +342,134 @@ const STATIC_SEO_MAP = {
     title: "BanksCart: Compare Loan Interest Rates, Credit Cards & CIBIL Score Online",
     description: "Compare personal, home, and business loan interest rates from 30+ top Indian banks. Check your CIBIL score for free and apply online with instant approval on BanksCart."
   },
+  "/resources/aadhar-pan": {
+    title: "Link Aadhaar to PAN Card Online: Step-by-Step Guide & Status Check | BanksCart",
+    description: "Complete guide on linking Aadhaar with PAN card online via Income Tax e-filing portal. Check linking status, penalty fee details, and step-by-step instructions."
+  },
+  "/aadhar-card/aadhaar-card-services": {
+    title: "Aadhaar Card Update Online Status: Address, Phone & Biometrics | BanksCart",
+    description: "Track your Aadhaar card update request status online via UIDAI portal using URN or Enrolment ID. Complete guide on updating address, mobile number, and photos."
+  },
+  "/personal-loan-emi-calculator": {
+    title: "Personal Loan EMI Calculator: Calculate Monthly Repayment & APR | BanksCart",
+    description: "Calculate your monthly personal loan installment instantly. Enter loan amount, interest rate (from 10.25% p.a.), and tenure to view total interest and amortization."
+  },
+  "/home-loan-emi-calculator": {
+    title: "Home Loan EMI Calculator: Housing Loan Repayment Schedule & Amortization | BanksCart",
+    description: "Project exact home loan monthly EMIs and interest amortization schedules up to 30 years. Compare interest rates starting at 8.35% from top Indian banks."
+  },
+  "/ssy-calculator": {
+    title: "Sukanya Samriddhi Yojana (SSY) Calculator Online: Maturity & Interest | BanksCart",
+    description: "Calculate Sukanya Samriddhi Yojana maturity value and annual interest returns at 8.2% p.a. Plan your girl child higher education and marriage fund."
+  },
+  "/blogs/Sukanya-Samriddhi-Yojana": {
+    title: "Sukanya Samriddhi Yojana (SSY) Scheme Guide 2026: Interest Rate & Rules | BanksCart",
+    description: "Complete guide to Sukanya Samriddhi Yojana (SSY). Check 8.2% interest rate, tax exemption under 80C, account opening eligibility, and maturity calculations."
+  },
+  "/loans/personal-loan/instant": {
+    title: "Instant Personal Loan Online: Apply for Fast Digital Cash Disbursal | BanksCart",
+    description: "Apply for instant personal loans online with digital e-KYC and 10-minute disbursal. Compare lowest interest rates from 10.25% p.a. with zero paperwork."
+  },
+  "/eligibility/personal-loan": {
+    title: "Personal Loan Eligibility Check Online: Salary & CIBIL Calculator | BanksCart",
+    description: "Check your personal loan eligibility online in 2 minutes. Calculate maximum loan borrowing limit based on your monthly salary, age, and CIBIL score."
+  },
+  "/loans/personal-loan-low-salary": {
+    title: "Personal Loan for ₹15,000 Low Salary: Instant Approval Lenders | BanksCart",
+    description: "Get personal loans for ₹15,000 monthly take-home salary. Compare top banks and NBFCs offering loans for low-income salaried employees with minimum documentation."
+  },
+  "/business-loan": {
+    title: "Business Loan Interest Rates: Compare Collateral-Free MSME Loans | BanksCart",
+    description: "Compare business loan interest rates starting from 11.25% p.a. from top Indian banks and NBFCs. Get collateral-free MSME loans up to ₹75 Lakhs with instant approval."
+  },
+  "/business-loan/collateral-free": {
+    title: "Collateral-Free Business Loans: Unsecured MSME Capital up to ₹75 Lakhs | BanksCart",
+    description: "Apply for unsecured collateral-free business loans for working capital and machinery. Fast disbursal for MSMEs, startups, and self-employed professionals."
+  },
+  "/business-loan/msme-scheme": {
+    title: "MSME Business Loan Schemes in India: 59-Minute In-Principle Sanction | BanksCart",
+    description: "Complete guide to government MSME loan schemes, PSB 59 minutes loan portal, CGTMSE collateral guarantees, and subsidy schemes for small businesses in India."
+  },
+  "/blog/best-bank-for-home-loan": {
+    title: "Best Bank for Home Loan in India: Compare Interest Rates & Processing Fees | BanksCart",
+    description: "Discover the best bank for home loans in India for 2026. Compare SBI, HDFC Bank, ICICI Bank, and Axis Bank on interest rates, hidden charges, and customer service."
+  },
+  "/loans/home-loan-balance-transfer": {
+    title: "Home Loan Balance Transfer Interest Rates: Switch Lender & Save EMIs | BanksCart",
+    description: "Transfer your existing home loan to a lower interest rate starting from 8.35% p.a. Reduce monthly EMIs, save up to ₹30 Lakhs in interest, and get top-up loans."
+  },
+  "/cards/credit-cards": {
+    title: "Best Credit Cards in India: Compare Rewards, Cashback & Lounge Access | BanksCart",
+    description: "Find the best credit cards in India for 2026. Compare cashback cards, airport lounge cards, travel air miles, and lifetime free credit cards side-by-side."
+  },
+  "/cards/lifetime-free": {
+    title: "Best Lifetime Free Credit Cards: Zero Joining & Annual Fee Forever | BanksCart",
+    description: "Apply for lifetime free credit cards in India with zero annual maintenance fees. Enjoy complimentary airport lounge access, dining discounts, and reward points."
+  },
+  "/cards/cashback-credit-cards": {
+    title: "Best Cashback Credit Cards in India: Up to 5% Flat Cashback Online | BanksCart",
+    description: "Maximize savings on Amazon, Flipkart, Swiggy, and Zomato. Compare the highest earning cashback credit cards with instant digital approvals."
+  },
+  "/cards/secured-credit-card": {
+    title: "Secured Credit Card Against Fixed Deposit (FD): 100% Approval | BanksCart",
+    description: "Get guaranteed approval credit cards against bank fixed deposits with zero income proof. Rebuild your CIBIL score while earning regular FD interest."
+  },
+  "/blog/what-is-good-cibil-score": {
+    title: "What is a Good CIBIL Score in India? Score Range & Approval Slabs | BanksCart",
+    description: "Understand CIBIL score ranges from 300 to 900. Learn why a score of 750+ is ideal for instant loan and credit card approvals at lowest interest rates."
+  },
+  "/credit-score/cibil-for-loan": {
+    title: "Minimum CIBIL Score for Personal Loan Approval: 2026 Bank Cut-Offs | BanksCart",
+    description: "What CIBIL score is required for personal loans? Check bank-wise cut-off scores, prime interest slabs for 750+ ratings, and loan options for low CIBIL scores."
+  },
+  "/credit-score/credit-rectification": {
+    title: "Credit Rectification Service: Dispute Errors & Improve CIBIL Score | BanksCart",
+    description: "Fix errors on your CIBIL report with expert credit rectification guidance. Resolve wrongful overdue tags, update settlement statuses, and rebuild your credit rating."
+  },
+  "/blog/how-to-dispute-cibil-errors": {
+    title: "How to Dispute CIBIL Report Inaccuracies Online: Step-by-Step Guide | BanksCart",
+    description: "Step-by-step walkthrough on raising an online dispute on CIBIL portal using your Enquiry Control Number (ECN). Resolve wrong overdue tags within 30 days."
+  },
+  "/blog/remove-settled-cibil-tag": {
+    title: "How to Remove 'Settled' Status from CIBIL Report: Convert to 'Closed' | BanksCart",
+    description: "Learn how to negotiate with lenders, pay outstanding principal and interest dues, obtain a No Dues Certificate (NOC), and convert 'Settled' status to 'Closed'."
+  },
+  "/company-registration/pvt-ltd": {
+    title: "Private Limited Company Registration Online: MCA Incorporation in India | BanksCart",
+    description: "Register a Private Limited company online in India. Complete MCA incorporation package including DSC, DIN, SPICe+ filing, PAN, TAN, and Certificate of Incorporation."
+  },
+  "/business-loan/company-reg-delhi": {
+    title: "Company Registration in Delhi: Fast Private Limited & LLP Incorporation | BanksCart",
+    description: "Incorporate your company in Delhi-NCR with expert legal assistance. Fast-track MCA filing, registered office compliance, GST registration, and startup funding support."
+  },
+  "/business-loan/company-reg-blr": {
+    title: "Company Registration in Bangalore: Startup Incorporation Hub | BanksCart",
+    description: "Register your private limited startup in Bangalore (Bengaluru), Karnataka. Complete legal incorporation, MCA clearance, and business loan support."
+  },
+  "/company-registration/copyright": {
+    title: "Copyright Registration Online in India: Protect Creative & Software Works | BanksCart",
+    description: "File copyright registration online for literary, artistic, software, and musical works with the Copyright Office of India. End-to-end IP protection."
+  },
+  "/blog/trademark-vs-copyright": {
+    title: "Trademark vs Copyright in India: Differences, Validity & Registration | BanksCart",
+    description: "Understand the key differences between trademarks and copyrights under Indian IP laws. Learn what each protects, registration fees, validity periods, and infringement remedies."
+  },
+  "/blog/pm-mudra-loan-online-apply": {
+    title: "PM Mudra Loan Scheme 2026: Apply Online, Interest Rates & Eligibility | BanksCart",
+    description: "Apply for Pradhan Mantri MUDRA Loan online up to ₹10 Lakhs. Compare Shishu, Kishore, and Tarun categories with zero collateral and concessional interest rates."
+  },
+  "/blog/pmay-subsidy-status-check": {
+    title: "PMAY Subsidy Status Check Online: Pradhan Mantri Awas Yojana CLSS Tracker | BanksCart",
+    description: "Track your PMAY home loan interest subsidy status online using your Application ID. Check eligibility criteria, subsidy calculation slabs, and CLSS guidelines."
+  },
+  "/blog/how-cibil-score-calculated": {
+    title: "CIBIL Score Calculation Formula: How Credit Bureaus Calculate Your 3-Digit Score | BanksCart",
+    description: "Discover the mathematical breakdown behind CIBIL score calculation. Understand the 4 key weights: payment history (35%), credit utilization (30%), credit mix (10%), and inquiries."
+  },
+  "/blog/nbfc-vs-bank-loan-diff": {
+    title: "Difference Between NBFC and Commercial Bank in India: Loan Lending Rules | BanksCart",
+    description: "Understand the regulatory and practical differences between NBFCs and scheduled commercial banks in India regarding loan interest rates, RBI oversight, and approval speed."
+  },
   "/loans/personal-loan": {
     title: "Personal Loan Interest Rates: Compare 30+ Banks & Apply Online | BanksCart",
     description: "Compare personal loan interest rates starting from 10.25% p.a. Calculate EMIs, check eligibility across top banks, and apply online with zero physical paperwork."

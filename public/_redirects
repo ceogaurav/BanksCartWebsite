@@ -3,3 +3,13 @@
 /blogs/* /blog/:splat 301
 /blogs /blog 301
 /blogs-overview-page /blog 301
+/credit-score/credit-rectification /credit-score/credit-rectification-service 301
+/credit-score/cibil-for-loan /credit-score/cibil-score-for-personal-loan 301
+/cards/lifetime-free /cards/credit/lifetime-free 301
+/cards/cashback-credit-cards /cards/credit/cashback 301
+/cards/secured-credit-card /cards/credit/secured 301
+/company-registration/copyright /company-registration/copyright-registration 301
+/company-registration/pvt-ltd /company-registration 301
+/business-loan/company-reg-delhi /business-loan/company-registration-in-delhi 301
+/business-loan/company-reg-blr /business-loan/company-registration-in-bangalore 301
+/blog/Sukanya-Samriddhi-Yojana /blog/Sukanya-Samriddhi-Yojana-Guide 301

@@ -82,6 +82,10 @@ const AuthorReviewerSection = () => {
             <img
               src={author.photo}
               alt={author.name}
+              width="56"
+              height="56"
+              style={{ aspectRatio: "1/1" }}
+              loading="lazy"
               className="w-14 h-14 rounded-full object-cover border-2 border-teal-500 shrink-0"
               onError={(e) => {
                 e.currentTarget.src = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80";
@@ -103,6 +107,10 @@ const AuthorReviewerSection = () => {
             <img
               src={reviewer.photo}
               alt={reviewer.name}
+              width="56"
+              height="56"
+              style={{ aspectRatio: "1/1" }}
+              loading="lazy"
               className="w-14 h-14 rounded-full object-cover border-2 border-blue-500 shrink-0"
               onError={(e) => {
                 e.currentTarget.src = "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&auto=format&fit=crop&q=80";
