@@ -1323,7 +1323,7 @@ export const PersonalLoanOverviewPage: React.FC<PersonalLoanOverviewPageProps> =
             </Link>
 
             <Link
-              to="/blogs/personal-loan-balance-transfer"
+              to="/blog/personal-loan-balance-transfer"
               className="bg-white p-5 rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition-all group"
             >
               <div className="font-bold text-sm text-slate-800 group-hover:text-blue-600 flex items-center justify-between">

@@ -55,6 +55,15 @@ async function generateSitemap() {
         // Core and legacy static pages
         const staticPages = [
             '',
+            '/about',
+            '/contact',
+            '/terms-of-use',
+            '/privacy-policy',
+            '/disclaimer',
+            '/investor-relations',
+            '/intellectual-policy',
+            '/credit-report-terms',
+            '/become-partner',
             '/loans',
             '/cards',
             '/investment',
@@ -460,48 +469,133 @@ async function generateSitemap() {
         // Merge both hardcoded list and dynamically extracted list, ensuring 100% deduplication
         const allPages = Array.from(new Set([...staticPages, ...directoryPages]));
 
-        console.log(`Unified sitemap target has ${allPages.length} unique pages`);
+        console.log(`Unified sitemap target has ${allPages.length} unique pages and ${posts.length} dynamic posts`);
 
-        let sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`;
+        // Categorization function for child sitemaps
+        function categorize(url) {
+            const clean = url.toLowerCase();
+            const coreSet = new Set([
+                '', '/', '/about', '/contact', '/terms-of-use', '/privacy-policy',
+                '/disclaimer', '/investor-relations', '/intellectual-policy',
+                '/credit-report-terms', '/become-partner', '/eligibility', '/status',
+                '/loans', '/cards', '/investment', '/insurance', '/calculators',
+                '/financial-directory', '/pages-directory', '/sitemap'
+            ]);
+            if (coreSet.has(url)) return 'core';
 
-        // Add static pages
+            if (url.startsWith('/blogs/') || url.startsWith('/blog/')) return 'blogs';
+
+            if (
+                clean.includes('company-registration') ||
+                clean.includes('copyright-registration') ||
+                clean.includes('aadhar') ||
+                clean.includes('pan-card') ||
+                clean.includes('credit-score') ||
+                clean.includes('credit-rectification') ||
+                clean.includes('credit-health') ||
+                clean.includes('income-tax') ||
+                clean.includes('recharge') ||
+                clean.includes('cibil')
+            ) {
+                return 'services';
+            }
+
+            if (clean.startsWith('/cards/') || clean.includes('credit-card') || clean.includes('debit-card') || clean.includes('forex-card')) {
+                return 'cards';
+            }
+
+            if (clean.startsWith('/loans/') || clean.includes('loan') || clean.includes('mortgage') || clean.includes('emi')) {
+                return 'loans';
+            }
+
+            return 'banking';
+        }
+
+        // Initialize child sitemap buckets
+        const segments = {
+            core: [],
+            loans: [],
+            cards: [],
+            banking: [],
+            blogs: [],
+            services: []
+        };
+
+        // Populate static pages
         allPages.forEach(page => {
-            sitemap += `
-  <url>
-    <loc>${baseUrl}${page}</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.9</priority>
-  </url>`;
+            const cat = categorize(page);
+            segments[cat].push({
+                url: page,
+                priority: cat === 'core' && (page === '' || page === '/') ? '1.0' : cat === 'core' ? '0.9' : '0.8',
+                changefreq: cat === 'core' ? 'daily' : 'weekly',
+                lastmod: new Date().toISOString().split('T')[0]
+            });
         });
 
-        // Add dynamic blog posts
+        // Populate dynamic blog posts into blogs bucket
         posts.forEach(post => {
             if (post.slug) {
-                sitemap += `
-  <url>
-    <loc>${baseUrl}/blog/${post.slug}</loc>
-    <lastmod>${post.publishedAt || new Date().toISOString()}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>`;
+                segments.blogs.push({
+                    url: `/blog/${post.slug}`,
+                    priority: '0.7',
+                    changefreq: 'weekly',
+                    lastmod: (post.publishedAt || new Date().toISOString()).split('T')[0]
+                });
             }
         });
 
-        sitemap += `\n</urlset>`;
-
         const publicDir = path.resolve(__dirname, '../public');
         if (!fs.existsSync(publicDir)) {
-            fs.mkdirSync(publicDir);
+            fs.mkdirSync(publicDir, { recursive: true });
+        }
+        const distDir = path.resolve(__dirname, '../dist');
+
+        const now = new Date().toISOString().split('T')[0];
+
+        // 1. Generate and write each child sitemap
+        const sitemapFiles = [
+            { key: 'core', filename: 'sitemap-core.xml' },
+            { key: 'loans', filename: 'sitemap-loans.xml' },
+            { key: 'cards', filename: 'sitemap-cards.xml' },
+            { key: 'banking', filename: 'sitemap-banking.xml' },
+            { key: 'blogs', filename: 'sitemap-blogs.xml' },
+            { key: 'services', filename: 'sitemap-services.xml' }
+        ];
+
+        sitemapFiles.forEach(({ key, filename }) => {
+            const list = segments[key];
+            let xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`;
+            list.forEach(item => {
+                // Exact canonical matching: root gets trailing slash, subpages do not
+                const locUrl = item.url === '' || item.url === '/' ? `${baseUrl}/` : `${baseUrl}${item.url.replace(/\/$/, '')}`;
+                xml += `\n  <url>\n    <loc>${locUrl}</loc>\n    <lastmod>${item.lastmod}</lastmod>\n    <changefreq>${item.changefreq}</changefreq>\n    <priority>${item.priority}</priority>\n  </url>`;
+            });
+            xml += `\n</urlset>\n`;
+
+            fs.writeFileSync(path.join(publicDir, filename), xml, 'utf8');
+            if (fs.existsSync(distDir)) {
+                fs.writeFileSync(path.join(distDir, filename), xml, 'utf8');
+            }
+            console.log(`  - ${filename}: ${list.length} URLs`);
+        });
+
+        // 2. Generate and write Sitemap Index (sitemap-index.xml and sitemap.xml)
+        let sitemapIndex = `<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`;
+        sitemapFiles.forEach(({ filename }) => {
+            sitemapIndex += `\n  <sitemap>\n    <loc>${baseUrl}/${filename}</loc>\n    <lastmod>${now}</lastmod>\n  </sitemap>`;
+        });
+        sitemapIndex += `\n</sitemapindex>\n`;
+
+        // Write both sitemap.xml and sitemap-index.xml as index
+        fs.writeFileSync(path.join(publicDir, 'sitemap.xml'), sitemapIndex, 'utf8');
+        fs.writeFileSync(path.join(publicDir, 'sitemap-index.xml'), sitemapIndex, 'utf8');
+        if (fs.existsSync(distDir)) {
+            fs.writeFileSync(path.join(distDir, 'sitemap.xml'), sitemapIndex, 'utf8');
+            fs.writeFileSync(path.join(distDir, 'sitemap-index.xml'), sitemapIndex, 'utf8');
         }
 
-        fs.writeFileSync(path.join(publicDir, 'sitemap.xml'), sitemap);
-        const distDir = path.resolve(__dirname, '../dist');
-        if (fs.existsSync(distDir)) {
-            fs.writeFileSync(path.join(distDir, 'sitemap.xml'), sitemap);
-        }
-        console.log(`Sitemap generated with ${posts.length} dynamic posts at public/sitemap.xml`);
-        console.log(`Total URLs registered in sitemap: ${allPages.length + posts.length}`);
+        const totalUrls = Object.values(segments).reduce((acc, curr) => acc + curr.length, 0);
+        console.log(`Successfully generated segmented Sitemap Index with ${totalUrls} total URLs across ${sitemapFiles.length} child sitemaps.`);
 
     } catch (error) {
         console.error('Error generating sitemap:', error);

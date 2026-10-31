@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <sitemap>
+    <loc>https://www.bankscart.com/sitemap-core.xml</loc>
+    <lastmod>2026-10-31</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://www.bankscart.com/sitemap-loans.xml</loc>
+    <lastmod>2026-10-31</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://www.bankscart.com/sitemap-cards.xml</loc>
+    <lastmod>2026-10-31</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://www.bankscart.com/sitemap-banking.xml</loc>
+    <lastmod>2026-10-31</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://www.bankscart.com/sitemap-blogs.xml</loc>
+    <lastmod>2026-10-31</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://www.bankscart.com/sitemap-services.xml</loc>
+    <lastmod>2026-10-31</lastmod>
+  </sitemap>
+</sitemapindex>

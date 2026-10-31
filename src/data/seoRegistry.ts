@@ -667,14 +667,29 @@ export const SEO_MAP: Record<string, SEOMetadata> = {
 
   // Legal Pages
   "/about": {
-    title: "About BanksCart: Our Mission, Leadership & Lending Partners",
-    description: "Learn about BanksCart's mission, leadership team, and institutional partnerships with 30+ top Indian banks. Empowering borrowers with transparent loan comparisons.",
+    title: "About BanksCart: India's Trusted Financial Services & Loan Comparison Platform",
+    description: "Learn about BanksCart's mission, leadership team, and editorial integrity in helping Indian borrowers compare loans, credit cards, and banking services objectively.",
     keywords: "about bankscart, bankscart mission, loan comparison company, bankscart partners, financial marketplace india"
   },
   "/about-us": {
-    title: "About BanksCart: Our Mission, Leadership & Lending Partners",
-    description: "Learn about BanksCart's mission, leadership team, and institutional partnerships with 30+ top Indian banks. Empowering borrowers with transparent loan comparisons.",
+    title: "About BanksCart: India's Trusted Financial Services & Loan Comparison Platform",
+    description: "Learn about BanksCart's mission, leadership team, and editorial integrity in helping Indian borrowers compare loans, credit cards, and banking services objectively.",
     keywords: "about bankscart, bankscart mission, loan comparison company"
+  },
+  "/company-registration": {
+    title: "Company Registration in India - Private Limited, LLP, OPC & IP Filing | BanksCart",
+    description: "Register your company online in India. End-to-end legal support for Private Limited, LLP, OPC incorporation, MCA compliance, and copyright registration.",
+    keywords: "company registration india, register private limited company, llp incorporation, copyright registration online"
+  },
+  "/contact": {
+    title: "Contact Us - Customer Support, Helpdesk & Grievance Redressal | BanksCart",
+    description: "Contact BanksCart customer care, support desk, and grievance redressal officer. Get in touch for loan application assistance, banking partner inquiries, and customer feedback.",
+    keywords: "contact bankscart, customer care bankscart, grievance officer bankscart, loan assistance helpline, support email bankscart"
+  },
+  "/contact-us": {
+    title: "Contact Us - Customer Support, Helpdesk & Grievance Redressal | BanksCart",
+    description: "Contact BanksCart customer care, support desk, and grievance redressal officer. Get in touch for loan application assistance, banking partner inquiries, and customer feedback.",
+    keywords: "contact bankscart, customer care bankscart, grievance officer bankscart"
   },
   "/credit-report-terms": {
     title: "Credit Report Terms & Conditions | BanksCart",
@@ -717,6 +732,19 @@ export function getSEOMetadata(pathname: string): SEOMetadata {
   // 1. Check exact match in static SEO map
   if (SEO_MAP[cleanPath]) {
     return SEO_MAP[cleanPath];
+  }
+
+  // Blog path normalization (/blog/{slug} <-> /blogs/{slug})
+  if (cleanPath.startsWith('/blog/')) {
+    const legacyPath = cleanPath.replace('/blog/', '/blogs/');
+    if (SEO_MAP[legacyPath]) {
+      return SEO_MAP[legacyPath];
+    }
+  } else if (cleanPath.startsWith('/blogs/')) {
+    const modernPath = cleanPath.replace('/blogs/', '/blog/');
+    if (SEO_MAP[modernPath]) {
+      return SEO_MAP[modernPath];
+    }
   }
 
   // 2. Hub and Core Paths

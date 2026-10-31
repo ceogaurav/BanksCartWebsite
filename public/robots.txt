@@ -1,11 +1,15 @@
 # robots.txt for https://www.bankscart.com
+# Verified Technical SEO & Crawl Budget Optimization
 
 User-agent: *
 Allow: /
 
-# Exclude private/admin pages from search results
+# Exclude dynamic query parameters, search URLs, API endpoints, and authenticated routes
+Disallow: /*?*
+Disallow: /api/
 Disallow: /admin/
 Disallow: /profile/
 
-# Declare the sitemap location
+# Primary Sitemap Index (Segmented across core, loans, cards, banking, blogs, and services)
 Sitemap: https://www.bankscart.com/sitemap.xml
+Sitemap: https://www.bankscart.com/sitemap-index.xml

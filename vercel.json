@@ -3,8 +3,29 @@
   "trailingSlash": false,
   "redirects": [
     {
-      "source": "/about-us",
-      "destination": "/about",
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "bankscart.com"
+        }
+      ],
+      "destination": "https://www.bankscart.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/about",
+      "destination": "/about-us",
+      "permanent": true
+    },
+    {
+      "source": "/contact-us",
+      "destination": "/contact",
+      "permanent": true
+    },
+    {
+      "source": "/blogs/:slug*",
+      "destination": "/blog/:slug*",
       "permanent": true
     },
     {
@@ -20,7 +41,19 @@
   ],
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/admin/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/profile/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/profile",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/blog/:slug",
       "destination": "/index.html"
     }
   ]

@@ -17,13 +17,42 @@ const sitemapContent = fs.readFileSync(sitemapPath, 'utf8');
 const directoryLinks = JSON.parse(fs.readFileSync(directoryLinksPath, 'utf8'));
 const loanPageData = JSON.parse(fs.readFileSync(loanDataPath, 'utf8'));
 
-// Extract URLs from sitemap
+// Extract URLs from segmented child sitemaps in public/
+const childSitemaps = [
+  'sitemap-core.xml',
+  'sitemap-loans.xml',
+  'sitemap-cards.xml',
+  'sitemap-banking.xml',
+  'sitemap-blogs.xml',
+  'sitemap-services.xml'
+];
+const urlsSet = new Set(['/']);
 const urlRegex = /<loc>https:\/\/www\.bankscart\.com([^<]*)<\/loc>/g;
-const urls = [];
-let match;
-while ((match = urlRegex.exec(sitemapContent)) !== null) {
-  urls.push(match[1] || '/');
+
+for (const smName of childSitemaps) {
+  const smPath = path.resolve(__dirname, '../public', smName);
+  if (fs.existsSync(smPath)) {
+    const smContent = fs.readFileSync(smPath, 'utf8');
+    let match;
+    while ((match = urlRegex.exec(smContent)) !== null) {
+      urlsSet.add(match[1] || '/');
+    }
+  }
 }
+
+// Fallback to sitemap.xml
+if (fs.existsSync(sitemapPath)) {
+  const smContent = fs.readFileSync(sitemapPath, 'utf8');
+  let match;
+  while ((match = urlRegex.exec(smContent)) !== null) {
+    const p = match[1] || '/';
+    if (!p.endsWith('.xml')) {
+      urlsSet.add(p);
+    }
+  }
+}
+
+const urls = Array.from(urlsSet);
 
 // Subpaths for Personal Loans with distinct value propositions
 const PERSONAL_LOAN_SUBPATHS = {
@@ -258,6 +287,14 @@ const STATIC_SEO_MAP = {
   "/about-us": {
     title: "About BanksCart: Our Mission, Leadership & Lending Partners",
     description: "Learn about BanksCart's mission, leadership team, and institutional partnerships with 30+ top Indian banks. Empowering borrowers with transparent loan comparisons."
+  },
+  "/contact": {
+    title: "Contact Us - Customer Support, Helpdesk & Grievance Redressal | BanksCart",
+    description: "Contact BanksCart customer care, support desk, and grievance redressal officer. Get in touch for loan application assistance, banking partner inquiries, and customer feedback."
+  },
+  "/contact-us": {
+    title: "Contact Us - Customer Support, Helpdesk & Grievance Redressal | BanksCart",
+    description: "Contact BanksCart customer care, support desk, and grievance redressal officer. Get in touch for loan application assistance, banking partner inquiries, and customer feedback."
   },
   "/": {
     title: "BanksCart: Compare Loan Interest Rates, Credit Cards & Apply Online",
@@ -741,6 +778,79 @@ function generatePreRenderedBody(cleanPath, meta) {
     `;
   }
 
+  // 1c. Contact Us Dedicated Pre-rendering
+  if (cleanPath === '/contact') {
+    return `
+    <div class="min-h-screen bg-slate-50 text-slate-800 font-sans antialiased">
+      <header class="bg-white border-b border-slate-200 py-4 px-6 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+          <a href="/" class="text-2xl font-bold tracking-tight text-blue-900">BanksCart</a>
+          <nav class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
+            <a href="/loans" class="hover:text-blue-600 transition-colors">Loans</a>
+            <a href="/cards" class="hover:text-blue-600 transition-colors">Credit Cards</a>
+            <a href="/calculators" class="hover:text-blue-600 transition-colors">Calculators</a>
+            <a href="/credit-score" class="hover:text-blue-600 transition-colors">Credit Score</a>
+            <a href="/blog" class="hover:text-blue-600 transition-colors">Financial Guides</a>
+          </nav>
+        </div>
+      </header>
+
+      <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+        <nav aria-label="Breadcrumb" class="text-sm text-slate-500">
+          <ol class="flex items-center space-x-2">
+            <li><a href="/" class="hover:text-blue-600">Home</a></li>
+            <li><span>/</span></li>
+            <li class="text-slate-800 font-medium" aria-current="page">Contact Us</li>
+          </ol>
+        </nav>
+
+        <section class="bg-white rounded-2xl p-8 lg:p-12 border border-slate-200 shadow-sm space-y-4">
+          <span class="inline-block px-3 py-1 bg-blue-50 text-blue-700 text-xs font-semibold uppercase tracking-wider rounded-full border border-blue-200">Customer Support & Grievance Redressal</span>
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">Get in Touch with BanksCart Support</h1>
+          <p class="text-lg text-slate-600 leading-relaxed max-w-4xl">Whether you have questions regarding personal loan eligibility, home mortgage comparisons, credit card applications, or credit report rectification, our dedicated advisory team is here to help.</p>
+        </section>
+
+        <section class="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+            <h3 class="text-base font-bold text-slate-900 mb-1">Email Inquiries</h3>
+            <p class="text-xs text-slate-500 mb-3">Response within 24 working hours</p>
+            <p class="text-sm"><a href="mailto:support@bankscart.com" class="text-blue-600 font-medium">support@bankscart.com</a></p>
+            <p class="text-xs text-slate-500 mt-2">Partnerships: <a href="mailto:partners@bankscart.com" class="text-blue-600">partners@bankscart.com</a></p>
+          </div>
+          <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+            <h3 class="text-base font-bold text-slate-900 mb-1">Helpline Phone</h3>
+            <p class="text-xs text-slate-500 mb-3">Mon-Sat: 9:30 AM – 6:30 PM IST</p>
+            <p class="text-sm font-semibold text-emerald-700"><a href="tel:18002008900">1800-200-8900</a></p>
+            <p class="text-xs text-slate-500 mt-2">Direct: +91 11 4100 8900</p>
+          </div>
+          <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+            <h3 class="text-base font-bold text-slate-900 mb-1">Registered Office</h3>
+            <p class="text-xs text-slate-500 mb-2">Corporate Headquarters</p>
+            <p class="text-xs text-slate-600 leading-relaxed">Statesman House, Barakhamba Road, Connaught Place, New Delhi - 110001, India</p>
+          </div>
+          <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+            <h3 class="text-base font-bold text-slate-900 mb-1">Grievance Desk</h3>
+            <p class="text-xs text-slate-500 mb-2">RBI Fair Practice Compliance</p>
+            <p class="text-xs text-slate-600 leading-relaxed">Officer: Mr. Rajesh Sharma<br />Email: <a href="mailto:grievance@bankscart.com" class="text-blue-600">grievance@bankscart.com</a><br />TAT: 48 business hours</p>
+          </div>
+        </section>
+
+        <section class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+          <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Need Immediate Assistance?</h2>
+          <p class="text-slate-600 text-sm leading-relaxed">You can explore self-service options on BanksCart at any time without waiting for phone support:</p>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-2">
+            <a href="/loans/personal" class="p-4 bg-slate-50 rounded-xl border border-slate-200 text-center font-medium text-blue-600 text-sm hover:bg-blue-50">Compare Personal Loans &rarr;</a>
+            <a href="/credit-score" class="p-4 bg-slate-50 rounded-xl border border-slate-200 text-center font-medium text-blue-600 text-sm hover:bg-blue-50">Check Credit Score &rarr;</a>
+            <a href="/calculators" class="p-4 bg-slate-50 rounded-xl border border-slate-200 text-center font-medium text-blue-600 text-sm hover:bg-blue-50">Calculate EMI &rarr;</a>
+            <a href="/status" class="p-4 bg-slate-50 rounded-xl border border-slate-200 text-center font-medium text-blue-600 text-sm hover:bg-blue-50">Track Loan Application &rarr;</a>
+          </div>
+        </section>
+      </main>
+      ${renderFooter()}
+    </div>
+    `;
+  }
+
     // 1c. Blog Hub Dedicated Pre-rendering (/blog)
   if (cleanPath === '/blog') {
     return `
@@ -1107,18 +1217,183 @@ function renderFooter() {
   `;
 }
 
-console.log(`Pre-rendering semantic HTML and tailored SEO meta tags for ${urls.length} sitemap URLs into dist/...`);
+// JSON-LD Structured Data Schema Generator for Pre-rendered HTML
+function generateJsonLd(cleanPath, meta, canonicalUrl) {
+  const schemas = [];
+
+  // Homepage: WebSite, FinancialService, Organization
+  if (!cleanPath || cleanPath === '/') {
+    schemas.push({
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "@id": "https://www.bankscart.com/#website",
+      "name": "BanksCart",
+      "url": "https://www.bankscart.com/",
+      "description": meta.description,
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://www.bankscart.com/financial-directory?q={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
+    });
+
+    schemas.push({
+      "@context": "https://schema.org",
+      "@type": "FinancialService",
+      "@id": "https://www.bankscart.com/#financialservice",
+      "name": "BanksCart Financial Services",
+      "url": "https://www.bankscart.com/",
+      "logo": "https://www.bankscart.com/favicon-32x32.png",
+      "image": "https://www.bankscart.com/favicon-32x32.png",
+      "description": "Leading digital financial marketplace in India comparing loan interest rates, credit cards, fixed deposits, and credit scores from 30+ scheduled commercial banks.",
+      "telephone": "+91-11-4100-8900",
+      "priceRange": "Free",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Level 4, Statesman House, Barakhamba Road, Connaught Place",
+        "addressLocality": "New Delhi",
+        "addressRegion": "Delhi",
+        "postalCode": "110001",
+        "addressCountry": "IN"
+      },
+      "sameAs": [
+        "https://twitter.com/bankscart",
+        "https://facebook.com/bankscart"
+      ]
+    });
+    return schemas;
+  }
+
+  // Breadcrumbs for all subpages
+  const segments = cleanPath.split('/').filter(Boolean);
+  if (segments.length > 0) {
+    const itemListElement = [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://www.bankscart.com/"
+      }
+    ];
+    let runningPath = '';
+    segments.forEach((seg, idx) => {
+      runningPath += '/' + seg;
+      itemListElement.push({
+        "@type": "ListItem",
+        "position": idx + 2,
+        "name": formatSlug(seg),
+        "item": "https://www.bankscart.com" + runningPath
+      });
+    });
+    schemas.push({
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": itemListElement
+    });
+  }
+
+  // Blog / Article Schema
+  if (cleanPath.startsWith('/blogs/') || cleanPath.startsWith('/blog/')) {
+    schemas.push({
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": canonicalUrl
+      },
+      "headline": meta.title,
+      "description": meta.description,
+      "image": "https://www.bankscart.com/favicon-32x32.png",
+      "author": {
+        "@type": "Organization",
+        "name": "BanksCart Financial Research Team",
+        "url": "https://www.bankscart.com"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "BanksCart",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.bankscart.com/favicon-32x32.png"
+        }
+      }
+    });
+
+    schemas.push({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is discussed in " + JSON.stringify(meta.title) + "?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": meta.description
+          }
+        }
+      ]
+    });
+    return schemas;
+  }
+
+  // About Page Schema
+  if (cleanPath === '/about') {
+    schemas.push({
+      "@context": "https://schema.org",
+      "@type": "AboutPage",
+      "name": meta.title,
+      "description": meta.description,
+      "url": canonicalUrl
+    });
+    return schemas;
+  }
+
+  // Contact Page Schema
+  if (cleanPath === '/contact') {
+    schemas.push({
+      "@context": "https://schema.org",
+      "@type": "ContactPage",
+      "name": meta.title,
+      "description": meta.description,
+      "url": canonicalUrl
+    });
+    return schemas;
+  }
+
+  // Product / Service Schema
+  schemas.push({
+    "@context": "https://schema.org",
+    "@type": "FinancialProduct",
+    "name": meta.title,
+    "description": meta.description,
+    "url": canonicalUrl,
+    "provider": {
+      "@type": "Organization",
+      "name": "BanksCart",
+      "url": "https://www.bankscart.com"
+    }
+  });
+
+  return schemas;
+}
+
+console.log('Pre-rendering semantic HTML and tailored SEO meta tags for ' + urls.length + ' sitemap URLs into dist/...');
 
 let pagesGenerated = 0;
 
 for (const urlPath of urls) {
   const cleanPath = urlPath === '/' ? '' : urlPath.replace(/\/$/, '');
   const meta = resolveSEO(cleanPath || '/');
-  let canonicalUrl = `https://www.bankscart.com${cleanPath}`;
+  let canonicalUrl = cleanPath === '' ? 'https://www.bankscart.com/' : `https://www.bankscart.com${cleanPath}`;
   if (cleanPath === '/blogs' || cleanPath === '/blogs-overview-page') {
     canonicalUrl = 'https://www.bankscart.com/blog';
   } else if (cleanPath === '/about-us') {
     canonicalUrl = 'https://www.bankscart.com/about';
+  } else if (cleanPath === '/contact-us') {
+    canonicalUrl = 'https://www.bankscart.com/contact';
   }
 
   // 301 Redirect Pages for legacy /blogs, /blogs-overview-page, and /about-us
@@ -1153,6 +1428,12 @@ for (const urlPath of urls) {
   // Tailor HTML
   let pageHtml = templateHtml;
 
+  // Clean out any pre-existing canonical link, OG tags, twitter tags, and JSON-LD from templateHtml
+  pageHtml = pageHtml.replace(/<link[^>]*rel=["']canonical["'][^>]*>/gi, '');
+  pageHtml = pageHtml.replace(/<meta[^>]*property=["']og:[^"']*["'][^>]*>/gi, '');
+  pageHtml = pageHtml.replace(/<meta[^>]*name=["']twitter:[^"']*["'][^>]*>/gi, '');
+  pageHtml = pageHtml.replace(/<script[^>]*type=["']application\/ld\+json["'][^>]*>[\s\S]*?<\/script>/gi, '');
+
   // Replace Title
   pageHtml = pageHtml.replace(
     /<title>.*?<\/title>/i,
@@ -1173,12 +1454,19 @@ for (const urlPath of urls) {
     <meta name="twitter:description" content="${escapeHtml(meta.description)}" />
     <meta name="twitter:image" content="https://www.bankscart.com/favicon-32x32.png" />`;
 
-  // Replace or inject description
+  // Generate JSON-LD structured data scripts
+  const jsonLdSchemas = generateJsonLd(cleanPath, meta, canonicalUrl);
+  const jsonLdScripts = jsonLdSchemas.map(s => '    <script type="application/ld+json">\n' + JSON.stringify(s, null, 2) + '\n    </script>').join('\n');
+
+  // Replace or inject description and JSON-LD
   if (pageHtml.includes('name="description"')) {
     pageHtml = pageHtml.replace(/<meta[^>]*name="description"[^>]*>/i, metaTags.trim());
   } else {
     pageHtml = pageHtml.replace('</head>', `${metaTags}\n  </head>`);
   }
+
+  // Inject JSON-LD structured data before </head>
+  pageHtml = pageHtml.replace('</head>', jsonLdScripts + '\n  </head>');
 
   // Pre-render semantic body inside <div id="root"></div>
   pageHtml = pageHtml.replace(
@@ -1206,8 +1494,16 @@ for (const urlPath of urls) {
 const legacyRedirects = [
   { path: '/blogs', target: '/blog' },
   { path: '/blogs-overview-page', target: '/blog' },
-  { path: '/about-us', target: '/about' }
+  { path: '/about-us', target: '/about' },
+  { path: '/contact-us', target: '/contact' }
 ];
+
+// Ensure public/404.html is copied to dist/404.html
+const public404 = path.resolve(__dirname, '../public/404.html');
+if (fs.existsSync(public404)) {
+  fs.copyFileSync(public404, path.join(distDir, '404.html'));
+  console.log('Copied public/404.html to dist/404.html');
+}
 
 for (const redir of legacyRedirects) {
   const targetDir = path.join(distDir, redir.path.replace(/^\//, ''));

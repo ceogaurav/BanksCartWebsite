@@ -3,10 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     
-    <!-- Existing favicon link (for broad compatibility) -->
+    <!-- Favicon links -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-
-    <!-- New Favicon and Manifest Links for better PWA/Mobile support -->
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -15,9 +13,83 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BanksCart: Compare Loan Interest Rates, Credit Cards & Apply Online</title>
     <meta data-rh="true" name="description" content="Compare and apply for personal loans, home loans, business loans, and credit cards from top Indian banks at BanksCart. Get instant eligibility and best interest rates." />
+    <link rel="canonical" href="https://www.bankscart.com/" />
+    
+    <!-- OpenGraph & Twitter -->
+    <meta property="og:title" content="BanksCart: Compare Loan Interest Rates, Credit Cards & Apply Online" />
+    <meta property="og:description" content="Compare and apply for personal loans, home loans, business loans, and credit cards from top Indian banks at BanksCart. Get instant eligibility and best interest rates." />
+    <meta property="og:url" content="https://www.bankscart.com/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://www.bankscart.com/favicon-32x32.png" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="BanksCart: Compare Loan Interest Rates, Credit Cards & Apply Online" />
+    <meta name="twitter:description" content="Compare and apply for personal loans, home loans, business loans, and credit cards from top Indian banks at BanksCart." />
+    <meta name="twitter:image" content="https://www.bankscart.com/favicon-32x32.png" />
+
+    <!-- Google Fonts Preconnect -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Structured Data: Organization, WebSite & FinancialService Schemas -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://www.bankscart.com/#website",
+          "url": "https://www.bankscart.com/",
+          "name": "BanksCart",
+          "description": "Compare loan interest rates, credit cards, and apply online with instant eligibility check across top Indian banks.",
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": {
+              "@type": "EntryPoint",
+              "urlTemplate": "https://www.bankscart.com/financial-directory?q={search_term_string}"
+            },
+            "query-input": "required name=search_term_string"
+          }
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://www.bankscart.com/#organization",
+          "name": "BanksCart",
+          "url": "https://www.bankscart.com/",
+          "logo": "https://www.bankscart.com/favicon-32x32.png",
+          "sameAs": [
+            "https://twitter.com/bankscart",
+            "https://facebook.com/bankscart"
+          ],
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+91-11-4100-8900",
+            "contactType": "Customer Support",
+            "email": "support@bankscart.com",
+            "areaServed": "IN"
+          }
+        },
+        {
+          "@type": "FinancialService",
+          "@id": "https://www.bankscart.com/#financialservice",
+          "name": "BanksCart Financial Services",
+          "url": "https://www.bankscart.com/",
+          "logo": "https://www.bankscart.com/favicon-32x32.png",
+          "image": "https://www.bankscart.com/favicon-32x32.png",
+          "description": "Compare and apply for personal loans, home loans, business loans, and credit cards from 30+ top banks in India.",
+          "priceRange": "Free",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Level 4, Statesman House, Barakhamba Road, Connaught Place",
+            "addressLocality": "New Delhi",
+            "addressRegion": "Delhi",
+            "postalCode": "110001",
+            "addressCountry": "IN"
+          }
+        }
+      ]
+    }
+    </script>
   </head>
   <body>
     <div id="root"></div>

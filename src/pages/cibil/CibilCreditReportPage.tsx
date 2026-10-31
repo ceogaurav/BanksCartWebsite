@@ -315,6 +315,14 @@ const CibilCreditReportPage: React.FC = () => {
               </div>
             </div>
 
+            {/* Disputing CIBIL Report Errors & Rectification */}
+            <div className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm">
+              <h3 className="text-lg font-bold text-slate-800 mb-2">Disputing CIBIL Report Errors</h3>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                Inaccuracies in your credit report—such as incorrect personal details, wrongful default tags, or outdated loan balances—can severely drag down your credit rating. If you identify discrepancies across bureau records, you should initiate a formal dispute or seek <a href="/credit-score/credit-rectification-service" className="text-blue-600 hover:text-blue-700 font-bold underline">professional credit score rectification</a> to ensure your score reflects your true repayment discipline.
+              </p>
+            </div>
+
             {/* Interactive Credit Score Range and Meaning Table */}
             <div className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm">
               <h3 className="text-lg font-bold text-slate-800 mb-2">Credit Score Range and Meaning</h3>

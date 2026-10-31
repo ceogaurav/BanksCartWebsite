@@ -8,7 +8,7 @@ const SitemapPage: React.FC = () => {
             title: "Main",
             links: [
                 { name: "Home", href: "/" },
-                { name: "About Us", href: "/about" },
+                { name: "About Us", href: "/about-us" },
                 { name: "Contact Us", href: "/contact" },
                 { name: "Careers", href: "/careers" },
                 { name: "Become a Partner", href: "/become-partner" },
@@ -30,7 +30,7 @@ const SitemapPage: React.FC = () => {
             title: "Credit Cards",
             links: [
                 { name: "All Credit Cards", href: "/cards/credit" },
-                { name: "Best Credit Cards", href: "/blogs/Best-Credit-Cards" },
+                { name: "Best Credit Cards", href: "/blog/Best-Credit-Cards" },
             ]
         },
         {

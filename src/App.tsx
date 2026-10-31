@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, Link, useParams } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import Profile from './pages/Profile';
@@ -112,6 +113,7 @@ import ResolveCibilDisputePage from './pages/cibil/ResolveCibilDisputePage';
 import DynamicPersonalLoanPage from './pages/cibil/DynamicPersonalLoanPage';
 import PersonalLoanOverviewPage from './pages/PersonalLoanOverviewPage';
 import AboutUs from './pages/AboutUs';
+import ContactUs from './pages/ContactUs';
 import InvestorRelations from './pages/legal/InvestorRelations';
 import Disclaimer from './pages/legal/Disclaimer';
 import IntellectualPolicy from './pages/legal/IntellectualPolicy';
@@ -189,16 +191,43 @@ import SukanyaSamriddhiYojanaGuide from './pages/blogs/SukanyaSamriddhiYojanaGui
 import CreditCardFinderPage from './pages/CreditCardFinderPage';
 
 
-// A simple 404 Not Found component
+// A robust 404 Not Found component with noindex meta tag to prevent Soft 404 indexing
 const NotFound = () => (
-  <div className="flex items-center justify-center min-h-[60vh] text-center">
-    <div>
-      <h1 className="text-4xl font-bold text-gray-800 mb-4">404 - Page Not Found</h1>
-      <p className="text-lg text-gray-600">The page you are looking for does not exist.</p>
-      <a href="/" className="mt-6 inline-block bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors">Go to Home</a>
+  <div className="flex items-center justify-center min-h-[60vh] text-center px-4 py-16">
+    <Helmet>
+      <title>404 - Page Not Found | BanksCart</title>
+      <meta name="robots" content="noindex, nofollow" />
+      <meta name="description" content="The page you requested could not be found. Explore personal loans, home loans, credit cards, and financial tools on BanksCart." />
+    </Helmet>
+    <div className="max-w-md mx-auto">
+      <div className="w-16 h-16 bg-red-50 text-red-600 rounded-2xl flex items-center justify-center mx-auto mb-4 text-2xl font-bold">
+        404
+      </div>
+      <h1 className="text-3xl font-extrabold text-gray-900 mb-2">Page Not Found</h1>
+      <p className="text-sm text-gray-600 mb-6 leading-relaxed">
+        The page you are looking for may have been moved, renamed, or does not exist. Browse our most popular financial services below:
+      </p>
+      <div className="flex flex-wrap justify-center gap-3 mb-8">
+        <Link to="/" className="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors shadow-sm">
+          Return Home
+        </Link>
+        <Link to="/loans" className="inline-flex items-center px-4 py-2 bg-slate-100 text-slate-800 text-sm font-medium rounded-lg hover:bg-slate-200 transition-colors border border-slate-300">
+          Compare Loans
+        </Link>
+        <Link to="/contact" className="inline-flex items-center px-4 py-2 bg-slate-100 text-slate-800 text-sm font-medium rounded-lg hover:bg-slate-200 transition-colors border border-slate-300">
+          Contact Support
+        </Link>
+      </div>
+      <p className="text-xs text-gray-400">Error Code: HTTP 404 Not Found</p>
     </div>
   </div>
 );
+
+// Legacy 301/SPA redirect handler for old /blogs/:slug URLs
+const LegacyBlogRedirect = () => {
+  const { slug } = useParams<{ slug: string }>();
+  return <Navigate to={slug ? `/blog/${slug}` : '/blog'} replace />;
+};
 
 const App: React.FC = () => {
   // State for Loan Application Modal
@@ -568,6 +597,7 @@ const App: React.FC = () => {
                 {/* General Wildcards */}
                 <Route path="/rbi/:subPath" element={<DynamicGeneralBankingPage />} />
                 <Route path="/rural-insurance/:subPath" element={<DynamicHealthInsurancePage />} />
+                <Route path="/company-registration" element={<DynamicGeneralBankingPage />} />
                 <Route path="/company-registration/:subPath" element={<DynamicGeneralBankingPage />} />
 
                 <Route path="/expert-advice" element={<ExpertAdvicePage openApplyModal={openApplyModal} />} />
@@ -710,51 +740,56 @@ const App: React.FC = () => {
                 <Route path="/credit-card-finder" element={<CreditCardFinderPage openApplyModal={openApplyModal} />} />
                 <Route path="/blogs-overview-page" element={<Navigate to="/blog" replace />} />
                 <Route path="/blogs" element={<Navigate to="/blog" replace />} />
-                <Route path="/blogs/what-is-cibil-score" element={<WhatIsCibilScore />} />
-                <Route path="/blogs/Best-Credit-Cards" element={<BestCreditCards />} />
-                <Route path="/blogs/Business-Loan-Guide" element={<BusinessLoanGuide />} />
-                <Route path="/blogs/Fixed-Deposit-Guide" element={<FixedDepositGuide />} />
-                <Route path="/blogs/Home-Loan-Guide" element={<HomeLoanGuide />} />
-                <Route path="/blogs/Investment-Plans-Guide" element={<InvestmentPlansGuide openApplyModal={openApplyModal} />} />
-                <Route path="/blogs/Sukanya-Samriddhi-Yojana-Guide" element={<SukanyaSamriddhiYojanaGuide />} />
-                <Route path="/blogs/Loan-Eligibility-Tricks" element={<LoanEligibilityTricks />} />
-                <Route path="/blogs/Secured-Unsecured-Guide" element={<SecuredUnsecuredGuide />} />
-                <Route path="/blogs/Gold-Vs-Personal-Loan" element={<GoldVsPersonalLoan />} />
-                <Route path="/blogs/Health-Insurance-Blog" element={<HealthInsuranceBlog />} />
-                <Route path="/blogs/Car-Loan-Interest-Rates" element={<CarLoanInterestRates />} />
-                <Route path="/blogs/Card-Showdown" element={<CardShowdown />} />
-                <Route path="/blogs/Tax-Saving-Guide" element={<TaxSavingGuide />} />
-                <Route path="/blogs/EMI-Explained" element={<EMIExplained />} />
-                <Route path="/blogs/Loan-Mistakes-To-Avoid" element={<LoanMistakesToAvoid />} />
-                <Route path="/blogs/Rising-Interest-Rates" element={<RisingInterestRates />} />
-                <Route path="/blogs/Digital-Banks" element={<DigitalBanks />} />
-                <Route path="/blogs/Wealth-Building-Strategies" element={<WealthBuildingStrategies />} />
-                <Route path="/blogs/Best-Personal-Loan-Apps" element={<BestPersonalLoanApps />} />
-                <Route path="/blogs/Loan-Vs-Card-Loan" element={<LoanVsCardLoan />} />
-                <Route path="/blogs/No-CIBIL-Loan-Tricks" element={<NoCIBILLoanTricks />} />
-                <Route path="/blogs/Personal-Loan-Rates" element={<PersonalLoanRates />} />
-                <Route path="/blogs/Loan-Eligibility-Trick" element={<LoanEligibilityTrick />} />
-                <Route path="/blogs/Personal-Loan-Balance-Transfer" element={<PersonalLoanBalanceTransfer />} />
-                <Route path="/blogs/Home-Loan-Comparison" element={<HomeLoanComparison />} />
-                <Route path="/blogs/Low-Salary-Home-Loan-Guide" element={<LowSalaryHomeLoanGuide />} />
-                <Route path="/blogs/Home-Loan-Mistakes" element={<HomeLoanMistakes />} />
-                <Route path="/blogs/PMAY" element={<PMAY />} />
-                <Route path="/blogs/Rent-Vs-Buy-2026" element={<RentVsBuy2026 />} />
-                <Route path="/blogs/Startup-Loan-Blueprint" element={<StartupLoanBlueprint />} />
-                <Route path="/blogs/MSME-Loan-Without-Collateral" element={<MSMELoanWithoutCollateral />} />
-                <Route path="/blogs/Business-Loan-Eligibility" element={<BusinessLoanEligibility />} />
-                <Route path="/blogs/Vehicle-Financing-Guide" element={<VehicleFinancingGuide />} />
-                <Route path="/blogs/Car-Loan-Rates-2026" element={<CarLoanRates2026 />} />
-                <Route path="/blogs/Used-Car-Loan-Guide" element={<UsedCarLoanGuide />} />
-                <Route path="/blogs/Bike-Loan-Eligibility" element={<BikeLoanEligibility />} />
-                <Route path="/blogs/Car-Loan-100-Percent-Finance" element={<CarLoan100PercentFinance />} />
+                <Route path="/blog/what-is-cibil-score" element={<WhatIsCibilScore />} />
+                <Route path="/blog/Best-Credit-Cards" element={<BestCreditCards />} />
+                <Route path="/blog/Business-Loan-Guide" element={<BusinessLoanGuide />} />
+                <Route path="/blog/Fixed-Deposit-Guide" element={<FixedDepositGuide />} />
+                <Route path="/blog/Home-Loan-Guide" element={<HomeLoanGuide />} />
+                <Route path="/blog/Investment-Plans-Guide" element={<InvestmentPlansGuide openApplyModal={openApplyModal} />} />
+                <Route path="/blog/Sukanya-Samriddhi-Yojana-Guide" element={<SukanyaSamriddhiYojanaGuide />} />
+                <Route path="/blog/Loan-Eligibility-Tricks" element={<LoanEligibilityTricks />} />
+                <Route path="/blog/Secured-Unsecured-Guide" element={<SecuredUnsecuredGuide />} />
+                <Route path="/blog/Gold-Vs-Personal-Loan" element={<GoldVsPersonalLoan />} />
+                <Route path="/blog/Health-Insurance-Blog" element={<HealthInsuranceBlog />} />
+                <Route path="/blog/Car-Loan-Interest-Rates" element={<CarLoanInterestRates />} />
+                <Route path="/blog/Card-Showdown" element={<CardShowdown />} />
+                <Route path="/blog/Tax-Saving-Guide" element={<TaxSavingGuide />} />
+                <Route path="/blog/EMI-Explained" element={<EMIExplained />} />
+                <Route path="/blog/Loan-Mistakes-To-Avoid" element={<LoanMistakesToAvoid />} />
+                <Route path="/blog/Rising-Interest-Rates" element={<RisingInterestRates />} />
+                <Route path="/blog/Digital-Banks" element={<DigitalBanks />} />
+                <Route path="/blog/Wealth-Building-Strategies" element={<WealthBuildingStrategies />} />
+                <Route path="/blog/Best-Personal-Loan-Apps" element={<BestPersonalLoanApps />} />
+                <Route path="/blog/Loan-Vs-Card-Loan" element={<LoanVsCardLoan />} />
+                <Route path="/blog/No-CIBIL-Loan-Tricks" element={<NoCIBILLoanTricks />} />
+                <Route path="/blog/Personal-Loan-Rates" element={<PersonalLoanRates />} />
+                <Route path="/blog/Loan-Eligibility-Trick" element={<LoanEligibilityTrick />} />
+                <Route path="/blog/Personal-Loan-Balance-Transfer" element={<PersonalLoanBalanceTransfer />} />
+                <Route path="/blog/Home-Loan-Comparison" element={<HomeLoanComparison />} />
+                <Route path="/blog/Low-Salary-Home-Loan-Guide" element={<LowSalaryHomeLoanGuide />} />
+                <Route path="/blog/Home-Loan-Mistakes" element={<HomeLoanMistakes />} />
+                <Route path="/blog/PMAY" element={<PMAY />} />
+                <Route path="/blog/Rent-Vs-Buy-2026" element={<RentVsBuy2026 />} />
+                <Route path="/blog/Startup-Loan-Blueprint" element={<StartupLoanBlueprint />} />
+                <Route path="/blog/MSME-Loan-Without-Collateral" element={<MSMELoanWithoutCollateral />} />
+                <Route path="/blog/Business-Loan-Eligibility" element={<BusinessLoanEligibility />} />
+                <Route path="/blog/Vehicle-Financing-Guide" element={<VehicleFinancingGuide />} />
+                <Route path="/blog/Car-Loan-Rates-2026" element={<CarLoanRates2026 />} />
+                <Route path="/blog/Used-Car-Loan-Guide" element={<UsedCarLoanGuide />} />
+                <Route path="/blog/Bike-Loan-Eligibility" element={<BikeLoanEligibility />} />
+                <Route path="/blog/Car-Loan-100-Percent-Finance" element={<CarLoan100PercentFinance />} />
 
                 {/* Dynamic Blog Route */}
                 <Route path="/blog/:slug" element={<BlogPost />} />
 
+                {/* Legacy /blogs/:slug Wildcard Redirect */}
+                <Route path="/blogs/:slug" element={<LegacyBlogRedirect />} />
+
                 {/* Legal Pages */}
-                <Route path="/about" element={<AboutUs />} />
-                <Route path="/about-us" element={<Navigate to="/about" replace />} />
+                <Route path="/about-us" element={<AboutUs />} />
+                <Route path="/about" element={<Navigate to="/about-us" replace />} />
+                <Route path="/contact" element={<ContactUs />} />
+                <Route path="/contact-us" element={<Navigate to="/contact" replace />} />
                 <Route path="/credit-report-terms" element={<CreditReportTerms />} />
                 <Route path="/terms-of-use" element={<TermsOfUse />} />
                 <Route path="/privacy-policy" element={<PrivacyPolicy />} />

@@ -26,7 +26,7 @@ const Footer: React.FC<FooterProps> = ({ openEligibilityModal }) => {
             </Link>
             <h3 className="text-white text-sm font-bold uppercase tracking-wider">BANKS CART</h3>
             <ul className="space-y-3 text-sm">
-              <li><Link to="/about" className="hover:text-blue-400 transition-colors">About</Link></li>
+              <li><Link to="/about-us" className="hover:text-blue-400 transition-colors">About</Link></li>
               <li><Link to="/careers" className="hover:text-blue-400 transition-colors">Careers</Link></li>
               <li><Link to="/contact" className="hover:text-blue-400 transition-colors">Contact Us</Link></li>
               <li><Link to="/partners" className="hover:text-blue-400 transition-colors">Partners</Link></li>
@@ -148,11 +148,11 @@ const Footer: React.FC<FooterProps> = ({ openEligibilityModal }) => {
               <ul className="space-y-2 text-slate-400">
                 <li>
                   <Link to="/aadhar-card/aadhaar-card-services" className="hover:text-blue-400 transition-colors">
-                    Aadhaar Card Services Portal
+                    Aadhaar card update and verification services
                   </Link>
                 </li>
                 <li>
-                  <Link to="/blogs/Sukanya-Samriddhi-Yojana-Guide" className="hover:text-blue-400 transition-colors">
+                  <Link to="/blog/Sukanya-Samriddhi-Yojana-Guide" className="hover:text-blue-400 transition-colors">
                     Sukanya Samriddhi Yojana (SSY) Guide
                   </Link>
                 </li>
