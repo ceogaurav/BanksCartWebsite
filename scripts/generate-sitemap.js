@@ -62,7 +62,6 @@ async function generateSitemap() {
             '/author/amit-khurana',
             '/author/neha-verma',
             '/author/priya-sharma',
-            '/about-us',
             '/company-registration',
             '/contact',
             '/terms-of-use',
@@ -331,8 +330,7 @@ async function generateSitemap() {
             '/annuity-calculator',
             '/pension-calculator',
             '/social-security-calculator',
-            // Legal
-            '/about-us',
+
             '/credit-report-terms',
             '/terms-of-use',
             '/privacy-policy',
@@ -513,7 +511,7 @@ async function generateSitemap() {
         function categorize(url) {
             const clean = url.toLowerCase();
             const coreSet = new Set([
-                '', '/', '/about', '/about-us', '/contact', '/editorial-policy', '/author/raghav-singhal', '/author/amit-khurana', '/author/neha-verma', '/author/priya-sharma', '/terms-of-use', '/privacy-policy',
+                '', '/', '/about', '/contact', '/editorial-policy', '/author/raghav-singhal', '/author/amit-khurana', '/author/neha-verma', '/author/priya-sharma', '/terms-of-use', '/privacy-policy',
                 '/disclaimer', '/investor-relations', '/intellectual-policy',
                 '/credit-report-terms', '/become-partner', '/eligibility', '/status',
                 '/loans', '/cards', '/investment', '/insurance', '/calculators',

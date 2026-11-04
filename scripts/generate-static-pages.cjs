@@ -1973,7 +1973,7 @@ function generatePreRenderedBody(cleanPath, meta) {
     
   
   // 1b. About Us Dedicated Pre-rendering
-  if (cleanPath === '/about-us') {
+  if (cleanPath === '/about' || cleanPath === '/about-us') {
     return `
     <div class="min-h-screen bg-slate-50 text-slate-800 font-sans antialiased">
       <header class="bg-white border-b border-slate-200 py-4 px-6 sticky top-0 z-50 shadow-sm">
@@ -2924,8 +2924,8 @@ for (const urlPath of urls) {
   let canonicalUrl = cleanPath === '' ? 'https://www.bankscart.com/' : `https://www.bankscart.com${cleanPath}`;
   if (cleanPath === '/blogs' || cleanPath === '/blogs-overview-page') {
     canonicalUrl = 'https://www.bankscart.com/blog';
-  } else if (cleanPath === '/about') {
-    canonicalUrl = 'https://www.bankscart.com/about-us';
+  } else if (cleanPath === '/about-us') {
+    canonicalUrl = 'https://www.bankscart.com/about';
   } else if (cleanPath === '/contact-us') {
     canonicalUrl = 'https://www.bankscart.com/contact';
   } else if (cleanPath.startsWith('/blogs/')) {
@@ -2933,8 +2933,8 @@ for (const urlPath of urls) {
   }
 
   // 301 Redirect Pages for legacy /blogs, /blogs-overview-page, and /about-us
-  if (cleanPath === '/blogs' || cleanPath === '/blogs-overview-page' || cleanPath === '/about' || cleanPath.startsWith('/blogs/')) {
-    const target = cleanPath === '/about' ? '/about-us' : (cleanPath.startsWith('/blogs/') ? cleanPath.replace('/blogs/', '/blog/') : '/blog');
+  if (cleanPath === '/blogs' || cleanPath === '/blogs-overview-page' || cleanPath === '/about-us' || cleanPath.startsWith('/blogs/')) {
+    const target = cleanPath === '/about-us' ? '/about' : (cleanPath.startsWith('/blogs/') ? cleanPath.replace('/blogs/', '/blog/') : '/blog');
     const redirectHtml = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -3037,7 +3037,7 @@ for (const urlPath of urls) {
 const legacyRedirects = [
   { path: '/blogs', target: '/blog' },
   { path: '/blogs-overview-page', target: '/blog' },
-  { path: '/about', target: '/about-us' },
+  { path: '/about-us', target: '/about' },
   { path: '/contact-us', target: '/contact' }
 ];
 

@@ -14,8 +14,8 @@
       "permanent": true
     },
     {
-      "source": "/about",
-      "destination": "/about-us",
+      "source": "/about-us",
+      "destination": "/about",
       "permanent": true
     },
     {
@@ -49,13 +49,13 @@
       "permanent": true
     },
     {
-      "source": "/cards/lifetime-free",
-      "destination": "/cards/credit/lifetime-free",
+      "source": "/cards/credit/lifetime-free",
+      "destination": "/cards/lifetime-free",
       "permanent": true
     },
     {
-      "source": "/cards/cashback-credit-cards",
-      "destination": "/cards/credit/cashback",
+      "source": "/cards/credit/cashback",
+      "destination": "/cards/cashback-credit-cards",
       "permanent": true
     },
     {
