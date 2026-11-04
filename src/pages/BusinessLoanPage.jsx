@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
+import Breadcrumb from "../components/Breadcrumb";
 // Import icons and animation libraries as needed
 import { Menu, X, Briefcase, CreditCard, Home, Shield, Trophy, Star, Banknote, Lock, Unlock, TrendingUp, Calendar, Phone, FileText, CheckCircle, Users, Settings, PieChart, Mail } from "lucide-react";
 import AOS from 'aos';
@@ -117,9 +118,9 @@ const BusinessLoanPage = ({ openApplyModal }) => {
           {JSON.stringify(financialProductSchema)}
         </script>
       </Helmet>
-      <nav className="text-sm text-gray-500 py-2 px-4 md:px-12">
-        Home &gt; <span className="text-blue-700 font-medium">Business Loan</span>
-      </nav>
+      <Breadcrumb path={["Home", "Loans", "Business Loan"]} />
+
+
       <section className="relative flex flex-col items-center justify-center py-12 md:py-20 bg-gradient-to-br from-white/60 to-blue-50/80 overflow-hidden">
         <h1 className="text-4xl md:text-5xl font-bold mb-4 text-center">Business Loan</h1>
         <h2 className="text-lg md:text-2xl text-gray-700 mb-2 text-center max-w-2xl">A business loan is financial assistance provided to small businesses and entrepreneurs to meet their capital requirements. These loans are used to fund various aspects of the business, like expansion, growth, and other business activities.</h2>

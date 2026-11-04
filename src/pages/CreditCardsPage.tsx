@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Helmet } from 'react-helmet-async';
+import Breadcrumb from '../components/Breadcrumb';
 // Removed specific GSAP imports as they were causing resolution errors in this environment.
 // Assuming GSAP and ScrollTrigger are globally available via CDN in the surrounding HTML context.
 import ApplyButton from '../components/common/ApplyButton';
@@ -832,6 +834,8 @@ const CreditCardsPage: React.FC<CreditCardsPageProps> = ({ openApplyModal }) => 
                 }
                 `}
             </style>
+
+            <Breadcrumb path={["Home", "Cards", "Credit Cards"]} />
 
             
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import Breadcrumb from '../components/Breadcrumb';
 // Import all mutual funds page components (to be created in ../components/mutualFunds/)
 import HeroSection from '../components/mutualFunds/HeroSection';
 import FeaturedProducts from '../components/mutualFunds/FeaturedProducts';
@@ -18,6 +19,7 @@ interface MutualFundsPageProps {
 
 const MutualFundsPage: React.FC<MutualFundsPageProps> = ({ openApplyModal }) => (
   <div className="font-inter bg-[#F8FAFC] dark:bg-[#1F2937] transition-colors duration-500">
+    <Breadcrumb path={["Home", "Investments", "Mutual Funds"]} />
     <DarkModeToggle />
     <LanguageSwitcher />
     <HeroSection openApplyModal={openApplyModal} />

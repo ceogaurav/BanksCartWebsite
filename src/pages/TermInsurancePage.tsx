@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Breadcrumb from '../components/Breadcrumb';
 
 // --- Helper Data (Could be fetched from an API in a real app) ---
 const NAV_LINKS = [
@@ -1374,6 +1375,7 @@ const TermInsurancePage: React.FC<TermInsurancePageProps> = ({ openApplyModal })
   return (
     <div className="min-h-screen bg-gray-50 font-inter text-gray-800 antialiased">
       {/* Header removed as per user request */}
+      <Breadcrumb path={["Home", "Insurance", "Term Insurance"]} />
 
       <main>
         <HeroSection />

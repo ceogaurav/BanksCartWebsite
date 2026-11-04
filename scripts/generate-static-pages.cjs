@@ -32,7 +32,7 @@ const urlsSet = new Set([
   '/embed/ssy-calculator',
   '/embed/home-loan-emi-calculator',
   '/',
-  '/about-us',
+  '/about',
   '/blog',
   '/blog',
   '/contact',
@@ -2937,8 +2937,8 @@ for (const urlPath of urls) {
   let canonicalUrl = cleanPath === '' ? 'https://www.bankscart.com/' : `https://www.bankscart.com${cleanPath}`;
   if (cleanPath === '/blogs' || cleanPath === '/blogs-overview-page') {
     canonicalUrl = 'https://www.bankscart.com/blog';
-  } else if (cleanPath === '/about-us') {
-    canonicalUrl = 'https://www.bankscart.com/about';
+  } else if (cleanPath === '/about') {
+    canonicalUrl = 'https://www.bankscart.com/about-us';
   } else if (cleanPath === '/contact-us') {
     canonicalUrl = 'https://www.bankscart.com/contact';
   } else if (cleanPath.startsWith('/blogs/')) {
@@ -2946,8 +2946,8 @@ for (const urlPath of urls) {
   }
 
   // 301 Redirect Pages for legacy /blogs, /blogs-overview-page, and /about-us
-  if (cleanPath === '/blogs' || cleanPath === '/blogs-overview-page' || cleanPath === '/about-us' || cleanPath.startsWith('/blogs/')) {
-    const target = cleanPath === '/about-us' ? '/about' : (cleanPath.startsWith('/blogs/') ? cleanPath.replace('/blogs/', '/blog/') : '/blog');
+  if (cleanPath === '/blogs' || cleanPath === '/blogs-overview-page' || cleanPath === '/about' || cleanPath.startsWith('/blogs/')) {
+    const target = cleanPath === '/about' ? '/about-us' : (cleanPath.startsWith('/blogs/') ? cleanPath.replace('/blogs/', '/blog/') : '/blog');
     const redirectHtml = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -2966,7 +2966,6 @@ for (const urlPath of urls) {
     if (!fs.existsSync(targetDir)) {
       fs.mkdirSync(targetDir, { recursive: true });
     }
-    if (targetDir.includes('about')) { console.log('WRITING REDIRECT HTML TO:', targetDir, 'TARGET:', target); }
     fs.writeFileSync(path.join(targetDir, 'index.html'), redirectHtml, 'utf8');
     pagesGenerated++;
     continue;
@@ -3041,7 +3040,6 @@ for (const urlPath of urls) {
       fs.mkdirSync(targetDir, { recursive: true });
     }
     const targetFile = path.join(targetDir, 'index.html');
-    if (targetFile.includes('about')) { console.log('WRITING PAGE HTML TO:', targetFile, 'LENGTH:', pageHtml.length); }
     fs.writeFileSync(targetFile, pageHtml, 'utf8');
     pagesGenerated++;
   }

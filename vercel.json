@@ -14,8 +14,8 @@
       "permanent": true
     },
     {
-      "source": "/about-us",
-      "destination": "/about",
+      "source": "/about",
+      "destination": "/about-us",
       "permanent": true
     },
     {

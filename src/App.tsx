@@ -7,7 +7,8 @@ import Profile from './pages/Profile';
 import LoginModal from './components/auth/LoginModal';
 import OnboardingModal from './components/auth/OnboardingModal';
 
-// Admin Imports
+// Layout Imports
+import MainLayout from './layouts/MainLayout';
 import AdminLayout from './layouts/AdminLayout';
 import AdminDashboardPage from './pages/admin/AdminDashboardPage';
 import AdminApplicationsPage from './pages/admin/AdminApplicationsPage';
@@ -150,15 +151,7 @@ import BorrowingSentimentReport2026 from './pages/research/BorrowingSentimentRep
 
 
 // Import common components
-import Header from './components/common/Header';
-import Footer from './components/common/Footer';
-import LoanApplicationModal from './components/common/LoanApplicationModal';
-import EligibilityCheckModal from './components/common/EligibilityCheckModal';
-import PartnerApplicationModal from './components/modals/PartnerApplicationModal';
-import CibilCheckButton from './components/common/CibilCheckButton';
-import CibilScoreCheckModal from './components/modals/CibilScoreCheckModal';
 import LoanApplyPage from './pages/LoanApply';
-import ChristmasThemeWrapper from './components/common/ChristmasThemeWrapper';
 import SEOManager from './components/common/SEOManager';
 
 // Import the CalculatorPages

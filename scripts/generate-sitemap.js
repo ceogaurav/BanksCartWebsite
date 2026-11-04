@@ -54,7 +54,7 @@ async function generateSitemap() {
 
         // Core and legacy static pages
         const staticPages = [
-            '/about-us',
+            '/about',
             '/research/borrowing-sentiment-report-q1-2026',
             '',
             
@@ -516,7 +516,7 @@ async function generateSitemap() {
         function categorize(url) {
             const clean = url.toLowerCase();
             const coreSet = new Set([
-                '', '/', '/about-us', '/contact', '/editorial-policy', '/author/raghav-singhal', '/author/amit-khurana', '/author/neha-verma', '/author/priya-sharma', '/terms-of-use', '/privacy-policy',
+                '', '/', '/about', '/contact', '/editorial-policy', '/author/raghav-singhal', '/author/amit-khurana', '/author/neha-verma', '/author/priya-sharma', '/terms-of-use', '/privacy-policy',
                 '/disclaimer', '/investor-relations', '/intellectual-policy',
                 '/credit-report-terms', '/become-partner', '/eligibility', '/status',
                 '/loans', '/cards', '/investment', '/insurance', '/calculators',

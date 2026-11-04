@@ -1,4 +1,5 @@
 import React from 'react';
+import Breadcrumb from '../components/Breadcrumb';
 import ApplyButton from '../components/common/ApplyButton';
 import FDCalculator from '../components/FDCalculator';
 import FDLiveCharts from '../components/FDLiveCharts';
@@ -16,6 +17,7 @@ import FinalCTASection from '../components/FinalCTASection';
 const FixedDepositPage: React.FC<{ openApplyModal?: (loanType?: string) => void }> = ({ openApplyModal }) => {
   return (
     <main className="bg-light-blue min-h-screen w-full font-inter">
+      <Breadcrumb path={["Home", "Investments", "Fixed Deposit"]} />
       {/* 1. Hero Section */}
       <section id="fd-hero" className="w-full min-h-[80vh] flex flex-col items-center justify-center bg-gradient-to-tr from-[#1E40AF] to-[#3B82F6] text-white relative overflow-hidden">
         {/* Animated Money Tree Illustration Placeholder */}

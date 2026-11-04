@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Breadcrumb from '../components/Breadcrumb';
 import { motion, AnimatePresence } from 'framer-motion';
 import ApplyButton from '../components/common/ApplyButton'; // Add this line
 import { useNavigate } from 'react-router-dom';
@@ -595,6 +596,7 @@ const BanksCartHealthInsurancePage: React.FC<HealthInsurancePageProps> = ({ open
   return (
     <div className="bg-gray-950 font-inter text-white min-h-screen">
       <BackgroundAnimation />
+      <Breadcrumb path={["Home", "Insurance", "Health Insurance"]} />
 
       {/* --- Hero Section --- */}
       <motion.section

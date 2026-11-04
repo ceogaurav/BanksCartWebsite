@@ -1,5 +1,6 @@
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
+import Breadcrumb from "../components/Breadcrumb";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { motion, useAnimation } from "framer-motion";
@@ -501,6 +502,9 @@ const HomeLoanPage = ({ openApplyModal }) => {
           {JSON.stringify(faqSchema)}
         </script>
       </Helmet>
+
+      {/* Accessible Clickable Breadcrumb */}
+      <Breadcrumb path={["Home", "Loans", "Home Loan"]} />
 
 
       {/* Hero Section - Enhanced */}

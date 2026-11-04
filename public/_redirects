@@ -1,4 +1,4 @@
-/about-us /about 301
+/about /about-us 301
 /contact-us /contact 301
 /blogs/* /blog/:splat 301
 /blogs /blog 301
