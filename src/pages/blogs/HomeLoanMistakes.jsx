@@ -21,7 +21,7 @@ import { Link } from "react-router-dom";
 const ARTICLE_TITLE = "Top 10 Mistakes to Avoid When Applying for a Home Loan";
 const ARTICLE_SUBTITLE =
   "The Essential Pre-Application Checklist: How Indian Borrowers Can Navigate Documentation Errors, DTI Traps, and Hidden Costs to Secure the Lowest Interest Rate.";
-const BACK_LINK = "/blogs/finance-strategy"; 
+const BACK_LINK = "/blog"; 
 const AUTHOR = "Real Estate Finance Strategist";
 const DATE = "Dec 5, 2025";
 const READ_TIME = "28 min read (The Risk Mitigation Guide)"; 

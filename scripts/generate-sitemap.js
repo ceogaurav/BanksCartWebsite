@@ -54,9 +54,10 @@ async function generateSitemap() {
 
         // Core and legacy static pages
         const staticPages = [
+            '/about',
             '/research/borrowing-sentiment-report-q1-2026',
             '',
-            '/about',
+            
             '/editorial-policy',
             '/author/raghav-singhal',
             '/author/amit-khurana',
@@ -110,6 +111,10 @@ async function generateSitemap() {
             '/cards/cashback-credit-cards',
             '/business-loan/company-registration-in-delhi',
             '/business-loan/company-registration-in-chennai',
+            '/business-loan/company-registration-in-bangalore',
+            '/business-loan/collateral-free',
+            '/business-loan/msme-scheme',
+            '/aadhar-card/aadhaar-card-services',
             '/company-registration/copyright-registration',
             '/credit-health-report-services',
             '/credit-score/credit-rectification-service',
@@ -511,7 +516,7 @@ async function generateSitemap() {
         function categorize(url) {
             const clean = url.toLowerCase();
             const coreSet = new Set([
-                '', '/', '/about', '/contact', '/editorial-policy', '/author/raghav-singhal', '/author/amit-khurana', '/author/neha-verma', '/author/priya-sharma', '/terms-of-use', '/privacy-policy',
+                '', '/',  '/contact', '/editorial-policy', '/author/raghav-singhal', '/author/amit-khurana', '/author/neha-verma', '/author/priya-sharma', '/terms-of-use', '/privacy-policy',
                 '/disclaimer', '/investor-relations', '/intellectual-policy',
                 '/credit-report-terms', '/become-partner', '/eligibility', '/status',
                 '/loans', '/cards', '/investment', '/insurance', '/calculators',

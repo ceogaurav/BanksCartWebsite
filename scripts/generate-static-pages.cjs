@@ -33,6 +33,7 @@ const urlsSet = new Set([
   '/embed/home-loan-emi-calculator',
   '/',
   '/about',
+  '/blog',
   '/contact',
   '/editorial-policy',
   '/author/raghav-singhal',
@@ -1125,7 +1126,7 @@ function generatePreRenderedBody(cleanPath, meta) {
       <main class="max-w-5xl mx-auto px-6 py-12 space-y-10">
         <section class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
           <h2 class="text-2xl font-bold text-slate-900">Specialized Regional Incorporation &amp; IP Clusters</h2>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <div class="p-6 rounded-2xl bg-blue-50 border border-blue-100 flex flex-col justify-between">
               <div>
                 <h3 class="font-bold text-lg text-blue-900 mb-2">Company Registration in Delhi</h3>
@@ -1143,6 +1144,16 @@ function generatePreRenderedBody(cleanPath, meta) {
               </div>
               <a href="/business-loan/company-registration-in-chennai" class="text-xs font-bold text-indigo-600 hover:text-indigo-800 underline">
                 Explore Chennai Company Registration &rarr;
+              </a>
+            </div>
+
+            <div class="p-6 rounded-2xl bg-emerald-50 border border-emerald-100 flex flex-col justify-between">
+              <div>
+                <h3 class="font-bold text-lg text-emerald-900 mb-2">Company Registration in Bangalore</h3>
+                <p class="text-xs text-slate-600 mb-4">Incorporate high-growth startups, SaaS ventures, and AI enterprises under Karnataka ROC with digital compliance.</p>
+              </div>
+              <a href="/business-loan/company-registration-in-bangalore" class="text-xs font-bold text-emerald-600 hover:text-emerald-800 underline">
+                Explore Bangalore Company Registration &rarr;
               </a>
             </div>
 
@@ -1973,7 +1984,7 @@ function generatePreRenderedBody(cleanPath, meta) {
     
   
   // 1b. About Us Dedicated Pre-rendering
-  if (cleanPath === '/about' || cleanPath === '/about-us') {
+  if (cleanPath === '/about-us' || cleanPath === '/about') {
     return `
     <div class="min-h-screen bg-slate-50 text-slate-800 font-sans antialiased">
       <header class="bg-white border-b border-slate-200 py-4 px-6 sticky top-0 z-50 shadow-sm">
@@ -2651,6 +2662,7 @@ function renderFooter() {
           <ul class="space-y-1.5 text-slate-400">
             <li><a href="/business-loan/company-registration-in-delhi" class="hover:text-white">company registration in Delhi</a></li>
             <li><a href="/business-loan/company-registration-in-chennai" class="hover:text-white">company registration in Chennai</a></li>
+            <li><a href="/business-loan/company-registration-in-bangalore" class="hover:text-white">company registration in Bangalore</a></li>
             <li><a href="/company-registration/copyright-registration" class="hover:text-white">online copyright registration services</a></li>
           </ul>
         </div>
@@ -3035,10 +3047,20 @@ for (const urlPath of urls) {
 
 // Explicit generation of legacy redirect pages (guarantees dist/blogs, dist/blogs-overview-page, and dist/about-us exist even when excluded from sitemap.xml)
 const legacyRedirects = [
+  { path: '/calculators/ssy-calculator', target: '/ssy-calculator' },
   { path: '/blogs', target: '/blog' },
   { path: '/blogs-overview-page', target: '/blog' },
   { path: '/about-us', target: '/about' },
-  { path: '/contact-us', target: '/contact' }
+  { path: '/contact-us', target: '/contact' },
+  { path: '/company-registration/pvt-ltd', target: '/company-registration' },
+  { path: '/business-loan/company-reg-delhi', target: '/business-loan/company-registration-in-delhi' },
+  { path: '/business-loan/company-reg-blr', target: '/business-loan/company-registration-in-bangalore' },
+  { path: '/company-registration/copyright', target: '/company-registration/copyright-registration' },
+  { path: '/credit-score/cibil-for-loan', target: '/credit-score/cibil-score-for-personal-loan' },
+  { path: '/credit-score/credit-rectification', target: '/credit-score/credit-rectification-service' },
+  { path: '/cards/secured-credit-card', target: '/cards/credit/secured' },
+  { path: '/blogs/Sukanya-Samriddhi-Yojana', target: '/blog/sukanya-samriddhi-yojana-guide' },
+  { path: '/blog/Sukanya-Samriddhi-Yojana', target: '/blog/sukanya-samriddhi-yojana-guide' }
 ];
 
 // Ensure public/404.html is copied to dist/404.html

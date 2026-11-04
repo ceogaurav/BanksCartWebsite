@@ -234,7 +234,7 @@ export const AuthorBioPage: React.FC = () => {
                 </h3>
                 <ul className="space-y-2 text-xs">
                   <li>
-                    <Link to="/blogs/What-Is-Cibil-Score" className="text-blue-600 hover:underline font-medium block">
+                    <Link to="/blog/what-is-cibil-score" className="text-blue-600 hover:underline font-medium block">
                       The Ultimate Guide to CIBIL Score &rarr;
                     </Link>
                   </li>

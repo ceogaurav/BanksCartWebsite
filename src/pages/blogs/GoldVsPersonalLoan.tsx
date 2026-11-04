@@ -18,7 +18,7 @@ import { Link } from "react-router-dom";
 const ARTICLE_TITLE = "Gold Loan vs Personal Loan: Which Is Better in 2025?";
 const ARTICLE_SUBTITLE =
   "The Definitive Guide for Indian Borrowers: Comparing Rates, Speed, Eligibility, and Risk to Choose Your Best Funding Option This Year.";
-const BACK_LINK = "/blogs/finance-strategy"; 
+const BACK_LINK = "/blog"; 
 const AUTHOR = "Financial Strategy Analyst";
 const DATE = "Nov 19, 2025";
 const READ_TIME = "20 min read (Definitive Guide)"; 

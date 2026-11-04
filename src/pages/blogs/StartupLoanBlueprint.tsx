@@ -18,7 +18,7 @@ import { Link } from "react-router-dom";
 const ARTICLE_TITLE = "Best Small Business Loans in India for Startups (2026 Guide)";
 const ARTICLE_SUBTITLE =
   "The definitive breakdown of startup funding in the 2026 financial landscape: Government schemes (Mudra 2.0, SISFS), NBFC speed vs. Bank stability, and the ultimate collateral-free checklist.";
-const BACK_LINK = "/blogs/startup-finance"; 
+const BACK_LINK = "/blog"; 
 const AUTHOR = "Startup Finance Expert";
 const DATE = "Nov 19, 2025";
 const READ_TIME = "22 min read (The Funding Compass)";

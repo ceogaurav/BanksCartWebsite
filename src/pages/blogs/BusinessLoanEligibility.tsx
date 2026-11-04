@@ -18,7 +18,7 @@ import { Link } from "react-router-dom";
 const ARTICLE_TITLE = "How to Improve Business Loan Eligibility Fast: 8 Rapid-Fire Fixes";
 const ARTICLE_SUBTITLE =
   "The SME Survival Manual: Quick strategies to stabilize your cash flow, optimize Debt Service Coverage Ratio (DSCR), secure lower rates, and unlock capital in under 90 days.";
-const BACK_LINK = "/blogs/finance-strategy"; 
+const BACK_LINK = "/blog"; 
 const AUTHOR = "SME Finance Specialist";
 const DATE = "Dec 1, 2025";
 const READ_TIME = "25 min read (The Rapid-Growth Guide)";

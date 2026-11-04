@@ -16,7 +16,7 @@ import { Link } from "react-router-dom";
 const ARTICLE_TITLE = "Car Loan Interest Rates 2025 + The Ultimate EMI Calculator Guide";
 const ARTICLE_SUBTITLE =
   "Navigating the Auto Finance Landscape: A 2025 outlook on the lowest rates in India, critical factors determining your eligibility, and decoding the EMI amortization schedule.";
-const BACK_LINK = "/blogs/finance-strategy"; 
+const BACK_LINK = "/blog"; 
 const AUTHOR = "Insider Banking Analyst";
 const DATE = "Nov 19, 2025";
 const READ_TIME = "20 min read (Financial Engineering)"; 

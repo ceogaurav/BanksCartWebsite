@@ -432,6 +432,7 @@ const App: React.FC = () => {
                 <Route path="/business-loan/company-reg-blr" element={<Navigate to="/business-loan/company-registration-in-bangalore" replace />} />
                 <Route path="/business-loan/company-registration-in-delhi" element={<DynamicBusinessLoanPage />} />
                 <Route path="/business-loan/company-registration-in-chennai" element={<DynamicBusinessLoanPage />} />
+                <Route path="/business-loan/company-registration-in-bangalore" element={<DynamicBusinessLoanPage />} />
                 <Route path="/company-registration/copyright-registration" element={<DynamicGeneralBankingPage />} />
                 <Route path="/business-loan/collateral-free" element={<DynamicBusinessLoanPage />} />
                 <Route path="/business-loan/msme-scheme" element={<DynamicBusinessLoanPage />} />
@@ -785,6 +786,7 @@ const App: React.FC = () => {
                 <Route path="/pension-calculator" element={<PensionCalculatorPage openApplyModal={openApplyModal} />} />
                 <Route path="/social-security-calculator" element={<SocialSecurityCalculatorPage openApplyModal={openApplyModal} />} />
                 <Route path="/ssy-calculator" element={<SSYCalculatorPage openApplyModal={openApplyModal} />} />
+                <Route path="/calculators/ssy-calculator" element={<Navigate to="/ssy-calculator" replace />} />
                 <Route path="/credit-card-finder" element={<CreditCardFinderPage openApplyModal={openApplyModal} />} />
                 <Route path="/blogs-overview-page" element={<Navigate to="/blog" replace />} />
                 <Route path="/blogs" element={<Navigate to="/blog" replace />} />
@@ -852,8 +854,8 @@ const App: React.FC = () => {
 
                 {/* Legal & Editorial Policy Pages */}
                 <Route path="/editorial-policy" element={<EditorialPolicy />} />
-                <Route path="/about" element={<AboutUs />} />
-                <Route path="/about-us" element={<Navigate to="/about" replace />} />
+                <Route path="/about-us" element={<AboutUs />} />
+                <Route path="/about" element={<Navigate to="/about-us" replace />} />
                 <Route path="/contact" element={<ContactUs />} />
                 <Route path="/contact-us" element={<Navigate to="/contact" replace />} />
                 <Route path="/credit-report-terms" element={<CreditReportTerms />} />

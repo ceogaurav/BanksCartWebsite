@@ -20,7 +20,7 @@ import { Link } from "react-router-dom";
 const ARTICLE_TITLE = "The No-CIBIL Code: How to Get an Instant Personal Loan Without a Credit Score";
 const ARTICLE_SUBTITLE =
   "A detailed playbook for New-to-Credit (NTC) and low-score borrowers: Leveraging Fintech, Secured Assets, and Alternate Data to unlock emergency funds in India.";
-const BACK_LINK = "/blogs/finance-strategy";
+const BACK_LINK = "/blog";
 const AUTHOR = "Fintech Strategy Team";
 const DATE = "Nov 19, 2025";
 const READ_TIME = "18 min read (Emergency Guide)";

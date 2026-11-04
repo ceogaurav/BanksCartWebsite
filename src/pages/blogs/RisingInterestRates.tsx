@@ -18,7 +18,7 @@ import { Link } from "react-router-dom";
 const ARTICLE_TITLE = "Rising Interest Rates 2026: How It Impacts Your Loans & EMIs";
 const ARTICLE_SUBTITLE =
   "The essential guide for Indian borrowers: Decrypting the RBI's Repo Rate hike, understanding the impact on Home, Auto, and Personal Loans, and 9 strategies to recession-proof your EMIs.";
-const BACK_LINK = "/blogs/finance-strategy"; 
+const BACK_LINK = "/blog"; 
 const AUTHOR = "Insider Macro Analyst";
 const DATE = "Dec 1, 2025";
 const READ_TIME = "25 min read (The Stability Manual)"; 

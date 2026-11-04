@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 const ARTICLE_TITLE = "Best Credit Cards in India 2025: Rewards, Cashback, Fees & Features";
 const ARTICLE_SUBTITLE =
   "Your ultimate guide to selecting the top credit card tailored to your lifestyle—from maximum cashback to premium travel benefits and low-interest options. Maximize your financial potential.";
-const BACK_LINK = "/blogs/banking-guides"; 
+const BACK_LINK = "/blog"; 
 const AUTHOR = "Advanced Financial Analytics Team";
 const DATE = "Dec 10, 2025";
 const READ_TIME = "30 min read";

@@ -18,7 +18,7 @@ import { Link } from "react-router-dom";
 const ARTICLE_TITLE = "Rent vs Buy: What Should You Choose in 2026?";
 const ARTICLE_SUBTITLE =
   "The 15-minute 2026 forecast: Analyzing the shift in interest rates, property appreciation, hidden costs, and the ultimate financial decision for Indian professionals.";
-const BACK_LINK = "/blogs/finance-strategy"; 
+const BACK_LINK = "/blog"; 
 const AUTHOR = "Real Estate Economist";
 const DATE = "Nov 19, 2025";
 const READ_TIME = "15 min read (The 2026 Forecast)"; 

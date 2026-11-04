@@ -87,6 +87,11 @@
       "source": "/blog/Sukanya-Samriddhi-Yojana",
       "destination": "/blog/Sukanya-Samriddhi-Yojana-Guide",
       "permanent": true
+    },
+    {
+      "source": "/calculators/ssy-calculator",
+      "destination": "/ssy-calculator",
+      "permanent": true
     }
   ],
   "rewrites": [

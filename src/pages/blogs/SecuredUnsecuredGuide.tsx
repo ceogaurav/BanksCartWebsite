@@ -22,7 +22,7 @@ import { Link } from "react-router-dom";
 const ARTICLE_TITLE = "Secured vs. Unsecured Loans: The Ultimate Guide to Pros, Cons, and Strategic Choice";
 const ARTICLE_SUBTITLE =
   "A comprehensive 5,000-word analysis of collateral, interest rates, risk dynamics, and eligibility criteria to help you choose the right financial path for your business or personal needs.";
-const BACK_LINK = "/blogs/finance-guides";
+const BACK_LINK = "/blog";
 const AUTHOR = "Advanced Financial Analytics Team";
 const DATE = "Nov 19, 2025";
 const READ_TIME = "28 min read (In-Depth Compendium)";

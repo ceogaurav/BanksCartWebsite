@@ -18,7 +18,7 @@ import { Link } from "react-router-dom";
 const ARTICLE_TITLE = "What Is EMI? How It Works, Calculation, and The Reducing Balance Advantage";
 const ARTICLE_SUBTITLE =
   "The essential financial guide for Indian borrowers: Deciphering the Equal Monthly Installment (EMI), understanding the amortization table, and the powerful benefit of the Reducing Balance method.";
-const BACK_LINK = "/blogs/finance-strategy"; 
+const BACK_LINK = "/blog"; 
 const AUTHOR = "Financial Education Analyst";
 const DATE = "Nov 19, 2025";
 const READ_TIME = "18 min read (The Foundation Manual)"; 

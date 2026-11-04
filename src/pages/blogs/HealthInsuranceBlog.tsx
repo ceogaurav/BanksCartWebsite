@@ -19,7 +19,7 @@ import { Link } from "react-router-dom";
 const ARTICLE_TITLE = "Best Health Insurance Plans in India 2025: Coverage, Premiums & Benefits";
 const ARTICLE_SUBTITLE =
   "The essential 2025 guide for Indian families: Decoding IRDAI's new rules, the 3 must-have plans, tax benefits, and securing unlimited cover restoration.";
-const BACK_LINK = "/blogs/finance-strategy"; 
+const BACK_LINK = "/blog"; 
 const AUTHOR = "The Financial Strategist";
 const DATE = "Nov 19, 2025";
 const READ_TIME = "18 min read";

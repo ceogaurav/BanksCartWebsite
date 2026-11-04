@@ -16,7 +16,7 @@ import { Link } from "react-router-dom";
 const ARTICLE_TITLE = "Top Banks Offering Lowest Personal Loan Interest Rates in 2025";
 const ARTICLE_SUBTITLE =
   "A detailed analysis of Public and Private sector banks competing for the 9.00% benchmark: How to qualify for the absolute best rates this year.";
-const BACK_LINK = "/blogs/finance-strategy";
+const BACK_LINK = "/blog";
 const AUTHOR = "Insider Banking Analyst";
 const DATE = "Nov 20, 2025";
 const READ_TIME = "18 min read (The Competitive Edge)";

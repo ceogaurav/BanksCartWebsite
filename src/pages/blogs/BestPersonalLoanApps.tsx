@@ -17,7 +17,7 @@ import { Link } from "react-router-dom";
 const ARTICLE_TITLE = "Best Personal Loan Apps in India 2026 – Interest Rates, Eligibility & Reviews";
 const ARTICLE_SUBTITLE =
   "The definitive guide to RBI-compliant digital lenders: Analyzing interest rates, understanding the new 50% LTI cap, and ensuring instant, safe disbursal.";
-const BACK_LINK = "/blogs/finance-strategy"; // Placeholder link, change as needed
+const BACK_LINK = "/blog"; // Placeholder link, change as needed
 const AUTHOR = "Digital Finance Expert";
 const DATE = "Nov 19, 2025";
 const READ_TIME = "18 min read (The App Guide)";

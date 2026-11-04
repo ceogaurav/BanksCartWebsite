@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 const ARTICLE_TITLE = "The Ultimate 2025 Guide to Business Loan Options for Small Businesses in India";
 const ARTICLE_SUBTITLE =
   "A 30,000-word compendium: Detailed analysis of Term Loans, Working Capital, Government Schemes (Mudra, CGTMSE), FinTech vs. Bank Lending, and advanced strategies for Indian SMEs.";
-const BACK_LINK = "/blogs/finance-guides"; 
+const BACK_LINK = "/blog"; 
 const AUTHOR = "Advanced Financial Analytics Team";
 const DATE = "Oct 22, 2025";
 const READ_TIME = "180 min read (The Compendium)";

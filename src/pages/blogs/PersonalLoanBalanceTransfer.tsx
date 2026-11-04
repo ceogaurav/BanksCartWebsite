@@ -18,7 +18,7 @@ import { Link } from "react-router-dom";
 const ARTICLE_TITLE = "Personal Loan Balance Transfer Explained: Benefits & Step-by-Step Guide";
 const ARTICLE_SUBTITLE =
   "The comprehensive guide for Indian borrowers: Unlocking lower EMIs, the secret to consolidating high-interest debt, and a 7-step process for a seamless transfer.";
-const BACK_LINK = "/blogs/finance-strategy";
+const BACK_LINK = "/blog";
 const AUTHOR = "Insider Banking Analyst";
 const DATE = "Nov 20, 2025";
 const READ_TIME = "15 min read (The Consolidation Manual)";

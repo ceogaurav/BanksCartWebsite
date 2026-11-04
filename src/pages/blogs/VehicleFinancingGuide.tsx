@@ -18,7 +18,7 @@ import { Link } from "react-router-dom";
 const ARTICLE_TITLE = "The Ultimate Guide to Car, Bike, and Used Car Loans: Rate Secrets, EMI Hacks, and the Best Time to Buy";
 const ARTICLE_SUBTITLE =
   "A 5,000-word deep-dive for Indian buyers: Master the difference between new and used financing, slash your EMIs using strategic prepayment, and navigate the RTO hypothecation maze.";
-const BACK_LINK = "/blogs/finance-strategy"; 
+const BACK_LINK = "/blog"; 
 const AUTHOR = "Automotive Finance Specialist";
 const DATE = "Dec 10, 2025";
 const READ_TIME = "35 min read (The Buyer's Manual)";

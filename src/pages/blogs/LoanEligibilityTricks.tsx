@@ -19,7 +19,7 @@ import { Link } from "react-router-dom";
 const ARTICLE_TITLE = "How to Improve Loan Eligibility: 9 Hidden Tricks Banks Don’t Tell You";
 const ARTICLE_SUBTITLE =
   "The 5,000-word insider guide for Indian borrowers: Unlocking CIBIL secrets, DSCR manipulation, the art of the soft inquiry, and negotiating lower rates before you even apply.";
-const BACK_LINK = "/blogs/finance-strategy"; 
+const BACK_LINK = "/blog"; 
 const AUTHOR = "Insider Banking Analyst";
 const DATE = "Nov 19, 2025";
 const READ_TIME = "35 min read (The Insider Manual)"; // Increased for 5,000 words

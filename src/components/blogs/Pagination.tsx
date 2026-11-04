@@ -2,8 +2,8 @@ import React from "react";
 import Link from "next/link";
 
 export default function Pagination({ currentPage, totalPages }: { currentPage: number; totalPages: number }) {
-  const prev = currentPage > 1 ? (currentPage === 2 ? `/blogs` : `/blogs/page/${currentPage - 1}`) : null;
-  const next = currentPage < totalPages ? `/blogs/page/${currentPage + 1}` : null;
+  const prev = currentPage > 1 ? (currentPage === 2 ? `/blog` : `/blog/page/${currentPage - 1}`) : null;
+  const next = currentPage < totalPages ? `/blog/page/${currentPage + 1}` : null;
 
   return (
     <nav className="flex items-center justify-center gap-4 mt-8">

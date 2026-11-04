@@ -19,7 +19,7 @@ import { Link } from "react-router-dom";
 const ARTICLE_TITLE = "Best Car Loan Interest Rates in India 2026: The Ultimate Guide";
 const ARTICLE_SUBTITLE =
   "How to crack the 7.60% barrier, leverage EV incentives, and secure the lowest EMI amidst the digital lending revolution.";
-const BACK_LINK = "/blogs/finance-strategy"; 
+const BACK_LINK = "/blog"; 
 const AUTHOR = "Insider Banking Analyst";
 const DATE = "Nov 19, 2025";
 const READ_TIME = "25 min read (The 2026 Rate Guide)"; 

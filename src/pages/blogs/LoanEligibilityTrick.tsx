@@ -20,7 +20,7 @@ import { Link } from "react-router-dom";
 const ARTICLE_TITLE = "10 Smart Ways to Reduce Your Personal Loan EMI Legally";
 const ARTICLE_SUBTITLE =
   "The essential financial guide for Indian borrowers: Strategies for legal EMI reduction, mastering the balance transfer, strategic prepayment, and effective negotiation with your bank.";
-const BACK_LINK = "/blogs/finance-strategy"; 
+const BACK_LINK = "/blog"; 
 const AUTHOR = "Insider Banking Analyst";
 const DATE = "Dec 1, 2025";
 const READ_TIME = "25 min read (The Money Saver)"; 

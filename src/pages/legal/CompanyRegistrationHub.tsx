@@ -104,7 +104,7 @@ export default function CompanyRegistrationHub({ openApplyModal }: CompanyRegist
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {/* 1. Delhi Regional Hub */}
             <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md hover:border-blue-300 transition-all flex flex-col justify-between">
               <div>
@@ -153,7 +153,31 @@ export default function CompanyRegistrationHub({ openApplyModal }: CompanyRegist
               </Link>
             </div>
 
-            {/* 3. Copyright & IP Filing */}
+            {/* 3. Bangalore Regional Hub */}
+            <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md hover:border-emerald-300 transition-all flex flex-col justify-between">
+              <div>
+                <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center mb-4 font-bold">
+                  <Building2 className="w-5 h-5" />
+                </div>
+                <h3 className="font-bold text-lg text-slate-900 mb-2">Company Registration in Bangalore</h3>
+                <p className="text-xs text-slate-600 leading-relaxed mb-4">
+                  Incorporate tech startups, SaaS companies, and AI ventures in Bengaluru, Karnataka. ROC Karnataka SPICe+ filing and venture debt matching.
+                </p>
+                <ul className="text-xs text-slate-500 space-y-1.5 mb-4">
+                  <li>• ROC Karnataka (Bengaluru Center)</li>
+                  <li>• Tech Parks &amp; STPI fast-track approvals</li>
+                  <li>• Collateral-free MSME loan access</li>
+                </ul>
+              </div>
+              <Link
+                to="/business-loan/company-registration-in-bangalore"
+                className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-600 hover:text-emerald-800 pt-3 border-t border-slate-100 group"
+              >
+                Explore Bangalore Company Registration <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+
+            {/* 4. Copyright & IP Filing */}
             <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-md hover:border-blue-300 transition-all flex flex-col justify-between">
               <div>
                 <div className="w-10 h-10 rounded-xl bg-purple-50 text-purple-700 flex items-center justify-center mb-4 font-bold">
@@ -173,7 +197,7 @@ export default function CompanyRegistrationHub({ openApplyModal }: CompanyRegist
                 to="/company-registration/copyright-registration"
                 className="inline-flex items-center gap-1.5 text-xs font-bold text-purple-600 hover:text-purple-800 pt-3 border-t border-slate-100 group"
               >
-                Explore Copyright Registration <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                online copyright registration services <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>
           </div>

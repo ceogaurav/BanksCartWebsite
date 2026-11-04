@@ -20,7 +20,7 @@ import { Link } from "react-router-dom";
 const ARTICLE_TITLE = "How to Build Wealth in India: 10 Proven Financial Strategies (2026)";
 const ARTICLE_SUBTITLE =
   "The 5,000-word blueprint for the modern Indian investor: Mastering goal-based investing, optimizing the 50-30-20 budget, decoding the new tax regimes, and creating generational wealth.";
-const BACK_LINK = "/blogs/finance-strategy"; 
+const BACK_LINK = "/blog"; 
 const AUTHOR = "Certified Financial Planner (CFP) India";
 const DATE = "Nov 19, 2025";
 const READ_TIME = "40 min read (The Wealth Blueprint)";

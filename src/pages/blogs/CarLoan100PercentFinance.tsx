@@ -19,7 +19,7 @@ import { Link } from "react-router-dom";
 const ARTICLE_TITLE = "How to Secure 100% Car Loan Finance: The Zero Down Payment Blueprint";
 const ARTICLE_SUBTITLE =
   "The comprehensive guide to securing full car value financing, minimizing out-of-pocket costs, navigating LTV ratios, and winning the dealer financing game.";
-const BACK_LINK = "/blogs/finance-strategy";
+const BACK_LINK = "/blog";
 const AUTHOR = "Automotive Finance Expert";
 const DATE = "Dec 15, 2025";
 const READ_TIME = "25 min read (The Automotive Manual)";

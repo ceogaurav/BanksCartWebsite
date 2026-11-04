@@ -18,7 +18,7 @@ import { Link } from "react-router-dom";
 const ARTICLE_TITLE = "PMAY Subsidy 2026 – Eligibility, Benefits & Latest Updates";
 const ARTICLE_SUBTITLE =
   "The Comprehensive Guide to Pradhan Mantri Awas Yojana: Understanding the CLSS expiry, PMAY-U 2.0, Rural Extensions to 2029, and the new Interest Subsidy Scheme (ISS).";
-const BACK_LINK = "/blogs/home-loan-schemes"; 
+const BACK_LINK = "/blog"; 
 const AUTHOR = "Housing Policy Analyst";
 const DATE = "Nov 19, 2025";
 const READ_TIME = "20 min read (Policy Deep Dive)";

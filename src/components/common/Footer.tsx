@@ -121,6 +121,11 @@ const Footer: React.FC<FooterProps> = ({ openEligibilityModal }) => {
                   </Link>
                 </li>
                 <li>
+                  <Link to="/business-loan/company-registration-in-bangalore" className="hover:text-blue-400 transition-colors">
+                    Company Registration in Bangalore
+                  </Link>
+                </li>
+                <li>
                   <Link to="/company-registration/copyright-registration" className="hover:text-blue-400 transition-colors">
                     Copyright Registration Online
                   </Link>

@@ -8,7 +8,7 @@ import { AuthorByline } from "../../components/blog/AuthorByline";
 const ARTICLE_TITLE = "The Ultimate 2026 Guide to CIBIL Score Mastery: Improve Your Creditworthiness for Loans";
 const ARTICLE_SUBTITLE =
   "Unlock the secrets of your 3-digit financial fate. Learn how CIBIL score calculation works, discover advanced strategies to boost your score above 750, and ensure easy loan approvals from banks and NBFCs.";
-const BACK_LINK = "/blogs/banking-guides"; 
+const BACK_LINK = "/blog"; 
 const AUTHOR = "Advanced Financial Analytics Team";
 const DATE = "Nov 18, 2025";
 const READ_TIME = "45 min read"; // Increased read time due to expansion

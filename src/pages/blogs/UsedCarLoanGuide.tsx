@@ -18,7 +18,7 @@ import { Link } from "react-router-dom";
 const ARTICLE_TITLE = "How to Buy a Used Car With a Loan: The Complete Buyer’s Guide";
 const ARTICLE_SUBTITLE =
   "Navigate the complex world of pre-owned auto financing: from securing the best interest rate via pre-approval to mastering the pre-purchase inspection and avoiding dealer markups.";
-const BACK_LINK = "/blogs/automotive-finance"; 
+const BACK_LINK = "/blog"; 
 const AUTHOR = "The Auto Finance Expert";
 const DATE = "Oct 25, 2025";
 const READ_TIME = "28 min read (The Buyer's Manual)"; 

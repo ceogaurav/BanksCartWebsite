@@ -17,7 +17,7 @@ import { Link } from "react-router-dom";
 const ARTICLE_TITLE = "Home Loan Interest Rates Comparison 2025 – SBI vs HDFC vs ICICI vs AXIS";
 const ARTICLE_SUBTITLE =
   "The definitive 2025 breakdown: Comparing floating rates, processing fees, CIBIL concessions, and hidden product features from India's four financial giants for the optimal home loan.";
-const BACK_LINK = "/blogs/finance-strategy";
+const BACK_LINK = "/blog";
 const AUTHOR = "Real Estate Finance Expert";
 const DATE = "Nov 19, 2025";
 const READ_TIME = "22 min read (Comparative Analysis)";

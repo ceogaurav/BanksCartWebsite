@@ -19,7 +19,7 @@ import { Link } from "react-router-dom";
 const ARTICLE_TITLE = "Top Digital Banks & Neobanks in India (2026 Review)";
 const ARTICLE_SUBTITLE =
   "A comprehensive deep dive into the best digital-first platforms, their mandatory RBI partnerships, the rise of specialized SME banking, and what the '2026 Digital Banking Bill' means for your money.";
-const BACK_LINK = "/blogs/fintech-analysis"; // Placeholder link
+const BACK_LINK = "/blog"; // Placeholder link
 const AUTHOR = "Digital Finance Strategist";
 const DATE = "Nov 19, 2025";
 const READ_TIME = "20 min read (Future of Finance)"; 

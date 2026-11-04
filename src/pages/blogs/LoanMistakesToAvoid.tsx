@@ -19,7 +19,7 @@ import { Link } from "react-router-dom";
 const ARTICLE_TITLE = "Top 10 Mistakes to Avoid While Taking a Loan in India";
 const ARTICLE_SUBTITLE =
   "The essential checklist for every Indian borrower: From comparing APRs and decoding the fine print to securing your credit score and avoiding the long-tenure debt trap.";
-const BACK_LINK = "/blogs/finance-strategy";
+const BACK_LINK = "/blog";
 const AUTHOR = "Insider Banking Analyst";
 const DATE = "Nov 19, 2025";
 const READ_TIME = "20 min read (Mistake-Proofing Manual)";

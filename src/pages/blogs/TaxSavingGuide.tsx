@@ -18,7 +18,7 @@ import { Link } from "react-router-dom";
 const ARTICLE_TITLE = "Best Ways to Save Tax in India (2026 Updated Guide)";
 const ARTICLE_SUBTITLE =
   "FY 2025-26 (AY 2026-27): Your Comprehensive Guide to Maximizing Deductions Under Both Old and New Tax Regimes, including the new ₹12 Lakh tax-free limit.";
-const BACK_LINK = "/blogs/tax-planning-strategy";
+const BACK_LINK = "/blog";
 const AUTHOR = "Financial Planning Expert";
 const DATE = "Nov 19, 2025";
 const READ_TIME = "25 min read (The Complete Tax Manual)";

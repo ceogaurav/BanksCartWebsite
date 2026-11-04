@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 const ARTICLE_TITLE = "Home Loan Interest Rates 2025: Best Banks, Eligibility & EMI Guide";
 const ARTICLE_SUBTITLE =
   "Navigating the largest financial commitment of your life. Discover the lowest floating and fixed rates, master the eligibility criteria, and calculate your maximum loan quantum for the financial year 2025-2026.";
-const BACK_LINK = "/blogs/banking-guides"; 
+const BACK_LINK = "/blog"; 
 const AUTHOR = "Advanced Mortgage Advisory Team";
 const DATE = "Dec 1, 2025";
 const READ_TIME = "90 min read"; // Reflecting the intended massive scale

@@ -19,7 +19,7 @@ import { Link } from "react-router-dom";
 const ARTICLE_TITLE = "Debit Card vs Credit Card: The Ultimate Showdown for Modern Money Management";
 const ARTICLE_SUBTITLE =
   "Beyond the swipe: Uncovering hidden protections, CIBIL influence, strategic rewards, and the true cost of convenience.";
-const BACK_LINK = "/blogs/finance-strategy"; 
+const BACK_LINK = "/blog"; 
 const AUTHOR = "Insider Banking Analyst";
 const DATE = "Nov 20, 2025";
 const READ_TIME = "25 min read (The Money Manager's Guide)"; 

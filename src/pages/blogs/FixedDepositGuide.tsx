@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 const ARTICLE_TITLE = "Fixed Deposit Interest Rates 2025: Your Ultimate Guide to the Best FD Plans in India";
 const ARTICLE_SUBTITLE =
   "Navigate the complex landscape of 2025 Fixed Deposit schemes. Discover where to find the highest interest rates, understand the tax implications, and learn advanced strategies for maximizing your returns across banks, NBFCs, and Small Finance Banks.";
-const BACK_LINK = "/blogs/banking-guides";
+const BACK_LINK = "/blog";
 const AUTHOR = "Advanced Financial Analytics Team";
 const DATE = "Nov 19, 2025";
 const READ_TIME = "150 min read"; // Placeholder for the desired length
