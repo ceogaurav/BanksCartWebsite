@@ -105,7 +105,7 @@ const LoansOverviewPage = () => (
           Gold Loan EMI Calculator
         </a>
         <a
-          href="/blogs/Best-Credit-Cards"
+          href="/blog/Best-Credit-Cards"
           className="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold rounded-xl transition-colors border border-slate-200"
         >
           Best credit cards in India

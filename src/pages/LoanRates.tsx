@@ -95,7 +95,7 @@ const LoanRates: React.FC = () => {
               <Link to="/personal-loan-emi-calculator" className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs rounded-xl shadow-sm transition-colors">
                 Personal loan EMI calculator
               </Link>
-              <Link to="/blogs/Best-Credit-Cards" className="px-4 py-2 bg-white hover:bg-slate-100 text-slate-800 font-semibold text-xs rounded-xl border border-slate-300 shadow-sm transition-colors">
+              <Link to="/blog/Best-Credit-Cards" className="px-4 py-2 bg-white hover:bg-slate-100 text-slate-800 font-semibold text-xs rounded-xl border border-slate-300 shadow-sm transition-colors">
                 Best credit cards in India
               </Link>
             </div>

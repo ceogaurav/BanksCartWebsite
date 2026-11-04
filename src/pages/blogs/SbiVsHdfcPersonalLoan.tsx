@@ -102,11 +102,11 @@ export default function SbiVsHdfcPersonalLoan() {
           <div className="flex flex-wrap items-center gap-4 text-xs text-slate-500 pt-3 border-t border-slate-100">
             <div className="flex items-center gap-1.5">
               <User className="w-4 h-4 text-teal-600" />
-              <span>Written by <strong>Raghav Singhal</strong> (FCA, CFP)</span>
+              <span>Written by <Link to="/author/raghav-singhal" className="font-bold text-blue-600 hover:underline">Raghav Singhal</Link> (FCA, CFP)</span>
             </div>
             <div className="flex items-center gap-1.5">
               <ShieldCheck className="w-4 h-4 text-blue-600" />
-              <span>Fact-checked by <strong>Amit Khurana</strong> (ex-SBI Chief Manager)</span>
+              <span>Fact-checked by <Link to="/author/amit-khurana" className="font-bold text-blue-600 hover:underline">Amit Khurana</Link> (ex-SBI Chief Manager)</span>
             </div>
             <div className="flex items-center gap-1.5">
               <Calendar className="w-4 h-4 text-slate-400" />

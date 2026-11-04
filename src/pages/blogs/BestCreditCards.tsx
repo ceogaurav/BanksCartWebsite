@@ -83,7 +83,7 @@ const BestCreditCardsPage: React.FC = () => (
     <Helmet>
       <title>15 Best Credit Cards in India (2026): Cashback, Travel &amp; Lifetime Free Compared | BanksCart</title>
       <meta name="description" content="Compare the 15 best credit cards in India for 2026. Detailed evaluation of cashback rates, airport lounge access, annual fee waivers, and reward multipliers." />
-      <link rel="canonical" href="https://www.bankscart.com/blogs/Best-Credit-Cards" />
+      <link rel="canonical" href="https://www.bankscart.com/blog/Best-Credit-Cards" />
       <script type="application/ld+json">
         {JSON.stringify({
           "@context": "https://schema.org",
@@ -128,7 +128,9 @@ const BestCreditCardsPage: React.FC = () => (
           {ARTICLE_SUBTITLE}
         </p>
         <div className="flex text-sm text-gray-500 mt-6 space-x-6">
-          <span>By <strong>{AUTHOR}</strong></span>
+          <span>Written by <Link to="/author/priya-sharma" className="font-semibold text-green-700 hover:underline">Priya Sharma, Senior Financial Analyst</Link></span>
+          <span>•</span>
+          <span>Reviewed by <Link to="/author/amit-khurana" className="font-semibold text-green-700 hover:underline">Amit Khurana, Banking Operations Lead</Link></span>
           <span>•</span>
           <span>{DATE}</span>
           <span>•</span>

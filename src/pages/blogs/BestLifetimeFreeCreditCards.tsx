@@ -102,11 +102,11 @@ export default function BestLifetimeFreeCreditCards() {
           <div className="flex flex-wrap items-center gap-4 text-xs text-slate-500 pt-3 border-t border-slate-100">
             <div className="flex items-center gap-1.5">
               <User className="w-4 h-4 text-purple-600" />
-              <span>Written by <strong>Neha Verma</strong> (CFP)</span>
+              <span>Written by <Link to="/author/neha-verma" className="font-bold text-purple-700 hover:underline">Neha Verma</Link> (CFP)</span>
             </div>
             <div className="flex items-center gap-1.5">
               <ShieldCheck className="w-4 h-4 text-blue-600" />
-              <span>Reviewed by <strong>Raghav Singhal</strong> (FCA)</span>
+              <span>Reviewed by <Link to="/author/raghav-singhal" className="font-bold text-blue-600 hover:underline">Raghav Singhal</Link> (FCA)</span>
             </div>
             <div className="flex items-center gap-1.5">
               <Calendar className="w-4 h-4 text-slate-400" />

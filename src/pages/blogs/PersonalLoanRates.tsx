@@ -122,7 +122,9 @@ const PersonalLoanRatesPage: React.FC = () => {
             <h1 className="text-5xl sm:text-6xl font-black text-white leading-tight mb-4">{ARTICLE_TITLE}</h1>
             <p className="text-xl text-indigo-300 font-light mb-6">{ARTICLE_SUBTITLE}</p>
             <div className="flex flex-wrap text-sm text-gray-400 space-x-4">
-              <span>By {AUTHOR}</span>
+              <span>Written by <Link to="/author/raghav-singhal" className="font-semibold text-yellow-300 hover:underline">Raghav Singhal, FCA &amp; CFP</Link></span>
+              <span>•</span>
+              <span>Reviewed by <Link to="/author/neha-verma" className="font-semibold text-yellow-300 hover:underline">Neha Verma, CFP</Link></span>
               <span>•</span>
               <span>{DATE}</span>
               <span>•</span>

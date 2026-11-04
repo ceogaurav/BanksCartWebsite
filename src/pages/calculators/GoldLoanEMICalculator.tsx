@@ -440,7 +440,7 @@ const GoldLoanEMICalculator: React.FC = () => {
           <Link to="/home-loan-emi-calculator" className="hover:text-blue-600 underline">Home Loan EMI Calculator</Link>
           <Link to="/ssy-calculator" className="hover:text-blue-600 underline">Sukanya Samriddhi Yojana Calculator</Link>
           <Link to="/credit-score" className="hover:text-blue-600 underline">Check Free CIBIL Score Online</Link>
-          <Link to="/blogs/Best-Credit-Cards" className="hover:text-blue-600 underline">Best Credit Cards in India</Link>
+          <Link to="/blog/Best-Credit-Cards" className="hover:text-blue-600 underline">Best Credit Cards in India</Link>
         </section>
       </main>
     </div>

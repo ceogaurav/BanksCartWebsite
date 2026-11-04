@@ -853,8 +853,8 @@ const App: React.FC = () => {
 
                 {/* Legal & Editorial Policy Pages */}
                 <Route path="/editorial-policy" element={<EditorialPolicy />} />
-                <Route path="/about" element={<AboutUs />} />
-                <Route path="/about-us" element={<Navigate to="/about" replace />} />
+                <Route path="/about-us" element={<AboutUs />} />
+                <Route path="/about" element={<Navigate to="/about-us" replace />} />
                 <Route path="/contact" element={<ContactUs />} />
                 <Route path="/contact-us" element={<Navigate to="/contact" replace />} />
                 <Route path="/credit-report-terms" element={<CreditReportTerms />} />

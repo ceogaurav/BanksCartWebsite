@@ -50,21 +50,30 @@ function PersonalLoanPage({ openApplyModal, openEligibilityModal }) {
 
   const financialProductSchema = {
     "@context": "https://schema.org",
-    "@type": "FinancialProduct",
-    "name": "Personal Loans in India",
+    "@type": "LoanOrCredit",
+    "name": "Personal Loans in India: Compare Low Interest Rates & Fast Disbursal",
     "description": pageDescription,
     "url": canonicalUrl,
     "provider": {
-      "@type": "Organization",
+      "@type": "FinancialService",
       "name": "BanksCart",
       "url": "https://www.bankscart.com"
     },
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "INR"
+    "annualPercentageRate": "10.15% - 24.00%",
+    "feesAndCommissionsSpecification": "Processing fee ranging from 0.50% to 2.50% + 18% GST. No foreclosure fee on floating-rate personal loans for individuals per RBI guidelines.",
+    "currency": "INR",
+    "loanTerm": {
+      "@type": "QuantitativeValue",
+      "minValue": 12,
+      "maxValue": 72,
+      "unitCode": "MON"
     },
-    "feesAndCommissionsSpecification": "Processing fee ranging from 0.50% to 2.50% + 18% GST. No foreclosure fee on floating-rate personal loans for individuals per RBI guidelines."
+    "amount": {
+      "@type": "MonetaryAmount",
+      "currency": "INR",
+      "minValue": 25000,
+      "maxValue": 5000000
+    }
   };
 
   const faqSchema = {

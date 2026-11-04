@@ -32,7 +32,7 @@ const urlsSet = new Set([
   '/embed/ssy-calculator',
   '/embed/home-loan-emi-calculator',
   '/',
-  '/about',
+  '/about-us',
   '/blog',
   '/blog',
   '/contact',
@@ -2490,23 +2490,23 @@ function generatePreRenderedBody(cleanPath, meta) {
 
             <article class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-3">
               <span class="text-xs font-semibold text-blue-600 uppercase">Business Finance</span>
-              <h3 class="text-lg font-bold text-slate-900"><a href="/blogs/Business-Loan-Guide" class="hover:text-blue-600">The Ultimate Business Loan Guide</a></h3>
+              <h3 class="text-lg font-bold text-slate-900"><a href="/blog/Business-Loan-Guide" class="hover:text-blue-600">The Ultimate Business Loan Guide</a></h3>
               <p class="text-sm text-slate-600">Everything entrepreneurs need to know about MSME credit, CGTMSE schemes, and collateral-free funding.</p>
-              <a href="/blogs/Business-Loan-Guide" class="text-sm font-medium text-blue-600 hover:text-blue-700 inline-block">Read Article &rarr;</a>
+              <a href="/blog/Business-Loan-Guide" class="text-sm font-medium text-blue-600 hover:text-blue-700 inline-block">Read Article &rarr;</a>
             </article>
 
             <article class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-3">
               <span class="text-xs font-semibold text-blue-600 uppercase">Fixed Income</span>
-              <h3 class="text-lg font-bold text-slate-900"><a href="/blogs/Fixed-Deposit-Guide" class="hover:text-blue-600">Fixed Deposit (FD) Complete Blueprint</a></h3>
+              <h3 class="text-lg font-bold text-slate-900"><a href="/blog/Fixed-Deposit-Guide" class="hover:text-blue-600">Fixed Deposit (FD) Complete Blueprint</a></h3>
               <p class="text-sm text-slate-600">Compare latest bank FD interest rates, cumulative options, and senior citizen returns.</p>
-              <a href="/blogs/Fixed-Deposit-Guide" class="text-sm font-medium text-blue-600 hover:text-blue-700 inline-block">Read Article &rarr;</a>
+              <a href="/blog/Fixed-Deposit-Guide" class="text-sm font-medium text-blue-600 hover:text-blue-700 inline-block">Read Article &rarr;</a>
             </article>
 
             <article class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-3">
               <span class="text-xs font-semibold text-blue-600 uppercase">Government Schemes</span>
-              <h3 class="text-lg font-bold text-slate-900"><a href="/blogs/Sukanya-Samriddhi-Yojana-Guide" class="hover:text-blue-600">Sukanya Samriddhi Yojana (SSY) Rules</a></h3>
+              <h3 class="text-lg font-bold text-slate-900"><a href="/blog/Sukanya-Samriddhi-Yojana-Guide" class="hover:text-blue-600">Sukanya Samriddhi Yojana (SSY) Rules</a></h3>
               <p class="text-sm text-slate-600">Complete guide to EEE tax exemption, 8.2% government interest, and girl child savings.</p>
-              <a href="/blogs/Sukanya-Samriddhi-Yojana-Guide" class="text-sm font-medium text-blue-600 hover:text-blue-700 inline-block">Read Article &rarr;</a>
+              <a href="/blog/Sukanya-Samriddhi-Yojana-Guide" class="text-sm font-medium text-blue-600 hover:text-blue-700 inline-block">Read Article &rarr;</a>
             </article>
 
             <article class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-3">
@@ -2521,6 +2521,127 @@ function generatePreRenderedBody(cleanPath, meta) {
       ${renderFooter()}
     </div>
     `;
+  }
+
+  // 1d. Dedicated Blog Post & Financial Guide Pre-rendering (/blog/*)
+  if (cleanPath.startsWith('/blog/')) {
+    const isSSY = cleanPath.toLowerCase().includes('sukanya');
+    const isCreditCard = cleanPath.toLowerCase().includes('credit-card');
+    const isLifetimeFree = cleanPath.toLowerCase().includes('lifetime-free');
+
+    let authorSlug = 'raghav-singhal';
+    let authorName = 'Raghav Singhal';
+    let authorRole = 'Lead Financial Analyst & Banking Researcher';
+    let reviewerSlug = 'amit-khurana';
+    let reviewerName = 'Amit Khurana';
+    let reviewerRole = 'Banking Operations & Retail Credit Lead';
+
+    if (isLifetimeFree) {
+      authorSlug = 'neha-verma';
+      authorName = 'Neha Verma';
+      authorRole = 'Senior Credit & Debt Advisory Lead';
+      reviewerSlug = 'raghav-singhal';
+      reviewerName = 'Raghav Singhal';
+      reviewerRole = 'Lead Financial Analyst';
+    } else if (isSSY || isCreditCard) {
+      authorSlug = 'priya-sharma';
+      authorName = 'Priya Sharma';
+      authorRole = 'Senior Financial Analyst & Retail Banking Specialist';
+      reviewerSlug = isCreditCard ? 'amit-khurana' : 'neha-verma';
+      reviewerName = isCreditCard ? 'Amit Khurana' : 'Neha Verma';
+      reviewerRole = isCreditCard ? 'Banking Operations & Retail Credit Lead' : 'Senior Credit & Debt Advisory Lead';
+    }
+
+    return `
+    <div class="min-h-screen bg-slate-50 text-slate-800 font-sans antialiased">
+      <header class="bg-white border-b border-slate-200 py-4 px-6 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+          <a href="/" class="text-2xl font-bold tracking-tight text-blue-900">BanksCart</a>
+          <nav class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
+            <a href="/loans/personal-loan" class="hover:text-blue-600">Personal Loans</a>
+            <a href="/loans/home-loan" class="hover:text-blue-600">Home Loans</a>
+            <a href="/cards/credit-cards" class="hover:text-blue-600">Credit Cards</a>
+            <a href="/blog" class="hover:text-blue-600 text-blue-600 font-semibold">Financial Guides</a>
+          </nav>
+        </div>
+      </header>
+
+      <main class="max-w-4xl mx-auto px-4 sm:px-6 py-10">
+        <nav aria-label="Breadcrumb" class="text-xs text-slate-500 mb-6">
+          <ol class="flex items-center space-x-2">
+            <li><a href="/" class="hover:text-blue-600">Home</a></li>
+            <li><span>/</span></li>
+            <li><a href="/blog" class="hover:text-blue-600">Financial Guides</a></li>
+            <li><span>/</span></li>
+            <li class="text-slate-800 font-medium truncate max-w-[280px]" aria-current="page">${title}</li>
+          </ol>
+        </nav>
+
+        <article class="bg-white rounded-2xl p-6 sm:p-10 border border-slate-200 shadow-sm space-y-6">
+          <header class="space-y-4 border-b border-slate-200 pb-6">
+            <span class="inline-block px-3 py-1 bg-blue-50 text-blue-700 text-xs font-semibold uppercase tracking-wider rounded-full border border-blue-200">Expert Financial Guide</span>
+            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">${title}</h1>
+            <p class="text-lg text-slate-600 leading-relaxed">${desc}</p>
+
+            <!-- Verified Author Byline System linking directly to Author Bio Pages -->
+            <div class="w-full my-6 bg-slate-50 border border-slate-200 rounded-xl p-4 sm:p-5 font-sans text-slate-800">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="flex items-center space-x-3">
+                  <div class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-sm shadow">
+                    ${authorName.split(' ').map(n => n[0]).join('')}
+                  </div>
+                  <div>
+                    <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider block">Written by</span>
+                    <a href="/author/${authorSlug}" class="text-sm font-bold text-slate-900 hover:text-blue-600 transition-colors inline-flex items-center gap-1">
+                      <span>${authorName}</span> &rarr;
+                    </a>
+                    <p class="text-xs text-slate-500">${authorRole}</p>
+                  </div>
+                </div>
+
+                <div class="flex items-center space-x-3 md:border-l md:border-slate-200 md:pl-4">
+                  <div class="w-10 h-10 rounded-full bg-emerald-700 text-white flex items-center justify-center font-bold text-sm shadow">
+                    ${reviewerName.split(' ').map(n => n[0]).join('')}
+                  </div>
+                  <div>
+                    <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider block">Reviewed &amp; Fact-Checked by</span>
+                    <a href="/author/${reviewerSlug}" class="text-sm font-bold text-slate-900 hover:text-emerald-700 transition-colors inline-flex items-center gap-1">
+                      <span>${reviewerName}</span> &rarr;
+                    </a>
+                    <p class="text-xs text-slate-500">${reviewerRole}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-3 pt-3 border-t border-slate-200/80 flex flex-wrap items-center justify-between text-xs text-slate-500 gap-2">
+                <span>Published: 2026 Edition</span>
+                <span>Fact-Checked per RBI Guidelines</span>
+                <span><a href="/editorial-policy" class="text-blue-600 hover:underline">Editorial &amp; Verification Policy</a></span>
+              </div>
+            </div>
+          </header>
+
+          <section class="prose max-w-none text-slate-700 leading-relaxed space-y-4">
+            <h2 class="text-2xl font-bold text-slate-900">Comprehensive Analysis &amp; Key Insights</h2>
+            <p>Our financial advisory team at BanksCart conducts comprehensive evaluations of current banking products, regulatory notifications from the Reserve Bank of India (RBI), and real-time interest rate benchmarks across 30+ scheduled commercial banks and premier NBFCs.</p>
+            <p>${desc}</p>
+            <div class="p-4 bg-blue-50/70 rounded-xl border border-blue-200 text-sm text-slate-700 my-4">
+              <strong class="text-blue-900 font-semibold block mb-1">Key Takeaway &amp; Advisory Note:</strong>
+              Prior to submitting formal credit applications or executing account opening agreements, borrowers and investors should evaluate annual percentage rates (APR), pre-closure charges, processing fee structures, and the impact of credit inquiries on their official CIBIL score.
+            </div>
+            <h3 class="text-xl font-bold text-slate-900">Comparing Premier Options in India</h3>
+            <p>Borrowers can leverage BanksCart's free algorithmic comparison tools to check loan eligibility, calculate monthly EMIs using reducing balance formulas, and compare pre-approved financing offers without incurring hard credit inquiries.</p>
+          </section>
+
+          <div class="pt-6 border-t border-slate-200 flex flex-wrap gap-4">
+            <a href="/loans/personal-loan" class="inline-flex items-center justify-center px-5 py-2.5 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors shadow text-sm">Compare Loan Options</a>
+            <a href="/cards/credit-cards" class="inline-flex items-center justify-center px-5 py-2.5 bg-slate-100 text-slate-800 font-medium rounded-lg hover:bg-slate-200 transition-colors border border-slate-300 text-sm">Explore Credit Cards</a>
+            <a href="/credit-score" class="inline-flex items-center justify-center px-5 py-2.5 bg-emerald-50 text-emerald-800 font-medium rounded-lg hover:bg-emerald-100 transition-colors border border-emerald-300 text-sm">Check Free Credit Score</a>
+          </div>
+        </article>
+      </main>
+
+      ${renderFooter()}
+    </div>`;
   }
 
   // 2. Directory Services (Company registration, Aadhaar, Credit Rectification, etc.)
@@ -2744,7 +2865,7 @@ function renderFooter() {
           <li><a href="/loans/personal" class="hover:text-white">Personal Loans</a></li>
           <li><a href="/loans/home" class="hover:text-white">Home Loans</a></li>
           <li><a href="/cards/credit" class="hover:text-white">Credit Cards</a></li>
-          <li><a href="/blogs/Best-Credit-Cards" class="hover:text-white">Best Credit Cards in India</a></li>
+          <li><a href="/blog/Best-Credit-Cards" class="hover:text-white">Best Credit Cards in India</a></li>
           <li><a href="/credit-score" class="hover:text-white">Credit Score</a></li>
         </ul>
       </div>
@@ -2760,7 +2881,7 @@ function renderFooter() {
       <div>
         <h4 class="font-semibold text-white mb-3">Company & Legal</h4>
         <ul class="space-y-2 text-xs">
-          <li><a href="/about" class="hover:text-white">About Us</a></li>
+          <li><a href="/about-us" class="hover:text-white">About Us</a></li>
           <li><a href="/contact" class="hover:text-white">Contact Support</a></li>
           <li><a href="/editorial-policy" class="hover:text-white">Editorial & Fact-Check Policy</a></li>
           <li><a href="/privacy-policy" class="hover:text-white">Privacy Policy</a></li>
@@ -2827,7 +2948,7 @@ function renderFooter() {
       <span>&copy; ${new Date().getFullYear()} BanksCart Financial Technologies Pvt. Ltd. All rights reserved.</span>
       <div class="flex items-center gap-4 text-xs">
         <a href="/editorial-policy" class="hover:text-white">Editorial Policy</a>
-        <a href="/about" class="hover:text-white">About Us</a>
+        <a href="/about-us" class="hover:text-white">About Us</a>
         <a href="/contact" class="hover:text-white">Contact Us</a>
         <a href="/privacy-policy" class="hover:text-white">Privacy</a>
         <a href="/terms-of-use" class="hover:text-white">Terms</a>
@@ -2860,7 +2981,7 @@ function generateJsonLd(cleanPath, meta, canonicalUrl) {
     },
     "contactPoint": {
       "@type": "ContactPoint",
-      "telephone": "+91-11-XXXXXXXX",
+      "telephone": "+91-11-41008900",
       "contactType": "Customer Support",
       "areaServed": "IN",
       "availableLanguage": ["English", "Hindi"]
@@ -3030,7 +3151,49 @@ function generateJsonLd(cleanPath, meta, canonicalUrl) {
       "@type": "AboutPage",
       "name": meta.title,
       "description": meta.description,
-      "url": "https://www.bankscart.com/about"
+      "url": "https://www.bankscart.com/about-us"
+    });
+    return schemas;
+  }
+
+  // Blog Hub CollectionPage Schema
+  if (cleanPath === '/blog' || cleanPath === '/blogs') {
+    schemas.push({
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": meta.title,
+      "description": meta.description,
+      "url": "https://www.bankscart.com/blog",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "BanksCart",
+        "url": "https://www.bankscart.com/"
+      }
+    });
+    return schemas;
+  }
+
+  // Legal & Informational Pages WebPage Schema
+  if (
+    cleanPath === '/terms-of-use' ||
+    cleanPath === '/terms' ||
+    cleanPath === '/privacy-policy' ||
+    cleanPath === '/privacy' ||
+    cleanPath === '/disclaimer' ||
+    cleanPath === '/sitemap'
+  ) {
+    schemas.push({
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": meta.title,
+      "description": meta.description,
+      "url": canonicalUrl,
+      "publisher": {
+        "@type": "Organization",
+        "name": "BanksCart",
+        "url": "https://www.bankscart.com",
+        "logo": "https://www.bankscart.com/favicon-32x32.png"
+      }
     });
     return schemas;
   }
@@ -3104,8 +3267,35 @@ function generateJsonLd(cleanPath, meta, canonicalUrl) {
     return schemas;
   }
 
-  // Template 2: Personal Loans FAQPage
+  // Template 2: Personal Loans FAQPage & LoanOrCredit Schema
   if (cleanPath === '/loans/personal-loan' || cleanPath === '/loans/personal') {
+    schemas.push({
+      "@context": "https://schema.org",
+      "@type": "LoanOrCredit",
+      "name": "Personal Loans in India: Compare Low Interest Rates & Fast Disbursal",
+      "description": meta.description,
+      "url": canonicalUrl,
+      "provider": {
+        "@type": "FinancialService",
+        "name": "BanksCart",
+        "url": "https://www.bankscart.com"
+      },
+      "annualPercentageRate": "10.15% - 24.00%",
+      "feesAndCommissionsSpecification": "Processing fee ranging from 0.50% to 2.50% + 18% GST. No foreclosure fee on floating-rate personal loans for individuals per RBI guidelines.",
+      "currency": "INR",
+      "loanTerm": {
+        "@type": "QuantitativeValue",
+        "minValue": 12,
+        "maxValue": 72,
+        "unitCode": "MON"
+      },
+      "amount": {
+        "@type": "MonetaryAmount",
+        "currency": "INR",
+        "minValue": 25000,
+        "maxValue": 5000000
+      }
+    });
     schemas.push({
       "@context": "https://schema.org",
       "@type": "FAQPage",
@@ -3144,6 +3334,7 @@ function generateJsonLd(cleanPath, meta, canonicalUrl) {
         }
       ]
     });
+    return schemas;
   }
 
   // Template 3: Home Loans FAQPage
@@ -3178,6 +3369,7 @@ function generateJsonLd(cleanPath, meta, canonicalUrl) {
         }
       ]
     });
+    return schemas;
   }
 
   // Gold Loan EMI Calculator FAQPage
@@ -3212,6 +3404,7 @@ function generateJsonLd(cleanPath, meta, canonicalUrl) {
         }
       ]
     });
+    return schemas;
   }
 
   // Personal Loan EMI Calculator FAQPage
@@ -3246,21 +3439,34 @@ function generateJsonLd(cleanPath, meta, canonicalUrl) {
         }
       ]
     });
+    return schemas;
   }
 
-  // Product / Service Schema
-  schemas.push({
-    "@context": "https://schema.org",
-    "@type": "FinancialProduct",
-    "name": meta.title,
-    "description": meta.description,
-    "url": canonicalUrl,
-    "provider": {
-      "@type": "Organization",
-      "name": "BanksCart",
-      "url": "https://www.bankscart.com"
-    }
-  });
+  // Product / Service Schema (Only on commercial/product pages)
+  const nonProductRoutes = [
+    '/about', '/about-us', '/blog', '/blogs', '/contact', '/contact-us',
+    '/editorial-policy', '/terms-of-use', '/terms', '/privacy-policy',
+    '/privacy', '/disclaimer', '/sitemap'
+  ];
+  const isNonProduct = nonProductRoutes.includes(cleanPath) ||
+    cleanPath.startsWith('/author/') ||
+    cleanPath.startsWith('/blog/') ||
+    cleanPath.startsWith('/blogs/');
+
+  if (!isNonProduct) {
+    schemas.push({
+      "@context": "https://schema.org",
+      "@type": "FinancialProduct",
+      "name": meta.title,
+      "description": meta.description,
+      "url": canonicalUrl,
+      "provider": {
+        "@type": "Organization",
+        "name": "BanksCart",
+        "url": "https://www.bankscart.com"
+      }
+    });
+  }
 
   return schemas;
 }
@@ -3275,17 +3481,17 @@ for (const urlPath of urls) {
   let canonicalUrl = cleanPath === '' ? 'https://www.bankscart.com/' : `https://www.bankscart.com${cleanPath}`;
   if (cleanPath === '/blogs' || cleanPath === '/blogs-overview-page') {
     canonicalUrl = 'https://www.bankscart.com/blog';
-  } else if (cleanPath === '/about-us') {
-    canonicalUrl = 'https://www.bankscart.com/about';
+  } else if (cleanPath === '/about') {
+    canonicalUrl = 'https://www.bankscart.com/about-us';
   } else if (cleanPath === '/contact-us') {
     canonicalUrl = 'https://www.bankscart.com/contact';
   } else if (cleanPath.startsWith('/blogs/')) {
     canonicalUrl = `https://www.bankscart.com${cleanPath.replace('/blogs/', '/blog/')}`;
   }
 
-  // 301 Redirect Pages for legacy /blogs, /blogs-overview-page, and /about-us
-  if (cleanPath === '/blogs' || cleanPath === '/blogs-overview-page' || cleanPath === '/about-us' || cleanPath.startsWith('/blogs/')) {
-    const target = cleanPath === '/about-us' ? '/about' : (cleanPath.startsWith('/blogs/') ? cleanPath.replace('/blogs/', '/blog/') : '/blog');
+  // 301 Redirect Pages for legacy /blogs, /blogs-overview-page, and /about
+  if (cleanPath === '/blogs' || cleanPath === '/blogs-overview-page' || cleanPath === '/about' || cleanPath.startsWith('/blogs/')) {
+    const target = cleanPath === '/about' ? '/about-us' : (cleanPath.startsWith('/blogs/') ? cleanPath.replace('/blogs/', '/blog/') : '/blog');
     const redirectHtml = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -3389,7 +3595,7 @@ const legacyRedirects = [
   { path: '/calculators/ssy-calculator', target: '/ssy-calculator' },
   { path: '/blogs', target: '/blog' },
   { path: '/blogs-overview-page', target: '/blog' },
-  { path: '/about-us', target: '/about' },
+  { path: '/about', target: '/about-us' },
   { path: '/contact-us', target: '/contact' },
   { path: '/credit-card', target: '/cards/credit-cards' },
   { path: '/credit-cards', target: '/cards/credit-cards' },

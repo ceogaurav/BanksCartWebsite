@@ -254,7 +254,7 @@ const Home: React.FC<HomeProps> = ({ openApplyModal, openEligibilityModal, openC
                     <a href="/gold-loan-emi-calculator" className="px-3.5 py-1.5 bg-amber-50 text-amber-800 hover:bg-amber-100 rounded-lg font-semibold transition-colors border border-amber-200">
                       Gold Loan EMI Calculator
                     </a>
-                    <a href="/blogs/Best-Credit-Cards" className="px-3.5 py-1.5 bg-purple-50 text-purple-700 hover:bg-purple-100 rounded-lg font-semibold transition-colors border border-purple-200">
+                    <a href="/blog/Best-Credit-Cards" className="px-3.5 py-1.5 bg-purple-50 text-purple-700 hover:bg-purple-100 rounded-lg font-semibold transition-colors border border-purple-200">
                       Best credit cards in India
                     </a>
                   </div>
