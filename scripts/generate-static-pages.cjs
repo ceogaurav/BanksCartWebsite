@@ -1259,6 +1259,117 @@ function generatePreRenderedBody(cleanPath, meta) {
   }
 
   // =========================================================================
+  // SILO 3 BLOG GUIDE: HOW TO DISPUTE CIBIL ERRORS (/blog/how-to-dispute-cibil-errors)
+  // =========================================================================
+  if (cleanPath === '/blog/how-to-dispute-cibil-errors') {
+    return `
+    <div class="min-h-screen bg-slate-50 text-slate-800 font-sans antialiased">
+      <header class="bg-white border-b border-slate-200 py-4 px-6 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+          <a href="/" class="text-2xl font-bold tracking-tight text-blue-900">BanksCart</a>
+          <nav class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
+            <a href="/credit-score" class="hover:text-blue-600">Credit Score</a>
+            <a href="/credit-score/credit-rectification-service" class="text-teal-600 font-bold">Credit Rectification</a>
+          </nav>
+        </div>
+      </header>
+
+      <main class="max-w-4xl mx-auto px-6 py-12 space-y-8">
+        <nav aria-label="Breadcrumb" class="text-sm text-slate-500">
+          <ol class="flex items-center space-x-2">
+            <li><a href="/" class="hover:text-blue-600">Home</a></li>
+            <li><span>/</span></li>
+            <li><a href="/credit-score" class="hover:text-blue-600">Credit Score</a></li>
+            <li><span>/</span></li>
+            <li><a href="/credit-score/credit-rectification-service" class="hover:text-blue-600">Credit Rectification</a></li>
+            <li><span>/</span></li>
+            <li class="text-slate-800 font-medium" aria-current="page">Dispute CIBIL Errors</li>
+          </ol>
+        </nav>
+
+        <article class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
+          <span class="text-xs font-bold text-teal-600 uppercase tracking-wider block">Credit Health &amp; Dispute Resolution</span>
+          <h1 class="text-3xl font-extrabold text-slate-900">${title}</h1>
+          <p class="text-slate-600 text-sm leading-relaxed">${desc}</p>
+          <div class="p-6 bg-teal-50 rounded-2xl border border-teal-200 flex items-center justify-between">
+            <div>
+              <h3 class="font-bold text-teal-900 text-sm">Need Help Fixing Your CIBIL Report?</h3>
+              <p class="text-xs text-teal-700">Explore expert credit rectification guidance to resolve wrongful overdue tags, update settlement statuses, and boost your score.</p>
+            </div>
+            <a href="/credit-score/credit-rectification-service" class="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs rounded-xl shadow whitespace-nowrap">Credit Rectification &rarr;</a>
+          </div>
+          <div class="pt-4 border-t flex flex-wrap gap-4 text-xs font-bold text-teal-600">
+            <a href="/credit-score/credit-rectification-service" class="hover:underline">Credit Rectification Service &rarr;</a>
+            <a href="/credit-score" class="hover:underline">Free Credit Score Check &rarr;</a>
+            <a href="/cibil-credit-report" class="hover:underline">CIBIL Credit Report &rarr;</a>
+            <a href="/credit-health-report-services" class="hover:underline">Credit Health Report &rarr;</a>
+          </div>
+        </article>
+      </main>
+      ${renderFooter()}
+    </div>`;
+  }
+
+  // =========================================================================
+  // SILO 4 PAGES: COMPANY REGISTRATION IN DELHI, CHENNAI & COPYRIGHT
+  // =========================================================================
+  if (
+    cleanPath === '/business-loan/company-registration-in-delhi' ||
+    cleanPath === '/business-loan/company-registration-in-chennai' ||
+    cleanPath === '/business-loan/company-registration-in-bangalore' ||
+    cleanPath === '/company-registration/copyright-registration'
+  ) {
+    return `
+    <div class="min-h-screen bg-slate-50 text-slate-800 font-sans antialiased">
+      <header class="bg-white border-b border-slate-200 py-4 px-6 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+          <a href="/" class="text-2xl font-bold tracking-tight text-blue-900">BanksCart</a>
+          <nav class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
+            <a href="/company-registration" class="text-blue-600 font-bold">Company Registration Hub</a>
+            <a href="/loans" class="hover:text-blue-600">Loans</a>
+            <a href="/cards" class="hover:text-blue-600">Cards</a>
+          </nav>
+        </div>
+      </header>
+
+      <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
+        <nav aria-label="Breadcrumb" class="text-sm text-slate-500">
+          <ol class="flex items-center space-x-2">
+            <li><a href="/" class="hover:text-blue-600">Home</a></li>
+            <li><span>/</span></li>
+            <li><a href="/company-registration" class="hover:text-blue-600">Company Registration</a></li>
+            <li><span>/</span></li>
+            <li class="text-slate-800 font-medium" aria-current="page">${title}</li>
+          </ol>
+        </nav>
+
+        <section class="bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 text-white rounded-3xl p-8 lg:p-14 shadow-xl space-y-6">
+          <span class="inline-block px-3 py-1 bg-white/10 text-teal-300 text-xs font-bold uppercase tracking-wider rounded-full border border-white/20">Corporate Incorporation &amp; IP Protection</span>
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight">${title}</h1>
+          <p class="text-lg text-slate-200 leading-relaxed max-w-4xl">${desc}</p>
+          <div class="pt-4 flex flex-wrap gap-4">
+            <a href="/company-registration" class="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow">&larr; Company Registration Hub</a>
+            <a href="/business-loan" class="inline-flex items-center px-6 py-3 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-xl border border-white/20">Business Loans</a>
+          </div>
+        </section>
+
+        <section class="bg-white rounded-2xl p-8 lg:p-12 border border-slate-200 shadow-sm space-y-6">
+          <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Registration &amp; Statutory Compliance Details</h2>
+          <p class="text-slate-600 text-sm sm:text-base leading-relaxed">BanksCart provides complete guidance for statutory entity registration, DIN/PAN procurement, ROC verification, and intellectual property filings under the Ministry of Corporate Affairs (MCA) and Indian Copyright Office frameworks.</p>
+          <div class="p-6 bg-slate-50 rounded-2xl border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div>
+              <h3 class="font-bold text-slate-900 text-sm">Return to Silo Hub: Company Registration &amp; IP Services</h3>
+              <p class="text-xs text-slate-600">Compare Pvt Ltd, LLP, One Person Company (OPC), and Trademark/Copyright registration options.</p>
+            </div>
+            <a href="/company-registration" class="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-xl shadow whitespace-nowrap">View All Legal Services &rarr;</a>
+          </div>
+        </section>
+      </main>
+      ${renderFooter()}
+    </div>`;
+  }
+
+  // =========================================================================
   // BLUEPRINT TEMPLATE 1: HOMEPAGE (/)
   // =========================================================================
   if (cleanPath === '/' || cleanPath === '') {

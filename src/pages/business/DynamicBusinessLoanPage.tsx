@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { HelpCircle, ChevronDown, Check, Star, ShieldAlert, Sparkles, BookOpen, AlertCircle, Info, Landmark, Percent, Award, ShieldCheck, ArrowRight, Play, MessageSquare, TrendingUp, CreditCard } from 'lucide-react';
 import CibilCheckerForm from '../../components/common/CibilCheckerForm';
 
@@ -282,6 +282,19 @@ const DynamicBusinessLoanPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-slate-50 pt-24 pb-16 font-sans">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+
+        {/* Silo 4 Breadcrumb */}
+        {currentSlug.includes('company-registration') && (
+          <nav aria-label="Breadcrumb" className="text-sm text-slate-500 mb-6">
+            <ol className="flex items-center space-x-2">
+              <li><Link to="/" className="hover:text-blue-600 transition-colors">Home</Link></li>
+              <li><span>/</span></li>
+              <li><Link to="/company-registration" className="hover:text-blue-600 transition-colors">Company Registration Hub</Link></li>
+              <li><span>/</span></li>
+              <li className="text-slate-800 font-medium" aria-current="page">{pageContent.title}</li>
+            </ol>
+          </nav>
+        )}
         
         {/* Top Banner section */}
         <div className="bg-gradient-to-r from-blue-800 via-indigo-900 to-blue-900 rounded-3xl text-white p-8 sm:p-12 mb-12 shadow-xl relative overflow-hidden">
@@ -298,6 +311,16 @@ const DynamicBusinessLoanPage: React.FC = () => {
             <p className="text-blue-100 text-base sm:text-lg mt-4 leading-relaxed max-w-2xl font-medium font-sans">
               {pageContent.intro}
             </p>
+            {currentSlug.includes('company-registration') && (
+              <div className="pt-6">
+                <Link
+                  to="/company-registration"
+                  className="inline-flex items-center px-4 py-2 bg-white/20 hover:bg-white/30 text-white font-bold text-xs rounded-xl transition-colors border border-white/20"
+                >
+                  &larr; Return to Company Registration Hub
+                </Link>
+              </div>
+            )}
           </div>
         </div>
 
