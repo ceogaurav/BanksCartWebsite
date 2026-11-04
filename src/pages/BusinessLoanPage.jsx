@@ -505,37 +505,85 @@ const BusinessLoanPage = ({ openApplyModal }) => {
 };
 
 function EMICalculator() {
-  const [amount, setAmount] = React.useState(500000);
-  const [rate, setRate] = React.useState(15);
-  const [tenure, setTenure] = React.useState(36);
+  const [displayAmount, setDisplayAmount] = React.useState(500000);
+  const [displayRate, setDisplayRate] = React.useState(15);
+  const [displayTenure, setDisplayTenure] = React.useState(36);
 
-  // EMI calculation
-  const r = rate / 12 / 100;
-  const n = tenure;
-  const emi = amount && rate && tenure
-    ? Math.round((amount * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1))
-    : 0;
-  const total = emi * n;
-  const interest = total - amount;
+  const [calcAmount, setCalcAmount] = React.useState(500000);
+  const [calcRate, setCalcRate] = React.useState(15);
+  const [calcTenure, setCalcTenure] = React.useState(36);
 
-  // For Pie Chart
-  window.__emiPie = { principal: amount, interest };
+  const [emi, setEmi] = React.useState(17333);
+  const [total, setTotal] = React.useState(623975);
+  const [interest, setInterest] = React.useState(123975);
+
+  const amountTimer = React.useRef(null);
+  const rateTimer = React.useRef(null);
+  const tenureTimer = React.useRef(null);
+
+  const handleAmountChange = (val) => {
+    setDisplayAmount(val);
+    if (amountTimer.current) clearTimeout(amountTimer.current);
+    amountTimer.current = setTimeout(() => setCalcAmount(val), 150);
+  };
+
+  const handleRateChange = (val) => {
+    setDisplayRate(val);
+    if (rateTimer.current) clearTimeout(rateTimer.current);
+    rateTimer.current = setTimeout(() => setCalcRate(val), 150);
+  };
+
+  const handleTenureChange = (val) => {
+    setDisplayTenure(val);
+    if (tenureTimer.current) clearTimeout(tenureTimer.current);
+    tenureTimer.current = setTimeout(() => setCalcTenure(val), 150);
+  };
+
+  React.useEffect(() => {
+    return () => {
+      if (amountTimer.current) clearTimeout(amountTimer.current);
+      if (rateTimer.current) clearTimeout(rateTimer.current);
+      if (tenureTimer.current) clearTimeout(tenureTimer.current);
+    };
+  }, []);
+
+  React.useEffect(() => {
+    const runCalculation = () => {
+      const r = calcRate / 12 / 100;
+      const n = calcTenure;
+      const calculatedEmi = calcAmount && calcRate && calcTenure
+        ? Math.round((calcAmount * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1))
+        : 0;
+      const calculatedTotal = calculatedEmi * n;
+      const calculatedInterest = calculatedTotal - calcAmount;
+      setEmi(calculatedEmi);
+      setTotal(calculatedTotal);
+      setInterest(calculatedInterest);
+      window.__emiPie = { principal: calcAmount, interest: calculatedInterest };
+    };
+
+    if (typeof queueMicrotask === 'function') {
+      queueMicrotask(runCalculation);
+    } else {
+      setTimeout(runCalculation, 0);
+    }
+  }, [calcAmount, calcRate, calcTenure]);
 
   return (
     <div className="w-80 bg-blue-50 p-6 rounded-lg shadow flex flex-col gap-4 animate__animated animate__fadeInLeft">
       <div className="font-semibold text-lg mb-2 text-blue-700">EMI Calculator</div>
       <label className="text-sm font-medium">Loan Amount (₹)</label>
-      <input type="range" min="50000" max="5000000" step="10000" value={amount} onChange={e => setAmount(Number(e.target.value))} className="w-full accent-blue-500" />
+      <input type="range" min="50000" max="5000000" step="10000" value={displayAmount} onChange={e => handleAmountChange(Number(e.target.value))} className="w-full accent-blue-500" />
       <div className="flex justify-between text-xs text-gray-500 mb-2"><span>50K</span><span>50L</span></div>
-      <input type="number" min="50000" max="5000000" step="10000" value={amount} onChange={e => setAmount(Number(e.target.value))} className="w-full mb-2 p-2 rounded border" />
+      <input type="number" min="50000" max="5000000" step="10000" value={displayAmount} onChange={e => handleAmountChange(Number(e.target.value))} className="w-full mb-2 p-2 rounded border" />
       <label className="text-sm font-medium">Interest Rate (% p.a.)</label>
-      <input type="range" min="8" max="36" step="0.1" value={rate} onChange={e => setRate(Number(e.target.value))} className="w-full accent-orange-500" />
+      <input type="range" min="8" max="36" step="0.1" value={displayRate} onChange={e => handleRateChange(Number(e.target.value))} className="w-full accent-orange-500" />
       <div className="flex justify-between text-xs text-gray-500 mb-2"><span>8%</span><span>36%</span></div>
-      <input type="number" min="8" max="36" step="0.1" value={rate} onChange={e => setRate(Number(e.target.value))} className="w-full mb-2 p-2 rounded border" />
+      <input type="number" min="8" max="36" step="0.1" value={displayRate} onChange={e => handleRateChange(Number(e.target.value))} className="w-full mb-2 p-2 rounded border" />
       <label className="text-sm font-medium">Tenure (months)</label>
-      <input type="range" min="12" max="84" step="1" value={tenure} onChange={e => setTenure(Number(e.target.value))} className="w-full accent-green-500" />
+      <input type="range" min="12" max="84" step="1" value={displayTenure} onChange={e => handleTenureChange(Number(e.target.value))} className="w-full accent-green-500" />
       <div className="flex justify-between text-xs text-gray-500 mb-2"><span>12</span><span>84</span></div>
-      <input type="number" min="12" max="84" step="1" value={tenure} onChange={e => setTenure(Number(e.target.value))} className="w-full mb-2 p-2 rounded border" />
+      <input type="number" min="12" max="84" step="1" value={displayTenure} onChange={e => handleTenureChange(Number(e.target.value))} className="w-full mb-2 p-2 rounded border" />
       <div className="mt-4 p-3 bg-white rounded shadow text-center">
         <div className="text-xs text-gray-500">Estimated EMI</div>
         <div className="text-2xl font-bold text-blue-700">₹{emi.toLocaleString()}</div>

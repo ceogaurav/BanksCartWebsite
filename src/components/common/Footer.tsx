@@ -30,7 +30,7 @@ const Footer: React.FC<FooterProps> = ({ openEligibilityModal }) => {
             </Link>
             <h3 className="text-white text-sm font-bold uppercase tracking-wider">BANKS CART</h3>
             <ul className="space-y-3 text-sm">
-              <li><Link to="/about-us" className="hover:text-blue-400 transition-colors">About Us</Link></li>
+              <li><Link to="/about" className="hover:text-blue-400 transition-colors">About Us</Link></li>
               <li><Link to="/careers" className="hover:text-blue-400 transition-colors">Careers</Link></li>
               <li><Link to="/contact" className="hover:text-blue-400 transition-colors">Contact Us</Link></li>
               <li><Link to="/partners" className="hover:text-blue-400 transition-colors">Partners</Link></li>
@@ -44,6 +44,9 @@ const Footer: React.FC<FooterProps> = ({ openEligibilityModal }) => {
             <ul className="space-y-3 text-sm">
               <li><Link to="/blog" className="hover:text-blue-400 transition-colors">Blogs</Link></li>
               <li><Link to="/calculators" className="hover:text-blue-400 transition-colors">Calculators</Link></li>
+              <li><Link to="/personal-loan-emi-calculator" className="hover:text-blue-400 transition-colors">Personal loan EMI calculator</Link></li>
+              <li><Link to="/gold-loan-emi-calculator" className="hover:text-blue-400 transition-colors">Gold Loan EMI Calculator</Link></li>
+              <li><Link to="/blogs/Best-Credit-Cards" className="hover:text-blue-400 transition-colors">Best credit cards in India</Link></li>
               <li><Link to="/loans" className="hover:text-blue-400 transition-colors">Loans</Link></li>
               <li><Link to="/cards" className="hover:text-blue-400 transition-colors">Credit Cards</Link></li>
             </ul>

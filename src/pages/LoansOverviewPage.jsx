@@ -84,6 +84,35 @@ const LoansOverviewPage = () => (
       ))}
     </div>
 
+    {/* High-Intent Financial Calculators & Comparison Banners */}
+    <div className="mt-12 max-w-6xl mx-auto w-full bg-white p-6 sm:p-8 rounded-3xl border border-blue-100 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6">
+      <div className="space-y-1 text-center md:text-left">
+        <span className="text-xs font-bold text-blue-600 uppercase tracking-wider">Loan Planning &amp; Analysis</span>
+        <h3 className="text-xl font-bold text-gray-900">Calculate Exact EMIs &amp; Compare Leading Credit Cards</h3>
+        <p className="text-xs text-gray-500">Plan monthly loan cash flows with accurate reducing-balance interest formulas before applying.</p>
+      </div>
+      <div className="flex flex-wrap items-center justify-center gap-3">
+        <a
+          href="/personal-loan-emi-calculator"
+          className="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl shadow-sm transition-colors"
+        >
+          Personal loan EMI calculator
+        </a>
+        <a
+          href="/gold-loan-emi-calculator"
+          className="px-5 py-2.5 bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 text-xs font-bold rounded-xl transition-colors"
+        >
+          Gold Loan EMI Calculator
+        </a>
+        <a
+          href="/blogs/Best-Credit-Cards"
+          className="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold rounded-xl transition-colors border border-slate-200"
+        >
+          Best credit cards in India
+        </a>
+      </div>
+    </div>
+
     {/* Specialized Commercial & Institutional Lending Hubs */}
     <div className="mt-16 max-w-6xl mx-auto w-full">
       <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 mb-4 text-center">

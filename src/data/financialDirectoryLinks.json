@@ -1245,6 +1245,13 @@
     "categoryId": "banking",
     "badge": ""
   },
+  "/banking/allahabad-bank-verified-by-visa": {
+    "name": "Allahabad Bank Verified by Visa (VbV) Registration & Security",
+    "desc": "Complete guide to Allahabad Bank Verified by Visa (3D Secure) registration, OTP authentication, and international debit/credit card security protocols.",
+    "category": "Scheduled & Private Banking Portals",
+    "categoryId": "banking",
+    "badge": "Striking Distance"
+  },
   "/banking/allahabad-bank-balance-enquiry-number": {
     "name": "Allahabad Bank Balance Enquiry",
     "desc": "Give a missed call or send an SMS to check your Allahabad account balance instantly.",

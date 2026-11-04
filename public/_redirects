@@ -1,5 +1,8 @@
-/about /about-us 301
+/about-us /about 301
 /contact-us /contact 301
+/credit-card /cards/credit-cards 301
+/credit-cards /cards/credit-cards 301
+/loans/business /business-loan 301
 /blogs/* /blog/:splat 301
 /blogs /blog 301
 /blogs-overview-page /blog 301

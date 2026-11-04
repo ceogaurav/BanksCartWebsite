@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import ApplyButton from '../components/common/ApplyButton';
 
 // --- Dynamic Data ---
@@ -100,29 +100,84 @@ const howToApply = [
 
 // --- EMI Calculator ---
 const CarLoanPage = ({ openApplyModal }) => {
-  const [loanAmount, setLoanAmount] = useState(5000000);
-  const [interestRate, setInterestRate] = useState(8.5);
-  const [tenure, setTenure] = useState(5);
-  const [processingFee, setProcessingFee] = useState(1.0);
-  const [emiResult, setEmiResult] = useState({ emi: 0, totalInterest: 0, totalAmount: 0 });
+  // Local immediate slider display values (for 60fps instant UI updates)
+  const [displayLoanAmount, setDisplayLoanAmount] = useState(500000);
+  const [displayInterestRate, setDisplayInterestRate] = useState(8.5);
+  const [displayTenure, setDisplayTenure] = useState(5);
+  const [displayProcessingFee, setDisplayProcessingFee] = useState(1.0);
+
+  // Debounced calculation state (minimum 150ms delay to eliminate INP latency bottlenecks)
+  const [calcLoanAmount, setCalcLoanAmount] = useState(500000);
+  const [calcInterestRate, setCalcInterestRate] = useState(8.5);
+  const [calcTenure, setCalcTenure] = useState(5);
+  const [calcProcessingFee, setCalcProcessingFee] = useState(1.0);
+
+  const [emiResult, setEmiResult] = useState(() => {
+    const p = 500000;
+    const r = 8.5 / 12 / 100;
+    const n = 5 * 12;
+    const emi = (p * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+    const totalAmount = emi * n + (p * 1.0 / 100);
+    return {
+      emi: Math.round(emi),
+      totalInterest: Math.round(totalAmount - p),
+      totalAmount: Math.round(totalAmount),
+    };
+  });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const calculateEMI = (e) => {
-    if (e) e.preventDefault();
-    setError("");
-    setLoading(true);
-    setTimeout(() => { // Simulate async for future API
-      const principal = Number(loanAmount);
-      const annualRate = Number(interestRate);
-      const years = Number(tenure);
-      const feePercent = Number(processingFee);
+  const amountTimer = useRef(null);
+  const rateTimer = useRef(null);
+  const tenureTimer = useRef(null);
+  const feeTimer = useRef(null);
+
+  const handleAmountChange = useCallback((val) => {
+    setDisplayLoanAmount(val);
+    if (amountTimer.current) clearTimeout(amountTimer.current);
+    amountTimer.current = setTimeout(() => setCalcLoanAmount(val), 150);
+  }, []);
+
+  const handleRateChange = useCallback((val) => {
+    setDisplayInterestRate(val);
+    if (rateTimer.current) clearTimeout(rateTimer.current);
+    rateTimer.current = setTimeout(() => setCalcInterestRate(val), 150);
+  }, []);
+
+  const handleTenureChange = useCallback((val) => {
+    setDisplayTenure(val);
+    if (tenureTimer.current) clearTimeout(tenureTimer.current);
+    tenureTimer.current = setTimeout(() => setCalcTenure(val), 150);
+  }, []);
+
+  const handleFeeChange = useCallback((val) => {
+    setDisplayProcessingFee(val);
+    if (feeTimer.current) clearTimeout(feeTimer.current);
+    feeTimer.current = setTimeout(() => setCalcProcessingFee(val), 150);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (amountTimer.current) clearTimeout(amountTimer.current);
+      if (rateTimer.current) clearTimeout(rateTimer.current);
+      if (tenureTimer.current) clearTimeout(tenureTimer.current);
+      if (feeTimer.current) clearTimeout(feeTimer.current);
+    };
+  }, []);
+
+  // Offload recalculation to an asynchronous microtask
+  useEffect(() => {
+    const runCalculation = () => {
+      const principal = Number(calcLoanAmount);
+      const annualRate = Number(calcInterestRate);
+      const years = Number(calcTenure);
+      const feePercent = Number(calcProcessingFee);
       if (!principal || !annualRate || !years) {
         setEmiResult({ emi: 0, totalInterest: 0, totalAmount: 0 });
         setError("Please enter valid values for all fields.");
-        setLoading(false);
         return;
       }
+      setError("");
       const n = years * 12;
       const r = annualRate / 12 / 100;
       const emi = r === 0 ? principal / n : (principal * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
@@ -133,15 +188,18 @@ const CarLoanPage = ({ openApplyModal }) => {
         totalInterest: Math.round(totalInterest),
         totalAmount: Math.round(totalAmount),
       });
-      setLoading(false);
-    }, 400);
+    };
+
+    if (typeof queueMicrotask === 'function') {
+      queueMicrotask(runCalculation);
+    } else {
+      setTimeout(runCalculation, 0);
+    }
+  }, [calcLoanAmount, calcInterestRate, calcTenure, calcProcessingFee]);
+
+  const calculateEMI = (e) => {
+    if (e) e.preventDefault();
   };
-
-  useEffect(() => {
-    calculateEMI();
-    // eslint-disable-next-line
-  }, [loanAmount, interestRate, tenure, processingFee]);
-
 
   return (
     <div className="min-h-screen bg-[#F8F9FA] py-8 px-4 md:px-12">
@@ -487,8 +545,8 @@ const CarLoanPage = ({ openApplyModal }) => {
               min={10000}
               max={10000000}
               step={10000}
-              value={loanAmount}
-              onChange={e => setLoanAmount(Number(e.target.value))}
+              value={displayLoanAmount}
+              onChange={e => handleAmountChange(Number(e.target.value))}
               className="w-full accent-[#E74C3C] h-2 rounded-lg appearance-none cursor-pointer mb-2"
             />
             <div className="flex justify-between text-xs text-gray-500 mb-1">
@@ -501,8 +559,8 @@ const CarLoanPage = ({ openApplyModal }) => {
               placeholder="e.g. 500000"
               min={10000}
               max={10000000}
-              value={loanAmount}
-              onChange={e => setLoanAmount(Number(e.target.value))}
+              value={displayLoanAmount}
+              onChange={e => handleAmountChange(Number(e.target.value))}
               aria-label="Loan Amount"
             />
           </div>
@@ -513,8 +571,8 @@ const CarLoanPage = ({ openApplyModal }) => {
               min={0}
               max={50}
               step={0.01}
-              value={interestRate}
-              onChange={e => setInterestRate(Number(e.target.value))}
+              value={displayInterestRate}
+              onChange={e => handleRateChange(Number(e.target.value))}
               className="w-full accent-[#F59E42] h-2 rounded-lg appearance-none cursor-pointer mb-2"
             />
             <div className="flex justify-between text-xs text-gray-500 mb-1">
@@ -528,8 +586,8 @@ const CarLoanPage = ({ openApplyModal }) => {
               placeholder="e.g. 8.5"
               min={0}
               max={50}
-              value={interestRate}
-              onChange={e => setInterestRate(Number(e.target.value))}
+              value={displayInterestRate}
+              onChange={e => handleRateChange(Number(e.target.value))}
               aria-label="Interest Rate"
             />
           </div>
@@ -539,8 +597,8 @@ const CarLoanPage = ({ openApplyModal }) => {
               type="range"
               min={1}
               max={8}
-              value={tenure}
-              onChange={e => setTenure(Number(e.target.value))}
+              value={displayTenure}
+              onChange={e => handleTenureChange(Number(e.target.value))}
               className="w-full accent-[#2E86C1] h-2 rounded-lg appearance-none cursor-pointer mb-2"
             />
             <div className="flex justify-between text-xs text-gray-500 mb-1">
@@ -553,8 +611,8 @@ const CarLoanPage = ({ openApplyModal }) => {
               placeholder="e.g. 5"
               min={1}
               max={8}
-              value={tenure}
-              onChange={e => setTenure(Number(e.target.value))}
+              value={displayTenure}
+              onChange={e => handleTenureChange(Number(e.target.value))}
               aria-label="Tenure"
             />
           </div>
@@ -565,8 +623,8 @@ const CarLoanPage = ({ openApplyModal }) => {
               min={0}
               max={10}
               step={0.01}
-              value={processingFee}
-              onChange={e => setProcessingFee(Number(e.target.value))}
+              value={displayProcessingFee}
+              onChange={e => handleFeeChange(Number(e.target.value))}
               className="w-full accent-[#E74C3C] h-2 rounded-lg appearance-none cursor-pointer mb-2"
             />
             <div className="flex justify-between text-xs text-gray-500 mb-1">
@@ -580,8 +638,8 @@ const CarLoanPage = ({ openApplyModal }) => {
               placeholder="e.g. 1.0"
               min={0}
               max={10}
-              value={processingFee}
-              onChange={e => setProcessingFee(Number(e.target.value))}
+              value={displayProcessingFee}
+              onChange={e => handleFeeChange(Number(e.target.value))}
               aria-label="Processing Fee"
             />
           </div>

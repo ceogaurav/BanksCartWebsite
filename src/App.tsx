@@ -37,6 +37,7 @@ import LoanRates from './pages/LoanRates';
 import Status from './pages/Status';
 import PanCard from './pages/PanCard';
 import PersonalLoanEMI from './pages/calculators/PersonalLoanEMI';
+import GoldLoanEMICalculator from './pages/calculators/GoldLoanEMICalculator';
 import HomeLoanEMI from './pages/calculators/HomeLoanEMI';
 import CarLoanEMI from './pages/calculators/CarLoanEMI';
 import IncomeTaxCalculator from './pages/calculators/IncomeTaxCalculator';
@@ -371,6 +372,7 @@ const App: React.FC = () => {
 
                 {/* Calculator specific routes */}
                 <Route path="/personal-loan-emi-calculator" element={<PersonalLoanEMI />} />
+                <Route path="/gold-loan-emi-calculator" element={<GoldLoanEMICalculator />} />
                 <Route path="/home-loan-emi-calculator" element={<HomeLoanEMI />} />
                 <Route path="/car-loan-emi-calculator" element={<CarLoanEMI />} />
                 <Route path="/income-tax-calculator" element={<IncomeTaxCalculator />} />
@@ -390,7 +392,7 @@ const App: React.FC = () => {
                 <Route path="/loans/personal-loan-low-salary" element={<DynamicPersonalLoanPage openApplyModal={openApplyModal} openEligibilityModal={openEligibilityModal} openCibilModal={openCibilModal} />} />
                 <Route path="/eligibility/personal-loan" element={<PersonalLoanPage openApplyModal={openApplyModal} openEligibilityModal={openEligibilityModal} />} />
                 <Route path="/business-loan" element={<BusinessLoanPage openApplyModal={openApplyModal} />} />
-                <Route path="/loans/business" element={<BusinessLoanPage openApplyModal={openApplyModal} />} />
+                <Route path="/loans/business" element={<Navigate to="/business-loan" replace />} />
                 <Route path="/loans/business-loan" element={<BusinessLoanPage openApplyModal={openApplyModal} />} />
                 <Route path="/loans/car" element={<CarLoanPage openApplyModal={openApplyModal} />} />
                 <Route path="/loans/used-car" element={<UsedCarLoanPage openApplyModal={openApplyModal} openEligibilityModal={openEligibilityModal} openCibilModal={openCibilModal} />} />
@@ -403,6 +405,8 @@ const App: React.FC = () => {
                 <Route path="/investment/more-plans" element={<InvestmentPlansPage openApplyModal={openApplyModal} />} />
 
                 {/* Card product specific routes */}
+                <Route path="/credit-card" element={<Navigate to="/cards/credit-cards" replace />} />
+                <Route path="/credit-cards" element={<Navigate to="/cards/credit-cards" replace />} />
                 <Route path="/cards/credit" element={<CreditCardsPage openApplyModal={openApplyModal} />} />
                 <Route path="/cards/credit-cards" element={<CreditCardsPage openApplyModal={openApplyModal} />} />
                 <Route path="/cards/lifetime-free" element={<DynamicCreditCardPage overrideSlug="lifetime-free" />} />
@@ -466,6 +470,7 @@ const App: React.FC = () => {
                 <Route path="/allahabad-bank/:subPath" element={<DynamicAbhyudayaBankPage />} />
                 <Route path="/andhra-bank" element={<DynamicAbhyudayaBankPage />} />
                 <Route path="/andhra-bank/:subPath" element={<DynamicAbhyudayaBankPage />} />
+                <Route path="/banking/allahabad-bank-verified-by-visa" element={<DynamicAbhyudayaBankPage />} />
                 <Route path="/banking/:subPath" element={<DynamicAbhyudayaBankPage />} />
                 <Route path="/home-loan/:subPath" element={<DynamicGeneralBankingPage />} />
                 <Route path="/annapurna-microfinance" element={<DynamicGeneralBankingPage />} />
@@ -848,8 +853,8 @@ const App: React.FC = () => {
 
                 {/* Legal & Editorial Policy Pages */}
                 <Route path="/editorial-policy" element={<EditorialPolicy />} />
-                <Route path="/about-us" element={<AboutUs />} />
-                <Route path="/about" element={<Navigate to="/about-us" replace />} />
+                <Route path="/about" element={<AboutUs />} />
+                <Route path="/about-us" element={<Navigate to="/about" replace />} />
                 <Route path="/contact" element={<ContactUs />} />
                 <Route path="/contact-us" element={<Navigate to="/contact" replace />} />
                 <Route path="/credit-report-terms" element={<CreditReportTerms />} />

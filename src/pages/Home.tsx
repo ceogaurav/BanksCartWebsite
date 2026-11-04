@@ -241,6 +241,24 @@ const Home: React.FC<HomeProps> = ({ openApplyModal, openEligibilityModal, openC
                     <span className="text-xs text-indigo-600 font-bold mt-2">Incorporate Company &rarr;</span>
                   </a>
                 </div>
+
+                <div className="mt-6 pt-6 border-t border-slate-100 flex flex-wrap items-center justify-between gap-4">
+                  <div className="text-xs text-slate-500 font-medium">
+                    <span className="font-bold text-slate-700 mr-2">Featured Calculators &amp; Guides:</span>
+                    Calculate accurate monthly loan amortization or evaluate top credit cards with zero annual fees.
+                  </div>
+                  <div className="flex flex-wrap gap-2 text-xs">
+                    <a href="/personal-loan-emi-calculator" className="px-3.5 py-1.5 bg-blue-50 text-blue-700 hover:bg-blue-100 rounded-lg font-semibold transition-colors border border-blue-200">
+                      Personal loan EMI calculator
+                    </a>
+                    <a href="/gold-loan-emi-calculator" className="px-3.5 py-1.5 bg-amber-50 text-amber-800 hover:bg-amber-100 rounded-lg font-semibold transition-colors border border-amber-200">
+                      Gold Loan EMI Calculator
+                    </a>
+                    <a href="/blogs/Best-Credit-Cards" className="px-3.5 py-1.5 bg-purple-50 text-purple-700 hover:bg-purple-100 rounded-lg font-semibold transition-colors border border-purple-200">
+                      Best credit cards in India
+                    </a>
+                  </div>
+                </div>
               </div>
             </section>
 

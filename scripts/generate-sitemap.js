@@ -54,7 +54,7 @@ async function generateSitemap() {
 
         // Core and legacy static pages
         const staticPages = [
-            '/about-us',
+            '/about',
             '/research/borrowing-sentiment-report-q1-2026',
             '',
             
@@ -88,6 +88,7 @@ async function generateSitemap() {
             '/resources/aadhar-pan',
             '/MortgageCalculatorPage',
             '/personal-loan-emi-calculator',
+            '/gold-loan-emi-calculator',
             '/home-loan-emi-calculator',
             '/car-loan-emi-calculator',
             '/income-tax-calculator',
@@ -103,6 +104,7 @@ async function generateSitemap() {
             '/loans/personal-loan-low-salary',
             '/eligibility/personal-loan',
             '/loans/home-loan-balance-transfer',
+            '/banking/allahabad-bank-verified-by-visa',
             '/cards/credit-cards',
             '/credit-score/cibil-score-for-personal-loan',
             '/blog/sbi-vs-hdfc-personal-loan',
@@ -516,7 +518,7 @@ async function generateSitemap() {
         function categorize(url) {
             const clean = url.toLowerCase();
             const coreSet = new Set([
-                '', '/', '/about-us', '/contact', '/editorial-policy', '/author/raghav-singhal', '/author/amit-khurana', '/author/neha-verma', '/author/priya-sharma', '/terms-of-use', '/privacy-policy',
+                '', '/', '/about', '/contact', '/editorial-policy', '/author/raghav-singhal', '/author/amit-khurana', '/author/neha-verma', '/author/priya-sharma', '/terms-of-use', '/privacy-policy',
                 '/disclaimer', '/investor-relations', '/intellectual-policy',
                 '/credit-report-terms', '/become-partner', '/eligibility', '/status',
                 '/loans', '/cards', '/investment', '/insurance', '/calculators',

@@ -26,7 +26,7 @@ import {
 const AboutUs: React.FC = () => {
   const pageTitle = "About BanksCart: India's Trusted Financial Services & Loan Comparison Platform";
   const pageDescription = "Learn about BanksCart's mission, leadership team, and editorial integrity in helping Indian borrowers compare loans, credit cards, and banking services objectively.";
-  const canonicalUrl = "https://www.bankscart.com/about-us";
+  const canonicalUrl = "https://www.bankscart.com/about";
 
   const jsonLd = {
     "@context": "https://schema.org",

@@ -32,7 +32,7 @@ const urlsSet = new Set([
   '/embed/ssy-calculator',
   '/embed/home-loan-emi-calculator',
   '/',
-  '/about-us',
+  '/about',
   '/blog',
   '/blog',
   '/contact',
@@ -387,8 +387,16 @@ const STATIC_SEO_MAP = {
     description: "Track your Aadhaar card update request status online via UIDAI portal using URN or Enrolment ID. Complete guide on updating address, mobile number, and photos."
   },
   "/personal-loan-emi-calculator": {
-    title: "Personal Loan EMI Calculator: Calculate Monthly Repayment & APR | BanksCart",
-    description: "Calculate your monthly personal loan installment instantly. Enter loan amount, interest rate (from 10.25% p.a.), and tenure to view total interest and amortization."
+    title: "Personal Loan EMI Calculator 2026: Calculate Monthly EMI & Interest Rates | BanksCart",
+    description: "Calculate your monthly personal loan installment instantly. Enter loan amount, interest rate (from 10.15% p.a.), and tenure to view total interest, bank rates comparison, and amortization."
+  },
+  "/gold-loan-emi-calculator": {
+    title: "Gold Loan EMI Calculator 2026: Calculate Interest & Per Gram Rate | BanksCart",
+    description: "Calculate gold loan EMI, loan eligibility per gram at 75% RBI LTV, and interest repayments across bullet, interest-only, and regular EMI schemes."
+  },
+  "/banking/allahabad-bank-verified-by-visa": {
+    title: "Allahabad Bank Verified by Visa (VbV) Guide: Registration & 3D Secure | BanksCart",
+    description: "Complete guide to Allahabad Bank Verified by Visa (3D Secure) card registration, OTP authentication, and international debit/credit transaction security."
   },
   "/home-loan-emi-calculator": {
     title: "Home Loan EMI Calculator: Housing Loan Repayment Schedule & Amortization | BanksCart",
@@ -1271,8 +1279,8 @@ function generatePreRenderedBody(cleanPath, meta) {
       </header>
 
       <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
-        {/* HERO SECTION */}
-        <section class="bg-gradient-to-br from-blue-900 via-indigo-950 to-slate-900 text-white rounded-3xl p-8 lg:p-14 shadow-xl space-y-6">
+        <!-- HERO SECTION -->
+        <section class="bg-gradient-to-br from-blue-900 via-indigo-950 to-slate-900 text-white rounded-3xl p-8 lg:p-14 shadow-xl space-y-6 hero-banner-lcp min-h-[460px]">
           <span class="inline-block px-3 py-1 bg-white/10 text-teal-300 text-xs font-bold uppercase tracking-wider rounded-full border border-white/20">
             India's Leading Financial Services &amp; Loan Comparison Portal
           </span>
@@ -1289,7 +1297,7 @@ function generatePreRenderedBody(cleanPath, meta) {
           </div>
         </section>
 
-        {/* CORE PRODUCT LINKS DIRECTORY */}
+        <!-- CORE PRODUCT LINKS DIRECTORY -->
         <section class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm">
           <span class="text-xs font-bold text-blue-600 uppercase tracking-wider block mb-3">Explore Core Financial Services</span>
           <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-4 gap-4 text-center">
@@ -2625,13 +2633,15 @@ function renderFooter() {
           <li><a href="/loans/personal" class="hover:text-white">Personal Loans</a></li>
           <li><a href="/loans/home" class="hover:text-white">Home Loans</a></li>
           <li><a href="/cards/credit" class="hover:text-white">Credit Cards</a></li>
+          <li><a href="/blogs/Best-Credit-Cards" class="hover:text-white">Best Credit Cards in India</a></li>
           <li><a href="/credit-score" class="hover:text-white">Credit Score</a></li>
         </ul>
       </div>
       <div>
         <h4 class="font-semibold text-white mb-3">Calculators</h4>
         <ul class="space-y-2 text-xs">
-          <li><a href="/personal-loan-emi-calculator" class="hover:text-white">Personal Loan EMI</a></li>
+          <li><a href="/personal-loan-emi-calculator" class="hover:text-white">Personal Loan EMI Calculator</a></li>
+          <li><a href="/gold-loan-emi-calculator" class="hover:text-white">Gold Loan EMI Calculator</a></li>
           <li><a href="/home-loan-emi-calculator" class="hover:text-white">Home Loan EMI</a></li>
           <li><a href="/income-tax-calculator" class="hover:text-white">Tax Calculator</a></li>
         </ul>
@@ -2639,7 +2649,7 @@ function renderFooter() {
       <div>
         <h4 class="font-semibold text-white mb-3">Company & Legal</h4>
         <ul class="space-y-2 text-xs">
-          <li><a href="/about-us" class="hover:text-white">About Us</a></li>
+          <li><a href="/about" class="hover:text-white">About Us</a></li>
           <li><a href="/contact" class="hover:text-white">Contact Support</a></li>
           <li><a href="/editorial-policy" class="hover:text-white">Editorial & Fact-Check Policy</a></li>
           <li><a href="/privacy-policy" class="hover:text-white">Privacy Policy</a></li>
@@ -2706,7 +2716,7 @@ function renderFooter() {
       <span>&copy; ${new Date().getFullYear()} BanksCart Financial Technologies Pvt. Ltd. All rights reserved.</span>
       <div class="flex items-center gap-4 text-xs">
         <a href="/editorial-policy" class="hover:text-white">Editorial Policy</a>
-        <a href="/about-us" class="hover:text-white">About Us</a>
+        <a href="/about" class="hover:text-white">About Us</a>
         <a href="/contact" class="hover:text-white">Contact Us</a>
         <a href="/privacy-policy" class="hover:text-white">Privacy</a>
         <a href="/terms-of-use" class="hover:text-white">Terms</a>
@@ -2909,7 +2919,7 @@ function generateJsonLd(cleanPath, meta, canonicalUrl) {
       "@type": "AboutPage",
       "name": meta.title,
       "description": meta.description,
-      "url": "https://www.bankscart.com/about-us"
+      "url": "https://www.bankscart.com/about"
     });
     return schemas;
   }
@@ -3059,6 +3069,74 @@ function generateJsonLd(cleanPath, meta, canonicalUrl) {
     });
   }
 
+  // Gold Loan EMI Calculator FAQPage
+  if (cleanPath === '/gold-loan-emi-calculator') {
+    schemas.push({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the maximum Loan-to-Value (LTV) ratio for gold loans in India?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "As mandated by the Reserve Bank of India (RBI), scheduled banks and NBFCs can sanction up to a maximum of 75% of the market value of gold pledged as collateral."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How is gold loan interest calculated under bullet repayment?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Under bullet repayment, you pay neither principal nor monthly interest during the tenure. Instead, the full principal plus cumulative interest is cleared in a single lump sum at the end of the term."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which gold purity is accepted for gold loans?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Banks and NBFCs generally accept 18-karat, 22-karat, and 24-karat gold jewellery or ornaments. 22K is the standard benchmark used by most Indian lenders."
+          }
+        }
+      ]
+    });
+  }
+
+  // Personal Loan EMI Calculator FAQPage
+  if (cleanPath === '/personal-loan-emi-calculator') {
+    schemas.push({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How is personal loan EMI calculated in 2026?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Personal loan EMI is calculated using the reducing balance formula: EMI = [P x R x (1+R)^N]/[(1+R)^N-1], where P is Principal, R is monthly interest rate, and N is tenure in months."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which Indian bank offers the lowest personal loan interest rate in 2026?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "HSBC Bank and State Bank of India (SBI) offer starting personal loan interest rates from 10.15% to 10.30% p.a. for borrowers with CIBIL scores above 750."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does checking my personal loan EMI affect my CIBIL score?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Using the BanksCart Personal Loan EMI Calculator performs no credit inquiry and does not impact your CIBIL score."
+          }
+        }
+      ]
+    });
+  }
+
   // Product / Service Schema
   schemas.push({
     "@context": "https://schema.org",
@@ -3086,17 +3164,17 @@ for (const urlPath of urls) {
   let canonicalUrl = cleanPath === '' ? 'https://www.bankscart.com/' : `https://www.bankscart.com${cleanPath}`;
   if (cleanPath === '/blogs' || cleanPath === '/blogs-overview-page') {
     canonicalUrl = 'https://www.bankscart.com/blog';
-  } else if (cleanPath === '/about') {
-    canonicalUrl = 'https://www.bankscart.com/about-us';
+  } else if (cleanPath === '/about-us') {
+    canonicalUrl = 'https://www.bankscart.com/about';
   } else if (cleanPath === '/contact-us') {
     canonicalUrl = 'https://www.bankscart.com/contact';
   } else if (cleanPath.startsWith('/blogs/')) {
     canonicalUrl = `https://www.bankscart.com${cleanPath.replace('/blogs/', '/blog/')}`;
   }
 
-  // 301 Redirect Pages for legacy /blogs, /blogs-overview-page, and /about
-  if (cleanPath === '/blogs' || cleanPath === '/blogs-overview-page' || cleanPath === '/about' || cleanPath.startsWith('/blogs/')) {
-    const target = cleanPath === '/about' ? '/about-us' : (cleanPath.startsWith('/blogs/') ? cleanPath.replace('/blogs/', '/blog/') : '/blog');
+  // 301 Redirect Pages for legacy /blogs, /blogs-overview-page, and /about-us
+  if (cleanPath === '/blogs' || cleanPath === '/blogs-overview-page' || cleanPath === '/about-us' || cleanPath.startsWith('/blogs/')) {
+    const target = cleanPath === '/about-us' ? '/about' : (cleanPath.startsWith('/blogs/') ? cleanPath.replace('/blogs/', '/blog/') : '/blog');
     const redirectHtml = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -3200,8 +3278,11 @@ const legacyRedirects = [
   { path: '/calculators/ssy-calculator', target: '/ssy-calculator' },
   { path: '/blogs', target: '/blog' },
   { path: '/blogs-overview-page', target: '/blog' },
-  { path: '/about', target: '/about-us' },
+  { path: '/about-us', target: '/about' },
   { path: '/contact-us', target: '/contact' },
+  { path: '/credit-card', target: '/cards/credit-cards' },
+  { path: '/credit-cards', target: '/cards/credit-cards' },
+  { path: '/loans/business', target: '/business-loan' },
   { path: '/company-registration/pvt-ltd', target: '/company-registration' },
   { path: '/business-loan/company-reg-delhi', target: '/business-loan/company-registration-in-delhi' },
   { path: '/business-loan/company-reg-blr', target: '/business-loan/company-registration-in-bangalore' },

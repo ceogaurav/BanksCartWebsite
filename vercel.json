@@ -14,8 +14,23 @@
       "permanent": true
     },
     {
-      "source": "/about",
-      "destination": "/about-us",
+      "source": "/about-us",
+      "destination": "/about",
+      "permanent": true
+    },
+    {
+      "source": "/credit-card",
+      "destination": "/cards/credit-cards",
+      "permanent": true
+    },
+    {
+      "source": "/credit-cards",
+      "destination": "/cards/credit-cards",
+      "permanent": true
+    },
+    {
+      "source": "/loans/business",
+      "destination": "/business-loan",
       "permanent": true
     },
     {
