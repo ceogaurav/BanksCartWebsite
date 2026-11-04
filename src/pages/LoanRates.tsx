@@ -85,6 +85,21 @@ const LoanRates: React.FC = () => {
             </motion.table>
           </div>
           <p className="text-xs text-gray-500 mt-2">* GST extra on processing fee</p>
+
+          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-2xl p-5 flex flex-col sm:flex-row items-center justify-between gap-4 mt-6">
+            <div>
+              <h3 className="text-sm font-bold text-slate-900">Plan Repayments Before Applying</h3>
+              <p className="text-xs text-slate-600 mt-0.5">Simulate exact monthly installments or compare top credit cards across leading banks.</p>
+            </div>
+            <div className="flex flex-wrap gap-2.5">
+              <Link to="/personal-loan-emi-calculator" className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs rounded-xl shadow-sm transition-colors">
+                Personal loan EMI calculator
+              </Link>
+              <Link to="/blogs/Best-Credit-Cards" className="px-4 py-2 bg-white hover:bg-slate-100 text-slate-800 font-semibold text-xs rounded-xl border border-slate-300 shadow-sm transition-colors">
+                Best credit cards in India
+              </Link>
+            </div>
+          </div>
         </motion.section>
 
         {/* 2. Tips to Get the Lowest Interest Rate */}
