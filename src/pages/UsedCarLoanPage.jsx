@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Breadcrumb from '../components/Breadcrumb';
 import ApplyButton from '../components/common/ApplyButton';
 
 // --- Used Car Loan Page ---
@@ -45,6 +46,7 @@ const UsedCarLoanPage = ({ openApplyModal, openEligibilityModal, openCibilModal 
 
   return (
     <div className="min-h-screen bg-[#f8f9fa] font-['Inter','Poppins',sans-serif] text-[#374151]">
+      <Breadcrumb path={["Home", "Loans", "Used Car Loan"]} />
 
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-blue-900 to-blue-700 text-white py-20">

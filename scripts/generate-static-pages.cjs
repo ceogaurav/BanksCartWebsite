@@ -2937,8 +2937,8 @@ for (const urlPath of urls) {
   let canonicalUrl = cleanPath === '' ? 'https://www.bankscart.com/' : `https://www.bankscart.com${cleanPath}`;
   if (cleanPath === '/blogs' || cleanPath === '/blogs-overview-page') {
     canonicalUrl = 'https://www.bankscart.com/blog';
-  } else if (cleanPath === '/about') {
-    canonicalUrl = 'https://www.bankscart.com/about-us';
+  } else if (cleanPath === '/about-us') {
+    canonicalUrl = 'https://www.bankscart.com/about';
   } else if (cleanPath === '/contact-us') {
     canonicalUrl = 'https://www.bankscart.com/contact';
   } else if (cleanPath.startsWith('/blogs/')) {
@@ -2946,8 +2946,8 @@ for (const urlPath of urls) {
   }
 
   // 301 Redirect Pages for legacy /blogs, /blogs-overview-page, and /about-us
-  if (cleanPath === '/blogs' || cleanPath === '/blogs-overview-page' || cleanPath === '/about' || cleanPath.startsWith('/blogs/')) {
-    const target = cleanPath === '/about' ? '/about-us' : (cleanPath.startsWith('/blogs/') ? cleanPath.replace('/blogs/', '/blog/') : '/blog');
+  if (cleanPath === '/blogs' || cleanPath === '/blogs-overview-page' || cleanPath === '/about-us' || cleanPath.startsWith('/blogs/')) {
+    const target = cleanPath === '/about-us' ? '/about' : (cleanPath.startsWith('/blogs/') ? cleanPath.replace('/blogs/', '/blog/') : '/blog');
     const redirectHtml = `<!DOCTYPE html>
 <html lang="en">
 <head>

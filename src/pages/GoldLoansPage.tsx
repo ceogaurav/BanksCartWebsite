@@ -6,6 +6,7 @@ import Features from '../components/GoldLoan/Features';
 import HowItWorks from '../components/GoldLoan/HowItWorks';
 import FAQ from '../components/GoldLoan/FAQ';
 import CTA from '../components/GoldLoan/CTA';
+import Breadcrumb from '../components/Breadcrumb';
 
 interface GoldLoansPageProps {
   openApplyModal?: (loanType?: string) => void;
@@ -15,6 +16,7 @@ interface GoldLoansPageProps {
 const GoldLoansPage: React.FC<GoldLoansPageProps> = ({ openApplyModal, openEligibilityModal }) => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-yellow-50">
+      <Breadcrumb path={["Home", "Loans", "Gold Loan"]} />
       <Hero openApplyModal={openApplyModal} openEligibilityModal={openEligibilityModal} />
       <GoldLoanTypes openApplyModal={openApplyModal} />
       <BankComparison openApplyModal={openApplyModal} />
