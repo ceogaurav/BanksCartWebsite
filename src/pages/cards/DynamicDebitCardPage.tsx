@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Breadcrumb from '../../components/Breadcrumb';
 import { useParams } from 'react-router-dom';
 import { HelpCircle, ChevronDown, Check, Star, ShieldAlert, Sparkles, BookOpen, AlertCircle, Info, Landmark, Percent, Award, ShieldCheck, ArrowRight, Play, MessageSquare, TrendingUp, CreditCard } from 'lucide-react';
 import CibilCheckerForm from '../../components/common/CibilCheckerForm';
@@ -161,6 +162,9 @@ const DynamicDebitCardPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-slate-50 pt-24 pb-16 font-sans">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 mb-6">
+        <Breadcrumb path={["Home", "Cards", pageContent.title || "Debit Card"]} />
+      </div>
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Top Banner section */}

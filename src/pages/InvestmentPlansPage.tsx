@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Breadcrumb from '../components/Breadcrumb';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import ApplyButton from '../components/common/ApplyButton';
@@ -229,6 +230,7 @@ const InvestmentPlansPage: React.FC<InvestmentPlansPageProps> = ({ openApplyModa
 
   return (
     <div className="font-inter bg-[#F8FAFC] dark:bg-[#1F2937] transition-colors duration-500">
+      <Breadcrumb path={["Home", "Investments", "Investment Plans"]} />
       {/* Hero Section */}
       <section className="w-full bg-gradient-to-br from-blue-600 to-blue-800 text-white py-24 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto">

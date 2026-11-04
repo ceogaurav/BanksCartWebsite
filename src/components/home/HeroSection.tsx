@@ -29,7 +29,7 @@ export default function HeroSection({ openApplyModal, openCibilModal }: HeroSect
   };
 
   return (
-    <div className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-indigo-950 to-blue-950 text-white pt-24 pb-20 font-inter">
+    <div className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-indigo-950 to-blue-950 text-white pt-24 pb-20 font-inter hero-banner-lcp">
       {/* Background Decorative Blur Blobs */}
       <div className="absolute top-0 right-0 w-[450px] h-[450px] bg-blue-600/10 rounded-full blur-3xl -translate-y-12 translate-x-12 pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-[350px] h-[350px] bg-pink-500/5 rounded-full blur-3xl translate-y-12 -translate-x-12 pointer-events-none" />

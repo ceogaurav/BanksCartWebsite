@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   IndianRupee, Percent, Calculator, TrendingUp, DollarSign,
@@ -128,44 +128,25 @@ interface LoanAmortizationCalculatorPageProps {
 }
 
 const LoanAmortizationCalculatorPage: React.FC<LoanAmortizationCalculatorPageProps> = ({ openApplyModal }) => {
-  // Calculator States
-  const [loanAmount, setLoanAmount] = useState<number>(5000000); // INR
-  const [interestRate, setInterestRate] = useState<number>(8); // Annual percentage
-  const [loanTermYears, setLoanTermYears] = useState<number>(15); // Years
+  // Calculator Display States (immediate 60fps feedback)
+  const [displayLoanAmount, setDisplayLoanAmount] = useState<number>(5000000); // INR
+  const [displayInterestRate, setDisplayInterestRate] = useState<number>(8); // Annual percentage
+  const [displayLoanTermYears, setDisplayLoanTermYears] = useState<number>(15); // Years
+
+  // Debounced calculation states (150ms debounce for INP)
+  const [calcLoanAmount, setCalcLoanAmount] = useState<number>(5000000);
+  const [calcInterestRate, setCalcInterestRate] = useState<number>(8);
+  const [calcLoanTermYears, setCalcLoanTermYears] = useState<number>(15);
 
   // FAQ state
   const [openFAQIndex, setOpenFAQIndex] = useState<number | null>(null);
 
-  // Handlers for inputs
-  const handleLoanAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replace(/,/g, '');
-    setLoanAmount(Number(value));
-  };
-  const handleInterestRateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInterestRate(Number(e.target.value));
-  };
-  const handleLoanTermYearsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLoanTermYears(Number(e.target.value));
-  };
-
-  // Toggle FAQ
-  const toggleFAQ = (index: number) => {
-    setOpenFAQIndex(openFAQIndex === index ? null : index);
-  };
-
-  // Memoized Amortization Calculations
-  const calculations = useMemo(() => {
-    const monthlyInterestRate = interestRate / 100 / 12;
-    const numberOfPayments = loanTermYears * 12;
-
-    let monthlyPayment = 0;
-    if (monthlyInterestRate === 0) {
-      monthlyPayment = loanAmount / numberOfPayments;
-    } else {
-      monthlyPayment = (loanAmount * monthlyInterestRate) / (1 - Math.pow(1 + monthlyInterestRate, -numberOfPayments));
-    }
-
-    let remainingBalance = loanAmount;
+  // Initial calculation
+  const initialCalculations = useMemo(() => {
+    const monthlyInterestRate = 8 / 100 / 12;
+    const numberOfPayments = 15 * 12;
+    let monthlyPayment = (5000000 * monthlyInterestRate) / (1 - Math.pow(1 + monthlyInterestRate, -numberOfPayments));
+    let remainingBalance = 5000000;
     let totalInterestPaid = 0;
     let totalPrincipalPaid = 0;
     const amortizationSchedule = [];
@@ -173,39 +154,130 @@ const LoanAmortizationCalculatorPage: React.FC<LoanAmortizationCalculatorPagePro
     for (let i = 1; i <= numberOfPayments; i++) {
       const interestPayment = remainingBalance * monthlyInterestRate;
       let principalPayment = monthlyPayment - interestPayment;
-
-      // Adjust last payment to account for rounding errors
       if (i === numberOfPayments) {
         principalPayment = remainingBalance;
-        monthlyPayment = principalPayment + interestPayment; // Adjust monthly payment for last month
+        monthlyPayment = principalPayment + interestPayment;
       }
-
       remainingBalance -= principalPayment;
       totalInterestPaid += interestPayment;
       totalPrincipalPaid += principalPayment;
-
       amortizationSchedule.push({
         month: i,
         monthlyPayment: monthlyPayment,
         principalPayment: principalPayment,
         interestPayment: interestPayment,
-        remainingBalance: Math.max(0, remainingBalance), // Ensure balance doesn't go negative
+        remainingBalance: Math.max(0, remainingBalance),
       });
-
-      if (remainingBalance <= 0 && i < numberOfPayments) {
-        // If paid off early due to rounding, stop
-        break;
-      }
+      if (remainingBalance <= 0 && i < numberOfPayments) break;
     }
 
     return {
-      monthlyPayment: monthlyPayment,
-      totalInterestPaid: totalInterestPaid,
-      totalPrincipalPaid: totalPrincipalPaid,
-      totalPaid: totalInterestPaid + loanAmount, // Total paid is principal (loan amount) + total interest
-      amortizationSchedule: amortizationSchedule,
+      monthlyPayment,
+      totalInterestPaid,
+      totalPrincipalPaid,
+      totalPaid: totalInterestPaid + 5000000,
+      amortizationSchedule,
     };
-  }, [loanAmount, interestRate, loanTermYears]);
+  }, []);
+
+  const [calculations, setCalculations] = useState(initialCalculations);
+
+  // Debounce timers
+  const amountTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const rateTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const termTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const handleLoanAmountChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = Number(e.target.value.replace(/,/g, ''));
+    setDisplayLoanAmount(value);
+    if (amountTimer.current) clearTimeout(amountTimer.current);
+    amountTimer.current = setTimeout(() => setCalcLoanAmount(value), 150);
+  }, []);
+
+  const handleInterestRateChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = Number(e.target.value);
+    setDisplayInterestRate(value);
+    if (rateTimer.current) clearTimeout(rateTimer.current);
+    rateTimer.current = setTimeout(() => setCalcInterestRate(value), 150);
+  }, []);
+
+  const handleLoanTermYearsChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = Number(e.target.value);
+    setDisplayLoanTermYears(value);
+    if (termTimer.current) clearTimeout(termTimer.current);
+    termTimer.current = setTimeout(() => setCalcLoanTermYears(value), 150);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (amountTimer.current) clearTimeout(amountTimer.current);
+      if (rateTimer.current) clearTimeout(rateTimer.current);
+      if (termTimer.current) clearTimeout(termTimer.current);
+    };
+  }, []);
+
+  // Offload heavy amortization recalculation to an asynchronous microtask
+  useEffect(() => {
+    const runAmortization = () => {
+      const monthlyInterestRate = calcInterestRate / 100 / 12;
+      const numberOfPayments = calcLoanTermYears * 12;
+
+      let monthlyPayment = 0;
+      if (monthlyInterestRate === 0) {
+        monthlyPayment = calcLoanAmount / numberOfPayments;
+      } else {
+        monthlyPayment = (calcLoanAmount * monthlyInterestRate) / (1 - Math.pow(1 + monthlyInterestRate, -numberOfPayments));
+      }
+
+      let remainingBalance = calcLoanAmount;
+      let totalInterestPaid = 0;
+      let totalPrincipalPaid = 0;
+      const amortizationSchedule = [];
+
+      for (let i = 1; i <= numberOfPayments; i++) {
+        const interestPayment = remainingBalance * monthlyInterestRate;
+        let principalPayment = monthlyPayment - interestPayment;
+
+        if (i === numberOfPayments) {
+          principalPayment = remainingBalance;
+          monthlyPayment = principalPayment + interestPayment;
+        }
+
+        remainingBalance -= principalPayment;
+        totalInterestPaid += interestPayment;
+        totalPrincipalPaid += principalPayment;
+
+        amortizationSchedule.push({
+          month: i,
+          monthlyPayment: monthlyPayment,
+          principalPayment: principalPayment,
+          interestPayment: interestPayment,
+          remainingBalance: Math.max(0, remainingBalance),
+        });
+
+        if (remainingBalance <= 0 && i < numberOfPayments) break;
+      }
+
+      setCalculations({
+        monthlyPayment,
+        totalInterestPaid,
+        totalPrincipalPaid,
+        totalPaid: totalInterestPaid + calcLoanAmount,
+        amortizationSchedule,
+      });
+    };
+
+    if (typeof queueMicrotask === 'function') {
+      queueMicrotask(runAmortization);
+    } else {
+      setTimeout(runAmortization, 0);
+    }
+  }, [calcLoanAmount, calcInterestRate, calcLoanTermYears]);
+
+  // Toggle FAQ
+  const toggleFAQ = (index: number) => {
+    setOpenFAQIndex(openFAQIndex === index ? null : index);
+  };
 
   // Data for informational sections
   const faqs = [
@@ -320,7 +392,7 @@ const LoanAmortizationCalculatorPage: React.FC<LoanAmortizationCalculatorPagePro
               {/* Loan Amount */}
               <motion.div variants={itemVariants}>
                 <label htmlFor="loanAmount" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Loan Amount: <span className="text-indigo-600">{formatCurrency(loanAmount)}</span>
+                  Loan Amount: <span className="text-indigo-600">{formatCurrency(displayLoanAmount)}</span>
                 </label>
                 <input
                   type="range"
@@ -328,13 +400,13 @@ const LoanAmortizationCalculatorPage: React.FC<LoanAmortizationCalculatorPagePro
                   min="100000"
                   max="10000000"
                   step="50000"
-                  value={loanAmount}
+                  value={displayLoanAmount}
                   onChange={handleLoanAmountChange}
                   className="w-full h-2 bg-gradient-to-r from-indigo-300 to-indigo-500 rounded-lg appearance-none cursor-pointer accent-indigo-600"
                 />
                 <input
                   type="text"
-                  value={formatNumberWithCommas(loanAmount)}
+                  value={formatNumberWithCommas(displayLoanAmount)}
                   onChange={handleLoanAmountChange}
                   onBlur={(e) => setLoanAmount(Number(e.target.value.replace(/,/g, '')))}
                   className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-indigo-500 focus:border-indigo-500 transition-all"
@@ -345,7 +417,7 @@ const LoanAmortizationCalculatorPage: React.FC<LoanAmortizationCalculatorPagePro
               {/* Interest Rate */}
               <motion.div variants={itemVariants}>
                 <label htmlFor="interestRate" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Annual Interest Rate (%): <span className="text-teal-600">{interestRate}%</span>
+                  Annual Interest Rate (%): <span className="text-teal-600">{displayInterestRate}%</span>
                 </label>
                 <input
                   type="range"
@@ -353,15 +425,15 @@ const LoanAmortizationCalculatorPage: React.FC<LoanAmortizationCalculatorPagePro
                   min="4"
                   max="20"
                   step="0.1"
-                  value={interestRate}
+                  value={displayInterestRate}
                   onChange={handleInterestRateChange}
                   className="w-full h-2 bg-gradient-to-r from-teal-300 to-teal-500 rounded-lg appearance-none cursor-pointer accent-teal-600"
                 />
                 <input
                   type="number"
-                  value={interestRate}
+                  value={displayInterestRate}
                   onChange={handleInterestRateChange}
-                  onBlur={(e) => setInterestRate(Number(e.target.value))}
+                  onBlur={(e) => { const v = Number(e.target.value); setDisplayInterestRate(v); setCalcInterestRate(v); }}
                   className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-teal-500 focus:border-teal-500 transition-all"
                   step="0.1"
                 />
@@ -370,7 +442,7 @@ const LoanAmortizationCalculatorPage: React.FC<LoanAmortizationCalculatorPagePro
               {/* Loan Term Years */}
               <motion.div variants={itemVariants}>
                 <label htmlFor="loanTermYears" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Loan Term (Years): <span className="text-orange-600">{loanTermYears} Years</span>
+                  Loan Term (Years): <span className="text-orange-600">{displayLoanTermYears} Years</span>
                 </label>
                 <input
                   type="range"
@@ -378,15 +450,15 @@ const LoanAmortizationCalculatorPage: React.FC<LoanAmortizationCalculatorPagePro
                   min="1"
                   max="30"
                   step="1"
-                  value={loanTermYears}
+                  value={displayLoanTermYears}
                   onChange={handleLoanTermYearsChange}
                   className="w-full h-2 bg-gradient-to-r from-orange-300 to-orange-500 rounded-lg appearance-none cursor-pointer accent-orange-600"
                 />
                 <input
                   type="number"
-                  value={loanTermYears}
+                  value={displayLoanTermYears}
                   onChange={handleLoanTermYearsChange}
-                  onBlur={(e) => setLoanTermYears(Number(e.target.value))}
+                  onBlur={(e) => { const v = Number(e.target.value); setDisplayLoanTermYears(v); setCalcLoanTermYears(v); }}
                   className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-orange-500 focus:border-orange-500 transition-all"
                   min="1"
                   max="30"

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import EmbedModal from '../components/common/EmbedModal';
 import { Code } from 'lucide-react';
@@ -181,13 +181,78 @@ interface HomeLoanEMICalculatorProps {
 }
 
 const HomeLoanEMICalculator: React.FC<HomeLoanEMICalculatorProps> = ({ openApplyModal }) => {
-  const [amount, setAmount] = useState(SLIDER_CONFIG.amount.default);
-  const [rate, setRate] = useState(SLIDER_CONFIG.rate.default);
-  const [tenure, setTenure] = useState(SLIDER_CONFIG.tenure.default);
+  // Local immediate slider display values (for 60fps instant UI updates)
+  const [displayAmount, setDisplayAmount] = useState(SLIDER_CONFIG.amount.default);
+  const [displayRate, setDisplayRate] = useState(SLIDER_CONFIG.rate.default);
+  const [displayTenure, setDisplayTenure] = useState(SLIDER_CONFIG.tenure.default);
+  const [displayFee, setDisplayFee] = useState(SLIDER_CONFIG.fee.default);
   const [isEmbedModalOpen, setIsEmbedModalOpen] = useState(false);
-  const [fee, setFee] = useState(SLIDER_CONFIG.fee.default);
 
-  const { schedule, totalInterest, emi } = getAmortization(amount, rate, tenure, fee);
+  // Debounced calculation state (minimum 150ms delay to eliminate INP latency bottlenecks)
+  const [calcAmount, setCalcAmount] = useState(SLIDER_CONFIG.amount.default);
+  const [calcRate, setCalcRate] = useState(SLIDER_CONFIG.rate.default);
+  const [calcTenure, setCalcTenure] = useState(SLIDER_CONFIG.tenure.default);
+  const [calcFee, setCalcFee] = useState(SLIDER_CONFIG.fee.default);
+
+  // Asynchronous calculated results
+  const [calculationData, setCalculationData] = useState(() =>
+    getAmortization(SLIDER_CONFIG.amount.default, SLIDER_CONFIG.rate.default, SLIDER_CONFIG.tenure.default, SLIDER_CONFIG.fee.default)
+  );
+
+  // Timers for 150ms debouncing
+  const amountTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const rateTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const tenureTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const feeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const handleAmount = useCallback((val: number) => {
+    setDisplayAmount(val);
+    if (amountTimer.current) clearTimeout(amountTimer.current);
+    amountTimer.current = setTimeout(() => setCalcAmount(val), 150);
+  }, []);
+
+  const handleRate = useCallback((val: number) => {
+    setDisplayRate(val);
+    if (rateTimer.current) clearTimeout(rateTimer.current);
+    rateTimer.current = setTimeout(() => setCalcRate(val), 150);
+  }, []);
+
+  const handleTenure = useCallback((val: number) => {
+    setDisplayTenure(val);
+    if (tenureTimer.current) clearTimeout(tenureTimer.current);
+    tenureTimer.current = setTimeout(() => setCalcTenure(val), 150);
+  }, []);
+
+  const handleFee = useCallback((val: number) => {
+    setDisplayFee(val);
+    if (feeTimer.current) clearTimeout(feeTimer.current);
+    feeTimer.current = setTimeout(() => setCalcFee(val), 150);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (amountTimer.current) clearTimeout(amountTimer.current);
+      if (rateTimer.current) clearTimeout(rateTimer.current);
+      if (tenureTimer.current) clearTimeout(tenureTimer.current);
+      if (feeTimer.current) clearTimeout(feeTimer.current);
+    };
+  }, []);
+
+  // Offload amortization recalculation to an asynchronous microtask
+  useEffect(() => {
+    const runAmortization = () => {
+      const result = getAmortization(calcAmount, calcRate, calcTenure, calcFee);
+      setCalculationData(result);
+    };
+
+    if (typeof queueMicrotask === 'function') {
+      queueMicrotask(runAmortization);
+    } else {
+      setTimeout(runAmortization, 0);
+    }
+  }, [calcAmount, calcRate, calcTenure, calcFee]);
+
+  const { schedule, totalInterest, emi } = calculationData;
 
   return (
     <div className="bg-[#f8f9fa] min-h-screen py-8">

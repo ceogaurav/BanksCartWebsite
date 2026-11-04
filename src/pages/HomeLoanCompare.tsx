@@ -124,7 +124,7 @@ const HomeLoanCompare: React.FC<HomeLoanCompareProps> = ({ openApplyModal }) => 
                 <div key={idx} className="bg-white/70 backdrop-blur rounded-lg shadow p-4 flex-1 min-w-[220px] flex flex-col items-center border border-gray-100 hover:shadow-lg transition-all">
                   <div className="mb-4">
                     {id ? (
-                      <img src={products.find((p) => p.id === id)?.logo} alt="Bank Logo" className="h-10" />
+                      <img src={products.find((p) => p.id === id)?.logo} alt="Bank Logo" width="80" height="40" style={{ aspectRatio: "2/1" }} className="h-10 w-auto object-contain" loading="lazy" decoding="async" />
                     ) : (
                       <div className="h-10 w-24 bg-gray-100 rounded" />
                     )}
@@ -210,7 +210,7 @@ const HomeLoanCompare: React.FC<HomeLoanCompareProps> = ({ openApplyModal }) => 
                         <th key={idx} className="text-center py-2 px-4">
                           {p && (
                             <div className="flex flex-col items-center">
-                              <img src={p.logo} alt={p.name} className="h-8 mb-1" />
+                              <img src={p.logo} alt={p.name} width="64" height="32" style={{ aspectRatio: "2/1" }} className="h-8 w-auto object-contain mb-1" loading="lazy" decoding="async" />
                               <span className="font-semibold text-sm">{p.name}</span>
                             </div>
                           )}

@@ -1,52 +1,49 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { Home, Calculator, TrendingUp, PieChart, BarChart3 } from 'lucide-react';
 import { calculateEMI, calculateTotalAmount, calculateTotalInterest, formatCurrency } from '../../utils/calculations';
 
 const HomeLoanEMI: React.FC = () => {
-  const [principal, setPrincipal] = useState(2500000);
-  const [rate, setRate] = useState(8.5);
-  const [tenure, setTenure] = useState(240); // 20 years
+  // Local immediate slider display values (for 60fps instant UI updates)
+  const [displayPrincipal, setDisplayPrincipal] = useState(2500000);
+  const [displayRate, setDisplayRate] = useState(8.5);
+  const [displayTenure, setDisplayTenure] = useState(240); // 20 years
 
-  const emi = calculateEMI(principal, rate, tenure);
-  const totalAmount = calculateTotalAmount(emi, tenure);
-  const totalInterest = calculateTotalInterest(totalAmount, principal);
+  // Debounced calculation state (minimum 150ms delay to eliminate INP latency bottlenecks)
+  const [calcPrincipal, setCalcPrincipal] = useState(2500000);
+  const [calcRate, setCalcRate] = useState(8.5);
+  const [calcTenure, setCalcTenure] = useState(240);
 
-  const handleSliderChange = useCallback((setter: React.Dispatch<React.SetStateAction<number>>) => 
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setter(Number(e.target.value));
-    }, []
-  );
+  // Initial calculations
+  const initialEmi = calculateEMI(2500000, 8.5, 240);
+  const initialTotal = calculateTotalAmount(initialEmi, 240);
+  const initialInterest = calculateTotalInterest(initialTotal, 2500000);
 
-  // Calculate tax benefits
-  const calculateTaxBenefits = () => {
-    const principalRepayment = Math.min(150000, principal * 0.1); // Section 80C limit
-    const interestDeduction = Math.min(200000, (totalInterest / tenure) * 12); // Section 24B limit
-    return { principalRepayment, interestDeduction, total: principalRepayment + interestDeduction };
-  };
+  const [emi, setEmi] = useState(initialEmi);
+  const [totalAmount, setTotalAmount] = useState(initialTotal);
+  const [totalInterest, setTotalInterest] = useState(initialInterest);
+  const [taxBenefits, setTaxBenefits] = useState(() => ({
+    principalRepayment: Math.min(150000, 2500000 * 0.1),
+    interestDeduction: Math.min(200000, (initialInterest / 240) * 12),
+    total: Math.min(150000, 2500000 * 0.1) + Math.min(200000, (initialInterest / 240) * 12)
+  }));
 
-  const taxBenefits = calculateTaxBenefits();
-
-  // Generate yearly amortization schedule
-  const generateYearlySchedule = () => {
+  const [yearlySchedule, setYearlySchedule] = useState(() => {
     const schedule = [];
-    let remainingPrincipal = principal;
-    const monthlyRate = rate / (12 * 100);
-    const years = Math.ceil(tenure / 12);
-
+    let remainingPrincipal = 2500000;
+    const monthlyRate = 8.5 / (12 * 100);
+    const years = Math.ceil(240 / 12);
     for (let year = 1; year <= Math.min(10, years); year++) {
       let yearlyPrincipal = 0;
       let yearlyInterest = 0;
-
       let month = 1;
       while (month <= 12 && remainingPrincipal > 0) {
         const interestPayment = remainingPrincipal * monthlyRate;
-        const principalPayment = emi - interestPayment;
+        const principalPayment = initialEmi - interestPayment;
         yearlyPrincipal += principalPayment;
         yearlyInterest += interestPayment;
         remainingPrincipal -= principalPayment;
         month++;
       }
-
       schedule.push({
         year,
         yearlyPrincipal,
@@ -55,9 +52,94 @@ const HomeLoanEMI: React.FC = () => {
       });
     }
     return schedule;
-  };
+  });
 
-  const yearlySchedule = generateYearlySchedule();
+  // Timers for 150ms debouncing
+  const principalTimer = useRef(null);
+  const rateTimer = useRef(null);
+  const tenureTimer = useRef(null);
+
+  const handlePrincipalChange = useCallback((e) => {
+    const val = Number(e.target.value);
+    setDisplayPrincipal(val);
+    if (principalTimer.current) clearTimeout(principalTimer.current);
+    principalTimer.current = setTimeout(() => setCalcPrincipal(val), 150);
+  }, []);
+
+  const handleRateChange = useCallback((e) => {
+    const val = Number(e.target.value);
+    setDisplayRate(val);
+    if (rateTimer.current) clearTimeout(rateTimer.current);
+    rateTimer.current = setTimeout(() => setCalcRate(val), 150);
+  }, []);
+
+  const handleTenureChange = useCallback((e) => {
+    const val = Number(e.target.value);
+    setDisplayTenure(val);
+    if (tenureTimer.current) clearTimeout(tenureTimer.current);
+    tenureTimer.current = setTimeout(() => setCalcTenure(val), 150);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (principalTimer.current) clearTimeout(principalTimer.current);
+      if (rateTimer.current) clearTimeout(rateTimer.current);
+      if (tenureTimer.current) clearTimeout(tenureTimer.current);
+    };
+  }, []);
+
+  // Offload recalculation and amortization schedule to an asynchronous microtask
+  useEffect(() => {
+    const runRecalculation = () => {
+      const calculatedEmi = calculateEMI(calcPrincipal, calcRate, calcTenure);
+      const calculatedTotal = calculateTotalAmount(calculatedEmi, calcTenure);
+      const calculatedInterest = calculateTotalInterest(calculatedTotal, calcPrincipal);
+
+      const principalRepayment = Math.min(150000, calcPrincipal * 0.1);
+      const interestDeduction = Math.min(200000, (calculatedInterest / calcTenure) * 12);
+
+      const schedule = [];
+      let remPrincipal = calcPrincipal;
+      const monthlyRate = calcRate / (12 * 100);
+      const years = Math.ceil(calcTenure / 12);
+
+      for (let yr = 1; yr <= Math.min(10, years); yr++) {
+        let yrPrincipal = 0;
+        let yrInterest = 0;
+        let m = 1;
+        while (m <= 12 && remPrincipal > 0) {
+          const intPayment = remPrincipal * monthlyRate;
+          const prPayment = calculatedEmi - intPayment;
+          yrPrincipal += prPayment;
+          yrInterest += intPayment;
+          remPrincipal -= prPayment;
+          m++;
+        }
+        schedule.push({
+          year: yr,
+          yearlyPrincipal: yrPrincipal,
+          yearlyInterest: yrInterest,
+          remainingPrincipal: Math.max(0, remPrincipal),
+        });
+      }
+
+      setEmi(calculatedEmi);
+      setTotalAmount(calculatedTotal);
+      setTotalInterest(calculatedInterest);
+      setTaxBenefits({
+        principalRepayment,
+        interestDeduction,
+        total: principalRepayment + interestDeduction,
+      });
+      setYearlySchedule(schedule);
+    };
+
+    if (typeof queueMicrotask === 'function') {
+      queueMicrotask(runRecalculation);
+    } else {
+      setTimeout(runRecalculation, 0);
+    }
+  }, [calcPrincipal, calcRate, calcTenure]);
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
@@ -92,15 +174,15 @@ const HomeLoanEMI: React.FC = () => {
               <div>
                 <div className="flex justify-between items-center mb-3">
                   <label className="text-sm font-medium text-gray-700">Home Loan Amount</label>
-                  <span className="text-lg font-bold text-primary-600">{formatCurrency(principal)}</span>
+                  <span className="text-lg font-bold text-primary-600">{formatCurrency(displayPrincipal)}</span>
                 </div>
                 <input
                   type="range"
                   min="500000"
                   max="50000000"
                   step="100000"
-                  value={principal}
-                  onChange={handleSliderChange(setPrincipal)}
+                  value={displayPrincipal}
+                  onChange={handlePrincipalChange}
                   className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
                 />
                 <div className="flex justify-between text-xs text-gray-500 mt-1">
@@ -113,15 +195,15 @@ const HomeLoanEMI: React.FC = () => {
               <div>
                 <div className="flex justify-between items-center mb-3">
                   <label className="text-sm font-medium text-gray-700">Interest Rate (per annum)</label>
-                  <span className="text-lg font-bold text-primary-600">{rate}%</span>
+                  <span className="text-lg font-bold text-primary-600">{displayRate}%</span>
                 </div>
                 <input
                   type="range"
                   min="6.5"
                   max="15"
                   step="0.1"
-                  value={rate}
-                  onChange={handleSliderChange(setRate)}
+                  value={displayRate}
+                  onChange={handleRateChange}
                   className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
                 />
                 <div className="flex justify-between text-xs text-gray-500 mt-1">
@@ -135,7 +217,7 @@ const HomeLoanEMI: React.FC = () => {
                 <div className="flex justify-between items-center mb-3">
                   <label className="text-sm font-medium text-gray-700">Loan Tenure</label>
                   <span className="text-lg font-bold text-primary-600">
-                    {Math.floor(tenure / 12)} years
+                    {Math.floor(displayTenure / 12)} years
                   </span>
                 </div>
                 <input
@@ -143,8 +225,8 @@ const HomeLoanEMI: React.FC = () => {
                   min="60"
                   max="360"
                   step="12"
-                  value={tenure}
-                  onChange={handleSliderChange(setTenure)}
+                  value={displayTenure}
+                  onChange={handleTenureChange}
                   className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
                 />
                 <div className="flex justify-between text-xs text-gray-500 mt-1">
@@ -222,7 +304,7 @@ const HomeLoanEMI: React.FC = () => {
                     <span className="text-sm text-gray-600">Principal</span>
                   </div>
                   <span className="text-sm font-semibold">
-                    {((principal / totalAmount) * 100).toFixed(1)}%
+                    {((calcPrincipal / totalAmount) * 100).toFixed(1)}%
                   </span>
                 </div>
                 <div className="flex items-center justify-between">
@@ -240,7 +322,7 @@ const HomeLoanEMI: React.FC = () => {
               <div className="mt-4 h-4 bg-gray-200 rounded-full overflow-hidden">
                 <div 
                   className="h-full bg-primary-600 float-left"
-                  style={{ width: `${(principal / totalAmount) * 100}%` }}
+                  style={{ width: `${(calcPrincipal / totalAmount) * 100}%` }}
                 ></div>
                 <div 
                   className="h-full bg-secondary-600"

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import {
@@ -146,16 +146,15 @@ export const PersonalLoanOverviewPage: React.FC<PersonalLoanOverviewPageProps> =
 }) => {
   const navigate = useNavigate();
 
-  // EMI Calculator States
-  const [loanAmount, setLoanAmount] = useState<number>(500000);
-  const [interestRate, setInterestRate] = useState<number>(10.5);
-  const [tenureMonths, setTenureMonths] = useState<number>(36);
+    // Immediate Display States
+  const [displayLoanAmount, setDisplayLoanAmount] = useState<number>(500000);
+  const [displayInterestRate, setDisplayInterestRate] = useState<number>(10.5);
+  const [displayTenureMonths, setDisplayTenureMonths] = useState<number>(36);
 
-  // Eligibility Tab State: 'salaried' | 'selfEmployed'
-  const [activeTab, setActiveTab] = useState<'salaried' | 'selfEmployed'>('salaried');
-
-  // FAQ Accordion State
-  const [activeFaq, setActiveFaq] = useState<number | null>(null);
+  // Debounced calculation states (150ms debounce for INP)
+  const [calcLoanAmount, setCalcLoanAmount] = useState<number>(500000);
+  const [calcInterestRate, setCalcInterestRate] = useState<number>(10.5);
+  const [calcTenureMonths, setCalcTenureMonths] = useState<number>(36);
 
   // EMI Calculation Formula: E = [P * r * (1+r)^n] / [(1+r)^n - 1]
   const calculateEMI = (p: number, annualRate: number, n: number): number => {
@@ -166,11 +165,72 @@ export const PersonalLoanOverviewPage: React.FC<PersonalLoanOverviewPageProps> =
     return Math.round(emi);
   };
 
-  const monthlyEmi = calculateEMI(loanAmount, interestRate, tenureMonths);
-  const totalPayment = monthlyEmi * tenureMonths;
-  const totalInterest = Math.max(0, totalPayment - loanAmount);
-  const principalPercent = totalPayment > 0 ? Math.round((loanAmount / totalPayment) * 100) : 100;
-  const interestPercent = totalPayment > 0 ? 100 - principalPercent : 0;
+  const initialEmi = calculateEMI(500000, 10.5, 36);
+  const initialTotal = initialEmi * 36;
+  const initialInterest = Math.max(0, initialTotal - 500000);
+
+  const [monthlyEmi, setMonthlyEmi] = useState<number>(initialEmi);
+  const [totalPayment, setTotalPayment] = useState<number>(initialTotal);
+  const [totalInterest, setTotalInterest] = useState<number>(initialInterest);
+  const [principalPercent, setPrincipalPercent] = useState<number>(() => Math.round((500000 / initialTotal) * 100));
+  const [interestPercent, setInterestPercent] = useState<number>(() => 100 - Math.round((500000 / initialTotal) * 100));
+
+  // Timers for 150ms debouncing
+  const amountTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const rateTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const tenureTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const handleAmountChange = useCallback((val: number) => {
+    setDisplayLoanAmount(val);
+    if (amountTimer.current) clearTimeout(amountTimer.current);
+    amountTimer.current = setTimeout(() => setCalcLoanAmount(val), 150);
+  }, []);
+
+  const handleRateChange = useCallback((val: number) => {
+    setDisplayInterestRate(val);
+    if (rateTimer.current) clearTimeout(rateTimer.current);
+    rateTimer.current = setTimeout(() => setCalcInterestRate(val), 150);
+  }, []);
+
+  const handleTenureChange = useCallback((val: number) => {
+    setDisplayTenureMonths(val);
+    if (tenureTimer.current) clearTimeout(tenureTimer.current);
+    tenureTimer.current = setTimeout(() => setCalcTenureMonths(val), 150);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (amountTimer.current) clearTimeout(amountTimer.current);
+      if (rateTimer.current) clearTimeout(rateTimer.current);
+      if (tenureTimer.current) clearTimeout(tenureTimer.current);
+    };
+  }, []);
+
+  useEffect(() => {
+    const runCalculation = () => {
+      const emi = calculateEMI(calcLoanAmount, calcInterestRate, calcTenureMonths);
+      const payment = emi * calcTenureMonths;
+      const interest = Math.max(0, payment - calcLoanAmount);
+      const pPercent = payment > 0 ? Math.round((calcLoanAmount / payment) * 100) : 100;
+      setMonthlyEmi(emi);
+      setTotalPayment(payment);
+      setTotalInterest(interest);
+      setPrincipalPercent(pPercent);
+      setInterestPercent(payment > 0 ? 100 - pPercent : 0);
+    };
+
+    if (typeof queueMicrotask === 'function') {
+      queueMicrotask(runCalculation);
+    } else {
+      setTimeout(runCalculation, 0);
+    }
+  }, [calcLoanAmount, calcInterestRate, calcTenureMonths]);
+
+  // Eligibility Tab State: 'salaried' | 'selfEmployed'
+  const [activeTab, setActiveTab] = useState<'salaried' | 'selfEmployed'>('salaried');
+
+  // FAQ Accordion State
+  const [activeFaq, setActiveFaq] = useState<number | null>(null);
 
   const handleApplyClick = () => {
     if (openApplyModal) {
@@ -578,7 +638,7 @@ export const PersonalLoanOverviewPage: React.FC<PersonalLoanOverviewPageProps> =
                     Required Loan Amount
                   </label>
                   <div className="bg-white/10 px-3 py-1 rounded-lg border border-white/20 font-bold text-white text-base">
-                    ₹{loanAmount.toLocaleString('en-IN')}
+                    ₹{displayLoanAmount.toLocaleString('en-IN')}
                   </div>
                 </div>
                 <input
@@ -587,8 +647,8 @@ export const PersonalLoanOverviewPage: React.FC<PersonalLoanOverviewPageProps> =
                   min={50000}
                   max={5000000}
                   step={10000}
-                  value={loanAmount}
-                  onChange={(e) => setLoanAmount(Number(e.target.value))}
+                  value={displayLoanAmount}
+                  onChange={(e) => handleAmountChange(Number(e.target.value))}
                   className="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-blue-500"
                 />
                 <div className="flex justify-between text-[11px] text-slate-400">
@@ -603,9 +663,9 @@ export const PersonalLoanOverviewPage: React.FC<PersonalLoanOverviewPageProps> =
                     <button
                       key={preset}
                       type="button"
-                      onClick={() => setLoanAmount(preset)}
+                      onClick={() => handleAmountChange(preset)}
                       className={`text-xs px-2.5 py-1 rounded-md transition-all cursor-pointer ${
-                        loanAmount === preset
+                        displayLoanAmount === preset
                           ? 'bg-blue-600 text-white font-bold'
                           : 'bg-white/10 hover:bg-white/20 text-slate-300'
                       }`}
@@ -623,7 +683,7 @@ export const PersonalLoanOverviewPage: React.FC<PersonalLoanOverviewPageProps> =
                     Annual Interest Rate (% p.a.)
                   </label>
                   <div className="bg-white/10 px-3 py-1 rounded-lg border border-white/20 font-bold text-amber-300 text-base">
-                    {interestRate.toFixed(2)}%
+                    {displayInterestRate.toFixed(2)}%
                   </div>
                 </div>
                 <input
@@ -632,8 +692,8 @@ export const PersonalLoanOverviewPage: React.FC<PersonalLoanOverviewPageProps> =
                   min={8.5}
                   max={28.0}
                   step={0.25}
-                  value={interestRate}
-                  onChange={(e) => setInterestRate(Number(e.target.value))}
+                  value={displayInterestRate}
+                  onChange={(e) => handleRateChange(Number(e.target.value))}
                   className="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-amber-400"
                 />
                 <div className="flex justify-between text-[11px] text-slate-400">
@@ -650,7 +710,7 @@ export const PersonalLoanOverviewPage: React.FC<PersonalLoanOverviewPageProps> =
                     Repayment Tenure (Months)
                   </label>
                   <div className="bg-white/10 px-3 py-1 rounded-lg border border-white/20 font-bold text-teal-300 text-base">
-                    {tenureMonths} Months ({Math.round(tenureMonths / 12)} Yrs)
+                    {displayTenureMonths} Months ({Math.round(displayTenureMonths / 12)} Yrs)
                   </div>
                 </div>
                 <input
@@ -659,8 +719,8 @@ export const PersonalLoanOverviewPage: React.FC<PersonalLoanOverviewPageProps> =
                   min={12}
                   max={84}
                   step={6}
-                  value={tenureMonths}
-                  onChange={(e) => setTenureMonths(Number(e.target.value))}
+                  value={displayTenureMonths}
+                  onChange={(e) => handleTenureChange(Number(e.target.value))}
                   className="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-teal-400"
                 />
                 <div className="flex justify-between text-[11px] text-slate-400">

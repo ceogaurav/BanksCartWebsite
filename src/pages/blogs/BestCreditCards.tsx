@@ -1,10 +1,11 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { ArrowLeft, CreditCard, Gift, IndianRupee, Zap, Shield, TrendingUp } from "lucide-react";
-import { Link } from "react-router-dom"; 
+import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async"; 
 
 // --- CONFIGURATION START ---
-const ARTICLE_TITLE = "Best Credit Cards in India 2025: Rewards, Cashback, Fees & Features";
+const ARTICLE_TITLE = "15 Best Credit Cards in India (2026): Cashback, Travel & Lifetime Free Compared";
 const ARTICLE_SUBTITLE =
   "Your ultimate guide to selecting the top credit card tailored to your lifestyle—from maximum cashback to premium travel benefits and low-interest options. Maximize your financial potential.";
 const BACK_LINK = "/blog"; 
@@ -78,6 +79,34 @@ const BestCreditCardsPage: React.FC = () => (
     initial="hidden"
     animate="visible"
   >
+
+    <Helmet>
+      <title>15 Best Credit Cards in India (2026): Cashback, Travel &amp; Lifetime Free Compared | BanksCart</title>
+      <meta name="description" content="Compare the 15 best credit cards in India for 2026. Detailed evaluation of cashback rates, airport lounge access, annual fee waivers, and reward multipliers." />
+      <link rel="canonical" href="https://www.bankscart.com/blogs/Best-Credit-Cards" />
+      <script type="application/ld+json">
+        {JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BlogPosting",
+          "headline": "15 Best Credit Cards in India (2026): Cashback, Travel & Lifetime Free Compared",
+          "description": "Compare the 15 best credit cards in India for 2026 across cashback, airport lounge access, and lifetime free categories.",
+          "author": {
+            "@type": "Person",
+            "name": "Priya Sharma",
+            "jobTitle": "Senior Financial Analyst",
+            "url": "https://www.bankscart.com/author/priya-sharma"
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "BanksCart",
+            "url": "https://www.bankscart.com"
+          },
+          "datePublished": "2025-12-10T10:00:00+05:30",
+          "dateModified": "2026-11-04T12:00:00+05:30"
+        })}
+      </script>
+    </Helmet>
+
     <div className="max-w-5xl mx-auto">
       {/* Back Link */}
       <motion.div variants={itemVariants} className="mb-8">

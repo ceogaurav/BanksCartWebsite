@@ -27,7 +27,7 @@ export default function BestLifetimeFreeCreditCards() {
       "name": "BanksCart",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://www.bankscart.com/logos/bankscartlogof.jpg"
+        "url": "https://www.bankscart.com/assets/images/bankscart-logo.png"
       }
     },
     "datePublished": "2026-02-15T09:00:00+05:30",

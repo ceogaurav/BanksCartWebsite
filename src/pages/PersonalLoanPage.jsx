@@ -223,7 +223,7 @@ function PersonalLoanPage({ openApplyModal, openEligibilityModal }) {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <Link
               to="/personal-loan-emi-calculator"
               className="p-6 rounded-2xl bg-gradient-to-br from-blue-50 to-indigo-50/50 border border-blue-100 hover:border-blue-300 hover:shadow-md transition-all group block"
@@ -240,6 +240,63 @@ function PersonalLoanPage({ openApplyModal, openEligibilityModal }) {
               </p>
               <span className="text-xs font-bold text-blue-600 inline-flex items-center gap-1">
                 Open Personal Loan EMI Calculator &rarr;
+              </span>
+            </Link>
+
+            <Link
+              to="/credit-score"
+              className="p-6 rounded-2xl bg-gradient-to-br from-amber-50 to-orange-50/50 border border-amber-100 hover:border-amber-300 hover:shadow-md transition-all group block"
+            >
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-xs font-extrabold text-amber-800 uppercase tracking-wider bg-amber-100/80 px-2.5 py-1 rounded-md">Credit Assessment</span>
+                <span className="text-amber-600 text-xs font-bold group-hover:translate-x-1 transition-transform inline-flex items-center">&rarr;</span>
+              </div>
+              <h3 className="font-bold text-slate-900 text-lg group-hover:text-amber-700 transition-colors mb-2">
+                Free CIBIL Score Check
+              </h3>
+              <p className="text-xs text-slate-600 leading-relaxed mb-4">
+                Check your real-time CIBIL score online with zero impact on your credit history. Get pre-approved personal loan offers matching your score bracket.
+              </p>
+              <span className="text-xs font-bold text-amber-700 inline-flex items-center gap-1">
+                Check Free Credit Score &rarr;
+              </span>
+            </Link>
+
+            <Link
+              to="/cibil-credit-report"
+              className="p-6 rounded-2xl bg-gradient-to-br from-purple-50 to-violet-50/50 border border-purple-100 hover:border-purple-300 hover:shadow-md transition-all group block"
+            >
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-xs font-extrabold text-purple-700 uppercase tracking-wider bg-purple-100/80 px-2.5 py-1 rounded-md">Bureau Analysis</span>
+                <span className="text-purple-600 text-xs font-bold group-hover:translate-x-1 transition-transform inline-flex items-center">&rarr;</span>
+              </div>
+              <h3 className="font-bold text-slate-900 text-lg group-hover:text-purple-700 transition-colors mb-2">
+                Official CIBIL Credit Report
+              </h3>
+              <p className="text-xs text-slate-600 leading-relaxed mb-4">
+                Review your complete credit history, active loan trade lines, credit card payment track records, and detect unauthorized hard inquiries.
+              </p>
+              <span className="text-xs font-bold text-purple-700 inline-flex items-center gap-1">
+                View Full Credit Report &rarr;
+              </span>
+            </Link>
+
+            <Link
+              to="/blog/how-to-improve-cibil-score-fast"
+              className="p-6 rounded-2xl bg-gradient-to-br from-emerald-50 to-teal-50/50 border border-emerald-100 hover:border-emerald-300 hover:shadow-md transition-all group block"
+            >
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-xs font-extrabold text-emerald-700 uppercase tracking-wider bg-emerald-100/80 px-2.5 py-1 rounded-md">Score Recovery Guide</span>
+                <span className="text-emerald-600 text-xs font-bold group-hover:translate-x-1 transition-transform inline-flex items-center">&rarr;</span>
+              </div>
+              <h3 className="font-bold text-slate-900 text-lg group-hover:text-emerald-700 transition-colors mb-2">
+                How to Improve CIBIL Score Fast
+              </h3>
+              <p className="text-xs text-slate-600 leading-relaxed mb-4">
+                Proven step-by-step strategies to rebuild your credit rating from 600 to 750+. Lower credit utilization, rectify dispute errors, and optimize repayment cycles.
+              </p>
+              <span className="text-xs font-bold text-emerald-700 inline-flex items-center gap-1">
+                Read Score Improvement Guide &rarr;
               </span>
             </Link>
 

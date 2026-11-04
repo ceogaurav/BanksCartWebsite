@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Breadcrumb from '../components/Breadcrumb';
 import { motion } from "framer-motion";
 import CountUp from 'react-countup';
 import ApplyButton from '../components/common/ApplyButton'; // Add this line
@@ -427,6 +428,7 @@ const EducationLoanPage = ({ openApplyModal }) => {
   // --- Main Render ---
   return (
     <div className="min-h-screen bg-[#f9fafb] font-inter text-[#1f2937]">
+      <Breadcrumb path={["Home", "Loans", "Education Loan"]} />
       {/* Header removed as requested */}
       {BackToTop()}
       <div className="pt-20 md:pt-24">

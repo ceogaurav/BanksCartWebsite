@@ -61,8 +61,24 @@ export default function SEOManager() {
     };
     schemas.push(siteWideOrganizationSchema);
 
-    // Homepage: Add WebSite SearchAction Schema
+    // Homepage: Add WebSite SearchAction Schema & Corporate Organization Schema
     if (pathname === '/') {
+      schemas.push({
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "@id": "https://www.bankscart.com/#organization",
+        "name": "BanksCart Financial Technologies Private Limited",
+        "alternateName": "BanksCart",
+        "url": "https://www.bankscart.com/",
+        "logo": "https://www.bankscart.com/favicon-32x32.png",
+        "foundingDate": "2024",
+        "sameAs": [
+          "https://www.facebook.com/bankscart",
+          "https://twitter.com/bankscart",
+          "https://www.linkedin.com/company/bankscart"
+        ]
+      });
+
       schemas.push({
         "@context": "https://schema.org",
         "@type": "WebSite",

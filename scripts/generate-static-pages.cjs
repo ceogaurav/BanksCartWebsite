@@ -32,7 +32,7 @@ const urlsSet = new Set([
   '/embed/ssy-calculator',
   '/embed/home-loan-emi-calculator',
   '/',
-  '/about',
+  '/about-us',
   '/blog',
   '/blog',
   '/contact',
@@ -2639,7 +2639,7 @@ function renderFooter() {
       <div>
         <h4 class="font-semibold text-white mb-3">Company & Legal</h4>
         <ul class="space-y-2 text-xs">
-          <li><a href="/about" class="hover:text-white">About Us</a></li>
+          <li><a href="/about-us" class="hover:text-white">About Us</a></li>
           <li><a href="/contact" class="hover:text-white">Contact Support</a></li>
           <li><a href="/editorial-policy" class="hover:text-white">Editorial & Fact-Check Policy</a></li>
           <li><a href="/privacy-policy" class="hover:text-white">Privacy Policy</a></li>
@@ -2706,7 +2706,7 @@ function renderFooter() {
       <span>&copy; ${new Date().getFullYear()} BanksCart Financial Technologies Pvt. Ltd. All rights reserved.</span>
       <div class="flex items-center gap-4 text-xs">
         <a href="/editorial-policy" class="hover:text-white">Editorial Policy</a>
-        <a href="/about" class="hover:text-white">About Us</a>
+        <a href="/about-us" class="hover:text-white">About Us</a>
         <a href="/contact" class="hover:text-white">Contact Us</a>
         <a href="/privacy-policy" class="hover:text-white">Privacy</a>
         <a href="/terms-of-use" class="hover:text-white">Terms</a>
@@ -2752,8 +2752,24 @@ function generateJsonLd(cleanPath, meta, canonicalUrl) {
   };
   schemas.push(siteWideOrganizationSchema);
 
-  // Homepage: Add WebSite SearchAction Schema
+  // Homepage: Add WebSite SearchAction Schema & Organization Schema
   if (!cleanPath || cleanPath === '/') {
+    schemas.push({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "@id": "https://www.bankscart.com/#organization",
+      "name": "BanksCart Financial Technologies Private Limited",
+      "alternateName": "BanksCart",
+      "url": "https://www.bankscart.com/",
+      "logo": "https://www.bankscart.com/favicon-32x32.png",
+      "foundingDate": "2024",
+      "sameAs": [
+        "https://www.facebook.com/bankscart",
+        "https://twitter.com/bankscart",
+        "https://www.linkedin.com/company/bankscart"
+      ]
+    });
+
     schemas.push({
       "@context": "https://schema.org",
       "@type": "WebSite",
@@ -2887,27 +2903,160 @@ function generateJsonLd(cleanPath, meta, canonicalUrl) {
   }
 
   // About Page Schema
-  if (cleanPath === '/about') {
+  if (cleanPath === '/about' || cleanPath === '/about-us') {
     schemas.push({
       "@context": "https://schema.org",
       "@type": "AboutPage",
       "name": meta.title,
       "description": meta.description,
-      "url": canonicalUrl
+      "url": "https://www.bankscart.com/about-us"
     });
     return schemas;
   }
 
   // Contact Page Schema
-  if (cleanPath === '/contact') {
+  if (cleanPath === '/contact' || cleanPath === '/contact-us') {
     schemas.push({
       "@context": "https://schema.org",
       "@type": "ContactPage",
       "name": meta.title,
       "description": meta.description,
-      "url": canonicalUrl
+      "url": "https://www.bankscart.com/contact"
     });
     return schemas;
+  }
+
+  // Template 4: Credit Rectification Service Schema & FAQPage
+  if (cleanPath === '/credit-score/credit-rectification-service') {
+    schemas.push({
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "Credit Rectification Service",
+      "serviceType": "Financial Consulting & Dispute Resolution Guidance",
+      "description": meta.description,
+      "url": canonicalUrl,
+      "provider": {
+        "@type": "Organization",
+        "name": "BanksCart",
+        "url": "https://www.bankscart.com"
+      },
+      "areaServed": "IN"
+    });
+    schemas.push({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How long does CIBIL take to resolve a formal credit report dispute?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Under RBI guidelines, credit bureaus (CIBIL, Experian, Equifax, CRIF High Mark) and partner lenders must resolve formal disputes and update credit records within 30 calendar days."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can credit rectification remove legitimate defaults or genuine missed payments?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Legitimate defaults or factual missed payments cannot be legally removed. Credit rectification strictly targets clerical inaccuracies, wrongful default tags, identity mismatches, and closed accounts erroneously showing active."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What documents are required to initiate a credit rectification request?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "You require your recent credit report containing the unique 9-digit Control Number (ECN), proof of identity (PAN/Aadhaar), and supporting closure documents such as a bank No Dues Certificate (NOC) or payment receipt."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much can my CIBIL score increase after error rectification?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Once wrongful 'Written-Off' or 90+ DPD default flags are rectified, borrowers frequently witness a 50 to 120 point score rebound within 1 to 2 subsequent bureau refresh cycles."
+          }
+        }
+      ]
+    });
+    return schemas;
+  }
+
+  // Template 2: Personal Loans FAQPage
+  if (cleanPath === '/loans/personal-loan' || cleanPath === '/loans/personal') {
+    schemas.push({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the maximum personal loan amount I can get in India?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Most leading Indian banks and NBFCs sanction personal loans up to ₹40 Lakhs to ₹50 Lakhs for eligible salaried individuals. The exact approved amount is determined by your net monthly take-home salary, employer categorization, existing debt obligations (FOIR), and credit score."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How are personal loan interest rates calculated?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Scheduled commercial banks calculate interest on a monthly reducing-balance basis. Under this method, interest is charged only on the outstanding principal at the end of each monthly cycle, not on the original sanctioned loan amount. Rates typically range from 10.25% to 24.00% p.a. depending on your risk profile."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the minimum CIBIL score required for a personal loan?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A CIBIL score of 720 or higher is generally considered ideal by major banks to qualify for prime interest rates and fast digital approval. While applicants with scores between 650 and 719 can still secure approval from select NBFCs, they may be charged higher processing fees and risk-adjusted interest margins."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I prepay or foreclose my personal loan before the tenure ends?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Per RBI regulations, lenders cannot levy foreclosure penalties or prepayment charges on floating-rate personal loans sanctioned to individuals."
+          }
+        }
+      ]
+    });
+  }
+
+  // Template 3: Home Loans FAQPage
+  if (cleanPath === '/loans/home-loan' || cleanPath === '/loans/home') {
+    schemas.push({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How does a home loan balance transfer work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A home loan balance transfer allows you to transfer your outstanding loan balance from your existing lender to a new bank offering a lower interest rate, reducing your monthly EMI and overall interest payout."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the maximum LTV (Loan-to-Value) ratio for home loans in India?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Per RBI directives, banks can finance up to 90% of property value for loans up to ₹30 Lakhs, up to 80% for loans between ₹30 Lakhs and ₹75 Lakhs, and up to 75% for loans exceeding ₹75 Lakhs."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What are the tax benefits on a home loan in India?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Under Section 24(b), borrowers can claim tax deductions up to ₹2,00,000 annually on home loan interest paid for self-occupied properties. Under Section 80C, principal repayments up to ₹1,50,000 per financial year are tax-deductible."
+          }
+        }
+      ]
+    });
   }
 
   // Product / Service Schema
@@ -2937,17 +3086,17 @@ for (const urlPath of urls) {
   let canonicalUrl = cleanPath === '' ? 'https://www.bankscart.com/' : `https://www.bankscart.com${cleanPath}`;
   if (cleanPath === '/blogs' || cleanPath === '/blogs-overview-page') {
     canonicalUrl = 'https://www.bankscart.com/blog';
-  } else if (cleanPath === '/about-us') {
-    canonicalUrl = 'https://www.bankscart.com/about';
+  } else if (cleanPath === '/about') {
+    canonicalUrl = 'https://www.bankscart.com/about-us';
   } else if (cleanPath === '/contact-us') {
     canonicalUrl = 'https://www.bankscart.com/contact';
   } else if (cleanPath.startsWith('/blogs/')) {
     canonicalUrl = `https://www.bankscart.com${cleanPath.replace('/blogs/', '/blog/')}`;
   }
 
-  // 301 Redirect Pages for legacy /blogs, /blogs-overview-page, and /about-us
-  if (cleanPath === '/blogs' || cleanPath === '/blogs-overview-page' || cleanPath === '/about-us' || cleanPath.startsWith('/blogs/')) {
-    const target = cleanPath === '/about-us' ? '/about' : (cleanPath.startsWith('/blogs/') ? cleanPath.replace('/blogs/', '/blog/') : '/blog');
+  // 301 Redirect Pages for legacy /blogs, /blogs-overview-page, and /about
+  if (cleanPath === '/blogs' || cleanPath === '/blogs-overview-page' || cleanPath === '/about' || cleanPath.startsWith('/blogs/')) {
+    const target = cleanPath === '/about' ? '/about-us' : (cleanPath.startsWith('/blogs/') ? cleanPath.replace('/blogs/', '/blog/') : '/blog');
     const redirectHtml = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -3051,7 +3200,7 @@ const legacyRedirects = [
   { path: '/calculators/ssy-calculator', target: '/ssy-calculator' },
   { path: '/blogs', target: '/blog' },
   { path: '/blogs-overview-page', target: '/blog' },
-  { path: '/about-us', target: '/about' },
+  { path: '/about', target: '/about-us' },
   { path: '/contact-us', target: '/contact' },
   { path: '/company-registration/pvt-ltd', target: '/company-registration' },
   { path: '/business-loan/company-reg-delhi', target: '/business-loan/company-registration-in-delhi' },

@@ -195,7 +195,7 @@ const UsedCarLoanPage = ({ openApplyModal, openEligibilityModal, openCibilModal 
               </thead>
               <tbody>
                 <tr className="border-b hover:bg-gray-50">
-                  <td className="px-6 py-4 flex items-center"><img src="/images/sbi.png" alt="SBI" className="w-8 h-8 mr-3" /><span className="font-semibold">State Bank of India</span></td>
+                  <td className="px-6 py-4 flex items-center"><img src="/images/sbi.png" alt="SBI" width="32" height="32" style={{ aspectRatio: "1/1" }} className="w-8 h-8 mr-3" loading="lazy" decoding="async" /><span className="font-semibold">State Bank of India</span></td>
                   <td className="px-6 py-4">11.75% - 15.25% p.a.</td>
                   <td className="px-6 py-4">5 years (maximum)</td>
                   <td className="px-6 py-4">0.50% of loan amount</td>
@@ -204,7 +204,7 @@ const UsedCarLoanPage = ({ openApplyModal, openEligibilityModal, openCibilModal 
                   </td>
                 </tr>
                 <tr className="border-b hover:bg-gray-50">
-                  <td className="px-6 py-4 flex items-center"><img src="/images/tata.png" alt="Tata Capital" className="w-8 h-8 mr-3" /><span className="font-semibold">Tata Capital</span></td>
+                  <td className="px-6 py-4 flex items-center"><img src="/images/tata.png" alt="Tata Capital" width="32" height="32" style={{ aspectRatio: "1/1" }} className="w-8 h-8 mr-3" loading="lazy" decoding="async" /><span className="font-semibold">Tata Capital</span></td>
                   <td className="px-6 py-4">10.75% p.a. onwards</td>
                   <td className="px-6 py-4">1 year to 5 years</td>
                   <td className="px-6 py-4">Up to 3% of loan amount</td>
@@ -213,7 +213,7 @@ const UsedCarLoanPage = ({ openApplyModal, openEligibilityModal, openCibilModal 
                   </td>
                 </tr>
                 <tr className="border-b hover:bg-gray-50">
-                  <td className="px-6 py-4 flex items-center"><img src="/images/hdfc.png" alt="HDFC Bank" className="w-8 h-8 mr-3" /><span className="font-semibold">HDFC Bank</span></td>
+                  <td className="px-6 py-4 flex items-center"><img src="/images/hdfc.png" alt="HDFC Bank" width="32" height="32" style={{ aspectRatio: "1/1" }} className="w-8 h-8 mr-3" loading="lazy" decoding="async" /><span className="font-semibold">HDFC Bank</span></td>
                   <td className="px-6 py-4">13.75% p.a. onwards</td>
                   <td className="px-6 py-4">7 years</td>
                   <td className="px-6 py-4">Up to 2.5% of loan amount</td>
@@ -222,7 +222,7 @@ const UsedCarLoanPage = ({ openApplyModal, openEligibilityModal, openCibilModal 
                   </td>
                 </tr>
                 <tr className="border-b hover:bg-gray-50">
-                  <td className="px-6 py-4 flex items-center"><img src="/images/pnb.png" alt="Punjab National Bank" className="w-8 h-8 mr-3" /><span className="font-semibold">Punjab National Bank</span></td>
+                  <td className="px-6 py-4 flex items-center"><img src="/images/pnb.png" alt="Punjab National Bank" width="32" height="32" style={{ aspectRatio: "1/1" }} className="w-8 h-8 mr-3" loading="lazy" decoding="async" /><span className="font-semibold">Punjab National Bank</span></td>
                   <td className="px-6 py-4">9.40% p.a. onwards</td>
                   <td className="px-6 py-4">5 years</td>
                   <td className="px-6 py-4">0.50% of loan amount</td>
@@ -231,7 +231,7 @@ const UsedCarLoanPage = ({ openApplyModal, openEligibilityModal, openCibilModal 
                   </td>
                 </tr>
                 <tr className="hover:bg-gray-50">
-                  <td className="px-6 py-4 flex items-center"><img src="/images/axis.png" alt="Axis Bank" className="w-8 h-8 mr-3" /><span className="font-semibold">Axis Bank</span></td>
+                  <td className="px-6 py-4 flex items-center"><img src="/images/axis.png" alt="Axis Bank" width="32" height="32" style={{ aspectRatio: "1/1" }} className="w-8 h-8 mr-3" loading="lazy" decoding="async" /><span className="font-semibold">Axis Bank</span></td>
                   <td className="px-6 py-4">13.55% - 15.80% p.a.</td>
                   <td className="px-6 py-4">5 years</td>
                   <td className="px-6 py-4">Up to 2% of loan amount</td>

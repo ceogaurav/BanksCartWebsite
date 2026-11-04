@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Breadcrumb from '../components/Breadcrumb';
 import { motion } from "framer-motion";
 import ApplyButton from '../components/common/ApplyButton';
 // import AOS from 'aos'; // Uncomment if you want to use AOS for scroll animations
@@ -9,6 +10,7 @@ function TwoWheelerLoanPage({ openApplyModal, openCibilModal }) {
   // useEffect(() => { AOS.init({ duration: 800 }); }, []); // Uncomment if using AOS
   return (
     <div className="min-h-screen bg-[#f8f9fa] font-['Open Sans','Roboto','Lato',sans-serif] text-[#343A40]">
+      <Breadcrumb path={["Home", "Loans", "Two Wheeler Loan"]} />
       {/* Header removed as requested */}
 
       {/* Hero Section */}
@@ -122,7 +124,7 @@ function LoanComparisonTable() {
           {/* Example row, repeat for each bank */}
           <tr className="hover:bg-blue-50 transition">
             <td className="px-4 py-2 flex items-center space-x-2">
-              <img src="/logos/axis.png" alt="Axis Bank" className="w-6 h-6 rounded-full hover:scale-110 transition-transform" />
+              <img src="/logos/axis.png" alt="Axis Bank" width="24" height="24" style={{ aspectRatio: "1/1" }} className="w-6 h-6 rounded-full hover:scale-110 transition-transform" loading="lazy" decoding="async" />
               <span>Axis Bank</span>
             </td>
             <td className="px-4 py-2">10.75% p.a. onwards</td>
@@ -131,7 +133,7 @@ function LoanComparisonTable() {
           </tr>
           <tr className="hover:bg-blue-50 transition">
             <td className="px-4 py-2 flex items-center space-x-2">
-              <img src="/logos/pnb.png" alt="Punjab National Bank" className="w-6 h-6 rounded-full hover:scale-110 transition-transform" />
+              <img src="/logos/pnb.png" alt="Punjab National Bank" width="24" height="24" style={{ aspectRatio: "1/1" }} className="w-6 h-6 rounded-full hover:scale-110 transition-transform" loading="lazy" decoding="async" />
               <span>Punjab National Bank</span>
             </td>
             <td className="px-4 py-2">11.15% p.a. onwards</td>
@@ -140,7 +142,7 @@ function LoanComparisonTable() {
           </tr>
           <tr className="hover:bg-blue-50 transition">
             <td className="px-4 py-2 flex items-center space-x-2">
-              <img src="/logos/union.png" alt="Union Bank of India" className="w-6 h-6 rounded-full hover:scale-110 transition-transform" />
+              <img src="/logos/union.png" alt="Union Bank of India" width="24" height="24" style={{ aspectRatio: "1/1" }} className="w-6 h-6 rounded-full hover:scale-110 transition-transform" loading="lazy" decoding="async" />
               <span>Union Bank of India</span>
             </td>
             <td className="px-4 py-2">12.15% p.a. onwards</td>
@@ -149,7 +151,7 @@ function LoanComparisonTable() {
           </tr>
           <tr className="hover:bg-blue-50 transition">
             <td className="px-4 py-2 flex items-center space-x-2">
-              <img src="/logos/hdfc.png" alt="HDFC Bank" className="w-6 h-6 rounded-full hover:scale-110 transition-transform" />
+              <img src="/logos/hdfc.png" alt="HDFC Bank" width="24" height="24" style={{ aspectRatio: "1/1" }} className="w-6 h-6 rounded-full hover:scale-110 transition-transform" loading="lazy" decoding="async" />
               <span>HDFC Bank</span>
             </td>
             <td className="px-4 py-2">14.50% p.a. onwards</td>
@@ -158,7 +160,7 @@ function LoanComparisonTable() {
           </tr>
           <tr className="hover:bg-blue-50 transition">
             <td className="px-4 py-2 flex items-center space-x-2">
-              <img src="/logos/sbi.png" alt="State Bank of India" className="w-6 h-6 rounded-full hover:scale-110 transition-transform" />
+              <img src="/logos/sbi.png" alt="State Bank of India" width="24" height="24" style={{ aspectRatio: "1/1" }} className="w-6 h-6 rounded-full hover:scale-110 transition-transform" loading="lazy" decoding="async" />
               <span>State Bank of India</span>
             </td>
             <td className="px-4 py-2">12.80% p.a. onwards</td>
@@ -167,7 +169,7 @@ function LoanComparisonTable() {
           </tr>
           <tr className="hover:bg-blue-50 transition">
             <td className="px-4 py-2 flex items-center space-x-2">
-              <img src="/logos/jana.png" alt="Jana Small Finance Bank" className="w-6 h-6 rounded-full hover:scale-110 transition-transform" />
+              <img src="/logos/jana.png" alt="Jana Small Finance Bank" width="24" height="24" style={{ aspectRatio: "1/1" }} className="w-6 h-6 rounded-full hover:scale-110 transition-transform" loading="lazy" decoding="async" />
               <span>Jana Small Finance Bank</span>
             </td>
             <td className="px-4 py-2">Contact the bank</td>
@@ -313,7 +315,7 @@ function BankLoanSections({ openApplyModal }) {
     <div className="space-y-6">
       {banks.map((bank, idx) => (
         <div key={bank.name} className="bg-white rounded-lg shadow-md p-6 flex items-start space-x-4 transition hover:shadow-lg" style={{ borderLeft: `6px solid ${bank.color}` }}>
-          <img src={bank.logo} alt={bank.name} className="w-14 h-14 rounded-full object-contain mr-4 hover:scale-110 transition-transform" />
+          <img src={bank.logo} alt={bank.name} width="56" height="56" style={{ aspectRatio: "1/1" }} className="w-14 h-14 rounded-full object-contain mr-4 hover:scale-110 transition-transform" loading="lazy" decoding="async" />
           <div className="flex-1">
             <button onClick={() => setOpen(open === idx ? null : idx)} className="flex items-center w-full text-left focus:outline-none">
               <span className="text-2xl font-bold mr-2" style={{ color: bank.color }}>{bank.name}</span>

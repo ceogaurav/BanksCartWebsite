@@ -285,6 +285,11 @@ export const SEO_MAP: Record<string, SEOMetadata> = {
     description: "Compare the best lifetime free credit cards in India for 2026. Zero joining fees, no renewal charges, high cashback rates, and airport lounge access.",
     keywords: "best lifetime free credit cards, zero annual fee credit cards, ltf credit cards india, amazon pay icici, idfc first millennia"
   },
+  "/blog/how-to-improve-cibil-score-fast": {
+    title: "How to Improve CIBIL Score Fast in India (2026 Step-by-Step Guide) | BanksCart",
+    description: "Proven actionable steps to increase your CIBIL score from 600 to 750+ quickly. Learn debt utilization reduction, dispute resolution, and credit mix strategies.",
+    keywords: "how to improve cibil score fast, increase credit score india, improve credit rating, boost cibil 750"
+  },
   "/company-registration": {
     title: "Company Registration in India: Pvt Ltd, LLP, OPC & Copyright Filing | BanksCart",
     description: "Online company registration services in India. Register Private Limited, LLP, and OPC startups in Delhi, Chennai, and file copyright protection with BanksCart.",

@@ -1,50 +1,133 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { Car, Calculator, TrendingUp, PieChart, BarChart3 } from 'lucide-react';
 import { calculateEMI, calculateTotalAmount, calculateTotalInterest, formatCurrency } from '../../utils/calculations';
 
 const CarLoanEMI: React.FC = () => {
-  const [carPrice, setCarPrice] = useState(800000);
-  const [downPayment, setDownPayment] = useState(160000);
-  const [rate, setRate] = useState(9.5);
-  const [tenure, setTenure] = useState(60); // 5 years
+  // Local immediate slider display values (for 60fps instant UI updates)
+  const [displayCarPrice, setDisplayCarPrice] = useState(800000);
+  const [displayDownPayment, setDisplayDownPayment] = useState(160000);
+  const [displayRate, setDisplayRate] = useState(9.5);
+  const [displayTenure, setDisplayTenure] = useState(60); // 5 years
 
-  const principal = carPrice - downPayment;
-  const emi = calculateEMI(principal, rate, tenure);
-  const totalAmount = calculateTotalAmount(emi, tenure);
-  const totalInterest = calculateTotalInterest(totalAmount, principal);
+  // Debounced calculation state (minimum 150ms delay to eliminate INP latency bottlenecks)
+  const [calcCarPrice, setCalcCarPrice] = useState(800000);
+  const [calcDownPayment, setCalcDownPayment] = useState(160000);
+  const [calcRate, setCalcRate] = useState(9.5);
+  const [calcTenure, setCalcTenure] = useState(60);
 
-  const handleSliderChange = useCallback((setter: React.Dispatch<React.SetStateAction<number>>) => 
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setter(Number(e.target.value));
-    }, []
-  );
+  const initialPrincipal = 800000 - 160000;
+  const initialEmi = calculateEMI(initialPrincipal, 9.5, 60);
+  const initialTotal = calculateTotalAmount(initialEmi, 60);
+  const initialInterest = calculateTotalInterest(initialTotal, initialPrincipal);
 
-  // Calculate loan-to-value ratio
-  const ltvRatio = ((principal / carPrice) * 100).toFixed(1);
+  const [principal, setPrincipal] = useState(initialPrincipal);
+  const [emi, setEmi] = useState(initialEmi);
+  const [totalAmount, setTotalAmount] = useState(initialTotal);
+  const [totalInterest, setTotalInterest] = useState(initialInterest);
+  const [ltvRatio, setLtvRatio] = useState(() => ((initialPrincipal / 800000) * 100).toFixed(1));
 
-  // Generate monthly amortization schedule for first year
-  const generateMonthlySchedule = () => {
+  const [monthlySchedule, setMonthlySchedule] = useState(() => {
     const schedule = [];
-    let remainingPrincipal = principal;
-    const monthlyRate = rate / (12 * 100);
-
-    for (let month = 1; month <= Math.min(12, tenure); month++) {
-      const interestPayment = remainingPrincipal * monthlyRate;
-      const principalPayment = emi - interestPayment;
-      remainingPrincipal -= principalPayment;
-
+    let remPrincipal = initialPrincipal;
+    const monthlyRate = 9.5 / (12 * 100);
+    for (let month = 1; month <= Math.min(12, 60); month++) {
+      const interestPayment = remPrincipal * monthlyRate;
+      const principalPayment = initialEmi - interestPayment;
+      remPrincipal -= principalPayment;
       schedule.push({
         month,
-        emi,
+        emi: initialEmi,
         principalPayment,
         interestPayment,
-        remainingPrincipal: Math.max(0, remainingPrincipal),
+        remainingPrincipal: Math.max(0, remPrincipal),
       });
     }
     return schedule;
-  };
+  });
 
-  const monthlySchedule = generateMonthlySchedule();
+  // Timers for 150ms debouncing
+  const priceTimer = useRef(null);
+  const downPaymentTimer = useRef(null);
+  const rateTimer = useRef(null);
+  const tenureTimer = useRef(null);
+
+  const handlePriceChange = useCallback((e) => {
+    const val = Number(e.target.value);
+    setDisplayCarPrice(val);
+    if (priceTimer.current) clearTimeout(priceTimer.current);
+    priceTimer.current = setTimeout(() => setCalcCarPrice(val), 150);
+  }, []);
+
+  const handleDownPaymentChange = useCallback((e) => {
+    const val = Number(e.target.value);
+    setDisplayDownPayment(val);
+    if (downPaymentTimer.current) clearTimeout(downPaymentTimer.current);
+    downPaymentTimer.current = setTimeout(() => setCalcDownPayment(val), 150);
+  }, []);
+
+  const handleRateChange = useCallback((e) => {
+    const val = Number(e.target.value);
+    setDisplayRate(val);
+    if (rateTimer.current) clearTimeout(rateTimer.current);
+    rateTimer.current = setTimeout(() => setCalcRate(val), 150);
+  }, []);
+
+  const handleTenureChange = useCallback((e) => {
+    const val = Number(e.target.value);
+    setDisplayTenure(val);
+    if (tenureTimer.current) clearTimeout(tenureTimer.current);
+    tenureTimer.current = setTimeout(() => setCalcTenure(val), 150);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (priceTimer.current) clearTimeout(priceTimer.current);
+      if (downPaymentTimer.current) clearTimeout(downPaymentTimer.current);
+      if (rateTimer.current) clearTimeout(rateTimer.current);
+      if (tenureTimer.current) clearTimeout(tenureTimer.current);
+    };
+  }, []);
+
+  // Offload recalculation and amortization schedule to an asynchronous microtask
+  useEffect(() => {
+    const runRecalculation = () => {
+      const calcP = calcCarPrice - calcDownPayment;
+      const calculatedEmi = calculateEMI(calcP, calcRate, calcTenure);
+      const calculatedTotal = calculateTotalAmount(calculatedEmi, calcTenure);
+      const calculatedInterest = calculateTotalInterest(calculatedTotal, calcP);
+
+      const schedule = [];
+      let remPrincipal = calcP;
+      const monthlyRate = calcRate / (12 * 100);
+
+      for (let month = 1; month <= Math.min(12, calcTenure); month++) {
+        const interestPayment = remPrincipal * monthlyRate;
+        const principalPayment = calculatedEmi - interestPayment;
+        remPrincipal -= principalPayment;
+
+        schedule.push({
+          month,
+          emi: calculatedEmi,
+          principalPayment,
+          interestPayment,
+          remainingPrincipal: Math.max(0, remPrincipal),
+        });
+      }
+
+      setPrincipal(calcP);
+      setEmi(calculatedEmi);
+      setTotalAmount(calculatedTotal);
+      setTotalInterest(calculatedInterest);
+      setLtvRatio(calcCarPrice > 0 ? ((calcP / calcCarPrice) * 100).toFixed(1) : '0');
+      setMonthlySchedule(schedule);
+    };
+
+    if (typeof queueMicrotask === 'function') {
+      queueMicrotask(runRecalculation);
+    } else {
+      setTimeout(runRecalculation, 0);
+    }
+  }, [calcCarPrice, calcDownPayment, calcRate, calcTenure]);
 
   const carTypes = [
     { name: 'Hatchback', priceRange: '₹4-8 Lakh', rate: '8.5-11%' },
@@ -86,15 +169,15 @@ const CarLoanEMI: React.FC = () => {
               <div>
                 <div className="flex justify-between items-center mb-3">
                   <label className="text-sm font-medium text-gray-700">Car Price (On-Road)</label>
-                  <span className="text-lg font-bold text-primary-600">{formatCurrency(carPrice)}</span>
+                  <span className="text-lg font-bold text-primary-600">{formatCurrency(displayCarPrice)}</span>
                 </div>
                 <input
                   type="range"
                   min="300000"
                   max="5000000"
                   step="50000"
-                  value={carPrice}
-                  onChange={handleSliderChange(setCarPrice)}
+                  value={displayCarPrice}
+                  onChange={handlePriceChange}
                   className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
                 />
                 <div className="flex justify-between text-xs text-gray-500 mt-1">
@@ -107,20 +190,20 @@ const CarLoanEMI: React.FC = () => {
               <div>
                 <div className="flex justify-between items-center mb-3">
                   <label className="text-sm font-medium text-gray-700">Down Payment</label>
-                  <span className="text-lg font-bold text-primary-600">{formatCurrency(downPayment)}</span>
+                  <span className="text-lg font-bold text-primary-600">{formatCurrency(displayDownPayment)}</span>
                 </div>
                 <input
                   type="range"
-                  min={carPrice * 0.1}
-                  max={carPrice * 0.5}
+                  min={displayCarPrice * 0.1}
+                  max={displayCarPrice * 0.5}
                   step="10000"
-                  value={downPayment}
-                  onChange={handleSliderChange(setDownPayment)}
+                  value={displayDownPayment}
+                  onChange={handleDownPaymentChange}
                   className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
                 />
                 <div className="flex justify-between text-xs text-gray-500 mt-1">
-                  <span>10% ({formatCurrency(carPrice * 0.1)})</span>
-                  <span>50% ({formatCurrency(carPrice * 0.5)})</span>
+                  <span>10% ({formatCurrency(displayCarPrice * 0.1)})</span>
+                  <span>50% ({formatCurrency(displayCarPrice * 0.5)})</span>
                 </div>
               </div>
 
@@ -128,15 +211,15 @@ const CarLoanEMI: React.FC = () => {
               <div>
                 <div className="flex justify-between items-center mb-3">
                   <label className="text-sm font-medium text-gray-700">Interest Rate (per annum)</label>
-                  <span className="text-lg font-bold text-primary-600">{rate}%</span>
+                  <span className="text-lg font-bold text-primary-600">{displayRate}%</span>
                 </div>
                 <input
                   type="range"
                   min="7"
                   max="15"
                   step="0.1"
-                  value={rate}
-                  onChange={handleSliderChange(setRate)}
+                  value={displayRate}
+                  onChange={handleRateChange}
                   className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
                 />
                 <div className="flex justify-between text-xs text-gray-500 mt-1">
@@ -150,7 +233,7 @@ const CarLoanEMI: React.FC = () => {
                 <div className="flex justify-between items-center mb-3">
                   <label className="text-sm font-medium text-gray-700">Loan Tenure</label>
                   <span className="text-lg font-bold text-primary-600">
-                    {Math.floor(tenure / 12)} years {tenure % 12} months
+                    {Math.floor(displayTenure / 12)} years {displayTenure % 12} months
                   </span>
                 </div>
                 <input
@@ -158,8 +241,8 @@ const CarLoanEMI: React.FC = () => {
                   min="12"
                   max="84"
                   step="6"
-                  value={tenure}
-                  onChange={handleSliderChange(setTenure)}
+                  value={displayTenure}
+                  onChange={handleTenureChange}
                   className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
                 />
                 <div className="flex justify-between text-xs text-gray-500 mt-1">

@@ -48,22 +48,36 @@ export default function BlogPost() {
         ? new Date(post.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
         : 'October 15, 2026';
 
+    const isSSY = slug?.toLowerCase().includes('sukanya');
     const blogPostingSchema = {
         "@context": "https://schema.org",
         "@type": "BlogPosting",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": `https://www.bankscart.com/blog/${slug}`
+            "@id": isSSY ? "https://www.bankscart.com/blog/sukanya-samriddhi-yojana-guide" : `https://www.bankscart.com/blog/${slug}`
         },
-        "headline": post.title,
-        "description": post.seoDescription || `Complete financial guide on ${post.title}. Verified by chartered accountants and ex-banking advisors on BanksCart.`,
-        "image": post.mainImage || "https://www.bankscart.com/assets/images/bankscart-logo.png",
-        "author": {
-            "@type": "Person",
-            "name": "Raghav Singhal",
-            "jobTitle": "Lead Financial Analyst",
-            "url": "https://www.bankscart.com/author/raghav-singhal"
-        },
+        "headline": isSSY
+            ? "Sukanya Samriddhi Yojana (SSY) 2026: Interest Rate, Rules, Eligibility & Tax Benefits"
+            : post.title,
+        "description": isSSY
+            ? "Complete guide on Sukanya Samriddhi Yojana (SSY) account opening, latest 8.2% interest rates, tenure calculation, and Section 80C tax exemption rules."
+            : (post.seoDescription || `Complete financial guide on ${post.title}. Verified by chartered accountants and ex-banking advisors on BanksCart.`),
+        "image": isSSY
+            ? "https://www.bankscart.com/assets/images/ssy-guide-banner.jpg"
+            : (post.mainImage || "https://www.bankscart.com/assets/images/bankscart-logo.png"),
+        "author": isSSY
+            ? {
+                "@type": "Person",
+                "name": "Priya Sharma",
+                "jobTitle": "Senior Financial Analyst",
+                "url": "https://www.bankscart.com/author/priya-sharma"
+            }
+            : {
+                "@type": "Person",
+                "name": "Raghav Singhal",
+                "jobTitle": "Lead Financial Analyst",
+                "url": "https://www.bankscart.com/author/raghav-singhal"
+            },
         "publisher": {
             "@type": "Organization",
             "name": "BanksCart",
@@ -72,7 +86,7 @@ export default function BlogPost() {
                 "url": "https://www.bankscart.com/assets/images/bankscart-logo.png"
             }
         },
-        "datePublished": post.publishedAt || "2026-01-15T09:00:00+05:30",
+        "datePublished": isSSY ? "2026-01-15T09:00:00+05:30" : (post.publishedAt || "2026-01-15T09:00:00+05:30"),
         "dateModified": "2026-10-30T10:00:00+05:30"
     };
 

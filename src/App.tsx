@@ -827,6 +827,7 @@ const App: React.FC = () => {
                 <Route path="/blog/best-bank-for-home-loan" element={<HomeLoanComparison />} />
                 <Route path="/blog/what-is-good-cibil-score" element={<WhatIsCibilScore />} />
                 <Route path="/blog/how-to-dispute-cibil-errors" element={<ResolveCibilDisputePage />} />
+                <Route path="/blog/how-to-improve-cibil-score-fast" element={<WaysToImproveCibilPage />} />
                 <Route path="/blog/pm-mudra-loan-online-apply" element={<StartupLoanBlueprint />} />
                 <Route path="/blog/pmay-subsidy-status-check" element={<PMAY />} />
                 <Route path="/blog/how-cibil-score-calculated" element={<WhatIsCibilScore />} />

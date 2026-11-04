@@ -27,7 +27,7 @@ export default function SbiVsHdfcPersonalLoan() {
       "name": "BanksCart",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://www.bankscart.com/logos/bankscartlogof.jpg"
+        "url": "https://www.bankscart.com/assets/images/bankscart-logo.png"
       }
     },
     "datePublished": "2026-02-10T09:00:00+05:30",

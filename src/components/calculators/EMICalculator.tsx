@@ -3,19 +3,79 @@ import { Calculator } from 'lucide-react';
 import { calculateEMI, calculateTotalAmount, calculateTotalInterest, formatCurrency } from '../../utils/calculations';
 
 const EMICalculator: React.FC = () => {
-  const [principal, setPrincipal] = useState(500000);
-  const [rate, setRate] = useState(12);
-  const [tenure, setTenure] = useState(60);
+  // Local immediate slider display values (for 60fps instant UI updates)
+  const [displayPrincipal, setDisplayPrincipal] = useState(500000);
+  const [displayRate, setDisplayRate] = useState(12);
+  const [displayTenure, setDisplayTenure] = useState(60);
 
-  const emi = calculateEMI(principal, rate, tenure);
-  const totalAmount = calculateTotalAmount(emi, tenure);
-  const totalInterest = calculateTotalInterest(totalAmount, principal);
+  // Debounced calculation state (minimum 150ms delay to eliminate INP latency bottlenecks)
+  const [calcPrincipal, setCalcPrincipal] = useState(500000);
+  const [calcRate, setCalcRate] = useState(12);
+  const [calcTenure, setCalcTenure] = useState(60);
 
-  const handleSliderChange = useCallback((setter: React.Dispatch<React.SetStateAction<number>>) => 
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setter(Number(e.target.value));
-    }, []
-  );
+  // Calculated results
+  const [emi, setEmi] = useState(() => calculateEMI(500000, 12, 60));
+  const [totalAmount, setTotalAmount] = useState(() => calculateTotalAmount(calculateEMI(500000, 12, 60), 60));
+  const [totalInterest, setTotalInterest] = useState(() => calculateTotalInterest(calculateTotalAmount(calculateEMI(500000, 12, 60), 60), 500000));
+
+  // Timers for 150ms debouncing
+  const principalTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const rateTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const tenureTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const handlePrincipalChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = Number(e.target.value);
+    setDisplayPrincipal(val);
+    if (principalTimer.current) clearTimeout(principalTimer.current);
+    principalTimer.current = setTimeout(() => {
+      setCalcPrincipal(val);
+    }, 150);
+  }, []);
+
+  const handleRateChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = Number(e.target.value);
+    setDisplayRate(val);
+    if (rateTimer.current) clearTimeout(rateTimer.current);
+    rateTimer.current = setTimeout(() => {
+      setCalcRate(val);
+    }, 150);
+  }, []);
+
+  const handleTenureChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = Number(e.target.value);
+    setDisplayTenure(val);
+    if (tenureTimer.current) clearTimeout(tenureTimer.current);
+    tenureTimer.current = setTimeout(() => {
+      setCalcTenure(val);
+    }, 150);
+  }, []);
+
+  // Cleanup timers on unmount
+  useEffect(() => {
+    return () => {
+      if (principalTimer.current) clearTimeout(principalTimer.current);
+      if (rateTimer.current) clearTimeout(rateTimer.current);
+      if (tenureTimer.current) clearTimeout(tenureTimer.current);
+    };
+  }, []);
+
+  // Offload recalculation to an asynchronous microtask
+  useEffect(() => {
+    const runCalculation = () => {
+      const calculatedEmi = calculateEMI(calcPrincipal, calcRate, calcTenure);
+      const calculatedTotal = calculateTotalAmount(calculatedEmi, calcTenure);
+      const calculatedInterest = calculateTotalInterest(calculatedTotal, calcPrincipal);
+      setEmi(calculatedEmi);
+      setTotalAmount(calculatedTotal);
+      setTotalInterest(calculatedInterest);
+    };
+
+    if (typeof queueMicrotask === 'function') {
+      queueMicrotask(runCalculation);
+    } else {
+      setTimeout(runCalculation, 0);
+    }
+  }, [calcPrincipal, calcRate, calcTenure]);
 
   return (
     <div className="bg-white rounded-xl shadow-lg p-6">
@@ -38,8 +98,8 @@ const EMICalculator: React.FC = () => {
               min="50000"
               max="10000000"
               step="10000"
-              value={principal}
-              onChange={handleSliderChange(setPrincipal)}
+              value={displayPrincipal}
+              onChange={handlePrincipalChange}
               className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
             />
             <div className="flex justify-between text-xs text-gray-500 mt-1">
@@ -57,8 +117,8 @@ const EMICalculator: React.FC = () => {
               min="5"
               max="30"
               step="0.1"
-              value={rate}
-              onChange={handleSliderChange(setRate)}
+              value={displayRate}
+              onChange={handleRateChange}
               className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
             />
             <div className="flex justify-between text-xs text-gray-500 mt-1">
@@ -76,8 +136,8 @@ const EMICalculator: React.FC = () => {
               min="12"
               max="360"
               step="12"
-              value={tenure}
-              onChange={handleSliderChange(setTenure)}
+              value={displayTenure}
+              onChange={handleTenureChange}
               className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
             />
             <div className="flex justify-between text-xs text-gray-500 mt-1">
@@ -110,7 +170,7 @@ const EMICalculator: React.FC = () => {
             </div>
           </div>
 
-          {/* Pie Chart Visualization */}
+          {/* Visualization */}
           <div className="bg-gray-50 p-6 rounded-lg">
             <h4 className="text-md font-semibold text-gray-900 mb-4">Breakdown</h4>
             <div className="space-y-3">
@@ -120,7 +180,7 @@ const EMICalculator: React.FC = () => {
                   <span className="text-sm text-gray-600">Principal</span>
                 </div>
                 <span className="text-sm font-semibold">
-                  {((principal / totalAmount) * 100).toFixed(1)}%
+                  {totalAmount > 0 ? ((calcPrincipal / totalAmount) * 100).toFixed(1) : '0'}%
                 </span>
               </div>
               <div className="flex items-center justify-between">
@@ -129,7 +189,7 @@ const EMICalculator: React.FC = () => {
                   <span className="text-sm text-gray-600">Interest</span>
                 </div>
                 <span className="text-sm font-semibold">
-                  {((totalInterest / totalAmount) * 100).toFixed(1)}%
+                  {totalAmount > 0 ? ((totalInterest / totalAmount) * 100).toFixed(1) : '0'}%
                 </span>
               </div>
             </div>

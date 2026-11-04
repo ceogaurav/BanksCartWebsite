@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import Breadcrumb from '../components/Breadcrumb';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 // Import all mutual funds page components (to be created in ../components/DebitCardsPage/)
@@ -30,6 +31,7 @@ const DebitCardsPage: React.FC<DebitCardsPageProps> = ({ openApplyModal }) => {
 
   return (
     <div className="debit-cards-page">
+      <Breadcrumb path={["Home", "Cards", "Debit Cards"]} />
       <HeroSection openApplyModal={openApplyModal} />
       <CardTypesShowcase openApplyModal={openApplyModal} />
       <SecurityFeatures />
