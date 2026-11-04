@@ -194,6 +194,13 @@ const CreditRectificationPage: React.FC = () => {
               >
                 Detailed Credit Health Report
               </Link>
+              <Link
+                to="/blog/how-to-dispute-cibil-errors"
+                className="inline-flex items-center justify-center px-6 py-3 bg-teal-500 hover:bg-teal-600 text-slate-900 font-bold rounded-xl shadow-lg transition-colors"
+              >
+                How to Dispute CIBIL Errors Guide
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Link>
             </div>
           </section>
 
@@ -305,6 +312,24 @@ const CreditRectificationPage: React.FC = () => {
                 <p className="text-xs text-slate-600 leading-relaxed">Upon lender confirmation, the negative entry is expunged and your CIBIL score is recomputed.</p>
               </div>
             </div>
+          </section>
+
+          {/* SILO 3: Rectification -> CIBILGuide (/blog/how-to-dispute-cibil-errors) */}
+          <section className="bg-gradient-to-r from-teal-900 via-emerald-950 to-slate-900 text-white rounded-2xl p-8 border border-teal-700/50 shadow-md flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="space-y-2">
+              <span className="text-xs font-bold text-teal-300 uppercase tracking-wider block">Official Dispute Protocol</span>
+              <h3 className="text-xl sm:text-2xl font-bold text-white">How to Dispute CIBIL Errors: Step-by-Step Filing Guide</h3>
+              <p className="text-xs sm:text-sm text-teal-100 max-w-2xl leading-relaxed">
+                Step-by-step editorial blueprint on submitting formal online dispute forms to TransUnion CIBIL, quoting your 9-digit Enquiry Control Number (ECN), and enforcing the statutory 30-day resolution timeline.
+              </p>
+            </div>
+            <Link
+              to="/blog/how-to-dispute-cibil-errors"
+              className="shrink-0 px-6 py-3 bg-teal-400 hover:bg-teal-300 text-slate-900 font-extrabold text-sm rounded-xl shadow transition-all flex items-center gap-2"
+            >
+              <span>Read Dispute Guide</span>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
           </section>
 
           {/* Section 4: Legitimate Credit Repair vs Illegal Scams */}
