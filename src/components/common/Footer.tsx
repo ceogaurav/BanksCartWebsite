@@ -30,7 +30,7 @@ const Footer: React.FC<FooterProps> = ({ openEligibilityModal }) => {
             </Link>
             <h3 className="text-white text-sm font-bold uppercase tracking-wider">BANKS CART</h3>
             <ul className="space-y-3 text-sm">
-              <li><Link to="/about" className="hover:text-blue-400 transition-colors">About Us</Link></li>
+              <li><Link to="/about-us" className="hover:text-blue-400 transition-colors">About Us</Link></li>
               <li><Link to="/careers" className="hover:text-blue-400 transition-colors">Careers</Link></li>
               <li><Link to="/contact" className="hover:text-blue-400 transition-colors">Contact Us</Link></li>
               <li><Link to="/partners" className="hover:text-blue-400 transition-colors">Partners</Link></li>

@@ -29,7 +29,39 @@ export default function SEOManager() {
   const jsonLdGraph = React.useMemo(() => {
     const schemas: any[] = [];
 
-    // 1. Homepage Schemas: WebSite (with Sitelinks Searchbox), Organization, and FinancialService
+    // 1. Site-Wide Organization & Brand Schema (Injected across all pages)
+    const siteWideOrganizationSchema = {
+      "@context": "https://schema.org",
+      "@type": "FinancialService",
+      "name": "BanksCart",
+      "legalName": "BanksCart Financial Services",
+      "url": "https://www.bankscart.com/",
+      "logo": "https://www.bankscart.com/assets/images/bankscart-logo.png",
+      "description": "BanksCart is an online financial comparison platform in India helping consumers compare and apply for personal loans, home loans, business loans, credit cards, and credit score improvement services.",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Connaught Place",
+        "addressLocality": "New Delhi",
+        "addressRegion": "Delhi",
+        "postalCode": "110001",
+        "addressCountry": "IN"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+91-11-XXXXXXXX",
+        "contactType": "Customer Support",
+        "areaServed": "IN",
+        "availableLanguage": ["English", "Hindi"]
+      },
+      "sameAs": [
+        "https://www.facebook.com/bankscart",
+        "https://twitter.com/bankscart",
+        "https://www.linkedin.com/company/bankscart"
+      ]
+    };
+    schemas.push(siteWideOrganizationSchema);
+
+    // Homepage: Add WebSite SearchAction Schema
     if (pathname === '/') {
       schemas.push({
         "@context": "https://schema.org",
@@ -46,36 +78,6 @@ export default function SEOManager() {
           },
           "query-input": "required name=search_term_string"
         }
-      });
-
-      schemas.push({
-        "@context": "https://schema.org",
-        "@type": "FinancialService",
-        "name": "BanksCart",
-        "legalName": "BanksCart Financial Services",
-        "url": "https://www.bankscart.com/",
-        "logo": "https://www.bankscart.com/assets/images/bankscart-logo.png",
-        "description": "BanksCart is an online financial comparison platform in India helping consumers compare and apply for personal loans, home loans, business loans, credit cards, and credit score improvement services.",
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "Connaught Place",
-          "addressLocality": "New Delhi",
-          "addressRegion": "Delhi",
-          "postalCode": "110001",
-          "addressCountry": "IN"
-        },
-        "contactPoint": {
-          "@type": "ContactPoint",
-          "telephone": "+91-11-XXXXXXXX",
-          "contactType": "Customer Support",
-          "areaServed": "IN",
-          "availableLanguage": ["English", "Hindi"]
-        },
-        "sameAs": [
-          "https://www.facebook.com/bankscart",
-          "https://twitter.com/bankscart",
-          "https://www.linkedin.com/company/bankscart"
-        ]
       });
 
       return schemas;

@@ -1,4 +1,6 @@
 import React from "react";
+import { Helmet } from "react-helmet-async";
+import Breadcrumb from "../components/Breadcrumb";
 import InsuranceCard from "../components/Insurance/InsuranceCard"; // <--- THIS LINE IS CRUCIAL
 import { motion } from 'framer-motion';
 import { HeartPulse, Car, Shield, LifeBuoy, Home, Briefcase, Plane, Gem } from "lucide-react"; // Importing Lucide icons
@@ -70,7 +72,36 @@ const itemVariants = {
   }
 };
 
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://www.bankscart.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Insurance",
+      "item": "https://www.bankscart.com/insurance"
+    }
+  ]
+};
+
 const InsuranceOverviewPage: React.FC = () => (
+  <>
+    <Helmet>
+      <title>Compare Insurance Plans in India: Health, Term Life & Car | BanksCart</title>
+      <meta name="description" content="Compare and buy best health, car, and term life insurance plans from top IRDAI-regulated insurers in India. Get instant quotes with BanksCart." />
+      <link rel="canonical" href="https://www.bankscart.com/insurance" />
+      <script type="application/ld+json">
+        {JSON.stringify(breadcrumbSchema)}
+      </script>
+    </Helmet>
+    <Breadcrumb path={["Home", "Insurance"]} />
   <motion.div
     className="min-h-screen bg-gradient-to-br from-white/60 to-blue-50/80 py-12 px-4 md:px-12 font-inter"
     variants={pageVariants}
@@ -134,6 +165,7 @@ const InsuranceOverviewPage: React.FC = () => (
       </motion.div>
     </motion.section>
   </motion.div>
+  </>
 );
 
 export default InsuranceOverviewPage;

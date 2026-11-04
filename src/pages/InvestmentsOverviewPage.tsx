@@ -1,4 +1,6 @@
 import React from "react";
+import { Helmet } from "react-helmet-async";
+import Breadcrumb from "../components/Breadcrumb";
 import InvestmentCard from "../components/investments/InvestmentCard";
 import { motion } from 'framer-motion';
 import { PiggyBank, TrendingUp, LineChart, Wallet, Briefcase, DollarSign, Home, Gem } from "lucide-react"; // Importing Lucide icons
@@ -70,7 +72,36 @@ const itemVariants = {
   }
 };
 
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://www.bankscart.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Investments",
+      "item": "https://www.bankscart.com/investment"
+    }
+  ]
+};
+
 const InvestmentsOverviewPage: React.FC = () => (
+  <>
+    <Helmet>
+      <title>Best Investment Plans & Options in India: FD, Mutual Funds & Stocks | BanksCart</title>
+      <meta name="description" content="Discover high-return investment plans in India. Compare fixed deposits, mutual funds, gold bonds, and retirement options with BanksCart." />
+      <link rel="canonical" href="https://www.bankscart.com/investment" />
+      <script type="application/ld+json">
+        {JSON.stringify(breadcrumbSchema)}
+      </script>
+    </Helmet>
+    <Breadcrumb path={["Home", "Investments"]} />
   <motion.div
     className="min-h-screen bg-gradient-to-br from-white/60 to-green-50/80 py-12 px-4 md:px-12 font-inter"
     variants={pageVariants}
@@ -171,6 +202,7 @@ const InvestmentsOverviewPage: React.FC = () => (
       </motion.div>
     </motion.section>
   </motion.div>
+  </>
 );
 
 export default InvestmentsOverviewPage;

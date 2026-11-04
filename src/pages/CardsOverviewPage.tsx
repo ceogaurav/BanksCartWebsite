@@ -1,6 +1,7 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
 import CardTypeCard from "../components/Card/CardTypeCard";
+import Breadcrumb from "../components/Breadcrumb";
 import { motion } from 'framer-motion';
 import { CreditCard, Wallet, IndianRupee, ShieldCheck, Briefcase } from "lucide-react"; // Importing Lucide icons
 
@@ -59,13 +60,42 @@ const itemVariants = {
   }
 };
 
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://www.bankscart.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Cards",
+      "item": "https://www.bankscart.com/cards"
+    }
+  ]
+};
+
 const CardsOverviewPage: React.FC = () => (
-  <motion.div
-    className="min-h-screen bg-gradient-to-br from-white/60 to-purple-50/80 py-12 px-4 md:px-12 font-inter"
-    variants={pageVariants}
-    initial="hidden"
-    animate="visible"
-  >
+  <>
+    <Helmet>
+      <title>Credit Cards & Debit Cards in India: Compare Top Bank Offers | BanksCart</title>
+      <meta name="description" content="Compare best credit cards and debit cards in India. Find cashback cards, lifetime free cards, travel perks, and apply online with instant approval." />
+      <link rel="canonical" href="https://www.bankscart.com/cards" />
+      <script type="application/ld+json">
+        {JSON.stringify(breadcrumbSchema)}
+      </script>
+    </Helmet>
+    <Breadcrumb path={["Home", "Cards"]} />
+    <motion.div
+      className="min-h-screen bg-gradient-to-br from-white/60 to-purple-50/80 py-12 px-4 md:px-12 font-inter"
+      variants={pageVariants}
+      initial="hidden"
+      animate="visible"
+    >
     <motion.h1
       className="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-12 text-center drop-shadow-lg
                  bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-pink-700"
@@ -251,6 +281,7 @@ const CardsOverviewPage: React.FC = () => (
       </div>
     </div>
   </motion.div>
+  </>
 );
 
 export default CardsOverviewPage;

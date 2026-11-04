@@ -32,7 +32,8 @@ const urlsSet = new Set([
   '/embed/ssy-calculator',
   '/embed/home-loan-emi-calculator',
   '/',
-  '/about',
+  '/about-us',
+  '/blog',
   '/blog',
   '/contact',
   '/editorial-policy',
@@ -2965,6 +2966,7 @@ for (const urlPath of urls) {
     if (!fs.existsSync(targetDir)) {
       fs.mkdirSync(targetDir, { recursive: true });
     }
+    if (targetDir.includes('about')) { console.log('WRITING REDIRECT HTML TO:', targetDir, 'TARGET:', target); }
     fs.writeFileSync(path.join(targetDir, 'index.html'), redirectHtml, 'utf8');
     pagesGenerated++;
     continue;
@@ -3039,6 +3041,7 @@ for (const urlPath of urls) {
       fs.mkdirSync(targetDir, { recursive: true });
     }
     const targetFile = path.join(targetDir, 'index.html');
+    if (targetFile.includes('about')) { console.log('WRITING PAGE HTML TO:', targetFile, 'LENGTH:', pageHtml.length); }
     fs.writeFileSync(targetFile, pageHtml, 'utf8');
     pagesGenerated++;
   }
