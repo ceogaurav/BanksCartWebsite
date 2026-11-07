@@ -7,7 +7,8 @@ import {
   HandCoins, CreditCard, Clock, Hourglass, PiggyBank as SavingsIcon,
   Flame, TrendingDown as InflationDown, TrendingUp as ValueUp // Icons for inflation
 } from 'lucide-react'; // Lucide icons
-import ApplyButton from '../../components/common/ApplyButton'; // Assuming this path is correct
+import ApplyButton from '../../components/common/ApplyButton';
+import Breadcrumb from '../../components/Breadcrumb'; // Assuming this path is correct
 
 // --- Helper Functions ---
 // Formats a number into INR currency format
@@ -218,11 +219,20 @@ const InflationCalculatorPage: React.FC<InflationCalculatorPageProps> = ({ openA
 
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-red-50 to-orange-50 py-8 font-inter text-gray-800">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-slate-50 py-8 font-sans text-slate-800">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Breadcrumb Navigation */}
+        <div className="mb-6">
+          <Breadcrumb
+            items={[
+              { label: 'Calculators', path: '/calculators' },
+              { label: 'Inflation Impact Calculator' }
+            ]}
+          />
+        </div>
         {/* Hero Section */}
         <motion.div
-          className="text-center mb-12 bg-gradient-to-r from-red-600 to-orange-700 text-white p-8 rounded-3xl shadow-xl"
+          className="text-center mb-8 bg-gradient-to-r from-[#0F172A] via-[#1E3A8A] to-[#0F172A] text-white p-8 sm:p-10 rounded-2xl shadow-xl border border-slate-700/50"
           variants={sectionVariants}
           initial="hidden"
           whileInView="visible"
@@ -249,9 +259,7 @@ const InflationCalculatorPage: React.FC<InflationCalculatorPageProps> = ({ openA
               <ApplyButton
                 loanType="Inflation Impact Financial Planning"
                 openApplyModal={openApplyModal}
-                className="bg-white text-red-600 px-8 py-4 rounded-full font-bold text-lg shadow-lg
-                           hover:bg-gray-100 transition-all duration-300 ease-in-out transform hover:-translate-y-1
-                           focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-50"
+                className="bg-amber-500 hover:bg-amber-400 text-slate-950 px-8 py-3.5 rounded-xl font-bold text-base shadow-lg transition-all inline-block"
               >
                 Get Financial Planning Advice
               </ApplyButton>
@@ -261,28 +269,40 @@ const InflationCalculatorPage: React.FC<InflationCalculatorPageProps> = ({ openA
 
         {/* Inflation Calculator Section */}
         <motion.div
-          className="bg-white rounded-3xl shadow-2xl p-6 md:p-10 w-full border border-red-100 mb-12"
+          className="bg-white rounded-2xl shadow-sm p-6 sm:p-8 w-full border border-slate-200 mb-10"
           variants={sectionVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
         >
-          <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-orange-600 to-red-600 drop-shadow-md">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-8 text-center flex items-center justify-center">
             <Calculator className="inline-block w-9 h-9 mr-3 text-orange-500" /> Inflation Impact Analyzer
           </h2>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
             {/* Input Controls Section */}
-            <div className="space-y-8 p-4 bg-gray-50 rounded-2xl border border-gray-100 shadow-inner">
+            <div className="space-y-6 p-6 bg-slate-50/70 rounded-xl border border-slate-200">
               <h3 className="text-2xl font-bold text-gray-800 mb-4 flex items-center">
                 <Flame className="w-6 h-6 mr-2 text-red-600" /> Your Inflation Scenario
               </h3>
 
               {/* Current Amount */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="currentAmount" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Current Amount / Value Today: <span className="text-blue-600">{formatCurrency(currentAmount)}</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="currentAmount" className="text-sm font-semibold text-slate-700">
+                    Current Amount / Value Today
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="text"
+                  value={formatNumberWithCommas(currentAmount)}
+                  onChange={handleCurrentAmountChange}
+                  onBlur={(e) => setCurrentAmount(Number(e.target.value.replace(/,/g, '')))}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  inputMode="numeric"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="currentAmount"
@@ -291,23 +311,27 @@ const InflationCalculatorPage: React.FC<InflationCalculatorPageProps> = ({ openA
                   step="1000"
                   value={currentAmount}
                   onChange={handleCurrentAmountChange}
-                  className="w-full h-2 bg-gradient-to-r from-blue-300 to-blue-500 rounded-lg appearance-none cursor-pointer accent-blue-600"
-                />
-                <input
-                  type="text"
-                  value={formatNumberWithCommas(currentAmount)}
-                  onChange={handleCurrentAmountChange}
-                  onBlur={(e) => setCurrentAmount(Number(e.target.value.replace(/,/g, '')))}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-blue-500 focus:border-blue-500 transition-all"
-                  inputMode="numeric"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
 
               {/* Annual Inflation Rate */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="inflationRate" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Annual Inflation Rate (%): <span className="text-teal-600">{inflationRate}%</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="inflationRate" className="text-sm font-semibold text-slate-700">
+                    Annual Inflation Rate (%)
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="number"
+                  value={inflationRate}
+                  onChange={handleInflationRateChange}
+                  onBlur={(e) => setInflationRate(Number(e.target.value))}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  step="0.1"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="inflationRate"
@@ -316,23 +340,28 @@ const InflationCalculatorPage: React.FC<InflationCalculatorPageProps> = ({ openA
                   step="0.1"
                   value={inflationRate}
                   onChange={handleInflationRateChange}
-                  className="w-full h-2 bg-gradient-to-r from-teal-300 to-teal-500 rounded-lg appearance-none cursor-pointer accent-teal-600"
-                />
-                <input
-                  type="number"
-                  value={inflationRate}
-                  onChange={handleInflationRateChange}
-                  onBlur={(e) => setInflationRate(Number(e.target.value))}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-teal-500 focus:border-teal-500 transition-all"
-                  step="0.1"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
 
               {/* Number of Years */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="years" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Number of Years: <span className="text-orange-600">{years} Years</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="years" className="text-sm font-semibold text-slate-700">
+                    Number of Years
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="number"
+                  value={years}
+                  onChange={handleYearsChange}
+                  onBlur={(e) => setYears(Number(e.target.value))}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  min="1"
+                  max="50"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="years"
@@ -341,22 +370,13 @@ const InflationCalculatorPage: React.FC<InflationCalculatorPageProps> = ({ openA
                   step="1"
                   value={years}
                   onChange={handleYearsChange}
-                  className="w-full h-2 bg-gradient-to-r from-orange-300 to-orange-500 rounded-lg appearance-none cursor-pointer accent-orange-600"
-                />
-                <input
-                  type="number"
-                  value={years}
-                  onChange={handleYearsChange}
-                  onBlur={(e) => setYears(Number(e.target.value))}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-orange-500 focus:border-orange-500 transition-all"
-                  min="1"
-                  max="50"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
             </div>
 
             {/* Results Display Section */}
-            <div className="p-6 bg-gradient-to-br from-red-500 to-orange-600 text-white rounded-2xl shadow-xl flex flex-col justify-center items-center text-center">
+            <div className="p-6 sm:p-8 bg-[#0F172A] text-white rounded-2xl shadow-xl border border-slate-800 flex flex-col justify-between text-left">
               <h3 className="text-2xl md:text-3xl font-bold mb-4">Inflation's Impact</h3>
 
               {/* Future Value Needed */}
@@ -372,19 +392,19 @@ const InflationCalculatorPage: React.FC<InflationCalculatorPageProps> = ({ openA
               </motion.div>
 
               <div className="w-full space-y-4 text-lg mt-8">
-                <motion.div variants={itemVariants} className="flex justify-between items-center bg-red-700/30 p-3 rounded-lg">
+                <motion.div variants={itemVariants} className="flex justify-between items-center bg-slate-800/80 border border-slate-700/60 p-3 rounded-xl text-sm sm:text-base font-mono tabular-nums">
                   <span className="font-medium flex items-center gap-2"><DollarSign className="w-5 h-5" /> Current Amount</span>
                   <span className="font-bold text-white">{formatCurrency(currentAmount)}</span>
                 </motion.div>
-                <motion.div variants={itemVariants} className="flex justify-between items-center bg-red-700/30 p-3 rounded-lg">
+                <motion.div variants={itemVariants} className="flex justify-between items-center bg-slate-800/80 border border-slate-700/60 p-3 rounded-xl text-sm sm:text-base font-mono tabular-nums">
                   <span className="font-medium flex items-center gap-2"><Percent className="w-5 h-5" /> Annual Inflation Rate</span>
                   <span className="font-bold text-white">{inflationRate}%</span>
                 </motion.div>
-                <motion.div variants={itemVariants} className="flex justify-between items-center bg-red-700/30 p-3 rounded-lg">
+                <motion.div variants={itemVariants} className="flex justify-between items-center bg-slate-800/80 border border-slate-700/60 p-3 rounded-xl text-sm sm:text-base font-mono tabular-nums">
                   <span className="font-medium flex items-center gap-2"><Clock className="w-5 h-5" /> Number of Years</span>
                   <span className="font-bold text-white">{years} Years</span>
                 </motion.div>
-                <motion.div variants={itemVariants} className="flex justify-between items-center bg-red-700/30 p-3 rounded-lg">
+                <motion.div variants={itemVariants} className="flex justify-between items-center bg-slate-800/80 border border-slate-700/60 p-3 rounded-xl text-sm sm:text-base font-mono tabular-nums">
                   <span className="font-medium flex items-center gap-2"><InflationDown className="w-5 h-5" /> Purchasing Power in Future</span>
                   <span className="font-bold text-white">{formatCurrency(calculations.purchasingPowerOfCurrentAmountInFuture)}</span>
                 </motion.div>
@@ -459,7 +479,7 @@ const InflationCalculatorPage: React.FC<InflationCalculatorPageProps> = ({ openA
         </motion.div>
 
         {/* Informational Sections */}
-        <div className="bg-white border border-gray-100 rounded-2xl p-8 shadow-lg mt-6 space-y-10">
+        <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm mt-8 space-y-10">
           <motion.section variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }}>
             <h2 className="text-3xl font-bold text-gray-900 mb-4 flex items-center">
               <Lightbulb className="w-8 h-8 mr-3 text-yellow-500" /> What is an Inflation Calculator?
@@ -558,7 +578,7 @@ const InflationCalculatorPage: React.FC<InflationCalculatorPageProps> = ({ openA
               {whyUseBanksCart.map((reason, index) => (
                 <motion.div
                   key={index}
-                  className="flex flex-col items-center text-center p-6 rounded-xl shadow-lg bg-gradient-to-br from-red-50 to-orange-50 border border-red-100"
+                  className="flex flex-col items-center text-center p-6 rounded-xl shadow-sm bg-slate-50 border border-slate-200"
                   variants={cardVariants}
                 >
                   {reason.icon}
@@ -571,7 +591,7 @@ const InflationCalculatorPage: React.FC<InflationCalculatorPageProps> = ({ openA
 
           {/* Final Call to Action */}
           <motion.section
-            className="text-center mt-12 p-8 bg-gradient-to-r from-red-600 to-orange-700 rounded-2xl shadow-xl"
+            className="text-center mt-12 p-8 sm:p-10 bg-gradient-to-r from-[#0F172A] via-[#1E3A8A] to-[#0F172A] text-white rounded-2xl shadow-xl border border-slate-700/50"
             variants={sectionVariants}
             initial="hidden"
             whileInView="visible"
@@ -595,9 +615,7 @@ const InflationCalculatorPage: React.FC<InflationCalculatorPageProps> = ({ openA
                 <ApplyButton
                   loanType="Inflation-Proof Financial Planning"
                   openApplyModal={openApplyModal}
-                  className="bg-white text-red-600 px-8 py-4 rounded-full font-bold text-lg shadow-lg
-                             hover:bg-gray-100 transition-all duration-300 ease-in-out transform hover:-translate-y-1
-                             focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-50"
+                  className="bg-amber-500 hover:bg-amber-400 text-slate-950 px-8 py-3.5 rounded-xl font-bold text-base shadow-lg transition-all inline-block"
                 >
                   Get Personalized Advice
                 </ApplyButton>

@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { Car, Calculator, TrendingUp, PieChart, BarChart3 } from 'lucide-react';
+import Breadcrumb from '../../components/Breadcrumb';
 import { calculateEMI, calculateTotalAmount, calculateTotalInterest, formatCurrency } from '../../utils/calculations';
 
 const CarLoanEMI: React.FC = () => {
@@ -137,8 +138,17 @@ const CarLoanEMI: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen bg-slate-50 py-8 font-sans text-slate-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Breadcrumb Navigation */}
+        <div className="mb-6">
+          <Breadcrumb
+            items={[
+              { label: 'Calculators', path: '/calculators' },
+              { label: 'Car Loan EMI Calculator' }
+            ]}
+          />
+        </div>
         {/* Header */}
         <div className="text-center mb-8">
           <div className="flex justify-center mb-4">

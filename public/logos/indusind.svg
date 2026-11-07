@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 120" width="400" height="120">
+  <rect width="400" height="120" rx="12" fill="#FFFFFF"/>
+  <!-- IndusInd Bull Emblem -->
+  <g transform="translate(20, 20)">
+    <circle cx="40" cy="40" r="38" fill="#8B0000"/>
+    <path d="M26 34 C 28 22, 38 18, 48 24 C 54 28, 56 34, 52 42 C 48 50, 36 54, 30 50 Z" fill="#DAA520"/>
+    <path d="M34 42 C 40 38, 48 40, 52 46 C 50 52, 42 56, 36 54 Z" fill="#FFFFFF"/>
+    <circle cx="42" cy="30" r="3" fill="#8B0000"/>
+    <path d="M46 22 Q 54 16 58 20" stroke="#DAA520" stroke-width="3" fill="none" stroke-linecap="round"/>
+  </g>
+  <!-- Brand Text -->
+  <text x="115" y="55" font-family="'IBM Plex Sans', 'Segoe UI', -apple-system, sans-serif" font-size="28" font-weight="800" fill="#8B0000" letter-spacing="-0.5">IndusInd</text>
+  <text x="240" y="55" font-family="'IBM Plex Sans', 'Segoe UI', -apple-system, sans-serif" font-size="28" font-weight="700" fill="#333333" letter-spacing="-0.5">Bank</text>
+  <text x="116" y="80" font-family="'IBM Plex Sans', 'Segoe UI', -apple-system, sans-serif" font-size="11" font-weight="600" fill="#DAA520" letter-spacing="1.5">WE MAKE YOU FEEL RICHER</text>
+</svg>

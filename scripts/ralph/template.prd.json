@@ -1,0 +1,22 @@
+{
+  "project": "BanksCart",
+  "phase": "Phase 4 - User Dashboard & Customer Intelligence",
+  "lastUpdated": "2026-11-05",
+  "userStories": [
+    {
+      "id": "BC-USER-01",
+      "title": "Redesign Profile.tsx with BanksCart Master Design System",
+      "targetFiles": ["src/pages/Profile.tsx"],
+      "description": "Align customer profile and KYC dashboard with 5-tab responsive layout and Trust Blue/Deep Slate palette.",
+      "acceptanceCriteria": [
+        "Uses max-w-7xl mx-auto px-4 sm:px-6 lg:px-8",
+        "Includes accessible Breadcrumb navigation",
+        "Zero exposure of unmasked Aadhaar or PAN in UI logs",
+        "Passes npx tsc --noEmit and npm test"
+      ],
+      "passes": false,
+      "verificationCommand": "npm test && npx tsc --noEmit",
+      "notes": "Preserves Firebase Auth state and application tracking tabs."
+    }
+  ]
+}

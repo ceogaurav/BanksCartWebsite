@@ -1,5 +1,20 @@
 import React, { useState } from 'react';
-import { HelpCircle, ChevronDown, Landmark, Sparkles, HelpCircle as HelpIcon, Landmark as BankIcon, BarChart2 } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
+import { Link } from 'react-router-dom';
+import { 
+  BarChart2, 
+  ChevronDown, 
+  ShieldCheck, 
+  CheckCircle2, 
+  Lock, 
+  ArrowRight, 
+  HelpCircle, 
+  AlertCircle,
+  Building2,
+  PieChart,
+  Briefcase
+} from 'lucide-react';
+import Breadcrumb from '../../components/Breadcrumb';
 import CibilCheckerForm from '../../components/common/CibilCheckerForm';
 
 const CibilScoreForPersonalLoanPage: React.FC = () => {
@@ -29,160 +44,228 @@ const CibilScoreForPersonalLoanPage: React.FC = () => {
     {
       q: "What is the Debt-to-Income (DTI) ratio and how does it affect approvals?",
       a: "The DTI ratio measures your total monthly EMI obligations compared to your net monthly income (e.g., paying ₹25,000 EMI on a ₹50,000 salary equals a 50% DTI). Lenders prefer a DTI strictly below 45%-50% for personal loans. A high DTI indicates over-leverage and triggers rejection, even with a 750 CIBIL score."
-    },
-    {
-      q: "Are pre-approved personal loans guaranteed to get disbursed?",
-      a: "No. Pre-approved loans are tentative offers based on a soft-credit check. The final approval and disbursement occur only after the bank validates your KYC documents, salary statements, and performs a final hard inquiry check on your credit bureau profile."
-    },
-    {
-      q: "Does my employer's corporate category affect personal loan approvals?",
-      a: "Yes. Banks classify employers into categories (Tier-1/Super-A, Tier-2/Category-B, Tier-3). Salaried individuals working for Tier-1 companies (like Fortune 500 or major MNCs) represent lowest job risk, which qualifies them for faster approvals and lower interest rates."
-    },
-    {
-      q: "Can I get a personal loan if I have an NH/-1 CIBIL score?",
-      a: "Yes. If you have no credit history (NH/-1), banks look at bank statements, salary account longevity, and employer tier rankings. Interest rates will likely be standard, and they may require a minimum net monthly salary of ₹25,000-₹30,000."
-    },
-    {
-      q: "How does a previous loan write-off label impact personal loan eligibility?",
-      a: "A 'Written-off' or 'Settled' label represents unpaid defaults and is a major warning flag. For personal loans, Tier-1 banks will reject your application instantly. Your only options will be high-interest micro-lending apps or NBFCs until you clear those records."
     }
   ];
 
+  const pageTitle = "CIBIL Score for Personal Loan: Minimum Score, Rates & Slabs | BanksCart";
+  const pageDescription = "Check the minimum CIBIL score required for personal loans in India. Understand interest rate slabs (750+ score), underwriting rules, approval criteria, and how to qualify with an average score.";
+  const canonicalUrl = "https://bankscart.com/credit-score/cibil-score-for-personal-loan";
+
+  const schemaJsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": canonicalUrl,
+        "url": canonicalUrl,
+        "name": pageTitle,
+        "description": pageDescription,
+        "isPartOf": {
+          "@type": "WebSite",
+          "@id": "https://bankscart.com/#website",
+          "name": "BanksCart",
+          "url": "https://bankscart.com"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://bankscart.com/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Credit Score",
+            "item": "https://bankscart.com/credit-score"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "CIBIL Score for Personal Loans",
+            "item": canonicalUrl
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": faqs.map(faq => ({
+          "@type": "Question",
+          "name": faq.q,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": faq.a
+          }
+        }))
+      }
+    ]
+  };
+
   return (
-    <div className="min-h-screen bg-slate-50 pt-24 pb-16 font-sans">
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-[#F8FAFC] font-sans pt-20 sm:pt-24 pb-16 antialiased">
+      <Helmet>
+        <title>{pageTitle}</title>
+        <meta name="description" content={pageDescription} />
+        <link rel="canonical" href={canonicalUrl} />
+        <script type="application/ld+json">
+          {JSON.stringify(schemaJsonLd)}
+        </script>
+      </Helmet>
+
+      {/* Main Container */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         
-        {/* Banner */}
-        <div className="bg-gradient-to-r from-amber-600 via-orange-600 to-amber-700 rounded-3xl text-white p-8 sm:p-12 mb-12 shadow-xl relative overflow-hidden">
-          <div className="absolute right-0 bottom-0 opacity-10 transform translate-x-12 translate-y-12">
-            <span className="text-[200px] font-black leading-none select-none">LOAN</span>
-          </div>
-          <div className="max-w-3xl relative z-10">
-            <span className="bg-white/10 backdrop-blur-md text-white border border-white/20 rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-wider">
-              Retail Loan Guide
-            </span>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black mt-6 tracking-tight leading-tight">
+        {/* Breadcrumb Navigation */}
+        <Breadcrumb path={["Home", "Credit Score", "CIBIL Score for Personal Loans"]} />
+
+        {/* Hero Section: Institutional Trust Navy / Slate */}
+        <section className="bg-gradient-to-r from-slate-900 via-[#1E3A8A] to-slate-900 rounded-2xl text-white p-6 sm:p-10 shadow-lg border border-slate-800">
+          <div className="max-w-3xl space-y-4">
+            <div className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-400/30 rounded-full px-3.5 py-1 text-xs font-semibold text-blue-200 uppercase tracking-wider">
+              <BarChart2 className="w-3.5 h-3.5 text-blue-400" />
+              Unsecured Lending Guide
+            </div>
+
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight text-white">
               CIBIL Score for Personal Loan
             </h1>
-            <p className="text-amber-100 text-base sm:text-lg mt-4 leading-relaxed max-w-2xl">
-              Learn the critical credit score tiers required to secure unsecured personal loans with the best interest rate approvals.
-            </p>
-          </div>
-        </div>
 
-        {/* Grid split */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+            <p className="text-slate-200 text-base sm:text-lg leading-relaxed max-w-2xl font-normal">
+              Learn the critical credit score tiers required to secure unsecured personal loans with the lowest interest rate approvals and zero collateral.
+            </p>
+
+            <div className="pt-2 flex flex-wrap gap-4 text-xs font-medium text-slate-300">
+              <span className="flex items-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4 text-emerald-400" /> 750+ Unlocks Prime Rates (10.49%)
+              </span>
+              <span className="flex items-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4 text-emerald-400" /> Instant Bureau Underwriting
+              </span>
+              <span className="flex items-center gap-1.5">
+                <Lock className="w-4 h-4 text-emerald-400" /> Soft Pull Guaranteed
+              </span>
+            </div>
+          </div>
+        </section>
+
+        {/* Two-Column Structured Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
           
-          {/* Left Column Content */}
-          <div className="lg:col-span-7 space-y-10 text-slate-700">
+          {/* Left Column (7 cols): Publication-Grade Unified Article Container */}
+          <article className="lg:col-span-7 bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-10 space-y-10 text-slate-700">
             
-            {/* Guide Intro */}
-            <div className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm">
-              <h2 className="text-xl sm:text-2xl font-bold text-slate-800 mb-4 flex items-center gap-2.5">
-                <span className="w-1.5 h-6 bg-amber-600 rounded-full"></span>
+            {/* Section 1: The Core Mechanism */}
+            <div className="space-y-4">
+              <h2 className="text-2xl font-bold text-slate-900 flex items-center gap-2.5">
+                <span className="w-1.5 h-6 bg-[#1E3A8A] rounded-full"></span>
                 The Direct Link Between CIBIL and Unsecured Credits
               </h2>
-              <p className="text-sm text-slate-600 leading-relaxed mb-4">
-                Unlike home or vehicle loans where lenders retain property collateral, **Personal Loans** are entirely unsecured. Since the lender takes on higher absolute risk, your **CIBIL score** acts as the definitive key. Lenders evaluate your report to determine if you are historically responsible with credit, and whether your debt load is manageable.
+              <p className="text-sm text-slate-600 leading-relaxed">
+                Unlike home or vehicle loans where lenders retain property collateral, <strong>Personal Loans</strong> are entirely unsecured. Since the lender takes on higher absolute risk, your <strong>CIBIL score</strong> acts as the definitive key. Lenders evaluate your report to determine if you are historically responsible with credit, and whether your debt load is manageable.
               </p>
-              <p className="text-sm text-slate-600 leading-relaxed mb-4">
-                A CIBIL score of **720+** is generally the gateway score to personal loan offers. A score above **750** grants you leverage to bargain for lower interest rates and processing fee waivers. When you apply, the underwriting engine queries your payment logs, credit mixes, and active revolving card balances to decide your ultimate risk grade.
+              <p className="text-sm text-slate-600 leading-relaxed">
+                A CIBIL score of <strong>720+</strong> is generally the gateway score to personal loan offers. A score above <strong>750</strong> grants you leverage to bargain for lower interest rates and processing fee waivers. When you apply, the underwriting engine queries your payment logs, credit mixes, and active revolving card balances to decide your ultimate risk grade.
               </p>
               <p className="text-sm text-slate-600 leading-relaxed">
                 If your score is average or poor, lenders will classify you as a high-risk borrower. This results in loan rejections, or high interest rates (up to 24%-36% p.a.) coupled with steep administrative charges.
               </p>
             </div>
 
-            {/* Matrix details */}
-            <div className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm">
-              <h3 className="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
-                <BarChart2 className="w-5 h-5 text-amber-600" />
+            {/* Section 2: Personal Loan Approval Metrics Table */}
+            <div className="space-y-4 pt-6 border-t border-slate-100">
+              <h2 className="text-2xl font-bold text-slate-900 flex items-center gap-2.5">
+                <span className="w-1.5 h-6 bg-[#1E3A8A] rounded-full"></span>
                 Personal Loan Approval Metrics by Credit Score
-              </h3>
-              <p className="text-sm text-slate-600 leading-relaxed mb-4">
-                Here is a detailed breakdown of loan eligibility, expected interest bands, and documentation rigor across credit tiers:
+              </h2>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                Detailed breakdown of loan eligibility, expected interest bands, and documentation rigor across credit tiers:
               </p>
-              <div className="overflow-x-auto mt-4">
+
+              <div className="overflow-x-auto rounded-xl border border-slate-200">
                 <table className="w-full text-left border-collapse text-xs sm:text-sm">
                   <thead>
-                    <tr className="bg-slate-50 border-b border-slate-100">
-                      <th className="p-3 font-semibold text-slate-700">CIBIL Score Slabs</th>
-                      <th className="p-3 font-semibold text-slate-700">Interest Rates (p.a.)</th>
-                      <th className="p-3 font-semibold text-slate-700">Approval Chances</th>
-                      <th className="p-3 font-semibold text-slate-700">Remarks</th>
+                    <tr className="bg-slate-50 border-b border-slate-200 text-slate-900">
+                      <th className="p-3 font-bold">CIBIL Score Slabs</th>
+                      <th className="p-3 font-bold">Interest Rates (p.a.)</th>
+                      <th className="p-3 font-bold">Approval Chances</th>
+                      <th className="p-3 font-bold">Remarks</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr className="border-b border-slate-100 hover:bg-slate-50/50">
-                      <td className="p-3 font-bold text-emerald-600">750 - 900</td>
-                      <td className="p-3 font-semibold text-slate-800">10.49% - 13.99%</td>
+                  <tbody className="divide-y divide-slate-100">
+                    <tr className="hover:bg-slate-50/70 transition-colors">
+                      <td className="p-3 font-bold text-emerald-700 font-mono tabular-nums">750 - 900</td>
+                      <td className="p-3 font-semibold text-slate-900 font-mono tabular-nums">10.49% - 13.99%</td>
                       <td className="p-3 font-medium text-emerald-700">95% (Prime Borrower)</td>
-                      <td className="p-3 text-slate-500">Quick processing, minimal documentation</td>
+                      <td className="p-3 text-slate-500">Fast approval, zero collateral</td>
                     </tr>
-                    <tr className="border-b border-slate-100 hover:bg-slate-50/50">
-                      <td className="p-3 font-bold text-teal-600">700 - 749</td>
-                      <td className="p-3 font-semibold text-slate-800">14.00% - 17.99%</td>
+                    <tr className="hover:bg-slate-50/70 transition-colors">
+                      <td className="p-3 font-bold text-teal-700 font-mono tabular-nums">700 - 749</td>
+                      <td className="p-3 font-semibold text-slate-900 font-mono tabular-nums">14.00% - 17.99%</td>
                       <td className="p-3 font-medium text-slate-700">75% (Likely Approval)</td>
                       <td className="p-3 text-slate-500">Standard documentation required</td>
                     </tr>
-                    <tr className="border-b border-slate-100 hover:bg-slate-50/50">
-                      <td className="p-3 font-bold text-amber-600">650 - 699</td>
-                      <td className="p-3 font-semibold text-slate-800">18.00% - 24.00%</td>
+                    <tr className="hover:bg-slate-50/70 transition-colors">
+                      <td className="p-3 font-bold text-amber-700 font-mono tabular-nums">650 - 699</td>
+                      <td className="p-3 font-semibold text-slate-900 font-mono tabular-nums">18.00% - 24.00%</td>
                       <td className="p-3 font-medium text-amber-700">40% (Conditional)</td>
-                      <td className="p-3 text-slate-500">Requires co-applicant or strong salary proof</td>
+                      <td className="p-3 text-slate-500">Requires co-applicant or salary proof</td>
                     </tr>
-                    <tr className="hover:bg-slate-50/50">
-                      <td className="p-3 font-bold text-rose-600">300 - 649</td>
-                      <td className="p-3 font-semibold text-slate-800">&gt; 24% or Rejected</td>
+                    <tr className="hover:bg-slate-50/70 transition-colors">
+                      <td className="p-3 font-bold text-rose-700 font-mono tabular-nums">300 - 649</td>
+                      <td className="p-3 font-semibold text-rose-700 font-mono tabular-nums">&gt; 24% or Rejected</td>
                       <td className="p-3 font-medium text-rose-700">Very Low (&lt;10%)</td>
-                      <td className="p-3 text-slate-500">Subject to high rejection rates</td>
+                      <td className="p-3 text-slate-500">High rejection probability</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
             </div>
 
-            {/* Other Vital Underwriting Criteria */}
-            <div className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm">
-              <h3 className="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
-                <Landmark className="w-5 h-5 text-amber-600" />
+            {/* Section 3: Underwriting Factors */}
+            <div className="space-y-4 pt-6 border-t border-slate-100">
+              <h2 className="text-2xl font-bold text-slate-900 flex items-center gap-2.5">
+                <span className="w-1.5 h-6 bg-[#1E3A8A] rounded-full"></span>
                 Additional Factors Lenders Check Beyond CIBIL
-              </h3>
-              <p className="text-sm text-slate-600 leading-relaxed mb-4">
+              </h2>
+              <p className="text-sm text-slate-600 leading-relaxed">
                 While a high CIBIL score is crucial, banks also analyze the following underwriting criteria before finalizing personal loans:
               </p>
-              <div className="space-y-4 mt-4">
-                <div className="flex gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-slate-50 text-slate-600 flex items-center justify-center flex-shrink-0 font-bold text-xs">
+
+              <div className="space-y-3 mt-4">
+                <div className="flex gap-4 p-4 rounded-xl bg-slate-50 border border-slate-200/80">
+                  <div className="w-8 h-8 rounded-lg bg-[#1E3A8A] text-white flex items-center justify-center font-bold text-xs flex-shrink-0">
                     A
                   </div>
                   <div>
-                    <h4 className="font-bold text-slate-800 text-sm">Employer Classification</h4>
-                    <p className="text-slate-500 text-xs mt-1 leading-relaxed">
+                    <h3 className="font-bold text-slate-900 text-sm">Employer Classification</h3>
+                    <p className="text-slate-600 text-xs mt-1 leading-relaxed">
                       Banks categorize companies into Super-A, Category-A, Category-B, and others. Employees of top multinational corporations or government services enjoy lowest risk margins, yielding lower interest rates.
                     </p>
                   </div>
                 </div>
 
-                <div className="flex gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-slate-50 text-slate-600 flex items-center justify-center flex-shrink-0 font-bold text-xs">
+                <div className="flex gap-4 p-4 rounded-xl bg-slate-50 border border-slate-200/80">
+                  <div className="w-8 h-8 rounded-lg bg-[#1E3A8A] text-white flex items-center justify-center font-bold text-xs flex-shrink-0">
                     B
                   </div>
                   <div>
-                    <h4 className="font-bold text-slate-800 text-sm">Debt-to-Income (DTI) Ratio</h4>
-                    <p className="text-slate-500 text-xs mt-1 leading-relaxed">
+                    <h3 className="font-bold text-slate-900 text-sm">Debt-to-Income (DTI) Ratio</h3>
+                    <p className="text-slate-600 text-xs mt-1 leading-relaxed">
                       Measures your total monthly EMI components against your net take-home salary. Lenders prefer DTI ratios strictly below 45%-50% to ensure you are not over-leveraged.
                     </p>
                   </div>
                 </div>
 
-                <div className="flex gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-slate-50 text-slate-600 flex items-center justify-center flex-shrink-0 font-bold text-xs">
+                <div className="flex gap-4 p-4 rounded-xl bg-slate-50 border border-slate-200/80">
+                  <div className="w-8 h-8 rounded-lg bg-[#1E3A8A] text-white flex items-center justify-center font-bold text-xs flex-shrink-0">
                     C
                   </div>
                   <div>
-                    <h4 className="font-bold text-slate-800 text-sm">Employment Stability</h4>
-                    <p className="text-slate-500 text-xs mt-1 leading-relaxed">
+                    <h3 className="font-bold text-slate-900 text-sm">Employment Stability</h3>
+                    <p className="text-slate-600 text-xs mt-1 leading-relaxed">
                       Most lenders require a minimum of 2 years of overall work experience, with at least 6 months to 1 year of continuous service with your current employer.
                     </p>
                   </div>
@@ -190,48 +273,35 @@ const CibilScoreForPersonalLoanPage: React.FC = () => {
               </div>
             </div>
 
-            {/* Quick Tips Box */}
-            <div className="bg-amber-50/50 border border-amber-100 rounded-2xl p-6 sm:p-8 shadow-sm">
-              <h3 className="text-lg font-bold text-amber-800 mb-3 flex items-center gap-2">
-                <Sparkles className="w-5 h-5" />
-                Tips to get Unsecured Loans with Average Credit Scores
-              </h3>
-              <div className="space-y-4 text-xs sm:text-sm text-amber-900 leading-relaxed font-medium">
-                <div className="flex gap-3">
-                  <Landmark className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
-                  <div>
-                    <strong className="block text-slate-800">Apply with your Salary Bank Account</strong>
-                    Lenders show high leniency and offer better rates to customers who route their monthly paychecks directly through them.
-                  </div>
-                </div>
-                <div className="flex gap-3">
-                  <span className="text-base text-amber-600">👥</span>
-                  <div>
-                    <strong className="block text-slate-800">Add a Co-Borrower</strong>
-                    Including a close family relative with excellent credit scores guarantees the loan repayment, reducing bank risk metrics.
-                  </div>
-                </div>
+            {/* Section 4: Key Financial Takeaway Callout */}
+            <div className="border-l-4 border-[#1E3A8A] bg-blue-50/60 p-5 rounded-r-xl space-y-2">
+              <div className="flex items-center gap-2 text-slate-900 font-bold text-sm">
+                <AlertCircle className="w-4 h-4 text-[#1E3A8A]" />
+                <span>Approval Tip for Average Scores</span>
               </div>
+              <p className="text-xs text-slate-700 leading-relaxed">
+                If your score is between 680 and 720, apply with the bank holding your primary salary account. Relationship longevity and payroll track record frequently grant internal credit policy waivers.
+              </p>
             </div>
 
-            {/* FAQs */}
-            <div className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm">
-              <h3 className="text-lg font-bold text-slate-800 mb-6 flex items-center gap-2">
-                <HelpIcon className="w-5 h-5 text-amber-600" />
+            {/* Section 5: Integrated FAQ Accordion */}
+            <div className="space-y-4 pt-6 border-t border-slate-100">
+              <h2 className="text-2xl font-bold text-slate-900 flex items-center gap-2.5">
+                <span className="w-1.5 h-6 bg-[#1E3A8A] rounded-full"></span>
                 Frequently Asked Questions
-              </h3>
-              <div className="space-y-4">
+              </h2>
+              <div className="space-y-3">
                 {faqs.map((faq, index) => (
-                  <div key={index} className="border border-slate-100 rounded-xl overflow-hidden transition-colors">
+                  <div key={index} className="border border-slate-200 rounded-xl overflow-hidden transition-colors">
                     <button
                       onClick={() => setActiveFaq(activeFaq === index ? null : index)}
-                      className="w-full flex justify-between items-center p-4 bg-slate-50/50 hover:bg-slate-50 text-left font-bold text-slate-700 text-sm outline-none transition-colors"
+                      className="w-full flex justify-between items-center p-4 bg-slate-50 hover:bg-slate-100/80 text-left font-bold text-slate-800 text-sm outline-none transition-colors"
                     >
-                      {faq.q}
-                      <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform ${activeFaq === index ? 'rotate-180 text-amber-700' : ''}`} />
+                      <span>{faq.q}</span>
+                      <ChevronDown className={`w-4 h-4 text-slate-500 transition-transform flex-shrink-0 ml-2 ${activeFaq === index ? 'rotate-180 text-blue-700' : ''}`} />
                     </button>
                     {activeFaq === index && (
-                      <div className="p-4 text-xs sm:text-sm text-slate-600 border-t border-slate-100 bg-white leading-relaxed">
+                      <div className="p-4 text-xs sm:text-sm text-slate-600 border-t border-slate-200 bg-white leading-relaxed">
                         {faq.a}
                       </div>
                     )}
@@ -240,12 +310,79 @@ const CibilScoreForPersonalLoanPage: React.FC = () => {
               </div>
             </div>
 
-          </div>
+          </article>
 
-          {/* Right Column Form */}
-          <div className="lg:col-span-5 lg:sticky lg:top-24">
-            <CibilCheckerForm sourcePage="Personal Loan CIBIL Landing Page" />
-          </div>
+          {/* Right Column (5 cols): Sticky Form & Credibility Rail */}
+          <aside className="lg:col-span-5 space-y-6 lg:sticky lg:top-24">
+            
+            {/* Embedded Verified CibilCheckerForm */}
+            <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-7 space-y-4">
+              <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+                <div>
+                  <h3 className="font-bold text-slate-900 text-lg">Check Your CIBIL Score</h3>
+                  <p className="text-xs text-slate-500">Instant Pre-Check for Loan Approval</p>
+                </div>
+                <span className="inline-flex items-center gap-1 bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded text-[11px] font-bold">
+                  <Lock className="w-3 h-3" /> SSL Secured
+                </span>
+              </div>
+
+              <CibilCheckerForm sourcePage="Personal Loan CIBIL Landing Page" />
+            </div>
+
+            {/* Bank-Grade Data Protection Trust Box */}
+            <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm space-y-3 text-xs text-slate-600">
+              <div className="flex items-center gap-2 text-slate-900 font-bold text-sm">
+                <ShieldCheck className="w-4 h-4 text-emerald-600" />
+                <span>Bank-Grade Data Protection</span>
+              </div>
+              <p className="leading-relaxed">
+                Checking your score on BanksCart is classified as a soft inquiry. It never impacts your existing CIBIL rating or alerts lending institutions.
+              </p>
+              <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] font-semibold text-slate-500">
+                <span className="flex items-center gap-1 text-emerald-700">
+                  <CheckCircle2 className="w-3.5 h-3.5" /> 100% Free Soft Pull
+                </span>
+                <span>Zero Bureau Score Impact</span>
+              </div>
+            </div>
+
+            {/* Related Credit Navigation */}
+            <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm space-y-3">
+              <h4 className="font-bold text-slate-900 text-sm">Popular Credit Resources</h4>
+              <div className="space-y-2 text-xs font-semibold">
+                <Link
+                  to="/cibil/how-to-check-cibil-score-by-pan-card"
+                  className="flex items-center justify-between p-2.5 rounded-xl hover:bg-slate-50 text-slate-700 hover:text-blue-700 transition-colors border border-transparent hover:border-slate-200"
+                >
+                  <span>Check CIBIL Score by PAN Card</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-slate-400" />
+                </Link>
+                <Link
+                  to="/cibil-report/cibil-score-sbi-loans"
+                  className="flex items-center justify-between p-2.5 rounded-xl hover:bg-slate-50 text-slate-700 hover:text-blue-700 transition-colors border border-transparent hover:border-slate-200"
+                >
+                  <span>SBI Loan CIBIL Score Rules</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-slate-400" />
+                </Link>
+                <Link
+                  to="/credit-report/ways-to-improve-your-cibil-score"
+                  className="flex items-center justify-between p-2.5 rounded-xl hover:bg-slate-50 text-slate-700 hover:text-blue-700 transition-colors border border-transparent hover:border-slate-200"
+                >
+                  <span>Ways to Improve CIBIL Score</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-slate-400" />
+                </Link>
+                <Link
+                  to="/cibil/how-to-resolve-cibil-dispute"
+                  className="flex items-center justify-between p-2.5 rounded-xl hover:bg-slate-50 text-slate-700 hover:text-blue-700 transition-colors border border-transparent hover:border-slate-200"
+                >
+                  <span>Resolve Online CIBIL Disputes</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-slate-400" />
+                </Link>
+              </div>
+            </div>
+
+          </aside>
 
         </div>
 

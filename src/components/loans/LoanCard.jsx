@@ -1,32 +1,29 @@
 import React from "react";
-import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { ArrowRight } from "lucide-react";
 
-const glassStyles =
-  "backdrop-blur-md bg-white/40 border border-white/30 shadow-xl rounded-2xl p-8 flex flex-col items-center transition-transform hover:scale-105 hover:shadow-2xl";
-
-const LoanCard = ({ title, description, icon: Icon, to, animate }) => {
+const LoanCard = ({ title, description, icon: Icon, to }) => {
   const card = (
-    <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      animate={{ opacity: 1, y: 0 }}
-      whileHover={{ scale: 1.05, boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)" }}
-      transition={{ duration: 0.4, type: "spring" }}
-      className={glassStyles + " w-80 min-h-[260px] cursor-pointer group"}
-      tabIndex={0}
-    >
-      <div className="bg-gradient-to-tr from-primary-600 to-secondary-600 p-4 rounded-full mb-4 shadow-lg">
-        <Icon className="h-10 w-10 text-white" />
+    <div className="bg-white rounded-2xl border border-slate-200 p-6 flex flex-col justify-between shadow-sm hover:shadow-md hover:border-blue-200 transition-all duration-300 w-80 min-h-[260px] group">
+      <div>
+        <div className="w-12 h-12 bg-blue-50 text-[#1E3A8A] rounded-xl flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
+          {Icon && <Icon className="h-6 w-6" />}
+        </div>
+        <h3 className="text-lg font-bold mb-2 text-[#0F172A] group-hover:text-[#1E3A8A] transition-colors">
+          {title}
+        </h3>
+        <p className="text-xs text-slate-600 leading-relaxed mb-4">{description}</p>
       </div>
-      <h2 className="text-xl font-bold mb-2 text-gray-900 group-hover:text-primary-700 transition-colors">
-        {title}
-      </h2>
-      <p className="text-gray-700 text-center mb-4">{description}</p>
-    </motion.div>
+      <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-[#1E3A8A]">
+        <span>Explore Loan</span>
+        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+      </div>
+    </div>
   );
+
   if (to) {
     return (
-      <Link to={to} tabIndex={0} aria-label={title} className="focus:outline-none focus:ring-2 focus:ring-primary-500">
+      <Link to={to} aria-label={title} className="focus:outline-none focus:ring-2 focus:ring-[#1E3A8A] rounded-2xl block">
         {card}
       </Link>
     );

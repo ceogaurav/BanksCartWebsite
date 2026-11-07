@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { ChevronDown, ChevronUp, HelpCircle } from "lucide-react";
 
 const faqs = [
   {
@@ -32,59 +33,49 @@ const FaqSection = () => {
   const [open, setOpen] = useState(0);
 
   return (
-    <section className="my-14">
+    <section className="my-14 font-ibm">
       <div className="text-center max-w-3xl mx-auto mb-10">
-        <span className="inline-block bg-teal-50 text-teal-700 text-xs sm:text-sm font-semibold px-3 py-1 rounded-full uppercase tracking-wider mb-2">
+        <span className="inline-block bg-slate-100 text-slate-800 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider mb-2 border border-slate-200">
           Clear Answers
         </span>
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
+        <h2 className="text-2xl sm:text-3xl font-bold text-slate-950 tracking-tight">
           FAQs on Personal Loan Applications, Prepayment &amp; Foreclosure
         </h2>
-        <p className="text-gray-600 text-sm sm:text-base mt-2">
+        <p className="text-slate-600 text-sm sm:text-base mt-2">
           Everything you need to know about personal loan eligibility, interest rates, charges, and repayments.
         </p>
       </div>
 
       <div className="max-w-4xl mx-auto space-y-3">
-        {faqs.map((faq, i) => (
-          <div
-            key={faq.q}
-            className={`border rounded-2xl bg-white shadow-sm transition-all duration-200 overflow-hidden ${
-              open === i ? "border-teal-500 ring-1 ring-teal-200" : "border-gray-200"
-            }`}
-          >
-            <button
-              className="w-full flex justify-between items-center px-6 py-4 text-left font-bold text-gray-900 focus:outline-none"
-              onClick={() => setOpen(open === i ? null : i)}
-              aria-expanded={open === i}
+        {faqs.map((faq, i) => {
+          const isOpen = open === i;
+          return (
+            <div
+              key={faq.q}
+              className={`border rounded-xl bg-white shadow-sm transition-all duration-200 overflow-hidden ${
+                isOpen ? "border-slate-900 ring-1 ring-slate-900/10" : "border-slate-200"
+              }`}
             >
-              <span className="text-sm sm:text-base pr-4">{faq.q}</span>
-              <svg
-                className={`w-5 h-5 text-gray-400 shrink-0 transform transition-transform duration-200 ${
-                  open === i ? "rotate-180 text-teal-600" : "rotate-0"
-                }`}
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+              <button
+                type="button"
+                className="w-full flex justify-between items-center px-6 py-4 text-left font-semibold text-slate-900 focus:outline-none cursor-pointer"
+                onClick={() => setOpen(isOpen ? null : i)}
+                aria-expanded={isOpen}
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-              </svg>
-            </button>
-            {open === i && (
-              <div className="px-6 pb-5 text-gray-600 text-xs sm:text-sm leading-relaxed border-t border-gray-100 pt-3">
-                {faq.a}
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
+                <span className="text-sm sm:text-base pr-4">{faq.q}</span>
+                <span className="shrink-0 text-slate-500">
+                  {isOpen ? <ChevronUp className="w-5 h-5 text-slate-900" /> : <ChevronDown className="w-5 h-5" />}
+                </span>
+              </button>
 
-      <div className="mt-8 text-center text-xs text-gray-500">
-        Still have questions? Check our comprehensive{" "}
-        <Link to="/loans/personal/overview" className="text-blue-600 font-semibold hover:underline">
-          Personal Loan Knowledge Base & Overview Guide
-        </Link>
-        .
+              {isOpen && (
+                <div className="px-6 pb-4 pt-1 text-slate-600 text-xs sm:text-sm leading-relaxed border-t border-slate-100">
+                  {faq.a}
+                </div>
+              )}
+            </div>
+          );
+        })}
       </div>
     </section>
   );

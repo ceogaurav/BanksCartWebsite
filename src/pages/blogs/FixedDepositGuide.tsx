@@ -1,298 +1,234 @@
-import React from "react";
-import { motion } from "framer-motion";
-import { ArrowLeft, TrendingUp, Banknote, Calendar, Shield, Zap, Search, PieChart, Info } from "lucide-react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Helmet } from 'react-helmet-async';
+import { Link } from 'react-router-dom';
+import Breadcrumb from '../../components/Breadcrumb';
+import { AuthorByline } from '../../components/blog/AuthorByline';
+import {
+  PiggyBank,
+  CheckCircle2,
+  Percent,
+  Clock,
+  ShieldCheck,
+  Building,
+  TrendingUp,
+  HelpCircle,
+  FileCheck2,
+  Calendar,
+  Scale
+} from 'lucide-react';
 
-// --- CONFIGURATION START ---
-const ARTICLE_TITLE = "Fixed Deposit Interest Rates 2025: Your Ultimate Guide to the Best FD Plans in India";
-const ARTICLE_SUBTITLE =
-  "Navigate the complex landscape of 2025 Fixed Deposit schemes. Discover where to find the highest interest rates, understand the tax implications, and learn advanced strategies for maximizing your returns across banks, NBFCs, and Small Finance Banks.";
-const BACK_LINK = "/blog";
-const AUTHOR = "Advanced Financial Analytics Team";
-const DATE = "Nov 19, 2025";
-const READ_TIME = "150 min read"; // Placeholder for the desired length
-// --- CONFIGURATION END ---
+export default function FixedDepositGuide() {
+  const canonicalUrl = "https://www.bankscart.com/blog/Fixed-Deposit-Guide";
+  const articleTitle = "Fixed Deposit Interest Rates 2026: Best FD Plans in India Compared";
+  const articleDesc = "Complete 2026 guide to fixed deposits in India: compare FD rates up to 9.00% across top public banks, private lenders, Small Finance Banks, and AAA-rated corporate NBFCs.";
 
-// Framer Motion variants (Reused for consistent, smooth interaction)
-const pageVariants = {
-  hidden: { opacity: 0, y: 50 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.8,
-      ease: "easeOut",
-      staggerChildren: 0.05,
+  const blogPostingSchema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": canonicalUrl
     },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      type: "spring",
-      stiffness: 70,
-      damping: 14,
+    "headline": articleTitle,
+    "description": articleDesc,
+    "image": "https://www.bankscart.com/assets/images/bankscart-logo.png",
+    "author": {
+      "@type": "Person",
+      "name": "Neha Verma",
+      "jobTitle": "Senior Personal Finance Specialist",
+      "url": "https://www.bankscart.com/author/neha-verma"
     },
-  },
-};
+    "publisher": {
+      "@type": "Organization",
+      "name": "BanksCart",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://www.bankscart.com/assets/images/bankscart-logo.png"
+      }
+    },
+    "datePublished": "2026-01-15T09:00:00+05:30",
+    "dateModified": "2026-11-06T10:00:00+05:30"
+  };
 
-// Reusable components
-const SectionHeader: React.FC<{ title: string; icon: React.ElementType }> = ({ title, icon: Icon }) => (
-  <motion.h2
-    className="text-3xl sm:text-4xl font-extrabold text-gray-900 mt-12 mb-6 pt-4 border-t-2 border-green-100 flex items-center"
-    variants={itemVariants}
-  >
-    <Icon className="w-8 h-8 mr-3 text-green-700" />
-    {title}
-  </motion.h2>
-);
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://www.bankscart.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Blog",
+        "item": "https://www.bankscart.com/blog"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Fixed Deposit Guide 2026",
+        "item": canonicalUrl
+      }
+    ]
+  };
 
-const SubHeader: React.FC<{ title: string }> = ({ title }) => (
-  <motion.h3
-    className="text-2xl font-bold text-gray-800 mt-8 mb-4 border-l-4 border-lime-400 pl-3"
-    variants={itemVariants}
-  >
-    {title}
-  </motion.h3>
-);
+  const fdComparison = [
+    { bank: "Unity Small Finance Bank", generalRate: "9.00%", seniorRate: "9.50%", tenure: "1001 Days", category: "SFB (DICGC Insured)" },
+    { bank: "Suryoday Small Finance Bank", generalRate: "8.65%", seniorRate: "9.15%", tenure: "2 Years 2 Months", category: "SFB (DICGC Insured)" },
+    { bank: "Equitas Small Finance Bank", generalRate: "8.50%", seniorRate: "9.00%", tenure: "444 Days", category: "SFB (DICGC Insured)" },
+    { bank: "Bajaj Finance Limited", generalRate: "8.60%", seniorRate: "8.85%", tenure: "42 Months", category: "AAA Corporate NBFC" },
+    { bank: "State Bank of India (SBI Amrit Vrishti)", generalRate: "7.25%", seniorRate: "7.75%", tenure: "444 Days", category: "Public Sector Giant" },
+    { bank: "HDFC Bank", generalRate: "7.25%", seniorRate: "7.75%", tenure: "35 Months", category: "Private Sector Bank" }
+  ];
 
-const BulletPoint: React.FC<{ text: string }> = ({ text }) => (
-  <motion.li
-    className="flex items-start mb-2 text-gray-700 leading-relaxed"
-    variants={itemVariants}
-  >
-    <Info className="w-5 h-5 mr-3 mt-1 text-teal-500 flex-shrink-0" />
-    <span>{text}</span>
-  </motion.li>
-);
+  return (
+    <div className="min-h-screen bg-slate-50 font-sans text-slate-800 pt-20 sm:pt-24 pb-16">
+      <Helmet>
+        <title>{`${articleTitle} | BanksCart`}</title>
+        <meta name="description" content={articleDesc} />
+        <link rel="canonical" href={canonicalUrl} />
+        <script type="application/ld+json">
+          {JSON.stringify(blogPostingSchema)}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify(breadcrumbSchema)}
+        </script>
+      </Helmet>
 
-// --- MAIN COMPONENT ---
-const FixedDepositGuidePage: React.FC = () => (
-  <motion.div
-    className="min-h-screen bg-gradient-to-br from-white/60 to-green-50/80 py-12 px-4 md:px-12 font-inter"
-    variants={pageVariants}
-    initial="hidden"
-    animate="visible"
-  >
-    <div className="max-w-5xl mx-auto">
-      {/* Back Link */}
-      <motion.div variants={itemVariants} className="mb-8">
-        <Link
-          to={BACK_LINK}
-          className="inline-flex items-center text-green-600 hover:text-green-800 transition-colors font-semibold"
-        >
-          <ArrowLeft className="w-5 h-5 mr-2" />
-          Back to Expert Banking Guides
-        </Link>
-      </motion.div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6">
+        <Breadcrumb path={["Home", "Blog", "Fixed Deposit Guide 2026"]} />
+      </div>
 
-      {/* Article Header (SEO H1) */}
-      <motion.header variants={itemVariants} className="mb-10 pb-6 border-b border-green-300">
-        <h1 className="text-4xl sm:text-6xl font-extrabold text-gray-900 mb-4 drop-shadow-sm bg-clip-text text-transparent bg-gradient-to-r from-green-600 to-teal-700 leading-tight">
-          {ARTICLE_TITLE}
-        </h1>
-        <p className="text-xl text-gray-700 leading-relaxed italic mt-4">
-          {ARTICLE_SUBTITLE}
-        </p>
-        <div className="flex text-sm text-gray-500 mt-6 space-x-6">
-          <span>By <strong>{AUTHOR}</strong></span>
-          <span>•</span>
-          <span>{DATE}</span>
-          <span>•</span>
-          <span>{READ_TIME}</span>
-        </div>
-      </motion.header>
+      <article className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 sm:space-y-12">
+        {/* Header */}
+        <header className="space-y-4 border-b border-slate-200 pb-8">
+          <div className="flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-wider text-blue-700">
+            <span className="bg-blue-50 border border-blue-200 px-3 py-1 rounded-full">
+              Fixed Income Master Guide
+            </span>
+            <span className="text-slate-400">•</span>
+            <span className="text-slate-500 font-mono">Updated November 2026</span>
+            <span className="text-slate-400">•</span>
+            <span className="text-slate-500">14 min read</span>
+          </div>
 
-      {/* Article Content */}
-      <article className="text-gray-800 leading-relaxed space-y-8">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight">
+            Fixed Deposit Interest Rates 2026: Best FD Plans in India Compared
+          </h1>
 
-        <motion.p variants={itemVariants} className="text-xl font-semibold p-4 bg-lime-50 rounded-lg border-l-4 border-green-600">
-          In 2025, Fixed Deposits (FDs) remain the bedrock of **risk-averse Indian investment**, offering guaranteed returns and capital safety. As interest rates fluctuate based on RBI policy (Repo Rate) and market liquidity, choosing the **right FD plan**—from the right institution and the optimal tenure—is crucial. This comprehensive guide will equip you with the advanced knowledge to capture the **highest possible FD returns** while ensuring compliance and security.
-        </motion.p>
-
-        {/* SECTION 1: FD Fundamentals and Market Context */}
-        <SectionHeader title="1. Understanding the 2025 FD Market Landscape" icon={Banknote} />
-        
-        <SubHeader title="1.1. How RBI Policy (Repo Rate) Dictates FD Rates" />
-        <motion.p variants={itemVariants}>
-          Fixed Deposit rates are intrinsically linked to the **Reserve Bank of India's (RBI) Monetary Policy**, specifically the **Repo Rate**. When the RBI raises the Repo Rate to curb inflation, banks raise their lending and borrowing rates, leading to higher FD returns. Conversely, rate cuts decrease FD returns. The 2025 outlook suggests a stabilization phase, making specific, high-rate schemes highly valuable for locking in returns. 
-        </motion.p>
-
-        <SubHeader title="1.2. The Importance of DICGC Insurance" />
-        <motion.p variants={itemVariants}>
-          The **Deposit Insurance and Credit Guarantee Corporation (DICGC)**, a subsidiary of the RBI, provides a crucial layer of safety. This insurance guarantees the return of your capital up to **₹5 Lakh** (including both principal and interest) per bank, per person, in the event of a bank failure. For high net worth individuals, understanding this limit is key to smart diversification.
-        </motion.p>
-        <ul className="list-none space-y-3">
-          <BulletPoint text="**Safety Net:** DICGC cover is the primary reason FDs are considered safer than mutual funds or equities." />
-          <BulletPoint text="**Diversification Strategy:** For deposits exceeding ₹5 Lakh, spread the amount across multiple, separate banks to ensure 100% DICGC coverage on the entire principal." />
-        </ul>
-        
-        {/* SECTION 2: Top FD Interest Rate Schemes in 2025 */}
-        <SectionHeader title="2. Maximizing Returns: Best FD Plans by Institution Type" icon={TrendingUp} />
-
-        <SubHeader title="2.1. Small Finance Banks (SFBs): The High-Rate Champions" />
-        <motion.p variants={itemVariants}>
-          SFBs consistently offer the highest FD interest rates, often exceeding 8.5% for specific tenures, due to their mandate to serve niche banking sectors. While they are fully covered by DICGC, their higher risk appetite translates to better returns. **Key SFBs to watch in 2025:**
-        </motion.p>
-        <ul className="list-disc ml-6 space-y-2">
-            <li>**Suryoday SFB:** Known for offering peak rates on 999-day and 2-year tenures.</li>
-            <li>**Unity SFB:** Often provides competitive returns on short-to-medium term FDs (1 to 3 years).</li>
-            <li>**Jana SFB:** Highly aggressive rates for senior citizen deposits, targeting 9%+ returns.</li>
-        </ul>
-
-        <SubHeader title="2.2. Public Sector (PSU) and Private Banks: Safety and Stability" />
-        <motion.p variants={itemVariants}>
-          While their rates are typically lower (ranging from 6.0% to 7.5%), they are chosen for their **massive scale and perceived safety** beyond the DICGC limit.
-        </motion.p>
-        <motion.div className="overflow-x-auto" variants={itemVariants}>
-          <table className="min-w-full divide-y divide-gray-200 shadow-md rounded-lg">
-            <thead className="bg-green-100">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Category</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Top Private Bank (Example)</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Top PSU Bank (Example)</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Best Tenure for 2025</th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              <motion.tr variants={itemVariants}>
-                <td className="px-6 py-4 whitespace-nowrap font-semibold">Max Retail Rate (General)</td>
-                <td className="px-6 py-4 whitespace-nowrap">HDFC Bank (~7.30%)</td>
-                <td className="px-6 py-4 whitespace-nowrap">SBI (~7.00%)</td>
-                <td className="px-6 py-4">400 days to 18 months</td>
-              </motion.tr>
-              <motion.tr variants={itemVariants}>
-                <td className="px-6 py-4 whitespace-nowrap font-semibold">Senior Citizen Peak Rate</td>
-                <td className="px-6 py-4 whitespace-nowrap">ICICI Bank (+0.50% over general)</td>
-                <td className="px-6 py-4 whitespace-nowrap">Bank of Baroda (+0.50% over general)</td>
-                <td className="px-6 py-4">5 years (for tax benefit schemes)</td>
-              </motion.tr>
-            </tbody>
-          </table>
-        </motion.div>
-
-        <SubHeader title="2.3. NBFC and Corporate FD Schemes" />
-        <motion.p variants={itemVariants}>
-          NBFCs (Non-Banking Financial Companies) like Bajaj Finance offer competitive rates, but they are **not covered by DICGC**. Their safety relies entirely on the company's credit rating (e.g., AAA, AA+). Only invest in NBFC FDs from companies with the highest possible **AAA rating** from agencies like CRISIL or ICRA.
-        </motion.p>
-        <motion.blockquote variants={itemVariants} className="p-3 bg-red-50 border-l-4 border-red-500 italic text-gray-700">
-            **Caution:** Higher rates from NBFCs come with higher risk. Prioritize DICGC-insured bank FDs unless you fully understand the credit risk associated with the NBFC.
-        </motion.blockquote>
-        
-        {/* SECTION 3: Advanced FD Investment Strategies */}
-        <SectionHeader title="3. Tenure, Strategy, and Return Calculation" icon={Calendar} />
-
-        <SubHeader title="3.1. The Critical Role of Tenure Selection" />
-        <motion.p variants={itemVariants}>
-          The best FD rate is highly tenure-specific. Most banks offer a **'Sweet Spot'**—a particular tenure (often 12-18 months or 390-500 days) that yields the highest return. Investors should avoid blindly choosing 5 years unless a tax deduction is the goal.
-        </motion.p>
-        <ul className="list-disc ml-6 space-y-2">
-            <BulletPoint text="**Short Term (1-12 Months):** Useful for liquidity needs, but rates are typically lower." />
-            <BulletPoint text="**Medium Term (1-3 Years):** Often the peak rate period, ideal for locking in high returns if rates are expected to fall." />
-            <BulletPoint text="**Long Term (5+ Years):** Rates often taper off, but essential for **Tax-Saving FDs** under Section 80C." />
-        </ul>
-
-        <SubHeader title="3.2. The Power of FD Laddering (Staggering Maturity)" />
-        <motion.p variants={itemVariants}>
-          FD Laddering is a technique to mitigate **interest rate risk** and ensure **liquidity**. Instead of placing all ₹10 Lakh in a single 5-year FD, an investor splits the amount into five equal FDs (₹2 Lakh each) with staggered tenures (1, 2, 3, 4, and 5 years).
-        </motion.p>
-        <motion.div variants={itemVariants} className="p-4 bg-gray-100 rounded-lg">
-            **Outcome:** Every year, one FD matures, giving you the flexibility to re-invest at the **current prevailing market rate** (mitigating interest rate risk) while ensuring annual cash flow (liquidity). 
-        </motion.div>
-
-        <SubHeader title="3.3. Compound Interest Calculation and Frequency" />
-        <motion.p variants={itemVariants}>
-          The true return is determined by the compounding frequency (quarterly, half-yearly, or annual). The formula for the maturity value (Maturity Value $= P (1 + r/n)^{(nt)}$) demonstrates that the more frequently interest is compounded, the higher the final return. Always choose an FD with **quarterly compounding** for maximum yield, even if the stated annual rate is marginally lower than a scheme offering annual compounding.
-          <br/>
-          $$Maturity\ Value = P \left(1 + \frac{r}{n}\right)^{(nt)}$$
-          <br/>
-          Where: $P$ = Principal, $r$ = Annual Interest Rate, $n$ = Compounding Frequency per year, $t$ = Tenure in years.
-        </motion.p>
-
-        {/* SECTION 4: Tax Implications and Compliance (TDS, 80C) */}
-        <SectionHeader title="4. Tax Compliance and Optimization (TDS & Section 80C)" icon={Shield} />
-
-        <SubHeader title="4.1. Understanding TDS (Tax Deducted at Source)" />
-        <motion.p variants={itemVariants}>
-          Banks are mandated to deduct TDS if the total interest earned across all your FDs with that specific bank exceeds **₹40,000 in a financial year** (₹50,000 for Senior Citizens). The standard TDS rate is **10%** if PAN is provided, and 20% if PAN is not linked.
-        </motion.p>
-        <ul className="list-none space-y-3">
-          <BulletPoint text="**Form 15G/15H:** If your total annual income (including FD interest) is below the taxable threshold (₹2.5 Lakh for general, ₹3 Lakh/₹5 Lakh for Senior/Super Senior Citizens), you must submit **Form 15G** (under 60 years) or **Form 15H** (60 years and above) to the bank to prevent TDS deduction." />
-          <BulletPoint text="**TDS is Not Final Tax:** TDS is merely an advance tax. The final interest income is added to your total income and taxed at your **slab rate** during IT return filing." />
-        </ul>
-
-        <SubHeader title="4.2. Tax-Saving FDs under Section 80C" />
-        <motion.p variants={itemVariants}>
-          A **Tax-Saving FD** is a specific scheme that qualifies for a deduction of up to **₹1.5 Lakh** under Section 80C of the Income Tax Act.
-        </motion.p>
-        <ul className="list-disc ml-6 space-y-2">
-            <li>**Mandatory Lock-in:** The compulsory lock-in period is **5 years**. Premature withdrawal is not allowed under any circumstances.</li>
-            <li>**Interest is Taxable:** While the principal investment is deductible, the interest earned remains fully taxable as per your slab rate, unlike some other 80C investments (like PPF).</li>
-        </ul>
-
-        {/* SECTION 5: Practical Comparison and Decision Making */}
-        <SectionHeader title="5. Final Comparison and Choosing the Right FD" icon={PieChart} />
-
-        <SubHeader title="5.1. Comparison of Best FD Rates (2025 Snapshot)" />
-        <motion.p variants={itemVariants}>
-          (This section would contain a large, dynamic table in a live application, constantly updated with the top 5 rates from SFBs, Private Banks, and NBFCs for the most popular tenures, e.g., 1 year and 3 years).
-        </motion.p>
-        
-        <SubHeader title="5.2. Decision Matrix: Safety vs. Return" />
-        <motion.p variants={itemVariants}>
-          Use the following matrix to determine the optimal FD institution based on your risk profile and investment size:
-        </motion.p>
-        <ul className="list-none space-y-3">
-          <BulletPoint text="**High Safety (Investment ≤ ₹5 Lakh):** Choose the SFB offering the highest rate, as the entire amount is DICGC-insured." />
-          <BulletPoint text="**Moderate Safety (Investment > ₹5 Lakh):** Diversify the amount across multiple SFBs/Private Banks (keeping $\le$ ₹5 Lakh in each) or choose a large PSU/Private bank with a strong track record, accepting a slightly lower rate." />
-          <BulletPoint text="**Low Risk Appetite, High Value:** Stick exclusively to India's largest Private and PSU banks (SBI, HDFC, ICICI), prioritizing institutional stability over the few extra basis points offered by smaller banks." />
-        </ul>
-
-        {/* CONCLUSION */}
-        <motion.section variants={itemVariants} className="mt-12 p-6 bg-yellow-50 border-l-4 border-yellow-500 rounded-lg">
-          <h4 className="text-xl font-bold text-gray-900 mb-3">Final Verdict on FD Strategy for 2025</h4>
-          <p>
-            Fixed Deposits are indispensable for capital preservation. The key to maximizing your returns in 2025 lies in proactive research: tracking the best **'sweet spot' tenures** offered by SFBs, implementing the **laddering strategy** for liquidity, and meticulously ensuring **DICGC insurance coverage** for every rupee. Discipline in tax compliance through Forms 15G/15H will ensure you retain the maximum post-tax yield.
+          <p className="text-base sm:text-lg text-slate-600 leading-relaxed">
+            Looking for guaranteed, risk-free returns? Here is an authoritative comparison of fixed deposit interest rates across public banks, top private lenders, Small Finance Banks (yielding up to 9.00%), and DICGC safety insurance rules.
           </p>
-        </motion.section>
 
-        {/* CTA Section */}
-        <motion.section
-          className="text-center mt-16 p-8 bg-gradient-to-r from-green-600 to-teal-700 rounded-2xl shadow-xl"
-          variants={pageVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-        >
-          <motion.h2
-            className="text-3xl sm:text-4xl font-extrabold text-white mb-4 drop-shadow-lg"
-            variants={itemVariants}
-          >
-            Get Live FD Rate Comparisons
-          </motion.h2>
-          <motion.p
-            className="text-lg text-green-100 mb-8 max-w-2xl mx-auto leading-relaxed"
-            variants={itemVariants}
-          >
-            Access a real-time, personalized comparison tool showing the best FD rates across 50+ financial institutions in India.
-          </motion.p>
-          <motion.div variants={itemVariants}>
-            <button
-              onClick={() => alert("Live Rate Comparison Tool Launched!")}
-              className="bg-white text-green-600 px-8 py-4 rounded-full font-bold text-lg shadow-lg hover:bg-gray-100 transition-all duration-300 ease-in-out transform hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-50"
+          <AuthorByline authorSlug="neha-verma" />
+        </header>
+
+        {/* Section 1: Comparison Table */}
+        <section className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 shadow-sm space-y-6">
+          <h2 className="text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
+            <PiggyBank className="w-6 h-6 text-blue-700" />
+            1. Highest Fixed Deposit Rates in India (2026)
+          </h2>
+
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-sm border-collapse">
+              <thead>
+                <tr className="bg-slate-100 text-slate-900 border-b border-slate-200">
+                  <th className="p-3 font-bold">Bank / Institution</th>
+                  <th className="p-3 font-bold">General Public Rate</th>
+                  <th className="p-3 font-bold">Senior Citizen Rate</th>
+                  <th className="p-3 font-bold">Tenure Bucket</th>
+                  <th className="p-3 font-bold">Security Classification</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-200 text-slate-700 font-sans">
+                {fdComparison.map((f, idx) => (
+                  <tr key={idx} className="hover:bg-slate-50">
+                    <td className="p-3 font-semibold text-slate-900">{f.bank}</td>
+                    <td className="p-3 tabular-nums font-mono font-bold text-emerald-700">{f.generalRate}</td>
+                    <td className="p-3 tabular-nums font-mono font-bold text-blue-800">{f.seniorRate}</td>
+                    <td className="p-3 text-xs">{f.tenure}</td>
+                    <td className="p-3 text-xs text-slate-600">{f.category}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        {/* Section 2: DICGC Guarantee */}
+        <section className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 shadow-sm space-y-4">
+          <h2 className="text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
+            <ShieldCheck className="w-6 h-6 text-emerald-600" />
+            2. The DICGC ₹5,00,000 Safety Shield
+          </h2>
+          <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
+            Every scheduled commercial bank and small finance bank licensed by the Reserve Bank of India is legally insured by the <strong>Deposit Insurance and Credit Guarantee Corporation (DICGC)</strong>.
+          </p>
+          <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-2xl text-xs sm:text-sm text-emerald-950 leading-relaxed">
+            <strong>Key Protection:</strong> In the rare event of bank resolution or liquidation, principal and accrued interest up to <strong>₹5,00,000 per depositor per bank</strong> is guaranteed and repaid by the RBI subsidiary within 90 days.
+          </div>
+        </section>
+
+        {/* Section 3: Tax Rules */}
+        <section className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 shadow-sm space-y-4">
+          <h2 className="text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
+            <FileCheck2 className="w-6 h-6 text-blue-700" />
+            3. Taxation on Fixed Deposit Returns
+          </h2>
+          <div className="space-y-2 text-sm text-slate-700 leading-relaxed">
+            <p>
+              Interest earned on fixed deposits is added to your total annual taxable income under "Income from Other Sources" and taxed at your applicable slab rate.
+            </p>
+            <ul className="list-disc list-inside space-y-1 text-xs sm:text-sm text-slate-600">
+              <li><strong>TDS Threshold:</strong> Banks deduct 10% TDS if total annual interest exceeds ₹40,000 (₹50,000 for senior citizens).</li>
+              <li><strong>Form 15G / 15H:</strong> If your total taxable income is below the taxable threshold, submit Form 15G (below 60 yrs) or Form 15H (senior citizens) to prevent TDS deduction.</li>
+              <li><strong>Section 80C Tax-Saver FDs:</strong> 5-year lock-in fixed deposits qualify for tax deduction up to ₹1.50 Lakhs under the Old Tax Regime.</li>
+            </ul>
+          </div>
+        </section>
+
+        {/* CTA Card */}
+        <div className="bg-slate-900 text-white rounded-3xl p-8 sm:p-10 shadow-xl border border-slate-800 text-center space-y-4">
+          <span className="text-xs font-bold text-amber-400 uppercase tracking-wider bg-amber-400/10 px-3 py-1 rounded-md border border-amber-400/20 inline-block">
+            Wealth &amp; Savings
+          </span>
+          <h3 className="text-2xl sm:text-3xl font-black text-white">
+            Plan Your Fixed-Income Portfolio
+          </h3>
+          <p className="text-sm text-slate-300 max-w-xl mx-auto leading-relaxed">
+            Compare fixed deposit rates, calculate post-tax maturity returns, and explore tax-efficient mutual fund SIPs on BanksCart.
+          </p>
+          <div className="pt-2 flex flex-wrap justify-center gap-4">
+            <Link
+              to="/blog/Investment-Plans-Guide"
+              className="px-6 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm shadow-md transition-all"
             >
-              Compare Rates Now
-            </button>
-          </motion.div>
-        </motion.section>
+              Explore Investment Plans &rarr;
+            </Link>
+            <Link
+              to="/blog/Tax-Saving-Guide"
+              className="px-6 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-sm border border-white/20 transition-all"
+            >
+              Tax Saving Guide 2026
+            </Link>
+          </div>
+        </div>
 
+        {/* Regulatory Disclosure */}
+        <div className="p-6 bg-slate-100 rounded-2xl border border-slate-200 text-xs text-slate-600 leading-relaxed space-y-2 font-sans">
+          <div className="flex items-center gap-2 text-slate-800 font-bold uppercase tracking-wider">
+            <ShieldCheck className="w-4 h-4 text-blue-700" />
+            <span>Deposit Advisory Notice</span>
+          </div>
+          <p>
+            Fixed deposit interest rates are subject to revision by individual banking institutions. Depositors should verify credit ratings (CRISIL, ICRA) for corporate NBFC deposits. BanksCart is an independent digital financial marketplace.
+          </p>
+        </div>
       </article>
     </div>
-  </motion.div>
-);
-
-export default FixedDepositGuidePage;
+  );
+}

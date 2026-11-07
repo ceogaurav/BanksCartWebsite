@@ -1,4 +1,5 @@
 import React from "react";
+import { CheckCircle2, ArrowRight } from "lucide-react";
 
 const criteria = [
   {
@@ -23,67 +24,64 @@ const criteria = [
     label: "Employment Stability",
     salaried: "Minimum 1 year total, 6 months with current employer",
     selfEmployed: "Minimum 2–3 years of continuous business vintage",
-    notes: "Salaried in confirmed permanent employment.",
+    notes: "Salaried applicants should be in confirmed permanent employment.",
   },
   {
     label: "Fixed Obligation to Income (FOIR)",
     salaried: "Below 40% – 50%",
     selfEmployed: "Below 45% – 50%",
-    notes: "Total monthly debt obligations (including new EMI) should not exceed 50% of take-home pay.",
+    notes: "Total monthly debt obligations (including new proposed EMI) must not exceed 50% of net take-home salary.",
   },
 ];
 
 const EligibilityTable = ({ openEligibilityModal }) => {
   return (
-    <section className="my-14">
+    <section className="my-14 font-ibm">
       <div className="text-center max-w-3xl mx-auto mb-10">
-        <span className="inline-block bg-teal-50 text-teal-700 text-xs sm:text-sm font-semibold px-3 py-1 rounded-full uppercase tracking-wider mb-2">
+        <span className="inline-block bg-slate-100 text-slate-800 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider mb-2 border border-slate-200">
           Approval Slabs
         </span>
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
-          Personal Loan Eligibility Criteria for Salaried &amp; Self-Employed Borrowers
+        <h2 className="text-2xl sm:text-3xl font-bold text-slate-950 tracking-tight">
+          Personal Loan Eligibility Criteria: Salaried vs. Self-Employed
         </h2>
-        <p className="text-gray-600 text-sm sm:text-base mt-2">
-          Detailed benchmarks required by major Indian banks and NBFCs for salaried and self-employed applicants.
+        <p className="text-slate-600 text-sm sm:text-base mt-2">
+          Detailed benchmarks required by major Indian scheduled banks and NBFCs for prime rate approval.
         </p>
       </div>
 
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden min-h-[380px]">
+      <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200 text-left text-sm">
-            <thead className="bg-slate-50">
+          <table className="min-w-full divide-y divide-slate-200 text-left text-sm">
+            <thead className="bg-slate-900 text-white">
               <tr>
-                <th scope="col" className="px-6 py-4 font-bold text-gray-900 w-1/4">
+                <th scope="col" className="px-6 py-4 font-semibold w-1/4">
                   Eligibility Factor
                 </th>
-                <th scope="col" className="px-6 py-4 font-bold text-teal-800 w-1/4">
+                <th scope="col" className="px-6 py-4 font-semibold text-amber-400 w-1/4">
                   Salaried Applicants
                 </th>
-                <th scope="col" className="px-6 py-4 font-bold text-blue-800 w-1/4">
+                <th scope="col" className="px-6 py-4 font-semibold text-blue-300 w-1/4">
                   Self-Employed Individuals
                 </th>
-                <th scope="col" className="px-6 py-4 font-bold text-gray-700 w-1/4">
-                  Key Notes & Exceptions
+                <th scope="col" className="px-6 py-4 font-semibold text-slate-300 w-1/4">
+                  Key Notes &amp; Exceptions
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100">
-              {criteria.map((item, idx) => (
-                <tr
-                  key={item.label}
-                  className={idx % 2 === 0 ? "bg-white" : "bg-slate-50/50"}
-                >
-                  <td className="px-6 py-4 font-semibold text-gray-900 align-top">
-                    {item.label}
+            <tbody className="divide-y divide-slate-100 bg-white">
+              {criteria.map((row, i) => (
+                <tr key={row.label} className={i % 2 === 0 ? "bg-white" : "bg-slate-50/50"}>
+                  <td className="px-6 py-4 font-bold text-slate-900">
+                    {row.label}
                   </td>
-                  <td className="px-6 py-4 text-gray-700 font-medium align-top">
-                    {item.salaried}
+                  <td className="px-6 py-4 font-medium text-slate-800 tabular-nums">
+                    {row.salaried}
                   </td>
-                  <td className="px-6 py-4 text-gray-700 font-medium align-top">
-                    {item.selfEmployed}
+                  <td className="px-6 py-4 font-medium text-slate-800 tabular-nums">
+                    {row.selfEmployed}
                   </td>
-                  <td className="px-6 py-4 text-gray-500 text-xs leading-relaxed align-top">
-                    {item.notes}
+                  <td className="px-6 py-4 text-xs text-slate-600 leading-relaxed">
+                    {row.notes}
                   </td>
                 </tr>
               ))}
@@ -92,17 +90,17 @@ const EligibilityTable = ({ openEligibilityModal }) => {
         </div>
 
         {openEligibilityModal && (
-          <div className="p-4 sm:p-6 bg-gradient-to-r from-teal-50 to-blue-50 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="text-sm text-gray-700 text-center sm:text-left">
-              <strong className="text-gray-900 font-semibold block">Not sure if you qualify?</strong>
-              Check your personalized approval odds across 15+ partner lenders without impacting your CIBIL score.
-            </div>
+          <div className="p-4 bg-slate-50 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <span className="text-xs text-slate-600">
+              Not sure about your eligibility? Check across 30+ lenders instantly with zero score impact.
+            </span>
             <button
               type="button"
-              onClick={openEligibilityModal}
-              className="shrink-0 bg-teal-600 hover:bg-teal-700 text-white font-bold py-2.5 px-6 rounded-xl text-sm shadow-sm transition-all"
+              onClick={() => openEligibilityModal("Personal Loan")}
+              className="h-10 px-5 bg-amber-600 hover:bg-amber-700 active:bg-amber-800 text-white font-semibold rounded-lg text-xs transition-colors inline-flex items-center gap-1.5 cursor-pointer shrink-0"
             >
-              Check My Free Eligibility
+              <span>Check Eligibility Now</span>
+              <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>
         )}

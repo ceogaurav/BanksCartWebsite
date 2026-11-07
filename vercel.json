@@ -111,6 +111,14 @@
   ],
   "rewrites": [
     {
+      "source": "/api/ifsc-proxy/:path*",
+      "destination": "https://ifsc.razorpay.com/:path*"
+    },
+    {
+      "source": "/api/pincode-proxy/:path*",
+      "destination": "https://api.postalpincode.in/:path*"
+    },
+    {
       "source": "/admin/:path*",
       "destination": "/index.html"
     },
@@ -124,6 +132,62 @@
     },
     {
       "source": "/blog/:slug",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/resources/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/pan-card/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/pan-card",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/insurance/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/insurance",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/expert-advice",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/loan-rates",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/recharge/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/recharge",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/bill-payment/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/bill-payment",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/banks",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/all-banks",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/bank-details/:path*",
       "destination": "/index.html"
     }
   ]

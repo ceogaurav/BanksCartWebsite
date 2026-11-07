@@ -6,7 +6,8 @@ import {
   Briefcase, ReceiptText, TrendingDown, Coins, Factory, Timer, LineChart, Target, PiggyBank,
   HandCoins, CreditCard, Clock, Hourglass, PiggyBank as SavingsIcon, MinusCircle, Landmark
 } from 'lucide-react'; // Lucide icons
-import ApplyButton from '../../components/common/ApplyButton'; // Assuming this path is correct
+import ApplyButton from '../../components/common/ApplyButton';
+import Breadcrumb from '../../components/Breadcrumb'; // Assuming this path is correct
 
 // --- Helper Functions ---
 // Formats a number into INR currency format
@@ -300,11 +301,20 @@ const DebtPayoffCalculatorPage: React.FC<DebtPayoffCalculatorPageProps> = ({ ope
 
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-red-50 to-orange-50 py-8 font-inter text-gray-800">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-slate-50 py-8 font-sans text-slate-800">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Breadcrumb Navigation */}
+        <div className="mb-6">
+          <Breadcrumb
+            items={[
+              { label: 'Calculators', path: '/calculators' },
+              { label: 'Debt Payoff Calculator' }
+            ]}
+          />
+        </div>
         {/* Hero Section */}
         <motion.div
-          className="text-center mb-12 bg-gradient-to-r from-red-600 to-orange-700 text-white p-8 rounded-3xl shadow-xl"
+          className="text-center mb-8 bg-gradient-to-r from-[#0F172A] via-[#1E3A8A] to-[#0F172A] text-white p-8 sm:p-10 rounded-2xl shadow-xl border border-slate-700/50"
           variants={sectionVariants}
           initial="hidden"
           whileInView="visible"
@@ -315,7 +325,7 @@ const DebtPayoffCalculatorPage: React.FC<DebtPayoffCalculatorPageProps> = ({ ope
             variants={itemVariants}
           >
             Accelerate Your Journey to{' '}
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 to-orange-300">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-amber-300 to-amber-100">
               Debt Freedom.
             </span>
           </motion.h1>
@@ -331,9 +341,7 @@ const DebtPayoffCalculatorPage: React.FC<DebtPayoffCalculatorPageProps> = ({ ope
               <ApplyButton
                 loanType="Debt Management Advisory"
                 openApplyModal={openApplyModal}
-                className="bg-white text-red-600 px-8 py-4 rounded-full font-bold text-lg shadow-lg
-                           hover:bg-gray-100 transition-all duration-300 ease-in-out transform hover:-translate-y-1
-                           focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-50"
+                className="bg-amber-500 hover:bg-amber-400 text-slate-950 px-8 py-3.5 rounded-xl font-bold text-base shadow-lg transition-all inline-block"
               >
                 Get Debt Management Advice
               </ApplyButton>
@@ -343,28 +351,40 @@ const DebtPayoffCalculatorPage: React.FC<DebtPayoffCalculatorPageProps> = ({ ope
 
         {/* Debt Payoff Calculator Section */}
         <motion.div
-          className="bg-white rounded-3xl shadow-2xl p-6 md:p-10 w-full border border-red-100 mb-12"
+          className="bg-white rounded-2xl shadow-sm p-6 sm:p-8 w-full border border-slate-200 mb-10"
           variants={sectionVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
         >
-          <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-orange-600 to-red-600 drop-shadow-md">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-8 text-center flex items-center justify-center">
             <Calculator className="inline-block w-9 h-9 mr-3 text-orange-500" /> Debt Payoff Estimator
           </h2>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
             {/* Input Controls Section */}
-            <div className="space-y-8 p-4 bg-gray-50 rounded-2xl border border-gray-100 shadow-inner">
+            <div className="space-y-6 p-6 bg-slate-50/70 rounded-xl border border-slate-200">
               <h3 className="text-2xl font-bold text-gray-800 mb-4 flex items-center">
                 <CreditCard className="w-6 h-6 mr-2 text-red-600" /> Your Debt Details
               </h3>
 
               {/* Current Debt Balance */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="currentDebtBalance" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Current Debt Balance: <span className="text-blue-600">{formatCurrency(currentDebtBalance)}</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="currentDebtBalance" className="text-sm font-semibold text-slate-700">
+                    Current Debt Balance
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="text"
+                  value={formatNumberWithCommas(currentDebtBalance)}
+                  onChange={handleCurrentDebtBalanceChange}
+                  onBlur={(e) => setCurrentDebtBalance(Number(e.target.value.replace(/,/g, '')))}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  inputMode="numeric"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="currentDebtBalance"
@@ -373,23 +393,27 @@ const DebtPayoffCalculatorPage: React.FC<DebtPayoffCalculatorPageProps> = ({ ope
                   step="10000"
                   value={currentDebtBalance}
                   onChange={handleCurrentDebtBalanceChange}
-                  className="w-full h-2 bg-gradient-to-r from-blue-300 to-blue-500 rounded-lg appearance-none cursor-pointer accent-blue-600"
-                />
-                <input
-                  type="text"
-                  value={formatNumberWithCommas(currentDebtBalance)}
-                  onChange={handleCurrentDebtBalanceChange}
-                  onBlur={(e) => setCurrentDebtBalance(Number(e.target.value.replace(/,/g, '')))}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-blue-500 focus:border-blue-500 transition-all"
-                  inputMode="numeric"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
 
               {/* Annual Interest Rate */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="annualInterestRate" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Annual Interest Rate: <span className="text-teal-600">{annualInterestRate}%</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="annualInterestRate" className="text-sm font-semibold text-slate-700">
+                    Annual Interest Rate
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="number"
+                  value={annualInterestRate}
+                  onChange={handleAnnualInterestRateChange}
+                  onBlur={(e) => setAnnualInterestRate(Number(e.target.value))}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  step="0.1"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="annualInterestRate"
@@ -398,23 +422,27 @@ const DebtPayoffCalculatorPage: React.FC<DebtPayoffCalculatorPageProps> = ({ ope
                   step="0.5"
                   value={annualInterestRate}
                   onChange={handleAnnualInterestRateChange}
-                  className="w-full h-2 bg-gradient-to-r from-teal-300 to-teal-500 rounded-lg appearance-none cursor-pointer accent-teal-600"
-                />
-                <input
-                  type="number"
-                  value={annualInterestRate}
-                  onChange={handleAnnualInterestRateChange}
-                  onBlur={(e) => setAnnualInterestRate(Number(e.target.value))}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-teal-500 focus:border-teal-500 transition-all"
-                  step="0.1"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
 
               {/* Monthly Payment */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="monthlyPayment" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Current Monthly Payment: <span className="text-orange-600">{formatCurrency(monthlyPayment)}</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="monthlyPayment" className="text-sm font-semibold text-slate-700">
+                    Current Monthly Payment
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="text"
+                  value={formatNumberWithCommas(monthlyPayment)}
+                  onChange={handleMonthlyPaymentChange}
+                  onBlur={(e) => setMonthlyPayment(Number(e.target.value.replace(/,/g, '')))}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  inputMode="numeric"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="monthlyPayment"
@@ -423,23 +451,27 @@ const DebtPayoffCalculatorPage: React.FC<DebtPayoffCalculatorPageProps> = ({ ope
                   step="500"
                   value={monthlyPayment}
                   onChange={handleMonthlyPaymentChange}
-                  className="w-full h-2 bg-gradient-to-r from-orange-300 to-orange-500 rounded-lg appearance-none cursor-pointer accent-orange-600"
-                />
-                <input
-                  type="text"
-                  value={formatNumberWithCommas(monthlyPayment)}
-                  onChange={handleMonthlyPaymentChange}
-                  onBlur={(e) => setMonthlyPayment(Number(e.target.value.replace(/,/g, '')))}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-orange-500 focus:border-orange-500 transition-all"
-                  inputMode="numeric"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
 
               {/* Additional Monthly Payment */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="additionalMonthlyPayment" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Additional Monthly Payment: <span className="text-purple-600">{formatCurrency(additionalMonthlyPayment)}</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="additionalMonthlyPayment" className="text-sm font-semibold text-slate-700">
+                    Additional Monthly Payment
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="text"
+                  value={formatNumberWithCommas(additionalMonthlyPayment)}
+                  onChange={handleAdditionalMonthlyPaymentChange}
+                  onBlur={(e) => setAdditionalMonthlyPayment(Number(e.target.value.replace(/,/g, '')))}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  inputMode="numeric"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="additionalMonthlyPayment"
@@ -448,21 +480,13 @@ const DebtPayoffCalculatorPage: React.FC<DebtPayoffCalculatorPageProps> = ({ ope
                   step="100"
                   value={additionalMonthlyPayment}
                   onChange={handleAdditionalMonthlyPaymentChange}
-                  className="w-full h-2 bg-gradient-to-r from-purple-300 to-purple-500 rounded-lg appearance-none cursor-pointer accent-purple-600"
-                />
-                <input
-                  type="text"
-                  value={formatNumberWithCommas(additionalMonthlyPayment)}
-                  onChange={handleAdditionalMonthlyPaymentChange}
-                  onBlur={(e) => setAdditionalMonthlyPayment(Number(e.target.value.replace(/,/g, '')))}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-purple-500 focus:border-purple-500 transition-all"
-                  inputMode="numeric"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
             </div>
 
             {/* Results Display Section */}
-            <div className="p-6 bg-gradient-to-br from-red-500 to-orange-600 text-white rounded-2xl shadow-xl flex flex-col justify-center items-center text-center">
+            <div className="p-6 sm:p-8 bg-[#0F172A] text-white rounded-2xl shadow-xl border border-slate-800 flex flex-col justify-between text-left">
               <h3 className="text-2xl md:text-3xl font-bold mb-4">Your Debt Payoff Insights</h3>
 
               {/* Regular Payoff */}
@@ -594,7 +618,7 @@ const DebtPayoffCalculatorPage: React.FC<DebtPayoffCalculatorPageProps> = ({ ope
         </motion.div>
 
         {/* Informational Sections */}
-        <div className="bg-white border border-gray-100 rounded-2xl p-8 shadow-lg mt-6 space-y-10">
+        <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm mt-8 space-y-10">
           <motion.section variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }}>
             <h2 className="text-3xl font-bold text-gray-900 mb-4 flex items-center">
               <Lightbulb className="w-8 h-8 mr-3 text-yellow-500" /> What is a Debt Payoff Calculator?
@@ -693,7 +717,7 @@ const DebtPayoffCalculatorPage: React.FC<DebtPayoffCalculatorPageProps> = ({ ope
               {whyUseBanksCart.map((reason, index) => (
                 <motion.div
                   key={index}
-                  className="flex flex-col items-center text-center p-6 rounded-xl shadow-lg bg-gradient-to-br from-red-50 to-orange-50 border border-red-100"
+                  className="flex flex-col items-center text-center p-6 rounded-xl shadow-sm bg-slate-50 border border-slate-200"
                   variants={cardVariants}
                 >
                   {reason.icon}
@@ -706,7 +730,7 @@ const DebtPayoffCalculatorPage: React.FC<DebtPayoffCalculatorPageProps> = ({ ope
 
           {/* Final Call to Action */}
           <motion.section
-            className="text-center mt-12 p-8 bg-gradient-to-r from-red-600 to-orange-700 rounded-2xl shadow-xl"
+            className="text-center mt-12 p-8 sm:p-10 bg-gradient-to-r from-[#0F172A] via-[#1E3A8A] to-[#0F172A] text-white rounded-2xl shadow-xl border border-slate-700/50"
             variants={sectionVariants}
             initial="hidden"
             whileInView="visible"
@@ -730,9 +754,7 @@ const DebtPayoffCalculatorPage: React.FC<DebtPayoffCalculatorPageProps> = ({ ope
                 <ApplyButton
                   loanType="Debt Consolidation & Management"
                   openApplyModal={openApplyModal}
-                  className="bg-white text-red-600 px-8 py-4 rounded-full font-bold text-lg shadow-lg
-                             hover:bg-gray-100 transition-all duration-300 ease-in-out transform hover:-translate-y-1
-                             focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-50"
+                  className="bg-amber-500 hover:bg-amber-400 text-slate-950 px-8 py-3.5 rounded-xl font-bold text-base shadow-lg transition-all inline-block"
                 >
                   Explore Debt Solutions
                 </ApplyButton>

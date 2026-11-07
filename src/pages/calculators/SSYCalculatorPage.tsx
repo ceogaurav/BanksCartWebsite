@@ -6,6 +6,7 @@ import {
   PiggyBank, Clock, Coins
 } from 'lucide-react';
 import ApplyButton from '../../components/common/ApplyButton';
+import Breadcrumb from '../../components/Breadcrumb';
 import EmbedModal from '../../components/common/EmbedModal';
 import { Code } from 'lucide-react';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
@@ -81,12 +82,21 @@ export default function SSYCalculatorPage({ openApplyModal }: { openApplyModal?:
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-50 to-rose-50 py-8 font-inter text-gray-800 pt-24">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-slate-50 py-8 font-sans text-slate-800">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Breadcrumb Navigation */}
+        <div className="mb-6">
+          <Breadcrumb
+            items={[
+              { label: 'Calculators', path: '/calculators' },
+              { label: 'Sukanya Samriddhi Yojana (SSY) Calculator' }
+            ]}
+          />
+        </div>
         
         {/* HERO SECTION */}
         <motion.div
-          className="text-center mb-12 bg-gradient-to-r from-rose-500 to-pink-600 text-white p-8 rounded-3xl shadow-xl"
+          className="text-center mb-8 bg-gradient-to-r from-[#0F172A] via-[#1E3A8A] to-[#0F172A] text-white p-8 sm:p-10 rounded-2xl shadow-xl border border-slate-700/50"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
@@ -111,30 +121,34 @@ export default function SSYCalculatorPage({ openApplyModal }: { openApplyModal?:
         <div className="bg-white rounded-3xl shadow-2xl p-6 md:p-10 border border-rose-100 mb-12 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
           
           {/* Inputs */}
-          <div className="space-y-8 p-6 bg-gray-50 rounded-2xl border border-gray-100 shadow-inner">
+          <div className="space-y-6 p-6 bg-slate-50/70 rounded-xl border border-slate-200">
             <h3 className="text-2xl font-bold text-gray-800 mb-4 flex items-center">
               <PiggyBank className="w-6 h-6 mr-2 text-rose-500" /> Scheme Inputs
             </h3>
 
             {/* Yearly Contribution */}
             <div>
-              <label className="block text-lg font-semibold text-gray-700 mb-2">
-                Yearly Contribution: <span className="text-rose-600">{formatCurrency(yearlyContribution)}</span>
-              </label>
-              <input
+              <div className="flex justify-between items-center mb-2">
+                  <label className="text-sm font-semibold text-slate-700">
+                    Yearly Contribution
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                type="text"
+                value={formatNumberWithCommas(yearlyContribution)}
+                onChange={(e) => setYearlyContribution(Number(e.target.value.replace(/,/g, '')))}
+                className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+              />
+                  </div>
+                </div>
+                <input
                 type="range"
                 min="250"
                 max="150000"
                 step="250"
                 value={yearlyContribution}
                 onChange={(e) => setYearlyContribution(Number(e.target.value))}
-                className="w-full h-2 bg-gradient-to-r from-rose-300 to-rose-500 rounded-lg appearance-none cursor-pointer accent-rose-500"
-              />
-              <input
-                type="text"
-                value={formatNumberWithCommas(yearlyContribution)}
-                onChange={(e) => setYearlyContribution(Number(e.target.value.replace(/,/g, '')))}
-                className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-rose-500 focus:border-rose-500"
+                className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
               />
             </div>
 
@@ -166,7 +180,7 @@ export default function SSYCalculatorPage({ openApplyModal }: { openApplyModal?:
           </div>
 
           {/* Outputs */}
-          <div className="p-6 bg-gradient-to-br from-rose-500 to-pink-600 text-white rounded-2xl shadow-xl flex flex-col justify-center items-center text-center">
+          <div className="p-6 sm:p-8 bg-[#0F172A] text-white rounded-2xl shadow-xl border border-slate-800 flex flex-col justify-between text-left">
             <h3 className="text-2xl font-bold mb-4">Maturity Value Estimator</h3>
             <div className="text-5xl font-extrabold mb-6 text-yellow-300 drop-shadow-md">
               {formatCurrency(calculations.maturityAmount)}
@@ -174,15 +188,15 @@ export default function SSYCalculatorPage({ openApplyModal }: { openApplyModal?:
             <p className="text-lg text-rose-100 mb-8">Estimated Amount in Year {calculations.maturityYear}</p>
 
             <div className="w-full space-y-4 text-base">
-              <div className="flex justify-between items-center bg-rose-700/30 p-3 rounded-lg">
+              <div className="flex justify-between items-center bg-slate-800/80 border border-slate-700/60 p-3 rounded-xl text-sm sm:text-base font-mono tabular-nums">
                 <span className="font-medium flex items-center gap-2"><IndianRupee className="w-4 h-4" /> Total Principal Invested</span>
                 <span className="font-bold">{formatCurrency(calculations.totalInvested)}</span>
               </div>
-              <div className="flex justify-between items-center bg-rose-700/30 p-3 rounded-lg">
+              <div className="flex justify-between items-center bg-slate-800/80 border border-slate-700/60 p-3 rounded-xl text-sm sm:text-base font-mono tabular-nums">
                 <span className="font-medium flex items-center gap-2"><TrendingUp className="w-4 h-4" /> Total Interest Earned</span>
                 <span className="font-bold">{formatCurrency(calculations.interestEarned)}</span>
               </div>
-              <div className="flex justify-between items-center bg-rose-700/30 p-3 rounded-lg">
+              <div className="flex justify-between items-center bg-slate-800/80 border border-slate-700/60 p-3 rounded-xl text-sm sm:text-base font-mono tabular-nums">
                 <span className="font-medium flex items-center gap-2"><Clock className="w-4 h-4" /> Scheme Maturity Period</span>
                 <span className="font-bold">21 Years (Pays for 15)</span>
               </div>

@@ -1,600 +1,1161 @@
-import React, { useState, useEffect } from "react";
-import Breadcrumb from '../components/Breadcrumb';
-import ApplyButton from '../components/common/ApplyButton';
+import React, { useState, useRef, useEffect, useCallback } from "react";
+import { Helmet } from "react-helmet-async";
+import { Link } from "react-router-dom";
+import Breadcrumb from "../components/Breadcrumb";
+import {
+  Car,
+  ShieldCheck,
+  CheckCircle2,
+  ArrowRight,
+  ChevronDown,
+  ChevronUp,
+  TrendingUp,
+  Wallet,
+  Percent,
+  Clock,
+  Sparkles,
+  FileText,
+  Award,
+  Info,
+  Search,
+  Users,
+  Settings,
+  Scale,
+  BadgeCheck,
+  FileCheck,
+  Zap,
+  HelpCircle,
+  RefreshCw,
+  AlertCircle,
+  ExternalLink,
+  Gauge,
+  Check
+} from "lucide-react";
 
-// --- Used Car Loan Page ---
+// Top Indian Pre-Owned Vehicle Lenders
+const usedCarLenders = [
+  {
+    id: "sbi",
+    name: "State Bank of India",
+    fullName: "SBI Pre-Owned Car Loan",
+    logo: "/logos/sbi.png",
+    category: "psu",
+    rate: "10.25% – 12.75%",
+    minRate: 10.25,
+    maxLoan: "Up to 80% – 85% of Valuation",
+    tenure: "Up to 5 Years",
+    processingFee: "0.50% (Min ₹1,000)",
+    badge: "Lowest Interest Rate",
+    featured: true,
+    highlights: [
+      "No prepayment penalty on floating rate loans",
+      "Vehicle age up to 5 years at purchase (max 8 years at loan maturity)",
+      "Transparent PSU sovereign terms with minimal processing overhead"
+    ],
+    applyTag: "Used Car Loan - State Bank of India"
+  },
+  {
+    id: "hdfc",
+    name: "HDFC Bank",
+    fullName: "HDFC Bank Used Car Finance",
+    logo: "/logos/hdfc.png",
+    category: "private",
+    rate: "10.75% – 14.50%",
+    minRate: 10.75,
+    maxLoan: "Up to 100% of Valuation",
+    tenure: "Up to 7 Years",
+    processingFee: "1.50% to 2.50% of Loan",
+    badge: "Highest Valuation LTV",
+    featured: true,
+    highlights: [
+      "Financing up to 100% of car valuation for select certified models",
+      "Fast 30-minute digital approval for pre-approved salary holders",
+      "End-to-end RTO ownership transfer assistance in 50+ metro cities"
+    ],
+    applyTag: "Used Car Loan - HDFC Bank"
+  },
+  {
+    id: "tata",
+    name: "Tata Capital",
+    fullName: "Tata Capital Pre-Owned Car Loan",
+    logo: "/logos/tata.png",
+    category: "nbfc",
+    rate: "10.75% – 15.00%",
+    minRate: 10.75,
+    maxLoan: "Up to ₹50 Lakhs",
+    tenure: "Up to 5 Years",
+    processingFee: "Up to 2.00% of Loan",
+    badge: "Instant Approval",
+    featured: true,
+    highlights: [
+      "Customized repayment tenures ranging from 12 to 60 months",
+      "Quick sanction with minimal paper verification",
+      "Coverage for certified second-hand multi-brand vehicles"
+    ],
+    applyTag: "Used Car Loan - Tata Capital"
+  },
+  {
+    id: "icici",
+    name: "ICICI Bank",
+    fullName: "ICICI Bank Used Car Loan",
+    logo: "/logos/icici.png",
+    category: "private",
+    rate: "10.50% – 13.90%",
+    minRate: 10.50,
+    maxLoan: "Up to 80% of Car Valuation",
+    tenure: "Up to 5 Years",
+    processingFee: "Up to ₹3,500 + GST",
+    badge: "Fast Digital KYC",
+    featured: false,
+    highlights: [
+      "Instant sanction letters issued through iMobile app",
+      "Tie-ups with leading organized pre-owned car platforms (Spinny, Cars24)",
+      "Flexible part-prepayment terms after 6 EMIs"
+    ],
+    applyTag: "Used Car Loan - ICICI Bank"
+  },
+  {
+    id: "axis",
+    name: "Axis Bank",
+    fullName: "Axis Bank Used Auto Loan",
+    logo: "/logos/axis.png",
+    category: "private",
+    rate: "11.25% – 15.80%",
+    minRate: 11.25,
+    maxLoan: "Up to 85% of Valuation",
+    tenure: "Up to 5 Years",
+    processingFee: "Up to 2.00% of Loan Amount",
+    badge: "Flexible Terms",
+    featured: false,
+    highlights: [
+      "Loan sanctions starting from ₹1,00,000 onwards",
+      "Accepts vehicles up to 10 years old at final loan maturity",
+      "Special rate concessions for priority banking customers"
+    ],
+    applyTag: "Used Car Loan - Axis Bank"
+  },
+  {
+    id: "pnb",
+    name: "Punjab National Bank",
+    fullName: "PNB Pre-Owned Car Scheme",
+    logo: "/logos/pnb.png",
+    category: "psu",
+    rate: "9.95% – 12.45%",
+    minRate: 9.95,
+    maxLoan: "Up to ₹25 Lakhs",
+    tenure: "Up to 5 Years",
+    processingFee: "0.50% (Max ₹1,500)",
+    badge: "Lowest Processing Fee",
+    featured: false,
+    highlights: [
+      "Sub-10% interest rate tier for high-CIBIL prime borrowers",
+      "Minimal capping on administrative charges and documentation fees",
+      "Extended branches network across semi-urban and rural districts"
+    ],
+    applyTag: "Used Car Loan - Punjab National Bank"
+  },
+  {
+    id: "indusind",
+    name: "IndusInd Bank",
+    fullName: "IndusInd Used Car Loan",
+    logo: "/logos/indusind.png",
+    category: "private",
+    rate: "11.00% – 16.00%",
+    minRate: 11.00,
+    maxLoan: "Up to 90% of Valuation",
+    tenure: "Up to 5 Years",
+    processingFee: "1.50% to 2.50%",
+    badge: "High LTV",
+    featured: false,
+    highlights: [
+      "Doorstep vehicle inspection and valuation service",
+      "Accepts wide range of car manufacturers and imported brands",
+      "Simplified surrogate income programs for self-employed individuals"
+    ],
+    applyTag: "Used Car Loan - IndusInd Bank"
+  },
+  {
+    id: "mahindra",
+    name: "Mahindra Finance",
+    fullName: "Mahindra Finance Used Car Loan",
+    logo: "/logos/mahindra.png",
+    category: "nbfc",
+    rate: "11.50% – 16.50%",
+    minRate: 11.50,
+    maxLoan: "Up to ₹30 Lakhs",
+    tenure: "Up to 5 Years",
+    processingFee: "Up to 3.00%",
+    badge: "Tier-2/3 Specialist",
+    featured: false,
+    highlights: [
+      "Pan-India presence with deep reach in Tier-2, Tier-3, and rural hubs",
+      "Flexible income assessment criteria without formal ITR requirement",
+      "Fast-track processing for utility vehicles, SUVs, and commercial sedans"
+    ],
+    applyTag: "Used Car Loan - Mahindra Finance"
+  }
+];
+
+// FAQs for Used Car Loans
+const usedCarFaqs = [
+  {
+    category: "general",
+    question: "What is a used car loan and how does it work in India?",
+    answer: "A used car loan (or pre-owned vehicle loan) is a secured retail loan extended by scheduled commercial banks and RBI-registered NBFCs to finance the purchase of a second-hand automobile. The lending institution conducts an independent valuation of the car and disburses up to 80% to 100% of this appraised value directly to the seller or certified dealership. The borrower repays the principal and interest through monthly EMIs over an agreed tenure, while the vehicle remains hypothecated to the lender until full repayment."
+  },
+  {
+    category: "valuation",
+    question: "How is the loan amount and valuation of a used car determined by banks?",
+    answer: "Banks do not base the loan amount on the seller's asking price. Instead, an empaneled automobile surveyor or authorized valuation agency evaluates the vehicle based on its make, model, manufacturing year, mileage, engine health, accident history, and Insured Declared Value (IDV) on the current insurance policy. Banks typically sanction 70% to 85% of this surveyor's appraised market value (though select private lenders provide up to 100% for certified vehicles from partner dealerships like Spinny or Cars24)."
+  },
+  {
+    category: "eligibility",
+    question: "What is the maximum vehicle age allowed for used car financing?",
+    answer: "Most banks stipulate that the car's age must not exceed 5 years at the time of purchase, and the combined age of the car plus the loan tenure must not exceed 8 to 10 years at loan maturity. For example, if you are purchasing a 4-year-old vehicle, the maximum loan tenure permitted would usually be 4 to 5 years (4 + 5 = 9 years total age at maturity)."
+  },
+  {
+    category: "rates",
+    question: "Why are used car loan interest rates higher than new car loan rates?",
+    answer: "Used car loan interest rates typically range between 9.95% and 15.00% p.a., compared to 8.20%–9.40% for brand-new vehicles. Lenders charge a risk premium because pre-owned vehicles face faster mechanical depreciation, lack a full manufacturer warranty, have varied maintenance histories, and exhibit lower resale liquidation values in case of default."
+  },
+  {
+    category: "rto",
+    question: "What RTO forms and documents are required for used car loan hypothecation?",
+    answer: "The key RTO documents required include: Form 29 (Notice of Transfer of Ownership), Form 30 (Application for Transfer of Ownership), Form 34 (Application for Making an Entry of an Agreement of Hire-Purchase/Lease/Hypothecation), original Registration Certificate (RC), valid Insurance Policy, valid Pollution Under Control (PUC) certificate, and Seller's NOC. Once the loan is sanctioned, the bank endorses its hypothecation onto the new smart-card RC issued in your name."
+  },
+  {
+    category: "eligibility",
+    question: "What is the minimum credit score and income needed for a used car loan?",
+    answer: "A CIBIL or Experian credit score of 700 or higher is recommended for swift approval and competitive interest rates. Salaried individuals generally require a minimum net monthly income of ₹20,000 (₹15,000 with select PSU banks), while self-employed applicants need an annual declared net profit of at least ₹1.5 Lakhs supported by audited ITRs and 6 months of bank account statements."
+  },
+  {
+    category: "foreclosure",
+    question: "Can I prepay or foreclose my used car loan before tenure completion?",
+    answer: "Yes. Under RBI regulatory guidelines, scheduled banks cannot levy prepayment penalties or foreclosure charges on floating-rate individual retail loans. However, fixed-rate used car loans or commercial/business applicant borrowings may attract a foreclosure fee ranging between 2% and 5% of the outstanding principal balance if closed before maturity."
+  },
+  {
+    category: "insurance",
+    question: "Is comprehensive motor insurance mandatory for a used car loan?",
+    answer: "Yes, comprehensive bumper-to-bumper or third-party + own-damage insurance is legally mandatory throughout the entire loan tenure. The insurance policy must explicitly endorse the financier's hypothecation clause (naming the lending bank as the primary loss payee). Borrowers must renew this policy annually and furnish proof of cover to the lender."
+  }
+];
+
 const UsedCarLoanPage = ({ openApplyModal, openEligibilityModal, openCibilModal }) => {
-  const [loanAmount, setLoanAmount] = useState(500000);
-  const [interestRate, setInterestRate] = useState(12.0);
-  const [tenure, setTenure] = useState(5);
-  const [emiResult, setEmiResult] = useState({ emi: 0, totalInterest: 0, totalAmount: 0 });
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  // Page SEO Details
+  const pageTitle = "Compare Used Car Loan Interest Rates in India (From 9.95% p.a.) | BanksCart";
+  const pageDescription = "Compare top used car loan rates from SBI, HDFC, Tata Capital, PNB, and ICICI Bank. Calculate monthly EMI, check 100% on-valuation financing, RTO transfer norms, and apply online with zero brokerage.";
+  const canonicalUrl = "https://www.bankscart.com/loans/used-car";
 
-  const calculateEMI = (e) => {
-    if (e) e.preventDefault();
-    setError("");
-    setLoading(true);
-    setTimeout(() => {
-      const principal = Number(loanAmount);
-      const annualRate = Number(interestRate);
-      const years = Number(tenure);
-      if (!principal || !annualRate || !years) {
-        setEmiResult({ emi: 0, totalInterest: 0, totalAmount: 0 });
-        setError("Please enter valid values for all fields.");
-        setLoading(false);
-        return;
+  // Calculator State
+  const [loanAmount, setLoanAmount] = useState(500000);
+  const [interestRate, setInterestRate] = useState(11.5);
+  const [tenureYears, setTenureYears] = useState(4);
+  const [downPayment, setDownPayment] = useState(100000);
+
+  // Filter & Search State
+  const [lenderCategory, setLenderCategory] = useState("all");
+  const [lenderSearch, setLenderSearch] = useState("");
+  const [faqCategory, setFaqCategory] = useState("all");
+  const [faqSearch, setFaqSearch] = useState("");
+  const [expandedFaq, setExpandedFaq] = useState(null);
+
+  // EMI Calculation Logic
+  const calculateEMI = useCallback(() => {
+    const principal = Math.max(0, loanAmount - downPayment);
+    const monthlyRate = interestRate / 12 / 100;
+    const months = tenureYears * 12;
+
+    if (principal <= 0 || monthlyRate <= 0 || months <= 0) {
+      return { monthlyEmi: 0, totalInterest: 0, totalPayable: 0, principalPortion: 0 };
+    }
+
+    const emi =
+      (principal * monthlyRate * Math.pow(1 + monthlyRate, months)) /
+      (Math.pow(1 + monthlyRate, months) - 1);
+    const totalPayable = emi * months;
+    const totalInterest = totalPayable - principal;
+
+    return {
+      monthlyEmi: Math.round(emi),
+      totalInterest: Math.round(totalInterest),
+      totalPayable: Math.round(totalPayable),
+      principalPortion: principal
+    };
+  }, [loanAmount, downPayment, interestRate, tenureYears]);
+
+  const { monthlyEmi, totalInterest, totalPayable, principalPortion } = calculateEMI();
+  const interestPercentage = totalPayable > 0 ? Math.round((totalInterest / totalPayable) * 100) : 0;
+  const principalPercentage = 100 - interestPercentage;
+
+  // Filtered Lenders
+  const filteredLenders = usedCarLenders.filter((lender) => {
+    const matchesCat = lenderCategory === "all" || lender.category === lenderCategory;
+    const matchesSearch =
+      lender.name.toLowerCase().includes(lenderSearch.toLowerCase()) ||
+      lender.fullName.toLowerCase().includes(lenderSearch.toLowerCase());
+    return matchesCat && matchesSearch;
+  });
+
+  // Filtered FAQs
+  const filteredFaqs = usedCarFaqs.filter((faq) => {
+    const matchesCat = faqCategory === "all" || faq.category === faqCategory;
+    const matchesSearch =
+      faq.question.toLowerCase().includes(faqSearch.toLowerCase()) ||
+      faq.answer.toLowerCase().includes(faqSearch.toLowerCase());
+    return matchesCat && matchesSearch;
+  });
+
+  // JSON-LD Schemas
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://www.bankscart.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Loans",
+        "item": "https://www.bankscart.com/loans"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Used Car Loan",
+        "item": canonicalUrl
       }
-      const n = years * 12;
-      const r = annualRate / 12 / 100;
-      const emi = r === 0 ? principal / n : (principal * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
-      const totalAmount = emi * n;
-      const totalInterest = totalAmount - principal;
-      setEmiResult({
-        emi: Math.round(emi),
-        totalInterest: Math.round(totalInterest),
-        totalAmount: Math.round(totalAmount),
-      });
-      setLoading(false);
-    }, 400);
+    ]
   };
 
-  useEffect(() => {
-    calculateEMI();
-    // eslint-disable-next-line
-  }, [loanAmount, interestRate, tenure]);
+  const productSchema = {
+    "@context": "https://schema.org",
+    "@type": "FinancialProduct",
+    "name": "BanksCart Used Car Loan Comparison",
+    "description": pageDescription,
+    "url": canonicalUrl,
+    "provider": {
+      "@type": "Organization",
+      "name": "BanksCart Financial Technologies Private Limited",
+      "url": "https://www.bankscart.com"
+    },
+    "category": "Pre-Owned Auto Financing",
+    "annualPercentageRate": {
+      "@type": "QuantitativeValue",
+      "minValue": "9.95",
+      "maxValue": "16.50",
+      "unitText": "%"
+    },
+    "amount": {
+      "@type": "MonetaryAmount",
+      "currency": "INR",
+      "minValue": "100000",
+      "maxValue": "7500000"
+    }
+  };
+
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": usedCarFaqs.map((faq) => ({
+      "@type": "Question",
+      "name": faq.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": faq.answer
+      }
+    }))
+  };
 
   return (
-    <div className="min-h-screen bg-[#f8f9fa] font-['Inter','Poppins',sans-serif] text-[#374151]">
-      <Breadcrumb path={["Home", "Loans", "Used Car Loan"]} />
+    <>
+      <Helmet>
+        <title>{pageTitle}</title>
+        <meta name="description" content={pageDescription} />
+        <meta name="keywords" content="used car loan, pre-owned car loan rates, second hand car loan india, used car emi calculator, sbi used car loan, hdfc pre owned car loan, rto hypothecation form 34" />
+        <link rel="canonical" href={canonicalUrl} />
 
-      {/* Hero Section */}
-      <section className="bg-gradient-to-r from-blue-900 to-blue-700 text-white py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-12 items-center">
-          <div>
-            <h1 className="text-5xl font-bold mb-6">
-              Get Your Dream Car Today with <span className="text-orange-400">Used Car Loan</span>
-            </h1>
-            <div className="mb-8 space-y-3">
-              <div className="flex items-center"><span className="mr-2">✓</span>Interest rates starting from 8.8% p.a.</div>
-              <div className="flex items-center"><span className="mr-2">✓</span>Loan amount up to ₹75 Lakhs</div>
-              <div className="flex items-center"><span className="mr-2">✓</span>Quick approval in 2 hours</div>
-              <div className="flex items-center"><span className="mr-2">✓</span>Minimal documentation required</div>
-            </div>
-            {/* Replace the existing button with ApplyButton */}
-            {openApplyModal && (
-              <ApplyButton
-                  loanType="Used Car Loan"  // Consistent loan type name
-                  openApplyModal={openApplyModal}
-                  variant="primary"
-                  size="lg"
-                  className="bg-[#ff4444] text-white px-8 py-4 rounded-full font-bold text-xl shadow-lg hover:bg-red-600 transition"
-              >Get Instant Approval</ApplyButton>
-            )}
-          </div>
-          <div className="bg-white rounded-lg p-8 shadow-xl text-center">
-            <h3 className="text-2xl font-semibold text-gray-800 mb-4">Check Your Loan Eligibility</h3>
-            <p className="text-gray-600 mb-6">Get a quick assessment of your eligibility for a used car loan in just a few steps.</p>
-            <button
-              onClick={() => openEligibilityModal('Used Car Loan')}
-              className="bg-[#1e3a8a] text-white w-full py-3 rounded-full font-bold hover:bg-blue-800 transition-colors"
-            >
-              Check Eligibility Now
-            </button>
-            <p className="text-xs text-gray-500 mt-3">Checking eligibility will not impact your credit score.</p>
+        {/* OpenGraph */}
+        <meta property="og:title" content={pageTitle} />
+        <meta property="og:description" content={pageDescription} />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://www.bankscart.com/favicon-32x32.png" />
+
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content={pageTitle} />
+        <meta name="twitter:description" content={pageDescription} />
+        <meta name="twitter:image" content="https://www.bankscart.com/favicon-32x32.png" />
+
+        {/* Structured Data */}
+        <script type="application/ld+json">{JSON.stringify(breadcrumbSchema)}</script>
+        <script type="application/ld+json">{JSON.stringify(productSchema)}</script>
+        <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>
+      </Helmet>
+
+      <div className="min-h-screen bg-[#F8FAFC] text-slate-800 font-ibm antialiased">
+        {/* Breadcrumb Navigation */}
+        <div className="bg-slate-900 border-b border-slate-800">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+            <nav aria-label="Breadcrumb" className="text-xs text-slate-400">
+              <ol className="flex items-center space-x-2">
+                <li><Link to="/" className="hover:text-amber-400 transition-colors">Home</Link></li>
+                <li className="text-slate-600">/</li>
+                <li><Link to="/loans" className="hover:text-amber-400 transition-colors">Loans</Link></li>
+                <li className="text-slate-600">/</li>
+                <li className="text-white font-medium" aria-current="page">Used Car Loan</li>
+              </ol>
+            </nav>
           </div>
         </div>
-      </section>
 
-      {/* Features Section */}
-      <section id="features" className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-800 mb-4">Key Features and Benefits of Used Car Loans</h2>
-            <p className="text-xl text-gray-600">Why choose our used car loan for your next vehicle purchase</p>
-          </div>
-          <div className="grid md:grid-cols-3 gap-8 mb-12">
-            <div className="bg-white rounded-lg p-8 shadow-md hover:shadow-lg transition">
-              <div className="mb-4 flex justify-center">
-                {/* Low EMI SVG */}
-                <svg className="w-16 h-16" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="32" cy="32" r="30" fill="#E0F2FE" />
-                  <path d="M20 44c0-6.627 5.373-12 12-12s12 5.373 12 12" stroke="#1e3a8a" strokeWidth="3" strokeLinecap="round"/>
-                  <circle cx="32" cy="28" r="4" fill="#1e3a8a" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold mb-3">Lower EMIs</h3>
-              <p className="text-gray-600">The loan amount for used cars is typically lower compared to new car loans, resulting in affordable monthly EMIs that fit your budget.</p>
-            </div>
-            <div className="bg-white rounded-lg p-8 shadow-md hover:shadow-lg transition">
-              <div className="mb-4 flex justify-center">
-                {/* Flexible Tenure SVG */}
-                <svg className="w-16 h-16" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="8" y="16" width="48" height="32" rx="8" fill="#FDE68A" />
-                  <path d="M16 32h32" stroke="#1e3a8a" strokeWidth="3" strokeLinecap="round"/>
-                  <circle cx="16" cy="32" r="3" fill="#1e3a8a" />
-                  <circle cx="48" cy="32" r="3" fill="#1e3a8a" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold mb-3">Flexible Repayment Tenure</h3>
-              <p className="text-gray-600">Choose from repayment tenures up to 7 years, giving you the flexibility to manage your finances effectively.</p>
-            </div>
-            <div className="bg-white rounded-lg p-8 shadow-md hover:shadow-lg transition">
-              <div className="mb-4 flex justify-center">
-                {/* 100% Financing SVG */}
-                <svg className="w-16 h-16" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="12" y="24" width="40" height="24" rx="8" fill="#BBF7D0" />
-                  <path d="M20 36h24" stroke="#1e3a8a" strokeWidth="3" strokeLinecap="round"/>
-                  <circle cx="20" cy="48" r="3" fill="#1e3a8a" />
-                  <circle cx="44" cy="48" r="3" fill="#1e3a8a" />
-                  <rect x="24" y="16" width="16" height="8" rx="4" fill="#1e3a8a" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold mb-3">Up to 100% Financing</h3>
-              <p className="text-gray-600">Get complete financing for your used car purchase from select banks and NBFCs with minimal down payment.</p>
-            </div>
-            <div className="bg-white rounded-lg p-8 shadow-md hover:shadow-lg transition">
-              <div className="mb-4 flex justify-center">
-                {/* Online Process SVG */}
-                <svg className="w-16 h-16" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="12" y="16" width="40" height="32" rx="8" fill="#C7D2FE" />
-                  <rect x="20" y="24" width="24" height="16" rx="4" fill="#1e3a8a" />
-                  <circle cx="32" cy="40" r="2" fill="#C7D2FE" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold mb-3">Simple Online Process</h3>
-              <p className="text-gray-600">Apply for your used car loan online with our streamlined digital process that saves time and effort.</p>
-            </div>
-            <div className="bg-white rounded-lg p-8 shadow-md hover:shadow-lg transition">
-              <div className="mb-4 flex justify-center">
-                {/* Lower Insurance SVG */}
-                <svg className="w-16 h-16" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <ellipse cx="32" cy="48" rx="20" ry="8" fill="#FECACA" />
-                  <rect x="20" y="20" width="24" height="20" rx="6" fill="#1e3a8a" />
-                  <path d="M32 28v8" stroke="#FECACA" strokeWidth="3" strokeLinecap="round"/>
-                  <circle cx="32" cy="36" r="2" fill="#FECACA" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold mb-3">Lower Insurance Costs</h3>
-              <p className="text-gray-600">Insurance costs and depreciation rates are significantly lower for used cars compared to new vehicles.</p>
-            </div>
-            <div className="bg-white rounded-lg p-8 shadow-md hover:shadow-lg transition">
-              <div className="mb-4 flex justify-center">
-                {/* Minimal Paperwork SVG */}
-                <svg className="w-16 h-16" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="16" y="12" width="32" height="40" rx="6" fill="#FDE68A" />
-                  <rect x="24" y="20" width="16" height="4" rx="2" fill="#1e3a8a" />
-                  <rect x="24" y="28" width="16" height="4" rx="2" fill="#1e3a8a" />
-                  <rect x="24" y="36" width="10" height="4" rx="2" fill="#1e3a8a" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold mb-3">Minimal Documentation</h3>
-              <p className="text-gray-600">Submit minimal paperwork with our simplified documentation process for faster loan approval.</p>
-            </div>
-          </div>
-          <div className="text-center">
-            <img src="used-car-loan-infographic.jpg" alt="Used Car Loan Benefits" className="mx-auto max-w-4xl w-full" />
-          </div>
-        </div>
-      </section>
+        {/* Institutional Hero Section */}
+        <section className="relative bg-gradient-to-br from-[#0F172A] via-[#1E293B] to-[#0F172A] text-white py-14 lg:py-18 overflow-hidden border-b border-slate-800">
+          <div className="absolute inset-0 opacity-5 pointer-events-none bg-[radial-gradient(#CBD5E1_1px,transparent_1px)] [background-size:20px_20px]" />
+          <div className="absolute -top-24 -right-24 w-96 h-96 bg-blue-600/15 rounded-full blur-3xl pointer-events-none" />
 
-      {/* Lender Comparison Table */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl font-bold text-center text-gray-800 mb-12">Top Lenders Offering Used Car Loans</h2>
-          <div className="overflow-x-auto">
-            <table className="w-full bg-white rounded-lg shadow-lg">
-              <thead className="bg-blue-600 text-white">
-                <tr>
-                  <th className="px-6 py-4 text-left">Lender</th>
-                  <th className="px-6 py-4 text-left">Interest Rate</th>
-                  <th className="px-6 py-4 text-left">Repayment Tenure</th>
-                  <th className="px-6 py-4 text-left">Processing Fee</th>
-                  <th className="px-6 py-4 text-center">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr className="border-b hover:bg-gray-50">
-                  <td className="px-6 py-4 flex items-center"><img src="/images/sbi.png" alt="SBI" width="32" height="32" style={{ aspectRatio: "1/1" }} className="w-8 h-8 mr-3" loading="lazy" decoding="async" /><span className="font-semibold">State Bank of India</span></td>
-                  <td className="px-6 py-4">11.75% - 15.25% p.a.</td>
-                  <td className="px-6 py-4">5 years (maximum)</td>
-                  <td className="px-6 py-4">0.50% of loan amount</td>
-                  <td className="px-6 py-4 text-center">
-                    {openApplyModal && <ApplyButton loanType="Used Car Loan - State Bank of India" openApplyModal={openApplyModal} variant="primary" size="md" className="bg-[#ff4444] text-white px-4 py-2 rounded-full font-semibold">Apply Now</ApplyButton>}
-                  </td>
-                </tr>
-                <tr className="border-b hover:bg-gray-50">
-                  <td className="px-6 py-4 flex items-center"><img src="/images/tata.png" alt="Tata Capital" width="32" height="32" style={{ aspectRatio: "1/1" }} className="w-8 h-8 mr-3" loading="lazy" decoding="async" /><span className="font-semibold">Tata Capital</span></td>
-                  <td className="px-6 py-4">10.75% p.a. onwards</td>
-                  <td className="px-6 py-4">1 year to 5 years</td>
-                  <td className="px-6 py-4">Up to 3% of loan amount</td>
-                  <td className="px-6 py-4 text-center">
-                    {openApplyModal && <ApplyButton loanType="Used Car Loan - Tata Capital" openApplyModal={openApplyModal} variant="primary" size="md" className="bg-[#ff4444] text-white px-4 py-2 rounded-full font-semibold">Apply Now</ApplyButton>}
-                  </td>
-                </tr>
-                <tr className="border-b hover:bg-gray-50">
-                  <td className="px-6 py-4 flex items-center"><img src="/images/hdfc.png" alt="HDFC Bank" width="32" height="32" style={{ aspectRatio: "1/1" }} className="w-8 h-8 mr-3" loading="lazy" decoding="async" /><span className="font-semibold">HDFC Bank</span></td>
-                  <td className="px-6 py-4">13.75% p.a. onwards</td>
-                  <td className="px-6 py-4">7 years</td>
-                  <td className="px-6 py-4">Up to 2.5% of loan amount</td>
-                  <td className="px-6 py-4 text-center">
-                    {openApplyModal && <ApplyButton loanType="Used Car Loan - HDFC Bank" openApplyModal={openApplyModal} variant="primary" size="md" className="bg-[#ff4444] text-white px-4 py-2 rounded-full font-semibold">Apply Now</ApplyButton>}
-                  </td>
-                </tr>
-                <tr className="border-b hover:bg-gray-50">
-                  <td className="px-6 py-4 flex items-center"><img src="/images/pnb.png" alt="Punjab National Bank" width="32" height="32" style={{ aspectRatio: "1/1" }} className="w-8 h-8 mr-3" loading="lazy" decoding="async" /><span className="font-semibold">Punjab National Bank</span></td>
-                  <td className="px-6 py-4">9.40% p.a. onwards</td>
-                  <td className="px-6 py-4">5 years</td>
-                  <td className="px-6 py-4">0.50% of loan amount</td>
-                  <td className="px-6 py-4 text-center">
-                    {openApplyModal && <ApplyButton loanType="Used Car Loan - Punjab National Bank" openApplyModal={openApplyModal} variant="primary" size="md" className="bg-[#ff4444] text-white px-4 py-2 rounded-full font-semibold">Apply Now</ApplyButton>}
-                  </td>
-                </tr>
-                <tr className="hover:bg-gray-50">
-                  <td className="px-6 py-4 flex items-center"><img src="/images/axis.png" alt="Axis Bank" width="32" height="32" style={{ aspectRatio: "1/1" }} className="w-8 h-8 mr-3" loading="lazy" decoding="async" /><span className="font-semibold">Axis Bank</span></td>
-                  <td className="px-6 py-4">13.55% - 15.80% p.a.</td>
-                  <td className="px-6 py-4">5 years</td>
-                  <td className="px-6 py-4">Up to 2% of loan amount</td>
-                  <td className="px-6 py-4 text-center">
-                    {openApplyModal && <ApplyButton loanType="Used Car Loan - Axis Bank" openApplyModal={openApplyModal} variant="primary" size="md" className="bg-[#ff4444] text-white px-4 py-2 rounded-full font-semibold">Apply Now</ApplyButton>}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div className="text-center mt-8">
-            {openCibilModal && (
-              <button onClick={openCibilModal} className="bg-[#1e3a8a] text-white px-8 py-4 rounded-full font-bold text-xl shadow-lg hover:bg-blue-800 transition">Check Your Credit Score for FREE</button>
-            )}
-          </div>
-        </div>
-      </section>
-
-      {/* Eligibility Section */}
-      <section id="eligibility" className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-800 mb-4">Eligibility Criteria for Used Car Loans</h2>
-            <p className="text-xl text-gray-600">Check if you meet the requirements for our used car loan</p>
-          </div>
-          <div className="grid md:grid-cols-2 gap-12">
-            <div className="bg-white rounded-lg p-8 shadow-lg">
-              <div className="text-center mb-6">
-                <div className="bg-blue-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                  {/* Salaried SVG */}
-                  <svg className="w-12 h-12" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="24" cy="16" r="8" fill="#1e3a8a" />
-                    <rect x="10" y="28" width="28" height="12" rx="6" fill="#1e3a8a" />
-                    <rect x="18" y="36" width="12" height="4" rx="2" fill="#60A5FA" />
-                  </svg>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+              <div className="lg:col-span-8 space-y-5">
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-amber-400/10 border border-amber-400/25 rounded-full text-amber-300 text-xs font-semibold tracking-wide">
+                  <Car className="w-3.5 h-3.5 text-amber-400" />
+                  <span>PRE-OWNED AUTO FINANCE &bull; VERIFIED BANK RATES</span>
                 </div>
-                <h3 className="text-2xl font-semibold text-gray-800">Salaried Employees</h3>
-              </div>
-              <div className="space-y-4">
-                <div className="flex items-start"><div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mr-4 mt-1"><span className="text-green-600 text-sm">✓</span></div><div><strong className="text-gray-800">Age Limit:</strong><p className="text-gray-600">21-65 years</p></div></div>
-                <div className="flex items-start"><div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mr-4 mt-1"><span className="text-green-600 text-sm">✓</span></div><div><strong className="text-gray-800">Minimum Income:</strong><p className="text-gray-600">At least ₹15,000 per month</p></div></div>
-                <div className="flex items-start"><div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mr-4 mt-1"><span className="text-green-600 text-sm">✓</span></div><div><strong className="text-gray-800">Work Experience:</strong><p className="text-gray-600">Must be working in current organization for at least 1 year</p></div></div>
-              </div>
-            </div>
-            <div className="bg-white rounded-lg p-8 shadow-lg">
-              <div className="text-center mb-6">
-                <div className="bg-orange-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                  {/* Self-employed SVG */}
-                  <svg className="w-12 h-12" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="24" cy="16" r="8" fill="#F59E42" />
-                    <rect x="10" y="28" width="28" height="12" rx="6" fill="#F59E42" />
-                    <rect x="18" y="36" width="12" height="4" rx="2" fill="#fff7ed" />
-                  </svg>
-                </div>
-                <h3 className="text-2xl font-semibold text-gray-800">Self-employed Individuals</h3>
-              </div>
-              <div className="space-y-4">
-                <div className="flex items-start"><div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mr-4 mt-1"><span className="text-green-600 text-sm">✓</span></div><div><strong className="text-gray-800">Age Limit:</strong><p className="text-gray-600">25-65 years</p></div></div>
-                <div className="flex items-start"><div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mr-4 mt-1"><span className="text-green-600 text-sm">✓</span></div><div><strong className="text-gray-800">Annual Profit:</strong><p className="text-gray-600">Must make a profit of at least ₹1.5 lakh per year</p></div></div>
-                <div className="flex items-start"><div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mr-4 mt-1"><span className="text-green-600 text-sm">✓</span></div><div><strong className="text-gray-800">Business Experience:</strong><p className="text-gray-600">Must be in the same line of business for at least 3 years</p></div></div>
-              </div>
-            </div>
-          </div>
-          <div className="text-center mt-12">
-            <button
-              onClick={() => openEligibilityModal('Used Car Loan')}
-              className="bg-[#1e3a8a] text-white px-8 py-4 rounded-full font-bold text-xl shadow-lg hover:bg-blue-800 transition"
-            >
-              Check Your Eligibility
-            </button>
-          </div>
-        </div>
-      </section>
 
-      {/* EMI Calculator Section */}
-      <section id="calculator" className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-800 mb-4">Car Loan EMI Calculator</h2>
-            <p className="text-xl text-gray-600">Calculate your monthly EMI and plan your budget</p>
-          </div>
-          <div className="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto">
-            {/* Calculator Inputs */}
-            <div className="bg-gray-50 rounded-lg p-8">
-              <h3 className="text-2xl font-semibold mb-6">Loan Details</h3>
-              <form onSubmit={calculateEMI} autoComplete="off" aria-label="Used Car Loan EMI Calculator">
-                <div className="mb-6">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Loan Amount (₹)</label>
-                  <input type="range" min={100000} max={7500000} step={10000} value={loanAmount} onChange={e => setLoanAmount(Number(e.target.value))} className="slider w-full mb-2" />
-                  <div className="flex justify-between text-sm text-gray-600">
-                    <span>₹1L</span>
-                    <span className="font-semibold text-blue-600">₹{loanAmount.toLocaleString()}</span>
-                    <span>₹75L</span>
+                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight">
+                  Compare Used Car Loan Interest Rates in India (Starting at 9.95% p.a.)
+                </h1>
+
+                <p className="text-sm sm:text-base text-slate-300 leading-relaxed max-w-3xl">
+                  Finance up to 85%–100% of appraised vehicle valuation across top certified pre-owned hatchbacks, sedans, and SUVs. Compare live APRs, processing fee slabs, and flexible tenures up to 7 years with instant digital approval.
+                </p>
+
+                <div className="pt-2 flex flex-wrap gap-4 items-center">
+                  {openApplyModal && (
+                    <button
+                      onClick={() => openApplyModal("Used Car Loan")}
+                      className="px-6 py-3 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-sm rounded-lg transition-colors shadow-lg shadow-amber-500/20 inline-flex items-center"
+                    >
+                      Apply for Used Car Loan
+                      <ArrowRight className="w-4 h-4 ml-2" />
+                    </button>
+                  )}
+                  {openEligibilityModal && (
+                    <button
+                      onClick={() => openEligibilityModal("Used Car Loan")}
+                      className="px-6 py-3 bg-slate-800/90 hover:bg-slate-700 text-white font-medium text-sm rounded-lg border border-slate-700 transition-colors"
+                    >
+                      Check Eligibility (Zero Impact)
+                    </button>
+                  )}
+                  {openCibilModal && (
+                    <button
+                      onClick={openCibilModal}
+                      className="text-xs text-slate-300 hover:text-amber-400 underline underline-offset-4 transition-colors"
+                    >
+                      Check Free Credit Score
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              {/* Fast Fact Pill in Hero */}
+              <div className="lg:col-span-4 bg-white/5 border border-white/10 rounded-2xl p-6 backdrop-blur-sm space-y-4">
+                <div className="text-xs font-semibold uppercase tracking-wider text-amber-300 flex items-center gap-2">
+                  <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                  Used Car Benchmark 2025
+                </div>
+                <div className="space-y-3 text-xs">
+                  <div className="flex justify-between border-b border-white/10 pb-2">
+                    <span className="text-slate-400">Lowest Interest Rate:</span>
+                    <span className="font-bold text-white font-mono text-sm">9.95% p.a.</span>
+                  </div>
+                  <div className="flex justify-between border-b border-white/10 pb-2">
+                    <span className="text-slate-400">Max Financing (LTV):</span>
+                    <span className="font-semibold text-white">Up to 85% – 100% Valuation</span>
+                  </div>
+                  <div className="flex justify-between border-b border-white/10 pb-2">
+                    <span className="text-slate-400">Max Repayment Tenure:</span>
+                    <span className="font-semibold text-white">Up to 7 Years (84 Mos)</span>
+                  </div>
+                  <div className="flex justify-between border-b border-white/10 pb-2">
+                    <span className="text-slate-400">Max Vehicle Age at Maturity:</span>
+                    <span className="font-semibold text-white">Up to 8 – 10 Years</span>
+                  </div>
+                  <div className="flex justify-between pt-1">
+                    <span className="text-slate-400">Processing Fees:</span>
+                    <span className="font-semibold text-emerald-400">0.50% to 2.50%</span>
                   </div>
                 </div>
-                <div className="mb-6">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Interest Rate (% p.a.)</label>
-                  <input type="range" min={8.8} max={17} step={0.1} value={interestRate} onChange={e => setInterestRate(Number(e.target.value))} className="slider w-full mb-2" />
-                  <div className="flex justify-between text-sm text-gray-600">
-                    <span>8.8%</span>
-                    <span className="font-semibold text-blue-600">{interestRate}%</span>
-                    <span>17%</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* 4 Trust Metric Cards */}
+        <section className="relative -mt-6 z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="bg-white rounded-xl p-5 border border-slate-200/90 shadow-md">
+              <div className="text-2xl lg:text-3xl font-extrabold text-blue-700 font-mono">9.95%</div>
+              <div className="text-xs font-bold text-slate-800 uppercase tracking-wider mt-0.5">Starting Rate</div>
+              <div className="text-[11px] text-slate-500 mt-1">Special PSU & high-CIBIL rates</div>
+            </div>
+            <div className="bg-white rounded-xl p-5 border border-slate-200/90 shadow-md">
+              <div className="text-2xl lg:text-3xl font-extrabold text-blue-700 font-mono">₹75 Lakhs</div>
+              <div className="text-xs font-bold text-slate-800 uppercase tracking-wider mt-0.5">Max Loan Amount</div>
+              <div className="text-[11px] text-slate-500 mt-1">Multi-brand & luxury certified cars</div>
+            </div>
+            <div className="bg-white rounded-xl p-5 border border-slate-200/90 shadow-md">
+              <div className="text-2xl lg:text-3xl font-extrabold text-blue-700 font-mono">100%</div>
+              <div className="text-xs font-bold text-slate-800 uppercase tracking-wider mt-0.5">Valuation Funding</div>
+              <div className="text-[11px] text-slate-500 mt-1">Select private bank partnerships</div>
+            </div>
+            <div className="bg-white rounded-xl p-5 border border-slate-200/90 shadow-md">
+              <div className="text-2xl lg:text-3xl font-extrabold text-blue-700 font-mono">2 Hours</div>
+              <div className="text-xs font-bold text-slate-800 uppercase tracking-wider mt-0.5">Digital Approval</div>
+              <div className="text-[11px] text-slate-500 mt-1">Paperless digital sanction letters</div>
+            </div>
+          </div>
+        </section>
+
+        {/* Main Content Body */}
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
+
+          {/* Section 1: Interactive Used Car EMI Calculator */}
+          <section id="calculator" className="bg-white rounded-2xl p-6 lg:p-10 border border-slate-200 shadow-sm space-y-8">
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-100 pb-5">
+              <div>
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-blue-50 text-blue-700 rounded text-xs font-semibold uppercase tracking-wider">
+                  <Gauge className="w-3.5 h-3.5" />
+                  <span>Real-Time Valuation & EMI Simulation</span>
+                </div>
+                <h2 className="text-2xl lg:text-3xl font-bold text-slate-900 tracking-tight mt-2">
+                  Used Car Loan EMI & Down Payment Calculator
+                </h2>
+              </div>
+              <span className="text-xs text-slate-500">
+                Formula: Reducing balance monthly compounding
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+              {/* Sliders Area */}
+              <div className="lg:col-span-7 space-y-6">
+                {/* Vehicle Valuation / On-Road Estimate */}
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center text-sm font-semibold text-slate-800">
+                    <label htmlFor="vehicle-val">Car Valuation / Agreed Price:</label>
+                    <span className="font-mono text-base font-bold text-blue-700">₹{loanAmount.toLocaleString("en-IN")}</span>
+                  </div>
+                  <input
+                    id="vehicle-val"
+                    type="range"
+                    min={100000}
+                    max={5000000}
+                    step={25000}
+                    value={loanAmount}
+                    onChange={(e) => setLoanAmount(Number(e.target.value))}
+                    className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-600"
+                  />
+                  <div className="flex justify-between text-[11px] text-slate-400 font-mono">
+                    <span>₹1,00,000</span>
+                    <span>₹25,00,000</span>
+                    <span>₹50,00,000</span>
+                  </div>
+                  {/* Quick Chips */}
+                  <div className="flex flex-wrap gap-2 pt-1">
+                    {[300000, 500000, 800000, 1200000, 2000000].map((amt) => (
+                      <button
+                        key={amt}
+                        type="button"
+                        onClick={() => setLoanAmount(amt)}
+                        className={`text-xs px-2.5 py-1 rounded border font-mono transition-colors ${
+                          loanAmount === amt
+                            ? "bg-blue-600 text-white border-blue-600"
+                            : "bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100"
+                        }`}
+                      >
+                        ₹{(amt / 100000).toFixed(amt % 100000 === 0 ? 0 : 1)}L
+                      </button>
+                    ))}
                   </div>
                 </div>
-                <div className="mb-6">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Loan Tenure (Years)</label>
-                  <input type="range" min={1} max={7} value={tenure} onChange={e => setTenure(Number(e.target.value))} className="slider w-full mb-2" />
-                  <div className="flex justify-between text-sm text-gray-600">
+
+                {/* Down Payment Slider */}
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center text-sm font-semibold text-slate-800">
+                    <label htmlFor="down-pay">Your Down Payment (Own Contribution):</label>
+                    <span className="font-mono text-base font-bold text-slate-800">₹{downPayment.toLocaleString("en-IN")}</span>
+                  </div>
+                  <input
+                    id="down-pay"
+                    type="range"
+                    min={0}
+                    max={Math.min(loanAmount * 0.5, 1500000)}
+                    step={10000}
+                    value={downPayment}
+                    onChange={(e) => setDownPayment(Number(e.target.value))}
+                    className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-600"
+                  />
+                  <div className="flex justify-between text-[11px] text-slate-400 font-mono">
+                    <span>₹0 (100% LTV)</span>
+                    <span>₹{Math.min(loanAmount * 0.5, 1500000).toLocaleString("en-IN")}</span>
+                  </div>
+                </div>
+
+                {/* Interest Rate Slider */}
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center text-sm font-semibold text-slate-800">
+                    <label htmlFor="interest-rate">Interest Rate (% p.a.):</label>
+                    <span className="font-mono text-base font-bold text-blue-700">{interestRate}%</span>
+                  </div>
+                  <input
+                    id="interest-rate"
+                    type="range"
+                    min={9.5}
+                    max={17.0}
+                    step={0.1}
+                    value={interestRate}
+                    onChange={(e) => setInterestRate(Number(e.target.value))}
+                    className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-600"
+                  />
+                  <div className="flex justify-between text-[11px] text-slate-400 font-mono">
+                    <span>9.5%</span>
+                    <span>13.0%</span>
+                    <span>17.0%</span>
+                  </div>
+                  <div className="flex flex-wrap gap-2 pt-1">
+                    {[9.95, 10.5, 11.25, 12.5, 14.0].map((r) => (
+                      <button
+                        key={r}
+                        type="button"
+                        onClick={() => setInterestRate(r)}
+                        className={`text-xs px-2.5 py-1 rounded border font-mono transition-colors ${
+                          interestRate === r
+                            ? "bg-blue-600 text-white border-blue-600"
+                            : "bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100"
+                        }`}
+                      >
+                        {r}%
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Tenure Slider */}
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center text-sm font-semibold text-slate-800">
+                    <label htmlFor="tenure-years">Repayment Tenure:</label>
+                    <span className="font-mono text-base font-bold text-blue-700">{tenureYears} Years ({tenureYears * 12} Months)</span>
+                  </div>
+                  <input
+                    id="tenure-years"
+                    type="range"
+                    min={1}
+                    max={7}
+                    step={1}
+                    value={tenureYears}
+                    onChange={(e) => setTenureYears(Number(e.target.value))}
+                    className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-600"
+                  />
+                  <div className="flex justify-between text-[11px] text-slate-400 font-mono">
                     <span>1 Year</span>
-                    <span className="font-semibold text-blue-600">{tenure} Years</span>
+                    <span>3 Years</span>
+                    <span>5 Years</span>
                     <span>7 Years</span>
                   </div>
                 </div>
-                <button type="submit" className="bg-[#1e3a8a] text-white w-full py-3 rounded-full font-bold mt-4" disabled={loading} aria-busy={loading}>{loading ? 'Calculating...' : 'Calculate EMI'}</button>
-                {error && <div className="mt-3 text-red-600 font-semibold text-center animate-pulse">{error}</div>}
-              </form>
-            </div>
-            {/* Results Display */}
-            <div>
-              <div className="bg-blue-600 text-white rounded-lg p-8 mb-6">
-                <h3 className="text-2xl font-semibold mb-6">Your EMI Breakdown</h3>
-                <div className="text-center mb-6">
-                  <div className="text-4xl font-bold mb-2">₹{emiResult.emi.toLocaleString()}</div>
-                  <p className="text-blue-200">Monthly EMI</p>
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="text-center">
-                    <div className="text-xl font-semibold">₹{emiResult.totalInterest.toLocaleString()}</div>
-                    <p className="text-blue-200 text-sm">Total Interest</p>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-xl font-semibold">₹{emiResult.totalAmount.toLocaleString()}</div>
-                    <p className="text-blue-200 text-sm">Total Amount</p>
-                  </div>
-                </div>
               </div>
-              <div className="bg-white rounded-lg p-6 shadow-md">
-                <div className="text-center text-gray-500">* Amortization chart coming soon.</div>
-              </div>
-            </div>
-          </div>
-          <div className="text-center mt-12">
-            <p className="text-gray-600 mb-4">Ready to apply with these EMI calculations?</p>
-            {openApplyModal && (
-              <ApplyButton loanType="Used Car Loan" openApplyModal={openApplyModal} variant="primary" size="xl" className="bg-[#ff4444] text-white px-8 py-4 rounded-full font-bold text-xl shadow-lg hover:bg-red-600 transition">
-                  Apply for Loan Now
-              </ApplyButton>
-            )}
-          </div>
-        </div>
-      </section>
 
-      {/* Documents Required Section */}
-      <section id="documents" className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-800 mb-4">Documents Required for Used Car Loans</h2>
-            <p className="text-xl text-gray-600">Keep these documents ready for a faster loan approval process</p>
-          </div>
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-white rounded-lg p-8 shadow-md">
-              <div className="text-center mb-6">
-                <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                  {/* Basic Documents SVG */}
-                  <svg className="w-10 h-10" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="8" y="8" width="24" height="24" rx="4" fill="#1e3a8a" />
-                    <rect x="14" y="14" width="12" height="3" rx="1.5" fill="#60A5FA" />
-                    <rect x="14" y="20" width="12" height="3" rx="1.5" fill="#60A5FA" />
-                    <rect x="14" y="26" width="8" height="3" rx="1.5" fill="#60A5FA" />
-                  </svg>
+              {/* Result Readout Card */}
+              <div className="lg:col-span-5 bg-[#F8FAFC] border border-slate-200 rounded-xl p-6 space-y-6">
+                <div className="text-center space-y-1">
+                  <div className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                    Calculated Monthly Installment (EMI)
+                  </div>
+                  <div className="text-4xl lg:text-5xl font-extrabold text-blue-700 font-mono tracking-tight">
+                    ₹{monthlyEmi.toLocaleString("en-IN")}
+                  </div>
+                  <p className="text-xs text-slate-500">Per month for {tenureYears * 12} installments</p>
                 </div>
-                <h3 className="text-xl font-semibold text-gray-800">Basic Documents</h3>
+
+                <div className="space-y-3 pt-3 border-t border-slate-200 text-xs">
+                  <div className="flex justify-between">
+                    <span className="text-slate-600">Net Financed Amount:</span>
+                    <span className="font-mono font-bold text-slate-900">₹{principalPortion.toLocaleString("en-IN")}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-slate-600">Total Interest Payable:</span>
+                    <span className="font-mono font-bold text-amber-700">₹{totalInterest.toLocaleString("en-IN")}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-slate-600">Total Amount Payable:</span>
+                    <span className="font-mono font-bold text-slate-900">₹{totalPayable.toLocaleString("en-IN")}</span>
+                  </div>
+                </div>
+
+                {/* Visual Ratio Bar */}
+                <div className="space-y-1.5 pt-2">
+                  <div className="h-2.5 w-full bg-slate-200 rounded-full overflow-hidden flex">
+                    <div style={{ width: `${principalPercentage}%` }} className="bg-blue-600 h-full" />
+                    <div style={{ width: `${interestPercentage}%` }} className="bg-amber-500 h-full" />
+                  </div>
+                  <div className="flex justify-between text-[11px] text-slate-500">
+                    <span className="flex items-center gap-1">
+                      <span className="w-2 h-2 rounded-full bg-blue-600 inline-block" /> Principal ({principalPercentage}%)
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <span className="w-2 h-2 rounded-full bg-amber-500 inline-block" /> Interest ({interestPercentage}%)
+                    </span>
+                  </div>
+                </div>
+
+                {openApplyModal && (
+                  <button
+                    onClick={() => openApplyModal(`Used Car Loan - Financed ₹${principalPortion.toLocaleString("en-IN")} for ${tenureYears} Yrs`)}
+                    className="w-full py-3.5 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-sm rounded-lg transition-colors shadow-md shadow-amber-500/20 text-center block"
+                  >
+                    Apply with this Pre-Owned EMI
+                  </button>
+                )}
               </div>
-              <ul className="space-y-3">
-                <li className="flex items-center"><span className="text-green-600 mr-3">✓</span><span className="text-gray-700">Application form</span></li>
-                <li className="flex items-center"><span className="text-green-600 mr-3">✓</span><span className="text-gray-700">Passport-size photographs</span></li>
-                <li className="flex items-center"><span className="text-green-600 mr-3">✓</span><span className="text-gray-700">Car valuation report</span></li>
-              </ul>
             </div>
-            <div className="bg-white rounded-lg p-8 shadow-md">
-              <div className="text-center mb-6">
-                <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                  {/* Identity Documents SVG */}
-                  <svg className="w-10 h-10" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="20" cy="16" r="6" fill="#22C55E" />
-                    <rect x="8" y="24" width="24" height="8" rx="4" fill="#22C55E" />
-                    <rect x="16" y="28" width="8" height="2" rx="1" fill="#fff" />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-semibold text-gray-800">Identity & Address Proof</h3>
-              </div>
-              <div className="mb-4">
-                <h4 className="font-semibold text-gray-800 mb-2">Identity Proof (Any One):</h4>
-                <ul className="space-y-2">
-                  <li className="flex items-center"><span className="text-blue-600 mr-3">•</span><span className="text-gray-700">Aadhaar Card</span></li>
-                  <li className="flex items-center"><span className="text-blue-600 mr-3">•</span><span className="text-gray-700">Passport</span></li>
-                  <li className="flex items-center"><span className="text-blue-600 mr-3">•</span><span className="text-gray-700">Driving License</span></li>
-                  <li className="flex items-center"><span className="text-blue-600 mr-3">•</span><span className="text-gray-700">Voter's ID</span></li>
-                  <li className="flex items-center"><span className="text-blue-600 mr-3">•</span><span className="text-gray-700">PAN Card</span></li>
-                </ul>
-              </div>
+          </section>
+
+          {/* Section 2: Multi-Lender Comparison Table & Cards */}
+          <section className="space-y-6">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
               <div>
-                <h4 className="font-semibold text-gray-800 mb-2">Address Proof (Any One):</h4>
-                <ul className="space-y-2">
-                  <li className="flex items-center"><span className="text-blue-600 mr-3">•</span><span className="text-gray-700">Electricity Bill</span></li>
-                  <li className="flex items-center"><span className="text-blue-600 mr-3">•</span><span className="text-gray-700">Aadhaar Card</span></li>
-                  <li className="flex items-center"><span className="text-blue-600 mr-3">•</span><span className="text-gray-700">Ration Card</span></li>
-                </ul>
-              </div>
-            </div>
-            <div className="bg-white rounded-lg p-8 shadow-md">
-              <div className="text-center mb-6">
-                <div className="bg-orange-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                  {/* Income Documents SVG */}
-                  <svg className="w-10 h-10" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="8" y="8" width="24" height="24" rx="4" fill="#F59E42" />
-                    <rect x="14" y="14" width="12" height="3" rx="1.5" fill="#fff7ed" />
-                    <rect x="14" y="20" width="12" height="3" rx="1.5" fill="#fff7ed" />
-                    <rect x="14" y="26" width="8" height="3" rx="1.5" fill="#fff7ed" />
-                  </svg>
+                <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-50 text-blue-700 text-xs font-semibold uppercase tracking-wider rounded-md border border-blue-100">
+                  <Award className="w-3.5 h-3.5" />
+                  <span>Verified Indian Lenders</span>
                 </div>
-                <h3 className="text-xl font-semibold text-gray-800">Income Proof</h3>
+                <h2 className="text-2xl lg:text-3xl font-bold text-slate-900 tracking-tight mt-2">
+                  Top Used Car Loan Interest Rates (2025 Matrix)
+                </h2>
               </div>
-              <ul className="space-y-3">
-                <li className="flex items-center"><span className="text-green-600 mr-3">✓</span><span className="text-gray-700">Salary slips (last 3 months)</span></li>
-                <li className="flex items-center"><span className="text-green-600 mr-3">✓</span><span className="text-gray-700">Bank statements (last 6 months)</span></li>
-                <li className="flex items-center"><span className="text-green-600 mr-3">✓</span><span className="text-gray-700">IT returns/Form 16</span></li>
-              </ul>
+              <p className="text-xs text-slate-500 max-w-sm md:text-right">
+                Audited bi-weekly. Interest rates benchmarked against Repo-Linked Lending Rate (RLLR) and lender internal MCLR.
+              </p>
             </div>
-          </div>
-        </div>
-      </section>
 
-      {/* Testimonials Section (optional) */}
-      <section id="testimonials" className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-4xl font-bold text-gray-800 mb-12">What Our Customers Say</h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-gray-50 rounded-lg p-8 shadow-md">
-              <p className="text-lg text-gray-700 mb-4">“The process was super smooth and I got my loan approved in just a day!”</p>
-              <div className="font-semibold text-[#1e3a8a]">Amit S., Mumbai</div>
+            {/* Filter Tabs & Search */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-3 rounded-xl border border-slate-200">
+              <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0">
+                {[
+                  { id: "all", label: "All Lenders" },
+                  { id: "psu", label: "Public Sector (PSU)" },
+                  { id: "private", label: "Private Banks" },
+                  { id: "nbfc", label: "NBFCs & Specialists" }
+                ].map((tab) => (
+                  <button
+                    key={tab.id}
+                    onClick={() => setLenderCategory(tab.id)}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-colors ${
+                      lenderCategory === tab.id
+                        ? "bg-blue-600 text-white font-semibold shadow-sm"
+                        : "text-slate-600 hover:bg-slate-100"
+                    }`}
+                  >
+                    {tab.label}
+                  </button>
+                ))}
+              </div>
+
+              <div className="relative">
+                <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                <input
+                  type="text"
+                  placeholder="Search bank name..."
+                  value={lenderSearch}
+                  onChange={(e) => setLenderSearch(e.target.value)}
+                  className="pl-8 pr-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg w-full sm:w-48 focus:outline-none focus:ring-1 focus:ring-blue-600"
+                />
+              </div>
             </div>
-            <div className="bg-gray-50 rounded-lg p-8 shadow-md">
-              <p className="text-lg text-gray-700 mb-4">“Best rates for used car loans. Highly recommended!”</p>
-              <div className="font-semibold text-[#1e3a8a]">Priya R., Bangalore</div>
+
+            {/* Lenders Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {filteredLenders.map((lender) => (
+                <div
+                  key={lender.id}
+                  className="bg-white rounded-xl p-5 border border-slate-200/90 shadow-sm hover:border-blue-300 transition-all flex flex-col justify-between space-y-4"
+                >
+                  <div className="space-y-3">
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-lg bg-slate-50 border border-slate-100 p-1.5 flex items-center justify-center flex-shrink-0">
+                          <img
+                            src={lender.logo}
+                            alt={lender.name}
+                            className="w-full h-full object-contain"
+                            loading="lazy"
+                            onError={(e) => {
+                              // Fallback initials
+                              e.currentTarget.style.display = "none";
+                            }}
+                          />
+                        </div>
+                        <div>
+                          <h3 className="font-bold text-slate-900 text-sm">{lender.fullName}</h3>
+                          <span className="text-[11px] text-slate-500 uppercase tracking-wider font-semibold">
+                            {lender.category === "psu" ? "Public Sector Bank" : lender.category === "private" ? "Private Commercial Bank" : "NBFC Specialist"}
+                          </span>
+                        </div>
+                      </div>
+                      <span className="inline-block px-2 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-bold rounded">
+                        {lender.badge}
+                      </span>
+                    </div>
+
+                    {/* Metrics Matrix */}
+                    <div className="grid grid-cols-3 gap-2 bg-slate-50 p-3 rounded-lg border border-slate-100 text-xs">
+                      <div>
+                        <span className="text-slate-400 block text-[10px]">Interest Rate</span>
+                        <span className="font-bold text-blue-700 font-mono">{lender.rate}</span>
+                      </div>
+                      <div>
+                        <span className="text-slate-400 block text-[10px]">Max Financing</span>
+                        <span className="font-semibold text-slate-800">{lender.maxLoan}</span>
+                      </div>
+                      <div>
+                        <span className="text-slate-400 block text-[10px]">Processing Fee</span>
+                        <span className="font-medium text-slate-700 text-[11px]">{lender.processingFee}</span>
+                      </div>
+                    </div>
+
+                    {/* Bullet Highlights */}
+                    <ul className="space-y-1 text-xs text-slate-650">
+                      {lender.highlights.map((h, i) => (
+                        <li key={i} className="flex items-start gap-1.5">
+                          <Check className="w-3.5 h-3.5 text-emerald-600 flex-shrink-0 mt-0.5" />
+                          <span>{h}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="pt-3 border-t border-slate-100 flex items-center justify-between gap-3">
+                    <span className="text-[11px] text-slate-400">Tenure: {lender.tenure}</span>
+                    {openApplyModal && (
+                      <button
+                        onClick={() => openApplyModal(lender.applyTag)}
+                        className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs rounded-lg transition-colors inline-flex items-center"
+                      >
+                        Apply with Bank
+                        <ChevronDown className="w-3 h-3 ml-1 -rotate-90" />
+                      </button>
+                    )}
+                  </div>
+                </div>
+              ))}
             </div>
-            <div className="bg-gray-50 rounded-lg p-8 shadow-md">
-              <p className="text-lg text-gray-700 mb-4">“Minimal paperwork and quick disbursal. Great experience.”</p>
-              <div className="font-semibold text-[#1e3a8a]">Rahul K., Delhi</div>
+          </section>
+
+          {/* Section 3: Essential Pre-Owned Car Valuation & Certified Inspection Checklist */}
+          <section className="bg-white rounded-2xl p-8 lg:p-10 border border-slate-200 shadow-sm space-y-6">
+            <div className="space-y-2">
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-amber-50 text-amber-800 rounded text-xs font-semibold uppercase tracking-wider border border-amber-200">
+                <ShieldCheck className="w-3.5 h-3.5 text-amber-600" />
+                <span>Buyer Protection & Fair Valuation</span>
+              </div>
+              <h2 className="text-2xl font-bold text-slate-900 tracking-tight">
+                Used Car Valuation Rules & Surveyor Inspection Checklist
+              </h2>
+              <p className="text-sm text-slate-650 leading-relaxed max-w-3xl">
+                Before releasing loan funds, every institutional bank mandates an independent vehicle valuation to confirm the car's true Insured Declared Value (IDV) and mechanical integrity:
+              </p>
             </div>
-          </div>
-        </div>
-      </section>
 
-      {/* How to Apply for a Used Car Loan */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-4xl mx-auto px-4">
-          <h2 className="text-3xl font-bold text-[#1e3a8a] mb-6">How to Apply for a Used Car Loan</h2>
-          <ol className="list-decimal pl-6 space-y-3 text-lg text-gray-700">
-            <li>Compare offers from multiple banks and NBFCs for the best rates and terms.</li>
-            <li>Check your eligibility and keep all required documents ready.</li>
-            <li>Apply online through the lender’s website or visit the nearest branch.</li>
-            <li>Fill out the application form and upload/submit your documents.</li>
-            <li>Wait for verification and approval. Once approved, the loan amount will be disbursed.</li>
-          </ol>
-        </div>
-      </section>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+              <div className="p-5 bg-slate-50 rounded-xl border border-slate-200 space-y-3">
+                <div className="w-9 h-9 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-sm">
+                  1
+                </div>
+                <h3 className="font-bold text-slate-900 text-base">Vehicle Age & Odometer Check</h3>
+                <p className="text-xs text-slate-650 leading-relaxed">
+                  Lenders check the original chassis manufacturing plate versus the RC registration year. Cars exceeding 1,20,000 km or 5 calendar years may face lowered LTV caps (60%–70% instead of 85%).
+                </p>
+              </div>
 
-      {/* Important Things to Do When Buying a Used Car */}
-      <section className="py-16 bg-white">
-        <div className="max-w-4xl mx-auto px-4">
-          <h2 className="text-3xl font-bold text-[#1e3a8a] mb-6">Important Things to Do When Buying a Used Car</h2>
-          <ul className="list-disc pl-6 space-y-3 text-lg text-gray-700">
-            <li>Check the car’s service history and ensure all maintenance is up to date.</li>
-            <li>Verify the car’s registration, insurance, and ownership documents.</li>
-            <li>Get the car inspected by a trusted mechanic for any hidden issues.</li>
-            <li>Negotiate the price based on the car’s condition and market value.</li>
-            <li>Transfer the RC (Registration Certificate) and insurance to your name after purchase.</li>
-          </ul>
-        </div>
-      </section>
+              <div className="p-5 bg-slate-50 rounded-xl border border-slate-200 space-y-3">
+                <div className="w-9 h-9 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-sm">
+                  2
+                </div>
+                <h3 className="font-bold text-slate-900 text-base">Engine Compression & Flood Damage</h3>
+                <p className="text-xs text-slate-650 leading-relaxed">
+                  The surveyor tests OBD-II error codes, ECU flashing history, suspension play, and floorboard rust to verify the car has never experienced water subversion or total-loss insurance claims.
+                </p>
+              </div>
 
-      {/* How to Use the Bankscart Car Loan EMI Calculator? */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-4xl mx-auto px-4">
-          <h2 className="text-3xl font-bold text-[#1e3a8a] mb-6">How to Use the Bankscart Car Loan EMI Calculator?</h2>
-          <ol className="list-decimal pl-6 space-y-3 text-lg text-gray-700">
-            <li>Enter the desired loan amount, interest rate, and tenure in the calculator above.</li>
-            <li>Adjust the sliders or input values to see real-time EMI, total interest, and total payment.</li>
-            <li>Use the results to plan your budget and choose the best loan offer.</li>
-          </ol>
-        </div>
-      </section>
+              <div className="p-5 bg-slate-50 rounded-xl border border-slate-200 space-y-3">
+                <div className="w-9 h-9 rounded-lg bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-sm">
+                  3
+                </div>
+                <h3 className="font-bold text-slate-900 text-base">Chassis & Apron Structural Integrity</h3>
+                <p className="text-xs text-slate-650 leading-relaxed">
+                  Surveyors check body pillar spot welds (A, B, and C pillars) and front radiator cross-members. Any signs of major structural repair or accidental unibody welding immediately disqualifies bank financing.
+                </p>
+              </div>
+            </div>
+          </section>
 
-      {/* Why Choose a Used Car Loan? */}
-      <section className="py-16 bg-white">
-        <div className="max-w-4xl mx-auto px-4">
-          <h2 className="text-3xl font-bold text-[#1e3a8a] mb-6">Why Choose a Used Car Loan?</h2>
-          <ul className="list-disc pl-6 space-y-3 text-lg text-gray-700">
-            <li>Lower EMIs and interest rates compared to unsecured loans.</li>
-            <li>Flexible repayment tenures up to 7 years.</li>
-            <li>Minimal documentation and quick approval process.</li>
-            <li>Option to finance up to 100% of the car’s value.</li>
-            <li>Improves your credit score with timely repayments.</li>
-          </ul>
-        </div>
-      </section>
+          {/* Section 4: Step-by-Step RTO Ownership Transfer & Hypothecation Guide */}
+          <section className="bg-slate-900 text-white rounded-2xl p-8 lg:p-10 shadow-xl space-y-8 border border-slate-800">
+            <div className="max-w-3xl space-y-3">
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-500/10 text-blue-300 text-xs font-semibold uppercase tracking-wider rounded-md border border-blue-500/20">
+                <FileCheck className="w-3.5 h-3.5 text-blue-400" />
+                <span>Statutory RTO Compliance</span>
+              </div>
+              <h2 className="text-2xl lg:text-3xl font-bold tracking-tight text-white">
+                RTO Ownership Transfer (Form 29/30) & Hypothecation (Form 34)
+              </h2>
+              <p className="text-slate-300 text-sm leading-relaxed">
+                When buying a pre-owned car with bank financing, ownership transfer and lender hypothecation must be executed simultaneously through your jurisdictional Regional Transport Office (RTO) or Parivahan portal:
+              </p>
+            </div>
 
-      {/* Tips for Availing a Used Car Loan */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-4xl mx-auto px-4">
-          <h2 className="text-3xl font-bold text-[#1e3a8a] mb-6">Tips for Availing a Used Car Loan</h2>
-          <ul className="list-disc pl-6 space-y-3 text-lg text-gray-700">
-            <li>Maintain a good credit score for better rates and approval chances.</li>
-            <li>Opt for a shorter tenure to save on total interest paid.</li>
-            <li>Compare processing fees and prepayment charges across lenders.</li>
-            <li>Read the loan agreement carefully before signing.</li>
-            <li>Make timely EMI payments to avoid penalties and improve your credit profile.</li>
-          </ul>
-        </div>
-      </section>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 text-slate-200">
+              <div className="bg-white/5 border border-white/10 p-5 rounded-xl space-y-2 backdrop-blur-sm">
+                <span className="font-mono text-amber-400 font-bold text-xs">STEP 01</span>
+                <h3 className="font-bold text-white text-sm">Form 29 & 30 Submission</h3>
+                <p className="text-xs text-slate-300 leading-relaxed">
+                  The original registered owner signs Form 29 (notice of transfer) and Form 30 (application for transfer). Accompanied by original RC and PAN card copy.
+                </p>
+              </div>
 
-      {/* FAQs on Used Car Loans */}
-      <section className="py-16 bg-white">
-        <div className="max-w-4xl mx-auto px-4">
-          <h2 className="text-3xl font-bold text-[#1e3a8a] mb-6">FAQs on Used Car Loans</h2>
-          <div className="space-y-4">
-            <details className="bg-gray-50 rounded-lg p-4 shadow">
-              <summary className="font-semibold cursor-pointer text-[#1e3a8a]">What is a used car loan?</summary>
-              <p className="mt-2 text-gray-700">A used car loan is a financing option that helps you purchase a pre-owned vehicle by paying the amount in EMIs over a fixed tenure.</p>
-            </details>
-            <details className="bg-gray-50 rounded-lg p-4 shadow">
-              <summary className="font-semibold cursor-pointer text-[#1e3a8a]">What is the maximum loan amount I can get for a used car?</summary>
-              <p className="mt-2 text-gray-700">You can get up to 80-100% of the car’s value, depending on the lender and your eligibility.</p>
-            </details>
-            <details className="bg-gray-50 rounded-lg p-4 shadow">
-              <summary className="font-semibold cursor-pointer text-[#1e3a8a]">What is the typical tenure for a used car loan?</summary>
-              <p className="mt-2 text-gray-700">Tenures usually range from 1 to 7 years for used car loans.</p>
-            </details>
-            <details className="bg-gray-50 rounded-lg p-4 shadow">
-              <summary className="font-semibold cursor-pointer text-[#1e3a8a]">What documents are required?</summary>
-              <p className="mt-2 text-gray-700">Common documents include identity proof, address proof, income proof, bank statements, and car-related documents.</p>
-            </details>
-            <details className="bg-gray-50 rounded-lg p-4 shadow">
-              <summary className="font-semibold cursor-pointer text-[#1e3a8a]">Can I prepay or foreclose my used car loan?</summary>
-              <p className="mt-2 text-gray-700">Yes, but some lenders may charge a prepayment or foreclosure penalty. Check with your lender for details.</p>
-            </details>
-            <details className="bg-gray-50 rounded-lg p-4 shadow">
-              <summary className="font-semibold cursor-pointer text-[#1e3a8a]">Is a down payment required?</summary>
-              <p className="mt-2 text-gray-700">Most lenders require a down payment, but some may offer 100% financing for select customers.</p>
-            </details>
-            <details className="bg-gray-50 rounded-lg p-4 shadow">
-              <summary className="font-semibold cursor-pointer text-[#1e3a8a]">Can I get a used car loan with a low credit score?</summary>
-              <p className="mt-2 text-gray-700">It is possible, but you may get a lower loan amount or higher interest rate. Some lenders may reject your application.</p>
-            </details>
-            <details className="bg-gray-50 rounded-lg p-4 shadow">
-              <summary className="font-semibold cursor-pointer text-[#1e3a8a]">How is EMI calculated?</summary>
-              <p className="mt-2 text-gray-700">EMI is calculated based on the loan amount, interest rate, and tenure using the reducing balance method. Use the calculator above for quick results.</p>
-            </details>
-          </div>
-        </div>
-      </section>
-    </div>
+              <div className="bg-white/5 border border-white/10 p-5 rounded-xl space-y-2 backdrop-blur-sm">
+                <span className="font-mono text-amber-400 font-bold text-xs">STEP 02</span>
+                <h3 className="font-bold text-white text-sm">Form 34 Hypothecation</h3>
+                <p className="text-xs text-slate-300 leading-relaxed">
+                  Signed by both borrower and lending bank to endorse the financier's lien on the vehicle under Section 51 of the Motor Vehicles Act 1988.
+                </p>
+              </div>
+
+              <div className="bg-white/5 border border-white/10 p-5 rounded-xl space-y-2 backdrop-blur-sm">
+                <span className="font-mono text-amber-400 font-bold text-xs">STEP 03</span>
+                <h3 className="font-bold text-white text-sm">RTO Verification & NOC</h3>
+                <p className="text-xs text-slate-300 leading-relaxed">
+                  If the vehicle is moving across RTO state lines or districts, a Clearance Certificate (CC) or RTO Form 28 (NOC) is verified through Parivahan.
+                </p>
+              </div>
+
+              <div className="bg-white/5 border border-white/10 p-5 rounded-xl space-y-2 backdrop-blur-sm">
+                <span className="font-mono text-amber-400 font-bold text-xs">STEP 04</span>
+                <h3 className="font-bold text-white text-sm">Smart Card RC Issuance</h3>
+                <p className="text-xs text-slate-300 leading-relaxed">
+                  The RTO prints your new Smart Card RC bearing your name as registered owner and the bank's name under "Hypothecated To".
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* Section 5: Eligibility Criteria & Documentation Matrix */}
+          <section className="bg-white rounded-2xl p-8 lg:p-10 border border-slate-200 shadow-sm space-y-8">
+            <div className="max-w-3xl space-y-2">
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-blue-50 text-blue-700 rounded text-xs font-semibold uppercase tracking-wider">
+                <Users className="w-3.5 h-3.5" />
+                <span>Underwriting Standards</span>
+              </div>
+              <h2 className="text-2xl font-bold text-slate-900 tracking-tight">
+                Used Car Loan Eligibility & Required Documentation
+              </h2>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {/* Salaried Profile */}
+              <div className="p-6 bg-slate-50 rounded-xl border border-slate-200 space-y-4">
+                <h3 className="font-bold text-slate-900 text-base flex items-center gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-blue-700" />
+                  Salaried Borrowers Checklist
+                </h3>
+                <div className="space-y-2.5 text-xs text-slate-700">
+                  <div className="flex justify-between border-b border-slate-200/60 pb-1.5">
+                    <span className="text-slate-500">Age Bracket:</span>
+                    <span className="font-semibold text-slate-900">21 to 65 Years (at maturity)</span>
+                  </div>
+                  <div className="flex justify-between border-b border-slate-200/60 pb-1.5">
+                    <span className="text-slate-500">Min Net Monthly Salary:</span>
+                    <span className="font-semibold text-slate-900">₹20,000/month (₹15k with PSUs)</span>
+                  </div>
+                  <div className="flex justify-between border-b border-slate-200/60 pb-1.5">
+                    <span className="text-slate-500">Job Stability:</span>
+                    <span className="font-semibold text-slate-900">Min 1 year total (6 mos current employer)</span>
+                  </div>
+                  <div className="flex justify-between border-b border-slate-200/60 pb-1.5">
+                    <span className="text-slate-500">Required KYC:</span>
+                    <span className="font-semibold text-slate-900">PAN Card + Aadhaar / Passport</span>
+                  </div>
+                  <div className="flex justify-between border-b border-slate-200/60 pb-1.5">
+                    <span className="text-slate-500">Income Documents:</span>
+                    <span className="font-semibold text-slate-900">Last 3 months salary slips + Form 16</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-slate-500">Banking Records:</span>
+                    <span className="font-semibold text-slate-900">Latest 6 months salary account statement</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Self-Employed Profile */}
+              <div className="p-6 bg-slate-50 rounded-xl border border-slate-200 space-y-4">
+                <h3 className="font-bold text-slate-900 text-base flex items-center gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-emerald-700" />
+                  Self-Employed Professionals & MSMEs
+                </h3>
+                <div className="space-y-2.5 text-xs text-slate-700">
+                  <div className="flex justify-between border-b border-slate-200/60 pb-1.5">
+                    <span className="text-slate-500">Age Bracket:</span>
+                    <span className="font-semibold text-slate-900">25 to 65 Years</span>
+                  </div>
+                  <div className="flex justify-between border-b border-slate-200/60 pb-1.5">
+                    <span className="text-slate-500">Min Net Annual Income:</span>
+                    <span className="font-semibold text-slate-900">₹1,50,000+ audited annual profit</span>
+                  </div>
+                  <div className="flex justify-between border-b border-slate-200/60 pb-1.5">
+                    <span className="text-slate-500">Business Vintage:</span>
+                    <span className="font-semibold text-slate-900">Min 3 years continuous operational history</span>
+                  </div>
+                  <div className="flex justify-between border-b border-slate-200/60 pb-1.5">
+                    <span className="text-slate-500">Entity Proof:</span>
+                    <span className="font-semibold text-slate-900">GST Registration, Udyam, or Shop & Est.</span>
+                  </div>
+                  <div className="flex justify-between border-b border-slate-200/60 pb-1.5">
+                    <span className="text-slate-500">Financial Filings:</span>
+                    <span className="font-semibold text-slate-900">2 years ITR with Computation & P&L</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-slate-500">Banking Records:</span>
+                    <span className="font-semibold text-slate-900">Latest 6 to 12 months primary current account</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Section 6: Searchable FAQ Accordion */}
+          <section className="bg-white rounded-2xl p-8 lg:p-10 border border-slate-200 shadow-sm space-y-6">
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+              <div>
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-slate-100 text-slate-700 rounded text-xs font-semibold uppercase tracking-wider">
+                  <HelpCircle className="w-3.5 h-3.5 text-blue-700" />
+                  <span>Frequently Answered Inquiries</span>
+                </div>
+                <h2 className="text-2xl font-bold text-slate-900 tracking-tight mt-2">
+                  Used Car Loan FAQs
+                </h2>
+              </div>
+
+              {/* FAQ Search Bar */}
+              <div className="relative">
+                <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                <input
+                  type="text"
+                  placeholder="Search questions..."
+                  value={faqSearch}
+                  onChange={(e) => setFaqSearch(e.target.value)}
+                  className="pl-8 pr-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg w-full sm:w-64 focus:outline-none focus:ring-1 focus:ring-blue-600"
+                />
+              </div>
+            </div>
+
+            {/* Category Filter Pills */}
+            <div className="flex flex-wrap gap-2 pt-2">
+              {[
+                { id: "all", label: "All Questions" },
+                { id: "general", label: "Basics & Process" },
+                { id: "valuation", label: "Valuation & LTV" },
+                { id: "rates", label: "Interest & Fees" },
+                { id: "rto", label: "RTO Transfer & Forms" },
+                { id: "eligibility", label: "Eligibility & CIBIL" }
+              ].map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => setFaqCategory(tab.id)}
+                  className={`text-xs px-3 py-1 rounded-full border transition-colors ${
+                    faqCategory === tab.id
+                      ? "bg-slate-900 text-white border-slate-900"
+                      : "bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100"
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              ))}
+            </div>
+
+            {/* Accordion List */}
+            <div className="space-y-3 pt-2">
+              {filteredFaqs.map((faq, idx) => (
+                <div
+                  key={idx}
+                  className="border border-slate-200 rounded-xl overflow-hidden transition-colors"
+                >
+                  <button
+                    onClick={() => setExpandedFaq(expandedFaq === idx ? null : idx)}
+                    className="w-full text-left p-4.5 bg-slate-50/70 hover:bg-slate-50 flex items-center justify-between gap-4 transition-colors"
+                  >
+                    <span className="font-bold text-slate-900 text-sm">
+                      {faq.question}
+                    </span>
+                    {expandedFaq === idx ? (
+                      <ChevronUp className="w-4 h-4 text-blue-700 flex-shrink-0" />
+                    ) : (
+                      <ChevronDown className="w-4 h-4 text-slate-400 flex-shrink-0" />
+                    )}
+                  </button>
+                  {expandedFaq === idx && (
+                    <div className="p-4.5 bg-white border-t border-slate-100 text-xs sm:text-sm text-slate-650 leading-relaxed">
+                      {faq.answer}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* Section 7: Strategic Cross-Linking Directory */}
+          <section className="bg-slate-50 rounded-2xl p-6 border border-slate-200 space-y-4">
+            <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider">
+              Related Vehicle Lending & Bureau Solutions
+            </h3>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+              <Link to="/loans/car" className="p-3 bg-white rounded-lg border border-slate-200 hover:border-blue-300 text-slate-800 font-semibold flex items-center justify-between">
+                <span>New Car Loan</span>
+                <ArrowRight className="w-3.5 h-3.5 text-blue-600" />
+              </Link>
+              <Link to="/loans/two-wheeler" className="p-3 bg-white rounded-lg border border-slate-200 hover:border-blue-300 text-slate-800 font-semibold flex items-center justify-between">
+                <span>Two-Wheeler Loan</span>
+                <ArrowRight className="w-3.5 h-3.5 text-blue-600" />
+              </Link>
+              <Link to="/credit-score" className="p-3 bg-white rounded-lg border border-slate-200 hover:border-blue-300 text-slate-800 font-semibold flex items-center justify-between">
+                <span>Free CIBIL Score</span>
+                <ArrowRight className="w-3.5 h-3.5 text-blue-600" />
+              </Link>
+              <Link to="/loans/personal-loan" className="p-3 bg-white rounded-lg border border-slate-200 hover:border-blue-300 text-slate-800 font-semibold flex items-center justify-between">
+                <span>Personal Loan</span>
+                <ArrowRight className="w-3.5 h-3.5 text-blue-600" />
+              </Link>
+            </div>
+          </section>
+
+          {/* Section 8: Statutory Non-Lender Disclosure */}
+          <section className="p-5 bg-amber-50/70 border border-amber-200/80 rounded-xl text-xs text-slate-700 leading-relaxed space-y-2">
+            <div className="flex items-center gap-2 font-bold text-slate-900">
+              <AlertCircle className="w-4 h-4 text-amber-700" />
+              <span>Statutory Marketplace Disclosure</span>
+            </div>
+            <p>
+              BanksCart Financial Technologies Private Limited (CIN: U67190DL2024PTC428910) is a digital lending service provider (LSP) and loan comparison platform. BanksCart does not grant loans, approve vehicle appraisals, or underwrite credit. All loan sanctions, interest rate slabs, LTV multiples, and RTO hypothecation procedures remain under the exclusive jurisdiction of the respective scheduled commercial banks and RBI-registered NBFCs.
+            </p>
+          </section>
+
+        </main>
+      </div>
+    </>
   );
 };
 

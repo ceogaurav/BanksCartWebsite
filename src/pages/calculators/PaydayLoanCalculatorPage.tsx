@@ -6,6 +6,7 @@ import {
   Hourglass, AlertTriangle, TrendingDown
 } from 'lucide-react'; // Lucide icons
 import ApplyButton from '../../components/common/ApplyButton';
+import Breadcrumb from '../../components/Breadcrumb';
 
 // --- Helper Functions ---
 // Formats a number into INR currency format
@@ -228,11 +229,20 @@ const PaydayLoanCalculatorPage: React.FC<PaydayLoanCalculatorPageProps> = ({ ope
 
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-amber-50 py-8 font-inter text-gray-800">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-slate-50 py-8 font-sans text-slate-800">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Breadcrumb Navigation */}
+        <div className="mb-6">
+          <Breadcrumb
+            items={[
+              { label: 'Calculators', path: '/calculators' },
+              { label: 'Short-Term Loan Calculator' }
+            ]}
+          />
+        </div>
         {/* Hero Section */}
         <motion.div
-          className="text-center mb-12 bg-gradient-to-r from-gray-700 to-gray-900 text-white p-8 rounded-3xl shadow-xl"
+          className="text-center mb-8 bg-gradient-to-r from-[#0F172A] via-[#1E3A8A] to-[#0F172A] text-white p-8 sm:p-10 rounded-2xl shadow-xl border border-slate-700/50"
           variants={sectionVariants}
           initial="hidden"
           whileInView="visible"
@@ -243,7 +253,7 @@ const PaydayLoanCalculatorPage: React.FC<PaydayLoanCalculatorPageProps> = ({ ope
             variants={itemVariants}
           >
             Understand the True Cost of{' '}
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 to-orange-300">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-amber-300 to-amber-100">
               Payday Loans.
             </span>
           </motion.h1>
@@ -270,28 +280,40 @@ const PaydayLoanCalculatorPage: React.FC<PaydayLoanCalculatorPageProps> = ({ ope
 
         {/* Payday Loan Calculator Section */}
         <motion.div
-          className="bg-white rounded-3xl shadow-2xl p-6 md:p-10 w-full border border-amber-100 mb-12"
+          className="bg-white rounded-2xl shadow-sm p-6 sm:p-8 w-full border border-slate-200 mb-10"
           variants={sectionVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
         >
-          <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-orange-600 to-red-600 drop-shadow-md">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-8 text-center flex items-center justify-center">
             <Calculator className="inline-block w-9 h-9 mr-3 text-orange-500" /> Payday Loan Cost Calculator
           </h2>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
             {/* Input Controls Section */}
-            <div className="space-y-8 p-4 bg-gray-50 rounded-2xl border border-gray-100 shadow-inner">
+            <div className="space-y-6 p-6 bg-slate-50/70 rounded-xl border border-slate-200">
               <h3 className="text-2xl font-bold text-gray-800 mb-4 flex items-center">
                 <Zap className="w-6 h-6 mr-2 text-red-600" /> Loan Parameters
               </h3>
 
               {/* Loan Amount */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="loanAmount" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Loan Amount: <span className="text-blue-600">{formatCurrency(loanAmount)}</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="loanAmount" className="text-sm font-semibold text-slate-700">
+                    Loan Amount
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="text"
+                  value={formatNumberWithCommas(loanAmount)}
+                  onChange={handleLoanAmountChange}
+                  onBlur={(e) => setLoanAmount(Number(e.target.value.replace(/,/g, '')))}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  inputMode="numeric"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="loanAmount"
@@ -300,23 +322,28 @@ const PaydayLoanCalculatorPage: React.FC<PaydayLoanCalculatorPageProps> = ({ ope
                   step="500"
                   value={loanAmount}
                   onChange={handleLoanAmountChange}
-                  className="w-full h-2 bg-gradient-to-r from-blue-300 to-blue-500 rounded-lg appearance-none cursor-pointer accent-blue-600"
-                />
-                <input
-                  type="text"
-                  value={formatNumberWithCommas(loanAmount)}
-                  onChange={handleLoanAmountChange}
-                  onBlur={(e) => setLoanAmount(Number(e.target.value.replace(/,/g, '')))}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-blue-500 focus:border-blue-500 transition-all"
-                  inputMode="numeric"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
 
               {/* Loan Term in Days */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="loanTermDays" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Loan Term: <span className="text-purple-600">{loanTermDays} Days</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="loanTermDays" className="text-sm font-semibold text-slate-700">
+                    Loan Term
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="number"
+                  value={loanTermDays}
+                  onChange={handleLoanTermDaysChange}
+                  onBlur={(e) => setLoanTermDays(Number(e.target.value))}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  min="7"
+                  max="60"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="loanTermDays"
@@ -325,16 +352,7 @@ const PaydayLoanCalculatorPage: React.FC<PaydayLoanCalculatorPageProps> = ({ ope
                   step="1"
                   value={loanTermDays}
                   onChange={handleLoanTermDaysChange}
-                  className="w-full h-2 bg-gradient-to-r from-purple-300 to-purple-500 rounded-lg appearance-none cursor-pointer accent-purple-600"
-                />
-                <input
-                  type="number"
-                  value={loanTermDays}
-                  onChange={handleLoanTermDaysChange}
-                  onBlur={(e) => setLoanTermDays(Number(e.target.value))}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-purple-500 focus:border-purple-500 transition-all"
-                  min="7"
-                  max="60"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
 
@@ -379,33 +397,33 @@ const PaydayLoanCalculatorPage: React.FC<PaydayLoanCalculatorPageProps> = ({ ope
             </div>
 
             {/* Results Display Section */}
-            <div className="p-6 bg-gradient-to-br from-red-500 to-orange-600 text-white rounded-2xl shadow-xl flex flex-col justify-center items-center text-center">
+            <div className="p-6 sm:p-8 bg-[#0F172A] text-white rounded-2xl shadow-xl border border-slate-800 flex flex-col justify-between text-left">
               <h3 className="text-2xl md:text-3xl font-bold mb-4">Your Payday Loan Cost</h3>
               <motion.div
                 key={calculations.totalRepayment} // Key for re-animation on value change
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, type: 'spring', damping: 20, stiffness: 300 }}
-                className="text-5xl md:text-6xl font-extrabold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 to-lime-300 drop-shadow-lg"
+                className="text-4xl sm:text-5xl font-extrabold text-amber-400 mb-4 font-mono tabular-nums tracking-tight text-center"
               >
                 {formatCurrency(calculations.totalRepayment)}
               </motion.div>
               <p className="text-xl text-red-100 mb-8">Total Repayment Amount</p>
 
               <div className="w-full space-y-4 text-lg">
-                <motion.div variants={itemVariants} className="flex justify-between items-center bg-red-700/30 p-3 rounded-lg">
+                <motion.div variants={itemVariants} className="flex justify-between items-center bg-slate-800/80 border border-slate-700/60 p-3 rounded-xl text-sm sm:text-base font-mono tabular-nums">
                   <span className="font-medium flex items-center gap-2"><IndianRupee className="w-5 h-5" /> Loan Principal</span>
                   <span className="font-bold text-white">{formatCurrency(loanAmount)}</span>
                 </motion.div>
-                <motion.div variants={itemVariants} className="flex justify-between items-center bg-red-700/30 p-3 rounded-lg">
+                <motion.div variants={itemVariants} className="flex justify-between items-center bg-slate-800/80 border border-slate-700/60 p-3 rounded-xl text-sm sm:text-base font-mono tabular-nums">
                   <span className="font-medium flex items-center gap-2"><DollarSign className="w-5 h-5" /> Total Fees</span>
                   <span className="font-bold text-white">{formatCurrency(calculations.totalFee)}</span>
                 </motion.div>
-                <motion.div variants={itemVariants} className="flex justify-between items-center bg-red-700/30 p-3 rounded-lg">
+                <motion.div variants={itemVariants} className="flex justify-between items-center bg-slate-800/80 border border-slate-700/60 p-3 rounded-xl text-sm sm:text-base font-mono tabular-nums">
                   <span className="font-medium flex items-center gap-2"><Percent className="w-5 h-5" /> Effective Annual Rate (APR)</span>
                   <span className="font-bold text-white">{calculations.effectiveAPR}%</span>
                 </motion.div>
-                <motion.div variants={itemVariants} className="flex justify-between items-center bg-red-700/30 p-3 rounded-lg">
+                <motion.div variants={itemVariants} className="flex justify-between items-center bg-slate-800/80 border border-slate-700/60 p-3 rounded-xl text-sm sm:text-base font-mono tabular-nums">
                   <span className="font-medium flex items-center gap-2"><Hourglass className="w-5 h-5" /> Loan Term</span>
                   <span className="font-bold text-white">{loanTermDays} Days</span>
                 </motion.div>
@@ -458,7 +476,7 @@ const PaydayLoanCalculatorPage: React.FC<PaydayLoanCalculatorPageProps> = ({ ope
         </motion.div>
 
         {/* Informational Sections */}
-        <div className="bg-white border border-gray-100 rounded-2xl p-8 shadow-lg mt-6 space-y-10">
+        <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm mt-8 space-y-10">
           <motion.section variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }}>
             <h2 className="text-3xl font-bold text-gray-900 mb-4 flex items-center">
               <Lightbulb className="w-8 h-8 mr-3 text-yellow-500" /> What is a Payday Loan Calculator?
@@ -549,7 +567,7 @@ const PaydayLoanCalculatorPage: React.FC<PaydayLoanCalculatorPageProps> = ({ ope
               {banksCartApproach.map((reason, index) => (
                 <motion.div
                   key={index}
-                  className="flex flex-col items-center text-center p-6 rounded-xl shadow-lg bg-gradient-to-br from-gray-50 to-amber-50 border border-amber-100"
+                  className="flex flex-col items-center text-center p-6 rounded-xl shadow-sm bg-slate-50 border border-slate-200"
                   variants={cardVariants}
                 >
                   {reason.icon}
@@ -562,7 +580,7 @@ const PaydayLoanCalculatorPage: React.FC<PaydayLoanCalculatorPageProps> = ({ ope
 
           {/* Final Call to Action */}
           <motion.section
-            className="text-center mt-12 p-8 bg-gradient-to-r from-gray-700 to-gray-900 rounded-2xl shadow-xl"
+            className="text-center mt-12 p-8 sm:p-10 bg-gradient-to-r from-[#0F172A] via-[#1E3A8A] to-[#0F172A] text-white rounded-2xl shadow-xl border border-slate-700/50"
             variants={sectionVariants}
             initial="hidden"
             whileInView="visible"

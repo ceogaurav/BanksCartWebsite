@@ -16,13 +16,14 @@ import TrustIndicators from "../components/loans/TrustIndicators";
 import PreApprovedOffersTable from "../components/loans/PreApprovedOffersTable";
 import InfoSections from "../components/loans/InfoSections";
 import FaqSection from "../components/loans/FaqSection";
+import { Calculator, BarChart3, FileText, TrendingUp, ArrowRight, ShieldCheck, Info } from "lucide-react";
 
 function PersonalLoanPage({ openApplyModal, openEligibilityModal }) {
   const pageTitle = "Personal Loan Interest Rates: Compare 30+ Banks & Apply Online | BanksCart";
   const pageDescription = "Compare personal loan interest rates starting from 10.25% p.a. Calculate EMIs, check eligibility across top banks, and apply online with zero physical paperwork.";
   const canonicalUrl = "https://www.bankscart.com/loans/personal-loan";
 
-  // Structured Data Schemas
+  // Structured Data Schemas (Preserved & Enhanced)
   const breadcrumbSchema = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -59,7 +60,7 @@ function PersonalLoanPage({ openApplyModal, openEligibilityModal }) {
       "name": "BanksCart",
       "url": "https://www.bankscart.com"
     },
-    "annualPercentageRate": "10.15% - 24.00%",
+    "annualPercentageRate": "10.25% - 24.00%",
     "feesAndCommissionsSpecification": "Processing fee ranging from 0.50% to 2.50% + 18% GST. No foreclosure fee on floating-rate personal loans for individuals per RBI guidelines.",
     "currency": "INR",
     "loanTerm": {
@@ -132,7 +133,7 @@ function PersonalLoanPage({ openApplyModal, openEligibilityModal }) {
   };
 
   return (
-    <main className="min-h-screen bg-slate-50 selection:bg-teal-100 selection:text-teal-900">
+    <main className="min-h-screen bg-slate-50 font-ibm text-slate-900 selection:bg-amber-100 selection:text-amber-900">
       <Helmet>
         <html lang="en-IN" />
         <title>{pageTitle}</title>
@@ -164,7 +165,7 @@ function PersonalLoanPage({ openApplyModal, openEligibilityModal }) {
         </script>
       </Helmet>
 
-      {/* Accessible Clickable Breadcrumb */}
+      {/* Accessible Breadcrumb */}
       <Breadcrumb path={["Home", "Loans", "Personal Loan"]} />
 
       {/* Hero Section */}
@@ -173,32 +174,28 @@ function PersonalLoanPage({ openApplyModal, openEligibilityModal }) {
         openEligibilityModal={openEligibilityModal}
       />
 
-      {/* Cross-Link Callout Banner */}
+      {/* Institutional Callout Banner */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
-        <div className="bg-gradient-to-r from-blue-50 via-teal-50 to-indigo-50 border border-teal-200/60 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm">
+        <div className="bg-white border border-slate-200 rounded-xl p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-teal-600 text-white flex items-center justify-center shrink-0 shadow-sm">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
+            <div className="w-10 h-10 rounded-lg bg-slate-100 border border-slate-200 text-slate-900 flex items-center justify-center shrink-0">
+              <Info className="w-5 h-5 text-slate-800" />
             </div>
             <div>
-              <div className="font-bold text-gray-900 text-sm sm:text-base">
-                Looking for Detailed Lender Guides & Mathematical Breakdown?
+              <div className="font-bold text-slate-900 text-sm sm:text-base">
+                Looking for Detailed Bank-by-Bank Guidelines &amp; Reducing Balance Formulas?
               </div>
-              <div className="text-xs text-gray-600">
-                Explore comprehensive bank-by-bank comparison tables, reducing-balance vs flat rate formulas, and RBI guidelines.
+              <div className="text-xs text-slate-600">
+                Explore bank-by-bank comparative breakdowns, reducing-balance vs flat rate math, and RBI digital lending norms.
               </div>
             </div>
           </div>
           <Link
             to="/loans/personal/overview"
-            className="shrink-0 bg-white hover:bg-teal-50 text-teal-800 border border-teal-300 font-bold px-4 py-2 rounded-xl text-xs sm:text-sm transition-all shadow-sm flex items-center gap-1.5"
+            className="shrink-0 bg-slate-900 hover:bg-slate-800 text-white font-semibold px-4 py-2 rounded-lg text-xs sm:text-sm transition-colors shadow-sm flex items-center gap-1.5"
           >
-            <span>Explore Personal Loan Overview</span>
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-            </svg>
+            <span>Explore Bank Overview</span>
+            <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
       </div>
@@ -220,111 +217,154 @@ function PersonalLoanPage({ openApplyModal, openEligibilityModal }) {
         <TrustIndicators />
         <PreApprovedOffersTable openApplyModal={openApplyModal} />
 
-        {/* SILO 1: Popular Personal Loan Tools & Comparison Guides */}
-        <section className="my-10 bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6">
+        {/* SILO: Popular Personal Loan Planning Tools & Guides */}
+        <section className="my-14 bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm font-ibm">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6 pb-4 border-b border-slate-100">
             <div>
-              <span className="text-xs font-bold text-blue-600 uppercase tracking-wider block">Financial Planning & Analysis</span>
-              <h2 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">Essential Personal Loan Tools & Expert Comparisons</h2>
+              <span className="text-xs font-bold text-amber-700 uppercase tracking-wider block">Financial Planning &amp; Analysis</span>
+              <h2 className="text-xl sm:text-2xl font-bold text-slate-950 tracking-tight">Essential Personal Loan Calculators &amp; Bureau Tools</h2>
             </div>
-            <Link to="/loans" className="text-xs font-bold text-blue-600 hover:text-blue-800 inline-flex items-center gap-1">
-              All Loan Types &rarr;
+            <Link to="/loans" className="text-xs font-semibold text-slate-700 hover:text-slate-950 inline-flex items-center gap-1">
+              All Loan Types <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <Link
               to="/personal-loan-emi-calculator"
-              className="p-6 rounded-2xl bg-gradient-to-br from-blue-50 to-indigo-50/50 border border-blue-100 hover:border-blue-300 hover:shadow-md transition-all group block"
+              className="p-5 rounded-xl bg-slate-50 border border-slate-200 hover:border-slate-400 hover:shadow-md transition-all group block"
             >
               <div className="flex items-center justify-between mb-3">
-                <span className="text-xs font-extrabold text-blue-700 uppercase tracking-wider bg-blue-100/80 px-2.5 py-1 rounded-md">Interactive Calculator</span>
-                <span className="text-blue-600 text-xs font-bold group-hover:translate-x-1 transition-transform inline-flex items-center">&rarr;</span>
+                <span className="text-[11px] font-bold text-slate-800 uppercase tracking-wider bg-white border border-slate-200 px-2 py-0.5 rounded">
+                  Interactive Tool
+                </span>
+                <span className="text-slate-400 group-hover:text-slate-900 group-hover:translate-x-1 transition-all inline-flex items-center">
+                  <ArrowRight className="w-4 h-4" />
+                </span>
               </div>
-              <h3 className="font-bold text-slate-900 text-lg group-hover:text-blue-600 transition-colors mb-2">
+              <h3 className="font-bold text-slate-950 text-base group-hover:text-amber-700 transition-colors mb-1.5">
                 Personal Loan EMI Calculator
               </h3>
               <p className="text-xs text-slate-600 leading-relaxed mb-4">
-                Calculate your monthly repayment installments, total interest outgo, and complete month-by-month amortization schedule before applying with banks.
+                Calculate your monthly installments, total interest outgo, and complete month-by-month amortization schedule.
               </p>
-              <span className="text-xs font-bold text-blue-600 inline-flex items-center gap-1">
-                Open Personal Loan EMI Calculator &rarr;
+              <span className="text-xs font-semibold text-amber-700 inline-flex items-center gap-1">
+                Open EMI Calculator &rarr;
               </span>
             </Link>
 
             <Link
               to="/credit-score"
-              className="p-6 rounded-2xl bg-gradient-to-br from-amber-50 to-orange-50/50 border border-amber-100 hover:border-amber-300 hover:shadow-md transition-all group block"
+              className="p-5 rounded-xl bg-slate-50 border border-slate-200 hover:border-slate-400 hover:shadow-md transition-all group block"
             >
               <div className="flex items-center justify-between mb-3">
-                <span className="text-xs font-extrabold text-amber-800 uppercase tracking-wider bg-amber-100/80 px-2.5 py-1 rounded-md">Credit Assessment</span>
-                <span className="text-amber-600 text-xs font-bold group-hover:translate-x-1 transition-transform inline-flex items-center">&rarr;</span>
+                <span className="text-[11px] font-bold text-slate-800 uppercase tracking-wider bg-white border border-slate-200 px-2 py-0.5 rounded">
+                  Credit Check
+                </span>
+                <span className="text-slate-400 group-hover:text-slate-900 group-hover:translate-x-1 transition-all inline-flex items-center">
+                  <ArrowRight className="w-4 h-4" />
+                </span>
               </div>
-              <h3 className="font-bold text-slate-900 text-lg group-hover:text-amber-700 transition-colors mb-2">
+              <h3 className="font-bold text-slate-950 text-base group-hover:text-amber-700 transition-colors mb-1.5">
                 Free CIBIL Score Check
               </h3>
               <p className="text-xs text-slate-600 leading-relaxed mb-4">
-                Check your real-time CIBIL score online with zero impact on your credit history. Get pre-approved personal loan offers matching your score bracket.
+                Check your real-time CIBIL score online with zero impact on your credit history. Get pre-approved personal loan offers.
               </p>
-              <span className="text-xs font-bold text-amber-700 inline-flex items-center gap-1">
+              <span className="text-xs font-semibold text-amber-700 inline-flex items-center gap-1">
                 Check Free Credit Score &rarr;
               </span>
             </Link>
 
             <Link
               to="/cibil-credit-report"
-              className="p-6 rounded-2xl bg-gradient-to-br from-purple-50 to-violet-50/50 border border-purple-100 hover:border-purple-300 hover:shadow-md transition-all group block"
+              className="p-5 rounded-xl bg-slate-50 border border-slate-200 hover:border-slate-400 hover:shadow-md transition-all group block"
             >
               <div className="flex items-center justify-between mb-3">
-                <span className="text-xs font-extrabold text-purple-700 uppercase tracking-wider bg-purple-100/80 px-2.5 py-1 rounded-md">Bureau Analysis</span>
-                <span className="text-purple-600 text-xs font-bold group-hover:translate-x-1 transition-transform inline-flex items-center">&rarr;</span>
+                <span className="text-[11px] font-bold text-slate-800 uppercase tracking-wider bg-white border border-slate-200 px-2 py-0.5 rounded">
+                  Bureau Analysis
+                </span>
+                <span className="text-slate-400 group-hover:text-slate-900 group-hover:translate-x-1 transition-all inline-flex items-center">
+                  <ArrowRight className="w-4 h-4" />
+                </span>
               </div>
-              <h3 className="font-bold text-slate-900 text-lg group-hover:text-purple-700 transition-colors mb-2">
+              <h3 className="font-bold text-slate-950 text-base group-hover:text-amber-700 transition-colors mb-1.5">
                 Official CIBIL Credit Report
               </h3>
               <p className="text-xs text-slate-600 leading-relaxed mb-4">
-                Review your complete credit history, active loan trade lines, credit card payment track records, and detect unauthorized hard inquiries.
+                Review your complete credit history, active loan trade lines, payment track records, and detect unauthorized inquiries.
               </p>
-              <span className="text-xs font-bold text-purple-700 inline-flex items-center gap-1">
+              <span className="text-xs font-semibold text-amber-700 inline-flex items-center gap-1">
                 View Full Credit Report &rarr;
               </span>
             </Link>
 
             <Link
               to="/blog/how-to-improve-cibil-score-fast"
-              className="p-6 rounded-2xl bg-gradient-to-br from-emerald-50 to-teal-50/50 border border-emerald-100 hover:border-emerald-300 hover:shadow-md transition-all group block"
+              className="p-5 rounded-xl bg-slate-50 border border-slate-200 hover:border-slate-400 hover:shadow-md transition-all group block"
             >
               <div className="flex items-center justify-between mb-3">
-                <span className="text-xs font-extrabold text-emerald-700 uppercase tracking-wider bg-emerald-100/80 px-2.5 py-1 rounded-md">Score Recovery Guide</span>
-                <span className="text-emerald-600 text-xs font-bold group-hover:translate-x-1 transition-transform inline-flex items-center">&rarr;</span>
+                <span className="text-[11px] font-bold text-slate-800 uppercase tracking-wider bg-white border border-slate-200 px-2 py-0.5 rounded">
+                  Score Advisory
+                </span>
+                <span className="text-slate-400 group-hover:text-slate-900 group-hover:translate-x-1 transition-all inline-flex items-center">
+                  <ArrowRight className="w-4 h-4" />
+                </span>
               </div>
-              <h3 className="font-bold text-slate-900 text-lg group-hover:text-emerald-700 transition-colors mb-2">
+              <h3 className="font-bold text-slate-950 text-base group-hover:text-amber-700 transition-colors mb-1.5">
                 How to Improve CIBIL Score Fast
               </h3>
               <p className="text-xs text-slate-600 leading-relaxed mb-4">
-                Proven step-by-step strategies to rebuild your credit rating from 600 to 750+. Lower credit utilization, rectify dispute errors, and optimize repayment cycles.
+                Proven strategies to rebuild your credit rating from 600 to 750+. Lower credit utilization and optimize repayment cycles.
               </p>
-              <span className="text-xs font-bold text-emerald-700 inline-flex items-center gap-1">
+              <span className="text-xs font-semibold text-amber-700 inline-flex items-center gap-1">
                 Read Score Improvement Guide &rarr;
               </span>
             </Link>
 
             <Link
               to="/blog/sbi-vs-hdfc-personal-loan"
-              className="p-6 rounded-2xl bg-gradient-to-br from-teal-50 to-emerald-50/50 border border-teal-100 hover:border-teal-300 hover:shadow-md transition-all group block"
+              className="p-5 rounded-xl bg-slate-50 border border-slate-200 hover:border-slate-400 hover:shadow-md transition-all group block"
             >
               <div className="flex items-center justify-between mb-3">
-                <span className="text-xs font-extrabold text-teal-700 uppercase tracking-wider bg-teal-100/80 px-2.5 py-1 rounded-md">Expert Comparison</span>
-                <span className="text-teal-600 text-xs font-bold group-hover:translate-x-1 transition-transform inline-flex items-center">&rarr;</span>
+                <span className="text-[11px] font-bold text-slate-800 uppercase tracking-wider bg-white border border-slate-200 px-2 py-0.5 rounded">
+                  Lender Comparison
+                </span>
+                <span className="text-slate-400 group-hover:text-slate-900 group-hover:translate-x-1 transition-all inline-flex items-center">
+                  <ArrowRight className="w-4 h-4" />
+                </span>
               </div>
-              <h3 className="font-bold text-slate-900 text-lg group-hover:text-teal-700 transition-colors mb-2">
+              <h3 className="font-bold text-slate-950 text-base group-hover:text-amber-700 transition-colors mb-1.5">
                 SBI vs HDFC Personal Loan: Full 2026 Comparison
               </h3>
               <p className="text-xs text-slate-600 leading-relaxed mb-4">
-                Evaluate interest rate spreads (starting at 10.50%), foreclosure charges, processing fees, and 10-second instant disbursal eligibility between SBI and HDFC.
+                Evaluate interest rate spreads (starting at 10.50%), foreclosure charges, processing fees, and instant disbursal terms.
               </p>
-              <span className="text-xs font-bold text-teal-700 inline-flex items-center gap-1">
+              <span className="text-xs font-semibold text-amber-700 inline-flex items-center gap-1">
                 Read SBI vs HDFC Guide &rarr;
+              </span>
+            </Link>
+
+            <Link
+              to="/loans/home-loan"
+              className="p-5 rounded-xl bg-slate-50 border border-slate-200 hover:border-slate-400 hover:shadow-md transition-all group block"
+            >
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-[11px] font-bold text-slate-800 uppercase tracking-wider bg-white border border-slate-200 px-2 py-0.5 rounded">
+                  Housing Finance
+                </span>
+                <span className="text-slate-400 group-hover:text-slate-900 group-hover:translate-x-1 transition-all inline-flex items-center">
+                  <ArrowRight className="w-4 h-4" />
+                </span>
+              </div>
+              <h3 className="font-bold text-slate-950 text-base group-hover:text-amber-700 transition-colors mb-1.5">
+                Compare Home Loans (From 8.00% p.a.)
+              </h3>
+              <p className="text-xs text-slate-600 leading-relaxed mb-4">
+                Looking for residential property loans or balance transfers? Compare SBI, HDFC, ICICI, and Axis home loans up to 30 years.
+              </p>
+              <span className="text-xs font-semibold text-amber-700 inline-flex items-center gap-1">
+                Compare Home Loans &rarr;
               </span>
             </Link>
           </div>

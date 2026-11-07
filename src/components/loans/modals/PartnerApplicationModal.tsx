@@ -64,16 +64,21 @@ const PartnerApplicationModal: React.FC<PartnerApplicationModalProps> = ({ isOpe
 
   // Authenticate user on component mount
   useEffect(() => {
+    const isDummyKey = !firebaseConfig.apiKey || firebaseConfig.apiKey.startsWith('AIzaSyDummy');
     const authenticate = async () => {
       try {
         if (typeof __initial_auth_token !== 'undefined') {
           await signInWithCustomToken(auth, __initial_auth_token);
-        } else {
+        } else if (!isDummyKey) {
           await signInAnonymously(auth);
+        } else {
+          setUserId((prev) => prev || crypto.randomUUID());
+          setIsAuthReady(true);
         }
       } catch (error) {
-        console.error("Firebase authentication error:", error);
-        setSubmissionError("Failed to authenticate for submission.");
+        console.warn("Firebase authentication note:", error);
+        setUserId((prev) => prev || crypto.randomUUID());
+        setIsAuthReady(true);
       }
     };
 
@@ -81,14 +86,14 @@ const PartnerApplicationModal: React.FC<PartnerApplicationModalProps> = ({ isOpe
       if (user) {
         setUserId(user.uid);
       } else {
-        setUserId(crypto.randomUUID());
+        setUserId((prev) => prev || crypto.randomUUID());
       }
       setIsAuthReady(true);
     });
 
     authenticate();
     return () => unsubscribe();
-  }, [auth]);
+  }, []);
 
   // Reset form and timer when modal opens
   useEffect(() => {

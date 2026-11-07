@@ -1,5 +1,21 @@
 import React, { useState } from 'react';
-import { HelpCircle, ChevronDown, CheckSquare, XCircle, ArrowUpRight, Award, Compass, HeartPulse } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
+import { Link } from 'react-router-dom';
+import { 
+  TrendingUp, 
+  ChevronDown, 
+  ShieldCheck, 
+  CheckCircle2, 
+  Lock, 
+  ArrowRight, 
+  HelpCircle, 
+  AlertCircle,
+  FileText,
+  CreditCard,
+  PieChart,
+  Clock
+} from 'lucide-react';
+import Breadcrumb from '../../components/Breadcrumb';
 import CibilCheckerForm from '../../components/common/CibilCheckerForm';
 
 const WaysToImproveCibilPage: React.FC = () => {
@@ -7,233 +23,329 @@ const WaysToImproveCibilPage: React.FC = () => {
 
   const faqs = [
     {
-      q: "How long does it take to rebuild or improve my CIBIL score?",
-      a: "Rebuilding a credit score is a gradual process. Generally, it takes between 3 to 6 months of disciplined credit behaviors (paying all bills on time, maintaining low card usage, avoiding hard inquiries) to see a significant, positive shift in your CIBIL rating."
+      q: "How fast can I realistically increase my CIBIL score?",
+      a: "Credit scores do not jump overnight. Banks report repayment logs to bureaus once every 30 to 45 days. If you immediately pay off high credit card balances to bring utilization under 30%, you can see an upward jump of 30 to 60 points within 1 to 2 reporting cycles. Repairing past defaults or settled accounts takes 6 to 12 months of disciplined on-time payments."
     },
     {
-      q: "Can a completely zeroed out score be jumped to 750 directly?",
-      a: "If you have a 'No History' (-1) profile, you have a blank slate. You can build a 750+ score relatively fast (within 4-5 months) by opening a secured Credit Card against a Fixed Deposit, using it for minor monthly purchases, and clearing the dues before the due date."
+      q: "Does closing old unused credit cards improve my CIBIL score?",
+      a: "No, closing old credit cards often damages your score. Closing an old card reduces your overall credit limit (which instantly inflates your Credit Utilization Ratio) and shortens the average age of your credit history. Keep old cards open, make occasional small purchases, and pay them off completely."
     },
     {
-      q: "Should I close my older credit cards to improve my score?",
-      a: "Absolutely not. Closing older credit cards shortens your active credit history length and reduces your cumulative credit limit. Keeping older accounts active, even with zero balances, increases your credit age average and signals stability to lenders, boosting your score."
+      q: "What is the optimal Credit Utilization Ratio (CUR) to aim for?",
+      a: "Credit bureaus recommend maintaining your credit card utilization strictly below 30% of your total credit limit. For example, if your total credit limit across all cards is ₹1,00,000, keep your total billing balance below ₹30,000. Prime borrowers who score 800+ routinely maintain utilization under 10% to 15%."
     },
     {
-      q: "Does paying off settled accounts raise CIBIL scores?",
-      a: "Yes. An account marked as 'Settled' or 'Written Off' is a major red flag on your report. Approaching the respective lender, paying the remaining write-off dues, and obtaining a 'No Dues Certificate' allows the bank to update the status to 'Closed/Paid', gradually rising your credit score."
+      q: "Can paying off all my debts at once instantly erase a default mark?",
+      a: "Paying off overdue balances changes the status from 'Default' to 'Closed' or 'Paid'. While the historical delay marks remain on your report for up to 36 months, an updated clean track record demonstrates to lenders that you have taken corrective responsibility, allowing your score to steadily recover."
     },
     {
-      q: "How does a credit score increase help in saving money?",
-      a: "A higher CIBIL score acts as a bargain chip. It qualifies you for lowest home or personal loan rates, reducing monthly EMI interest components by up to 0.50% - 1.50%, saving you thousands or lakhs over loan tenures."
+      q: "How does a Fixed Deposit (FD) backed credit card help rebuild credit?",
+      a: "Secured credit cards (issued against an FD of ₹10,000 to ₹50,000) require no income proof or CIBIL check. The issuing bank reports your monthly repayments to TransUnion CIBIL just like a regular card. Making timely payments on a secured card is the fastest guaranteed method for individuals with poor scores (or no credit history) to rebuild a 750+ score."
     },
     {
-      q: "Can an overdraft facility help improve my CIBIL score?",
-      a: "Yes. An overdraft facility against an FD or property functions as a credit account. Paying the overdraft dues on time serves as a positive repayment log, signaling low default risk and boosting score histories."
-    },
-    {
-      q: "Does a high salary automatically guarantee a high CIBIL score?",
-      a: "No. CIBIL score calculations are entirely separate from your salary levels. You can have a high salary (e.g., ₹2 Lakhs a month) but a poor CIBIL score (e.g., 580) due to payment defaults or maxed-out card limits. Lenders check both salary (for repayment capacity) and CIBIL (for repayment intention)."
-    },
-    {
-      q: "Will co-signing a loan for a defaulter drop my CIBIL score?",
-      a: "Yes. As a co-signer or guarantor, you are equally liable for the loan repayment. If the primary borrower defaults or delays payment, it will reflect as a default on your CIBIL report as well, dropping your score significantly."
-    },
-    {
-      q: "Does check count frequency on BanksCart reduce my credit rating?",
-      a: "No. Checking your score on BanksCart is classified as a 'Soft Inquiry'. These check requests are for personal monitoring and have absolute zero impact on your CIBIL rating, regardless of how many times you check."
-    },
-    {
-      q: "What should I do if a bank delays updating my cleared loan status?",
-      a: "Lenders are legally required to report changes to bureaus within 30-45 days. If a bank delays, you should write to the bank's nodal officer with the NDC/NOC certificate and file a formal online dispute on the CIBIL portal."
+      q: "Will taking a small personal loan help improve my credit mix?",
+      a: "Yes. Having only credit cards (unsecured revolving debt) can limit your score. Adding an installment loan (like a small personal or consumer durable loan) and paying all EMIs on time diversifies your portfolio, positively contributing 10% to your bureau score calculation."
     }
   ];
 
+  const pageTitle = "10 Proven Ways to Improve CIBIL Score Fast in 2026 | BanksCart";
+  const pageDescription = "Learn 10 actionable, expert strategies to improve your CIBIL score from 600 to 750+. Understand credit utilization, dispute rectifications, and timeline milestones.";
+  const canonicalUrl = "https://bankscart.com/credit-report/ways-to-improve-your-cibil-score";
+
+  const schemaJsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": canonicalUrl,
+        "url": canonicalUrl,
+        "name": pageTitle,
+        "description": pageDescription,
+        "isPartOf": {
+          "@type": "WebSite",
+          "@id": "https://bankscart.com/#website",
+          "name": "BanksCart",
+          "url": "https://bankscart.com"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://bankscart.com/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Credit Score",
+            "item": "https://bankscart.com/credit-score"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Ways to Improve CIBIL Score",
+            "item": canonicalUrl
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": faqs.map(faq => ({
+          "@type": "Question",
+          "name": faq.q,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": faq.a
+          }
+        }))
+      }
+    ]
+  };
+
   return (
-    <div className="min-h-screen bg-slate-50 pt-24 pb-16 font-sans">
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-[#F8FAFC] font-sans pt-20 sm:pt-24 pb-16 antialiased">
+      <Helmet>
+        <title>{pageTitle}</title>
+        <meta name="description" content={pageDescription} />
+        <link rel="canonical" href={canonicalUrl} />
+        <script type="application/ld+json">
+          {JSON.stringify(schemaJsonLd)}
+        </script>
+      </Helmet>
+
+      {/* Main Container */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         
-        {/* Banner */}
-        <div className="bg-gradient-to-r from-violet-700 via-purple-700 to-indigo-800 rounded-3xl text-white p-8 sm:p-12 mb-12 shadow-xl relative overflow-hidden">
-          <div className="absolute right-0 bottom-0 opacity-10 transform translate-x-12 translate-y-12">
-            <span className="text-[200px] font-black leading-none select-none">BOOST</span>
-          </div>
-          <div className="max-w-3xl relative z-10">
-            <span className="bg-white/10 backdrop-blur-md text-white border border-white/20 rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-wider">
-              Optimization Playbook
-            </span>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black mt-6 tracking-tight leading-tight">
+        {/* Breadcrumb Navigation */}
+        <Breadcrumb path={["Home", "Credit Score", "Ways to Improve CIBIL Score"]} />
+
+        {/* Hero Section: Institutional Trust Navy / Slate */}
+        <section className="bg-gradient-to-r from-slate-900 via-[#1E3A8A] to-slate-900 rounded-2xl text-white p-6 sm:p-10 shadow-lg border border-slate-800">
+          <div className="max-w-3xl space-y-4">
+            <div className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-400/30 rounded-full px-3.5 py-1 text-xs font-semibold text-blue-200 uppercase tracking-wider">
+              <TrendingUp className="w-3.5 h-3.5 text-blue-400" />
+              Score Improvement Roadmap
+            </div>
+
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight text-white">
               Ways to Improve CIBIL Score
             </h1>
-            <p className="text-violet-100 text-base sm:text-lg mt-4 leading-relaxed max-w-2xl">
-              Equip yourself with a highly structured, 6-step blueprint designed to recover and build your credit profile back to prime slabs.
+
+            <p className="text-slate-200 text-base sm:text-lg leading-relaxed max-w-2xl font-normal">
+              Actionable, data-backed strategies to elevate your credit score to the prime 750+ tier. Learn the exact algorithmic levers that drive credit score recovery in India.
             </p>
+
+            <div className="pt-2 flex flex-wrap gap-4 text-xs font-medium text-slate-300">
+              <span className="flex items-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4 text-emerald-400" /> 30-Day Bureau Refresh Cycles
+              </span>
+              <span className="flex items-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4 text-emerald-400" /> RBI Compliant Strategies
+              </span>
+              <span className="flex items-center gap-1.5">
+                <Lock className="w-4 h-4 text-emerald-400" /> Free Score Health Auditing
+              </span>
+            </div>
           </div>
-        </div>
+        </section>
 
-        {/* Grid layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+        {/* Two-Column Structured Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
           
-          {/* Left Column Content */}
-          <div className="lg:col-span-7 space-y-10 text-slate-700">
+          {/* Left Column (7 cols): Publication-Grade Unified Article Container */}
+          <article className="lg:col-span-7 bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-10 space-y-10 text-slate-700">
             
-            {/* Introductory block */}
-            <div className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm">
-              <h2 className="text-xl sm:text-2xl font-bold text-slate-800 mb-4 flex items-center gap-2.5">
-                <span className="w-1.5 h-6 bg-purple-600 rounded-full"></span>
-                The Foundation of Credit Score Recovery
+            {/* Section 1: The Core Scoring Levers */}
+            <div className="space-y-4">
+              <h2 className="text-2xl font-bold text-slate-900 flex items-center gap-2.5">
+                <span className="w-1.5 h-6 bg-[#1E3A8A] rounded-full"></span>
+                The 5 Algorithmic Levers of Your CIBIL Score
               </h2>
-              <p className="text-sm text-slate-600 leading-relaxed mb-4">
-                Improving an average or poor credit score requires structural financial discipline rather than immediate fixes. Credit bureaus calculate scores based on cumulative repayment algorithms. When you demonstrate stable, consistent, and low-risk credit behaviors, the scoring engine adjusts your rating upward.
-              </p>
-              <p className="text-sm text-slate-600 leading-relaxed mb-4">
-                Whether your score took a hit due to previous payment defaults, excessive credit usage, or unresolved errors, following these core practices will optimize your score and help you achieve the coveted 750+ mark. Note that score reconstruction takes between 3 to 6 months to reflect fully across databases due to standard bank reporting cycles.
-              </p>
               <p className="text-sm text-slate-600 leading-relaxed">
-                By understanding the core algorithms, you can take deliberate steps to clear immediate red flags, lower your credit utilization footprint, and establish an impeccable payment timeline.
+                Your CIBIL score is a dynamic 3-digit numerical summary (ranging from 300 to 900) calculated by TransUnion CIBIL using a proprietary mathematical algorithm. To improve your score efficiently, you must target the specific weights that lenders look at:
               </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+                <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                  <div className="flex justify-between items-center mb-1">
+                    <span className="font-bold text-sm text-slate-900">1. Repayment Track</span>
+                    <span className="text-xs font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded font-mono">35% Weight</span>
+                  </div>
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    Paying 100% of EMIs and card bills before the due date. The single biggest driver of high scores.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                  <div className="flex justify-between items-center mb-1">
+                    <span className="font-bold text-sm text-slate-900">2. Credit Utilization</span>
+                    <span className="text-xs font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded font-mono">30% Weight</span>
+                  </div>
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    Keeping card spending strictly under 30% of your approved limits signals healthy spending restraint.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                  <div className="flex justify-between items-center mb-1">
+                    <span className="font-bold text-sm text-slate-900">3. Credit Vintage</span>
+                    <span className="text-xs font-bold text-slate-700 bg-slate-100 px-2 py-0.5 rounded font-mono">15% Weight</span>
+                  </div>
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    The average age of your oldest active credit card or loan accounts. Older accounts reflect stability.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                  <div className="flex justify-between items-center mb-1">
+                    <span className="font-bold text-sm text-slate-900">4. Credit Mix & Inquiries</span>
+                    <span className="text-xs font-bold text-slate-700 bg-slate-100 px-2 py-0.5 rounded font-mono">20% Weight</span>
+                  </div>
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    A balanced mix of secured (Home/Auto) and unsecured loans, with minimal recent hard loan inquiries.
+                  </p>
+                </div>
+              </div>
             </div>
 
-            {/* Dos and Don'ts comparison */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              
-              {/* DOs Card */}
-              <div className="bg-white border border-emerald-100 rounded-2xl p-6 shadow-sm">
-                <h3 className="text-lg font-bold text-emerald-800 mb-4 flex items-center gap-2">
-                  <CheckSquare className="w-5 h-5 text-emerald-600" />
-                  What to Do (Score Boosters)
-                </h3>
-                <ul className="space-y-4 text-xs sm:text-sm text-slate-600 font-medium">
-                  <li className="flex gap-2">
-                    <span className="text-emerald-500 font-semibold">✔</span>
-                    <div>
-                      <strong className="text-slate-800 block">Maintain &lt;30% Credit Usage</strong>
-                      Keep monthly card spending strictly below 30% of your maximum credit limits.
-                    </div>
-                  </li>
-                  <li className="flex gap-2">
-                    <span className="text-emerald-500 font-semibold">✔</span>
-                    <div>
-                      <strong className="text-slate-800 block">Set Auto-Debits for Bills</strong>
-                      Ensure you never miss EMI due dates by configuring automatic standing instructions.
-                    </div>
-                  </li>
-                  <li className="flex gap-2">
-                    <span className="text-emerald-500 font-semibold">✔</span>
-                    <div>
-                      <strong className="text-slate-800 block">Report Errors Promptly</strong>
-                      Audit reports monthly to clear incorrect delayed flags via bureau disputes.
-                    </div>
-                  </li>
-                </ul>
-              </div>
+            {/* Section 2: Actionable Step-by-Step Improvement Plan */}
+            <div className="space-y-4 pt-6 border-t border-slate-100">
+              <h2 className="text-2xl font-bold text-slate-900 flex items-center gap-2.5">
+                <span className="w-1.5 h-6 bg-[#1E3A8A] rounded-full"></span>
+                Actionable 4-Step Strategy to Reach 750+
+              </h2>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                Implement these proven steps in order of priority to systematically boost your credit score:
+              </p>
 
-              {/* DONTs Card */}
-              <div className="bg-white border border-rose-100 rounded-2xl p-6 shadow-sm">
-                <h3 className="text-lg font-bold text-rose-800 mb-4 flex items-center gap-2">
-                  <XCircle className="w-5 h-5 text-rose-600" />
-                  What to Avoid (Score Killers)
-                </h3>
-                <ul className="space-y-4 text-xs sm:text-sm text-slate-600 font-medium">
-                  <li className="flex gap-2">
-                    <span className="text-rose-500 font-semibold">✖</span>
-                    <div>
-                      <strong className="text-slate-800 block">Avoid Loan Spams</strong>
-                      Never apply for cards/loans with multiple lenders simultaneously (creates hard inquiry spikes).
-                    </div>
-                  </li>
-                  <li className="flex gap-2">
-                    <span className="text-rose-500 font-semibold">✖</span>
-                    <div>
-                      <strong className="text-slate-800 block">Don't Settle Accounts</strong>
-                      Avoid accepting 'settlement' offers from banks. Settle in full to obtain a 'Closed' status.
-                    </div>
-                  </li>
-                  <li className="flex gap-2">
-                    <span className="text-rose-500 font-semibold">✖</span>
-                    <div>
-                      <strong className="text-slate-800 block">Closing Older Accounts</strong>
-                      Closing active older credit cards truncates your credit history length.
-                    </div>
-                  </li>
-                </ul>
-              </div>
+              <div className="space-y-4 mt-4">
+                <div className="flex gap-4 p-4 rounded-xl bg-slate-50 border border-slate-200/80">
+                  <div className="w-8 h-8 rounded-lg bg-[#1E3A8A] text-white flex items-center justify-center font-bold text-xs flex-shrink-0">
+                    1
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-slate-900 text-sm">Pay Down Revolving Balances Immediately</h3>
+                    <p className="text-slate-600 text-xs mt-1 leading-relaxed">
+                      If your credit cards are at 70% to 90% utilization, pay them down below 30%. Because card balances are reported monthly, reducing utilization produces the fastest 30 to 50 point upward rebound.
+                    </p>
+                  </div>
+                </div>
 
+                <div className="flex gap-4 p-4 rounded-xl bg-slate-50 border border-slate-200/80">
+                  <div className="w-8 h-8 rounded-lg bg-[#1E3A8A] text-white flex items-center justify-center font-bold text-xs flex-shrink-0">
+                    2
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-slate-900 text-sm">Automate 100% of Monthly EMI & Card Bills</h3>
+                    <p className="text-slate-600 text-xs mt-1 leading-relaxed">
+                      Set up automated e-NACH mandates for full monthly card statements (not just the Minimum Amount Due). A single missed payment creates a 30+ DPD mark that takes 24 to 36 months to dilute.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex gap-4 p-4 rounded-xl bg-slate-50 border border-slate-200/80">
+                  <div className="w-8 h-8 rounded-lg bg-[#1E3A8A] text-white flex items-center justify-center font-bold text-xs flex-shrink-0">
+                    3
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-slate-900 text-sm">Audit for Bureau Discrepancies & Dispute</h3>
+                    <p className="text-slate-600 text-xs mt-1 leading-relaxed">
+                      Frequently, banks fail to update closed loan records or wrongly attribute another person's late payment to your PAN. Raising an online dispute on CIBIL removes erroneous defaults within 30 days.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex gap-4 p-4 rounded-xl bg-slate-50 border border-slate-200/80">
+                  <div className="w-8 h-8 rounded-lg bg-[#1E3A8A] text-white flex items-center justify-center font-bold text-xs flex-shrink-0">
+                    4
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-slate-900 text-sm">Build Positive History with a Secured Card</h3>
+                    <p className="text-slate-600 text-xs mt-1 leading-relaxed">
+                      If past defaults damaged your score, banks will reject regular cards. Obtain a fixed-deposit (FD) backed credit card. Using 15% of its limit and paying on time rebuilds your score to 750+ within 6 to 9 months.
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
 
-            {/* Rebuilding Milestones Slabs */}
-            <div className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm">
-              <h3 className="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
-                <HeartPulse className="w-5 h-5 text-purple-600" />
-                Score Improvement Timeline & Expectations
-              </h3>
-              <p className="text-sm text-slate-600 leading-relaxed mb-4">
-                Credit score recovery occurs in developmental phases. Here is what you should expect if you maintain pristine behaviors:
+            {/* Section 3: Recovery Timeline Milestones Table */}
+            <div className="space-y-4 pt-6 border-t border-slate-100">
+              <h2 className="text-2xl font-bold text-slate-900 flex items-center gap-2.5">
+                <span className="w-1.5 h-6 bg-[#1E3A8A] rounded-full"></span>
+                Score Recovery Timeline & Expectations
+              </h2>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                Realistic timelines based on credit reporting bureau cycles across India:
               </p>
-              <div className="overflow-x-auto mt-4">
-                <table className="w-full text-left border-collapse text-xs">
+
+              <div className="overflow-x-auto rounded-xl border border-slate-200">
+                <table className="w-full text-left border-collapse text-xs sm:text-sm">
                   <thead>
-                    <tr className="bg-slate-50 border-b border-slate-100">
-                      <th className="p-3 font-semibold text-slate-700">Days Elapsed</th>
-                      <th className="p-3 font-semibold text-slate-700">Expected Actions</th>
-                      <th className="p-3 font-semibold text-slate-700">Expected Score Shift</th>
+                    <tr className="bg-slate-50 border-b border-slate-200 text-slate-900">
+                      <th className="p-3 font-bold">Action Taken</th>
+                      <th className="p-3 font-bold">Expected Score Impact</th>
+                      <th className="p-3 font-bold">Turnaround Time</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr className="border-b border-slate-100">
-                      <td className="p-3 font-bold text-slate-800">Day 1 - 30</td>
-                      <td className="p-3 text-slate-600">Clear immediate defaults; file disputes for report errors.</td>
-                      <td className="p-3 text-emerald-600 font-semibold">+10 to +30 points (Dispute clears)</td>
+                  <tbody className="divide-y divide-slate-100">
+                    <tr className="hover:bg-slate-50/70 transition-colors">
+                      <td className="p-3 font-semibold text-slate-900">Reducing Card Utilization below 30%</td>
+                      <td className="p-3 font-mono tabular-nums text-emerald-700 font-bold">+30 to +55 Points</td>
+                      <td className="p-3 text-slate-600 font-medium">30 - 45 Days</td>
                     </tr>
-                    <tr className="border-b border-slate-100">
-                      <td className="p-3 font-bold text-slate-800">Day 30 - 90</td>
-                      <td className="p-3 text-slate-600">Maintain low card utilization; pay three consecutive bills on time.</td>
-                      <td className="p-3 text-emerald-600 font-semibold">+30 to +60 points (Trend positive)</td>
+                    <tr className="hover:bg-slate-50/70 transition-colors">
+                      <td className="p-3 font-semibold text-slate-900">Resolving an Erroneous Dispute on CIBIL</td>
+                      <td className="p-3 font-mono tabular-nums text-emerald-700 font-bold">+40 to +80 Points</td>
+                      <td className="p-3 text-slate-600 font-medium">Within 30 Days (RBI Limit)</td>
                     </tr>
-                    <tr className="border-b border-slate-100">
-                      <td className="p-3 font-bold text-slate-800">Day 90 - 180</td>
-                      <td className="p-3 text-slate-600">Clean inquiry cooling; card limit upgrades or credit mix balancing.</td>
-                      <td className="p-3 text-emerald-600 font-bold">+60 to +120 points (Cross 750 threshold)</td>
+                    <tr className="hover:bg-slate-50/70 transition-colors">
+                      <td className="p-3 font-semibold text-slate-900">Rebuilding after Settled / Written-off Account</td>
+                      <td className="p-3 font-mono tabular-nums text-blue-700 font-bold">+70 to +120 Points</td>
+                      <td className="p-3 text-slate-600 font-medium">6 - 12 Months</td>
+                    </tr>
+                    <tr className="hover:bg-slate-50/70 transition-colors">
+                      <td className="p-3 font-semibold text-slate-900">Adding a Secured Card for First-Timers</td>
+                      <td className="p-3 font-mono tabular-nums text-blue-700 font-bold">Establishes 750+ Score</td>
+                      <td className="p-3 text-slate-600 font-medium">6 Months of Clean Swipes</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
             </div>
 
-            {/* Quick Action Plan */}
-            <div className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm">
-              <h3 className="text-lg font-bold text-slate-800 mb-6 flex items-center gap-2">
-                <ArrowUpRight className="w-5 h-5 text-purple-600" />
-                The Secure Way to Build Score: Secured Credit Cards
-              </h3>
-              <p className="text-sm text-slate-600 leading-relaxed mb-4">
-                If your score is currently below 600 or you have zero credit history, standard credit cards will likely be rejected. The single most effective path is securing a **Fixed Deposit Credit Card (FD Card)**:
-              </p>
-              <div className="bg-slate-50 border border-slate-100 rounded-xl p-4 text-xs sm:text-sm text-slate-600 space-y-2">
-                <p>1. Open a Fixed Deposit (FD) starting from ₹10,000 with a premier bank.</p>
-                <p>2. Get an instant, pre-approved credit card with a limit of 80% to 90% of your FD amount.</p>
-                <p>3. Use this card to make minor payments (groceries, utilities) and pay the bills in full monthly.</p>
-                <p>4. Banks report these consistent payments to CIBIL, establishing an excellent credit score within months.</p>
+            {/* Section 4: Key Financial Takeaway Callout */}
+            <div className="border-l-4 border-[#1E3A8A] bg-blue-50/60 p-5 rounded-r-xl space-y-2">
+              <div className="flex items-center gap-2 text-slate-900 font-bold text-sm">
+                <AlertCircle className="w-4 h-4 text-[#1E3A8A]" />
+                <span>Avoid Multiple Hard Inquiries</span>
               </div>
+              <p className="text-xs text-slate-700 leading-relaxed">
+                When rejected for a loan, resist applying immediately with other lenders. Every formal loan application triggers a 'Hard Inquiry' that knocks 2 to 5 points off your score. Instead, audit your report on BanksCart (zero impact soft pull) and resolve underlying factors first.
+              </p>
             </div>
 
-            {/* FAQs */}
-            <div className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm">
-              <h3 className="text-lg font-bold text-slate-800 mb-6 flex items-center gap-2">
-                <HelpCircle className="w-5 h-5 text-purple-600" />
+            {/* Section 5: Integrated FAQ Accordion */}
+            <div className="space-y-4 pt-6 border-t border-slate-100">
+              <h2 className="text-2xl font-bold text-slate-900 flex items-center gap-2.5">
+                <span className="w-1.5 h-6 bg-[#1E3A8A] rounded-full"></span>
                 Frequently Asked Questions
-              </h3>
-              <div className="space-y-4">
+              </h2>
+              <div className="space-y-3">
                 {faqs.map((faq, index) => (
-                  <div key={index} className="border border-slate-100 rounded-xl overflow-hidden transition-colors">
+                  <div key={index} className="border border-slate-200 rounded-xl overflow-hidden transition-colors">
                     <button
                       onClick={() => setActiveFaq(activeFaq === index ? null : index)}
-                      className="w-full flex justify-between items-center p-4 bg-slate-50/50 hover:bg-slate-50 text-left font-bold text-slate-700 text-sm outline-none transition-colors"
+                      className="w-full flex justify-between items-center p-4 bg-slate-50 hover:bg-slate-100/80 text-left font-bold text-slate-800 text-sm outline-none transition-colors"
                     >
-                      {faq.q}
-                      <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform ${activeFaq === index ? 'rotate-180 text-purple-700' : ''}`} />
+                      <span>{faq.q}</span>
+                      <ChevronDown className={`w-4 h-4 text-slate-500 transition-transform flex-shrink-0 ml-2 ${activeFaq === index ? 'rotate-180 text-blue-700' : ''}`} />
                     </button>
                     {activeFaq === index && (
-                      <div className="p-4 text-xs sm:text-sm text-slate-600 border-t border-slate-100 bg-white leading-relaxed">
+                      <div className="p-4 text-xs sm:text-sm text-slate-600 border-t border-slate-200 bg-white leading-relaxed">
                         {faq.a}
                       </div>
                     )}
@@ -242,12 +354,79 @@ const WaysToImproveCibilPage: React.FC = () => {
               </div>
             </div>
 
-          </div>
+          </article>
 
-          {/* Right Column Form */}
-          <div className="lg:col-span-5 lg:sticky lg:top-24">
-            <CibilCheckerForm sourcePage="Ways to Improve CIBIL Landing Page" />
-          </div>
+          {/* Right Column (5 cols): Sticky Form & Credibility Rail */}
+          <aside className="lg:col-span-5 space-y-6 lg:sticky lg:top-24">
+            
+            {/* Embedded Verified CibilCheckerForm */}
+            <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-7 space-y-4">
+              <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+                <div>
+                  <h3 className="font-bold text-slate-900 text-lg">Check Your CIBIL Score</h3>
+                  <p className="text-xs text-slate-500">Track Score Progress • Zero Bureau Impact</p>
+                </div>
+                <span className="inline-flex items-center gap-1 bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded text-[11px] font-bold">
+                  <Lock className="w-3 h-3" /> SSL Secured
+                </span>
+              </div>
+
+              <CibilCheckerForm sourcePage="Ways to Improve CIBIL Landing Page" />
+            </div>
+
+            {/* Bank-Grade Data Protection Trust Box */}
+            <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm space-y-3 text-xs text-slate-600">
+              <div className="flex items-center gap-2 text-slate-900 font-bold text-sm">
+                <ShieldCheck className="w-4 h-4 text-emerald-600" />
+                <span>Bank-Grade Data Protection</span>
+              </div>
+              <p className="leading-relaxed">
+                Checking your score on BanksCart is classified as a soft inquiry. It never impacts your existing CIBIL rating or alerts lending institutions.
+              </p>
+              <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] font-semibold text-slate-500">
+                <span className="flex items-center gap-1 text-emerald-700">
+                  <CheckCircle2 className="w-3.5 h-3.5" /> 100% Free Soft Pull
+                </span>
+                <span>Zero Bureau Score Impact</span>
+              </div>
+            </div>
+
+            {/* Related Credit Navigation */}
+            <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm space-y-3">
+              <h4 className="font-bold text-slate-900 text-sm">Popular Credit Resources</h4>
+              <div className="space-y-2 text-xs font-semibold">
+                <Link
+                  to="/cibil/how-to-check-cibil-score-by-pan-card"
+                  className="flex items-center justify-between p-2.5 rounded-xl hover:bg-slate-50 text-slate-700 hover:text-blue-700 transition-colors border border-transparent hover:border-slate-200"
+                >
+                  <span>Check CIBIL Score by PAN Card</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-slate-400" />
+                </Link>
+                <Link
+                  to="/cibil-report/cibil-score-sbi-loans"
+                  className="flex items-center justify-between p-2.5 rounded-xl hover:bg-slate-50 text-slate-700 hover:text-blue-700 transition-colors border border-transparent hover:border-slate-200"
+                >
+                  <span>SBI Loan CIBIL Score Rules</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-slate-400" />
+                </Link>
+                <Link
+                  to="/cibil/how-to-resolve-cibil-dispute"
+                  className="flex items-center justify-between p-2.5 rounded-xl hover:bg-slate-50 text-slate-700 hover:text-blue-700 transition-colors border border-transparent hover:border-slate-200"
+                >
+                  <span>Resolve Online CIBIL Disputes</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-slate-400" />
+                </Link>
+                <Link
+                  to="/credit-score/cibil-score-for-personal-loan"
+                  className="flex items-center justify-between p-2.5 rounded-xl hover:bg-slate-50 text-slate-700 hover:text-blue-700 transition-colors border border-transparent hover:border-slate-200"
+                >
+                  <span>CIBIL Score for Personal Loans</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-slate-400" />
+                </Link>
+              </div>
+            </div>
+
+          </aside>
 
         </div>
 

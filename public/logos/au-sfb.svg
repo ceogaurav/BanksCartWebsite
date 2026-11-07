@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 120" width="400" height="120">
+  <rect width="400" height="120" rx="12" fill="#FFFFFF"/>
+  <!-- AU Hexagon Emblem -->
+  <g transform="translate(25, 20)">
+    <polygon points="40,5 75,25 75,65 40,85 5,65 5,25" fill="#6A1B9A"/>
+    <polygon points="40,15 65,30 65,60 40,75 15,60 15,30" fill="#FF6F00"/>
+    <text x="40" y="55" font-family="'IBM Plex Sans', sans-serif" font-size="24" font-weight="900" fill="#FFFFFF" text-anchor="middle">AU</text>
+  </g>
+  <!-- Text -->
+  <text x="120" y="52" font-family="'IBM Plex Sans', sans-serif" font-size="28" font-weight="900" fill="#6A1B9A" letter-spacing="-0.5">AU SMALL FINANCE</text>
+  <text x="120" y="76" font-family="'IBM Plex Sans', sans-serif" font-size="22" font-weight="800" fill="#FF6F00" letter-spacing="1">BANK</text>
+  <text x="195" y="76" font-family="'IBM Plex Sans', sans-serif" font-size="11" font-weight="600" fill="#666666" letter-spacing="0.5">Badlaav Humse Hai</text>
+</svg>

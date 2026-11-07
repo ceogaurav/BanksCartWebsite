@@ -7,7 +7,8 @@ import {
   HandCoins, CreditCard, Clock, Hourglass, PiggyBank as SavingsIcon, Goal, CalendarCheck, Landmark,
   GraduationCap, BookOpen, User
 } from 'lucide-react'; // Lucide icons
-import ApplyButton from '../../components/common/ApplyButton'; // Assuming this path is correct
+import ApplyButton from '../../components/common/ApplyButton';
+import Breadcrumb from '../../components/Breadcrumb'; // Assuming this path is correct
 
 // --- Helper Functions ---
 // Formats a number into INR currency format
@@ -294,11 +295,20 @@ const CollegeSavingsCalculatorPage: React.FC<CollegeSavingsCalculatorPageProps> 
 
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-purple-50 py-8 font-inter text-gray-800">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-slate-50 py-8 font-sans text-slate-800">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Breadcrumb Navigation */}
+        <div className="mb-6">
+          <Breadcrumb
+            items={[
+              { label: 'Calculators', path: '/calculators' },
+              { label: 'Child Education / College Fund' }
+            ]}
+          />
+        </div>
         {/* Hero Section */}
         <motion.div
-          className="text-center mb-12 bg-gradient-to-r from-indigo-600 to-purple-700 text-white p-8 rounded-3xl shadow-xl"
+          className="text-center mb-8 bg-gradient-to-r from-[#0F172A] via-[#1E3A8A] to-[#0F172A] text-white p-8 sm:p-10 rounded-2xl shadow-xl border border-slate-700/50"
           variants={sectionVariants}
           initial="hidden"
           whileInView="visible"
@@ -309,7 +319,7 @@ const CollegeSavingsCalculatorPage: React.FC<CollegeSavingsCalculatorPageProps> 
             variants={itemVariants}
           >
             Plan for Their Future with Our{' '}
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 to-orange-300">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-amber-300 to-amber-100">
               College Savings Calculator.
             </span>
           </motion.h1>
@@ -325,9 +335,7 @@ const CollegeSavingsCalculatorPage: React.FC<CollegeSavingsCalculatorPageProps> 
               <ApplyButton
                 loanType="College Savings Planning Advisory"
                 openApplyModal={openApplyModal}
-                className="bg-white text-indigo-600 px-8 py-4 rounded-full font-bold text-lg shadow-lg
-                           hover:bg-gray-100 transition-all duration-300 ease-in-out transform hover:-translate-y-1
-                           focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-50"
+                className="bg-amber-500 hover:bg-amber-400 text-slate-950 px-8 py-3.5 rounded-xl font-bold text-base shadow-lg transition-all inline-block"
               >
                 Get Education Planning Advice
               </ApplyButton>
@@ -337,28 +345,41 @@ const CollegeSavingsCalculatorPage: React.FC<CollegeSavingsCalculatorPageProps> 
 
         {/* College Savings Calculator Section */}
         <motion.div
-          className="bg-white rounded-3xl shadow-2xl p-6 md:p-10 w-full border border-indigo-100 mb-12"
+          className="bg-white rounded-2xl shadow-sm p-6 sm:p-8 w-full border border-slate-200 mb-10"
           variants={sectionVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
         >
-          <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-indigo-600 drop-shadow-md">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-8 text-center flex items-center justify-center">
             <GraduationCap className="inline-block w-9 h-9 mr-3 text-purple-500" /> College Education Fund Planner
           </h2>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
             {/* Input Controls Section */}
-            <div className="space-y-8 p-4 bg-gray-50 rounded-2xl border border-gray-100 shadow-inner">
+            <div className="space-y-6 p-6 bg-slate-50/70 rounded-xl border border-slate-200">
               <h3 className="text-2xl font-bold text-gray-800 mb-4 flex items-center">
                 <User className="w-6 h-6 mr-2 text-indigo-600" /> Child & College Details
               </h3>
 
               {/* Current Age of Child */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="currentChildAge" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Current Age of Child: <span className="text-blue-600">{currentChildAge} Years</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="currentChildAge" className="text-sm font-semibold text-slate-700">
+                    Current Age of Child
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="number"
+                  value={currentChildAge}
+                  onChange={handleCurrentChildAgeChange}
+                  onBlur={(e) => setCurrentChildAge(Number(e.target.value))}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  min="0"
+                  max="17"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="currentChildAge"
@@ -367,24 +388,28 @@ const CollegeSavingsCalculatorPage: React.FC<CollegeSavingsCalculatorPageProps> 
                   step="1"
                   value={currentChildAge}
                   onChange={handleCurrentChildAgeChange}
-                  className="w-full h-2 bg-gradient-to-r from-blue-300 to-blue-500 rounded-lg appearance-none cursor-pointer accent-blue-600"
-                />
-                <input
-                  type="number"
-                  value={currentChildAge}
-                  onChange={handleCurrentChildAgeChange}
-                  onBlur={(e) => setCurrentChildAge(Number(e.target.value))}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-blue-500 focus:border-blue-500 transition-all"
-                  min="0"
-                  max="17"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
 
               {/* College Start Age */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="collegeStartAge" className="block text-lg font-semibold text-gray-700 mb-2">
-                  College Start Age: <span className="text-teal-600">{collegeStartAge} Years</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="collegeStartAge" className="text-sm font-semibold text-slate-700">
+                    College Start Age
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="number"
+                  value={collegeStartAge}
+                  onChange={handleCollegeStartAgeChange}
+                  onBlur={(e) => setCollegeStartAge(Number(e.target.value))}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  min="18"
+                  max="25"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="collegeStartAge"
@@ -393,24 +418,28 @@ const CollegeSavingsCalculatorPage: React.FC<CollegeSavingsCalculatorPageProps> 
                   step="1"
                   value={collegeStartAge}
                   onChange={handleCollegeStartAgeChange}
-                  className="w-full h-2 bg-gradient-to-r from-teal-300 to-teal-500 rounded-lg appearance-none cursor-pointer accent-teal-600"
-                />
-                <input
-                  type="number"
-                  value={collegeStartAge}
-                  onChange={handleCollegeStartAgeChange}
-                  onBlur={(e) => setCollegeStartAge(Number(e.target.value))}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-teal-500 focus:border-teal-500 transition-all"
-                  min="18"
-                  max="25"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
 
               {/* Years in College */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="yearsInCollege" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Years in College: <span className="text-orange-600">{yearsInCollege} Years</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="yearsInCollege" className="text-sm font-semibold text-slate-700">
+                    Years in College
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="number"
+                  value={yearsInCollege}
+                  onChange={handleYearsInCollegeChange}
+                  onBlur={(e) => setYearsInCollege(Number(e.target.value))}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  min="1"
+                  max="6"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="yearsInCollege"
@@ -419,24 +448,27 @@ const CollegeSavingsCalculatorPage: React.FC<CollegeSavingsCalculatorPageProps> 
                   step="1"
                   value={yearsInCollege}
                   onChange={handleYearsInCollegeChange}
-                  className="w-full h-2 bg-gradient-to-r from-orange-300 to-orange-500 rounded-lg appearance-none cursor-pointer accent-orange-600"
-                />
-                <input
-                  type="number"
-                  value={yearsInCollege}
-                  onChange={handleYearsInCollegeChange}
-                  onBlur={(e) => setYearsInCollege(Number(e.target.value))}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-orange-500 focus:border-orange-500 transition-all"
-                  min="1"
-                  max="6"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
 
               {/* Current Annual College Cost */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="currentAnnualCollegeCost" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Current Annual College Cost: <span className="text-red-600">{formatCurrency(currentAnnualCollegeCost)}</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="currentAnnualCollegeCost" className="text-sm font-semibold text-slate-700">
+                    Current Annual College Cost
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="text"
+                  value={formatNumberWithCommas(currentAnnualCollegeCost)}
+                  onChange={handleCurrentAnnualCollegeCostChange}
+                  onBlur={(e) => setCurrentAnnualCollegeCost(Number(e.target.value.replace(/,/g, '')))}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  inputMode="numeric"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="currentAnnualCollegeCost"
@@ -445,23 +477,27 @@ const CollegeSavingsCalculatorPage: React.FC<CollegeSavingsCalculatorPageProps> 
                   step="10000"
                   value={currentAnnualCollegeCost}
                   onChange={handleCurrentAnnualCollegeCostChange}
-                  className="w-full h-2 bg-gradient-to-r from-red-300 to-red-500 rounded-lg appearance-none cursor-pointer accent-red-600"
-                />
-                <input
-                  type="text"
-                  value={formatNumberWithCommas(currentAnnualCollegeCost)}
-                  onChange={handleCurrentAnnualCollegeCostChange}
-                  onBlur={(e) => setCurrentAnnualCollegeCost(Number(e.target.value.replace(/,/g, '')))}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-red-500 focus:border-red-500 transition-all"
-                  inputMode="numeric"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
 
               {/* College Inflation Rate */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="collegeInflationRate" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Expected Annual College Inflation Rate (%): <span className="text-purple-600">{collegeInflationRate}%</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="collegeInflationRate" className="text-sm font-semibold text-slate-700">
+                    Expected Annual College Inflation Rate (%)
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="number"
+                  value={collegeInflationRate}
+                  onChange={handleCollegeInflationRateChange}
+                  onBlur={(e) => setCollegeInflationRate(Number(e.target.value))}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  step="0.1"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="collegeInflationRate"
@@ -470,23 +506,27 @@ const CollegeSavingsCalculatorPage: React.FC<CollegeSavingsCalculatorPageProps> 
                   step="0.1"
                   value={collegeInflationRate}
                   onChange={handleCollegeInflationRateChange}
-                  className="w-full h-2 bg-gradient-to-r from-purple-300 to-purple-500 rounded-lg appearance-none cursor-pointer accent-purple-600"
-                />
-                <input
-                  type="number"
-                  value={collegeInflationRate}
-                  onChange={handleCollegeInflationRateChange}
-                  onBlur={(e) => setCollegeInflationRate(Number(e.target.value))}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-purple-500 focus:border-purple-500 transition-all"
-                  step="0.1"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
 
               {/* Current College Savings */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="currentCollegeSavings" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Current College Savings: <span className="text-green-600">{formatCurrency(currentCollegeSavings)}</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="currentCollegeSavings" className="text-sm font-semibold text-slate-700">
+                    Current College Savings
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="text"
+                  value={formatNumberWithCommas(currentCollegeSavings)}
+                  onChange={handleCurrentCollegeSavingsChange}
+                  onBlur={(e) => setCurrentCollegeSavings(Number(e.target.value.replace(/,/g, '')))}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  inputMode="numeric"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="currentCollegeSavings"
@@ -495,23 +535,27 @@ const CollegeSavingsCalculatorPage: React.FC<CollegeSavingsCalculatorPageProps> 
                   step="10000"
                   value={currentCollegeSavings}
                   onChange={handleCurrentCollegeSavingsChange}
-                  className="w-full h-2 bg-gradient-to-r from-green-300 to-green-500 rounded-lg appearance-none cursor-pointer accent-green-600"
-                />
-                <input
-                  type="text"
-                  value={formatNumberWithCommas(currentCollegeSavings)}
-                  onChange={handleCurrentCollegeSavingsChange}
-                  onBlur={(e) => setCurrentCollegeSavings(Number(e.target.value.replace(/,/g, '')))}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-green-500 focus:border-green-500 transition-all"
-                  inputMode="numeric"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
 
               {/* Annual Return on Savings */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="annualReturnOnSavings" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Expected Annual Return on Savings (%): <span className="text-indigo-600">{annualReturnOnSavings}%</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="annualReturnOnSavings" className="text-sm font-semibold text-slate-700">
+                    Expected Annual Return on Savings (%)
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="number"
+                  value={annualReturnOnSavings}
+                  onChange={handleAnnualReturnOnSavingsChange}
+                  onBlur={(e) => setAnnualReturnOnSavings(Number(e.target.value))}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  step="0.1"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="annualReturnOnSavings"
@@ -520,21 +564,13 @@ const CollegeSavingsCalculatorPage: React.FC<CollegeSavingsCalculatorPageProps> 
                   step="0.1"
                   value={annualReturnOnSavings}
                   onChange={handleAnnualReturnOnSavingsChange}
-                  className="w-full h-2 bg-gradient-to-r from-indigo-300 to-indigo-500 rounded-lg appearance-none cursor-pointer accent-indigo-600"
-                />
-                <input
-                  type="number"
-                  value={annualReturnOnSavings}
-                  onChange={handleAnnualReturnOnSavingsChange}
-                  onBlur={(e) => setAnnualReturnOnSavings(Number(e.target.value))}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-indigo-500 focus:border-indigo-500 transition-all"
-                  step="0.1"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
             </div>
 
             {/* Results Display Section */}
-            <div className="p-6 bg-gradient-to-br from-indigo-500 to-purple-600 text-white rounded-2xl shadow-xl flex flex-col justify-center items-center text-center">
+            <div className="p-6 sm:p-8 bg-[#0F172A] text-white rounded-2xl shadow-xl border border-slate-800 flex flex-col justify-between text-left">
               <h3 className="text-2xl md:text-3xl font-bold mb-4">Your College Savings Plan</h3>
               <p className="text-xl text-indigo-100 mb-8">Years Until College: {calculations.yearsUntilCollege} Years</p>
 
@@ -543,26 +579,26 @@ const CollegeSavingsCalculatorPage: React.FC<CollegeSavingsCalculatorPageProps> 
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, type: 'spring', damping: 20, stiffness: 300 }}
-                className="text-5xl md:text-6xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 to-orange-300 drop-shadow-lg"
+                className="text-5xl md:text-6xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-amber-300 to-amber-100 drop-shadow-lg"
               >
                 {formatCurrency(calculations.monthlySavingsNeeded)} / Month
               </motion.div>
               <p className="text-xl text-indigo-100 mb-8">Required Monthly Savings</p>
 
               <div className="w-full space-y-4 text-lg mt-8">
-                <motion.div variants={itemVariants} className="flex justify-between items-center bg-indigo-700/30 p-3 rounded-lg">
+                <motion.div variants={itemVariants} className="flex justify-between items-center bg-slate-800/80 border border-slate-700/60 p-3 rounded-xl text-sm sm:text-base font-mono tabular-nums">
                   <span className="font-medium flex items-center gap-2"><DollarSign className="w-5 h-5" /> Total Future College Cost</span>
                   <span className="font-bold text-white">{formatCurrency(calculations.totalFutureCollegeCost)}</span>
                 </motion.div>
-                <motion.div variants={itemVariants} className="flex justify-between items-center bg-indigo-700/30 p-3 rounded-lg">
+                <motion.div variants={itemVariants} className="flex justify-between items-center bg-slate-800/80 border border-slate-700/60 p-3 rounded-xl text-sm sm:text-base font-mono tabular-nums">
                   <span className="font-medium flex items-center gap-2"><SavingsIcon className="w-5 h-5" /> Future Value of Current Savings</span>
                   <span className="font-bold text-white">{formatCurrency(calculations.futureValueOfCurrentSavings)}</span>
                 </motion.div>
-                <motion.div variants={itemVariants} className="flex justify-between items-center bg-indigo-700/30 p-3 rounded-lg">
+                <motion.div variants={itemVariants} className="flex justify-between items-center bg-slate-800/80 border border-slate-700/60 p-3 rounded-xl text-sm sm:text-base font-mono tabular-nums">
                   <span className="font-medium flex items-center gap-2"><IndianRupee className="w-5 h-5" /> Total Contributions Needed</span>
                   <span className="font-bold text-white">{formatCurrency(calculations.totalContributions)}</span>
                 </motion.div>
-                <motion.div variants={itemVariants} className="flex justify-between items-center bg-indigo-700/30 p-3 rounded-lg">
+                <motion.div variants={itemVariants} className="flex justify-between items-center bg-slate-800/80 border border-slate-700/60 p-3 rounded-xl text-sm sm:text-base font-mono tabular-nums">
                   <span className="font-medium flex items-center gap-2"><Percent className="w-5 h-5" /> Total Interest Earned</span>
                   <span className="font-bold text-white">{formatCurrency(calculations.totalInterestEarned)}</span>
                 </motion.div>
@@ -665,7 +701,7 @@ const CollegeSavingsCalculatorPage: React.FC<CollegeSavingsCalculatorPageProps> 
         </motion.div>
 
         {/* Informational Sections */}
-        <div className="bg-white border border-gray-100 rounded-2xl p-8 shadow-lg mt-6 space-y-10">
+        <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm mt-8 space-y-10">
           <motion.section variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }}>
             <h2 className="text-3xl font-bold text-gray-900 mb-4 flex items-center">
               <Lightbulb className="w-8 h-8 mr-3 text-yellow-500" /> What is a College Savings Calculator?
@@ -764,7 +800,7 @@ const CollegeSavingsCalculatorPage: React.FC<CollegeSavingsCalculatorPageProps> 
               {whyUseBanksCart.map((reason, index) => (
                 <motion.div
                   key={index}
-                  className="flex flex-col items-center text-center p-6 rounded-xl shadow-lg bg-gradient-to-br from-indigo-50 to-purple-50 border border-indigo-100"
+                  className="flex flex-col items-center text-center p-6 rounded-xl shadow-sm bg-slate-50 border border-slate-200"
                   variants={cardVariants}
                 >
                   {reason.icon}
@@ -777,7 +813,7 @@ const CollegeSavingsCalculatorPage: React.FC<CollegeSavingsCalculatorPageProps> 
 
           {/* Final Call to Action */}
           <motion.section
-            className="text-center mt-12 p-8 bg-gradient-to-r from-indigo-600 to-purple-700 rounded-2xl shadow-xl"
+            className="text-center mt-12 p-8 sm:p-10 bg-gradient-to-r from-[#0F172A] via-[#1E3A8A] to-[#0F172A] text-white rounded-2xl shadow-xl border border-slate-700/50"
             variants={sectionVariants}
             initial="hidden"
             whileInView="visible"
@@ -801,9 +837,7 @@ const CollegeSavingsCalculatorPage: React.FC<CollegeSavingsCalculatorPageProps> 
                 <ApplyButton
                   loanType="Education Savings & Loan Advisory"
                   openApplyModal={openApplyModal}
-                  className="bg-white text-indigo-600 px-8 py-4 rounded-full font-bold text-lg shadow-lg
-                             hover:bg-gray-100 transition-all duration-300 ease-in-out transform hover:-translate-y-1
-                             focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-50"
+                  className="bg-amber-500 hover:bg-amber-400 text-slate-950 px-8 py-3.5 rounded-xl font-bold text-base shadow-lg transition-all inline-block"
                 >
                   Explore Education Solutions
                 </ApplyButton>

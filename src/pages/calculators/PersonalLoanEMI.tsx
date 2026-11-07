@@ -6,6 +6,7 @@ import { calculateEMI, calculateTotalAmount, calculateTotalInterest, formatCurre
 
 // Assuming you have a Button component in common
 import Button from '../../components/common/Button';
+import Breadcrumb from '../../components/Breadcrumb';
 
 // Define the props for this component, including the modal open functions
 interface PersonalLoanEMIProps {
@@ -125,8 +126,17 @@ const PersonalLoanEMI: React.FC<PersonalLoanEMIProps> = ({ openApplyModal, openE
 
   return (
     <>
-      <div className="min-h-screen bg-gray-50 py-8 font-inter">
+      <div className="min-h-screen bg-slate-50 py-8 font-sans text-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Breadcrumb Navigation */}
+          <div className="mb-6">
+            <Breadcrumb
+              items={[
+                { label: 'Calculators', path: '/calculators' },
+                { label: 'Personal Loan EMI Calculator' }
+              ]}
+            />
+          </div>
       <Helmet>
         <title>Personal Loan EMI Calculator 2026: Calculate Monthly EMI &amp; Interest Rates | BanksCart</title>
         <meta name="description" content="Calculate your monthly personal loan installment instantly. Enter loan amount, interest rate (from 10.25% p.a.), and tenure to view total interest and amortization." />

@@ -1,7 +1,9 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Calendar, User, ShieldCheck, CheckCircle2, ChevronRight, Calculator, Landmark, Percent, FileText } from 'lucide-react';
+import Breadcrumb from '../../components/Breadcrumb';
+import { AuthorByline } from '../../components/blog/AuthorByline';
+import { ShieldCheck, CheckCircle2, Scale, ArrowRight, FileText } from 'lucide-react';
 
 export default function SbiVsHdfcPersonalLoan() {
   const canonicalUrl = "https://www.bankscart.com/blog/sbi-vs-hdfc-personal-loan";
@@ -15,11 +17,11 @@ export default function SbiVsHdfcPersonalLoan() {
     },
     "headline": "SBI vs HDFC Personal Loan 2026: Interest Rates, Eligibility, Fees & Full Comparison",
     "description": "In-depth comparison between SBI and HDFC personal loans. Compare interest rates, processing fees, repayment tenures, eligibility criteria, and calculate your monthly EMI.",
-    "image": "https://www.bankscart.com/assets/images/sbi-vs-hdfc-personal-loan.webp",
+    "image": "https://www.bankscart.com/assets/images/bankscart-logo.png",
     "author": {
       "@type": "Person",
       "name": "Raghav Singhal",
-      "jobTitle": "Chartered Accountant & Certified Financial Planner",
+      "jobTitle": "Lead Financial Analyst & Debt Strategist",
       "url": "https://www.bankscart.com/author/raghav-singhal"
     },
     "publisher": {
@@ -31,7 +33,7 @@ export default function SbiVsHdfcPersonalLoan() {
       }
     },
     "datePublished": "2026-02-10T09:00:00+05:30",
-    "dateModified": "2026-10-31T17:00:00+05:30"
+    "dateModified": "2026-11-06T10:00:00+05:30"
   };
 
   const breadcrumbSchema = {
@@ -47,18 +49,12 @@ export default function SbiVsHdfcPersonalLoan() {
       {
         "@type": "ListItem",
         "position": 2,
-        "name": "Loans",
-        "item": "https://www.bankscart.com/loans"
+        "name": "Blog",
+        "item": "https://www.bankscart.com/blog"
       },
       {
         "@type": "ListItem",
         "position": 3,
-        "name": "Personal Loan",
-        "item": "https://www.bankscart.com/loans/personal-loan"
-      },
-      {
-        "@type": "ListItem",
-        "position": 4,
         "name": "SBI vs HDFC Personal Loan",
         "item": canonicalUrl
       }
@@ -66,7 +62,7 @@ export default function SbiVsHdfcPersonalLoan() {
   };
 
   return (
-    <div className="bg-slate-50 min-h-screen py-10 font-sans text-slate-800 antialiased">
+    <div className="min-h-screen bg-[#F8FAFC] font-sans text-slate-800 pt-20 sm:pt-24 pb-16 antialiased">
       <Helmet>
         <title>SBI vs HDFC Personal Loan 2026: Interest Rates, Fees & Comparison | BanksCart</title>
         <meta name="description" content="Detailed side-by-side comparison between SBI and HDFC Personal Loans. Evaluate interest rates, processing fees, loan limits, and apply online on BanksCart." />
@@ -79,147 +75,174 @@ export default function SbiVsHdfcPersonalLoan() {
         </script>
       </Helmet>
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+        
         {/* Breadcrumb Navigation */}
-        <nav className="flex items-center text-xs text-slate-500 mb-6 space-x-2">
-          <Link to="/" className="hover:text-blue-600">Home</Link>
-          <ChevronRight className="w-3.5 h-3.5" />
-          <Link to="/loans" className="hover:text-blue-600">Loans</Link>
-          <ChevronRight className="w-3.5 h-3.5" />
-          <Link to="/loans/personal-loan" className="hover:text-blue-600">Personal Loan</Link>
-          <ChevronRight className="w-3.5 h-3.5" />
-          <span className="text-slate-800 font-semibold truncate">SBI vs HDFC Personal Loan</span>
-        </nav>
+        <Breadcrumb path={["Home", "Blog", "SBI vs HDFC Personal Loan"]} />
 
-        {/* Article Header */}
-        <header className="mb-8 bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
-          <span className="inline-block px-3 py-1 bg-blue-100 text-blue-800 text-xs font-bold uppercase tracking-wider rounded-full mb-3">
-            Banking Head-to-Head Comparison
-          </span>
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight mb-4">
-            SBI vs HDFC Personal Loan: Complete 2026 Comparison of Rates, Fees &amp; Approvals
-          </h1>
-          <div className="flex flex-wrap items-center gap-4 text-xs text-slate-500 pt-3 border-t border-slate-100">
-            <div className="flex items-center gap-1.5">
-              <User className="w-4 h-4 text-teal-600" />
-              <span>Written by <Link to="/author/raghav-singhal" className="font-bold text-blue-600 hover:underline">Raghav Singhal</Link> (FCA, CFP)</span>
+        {/* Unified Publication-Grade Article Canvas */}
+        <article className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-10 lg:p-12 space-y-8">
+          
+          {/* Article Header */}
+          <header className="space-y-4 pb-6 border-b border-slate-100">
+            <div className="flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-wider text-blue-700">
+              <span className="bg-blue-50 border border-blue-200 px-3 py-1 rounded-full">
+                Head-to-Head Comparison
+              </span>
+              <span className="text-slate-400">•</span>
+              <span className="text-slate-500 font-mono">Updated November 2026</span>
+              <span className="text-slate-400">•</span>
+              <span className="text-slate-500">12 min read</span>
             </div>
-            <div className="flex items-center gap-1.5">
-              <ShieldCheck className="w-4 h-4 text-blue-600" />
-              <span>Fact-checked by <Link to="/author/amit-khurana" className="font-bold text-blue-600 hover:underline">Amit Khurana</Link> (ex-SBI Chief Manager)</span>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <Calendar className="w-4 h-4 text-slate-400" />
-              <span>Updated: October 31, 2026</span>
-            </div>
-          </div>
-        </header>
 
-        {/* SILO CALLOUT BANNER (Bidirectional link to /loans/personal-loan) */}
-        <div className="bg-gradient-to-r from-blue-900 to-indigo-900 text-white rounded-2xl p-6 mb-8 shadow-md flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div>
-            <h3 className="font-bold text-lg">Looking for the Lowest Personal Loan Rate?</h3>
-            <p className="text-xs text-blue-200 mt-1">
-              Compare 30+ top banks and NBFCs alongside SBI and HDFC with instant approval.
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
+              SBI vs HDFC Personal Loan: Complete 2026 Comparison of Rates, Fees &amp; Approvals
+            </h1>
+
+            <p className="text-base sm:text-lg text-slate-600 leading-relaxed font-normal">
+              When borrowing unsecured funds in India, State Bank of India (SBI) and HDFC Bank command over 40% of retail credit market share. Here is an unbiased analysis of rates, processing turnaround, foreclosure rules, and customer eligibility.
+            </p>
+
+            <AuthorByline
+              authorSlug="raghav-singhal"
+              reviewerSlug="amit-khurana"
+              publishedDate="February 10, 2026"
+              updatedDate="November 6, 2026"
+              readTime="12 min read"
+              showBioCard={true}
+            />
+          </header>
+
+          {/* Core Introduction */}
+          <div className="space-y-4 text-sm sm:text-base leading-relaxed text-slate-700">
+            <p>
+              When borrowing unsecured capital in India, <strong>State Bank of India (SBI)</strong> and <strong>HDFC Bank</strong> represent the two largest lenders commanding over 40% of retail credit market share. While SBI is renowned for its competitive public-sector interest margins and zero prepayment penalty schemes, HDFC Bank leads in 10-second instant paperless disbursal algorithms for salaried corporate professionals.
             </p>
           </div>
-          <Link
-            to="/loans/personal-loan"
-            className="px-5 py-2.5 bg-teal-400 hover:bg-teal-300 text-slate-900 text-xs font-extrabold rounded-xl shadow transition-colors whitespace-nowrap"
-          >
-            Compare Personal Loans &rarr;
-          </Link>
-        </div>
 
-        {/* Main Content Article */}
-        <article className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6 text-sm leading-relaxed text-slate-700">
-          <p>
-            When borrowing unsecured capital in India, <strong>State Bank of India (SBI)</strong> and <strong>HDFC Bank</strong> represent the two largest lenders commanding over 40% of retail credit market share. While SBI is renowned for its competitive public-sector interest margins and zero prepayment penalty schemes, HDFC Bank leads in 10-second instant paperless disbursal algorithms for salaried corporate professionals.
-          </p>
+          {/* Section: Side-by-Side Comparison Table */}
+          <div className="space-y-4 pt-4 border-t border-slate-100">
+            <h2 className="text-2xl font-bold text-slate-900 flex items-center gap-2.5">
+              <span className="w-1.5 h-6 bg-[#1E3A8A] rounded-full"></span>
+              Side-by-Side Comparison: SBI vs HDFC Bank
+            </h2>
 
-          <h2 className="text-2xl font-bold text-slate-900 pt-4">Side-by-Side Comparison: SBI vs HDFC Bank</h2>
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs border border-slate-200 rounded-xl overflow-hidden">
-              <thead className="bg-slate-100 text-slate-700 font-bold uppercase text-[11px]">
-                <tr>
-                  <th className="p-3 border-b">Feature</th>
-                  <th className="p-3 border-b">SBI Personal Loan</th>
-                  <th className="p-3 border-b">HDFC Bank Personal Loan</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-100 font-medium">
-                <tr>
-                  <td className="p-3 font-bold text-slate-900">Interest Rates</td>
-                  <td className="p-3 text-teal-700 font-bold">10.55% - 15.30% p.a.</td>
-                  <td className="p-3 text-blue-700 font-bold">10.50% - 21.00% p.a.</td>
-                </tr>
-                <tr>
-                  <td className="p-3 font-bold text-slate-900">Maximum Loan Amount</td>
-                  <td className="p-3">Up to ₹20 Lakhs</td>
-                  <td className="p-3">Up to ₹40 Lakhs</td>
-                </tr>
-                <tr>
-                  <td className="p-3 font-bold text-slate-900">Repayment Tenure</td>
-                  <td className="p-3">Up to 6 years (72 months)</td>
-                  <td className="p-3">Up to 5 years (60 months)</td>
-                </tr>
-                <tr>
-                  <td className="p-3 font-bold text-slate-900">Processing Fees</td>
-                  <td className="p-3">Up to 1.5% (Min ₹1,000)</td>
-                  <td className="p-3">Up to 2.50% (Min ₹1,999)</td>
-                </tr>
-                <tr>
-                  <td className="p-3 font-bold text-slate-900">Disbursal Turnaround</td>
-                  <td className="p-3">2 to 4 working days</td>
-                  <td className="p-3 text-emerald-700 font-bold">10 seconds (Pre-approved) / 4 hours</td>
-                </tr>
-                <tr>
-                  <td className="p-3 font-bold text-slate-900">Prepayment Charges</td>
-                  <td className="p-3 text-emerald-700 font-bold">Nil (Zero charges under floating schemes)</td>
-                  <td className="p-3">2% to 4% (Allowed after 12 EMIs)</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h2 className="text-2xl font-bold text-slate-900 pt-4">Which Bank Should You Choose?</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="p-4 bg-teal-50/50 rounded-2xl border border-teal-200">
-              <h3 className="font-bold text-teal-900 text-base mb-2">Choose SBI If:</h3>
-              <ul className="space-y-1.5 text-xs text-teal-800">
-                <li>• You work for Central/State Govt, PSU, or defense forces.</li>
-                <li>• You plan to prepay or foreclose your loan without exit penalties.</li>
-                <li>• You require extended tenures up to 72 months to reduce monthly EMI.</li>
-              </ul>
-            </div>
-            <div className="p-4 bg-blue-50/50 rounded-2xl border border-blue-200">
-              <h3 className="font-bold text-blue-900 text-base mb-2">Choose HDFC Bank If:</h3>
-              <ul className="space-y-1.5 text-xs text-blue-800">
-                <li>• You need immediate disbursal within 10 seconds for emergencies.</li>
-                <li>• You work in a Tier-1 IT, MNC, or Fortune 500 corporate firm.</li>
-                <li>• You need high loan amounts up to ₹40 Lakhs without collateral.</li>
-              </ul>
+            <div className="overflow-x-auto rounded-xl border border-slate-200">
+              <table className="w-full text-left text-xs sm:text-sm border-collapse">
+                <thead>
+                  <tr className="bg-slate-50 text-slate-900 border-b border-slate-200">
+                    <th className="p-3.5 font-bold">Parameter</th>
+                    <th className="p-3.5 font-bold text-blue-900">State Bank of India (SBI)</th>
+                    <th className="p-3.5 font-bold text-indigo-900">HDFC Bank</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100 text-slate-700">
+                  <tr className="hover:bg-slate-50/70 transition-colors">
+                    <td className="p-3.5 font-semibold text-slate-900">Interest Rate Range</td>
+                    <td className="p-3.5 tabular-nums font-mono font-bold text-emerald-700">10.30% - 15.10% p.a.</td>
+                    <td className="p-3.5 tabular-nums font-mono font-bold text-emerald-700">10.50% - 21.00% p.a.</td>
+                  </tr>
+                  <tr className="hover:bg-slate-50/70 transition-colors">
+                    <td className="p-3.5 font-semibold text-slate-900">Processing Fee</td>
+                    <td className="p-3.5 text-xs">Nil to 1.50% (often 0% during festive schemes)</td>
+                    <td className="p-3.5 text-xs">Up to 2.50% of loan amount (Min ₹1,999)</td>
+                  </tr>
+                  <tr className="hover:bg-slate-50/70 transition-colors">
+                    <td className="p-3.5 font-semibold text-slate-900">Loan Quantum</td>
+                    <td className="p-3.5 tabular-nums font-mono">₹25,000 to ₹20,00,000</td>
+                    <td className="p-3.5 tabular-nums font-mono">₹50,000 to ₹40,00,000</td>
+                  </tr>
+                  <tr className="hover:bg-slate-50/70 transition-colors">
+                    <td className="p-3.5 font-semibold text-slate-900">Loan Tenure</td>
+                    <td className="p-3.5">Up to 72 months (6 Years)</td>
+                    <td className="p-3.5">Up to 60 months (5 Years)</td>
+                  </tr>
+                  <tr className="hover:bg-slate-50/70 transition-colors">
+                    <td className="p-3.5 font-semibold text-slate-900">Disbursal Turnaround</td>
+                    <td className="p-3.5 text-xs">1 to 3 working days (Instant via YONO if pre-approved)</td>
+                    <td className="p-3.5 text-xs">Under 10 seconds for pre-approved customers; 4 hours for others</td>
+                  </tr>
+                  <tr className="hover:bg-slate-50/70 transition-colors">
+                    <td className="p-3.5 font-semibold text-slate-900">Prepayment / Foreclosure</td>
+                    <td className="p-3.5 text-xs font-semibold text-emerald-700">3% (Nil if closed from new loan of same bank)</td>
+                    <td className="p-3.5 text-xs">2% to 4% after lock-in period</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
 
-          <h2 className="text-2xl font-bold text-slate-900 pt-4">Calculate Your Monthly EMI Before Applying</h2>
-          <p>
-            Before committing to either lender, always calculate your exact monthly EMI, total interest liability, and processing fee outgo with our high-precision online tool.
-          </p>
-          <div className="pt-2 flex flex-wrap gap-4">
-            <Link
-              to="/personal-loan-emi-calculator"
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow text-xs transition-colors"
-            >
-              <Calculator className="w-4 h-4" /> Personal Loan EMI Calculator &rarr;
-            </Link>
-            <Link
-              to="/loans/personal-loan"
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold rounded-xl text-xs transition-colors"
-            >
-              <Landmark className="w-4 h-4" /> Compare 30+ Personal Loan Lenders &rarr;
-            </Link>
+          {/* Section: Which Bank Should You Choose */}
+          <div className="space-y-4 pt-4 border-t border-slate-100">
+            <h2 className="text-2xl font-bold text-slate-900 flex items-center gap-2.5">
+              <span className="w-1.5 h-6 bg-[#1E3A8A] rounded-full"></span>
+              Which Bank Should You Choose?
+            </h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
+              <div className="p-5 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+                <h3 className="font-bold text-blue-950 text-base flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-blue-700" />
+                  Choose SBI When:
+                </h3>
+                <ul className="text-xs sm:text-sm text-slate-700 space-y-1.5 list-disc list-inside">
+                  <li>You work in Central/State Government, Defence, or PSUs.</li>
+                  <li>You want the lowest possible interest rate cap (15.10%).</li>
+                  <li>You want a longer tenure of up to 6 years to reduce monthly EMI.</li>
+                  <li>You maintain your primary salary account with SBI.</li>
+                </ul>
+              </div>
+
+              <div className="p-5 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+                <h3 className="font-bold text-indigo-950 text-base flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-indigo-700" />
+                  Choose HDFC Bank When:
+                </h3>
+                <ul className="text-xs sm:text-sm text-slate-700 space-y-1.5 list-disc list-inside">
+                  <li>You need emergency funds credited within 10 seconds.</li>
+                  <li>You need a larger loan ticket size (up to ₹40 Lakhs).</li>
+                  <li>You are an existing salaried corporate banking customer.</li>
+                  <li>You prefer a 100% paperless digital loan disbursement.</li>
+                </ul>
+              </div>
+            </div>
           </div>
+
+          {/* Inline Conversion Callout Banner: Clean & Aligned */}
+          <div className="bg-gradient-to-r from-slate-900 via-[#1E3A8A] to-slate-900 text-white rounded-xl p-6 sm:p-8 shadow-md border border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-6">
+            <div className="space-y-1 text-center sm:text-left">
+              <h3 className="font-bold text-xl sm:text-2xl text-white">Looking for the Lowest Personal Loan Rate?</h3>
+              <p className="text-xs sm:text-sm text-slate-300 max-w-xl">
+                Compare 30+ top banks and NBFCs alongside SBI and HDFC with instant approval and transparent processing charges.
+              </p>
+            </div>
+            <div className="flex flex-wrap items-center gap-3">
+              <Link
+                to="/loans/personal/overview"
+                className="px-5 py-3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-xl shadow transition-colors whitespace-nowrap text-xs sm:text-sm"
+              >
+                Compare Personal Loans &rarr;
+              </Link>
+              <Link
+                to="/calculators/loan/personal-loan-emi"
+                className="px-5 py-3 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/20 transition-colors whitespace-nowrap text-xs sm:text-sm"
+              >
+                Calculate EMI
+              </Link>
+            </div>
+          </div>
+
+          {/* Regulatory Disclosure */}
+          <div className="p-5 bg-slate-50 rounded-xl border border-slate-200 text-xs text-slate-600 leading-relaxed space-y-2">
+            <div className="flex items-center gap-2 text-slate-800 font-bold uppercase tracking-wider">
+              <ShieldCheck className="w-4 h-4 text-[#1E3A8A]" />
+              <span>Lending Benchmark Disclaimer</span>
+            </div>
+            <p>
+              Rate figures are collated from official bank disclosures as of November 2026. Final interest rate quotes depend on applicant credit score, employer classification, and underwriting matrices. BanksCart is an independent digital loan marketplace.
+            </p>
+          </div>
+
         </article>
       </div>
     </div>

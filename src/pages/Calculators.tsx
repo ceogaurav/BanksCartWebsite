@@ -1,359 +1,857 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
+import Breadcrumb from '../components/Breadcrumb';
 import {
   Calculator,
   PiggyBank,
   Receipt,
   TrendingUp,
-  UserCheck,
   Percent,
   Home,
   CreditCard,
   Wallet,
-  TrendingDown,
   DollarSign,
   BarChart2,
   BookOpen,
-  Car
+  Car,
+  Coins,
+  ShieldCheck,
+  Building2,
+  Sparkles,
+  Search,
+  ArrowRight,
+  Briefcase,
+  HelpCircle,
+  Sliders,
+  CheckCircle2,
+  Clock,
+  Layers
 } from 'lucide-react';
-import EMICalculator from '../components/calculators/EMICalculator';
-import FDCalculator from '../components/calculators/FDCalculator';
-import TaxCalculator from '../components/calculators/TaxCalculator';
 
-const Calculators: React.FC = () => {
-  const [activeCalculator, setActiveCalculator] = useState('emi');
-  const [activeExtraCalculator, setActiveExtraCalculator] = useState('sip');
+interface CalculatorItem {
+  id: string;
+  name: string;
+  category: string;
+  icon: React.ElementType;
+  description: string;
+  route: string;
+  badge?: string;
+}
 
+export const Calculators: React.FC = () => {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('all');
 
-  // --- Calculator Categories ---
-  type CalculatorTab = { id: string; name: string; icon: React.ElementType; description: string };
-  type CalculatorCategory = { title: string; description?: string; calculators: CalculatorTab[] };
+  // Interactive Live Calculator Preset in Hero
+  const [activeLiveCalc, setActiveLiveCalc] = useState<'home' | 'personal' | 'car' | 'sip'>('home');
+  const [liveAmount, setLiveAmount] = useState<number>(4000000);
+  const [liveRate, setLiveRate] = useState<number>(8.5);
+  const [liveTenure, setLiveTenure] = useState<number>(20);
 
-  const calculatorCategories: CalculatorCategory[] = [
-    {
-      title: 'Loan Calculators',
-      description: 'Tools to help you plan and manage all types of loans.',
-      calculators: [
-        { id: 'mortgage', name: 'Mortgage Calculator', icon: Home, description: 'Calculate monthly payments, interest rates, loan term, and total cost for home loans.' },
-        { id: 'carloan', name: 'Auto Loan Calculator', icon: Car, description: 'Estimate monthly payments for car loans.' },
-        { id: 'studentloan', name: 'Student Loan Calculator', icon: BookOpen, description: 'Calculate monthly payments, interest accruals, and total debt for student loans.' },
-        { id: 'personalloan', name: 'Personal Loan Calculator', icon: Wallet, description: 'Estimate the payment schedule for personal loans.' },
-        { id: 'paydayloan', name: 'Payday Loan Calculator', icon: CreditCard, description: 'Calculate the payday loan cost including fees and interest.' },
-      ]
-    },
-    {
-      title: 'Investment Calculators',
-      description: 'Project your investment growth and plan for the future.',
-      calculators: [
-        { id: 'compound', name: 'Compound Interest Calculator', icon: Percent, description: 'Calculate the amount of interest earned over time on an investment, considering compounded growth.' },
-        { id: 'investmentgrowth', name: 'Investment Growth Calculator', icon: TrendingUp, description: 'Project the growth of investments over time at a fixed rate of return.' },
-        { id: 'retirement', name: 'Retirement Savings Calculator', icon: UserCheck, description: 'Estimate how much you need to save monthly or annually to reach your retirement goal.' },
-        { id: 'rothvstrad', name: 'Roth IRA vs. Traditional IRA Calculator', icon: BarChart2, description: 'Compare potential outcomes between Roth and Traditional IRAs.' },
-        { id: 'stock', name: 'Stock Investment Calculator', icon: DollarSign, description: 'Estimate returns based on stock price, dividends, and the amount invested.' },
-      ]
-    },
-    {
-      title: 'Tax Calculators',
-      description: 'Estimate your tax liabilities and plan your finances.',
-      calculators: [
-        { id: 'incometax', name: 'Income Tax Calculator', icon: Receipt, description: 'Estimate income tax liabilities based on income, deductions, exemptions, and filing status.' },
-        { id: 'capitalgains', name: 'Capital Gains Tax Calculator', icon: TrendingUp, description: 'Calculate taxes owed on profits from the sale of investments or assets.' },
-        { id: 'salestax', name: 'Sales Tax Calculator', icon: PiggyBank, description: 'Calculate the final price of a product including the applicable sales tax.' },
-        { id: 'payrolltax', name: 'Payroll Tax Calculator', icon: Wallet, description: 'Estimate deductions for taxes from your paycheck based on various factors.' },
-      ]
-    },
-    {
-      title: 'Business & Corporate Calculators',
-      description: 'Business tools for profitability, cash flow, and asset management.',
-      calculators: [
-        { id: 'breakeven', name: 'Break-even Calculator', icon: BarChart2, description: 'Calculate the sales required to cover fixed and variable costs.' },
-        { id: 'npv', name: 'Net Present Value (NPV) Calculator', icon: TrendingUp, description: 'Assess the profitability of an investment or project over time.' },
-        { id: 'irr', name: 'Internal Rate of Return (IRR) Calculator', icon: Percent, description: 'Calculate the profitability of potential investments over time.' },
-        { id: 'cashflow', name: 'Cash Flow Calculator', icon: DollarSign, description: 'Estimate cash inflows and outflows for businesses or investments.' },
-        { id: 'depreciation', name: 'Depreciation Calculator', icon: TrendingDown, description: 'Estimate the depreciation of assets over time.' },
-      ]
-    },
-    {
-      title: 'Budgeting Calculators',
-      description: 'Manage your personal or business budget and expenses.',
-      calculators: [
-        { id: 'budget', name: 'Budget Calculator', icon: Wallet, description: 'Create and manage personal or business budgets.' },
-        { id: 'expense', name: 'Expense Calculator', icon: CreditCard, description: 'Track your monthly expenses and categorize them.' },
-        { id: 'debtpayoff', name: 'Debt Payoff Calculator', icon: PiggyBank, description: 'Determine how long it will take to pay off debt.' },
-      ]
-    },
-    {
-      title: 'Savings Calculators',
-      description: 'Plan and track your savings for any goal.',
-      calculators: [
-        { id: 'savingsgoal', name: 'Savings Goal Calculator', icon: PiggyBank, description: 'Set goals for how much to save over a set period.' },
-        { id: 'emergencyfund', name: 'Emergency Fund Calculator', icon: Wallet, description: 'Estimate how much you need to save for an emergency fund.' },
-        { id: 'collegesavings', name: 'College Savings Calculator', icon: BookOpen, description: 'Calculate how much money you need to save for college.' },
-      ]
-    },
-    {
-      title: 'Currency Conversion Calculators',
-      description: 'Convert and compare currencies with up-to-date rates.',
-      calculators: [
-        { id: 'currency', name: 'Currency Converter', icon: DollarSign, description: 'Convert one currency to another using the current exchange rate.' },
-        { id: 'forex', name: 'Foreign Exchange Rate Calculator', icon: TrendingUp, description: 'Provides current foreign exchange rates for international money transfers.' },
-      ]
-    },
-    {
-      title: 'Credit Card Calculators',
-      description: 'Manage and optimize your credit card usage.',
-      calculators: [
-        { id: 'creditcardpayoff', name: 'Credit Card Payoff Calculator', icon: CreditCard, description: 'Determine how long it will take to pay off a credit card.' },
-        { id: 'creditcardinterest', name: 'Credit Card Interest Calculator', icon: Percent, description: 'Calculate how much interest you’ll pay on outstanding credit card balances.' },
-        { id: 'balancetransfer', name: 'Balance Transfer Calculator', icon: BarChart2, description: 'Determine how much you can save by transferring your credit card debt.' },
-      ]
-    },
-    {
-      title: 'Real Estate Calculators',
-      description: 'Make informed decisions about real estate and property.',
-      calculators: [
-        { id: 'homeafford', name: 'Home Affordability Calculator', icon: Home, description: 'Estimate how much house you can afford.' },
-        { id: 'rentvsbuy', name: 'Rent vs. Buy Calculator', icon: BarChart2, description: 'Compare the costs of renting versus buying a home.' },
-        { id: 'propertytax', name: 'Property Tax Calculator', icon: Receipt, description: 'Estimate property taxes for a specific location.' },
-        { id: 'caprate', name: 'Capitalization Rate Calculator', icon: TrendingUp, description: 'Calculate the return on investment for rental properties.' },
-      ]
-    },
-    {
-      title: 'Other Financial Calculators',
-      description: 'Other essential financial tools for your needs.',
-      calculators: [
-        { id: 'inflation', name: 'Inflation Calculator', icon: TrendingDown, description: 'Calculate the effect of inflation on purchasing power.' },
-        { id: 'amortization', name: 'Loan Amortization Calculator', icon: BarChart2, description: 'Show how loan payments are split between principal and interest.' },
-        { id: 'annuity', name: 'Annuity Calculator', icon: PiggyBank, description: 'Estimate the value of annuities.' },
-        { id: 'pension', name: 'Pension Calculator', icon: UserCheck, description: 'Estimate pension payouts based on salary, age, and retirement age.' },
-        { id: 'socialsecurity', name: 'Social Security Calculator', icon: Receipt, description: 'Estimate future Social Security benefits.' },
-      ]
-    },
-  ];
-
-
-
-  // Maintain a single state for all active tabs by category
-  const [activeTabs, setActiveTabs] = useState<{ [category: string]: string }>(
-    () => Object.fromEntries(calculatorCategories.map(cat => [cat.title, cat.calculators[0].id]))
-  );
-
-  const handleTabChange = (categoryTitle: string, tabId: string) => {
-    setActiveTabs(prev => ({ ...prev, [categoryTitle]: tabId }));
+  // Switch Live Calculator presets
+  const handleLiveTypeChange = (type: 'home' | 'personal' | 'car' | 'sip') => {
+    setActiveLiveCalc(type);
+    if (type === 'home') {
+      setLiveAmount(4000000);
+      setLiveRate(8.5);
+      setLiveTenure(20);
+    } else if (type === 'personal') {
+      setLiveAmount(500000);
+      setLiveRate(11.5);
+      setLiveTenure(3);
+    } else if (type === 'car') {
+      setLiveAmount(800000);
+      setLiveRate(8.95);
+      setLiveTenure(5);
+    } else if (type === 'sip') {
+      setLiveAmount(10000); // monthly investment
+      setLiveRate(12.0); // expected return
+      setLiveTenure(10); // years
+    }
   };
 
-  const TabBar = ({ tabs, active, onTabClick }: {
-    tabs: CalculatorTab[];
-    active: string;
-    onTabClick: (id: string) => void;
-  }) => (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-      {tabs.map((tab) => {
-        const Icon = tab.icon;
-        const isActive = active === tab.id;
-        // Map tab.id to page route (add more as you create more pages)
-        let pageRoute = '';
-        switch (tab.id) {
-          case 'mortgage':
-            pageRoute = '/MortgageCalculatorPage';
-            break;
-          case 'carloan':
-            pageRoute = '/car-loan-calculator';
-            break;
-            case 'studentloan':
-            pageRoute = '/student-loan-calculator';
-            break;
-            case 'personalloan':
-            pageRoute = '/personal-loan-emi-calculator';
-            break;
-            case 'paydayloan':
-            pageRoute = '/payday-loan-calculator';
-            break;
-          case 'compound':
-            pageRoute = '/compound-interest-calculator';
-            break;
-          case 'investmentgrowth':
-            pageRoute = '/investment-growth-calculator';
-            break;
-          case 'retirement':
-            pageRoute = '/retirement-calculator';
-            break;
-            case 'rothvstrad':
-            pageRoute = '/roth-vs-trad-calculator';
-            break;
-              case 'stock':
-            pageRoute = '/stock-calculator';
-            break;
-          case 'incometax':
-            pageRoute = '/income-tax-calculator';
-            break;
-          case 'capitalgains':
-            pageRoute = '/capital-gains-calculator';
-            break;  
-          case 'salestax':
-            pageRoute = '/sales-tax-calculator';
-            break;  
-          case 'payrolltax':
-            pageRoute = '/payroll-tax-calculator';
-            break;
-          case 'breakeven':
-            pageRoute = '/break-even-calculator';
-            break;
-          case 'npv':
-            pageRoute = '/npv-calculator';
-            break;
-          case 'irr':
-            pageRoute = '/irr-calculator';
-            break;
-          case 'cashflow':
-            pageRoute = '/cash-flow-calculator';
-            break;
-            case 'depreciation':
-            pageRoute = '/depreciation-calculator';
-            break;
-            case 'budget':
-            pageRoute = '/budget-calculator';
-            break;
-          case 'expense':
-            pageRoute = '/expense-calculator';
-            break;
-          case 'debtpayoff':
-            pageRoute = '/debt-payoff-calculator';
-            break;
-          case 'savingsgoal':
-            pageRoute = '/savings-goal-calculator';
-            break;  
-          case 'emergencyfund':
-            pageRoute = '/emergency-fund-calculator';
-            break;  
-          case 'collegesavings':
-            pageRoute = '/college-savings-calculator';
-            break;
-          case 'currency':
-            pageRoute = '/currency-converter';
-            break;
-          case 'forex':
-            pageRoute = '/foreign-exchange-rate-calculator';
-            break;
-            case 'creditcardpayoff':
-            pageRoute = '/credit-card-payoff-calculator';
-            break;
-          case 'creditcardinterest':
-            pageRoute = '/credit-card-interest-calculator';
-            break;
-          case 'balancetransfer':
-            pageRoute = '/balance-transfer-calculator';
-            break;
-            case 'homeafford':
-            pageRoute = '/home-affordability-calculator';
-            break;
-          case 'rentvsbuy':
-            pageRoute = '/rent-vs-buy-calculator';
-            break;
-          case 'propertytax':
-            pageRoute = '/property-tax-calculator';
-            break;
-          case 'caprate':
-            pageRoute = '/caprate-calculator';
-            break;  
-          case 'inflation':
-            pageRoute = '/inflation-calculator';
-            break;
-          case 'amortization':
-            pageRoute = '/amortization-calculator';
-            break;
-          case 'annuity':
-            pageRoute = '/annuity-calculator';
-            break;
-          case 'pension':
-            pageRoute = '/pension-calculator';
-            break;
-          case 'socialsecurity':
-            pageRoute = '/social-security-calculator';
-            break;
-          // Add more cases for other calculators as you create their pages
-          default:
-            pageRoute = '';
-        }
-        const cardContent = (
-          <div
-            className={`group relative flex flex-col items-start px-6 py-5 rounded-2xl text-left border transition-all duration-200 shadow-md focus:outline-none h-36 bg-white
-              ${isActive
-                ? 'ring-2 ring-primary-500 border-primary-600 shadow-lg scale-105 z-10'
-                : 'border-gray-200 hover:bg-primary-50 hover:shadow-lg hover:scale-105'}
-            `}
-            style={{ minWidth: 0 }}
-          >
-            <div className={`flex items-center mb-2 ${isActive ? 'text-primary-700' : 'text-primary-600'}`}>
-              <Icon className={`h-7 w-7 mr-3 ${isActive ? 'text-primary-700' : 'text-primary-600'}`} />
-              <span className="font-semibold text-lg truncate">{tab.name}</span>
-            </div>
-            <div className="text-xs text-gray-500 group-hover:text-primary-700 group-hover:font-medium transition-colors duration-200 line-clamp-3">
-              {tab.description}
-            </div>
-            {isActive && (
-              <span className="absolute left-4 right-4 -bottom-2 h-1 rounded-b bg-primary-600 animate-fadeIn" />
-            )}
-          </div>
-        );
-        return pageRoute ? (
-          <Link to={pageRoute} key={tab.id} style={{ textDecoration: 'none', width: '100%' }}>
-            {cardContent}
-          </Link>
-        ) : (
-          <button
-            key={tab.id}
-            onClick={() => onTabClick(tab.id)}
-            style={{ width: '100%' }}
-          >
-            {cardContent}
-          </button>
-        );
-      })}
-    </div>
-  );
+  // Compute Live Calculator output
+  const liveResults = useMemo(() => {
+    if (activeLiveCalc === 'sip') {
+      const p = liveAmount;
+      const i = liveRate / 12 / 100;
+      const n = liveTenure * 12;
+      const totalInvested = p * n;
+      const futureValue = p * ((Math.pow(1 + i, n) - 1) / i) * (1 + i);
+      const returns = futureValue - totalInvested;
+      return {
+        primaryLabel: 'Expected Maturity Amount',
+        primaryVal: Math.round(futureValue),
+        sub1Label: 'Total Amount Invested',
+        sub1Val: Math.round(totalInvested),
+        sub2Label: 'Est. Wealth Gain',
+        sub2Val: Math.round(returns)
+      };
+    } else {
+      const p = liveAmount;
+      const r = liveRate / 12 / 100;
+      const n = liveTenure * 12;
+      const emi = (p * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+      const totalPayment = emi * n;
+      const totalInterest = totalPayment - p;
+      return {
+        primaryLabel: 'Monthly EMI Payable',
+        primaryVal: Math.round(emi),
+        sub1Label: 'Principal Loan Amount',
+        sub1Val: Math.round(p),
+        sub2Label: 'Total Interest Payable',
+        sub2Val: Math.round(totalInterest)
+      };
+    }
+  }, [activeLiveCalc, liveAmount, liveRate, liveTenure]);
+
+  // Master Indian Financial Calculators Catalog
+  const allCalculators: CalculatorItem[] = [
+    // 1. Loan & EMI Calculators
+    {
+      id: 'home-loan-emi',
+      name: 'Home Loan EMI Calculator',
+      category: 'loans',
+      icon: Home,
+      description: 'Calculate monthly home loan EMIs, interest amortization, and PMAY subsidy savings.',
+      route: '/home-loan-emi-calculator',
+      badge: 'Popular'
+    },
+    {
+      id: 'personal-loan-emi',
+      name: 'Personal Loan EMI Calculator',
+      category: 'loans',
+      icon: Wallet,
+      description: 'Estimate monthly installments, total interest, and reducing balance schedules.',
+      route: '/personal-loan-emi-calculator',
+      badge: 'High Intent'
+    },
+    {
+      id: 'car-loan-emi',
+      name: 'Car Loan EMI Calculator',
+      category: 'loans',
+      icon: Car,
+      description: 'Plan monthly payments for new and used cars with on-road down payments.',
+      route: '/car-loan-calculator',
+      badge: 'Auto'
+    },
+    {
+      id: 'education-loan-emi',
+      name: 'Education Loan Calculator',
+      category: 'loans',
+      icon: BookOpen,
+      description: 'Calculate post-moratorium EMIs and Section 80E tax deduction benefits.',
+      route: '/student-loan-calculator',
+      badge: 'Tax Saver'
+    },
+    {
+      id: 'gold-loan-emi',
+      name: 'Gold Loan EMI Calculator',
+      category: 'loans',
+      icon: Coins,
+      description: 'Compute monthly interest payments and per-gram gold valuation advances.',
+      route: '/gold-loan-emi-calculator',
+      badge: 'Instant'
+    },
+    {
+      id: 'loan-amortization',
+      name: 'Loan Amortization Schedule',
+      category: 'loans',
+      icon: BarChart2,
+      description: 'View month-by-month and year-by-year principal vs. interest breakdown.',
+      route: '/amortization-calculator',
+      badge: 'Amortization'
+    },
+    {
+      id: 'home-affordability',
+      name: 'Home Affordability Calculator',
+      category: 'loans',
+      icon: Home,
+      description: 'Find out the maximum property cost and loan amount you qualify for.',
+      route: '/home-affordability-calculator',
+      badge: 'Eligibility'
+    },
+    {
+      id: 'rent-vs-buy',
+      name: 'Rent vs. Buy Calculator',
+      category: 'loans',
+      icon: Building2,
+      description: 'Compare financial outcomes of renting a house versus buying with a home loan.',
+      route: '/rent-vs-buy-calculator',
+      badge: 'Analysis'
+    },
+
+    // 2. Investment & Wealth Calculators
+    {
+      id: 'compound-interest',
+      name: 'Compound Interest Calculator',
+      category: 'investments',
+      icon: Percent,
+      description: 'Calculate compounding returns on monthly, quarterly, or annual investments.',
+      route: '/compound-interest-calculator',
+      badge: 'Wealth'
+    },
+    {
+      id: 'investment-growth',
+      name: 'Investment Growth Calculator',
+      category: 'investments',
+      icon: TrendingUp,
+      description: 'Project portfolio maturity value at expected annual rates of return.',
+      route: '/investment-growth-calculator',
+      badge: 'Forecaster'
+    },
+    {
+      id: 'savings-goal',
+      name: 'Savings Goal Calculator',
+      category: 'investments',
+      icon: PiggyBank,
+      description: 'Determine required monthly savings to achieve target financial milestones.',
+      route: '/savings-goal-calculator'
+    },
+    {
+      id: 'emergency-fund',
+      name: 'Emergency Fund Calculator',
+      category: 'investments',
+      icon: ShieldCheck,
+      description: 'Calculate ideal contingency reserves based on 6 to 12 months of expenses.',
+      route: '/emergency-fund-calculator'
+    },
+    {
+      id: 'stock-investment',
+      name: 'Stock Investment Calculator',
+      category: 'investments',
+      icon: DollarSign,
+      description: 'Estimate returns based on equity price appreciation, dividends, and horizon.',
+      route: '/stock-calculator'
+    },
+    {
+      id: 'college-savings',
+      name: 'Child Education / College Fund',
+      category: 'investments',
+      icon: BookOpen,
+      description: 'Plan savings needed for higher education taking education inflation into account.',
+      route: '/college-savings-calculator'
+    },
+    {
+      id: 'inflation-impact',
+      name: 'Inflation Impact Calculator',
+      category: 'investments',
+      icon: TrendingUp,
+      description: 'Estimate how inflation erodes purchasing power of your money over time.',
+      route: '/inflation-calculator'
+    },
+
+    // 3. Tax & Retirement Calculators
+    {
+      id: 'income-tax',
+      name: 'Income Tax Calculator (FY 2025-26)',
+      category: 'tax',
+      icon: Receipt,
+      description: 'Compare tax liabilities between Old and New Tax Regimes with deductions.',
+      route: '/income-tax-calculator',
+      badge: 'Old vs New'
+    },
+    {
+      id: 'capital-gains-tax',
+      name: 'Capital Gains Tax Calculator',
+      category: 'tax',
+      icon: TrendingUp,
+      description: 'Calculate LTCG and STCG taxes on equity shares, mutual funds, and real estate.',
+      route: '/capital-gains-calculator'
+    },
+    {
+      id: 'sales-tax',
+      name: 'GST & Sales Tax Calculator',
+      category: 'tax',
+      icon: PiggyBank,
+      description: 'Calculate GST inclusive and exclusive prices across 5%, 12%, 18%, and 28% slabs.',
+      route: '/sales-tax-calculator'
+    },
+    {
+      id: 'payroll-tax',
+      name: 'Payroll & Salary Take-Home',
+      category: 'tax',
+      icon: Wallet,
+      description: 'Calculate net in-hand salary after Provident Fund (PF), Professional Tax & TDS.',
+      route: '/payroll-tax-calculator'
+    },
+    {
+      id: 'retirement-planner',
+      name: 'Retirement Corpus Planner',
+      category: 'tax',
+      icon: PiggyBank,
+      description: 'Estimate the total retirement nest egg required to sustain your lifestyle.',
+      route: '/retirement-calculator',
+      badge: 'Pensions'
+    },
+    {
+      id: 'pension-annuity',
+      name: 'Pension & Annuity Calculator',
+      category: 'tax',
+      icon: Receipt,
+      description: 'Calculate guaranteed monthly annuity payouts from insurance or NPS.',
+      route: '/annuity-calculator'
+    },
+
+    // 4. Credit Card & Debt Calculators
+    {
+      id: 'credit-card-payoff',
+      name: 'Credit Card Payoff Calculator',
+      category: 'cards',
+      icon: CreditCard,
+      description: 'Find out how long it will take to eliminate revolving credit card debt.',
+      route: '/credit-card-payoff-calculator',
+      badge: 'Debt Relief'
+    },
+    {
+      id: 'credit-card-interest',
+      name: 'Credit Card Interest Calculator',
+      category: 'cards',
+      icon: Percent,
+      description: 'Calculate finance charges levied on outstanding balances at 36% to 42% APR.',
+      route: '/credit-card-interest-calculator'
+    },
+    {
+      id: 'balance-transfer',
+      name: 'Balance Transfer Calculator',
+      category: 'cards',
+      icon: BarChart2,
+      description: 'Determine exact interest savings by transferring high-cost debt to a lower APR card.',
+      route: '/balance-transfer-calculator'
+    },
+    {
+      id: 'debt-snowball',
+      name: 'Debt Payoff & Consolidation',
+      category: 'cards',
+      icon: Wallet,
+      description: 'Prioritize debt repayments using the Avalanche or Snowball strategy.',
+      route: '/debt-payoff-calculator'
+    },
+
+    // 5. Business & Commercial Calculators
+    {
+      id: 'break-even',
+      name: 'Break-Even Sales Calculator',
+      category: 'business',
+      icon: BarChart2,
+      description: 'Calculate the minimum unit sales required to cover fixed and variable business costs.',
+      route: '/break-even-calculator',
+      badge: 'MSME'
+    },
+    {
+      id: 'npv-calculator',
+      name: 'Net Present Value (NPV)',
+      category: 'business',
+      icon: TrendingUp,
+      description: 'Assess profitability of capital investment projects discounting future cash flows.',
+      route: '/npv-calculator'
+    },
+    {
+      id: 'irr-calculator',
+      name: 'Internal Rate of Return (IRR)',
+      category: 'business',
+      icon: Percent,
+      description: 'Calculate the annualized rate of earnings on capital expenditure and ventures.',
+      route: '/irr-calculator'
+    },
+    {
+      id: 'cash-flow',
+      name: 'Business Cash Flow Estimator',
+      category: 'business',
+      icon: DollarSign,
+      description: 'Forecast working capital inflows and outflows to prevent liquidity crunches.',
+      route: '/cash-flow-calculator'
+    },
+    {
+      id: 'asset-depreciation',
+      name: 'Asset Depreciation Calculator',
+      category: 'business',
+      icon: BarChart2,
+      description: 'Estimate straight-line and WDV depreciation for income tax deduction purposes.',
+      route: '/depreciation-calculator'
+    },
+
+    // 6. Currency & International
+    {
+      id: 'currency-converter',
+      name: 'Live Currency Converter',
+      category: 'forex',
+      icon: DollarSign,
+      description: 'Convert INR against USD, EUR, GBP, AED, and 150+ international currencies.',
+      route: '/currency-converter',
+      badge: 'Live Forex'
+    },
+    {
+      id: 'forex-markup',
+      name: 'Foreign Exchange Markup Calculator',
+      category: 'forex',
+      icon: TrendingUp,
+      description: 'Compare bank vs. card forex markups on overseas remittances and spends.',
+      route: '/foreign-exchange-rate-calculator'
+    }
+  ];
+
+  // Filtered Calculators
+  const filteredCalculators = useMemo(() => {
+    return allCalculators.filter((calc) => {
+      // Category Match
+      if (selectedCategory !== 'all' && calc.category !== selectedCategory) {
+        return false;
+      }
+      // Search Match
+      if (searchQuery.trim()) {
+        const q = searchQuery.toLowerCase();
+        const nameMatch = calc.name.toLowerCase().includes(q);
+        const descMatch = calc.description.toLowerCase().includes(q);
+        const badgeMatch = (calc.badge || '').toLowerCase().includes(q);
+        if (!nameMatch && !descMatch && !badgeMatch) return false;
+      }
+      return true;
+    });
+  }, [allCalculators, selectedCategory, searchQuery]);
+
+  // Structured Data JSON-LD
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.bankscart.com/' },
+          { '@type': 'ListItem', position: 2, name: 'Calculators', item: 'https://www.bankscart.com/calculators' }
+        ]
+      },
+      {
+        '@type': 'FinancialService',
+        name: 'BanksCart Financial Calculators Hub',
+        description: 'Comprehensive suite of Indian financial calculators: Home loan EMI, Personal loan EMI, SIP wealth, Income tax, GST, and business valuation tools.',
+        url: 'https://www.bankscart.com/calculators'
+      }
+    ]
+  };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mb-8">
-          <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-            Financial Calculators
-          </h1>
-          <p className="text-xl text-gray-600">
-            Make informed financial decisions with our calculators
-          </p>
-        </div>
+    <div className="min-h-screen bg-[#F8FAFC] text-[#0F172A] font-ibm">
+      <Helmet>
+        <title>Financial Calculators India: Loan EMI, SIP, Income Tax & GST | BanksCart</title>
+        <meta
+          name="description"
+          content="Explore 40+ free Indian financial calculators on BanksCart: Home loan EMI, personal loan EMI, car loan, SIP wealth, income tax (old vs new), GST, and retirement planning tools."
+        />
+        <link rel="canonical" href="https://www.bankscart.com/calculators" />
+        <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
+      </Helmet>
 
-        {/* Categorized Financial Calculators */}
-        <div className="space-y-16">
-          {calculatorCategories.map((category) => {
-            const active = activeTabs[category.title];
-            const selectedCalc = category.calculators.find(c => c.id === active);
-            return (
-              <section key={category.title} className="mb-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-1">{category.title}</h2>
-                {category.description && (
-                  <p className="text-gray-500 mb-6 text-base">{category.description}</p>
-                )}
-                <TabBar tabs={category.calculators} active={active} onTabClick={tabId => handleTabChange(category.title, tabId)} />
-                <div className="bg-white border border-gray-100 rounded-2xl p-8 shadow mt-6 min-h-[56px] flex items-center">
-                  {selectedCalc ? (
-                    <div className="flex items-center gap-4">
-                      <selectedCalc.icon className="h-8 w-8 text-primary-600" />
-                      <div>
-                        <div className="font-semibold text-lg text-gray-900 mb-1">{selectedCalc.name}</div>
-                        <div className="text-gray-600 text-sm">{selectedCalc.description}</div>
-                        <div className="text-primary-500 text-xs mt-2 font-medium">Calculator coming soon...</div>
-                      </div>
-                    </div>
-                  ) : null}
-                </div>
-              </section>
-            );
-          })}
+      {/* Breadcrumb Navigation */}
+      <div className="bg-white border-b border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+          <Breadcrumb path={['Home', 'Calculators']} />
         </div>
       </div>
+
+      {/* ==================== HERO SECTION ==================== */}
+      <section className="bg-gradient-to-b from-[#0F172A] via-[#1E293B] to-[#0F172A] text-white pt-12 pb-16 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#38bdf8_1px,transparent_1px)] [background-size:24px_24px]"></div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center max-w-3xl mx-auto mb-10">
+            <div className="inline-flex items-center gap-2 bg-[#1E3A8A]/60 border border-[#38BDF8]/30 px-3.5 py-1.5 rounded-full text-xs font-semibold text-[#38BDF8] mb-4">
+              <Sparkles className="w-3.5 h-3.5" />
+              Comprehensive Indian Financial Engines 2026
+            </div>
+
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight">
+              Interactive <span className="text-[#38BDF8]">Financial Calculators</span>
+            </h1>
+
+            <p className="mt-4 text-base sm:text-lg text-slate-300 leading-relaxed">
+              Plan loans, investments, taxes, and business cash flows with mathematical precision. 100% free, bank-accurate reducing balance formulas tailored to Indian financial benchmarks.
+            </p>
+          </div>
+
+          {/* Trust Highlights */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 max-w-5xl mx-auto mb-12">
+            <div className="bg-white/5 border border-white/10 rounded-xl p-3 flex items-center gap-2.5">
+              <Calculator className="w-5 h-5 text-[#38BDF8] flex-shrink-0" />
+              <div>
+                <p className="text-xs font-bold text-white">40+ Calculators</p>
+                <p className="text-[10px] text-slate-400">Complete Financial Suite</p>
+              </div>
+            </div>
+            <div className="bg-white/5 border border-white/10 rounded-xl p-3 flex items-center gap-2.5">
+              <Percent className="w-5 h-5 text-emerald-400 flex-shrink-0" />
+              <div>
+                <p className="text-xs font-bold text-white">RBI Compliant</p>
+                <p className="text-[10px] text-slate-400">Reducing Balance Math</p>
+              </div>
+            </div>
+            <div className="bg-white/5 border border-white/10 rounded-xl p-3 flex items-center gap-2.5">
+              <Receipt className="w-5 h-5 text-amber-400 flex-shrink-0" />
+              <div>
+                <p className="text-xs font-bold text-white">FY 2025-26 Tax</p>
+                <p className="text-[10px] text-slate-400">Old vs New Regime</p>
+              </div>
+            </div>
+            <div className="bg-white/5 border border-white/10 rounded-xl p-3 flex items-center gap-2.5">
+              <ShieldCheck className="w-5 h-5 text-purple-400 flex-shrink-0" />
+              <div>
+                <p className="text-xs font-bold text-white">100% Free</p>
+                <p className="text-[10px] text-slate-400">No Sign-Up Required</p>
+              </div>
+            </div>
+          </div>
+
+          {/* ==================== FLAGSHIP EMBEDDED LIVE CALCULATOR WIDGET ==================== */}
+          <div className="bg-white text-[#0F172A] rounded-2xl p-6 sm:p-8 shadow-2xl border border-slate-200 max-w-5xl mx-auto">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-100">
+              <div>
+                <div className="text-[11px] font-bold text-[#1E3A8A] uppercase tracking-wider">Quick Calculation Engine</div>
+                <h3 className="text-lg sm:text-xl font-bold text-[#0F172A]">Test Live Payments &amp; Growth</h3>
+              </div>
+
+              {/* Preset Selector */}
+              <div className="flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl">
+                {[
+                  { id: 'home', label: 'Home Loan' },
+                  { id: 'personal', label: 'Personal Loan' },
+                  { id: 'car', label: 'Car Loan' },
+                  { id: 'sip', label: 'SIP Wealth' }
+                ].map((item) => (
+                  <button
+                    key={item.id}
+                    onClick={() => handleLiveTypeChange(item.id as any)}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                      activeLiveCalc === item.id
+                        ? 'bg-[#1E3A8A] text-white shadow-sm'
+                        : 'text-slate-600 hover:text-slate-900'
+                    }`}
+                  >
+                    {item.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+              {/* Sliders Area */}
+              <div className="lg:col-span-7 space-y-4">
+                {/* Amount Slider */}
+                <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                  <div className="flex justify-between items-center text-xs mb-2">
+                    <span className="font-semibold text-slate-600">
+                      {activeLiveCalc === 'sip' ? 'Monthly SIP Investment' : 'Total Loan Amount'}
+                    </span>
+                    <span className="font-bold text-[#0F172A] text-sm tabular-nums">
+                      ₹{liveAmount.toLocaleString('en-IN')}
+                    </span>
+                  </div>
+                  <input
+                    type="range"
+                    min={activeLiveCalc === 'sip' ? 500 : activeLiveCalc === 'personal' ? 50000 : 200000}
+                    max={activeLiveCalc === 'sip' ? 100000 : activeLiveCalc === 'personal' ? 4000000 : 20000000}
+                    step={activeLiveCalc === 'sip' ? 500 : 25000}
+                    value={liveAmount}
+                    onChange={(e) => setLiveAmount(Number(e.target.value))}
+                    className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
+                  />
+                  <div className="flex justify-between text-[10px] text-slate-400 mt-1">
+                    <span>{activeLiveCalc === 'sip' ? '₹500 / mo' : '₹50,000'}</span>
+                    <span>{activeLiveCalc === 'sip' ? '₹1 Lakh / mo' : '₹2 Crores'}</span>
+                  </div>
+                </div>
+
+                {/* Rate Slider */}
+                <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                  <div className="flex justify-between items-center text-xs mb-2">
+                    <span className="font-semibold text-slate-600">
+                      {activeLiveCalc === 'sip' ? 'Expected Annual Return' : 'Interest Rate (% p.a.)'}
+                    </span>
+                    <span className="font-bold text-[#1E3A8A] text-sm tabular-nums">{liveRate}%</span>
+                  </div>
+                  <input
+                    type="range"
+                    min="5.0"
+                    max="24.0"
+                    step="0.1"
+                    value={liveRate}
+                    onChange={(e) => setLiveRate(Number(e.target.value))}
+                    className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
+                  />
+                  <div className="flex justify-between text-[10px] text-slate-400 mt-1">
+                    <span>5.0%</span>
+                    <span>14.0%</span>
+                    <span>24.0%</span>
+                  </div>
+                </div>
+
+                {/* Tenure Slider */}
+                <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                  <div className="flex justify-between items-center text-xs mb-2">
+                    <span className="font-semibold text-slate-600">Tenure</span>
+                    <span className="font-bold text-[#0F172A] text-sm tabular-nums">
+                      {liveTenure} Years ({liveTenure * 12} Months)
+                    </span>
+                  </div>
+                  <input
+                    type="range"
+                    min="1"
+                    max={activeLiveCalc === 'home' ? 30 : 15}
+                    step="1"
+                    value={liveTenure}
+                    onChange={(e) => setLiveTenure(Number(e.target.value))}
+                    className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
+                  />
+                  <div className="flex justify-between text-[10px] text-slate-400 mt-1">
+                    <span>1 Year</span>
+                    <span>{activeLiveCalc === 'home' ? '30 Years' : '15 Years'}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Result Summary */}
+              <div className="lg:col-span-5 bg-[#0F172A] text-white rounded-xl p-6 border border-slate-700 shadow-md">
+                <span className="text-[11px] font-bold text-[#38BDF8] uppercase tracking-wider">
+                  {liveResults.primaryLabel}
+                </span>
+                <div className="mt-2 text-3xl font-extrabold text-white tabular-nums">
+                  ₹{liveResults.primaryVal.toLocaleString('en-IN')}
+                  {activeLiveCalc !== 'sip' && <span className="text-xs text-slate-400 font-normal"> / month</span>}
+                </div>
+
+                <div className="mt-5 pt-4 border-t border-slate-700 space-y-2.5 text-xs">
+                  <div className="flex justify-between text-slate-300">
+                    <span>{liveResults.sub1Label}:</span>
+                    <span className="font-bold text-white tabular-nums">₹{liveResults.sub1Val.toLocaleString('en-IN')}</span>
+                  </div>
+                  <div className="flex justify-between text-slate-300">
+                    <span>{liveResults.sub2Label}:</span>
+                    <span className="font-bold text-emerald-400 tabular-nums">₹{liveResults.sub2Val.toLocaleString('en-IN')}</span>
+                  </div>
+                </div>
+
+                <Link
+                  to={activeLiveCalc === 'home' ? '/home-loan-emi-calculator' : activeLiveCalc === 'personal' ? '/personal-loan-emi-calculator' : activeLiveCalc === 'car' ? '/car-loan-calculator' : '/investment-growth-calculator'}
+                  className="mt-6 w-full py-2.5 bg-[#A16207] hover:bg-amber-800 text-white rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 shadow"
+                >
+                  Open Dedicated Calculator <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ==================== CALCULATORS DIRECTORY GRID ==================== */}
+      <section className="py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Filter Bar & Search */}
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+            <div>
+              <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#1E3A8A] mb-1">
+                <Layers className="w-3.5 h-3.5" />
+                Complete Financial Directory
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-bold text-[#0F172A]">
+                Browse All Calculators ({filteredCalculators.length} Tools Available)
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-600 mt-1">
+                Filter by category or search by calculator name, financial formula, or use case.
+              </p>
+            </div>
+
+            {/* Search Input */}
+            <div className="relative min-w-[260px]">
+              <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+              <input
+                type="text"
+                placeholder="Search calculator (e.g. EMI, Tax, GST)..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-9 pr-3 py-2 bg-white border border-slate-300 rounded-lg text-xs focus:ring-2 focus:ring-[#1E3A8A] focus:outline-none shadow-sm"
+              />
+            </div>
+          </div>
+
+          {/* Category Filter Pills */}
+          <div className="flex items-center gap-2 overflow-x-auto pb-3 mb-8 scrollbar-none">
+            {[
+              { id: 'all', label: 'All Calculators' },
+              { id: 'loans', label: 'Loan & EMI' },
+              { id: 'investments', label: 'Investments & Wealth' },
+              { id: 'tax', label: 'Income Tax & GST' },
+              { id: 'cards', label: 'Cards & Debt' },
+              { id: 'business', label: 'Business & MSME' },
+              { id: 'forex', label: 'Currency & Forex' }
+            ].map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setSelectedCategory(tab.id)}
+                className={`px-3.5 py-2 rounded-lg text-xs font-bold whitespace-nowrap transition-all flex-shrink-0 ${
+                  selectedCategory === tab.id
+                    ? 'bg-[#1E3A8A] text-white shadow-sm'
+                    : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-100 hover:border-slate-300'
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Calculator Tiles Grid */}
+          {filteredCalculators.length === 0 ? (
+            <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center max-w-xl mx-auto shadow-sm">
+              <div className="w-12 h-12 bg-slate-100 text-slate-400 rounded-full flex items-center justify-center mx-auto mb-3">
+                <Search className="w-6 h-6" />
+              </div>
+              <h3 className="text-base font-bold text-slate-800">No matching calculator found</h3>
+              <p className="text-xs text-slate-500 mt-1">Try searching with a broader term or reset the category filter.</p>
+              <button
+                onClick={() => {
+                  setSearchQuery('');
+                  setSelectedCategory('all');
+                }}
+                className="mt-4 px-4 py-2 bg-[#1E3A8A] text-white rounded-lg text-xs font-bold hover:bg-blue-900"
+              >
+                Reset Filters
+              </button>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {filteredCalculators.map((calc) => {
+                const Icon = calc.icon;
+                return (
+                  <Link
+                    key={calc.id}
+                    to={calc.route}
+                    className="bg-white rounded-2xl border border-slate-200 p-6 flex flex-col justify-between shadow-sm hover:shadow-md hover:border-blue-300 transition-all duration-300 group"
+                  >
+                    <div>
+                      <div className="flex justify-between items-start mb-4">
+                        <div className="w-12 h-12 bg-blue-50 text-[#1E3A8A] rounded-xl flex items-center justify-center group-hover:scale-105 transition-transform">
+                          <Icon className="w-6 h-6" />
+                        </div>
+                        {calc.badge && (
+                          <span className="text-[10px] font-bold text-[#1E3A8A] bg-blue-50 border border-blue-100 px-2 py-0.5 rounded-full uppercase tracking-wider">
+                            {calc.badge}
+                          </span>
+                        )}
+                      </div>
+
+                      <h3 className="text-base font-bold text-[#0F172A] group-hover:text-[#1E3A8A] transition-colors mb-2">
+                        {calc.name}
+                      </h3>
+
+                      <p className="text-xs text-slate-600 leading-relaxed mb-6">
+                        {calc.description}
+                      </p>
+                    </div>
+
+                    <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-[#1E3A8A]">
+                      <span>Open Calculator</span>
+                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* ==================== MATHEMATICAL ACCURACY & FORMULAS GUIDE ==================== */}
+      <section className="py-16 bg-white border-y border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-12">
+            <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#1E3A8A] mb-2">
+              <ShieldCheck className="w-3.5 h-3.5" />
+              Transparent Fiduciary Standards
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#0F172A]">
+              Underlying Mathematical Formulas &amp; Methodology
+            </h2>
+            <p className="text-sm text-slate-600 mt-2">
+              Every calculator on BanksCart adheres strictly to Reserve Bank of India (RBI) compounding guidelines and transparent financial algorithms.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="bg-[#F8FAFC] border border-slate-200 rounded-2xl p-6">
+              <h3 className="text-base font-bold text-[#0F172A] mb-2">Reducing Balance EMI Formula</h3>
+              <p className="text-xs text-slate-600 leading-relaxed mb-3">
+                Calculates true amortization where interest is charged strictly on the declining principal balance each month.
+              </p>
+              <div className="bg-white p-3 rounded-xl border border-slate-200 font-mono text-[11px] text-[#1E3A8A]">
+                EMI = P × r × (1 + r)ⁿ / [(1 + r)ⁿ - 1]
+              </div>
+            </div>
+
+            <div className="bg-[#F8FAFC] border border-slate-200 rounded-2xl p-6">
+              <h3 className="text-base font-bold text-[#0F172A] mb-2">Compound Interest &amp; SIP Wealth</h3>
+              <p className="text-xs text-slate-600 leading-relaxed mb-3">
+                Projects regular monthly recurring investments growing with monthly compounding interest.
+              </p>
+              <div className="bg-white p-3 rounded-xl border border-slate-200 font-mono text-[11px] text-emerald-700">
+                M = P × [((1 + i)ⁿ - 1) / i] × (1 + i)
+              </div>
+            </div>
+
+            <div className="bg-[#F8FAFC] border border-slate-200 rounded-2xl p-6">
+              <h3 className="text-base font-bold text-[#0F172A] mb-2">Income Tax &amp; Surcharge Math</h3>
+              <p className="text-xs text-slate-600 leading-relaxed mb-3">
+                Evaluates slab-wise marginal tax rates, 87A rebate, standard deduction (₹75,000 in FY 2025-26), and health cess.
+              </p>
+              <div className="bg-white p-3 rounded-xl border border-slate-200 font-mono text-[11px] text-amber-800">
+                Tax = Slab Total - 87A + 4% Health/Edu Cess
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ==================== FAQ ACCORDION ==================== */}
+      <section className="py-16 bg-[#F8FAFC]">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10">
+            <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#1E3A8A] mb-2">
+              <HelpCircle className="w-3.5 h-3.5" />
+              Frequently Asked Questions
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#0F172A]">
+              Frequently Asked Questions About Financial Calculations
+            </h2>
+            <p className="text-sm text-slate-600 mt-2">
+              Learn how bank calculations work, why EMIs differ between lenders, and how to optimize your debt.
+            </p>
+          </div>
+
+          <div className="space-y-3">
+            {[
+              {
+                q: 'How accurate are the EMI calculations on BanksCart?',
+                a: 'BanksCart calculators use standard reducing-balance actuarial formulas identical to the core banking software utilized by SBI, HDFC, and ICICI. Minor differences in final quotes may arise only from one-time processing charges, statutory stamp duties, or initial broken-period interest.'
+              },
+              {
+                q: 'What is the difference between Flat Interest Rate and Reducing Balance Rate?',
+                a: 'A flat interest rate charges interest on your full original principal throughout the loan tenure, which effectively doubles your true borrowing cost. Reducing balance interest is charged only on the remaining unpaid principal each month, saving thousands of rupees. All BanksCart calculators use reducing balance.'
+              },
+              {
+                q: 'Can I calculate pre-payment savings on my home or personal loan?',
+                a: 'Yes. Our specialized Loan Amortization and Prepayment calculators allow you to model part-prepayments (lump sum or annual percentage increases) to see exactly how many years you can shave off your loan and how much interest you save.'
+              },
+              {
+                q: 'Are the tax calculators updated for the latest Union Budget?',
+                a: 'Yes. Our Income Tax Calculator incorporates the latest Union Budget provisions for FY 2025-26 (AY 2026-27), including the revised standard deduction of ₹75,000 under the New Tax Regime and updated slab thresholds.'
+              }
+            ].map((faq, idx) => (
+              <div key={idx} className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm p-5">
+                <h3 className="font-bold text-sm text-[#0F172A] mb-2">{faq.q}</h3>
+                <p className="text-xs text-slate-600 leading-relaxed">{faq.a}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
     </div>
   );
 };

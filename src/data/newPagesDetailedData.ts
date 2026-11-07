@@ -305,6 +305,8 @@ function generateGenericStructuredContent(pathname: string): DetailedPageContent
     entity = "Official Bank Calendar";
   } else if (pathname.includes('atm')) {
     entity = "National ATM Network";
+  } else if (pathname.includes('/bonds/') || pathname.includes('bonds') || pathname.includes('gilt') || pathname.includes('g-sec')) {
+    entity = "Sovereign & Corporate Debt";
   } else if (pathname.includes('mutual-funds') || pathname.includes('arn-code') || pathname.includes('asset-management')) {
     entity = "Mutual Funds Association";
   }
@@ -361,6 +363,9 @@ function generateGenericStructuredContent(pathname: string): DetailedPageContent
   } else if (pathname.includes('salary') || pathname.includes('bonus')) {
     category = "Salary Structures & Benefits";
     catKey = "salary";
+  } else if (pathname.includes('/bonds/') || pathname.includes('bonds') || pathname.includes('g-sec') || pathname.includes('gilt')) {
+    category = "Bonds & Government Securities";
+    catKey = "bonds";
   }
 
   // --- Dynamic text matrices ---
@@ -399,6 +404,14 @@ function generateGenericStructuredContent(pathname: string): DetailedPageContent
       ["Medium-term (1 to 3 Years)", "7.00% - 7.25% compounding", "7.50% - 7.75% (special high-yield 399D bucket for retail wealth)"],
       ["Long-term (Above 3 to 10 Years)", "6.50% - 6.75% compounding", "7.00% - 7.25% (stable wealth building with tax saver exemptions)"],
       ["Premature Withdrawal Penalty", "Nominal 1.00% flat penalty", "Waived for specific emergency or retirement schemes under institutional rules"]
+    ];
+  } else if (catKey === 'bonds') {
+    ratesHeaders = ["Bond Category & Security", "Indicative Annual Yield (p.a.)", "Sovereign / Credit Rating"];
+    ratesRows = [
+      ["Government of India Dated Securities (G-Secs)", "7.05% - 7.20% semi-annual coupon", "Sovereign Guarantee (Zero Default Risk)"],
+      ["91-Day / 364-Day Treasury Bills (T-Bills)", "6.80% - 6.95% annualized yield", "Central Government Backed via RBI"],
+      ["AAA-Rated Public Sector Undertaking (PSU) Bonds", "7.60% - 8.10% p.a. fixed interest", "CRISIL / ICRA AAA Rated"],
+      ["High-Yield Corporate Non-Convertible Debentures (NCD)", "8.50% - 9.50% p.a. compounding", "AA+ / AAA Secured Debentures"]
     ];
   } else if (catKey === 'holidays') {
     ratesHeaders = ["Holiday Event Category", "Applicable States & Zones", "Digital Banking Channel Availability"];

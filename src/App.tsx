@@ -43,6 +43,7 @@ import CarLoanEMI from './pages/calculators/CarLoanEMI';
 import IncomeTaxCalculator from './pages/calculators/IncomeTaxCalculator';
 import AadharCard from './pages/AadharCard';
 import BankDetails from './pages/BankDetails';
+import BankDirectoryPage from './pages/BankDirectoryPage';
 import BecomePartnerPage from './pages/BecomePartnerPage';
 import BusinessLoanPage from './pages/BusinessLoanPage';
 import CarInsurancePage from './pages/CarInsurancePage';
@@ -145,11 +146,6 @@ import DynamicAegonLifePage from './pages/insurance/DynamicAegonLifePage';
 import SbiVsHdfcPersonalLoan from './pages/blogs/SbiVsHdfcPersonalLoan';
 import BestLifetimeFreeCreditCards from './pages/blogs/BestLifetimeFreeCreditCards';
 import CompanyRegistrationHub from './pages/legal/CompanyRegistrationHub';
-import HomeLoanEMIEmbed from './pages/embed/HomeLoanEMIEmbed';
-import SSYCalculatorEmbed from './pages/embed/SSYCalculatorEmbed';
-import BorrowingSentimentReport2026 from './pages/research/BorrowingSentimentReport2026';
-
-
 
 // Import common components
 import LoanApplyPage from './pages/LoanApply';
@@ -309,7 +305,7 @@ const App: React.FC = () => {
 
   return (
     <AuthProvider>
-      <Router>
+      <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
         <SEOManager />
         <LoginModal />
         <OnboardingModal />
@@ -362,29 +358,38 @@ const App: React.FC = () => {
 
                 <Route path="/" element={<Home openApplyModal={openApplyModal} openEligibilityModal={openEligibilityModal} openCibilModal={openCibilModal} />} />
                 <Route path="/resources/loan-rates" element={<LoanRates />} />
+                <Route path="/loan-rates" element={<LoanRates />} />
                 <Route path="/eligibility" element={<Eligibility />} />
                 <Route path="/resources/ifsc-finder" element={<IFSCFinder />} />
+                <Route path="/resources/ifsc-finder/:ifscCode" element={<IFSCFinder />} />
+                <Route path="/ifsc/:ifscCode" element={<IFSCFinder />} />
                 <Route path="/calculators" element={<Calculators />} />
                 <Route path="/status" element={<Status />} />
+                <Route path="/track-application" element={<Status />} />
                 <Route path="/pan-card" element={<PanCard />} />
+                <Route path="/resources/pan-card" element={<PanCard />} />
+                <Route path="/resources/PanCard" element={<PanCard />} />
                 <Route path="/resources/aadhar-pan" element={<AadharCard />} />
+                <Route path="/resources/aadhaar-pan" element={<AadharCard />} />
+                <Route path="/aadhar-pan" element={<AadharCard />} />
                 <Route path="/MortgageCalculatorPage" element={<MortgageCalculatorPage />} />
 
                 {/* Calculator specific routes */}
                 <Route path="/personal-loan-emi-calculator" element={<PersonalLoanEMI />} />
                 <Route path="/gold-loan-emi-calculator" element={<GoldLoanEMICalculator />} />
-                <Route path="/home-loan-emi-calculator" element={<HomeLoanEMI />} />
+                <Route path="/home-loan-emi-calculator" element={<HomeLoanEMI openApplyModal={openApplyModal} openEligibilityModal={openEligibilityModal} openCibilModal={openCibilModal} />} />
                 <Route path="/car-loan-emi-calculator" element={<CarLoanEMI />} />
                 <Route path="/income-tax-calculator" element={<IncomeTaxCalculator />} />
 
                 {/* Loan product specific routes */}
-                <Route path="/plot-construction-loan" element={<PlotConstructionLoan openApplyModal={openApplyModal} />} />
-                <Route path="/home-loan-compare" element={<HomeLoanCompare openApplyModal={openApplyModal} />} />
+                <Route path="/plot-construction-loan" element={<PlotConstructionLoan openApplyModal={openApplyModal} openEligibilityModal={openEligibilityModal} openCibilModal={openCibilModal} />} />
+                <Route path="/home-loan-compare" element={<HomeLoanCompare openApplyModal={openApplyModal} openEligibilityModal={openEligibilityModal} openCibilModal={openCibilModal} />} />
                 <Route path="/loans" element={<LoansOverviewPage />} />              <Route path="/insurance" element={<InsuranceOverviewPage />} /> {/* NEW: Route for the Insurance e */}
                 <Route path="/investment" element={<InvestmentsOverviewPage />} /> {/* NEW: Route for the Investments e */}
                 <Route path="/cards" element={<CardsOverviewPage />} /> {/* NEW: Route for the Cards e */}
                 <Route path="/loans/home" element={<HomeLoanPage openApplyModal={openApplyModal} />} />
                 <Route path="/loans/home-loan" element={<HomeLoanPage openApplyModal={openApplyModal} />} />
+                <Route path="/loans/home/overview" element={<Navigate to="/loans/home-loan" replace />} />
                 <Route path="/loans/home-loan-balance-transfer" element={<HomeLoanPage openApplyModal={openApplyModal} />} />
                 <Route path="/loans/personal" element={<PersonalLoanPage openApplyModal={openApplyModal} openEligibilityModal={openEligibilityModal} />} />
                 <Route path="/loans/personal-loan" element={<PersonalLoanPage openApplyModal={openApplyModal} openEligibilityModal={openEligibilityModal} />} />
@@ -393,11 +398,17 @@ const App: React.FC = () => {
                 <Route path="/eligibility/personal-loan" element={<PersonalLoanPage openApplyModal={openApplyModal} openEligibilityModal={openEligibilityModal} />} />
                 <Route path="/business-loan" element={<BusinessLoanPage openApplyModal={openApplyModal} />} />
                 <Route path="/loans/business" element={<Navigate to="/business-loan" replace />} />
+                <Route path="/loans/business/overview" element={<Navigate to="/business-loan" replace />} />
                 <Route path="/loans/business-loan" element={<BusinessLoanPage openApplyModal={openApplyModal} />} />
                 <Route path="/loans/car" element={<CarLoanPage openApplyModal={openApplyModal} />} />
+                <Route path="/loans/car/overview" element={<Navigate to="/loans/car" replace />} />
                 <Route path="/loans/used-car" element={<UsedCarLoanPage openApplyModal={openApplyModal} openEligibilityModal={openEligibilityModal} openCibilModal={openCibilModal} />} />
+                <Route path="/loans/used-car/overview" element={<Navigate to="/loans/used-car" replace />} />
                 <Route path="/loans/two-wheeler" element={<TwoWheelerLoanPage openApplyModal={openApplyModal} openCibilModal={openCibilModal} />} />
+                <Route path="/loans/two-wheeler/overview" element={<Navigate to="/loans/two-wheeler" replace />} />
                 <Route path="/loans/education" element={<EducationLoanPage openApplyModal={openApplyModal} />} />
+                <Route path="/loans/education/overview" element={<Navigate to="/loans/education" replace />} />
+                <Route path="/loans/gold/overview" element={<Navigate to="/resources/gold-rates" replace />} />
 
                 {/* Investment product specific routes */}
                 <Route path="/investment/fixed-deposit" element={<FixedDepositPage openApplyModal={openApplyModal} />} />
@@ -439,7 +450,12 @@ const App: React.FC = () => {
                 <Route path="/cards/credit/:subPath" element={<DynamicCreditCardPage />} />
                 <Route path="/investment/:type/:subPath" element={<DynamicInvestmentPage />} />
                 <Route path="/calculators/:category/:subPath" element={<DynamicCalculatorPage />} />
+                <Route path="/recharge" element={<DynamicRechargePage />} />
                 <Route path="/recharge/:subPath" element={<DynamicRechargePage />} />
+                <Route path="/bill-payment" element={<DynamicRechargePage />} />
+                <Route path="/bill-payment/:subPath" element={<DynamicRechargePage />} />
+                <Route path="/bill-payments" element={<DynamicRechargePage />} />
+                <Route path="/bill-payments/:subPath" element={<DynamicRechargePage />} />
                 <Route path="/aadhar-card" element={<DynamicAadharCardPage />} />
                 <Route path="/aadhar-card/aadhaar-card-services" element={<DynamicAadharCardPage />} />
                 <Route path="/aadhar-card/:subPath" element={<DynamicAadharCardPage />} />
@@ -739,9 +755,13 @@ const App: React.FC = () => {
                 <Route path="/insurance/term-life" element={<TermInsurancePage />} />
                 <Route path="/resources/gold-rates" element={<GoldLoansPage openApplyModal={openApplyModal} openEligibilityModal={openEligibilityModal} />} />
                 <Route path="/resources/pincodes" element={<PincodesPage />} />
+                <Route path="/resources/pincodes/:pincode" element={<PincodesPage />} />
+                <Route path="/pincode/:pincode" element={<PincodesPage />} />
                 <Route path="/become-partner" element={<BecomePartnerPage openApplyModal={openApplyModal} openPartnerModal={openPartnerModal} />} />
                 <Route path="/resources/ppf" element={<PPFPage openApplyModal={openApplyModal} />} />
                 <Route path="/resources/income-tax" element={<IncomeTaxPage openApplyModal={openApplyModal} />} />
+                <Route path="/banks" element={<BankDirectoryPage openEligibilityModal={openEligibilityModal} />} />
+                <Route path="/all-banks" element={<BankDirectoryPage openEligibilityModal={openEligibilityModal} />} />
                 <Route path="/bank-details/:bankId" element={<BankDetails openEligibilityModal={openEligibilityModal} />} />
                 <Route path="/loan-apply" element={<LoanApplyPage />} />
                 <Route path="/blog" element={<BlogsOverviewPage openApplyModal={openApplyModal} />} />

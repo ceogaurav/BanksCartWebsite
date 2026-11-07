@@ -62,15 +62,21 @@ const CibilCheckerForm: React.FC<CibilCheckerFormProps> = ({ className = '', sou
 
   // Authenticate user on component mount
   useEffect(() => {
+    const isDummyKey = !firebaseConfig.apiKey || firebaseConfig.apiKey.startsWith('AIzaSyDummy');
     const authenticate = async () => {
       try {
         if (typeof __initial_auth_token !== 'undefined') {
           await signInWithCustomToken(auth, __initial_auth_token);
-        } else {
+        } else if (!isDummyKey) {
           await signInAnonymously(auth);
+        } else {
+          setUserId((prev) => prev || crypto.randomUUID());
+          setIsAuthReady(true);
         }
       } catch (error) {
-        console.error("Firebase authentication error in checker:", error);
+        console.warn("Firebase auth note in checker:", error);
+        setUserId((prev) => prev || crypto.randomUUID());
+        setIsAuthReady(true);
       }
     };
 
@@ -78,14 +84,14 @@ const CibilCheckerForm: React.FC<CibilCheckerFormProps> = ({ className = '', sou
       if (user) {
         setUserId(user.uid);
       } else {
-        setUserId(crypto.randomUUID());
+        setUserId((prev) => prev || crypto.randomUUID());
       }
       setIsAuthReady(true);
     });
 
     authenticate();
     return () => unsubscribe();
-  }, [auth]);
+  }, []);
 
   const validateForm = () => {
     const newErrors: { [key: string]: string } = {};

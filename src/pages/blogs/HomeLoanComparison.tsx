@@ -1,433 +1,274 @@
-import React from "react";
-import { motion } from "framer-motion";
+import React from 'react';
+import { Helmet } from 'react-helmet-async';
+import { Link } from 'react-router-dom';
+import Breadcrumb from '../../components/Breadcrumb';
+import { AuthorByline } from '../../components/blog/AuthorByline';
 import {
-  ArrowLeft,
-  Scale, // Used for the overall comparison
-  Banknote, // Used for Fees and Waivers
-  TrendingUp, // Used for SBI's scale
-  Landmark, // Used for HDFC's legacy/Premier
-  Zap, // Used for CTA / Digital
-  GanttChart, // Used for the Comparative Table
-  Shield, // Used for Axis/Other Benefits
-  Percent, // Used for Interest Rate focus
-} from "lucide-react";
-import { Link } from "react-router-dom";
+  Scale,
+  Building,
+  CheckCircle2,
+  Percent,
+  Clock,
+  ShieldCheck,
+  TrendingDown,
+  ArrowRight,
+  HelpCircle,
+  FileCheck2
+} from 'lucide-react';
 
-// --- CONFIGURATION START ---
-const ARTICLE_TITLE = "Home Loan Interest Rates Comparison 2025 – SBI vs HDFC vs ICICI vs AXIS";
-const ARTICLE_SUBTITLE =
-  "The definitive 2025 breakdown: Comparing floating rates, processing fees, CIBIL concessions, and hidden product features from India's four financial giants for the optimal home loan.";
-const BACK_LINK = "/blog";
-const AUTHOR = "Real Estate Finance Expert";
-const DATE = "Nov 19, 2025";
-const READ_TIME = "22 min read (Comparative Analysis)";
-// --- CONFIGURATION END ---
+export default function HomeLoanComparison() {
+  const canonicalUrl = "https://www.bankscart.com/blog/Home-Loan-Comparison";
+  const articleTitle = "Home Loan Comparison 2026: SBI vs HDFC vs ICICI vs Axis Bank";
+  const articleDesc = "Complete 2026 comparison of home loan interest rates, processing fees, loan-to-value ratios, and special concessions across India's top four mortgage lenders.";
 
-// ====================================================================
-// FRAMEWORK COMPONENTS (Replicating the modular structure)
-// ====================================================================
-
-// Framer Motion variants (Reused for consistent, smooth interaction)
-const pageVariants = {
-  hidden: { opacity: 0, y: 50 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.5,
-      when: "beforeChildren",
-      staggerChildren: 0.1,
+  const blogPostingSchema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": canonicalUrl
     },
-  },
-};
+    "headline": articleTitle,
+    "description": articleDesc,
+    "image": "https://www.bankscart.com/assets/images/bankscart-logo.png",
+    "author": {
+      "@type": "Person",
+      "name": "Amit Khurana",
+      "jobTitle": "Senior Banking Advisor & Principal Reviewer",
+      "url": "https://www.bankscart.com/author/amit-khurana"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "BanksCart",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://www.bankscart.com/assets/images/bankscart-logo.png"
+      }
+    },
+    "datePublished": "2026-01-18T09:00:00+05:30",
+    "dateModified": "2026-11-06T10:00:00+05:30"
+  };
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.4 } },
-};
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://www.bankscart.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Blog",
+        "item": "https://www.bankscart.com/blog"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Home Loan Comparison",
+        "item": canonicalUrl
+      }
+    ]
+  };
 
-// Reusable Components
-const SectionHeader: React.FC<{ icon: React.ReactNode; text: string }> = ({
-  icon,
-  text,
-}) => (
-  <motion.h2
-    className="text-3xl sm:text-4xl font-extrabold text-indigo-100 mt-12 mb-6 border-b-2 border-indigo-400/30 pb-3 drop-shadow-md flex items-center space-x-3"
-    variants={itemVariants}
-  >
-    {icon}
-    <span>{text}</span>
-  </motion.h2>
-);
+  const bankComparison = [
+    {
+      bank: "State Bank of India (SBI)",
+      rate: "8.50% - 9.25%",
+      processingFee: "0.17% (Min ₹2,000, Max ₹10,000 + GST)",
+      maxTenure: "30 Years",
+      highlight: "Lowest benchmark spread for borrowers with CIBIL > 750; zero prepayment penalty on floating rate loans.",
+      tag: "Best for Low Total Interest"
+    },
+    {
+      bank: "HDFC Bank",
+      rate: "8.70% - 9.40%",
+      processingFee: "Up to 0.50% of loan amount (Min ₹3,000 + GST)",
+      maxTenure: "30 Years",
+      highlight: "Rapid digital pre-approval, doorstep service, and extensive pan-India builder tie-ups.",
+      tag: "Best for Processing Speed"
+    },
+    {
+      bank: "ICICI Bank",
+      rate: "8.75% - 9.50%",
+      processingFee: "0.50% - 1.00% (Min ₹3,000 + GST)",
+      maxTenure: "30 Years",
+      highlight: "Pre-approved sanctions for existing salary account holders; instant online sanction letter.",
+      tag: "Best for Existing Salary Customers"
+    },
+    {
+      bank: "Axis Bank",
+      rate: "8.75% - 9.45%",
+      processingFee: "Up to 1.00% (Min ₹10,000 + GST)",
+      maxTenure: "30 Years",
+      highlight: "Special Shubh Aarambh product with 12 EMI waivers upon consistent, on-time repayments.",
+      tag: "Best for Long-Term Rewards"
+    }
+  ];
 
-const SubHeader: React.FC<{ text: string }> = ({ text }) => (
-  <motion.h3
-    className="text-xl sm:text-2xl font-bold text-yellow-300 mt-8 mb-4 drop-shadow"
-    variants={itemVariants}
-  >
-    {text}
-  </motion.h3>
-);
-
-const Paragraph: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <motion.p
-    className="text-lg text-white mb-6 leading-relaxed"
-    variants={itemVariants}
-  >
-    {children}
-  </motion.p>
-);
-
-const KeyTakeaway: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <motion.div
-    className="bg-indigo-600/70 p-4 sm:p-6 rounded-lg shadow-xl border-l-4 border-yellow-400 my-6"
-    variants={itemVariants}
-  >
-    <p className="font-bold text-yellow-200 text-lg">Key Takeaway:</p>
-    <p className="text-white mt-1 italic">{children}</p>
-  </motion.div>
-);
-
-const BulletPoint: React.FC<{ text: string }> = ({ text }) => (
-  <motion.li
-    className="flex items-start mb-3 text-white text-lg"
-    variants={itemVariants}
-  >
-    <Percent className="w-5 h-5 text-yellow-400 flex-shrink-0 mt-1 mr-3" />
-    <span>{text}</span>
-  </motion.li>
-);
-
-// Custom Table Component for the Comparison
-const ComparisonTable: React.FC = () => (
-  <motion.div variants={itemVariants} className="overflow-x-auto my-8">
-    <table className="min-w-full bg-indigo-900 border border-indigo-700 rounded-lg shadow-2xl">
-      <thead>
-        <tr className="bg-indigo-700 text-yellow-300">
-          <th className="py-3 px-4 text-left font-bold border-b border-indigo-700">
-            Category
-          </th>
-          <th className="py-3 px-4 text-left font-bold border-b border-indigo-700">
-            SBI
-          </th>
-          <th className="py-3 px-4 text-left font-bold border-b border-indigo-700">
-            HDFC Bank
-          </th>
-          <th className="py-3 px-4 text-left font-bold border-b border-indigo-700">
-            ICICI Bank
-          </th>
-          <th className="py-3 px-4 text-left font-bold border-b border-indigo-700">
-            Axis Bank
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        {/* Row 1: Starting Rate */}
-        <tr className="border-b border-indigo-700 hover:bg-indigo-800 transition-colors duration-200">
-          <td className="py-3 px-4 font-semibold text-white">Starting Rate (p.a.)</td>
-          <td className="py-3 px-4 text-green-300 font-bold">~7.50%</td>
-          <td className="py-3 px-4 text-white">~7.90%</td>
-          <td className="py-3 px-4 text-white">~8.75%</td>
-          <td className="py-3 px-4 text-white">~8.35%</td>
-        </tr>
-        {/* Row 2: Rate Linkage */}
-        <tr className="border-b border-indigo-700 hover:bg-indigo-800 transition-colors duration-200">
-          <td className="py-3 px-4 font-semibold text-white">Rate Linkage</td>
-          <td className="py-3 px-4 text-white">EBLR (Repo Rate)</td>
-          <td className="py-3 px-4 text-white">Repo Rate</td>
-          <td className="py-3 px-4 text-white">Repo Rate/MCLR</td>
-          <td className="py-3 px-4 text-white">Repo Rate/MCLR</td>
-        </tr>
-        {/* Row 3: Processing Fee (Min-Max) */}
-        <tr className="border-b border-indigo-700 hover:bg-indigo-800 transition-colors duration-200">
-          <td className="py-3 px-4 font-semibold text-white">Processing Fee</td>
-          <td className="py-3 px-4 text-green-300">0.35% (Max ₹10k)</td>
-          <td className="py-3 px-4 text-white">Up to 0.50%</td>
-          <td className="py-3 px-4 text-red-300">Up to 2.00%</td>
-          <td className="py-3 px-4 text-white">Up to 1.00%</td>
-        </tr>
-        {/* Row 4: Max Tenure */}
-        <tr className="border-b border-indigo-700 hover:bg-indigo-800 transition-colors duration-200">
-          <td className="py-3 px-4 font-semibold text-white">Max Tenure</td>
-          <td className="py-3 px-4 text-white">30 Years</td>
-          <td className="py-3 px-4 text-white">30 Years</td>
-          <td className="py-3 px-4 text-white">30 Years</td>
-          <td className="py-3 px-4 text-white">30 Years</td>
-        </tr>
-        {/* Row 5: Special Feature */}
-        <tr className="hover:bg-indigo-800 transition-colors duration-200">
-          <td className="py-3 px-4 font-semibold text-white">Unique Benefit</td>
-          <td className="py-3 px-4 text-white">Low fees & Women concession</td>
-          <td className="py-3 px-4 text-white">TruFixed option</td>
-          <td className="py-3 px-4 text-white">Instant Pre-Approved Loans</td>
-          <td className="py-3 px-4 text-white">EMI Waivers (Fast Forward)</td>
-        </tr>
-      </tbody>
-    </table>
-  </motion.div>
-);
-
-// ====================================================================
-// MAIN PAGE COMPONENT (The new blog content)
-// ====================================================================
-
-const HomeLoanComparison: React.FC = () => {
   return (
-    <div className="min-h-screen bg-gray-900 font-sans">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div className="min-h-screen bg-slate-50 font-sans text-slate-800 pt-20 sm:pt-24 pb-16">
+      <Helmet>
+        <title>{`${articleTitle} | BanksCart`}</title>
+        <meta name="description" content={articleDesc} />
+        <link rel="canonical" href={canonicalUrl} />
+        <script type="application/ld+json">
+          {JSON.stringify(blogPostingSchema)}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify(breadcrumbSchema)}
+        </script>
+      </Helmet>
 
-        {/* Back Link and Header Section */}
-        <motion.header
-          className="text-white pb-8 border-b border-indigo-500/50"
-          initial="hidden"
-          animate="visible"
-          variants={pageVariants}
-        >
-          <motion.div variants={itemVariants} className="mb-6">
-            <Link
-              to={BACK_LINK}
-              className="text-indigo-400 hover:text-indigo-300 transition-colors duration-200 flex items-center text-sm font-medium"
-            >
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Finance Strategy Blogs
-            </Link>
-          </motion.div>
-
-          <motion.h1
-            className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white mb-4 leading-tight"
-            variants={itemVariants}
-          >
-            {ARTICLE_TITLE}
-          </motion.h1>
-          <motion.p
-            className="text-xl sm:text-2xl text-indigo-300 italic mb-6"
-            variants={itemVariants}
-          >
-            {ARTICLE_SUBTITLE}
-          </motion.p>
-
-          <motion.div
-            className="flex flex-wrap text-sm text-indigo-400 font-mono space-x-4"
-            variants={itemVariants}
-          >
-            <span>
-              By: **{AUTHOR}**
-            </span>
-            <span>
-              | Date: **{DATE}**
-            </span>
-            <span>
-              | Read Time: **{READ_TIME}**
-            </span>
-          </motion.div>
-        </motion.header>
-
-        {/* Main Article Content */}
-        <motion.article
-          className="mt-8"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }}
-          variants={pageVariants}
-        >
-          {/* Section 1: Introduction */}
-          <motion.section variants={itemVariants}>
-            <SectionHeader
-              icon={<Scale className="w-6 h-6 text-yellow-300" />}
-              text="1. The 2025 Home Loan Landscape: Finding the Best Deal"
-            />
-            <Paragraph>
-              The 2025 home loan market in India is fiercely competitive, driven by a stable **Repo Rate-linked Lending Rate (RLLR/EBLR)** regime. While interest rates remain closely linked across the top four lenders—**SBI, HDFC Bank, ICICI Bank, and Axis Bank**—the true value lies in the subtle differences: **CIBIL-based concessions, variable processing fees, and unique loan products.** This analysis cuts through the marketing noise to reveal who offers the best deal for different borrower profiles.
-            </Paragraph>
-            <KeyTakeaway>
-              All four banks peg their floating rates to the RBI's benchmark (Repo Rate). Therefore, the actual lowest effective rate is determined by your **credit score (750+ is key)** and whether you qualify for concessions.
-            </KeyTakeaway>
-          </motion.section>
-          
-          <div className="border-t border-indigo-700/50 my-8"></div>
-
-          {/* Section 2: SBI - The Volume Leader and Lowest Base Rate */}
-          <motion.section
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-          >
-            <SectionHeader
-              icon={<TrendingUp className="w-6 h-6 text-yellow-300" />}
-              text="2. State Bank of India (SBI): The Lowest Entry Point"
-            />
-            <Paragraph>
-              As India's largest lender, **SBI** consistently targets the lowest base rate, often starting at **~7.50% p.a. onwards** for the best CIBIL scores. Its massive scale allows it to minimize processing fees, making its upfront cost the most attractive.
-            </Paragraph>
-            <SubHeader text="Key Features of SBI Home Loans" />
-            <ul className="list-none space-y-3 pl-0">
-              <BulletPoint text="Lowest Starting Rate: Often 0.10% to 0.50% lower than its private bank competitors for high-CIBIL borrowers." />
-              <BulletPoint text="Processing Fee Cap: SBI's fee (0.35% of loan amount) is capped at a low **₹10,000**, offering huge savings on loans over ₹30 Lakhs." />
-              <BulletPoint text="Women Borrower Concession: Offers a standard **0.05% interest rate concession** for women applicants." />
-              <BulletPoint text="No Prepayment Penalty: True for all floating rate loans, a standard but crucial feature." />
-            </ul>
-          </motion.section>
-
-          <div className="border-t border-indigo-700/50 my-8"></div>
-
-          {/* Section 3: HDFC Bank - The Premier Private Player */}
-          <motion.section
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-          >
-            <SectionHeader
-              icon={<Landmark className="w-6 h-6 text-yellow-300" />}
-              text="3. HDFC Bank: Trust, Speed, and Hybrid Rates"
-            />
-            <Paragraph>
-              **HDFC Bank** (post-merger) commands a significant market share and is renowned for its quick, transparent processing. Its floating rates start competitively at **~7.90% p.a.** but its distinct advantage lies in its product flexibility, particularly the **TruFixed Loan** option.
-            </Paragraph>
-            <SubHeader text="HDFC's Product Edge" />
-            <ul className="list-none space-y-3 pl-0">
-              <BulletPoint text="TruFixed Loan: Offers a fixed rate for the first 2-3 years, converting to a floating rate thereafter. Ideal for those who fear short-term rate volatility." />
-              <BulletPoint text="Competitive Processing Fees: Up to 0.50% of the loan amount, with a low minimum of around ₹3,300." />
-              <BulletPoint text="High LTV Ratio: Offers high Loan-to-Value (LTV) ratios, financing up to 90% of the property cost for loans up to ₹30 Lakhs." />
-            </ul>
-            <KeyTakeaway>
-              Choose HDFC Bank if you value a blend of **fixed-rate security** for the initial tenure and require a fast, high-LTV loan processing experience.
-            </KeyTakeaway>
-          </motion.section>
-
-          <div className="border-t border-indigo-700/50 my-8"></div>
-
-          {/* Section 4: ICICI Bank - The Digital Frontrunner */}
-          <motion.section
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-          >
-            <SectionHeader
-              icon={<Zap className="w-6 h-6 text-yellow-300" />}
-              text="4. ICICI Bank: Digital Speed and Top-Up Flexibility"
-            />
-            <Paragraph>
-              **ICICI Bank** has a higher starting rate (around **~8.75% p.a.** for top CIBIL scores) but excels in digital integration and product ecosystems. They are the market leaders in offering instant, pre-approved loan sanctions to existing customers via their digital channels.
-            </Paragraph>
-            <SubHeader text="ICICI's Cost Consideration" />
-            <ul className="list-none space-y-3 pl-0">
-              <BulletPoint text="Instant Sanctions: Their pre-approved home loan facility provides immediate sanction letters, simplifying the property purchase negotiation." />
-              <BulletPoint text="Top-Up Loans: Offers highly flexible and quick Top-Up Home Loans with a longer tenure (up to 20 years), ideal for renovation or other financial needs." />
-              <BulletPoint text="High Processing Fees: Be cautious of the processing fee, which can be **up to 2.00%** of the loan amount. This can significantly increase the total upfront cost compared to SBI." />
-            </ul>
-          </motion.section>
-
-          <div className="border-t border-indigo-700/50 my-8"></div>
-
-          {/* Section 5: Axis Bank - The Scheme Specialist */}
-          <motion.section
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-          >
-            <SectionHeader
-              icon={<Shield className="w-6 h-6 text-yellow-300" />}
-              text="5. Axis Bank: EMI Waivers and Product Innovation"
-            />
-            <Paragraph>
-              **Axis Bank** starts at a competitive **~8.35% p.a.** and positions itself as the innovation-focused private bank. While their rate is slightly higher than SBI and HDFC's entry points, they offer unique loan schemes designed to reward timely repayment.
-            </Paragraph>
-            <SubHeader text="The 'Fast Forward' Advantage" />
-            <ul className="list-none space-y-3 pl-0">
-              <BulletPoint text="EMI Waivers: The **Fast Forward Home Loan** scheme offers a waiver of up to 12 EMIs upon regular repayment, leading to substantial long-term savings." />
-              <BulletPoint text="Shubh Aarambh Home Loan: A specialized scheme with a lower interest rate for customers who maintain a minimum balance or meet other banking relationship criteria." />
-              <BulletPoint text="Floating Rate Tenure: Maximum tenure of 30 years for floating rates, but only 20 years for fixed-rate options." />
-            </ul>
-          </motion.section>
-
-          <div className="border-t border-indigo-700/50 my-8"></div>
-
-          {/* Section 6: Side-by-Side Comparison Table */}
-          <motion.section
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-          >
-            <SectionHeader
-              icon={<GanttChart className="w-6 h-6 text-yellow-300" />}
-              text="6. The Ultimate Rate Showdown: Comparison Table 2025"
-            />
-            <Paragraph>
-              A snapshot comparison of the key financial metrics for a prime borrower (CIBIL 750+). Note that the lowest rate shown is for the most creditworthy customer, and actual rates depend on your loan amount and risk profile.
-            </Paragraph>
-
-            <ComparisonTable />
-          </motion.section>
-
-          <div className="border-t border-indigo-700/50 my-8"></div>
-
-          {/* Section 7: Final Verdict and Strategy */}
-          <motion.section
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-          >
-            <SectionHeader
-              icon={<Scale className="w-6 h-6 text-yellow-300" />}
-              text="7. Final Verdict: Which Bank is Right for You?"
-            />
-            <Paragraph>
-              The "best" bank depends entirely on your priority:
-            </Paragraph>
-
-            <SubHeader text="For the Cost-Conscious Borrower (Best CIBIL Score)" />
-            <Paragraph>
-              **SBI** is the uncontested winner due to the combination of the lowest base rate (~7.50% p.a.) and the lowest capped processing fee (max ₹10,000). Every ₹1 saved on processing fees is a direct saving.
-            </Paragraph>
-
-            <SubHeader text="For Stability and Flexibility" />
-            <Paragraph>
-              **HDFC Bank** is the strong choice for those who want a **fixed-rate buffer** (TruFixed loan) in the early years or require seamless digital service with high LTV financing.
-            </Paragraph>
-
-            <SubHeader text="For Loyalty and Unique Benefits" />
-            <Paragraph>
-              **Axis Bank's** EMI waiver schemes offer the best long-term value for reliable borrowers. If you plan to hold the loan for 15+ years and have excellent repayment history, the waived EMIs can easily offset a slightly higher starting rate.
-            </Paragraph>
-            
-            <SubHeader text="For Speed and Existing ICICI Customers" />
-            <Paragraph>
-              **ICICI Bank** is best if you are an existing customer who can secure an instant pre-approved loan, or if you anticipate needing an easy top-up loan in the future. However, be prepared to negotiate the potentially higher processing fee.
-            </Paragraph>
-          </motion.section>
-
-          <div className="border-t border-indigo-700/50 my-8"></div>
-
-          {/* Call to Action (Replicating the structure and style of the original CTA) */}
-          <motion.section
-            className="text-center bg-indigo-700/50 p-10 rounded-xl shadow-2xl mt-12 mb-10"
-            variants={pageVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-          >
-            <motion.h2
-              className="text-3xl sm:text-4xl font-extrabold text-white mb-4 drop-shadow-lg flex items-center justify-center space-x-3"
-              variants={itemVariants}
-            >
-              <Zap className="w-8 h-8 text-yellow-300" />
-              <span>Implement the Strategy: Get Your Personalized Rate Quote</span>
-            </motion.h2>
-            <motion.p
-              className="text-lg text-blue-100 mb-8 max-w-2xl mx-auto leading-relaxed"
-              variants={itemVariants}
-            >
-              Don't guess which bank offers the lowest rate. Use a soft inquiry to compare all four offers based on your exact CIBIL score and financial profile—in under 5 minutes, without affecting your credit history.
-            </motion.p>
-            <motion.div variants={itemVariants}>
-              <button
-                onClick={() => alert("Personalized Home Loan Quote Comparison Initiated!")}
-                className="bg-white text-indigo-600 px-8 py-4 rounded-full font-bold text-lg shadow-lg hover:bg-gray-100 transition-all duration-300 ease-in-out transform hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-50"
-              >
-                Start My Free Rate Comparison Now
-              </button>
-            </motion.div>
-          </motion.section>
-
-        </motion.article>
-
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6">
+        <Breadcrumb path={["Home", "Blog", "Home Loan Comparison"]} />
       </div>
+
+      <article className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 sm:space-y-12">
+        {/* Header */}
+        <header className="space-y-4 border-b border-slate-200 pb-8">
+          <div className="flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-wider text-blue-700">
+            <span className="bg-blue-50 border border-blue-200 px-3 py-1 rounded-full">
+              Lender Comparison
+            </span>
+            <span className="text-slate-400">•</span>
+            <span className="text-slate-500 font-mono">Updated November 2026</span>
+            <span className="text-slate-400">•</span>
+            <span className="text-slate-500">11 min read</span>
+          </div>
+
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight">
+            Home Loan Comparison 2026: SBI vs HDFC vs ICICI vs Axis Bank
+          </h1>
+
+          <p className="text-base sm:text-lg text-slate-600 leading-relaxed">
+            Choosing the right home loan lender can save you lakhs of rupees in interest and processing charges over a 20 to 30 year tenure. Here is an unbiased, side-by-side analysis of India's four largest mortgage providers.
+          </p>
+
+          <AuthorByline authorSlug="amit-khurana" />
+        </header>
+
+        {/* Master Comparison Table */}
+        <section className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 shadow-sm space-y-6">
+          <h2 className="text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
+            <Scale className="w-6 h-6 text-blue-700" />
+            1. 2026 Rate & Fee Matrix Across Top 4 Lenders
+          </h2>
+          <p className="text-sm text-slate-600">
+            Interest rates shown are linked to RBI External Benchmark Lending Rates (EBLR/Repo Rate) for salaried borrowers with CIBIL score &ge; 750:
+          </p>
+
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-sm border-collapse">
+              <thead>
+                <tr className="bg-slate-100 text-slate-900 border-b border-slate-200">
+                  <th className="p-3 font-bold">Lender</th>
+                  <th className="p-3 font-bold">Interest Rate</th>
+                  <th className="p-3 font-bold">Processing Fee</th>
+                  <th className="p-3 font-bold">Max Tenure</th>
+                  <th className="p-3 font-bold">Category Verdict</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-200 text-slate-700 font-sans">
+                {bankComparison.map((item, idx) => (
+                  <tr key={idx} className="hover:bg-slate-50">
+                    <td className="p-3 font-semibold text-slate-900">{item.bank}</td>
+                    <td className="p-3 tabular-nums font-mono font-bold text-emerald-700">{item.rate}</td>
+                    <td className="p-3 text-xs">{item.processingFee}</td>
+                    <td className="p-3">{item.maxTenure}</td>
+                    <td className="p-3">
+                      <span className="text-xs font-semibold bg-blue-50 text-blue-800 px-2.5 py-1 rounded-full border border-blue-200">
+                        {item.tag}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        {/* Individual Breakdown Cards */}
+        <div className="space-y-6">
+          <h2 className="text-2xl font-bold text-slate-900 tracking-tight">
+            2. Detailed Bank-by-Bank Analysis
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {bankComparison.map((item, idx) => (
+              <div key={idx} className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-sm space-y-3">
+                <div className="flex items-center justify-between">
+                  <h3 className="font-bold text-slate-900 text-lg">{item.bank}</h3>
+                  <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200">
+                    {item.rate}
+                  </span>
+                </div>
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                  {item.highlight}
+                </p>
+                <div className="pt-2 text-xs text-slate-500 font-mono">
+                  Processing Fee: {item.processingFee}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Crucial Factors to Compare */}
+        <section className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 shadow-sm space-y-4">
+          <h2 className="text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
+            <CheckCircle2 className="w-6 h-6 text-emerald-600" />
+            3. Four Things to Verify Before Signing
+          </h2>
+          <ul className="space-y-3 text-sm text-slate-700 list-disc list-inside leading-relaxed">
+            <li><strong>Spread vs Benchmark:</strong> Understand that while the Repo Rate is set by RBI, each bank adds a credit spread. SBI historically offers the tightest spread for 750+ CIBIL scores.</li>
+            <li><strong>Reset Frequency:</strong> Repo rate adjustments must be passed on to borrowers every quarter (3 months). Check whether your bank resets on the 1st of each month following an RBI policy update.</li>
+            <li><strong>Prepayment Rules:</strong> Ensure 100% zero prepayment and foreclosure charges for individual floating-rate home loans, guaranteed under RBI circulars.</li>
+            <li><strong>Legal & Valuation Fee Transparency:</strong> Verify whether upfront administrative valuation fees are capped or deducted automatically from your first tranche disbursement.</li>
+          </ul>
+        </section>
+
+        {/* Financial Conversion Callout */}
+        <div className="bg-slate-900 text-white rounded-3xl p-8 sm:p-10 shadow-xl border border-slate-800 text-center space-y-4">
+          <span className="text-xs font-bold text-amber-400 uppercase tracking-wider bg-amber-400/10 px-3 py-1 rounded-md border border-amber-400/20 inline-block">
+            Compare & Save Lakhs
+          </span>
+          <h3 className="text-2xl sm:text-3xl font-black text-white">
+            Find the Best Mortgage Rate for Your Profile
+          </h3>
+          <p className="text-sm text-slate-300 max-w-xl mx-auto leading-relaxed">
+            Compare actual quotes from SBI, HDFC, ICICI, Axis and 25+ other lenders. Check eligibility and calculate monthly savings in under 2 minutes.
+          </p>
+          <div className="pt-2 flex flex-wrap justify-center gap-4">
+            <Link
+              to="/home-loan-compare"
+              className="px-6 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm shadow-md transition-all"
+            >
+              Compare Home Loans Now &rarr;
+            </Link>
+            <Link
+              to="/home-loan-emi-calculator"
+              className="px-6 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-sm border border-white/20 transition-all"
+            >
+              Home Loan EMI Calculator
+            </Link>
+          </div>
+        </div>
+
+        {/* Regulatory Disclosure */}
+        <div className="p-6 bg-slate-100 rounded-2xl border border-slate-200 text-xs text-slate-600 leading-relaxed space-y-2 font-sans">
+          <div className="flex items-center gap-2 text-slate-800 font-bold uppercase tracking-wider">
+            <ShieldCheck className="w-4 h-4 text-blue-700" />
+            <span>Regulatory Notice & Banking Disclaimer</span>
+          </div>
+          <p>
+            BanksCart is an independent digital loan comparison portal. Interest rates and processing fees mentioned are sourced from official bank schedules and regulatory filings as of November 2026 and are subject to change based on applicant CIBIL score, loan quantum, and property location.
+          </p>
+        </div>
+      </article>
     </div>
   );
-};
-
-export default HomeLoanComparison;
+}

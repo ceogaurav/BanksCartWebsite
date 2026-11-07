@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { CheckCircle, Loader2, AlertTriangle, User, Mail, Phone, Calendar, MapPin, Briefcase, Building } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { initializeApp } from 'firebase/app';
+import { initializeApp, getApps, getApp } from 'firebase/app';
 import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from 'firebase/auth';
 import { getFirestore, collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
@@ -414,7 +414,7 @@ const Eligibility: React.FC<EligibilityPageProps> = ({ openApplyModal }) => {
 
   const appId = typeof __app_id !== 'undefined' ? __app_id : firebaseConfig.projectId || 'default-app-id';
 
-  const app = initializeApp(firebaseConfig);
+  const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
   const db = getFirestore(app);
   const auth = getAuth(app);
 
@@ -422,16 +422,21 @@ const Eligibility: React.FC<EligibilityPageProps> = ({ openApplyModal }) => {
   const [isAuthReady, setIsAuthReady] = useState(false);
 
   useEffect(() => {
+    const isDummyKey = !firebaseConfig.apiKey || firebaseConfig.apiKey.startsWith('AIzaSyDummy');
     const authenticate = async () => {
       try {
         if (typeof __initial_auth_token !== 'undefined') {
           await signInWithCustomToken(auth, __initial_auth_token);
-        } else {
+        } else if (!isDummyKey) {
           await signInAnonymously(auth);
+        } else {
+          setUserId((prev) => prev || crypto.randomUUID());
+          setIsAuthReady(true);
         }
       } catch (error) {
-        console.error("Firebase authentication error:", error);
-        setSubmissionError("Failed to authenticate for submission.");
+        console.warn("Firebase auth note in Eligibility:", error);
+        setUserId((prev) => prev || crypto.randomUUID());
+        setIsAuthReady(true);
       }
     };
 
@@ -439,7 +444,7 @@ const Eligibility: React.FC<EligibilityPageProps> = ({ openApplyModal }) => {
       if (user) {
         setUserId(user.uid);
       } else {
-        setUserId(crypto.randomUUID());
+        setUserId((prev) => prev || crypto.randomUUID());
       }
       setIsAuthReady(true);
     });

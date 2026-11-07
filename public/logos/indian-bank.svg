@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 120" width="400" height="120">
+  <rect width="400" height="120" rx="12" fill="#FFFFFF"/>
+  <!-- Indian Bank Tri-Arc Globe Emblem -->
+  <g transform="translate(25, 20)">
+    <circle cx="40" cy="40" r="38" fill="#003366"/>
+    <path d="M40 10 A 30 30 0 0 1 70 40 L 58 40 A 18 18 0 0 0 40 22 Z" fill="#E65100"/>
+    <path d="M70 40 A 30 30 0 0 1 40 70 L 40 58 A 18 18 0 0 0 58 40 Z" fill="#FFB300"/>
+    <path d="M40 70 A 30 30 0 0 1 10 40 L 22 40 A 18 18 0 0 0 40 58 Z" fill="#E65100"/>
+    <circle cx="40" cy="40" r="8" fill="#FFFFFF"/>
+  </g>
+  <!-- Text -->
+  <text x="120" y="55" font-family="'IBM Plex Sans', sans-serif" font-size="28" font-weight="900" fill="#003366" letter-spacing="-0.5">Indian Bank</text>
+  <text x="122" y="80" font-family="'IBM Plex Sans', sans-serif" font-size="11" font-weight="700" fill="#E65100" letter-spacing="1">YOUR TECH-FRIENDLY BANK</text>
+</svg>

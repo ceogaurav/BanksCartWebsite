@@ -7,7 +7,8 @@ import {
   HandCoins, CreditCard, Clock, Hourglass, PiggyBank as SavingsIcon, Home, Building2, User,
   Shield, Landmark, ReceiptText as TaxIcon, HandCoins as DownPaymentIcon // Icons for home affordability
 } from 'lucide-react'; // Lucide icons
-import ApplyButton from '../../components/common/ApplyButton'; // Assuming this path is correct
+import ApplyButton from '../../components/common/ApplyButton';
+import Breadcrumb from '../../components/Breadcrumb'; // Assuming this path is correct
 
 // --- Helper Functions ---
 // Formats a number into INR currency format
@@ -302,11 +303,20 @@ const HomeAffordabilityCalculatorPage: React.FC<HomeAffordabilityCalculatorPageP
 
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 py-8 font-inter text-gray-800">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-slate-50 py-8 font-sans text-slate-800">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Breadcrumb Navigation */}
+        <div className="mb-6">
+          <Breadcrumb
+            items={[
+              { label: 'Calculators', path: '/calculators' },
+              { label: 'Home Affordability Calculator' }
+            ]}
+          />
+        </div>
         {/* Hero Section */}
         <motion.div
-          className="text-center mb-12 bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-8 rounded-3xl shadow-xl"
+          className="text-center mb-8 bg-gradient-to-r from-[#0F172A] via-[#1E3A8A] to-[#0F172A] text-white p-8 sm:p-10 rounded-2xl shadow-xl border border-slate-700/50"
           variants={sectionVariants}
           initial="hidden"
           whileInView="visible"
@@ -317,7 +327,7 @@ const HomeAffordabilityCalculatorPage: React.FC<HomeAffordabilityCalculatorPageP
             variants={itemVariants}
           >
             Discover Your Dream Home's Price with Our{' '}
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 to-orange-300">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-amber-300 to-amber-100">
               Home Affordability Calculator.
             </span>
           </motion.h1>
@@ -333,9 +343,7 @@ const HomeAffordabilityCalculatorPage: React.FC<HomeAffordabilityCalculatorPageP
               <ApplyButton
                 loanType="Home Loan - Affordability Check"
                 openApplyModal={openApplyModal}
-                className="bg-white text-blue-600 px-8 py-4 rounded-full font-bold text-lg shadow-lg
-                           hover:bg-gray-100 transition-all duration-300 ease-in-out transform hover:-translate-y-1
-                           focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-50"
+                className="bg-amber-500 hover:bg-amber-400 text-slate-950 px-8 py-3.5 rounded-xl font-bold text-base shadow-lg transition-all inline-block"
               >
                 Get Home Loan Advice
               </ApplyButton>
@@ -345,28 +353,40 @@ const HomeAffordabilityCalculatorPage: React.FC<HomeAffordabilityCalculatorPageP
 
         {/* Home Affordability Calculator Section */}
         <motion.div
-          className="bg-white rounded-3xl shadow-2xl p-6 md:p-10 w-full border border-blue-100 mb-12"
+          className="bg-white rounded-2xl shadow-sm p-6 sm:p-8 w-full border border-slate-200 mb-10"
           variants={sectionVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
         >
-          <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-blue-600 drop-shadow-md">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-8 text-center flex items-center justify-center">
             <Home className="inline-block w-9 h-9 mr-3 text-indigo-500" /> Estimate Your Home Buying Power
           </h2>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
             {/* Input Controls Section */}
-            <div className="space-y-8 p-4 bg-gray-50 rounded-2xl border border-gray-100 shadow-inner">
+            <div className="space-y-6 p-6 bg-slate-50/70 rounded-xl border border-slate-200">
               <h3 className="text-2xl font-bold text-gray-800 mb-4 flex items-center">
                 <User className="w-6 h-6 mr-2 text-blue-600" /> Your Financial Profile
               </h3>
 
               {/* Annual Income */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="annualIncome" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Annual Household Income: <span className="text-purple-600">{formatCurrency(annualIncome)}</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="annualIncome" className="text-sm font-semibold text-slate-700">
+                    Annual Household Income
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="text"
+                  value={formatNumberWithCommas(annualIncome)}
+                  onChange={handleAnnualIncomeChange}
+                  onBlur={(e) => setAnnualIncome(Number(e.target.value.replace(/,/g, '')))}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  inputMode="numeric"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="annualIncome"
@@ -375,23 +395,27 @@ const HomeAffordabilityCalculatorPage: React.FC<HomeAffordabilityCalculatorPageP
                   step="50000"
                   value={annualIncome}
                   onChange={handleAnnualIncomeChange}
-                  className="w-full h-2 bg-gradient-to-r from-purple-300 to-purple-500 rounded-lg appearance-none cursor-pointer accent-purple-600"
-                />
-                <input
-                  type="text"
-                  value={formatNumberWithCommas(annualIncome)}
-                  onChange={handleAnnualIncomeChange}
-                  onBlur={(e) => setAnnualIncome(Number(e.target.value.replace(/,/g, '')))}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-purple-500 focus:border-purple-500 transition-all"
-                  inputMode="numeric"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
 
               {/* Down Payment */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="downPayment" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Available Down Payment: <span className="text-teal-600">{formatCurrency(downPayment)}</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="downPayment" className="text-sm font-semibold text-slate-700">
+                    Available Down Payment
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="text"
+                  value={formatNumberWithCommas(downPayment)}
+                  onChange={handleDownPaymentChange}
+                  onBlur={(e) => setDownPayment(Number(e.target.value.replace(/,/g, '')))}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  inputMode="numeric"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="downPayment"
@@ -400,23 +424,27 @@ const HomeAffordabilityCalculatorPage: React.FC<HomeAffordabilityCalculatorPageP
                   step="50000"
                   value={downPayment}
                   onChange={handleDownPaymentChange}
-                  className="w-full h-2 bg-gradient-to-r from-teal-300 to-teal-500 rounded-lg appearance-none cursor-pointer accent-teal-600"
-                />
-                <input
-                  type="text"
-                  value={formatNumberWithCommas(downPayment)}
-                  onChange={handleDownPaymentChange}
-                  onBlur={(e) => setDownPayment(Number(e.target.value.replace(/,/g, '')))}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-teal-500 focus:border-teal-500 transition-all"
-                  inputMode="numeric"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
 
               {/* Monthly Debts */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="monthlyDebts" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Total Monthly Debts (Car, Student, CC Min.): <span className="text-orange-600">{formatCurrency(monthlyDebts)}</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="monthlyDebts" className="text-sm font-semibold text-slate-700">
+                    Total Monthly Debts (Car, Student, CC Min.)
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="text"
+                  value={formatNumberWithCommas(monthlyDebts)}
+                  onChange={handleMonthlyDebtsChange}
+                  onBlur={(e) => setMonthlyDebts(Number(e.target.value.replace(/,/g, '')))}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  inputMode="numeric"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="monthlyDebts"
@@ -425,15 +453,7 @@ const HomeAffordabilityCalculatorPage: React.FC<HomeAffordabilityCalculatorPageP
                   step="1000"
                   value={monthlyDebts}
                   onChange={handleMonthlyDebtsChange}
-                  className="w-full h-2 bg-gradient-to-r from-orange-300 to-orange-500 rounded-lg appearance-none cursor-pointer accent-orange-600"
-                />
-                <input
-                  type="text"
-                  value={formatNumberWithCommas(monthlyDebts)}
-                  onChange={handleMonthlyDebtsChange}
-                  onBlur={(e) => setMonthlyDebts(Number(e.target.value.replace(/,/g, '')))}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-orange-500 focus:border-orange-500 transition-all"
-                  inputMode="numeric"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
 
@@ -445,9 +465,21 @@ const HomeAffordabilityCalculatorPage: React.FC<HomeAffordabilityCalculatorPageP
 
               {/* Interest Rate */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="interestRate" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Expected Mortgage Interest Rate (%): <span className="text-red-600">{interestRate}%</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="interestRate" className="text-sm font-semibold text-slate-700">
+                    Expected Mortgage Interest Rate (%)
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="number"
+                  value={interestRate}
+                  onChange={handleInterestRateChange}
+                  onBlur={(e) => setInterestRate(Number(e.target.value))}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  step="0.1"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="interestRate"
@@ -456,23 +488,28 @@ const HomeAffordabilityCalculatorPage: React.FC<HomeAffordabilityCalculatorPageP
                   step="0.1"
                   value={interestRate}
                   onChange={handleInterestRateChange}
-                  className="w-full h-2 bg-gradient-to-r from-red-300 to-red-500 rounded-lg appearance-none cursor-pointer accent-red-600"
-                />
-                <input
-                  type="number"
-                  value={interestRate}
-                  onChange={handleInterestRateChange}
-                  onBlur={(e) => setInterestRate(Number(e.target.value))}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-red-500 focus:border-red-500 transition-all"
-                  step="0.1"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
 
               {/* Loan Term Years */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="loanTermYears" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Desired Loan Term (Years): <span className="text-green-600">{loanTermYears} Years</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="loanTermYears" className="text-sm font-semibold text-slate-700">
+                    Desired Loan Term (Years)
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="number"
+                  value={loanTermYears}
+                  onChange={handleLoanTermYearsChange}
+                  onBlur={(e) => setLoanTermYears(Number(e.target.value))}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  min="5"
+                  max="30"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="loanTermYears"
@@ -481,24 +518,27 @@ const HomeAffordabilityCalculatorPage: React.FC<HomeAffordabilityCalculatorPageP
                   step="1"
                   value={loanTermYears}
                   onChange={handleLoanTermYearsChange}
-                  className="w-full h-2 bg-gradient-to-r from-green-300 to-green-500 rounded-lg appearance-none cursor-pointer accent-green-600"
-                />
-                <input
-                  type="number"
-                  value={loanTermYears}
-                  onChange={handleLoanTermYearsChange}
-                  onBlur={(e) => setLoanTermYears(Number(e.target.value))}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-green-500 focus:border-green-500 transition-all"
-                  min="5"
-                  max="30"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
 
               {/* Annual Property Tax Rate */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="annualPropertyTaxRate" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Annual Property Tax Rate (% of Home Value): <span className="text-yellow-600">{annualPropertyTaxRate}%</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="annualPropertyTaxRate" className="text-sm font-semibold text-slate-700">
+                    Annual Property Tax Rate (% of Home Value)
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="number"
+                  value={annualPropertyTaxRate}
+                  onChange={handleAnnualPropertyTaxRateChange}
+                  onBlur={(e) => setAnnualPropertyTaxRate(Number(e.target.value))}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  step="0.01"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="annualPropertyTaxRate"
@@ -507,23 +547,27 @@ const HomeAffordabilityCalculatorPage: React.FC<HomeAffordabilityCalculatorPageP
                   step="0.01"
                   value={annualPropertyTaxRate}
                   onChange={handleAnnualPropertyTaxRateChange}
-                  className="w-full h-2 bg-gradient-to-r from-yellow-300 to-yellow-500 rounded-lg appearance-none cursor-pointer accent-yellow-600"
-                />
-                <input
-                  type="number"
-                  value={annualPropertyTaxRate}
-                  onChange={handleAnnualPropertyTaxRateChange}
-                  onBlur={(e) => setAnnualPropertyTaxRate(Number(e.target.value))}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-yellow-500 focus:border-yellow-500 transition-all"
-                  step="0.01"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
 
               {/* Annual Home Insurance */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="annualHomeInsurance" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Annual Home Insurance: <span className="text-pink-600">{formatCurrency(annualHomeInsurance)}</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="annualHomeInsurance" className="text-sm font-semibold text-slate-700">
+                    Annual Home Insurance
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="text"
+                  value={formatNumberWithCommas(annualHomeInsurance)}
+                  onChange={handleAnnualHomeInsuranceChange}
+                  onBlur={(e) => setAnnualHomeInsurance(Number(e.target.value.replace(/,/g, '')))}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  inputMode="numeric"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="annualHomeInsurance"
@@ -532,23 +576,27 @@ const HomeAffordabilityCalculatorPage: React.FC<HomeAffordabilityCalculatorPageP
                   step="1000"
                   value={annualHomeInsurance}
                   onChange={handleAnnualHomeInsuranceChange}
-                  className="w-full h-2 bg-gradient-to-r from-pink-300 to-pink-500 rounded-lg appearance-none cursor-pointer accent-pink-600"
-                />
-                <input
-                  type="text"
-                  value={formatNumberWithCommas(annualHomeInsurance)}
-                  onChange={handleAnnualHomeInsuranceChange}
-                  onBlur={(e) => setAnnualHomeInsurance(Number(e.target.value.replace(/,/g, '')))}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-pink-500 focus:border-pink-500 transition-all"
-                  inputMode="numeric"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
 
               {/* Monthly HOA Fees */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="monthlyHoaFees" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Monthly HOA Fees: <span className="text-gray-600">{formatCurrency(monthlyHoaFees)}</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="monthlyHoaFees" className="text-sm font-semibold text-slate-700">
+                    Monthly HOA Fees
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="text"
+                  value={formatNumberWithCommas(monthlyHoaFees)}
+                  onChange={handleMonthlyHoaFeesChange}
+                  onBlur={(e) => setMonthlyHoaFees(Number(e.target.value.replace(/,/g, '')))}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  inputMode="numeric"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="monthlyHoaFees"
@@ -557,21 +605,13 @@ const HomeAffordabilityCalculatorPage: React.FC<HomeAffordabilityCalculatorPageP
                   step="100"
                   value={monthlyHoaFees}
                   onChange={handleMonthlyHoaFeesChange}
-                  className="w-full h-2 bg-gradient-to-r from-gray-300 to-gray-500 rounded-lg appearance-none cursor-pointer accent-gray-600"
-                />
-                <input
-                  type="text"
-                  value={formatNumberWithCommas(monthlyHoaFees)}
-                  onChange={handleMonthlyHoaFeesChange}
-                  onBlur={(e) => setMonthlyHoaFees(Number(e.target.value.replace(/,/g, '')))}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-gray-500 focus:border-gray-500 transition-all"
-                  inputMode="numeric"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
             </div>
 
             {/* Results Display Section */}
-            <div className="p-6 bg-gradient-to-br from-blue-500 to-indigo-600 text-white rounded-2xl shadow-xl flex flex-col justify-center items-center text-center">
+            <div className="p-6 sm:p-8 bg-[#0F172A] text-white rounded-2xl shadow-xl border border-slate-800 flex flex-col justify-between text-left">
               <h3 className="text-2xl md:text-3xl font-bold mb-4">Your Estimated Affordability</h3>
 
               {calculations.affordabilityWarning ? (
@@ -592,7 +632,7 @@ const HomeAffordabilityCalculatorPage: React.FC<HomeAffordabilityCalculatorPageP
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.5, type: 'spring', damping: 20, stiffness: 300 }}
-                    className="text-5xl md:text-6xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 to-orange-300 drop-shadow-lg"
+                    className="text-5xl md:text-6xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-amber-300 to-amber-100 drop-shadow-lg"
                   >
                     {formatCurrency(calculations.maxAffordableHomePrice)}
                   </motion.div>
@@ -601,31 +641,31 @@ const HomeAffordabilityCalculatorPage: React.FC<HomeAffordabilityCalculatorPageP
               )}
 
               <div className="w-full space-y-4 text-lg mt-8">
-                <motion.div variants={itemVariants} className="flex justify-between items-center bg-blue-700/30 p-3 rounded-lg">
+                <motion.div variants={itemVariants} className="flex justify-between items-center bg-slate-800/80 border border-slate-700/60 p-3 rounded-xl text-sm sm:text-base font-mono tabular-nums">
                   <span className="font-medium flex items-center gap-2"><DollarSign className="w-5 h-5" /> Max Loan Amount</span>
                   <span className="font-bold text-white">{formatCurrency(calculations.maxLoanAmount)}</span>
                 </motion.div>
-                <motion.div variants={itemVariants} className="flex justify-between items-center bg-blue-700/30 p-3 rounded-lg">
+                <motion.div variants={itemVariants} className="flex justify-between items-center bg-slate-800/80 border border-slate-700/60 p-3 rounded-xl text-sm sm:text-base font-mono tabular-nums">
                   <span className="font-medium flex items-center gap-2"><DownPaymentIcon className="w-5 h-5" /> Your Down Payment</span>
                   <span className="font-bold text-white">{formatCurrency(downPayment)}</span>
                 </motion.div>
-                <motion.div variants={itemVariants} className="flex justify-between items-center bg-blue-700/30 p-3 rounded-lg">
+                <motion.div variants={itemVariants} className="flex justify-between items-center bg-slate-800/80 border border-slate-700/60 p-3 rounded-xl text-sm sm:text-base font-mono tabular-nums">
                   <span className="font-medium flex items-center gap-2"><IndianRupee className="w-5 h-5" /> Est. Monthly Mortgage (P&I)</span>
                   <span className="font-bold text-white">{formatCurrency(calculations.estimatedMonthlyPI)}</span>
                 </motion.div>
-                <motion.div variants={itemVariants} className="flex justify-between items-center bg-blue-700/30 p-3 rounded-lg">
+                <motion.div variants={itemVariants} className="flex justify-between items-center bg-slate-800/80 border border-slate-700/60 p-3 rounded-xl text-sm sm:text-base font-mono tabular-nums">
                   <span className="font-medium flex items-center gap-2"><TaxIcon className="w-5 h-5" /> Est. Monthly Property Tax</span>
                   <span className="font-bold text-white">{formatCurrency(calculations.estimatedMonthlyPropertyTax)}</span>
                 </motion.div>
-                <motion.div variants={itemVariants} className="flex justify-between items-center bg-blue-700/30 p-3 rounded-lg">
+                <motion.div variants={itemVariants} className="flex justify-between items-center bg-slate-800/80 border border-slate-700/60 p-3 rounded-xl text-sm sm:text-base font-mono tabular-nums">
                   <span className="font-medium flex items-center gap-2"><Shield className="w-5 h-5" /> Est. Monthly Home Insurance</span>
                   <span className="font-bold text-white">{formatCurrency(calculations.estimatedMonthlyInsurance)}</span>
                 </motion.div>
-                <motion.div variants={itemVariants} className="flex justify-between items-center bg-blue-700/30 p-3 rounded-lg">
+                <motion.div variants={itemVariants} className="flex justify-between items-center bg-slate-800/80 border border-slate-700/60 p-3 rounded-xl text-sm sm:text-base font-mono tabular-nums">
                   <span className="font-medium flex items-center gap-2"><Building2 className="w-5 h-5" /> Est. Monthly HOA Fees</span>
                   <span className="font-bold text-white">{formatCurrency(calculations.estimatedMonthlyHoaFees)}</span>
                 </motion.div>
-                <motion.div variants={itemVariants} className="flex justify-between items-center bg-blue-700/30 p-3 rounded-lg">
+                <motion.div variants={itemVariants} className="flex justify-between items-center bg-slate-800/80 border border-slate-700/60 p-3 rounded-xl text-sm sm:text-base font-mono tabular-nums">
                   <span className="font-medium flex items-center gap-2"><CreditCard className="w-5 h-5" /> Other Monthly Debts</span>
                   <span className="font-bold text-white">{formatCurrency(monthlyDebts)}</span>
                 </motion.div>
@@ -633,7 +673,7 @@ const HomeAffordabilityCalculatorPage: React.FC<HomeAffordabilityCalculatorPageP
                   <span className="font-medium flex items-center gap-2"><Wallet className="w-5 h-5" /> Total Est. Monthly Outflow</span>
                   <span className="font-bold text-white">{formatCurrency(calculations.totalEstimatedMonthlyPayment)}</span>
                 </motion.div>
-                <motion.div variants={itemVariants} className="flex justify-between items-center bg-blue-700/30 p-3 rounded-lg">
+                <motion.div variants={itemVariants} className="flex justify-between items-center bg-slate-800/80 border border-slate-700/60 p-3 rounded-xl text-sm sm:text-base font-mono tabular-nums">
                   <span className="font-medium flex items-center gap-2"><User className="w-5 h-5" /> Your Gross Monthly Income</span>
                   <span className="font-bold text-white">{formatCurrency(calculations.gmi)}</span>
                 </motion.div>
@@ -704,7 +744,7 @@ const HomeAffordabilityCalculatorPage: React.FC<HomeAffordabilityCalculatorPageP
         </motion.div>
 
         {/* Informational Sections */}
-        <div className="bg-white border border-gray-100 rounded-2xl p-8 shadow-lg mt-6 space-y-10">
+        <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm mt-8 space-y-10">
           <motion.section variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }}>
             <h2 className="text-3xl font-bold text-gray-900 mb-4 flex items-center">
               <Lightbulb className="w-8 h-8 mr-3 text-yellow-500" /> What is a Home Affordability Calculator?
@@ -803,7 +843,7 @@ const HomeAffordabilityCalculatorPage: React.FC<HomeAffordabilityCalculatorPageP
               {whyUseBanksCart.map((reason, index) => (
                 <motion.div
                   key={index}
-                  className="flex flex-col items-center text-center p-6 rounded-xl shadow-lg bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100"
+                  className="flex flex-col items-center text-center p-6 rounded-xl shadow-sm bg-slate-50 border border-slate-200"
                   variants={cardVariants}
                 >
                   {reason.icon}
@@ -816,7 +856,7 @@ const HomeAffordabilityCalculatorPage: React.FC<HomeAffordabilityCalculatorPageP
 
           {/* Final Call to Action */}
           <motion.section
-            className="text-center mt-12 p-8 bg-gradient-to-r from-blue-600 to-indigo-700 rounded-2xl shadow-xl"
+            className="text-center mt-12 p-8 sm:p-10 bg-gradient-to-r from-[#0F172A] via-[#1E3A8A] to-[#0F172A] text-white rounded-2xl shadow-xl border border-slate-700/50"
             variants={sectionVariants}
             initial="hidden"
             whileInView="visible"
@@ -840,9 +880,7 @@ const HomeAffordabilityCalculatorPage: React.FC<HomeAffordabilityCalculatorPageP
                 <ApplyButton
                   loanType="Home Loan Application"
                   openApplyModal={openApplyModal}
-                  className="bg-white text-blue-600 px-8 py-4 rounded-full font-bold text-lg shadow-lg
-                             hover:bg-gray-100 transition-all duration-300 ease-in-out transform hover:-translate-y-1
-                             focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-50"
+                  className="bg-amber-500 hover:bg-amber-400 text-slate-950 px-8 py-3.5 rounded-xl font-bold text-base shadow-lg transition-all inline-block"
                 >
                   Apply for a Home Loan
                 </ApplyButton>

@@ -33,7 +33,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, activeTab, 
     }
 
     return (
-        <div className="min-h-screen bg-slate-50 font-sans text-slate-800">
+        <div className="min-h-screen bg-slate-50 font-ibm text-slate-900">
             {/* Sticky Header (z-50) */}
             <div className="fixed top-0 left-0 right-0 z-50 print:hidden">
                 <Header

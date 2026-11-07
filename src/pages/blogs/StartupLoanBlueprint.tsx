@@ -1,364 +1,230 @@
-import React from "react";
-import { motion } from "framer-motion";
+import React from 'react';
+import { Helmet } from 'react-helmet-async';
+import { Link } from 'react-router-dom';
+import Breadcrumb from '../../components/Breadcrumb';
+import { AuthorByline } from '../../components/blog/AuthorByline';
 import {
-  ArrowLeft,
-  Rocket, // Used for Introduction
-  Shield, // Used for Government Schemes (Mudra, CGTMSE)
-  Target, // Used for SISFS (Focused Funding)
-  Landmark, // Used for Secured Bank Loans (Stability)
-  Bolt, // Used for NBFC/Fintech (Speed)
-  Activity, // Used for Working Capital / Invoice Factoring
-  CheckSquare, // Used for Eligibility Checklist
-  Feather, // Used for Negotiation Tactics
-  Zap, // Used for CTA
-} from "lucide-react";
-import { Link } from "react-router-dom"; 
+  Rocket,
+  CheckCircle2,
+  Percent,
+  Clock,
+  ShieldCheck,
+  Building,
+  TrendingUp,
+  HelpCircle,
+  FileCheck2,
+  Sparkles,
+  Award
+} from 'lucide-react';
 
-// --- CONFIGURATION START ---
-const ARTICLE_TITLE = "Best Small Business Loans in India for Startups (2026 Guide)";
-const ARTICLE_SUBTITLE =
-  "The definitive breakdown of startup funding in the 2026 financial landscape: Government schemes (Mudra 2.0, SISFS), NBFC speed vs. Bank stability, and the ultimate collateral-free checklist.";
-const BACK_LINK = "/blog"; 
-const AUTHOR = "Startup Finance Expert";
-const DATE = "Nov 19, 2025";
-const READ_TIME = "22 min read (The Funding Compass)";
-// --- CONFIGURATION END ---
+export default function StartupLoanBlueprint() {
+  const canonicalUrl = "https://www.bankscart.com/blog/Startup-Loan-Blueprint";
+  const articleTitle = "Startup Loan Blueprint: Government Schemes & Capital Options (2026)";
+  const articleDesc = "Complete 2026 guide to startup loans in India: explore DPIIT recognition, Startup India Seed Fund (SISFS up to ₹50L), Credit Guarantee Scheme for Startups (CGSS), and Mudra loans.";
 
-// ====================================================================
-// FRAMEWORK COMPONENTS (Replicating the modular structure)
-// ====================================================================
-
-// Framer Motion variants (Reused for consistent, smooth interaction)
-const pageVariants = {
-  hidden: { opacity: 0, y: 50 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      delay: 0.3,
-      duration: 0.8,
-      when: "beforeChildren",
-      staggerChildren: 0.2,
+  const blogPostingSchema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": canonicalUrl
     },
-  },
-};
+    "headline": articleTitle,
+    "description": articleDesc,
+    "image": "https://www.bankscart.com/assets/images/bankscart-logo.png",
+    "author": {
+      "@type": "Person",
+      "name": "Amit Khurana",
+      "jobTitle": "Senior Banking Advisor & Principal Reviewer",
+      "url": "https://www.bankscart.com/author/amit-khurana"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "BanksCart",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://www.bankscart.com/assets/images/bankscart-logo.png"
+      }
+    },
+    "datePublished": "2026-01-20T09:00:00+05:30",
+    "dateModified": "2026-11-06T10:00:00+05:30"
+  };
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-};
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://www.bankscart.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Blog",
+        "item": "https://www.bankscart.com/blog"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Startup Loan Blueprint",
+        "item": canonicalUrl
+      }
+    ]
+  };
 
-interface SectionHeaderProps {
-  children: React.ReactNode;
-  Icon: React.ElementType;
-}
+  const schemes = [
+    {
+      title: "Startup India Seed Fund Scheme (SISFS)",
+      funding: "Up to ₹20 Lakhs grant / ₹50 Lakhs debt",
+      nature: "Convertible debentures or debt via approved incubators",
+      eligibility: "DPIIT-recognized startups incorporated within the last 2 years with a viable proof of concept."
+    },
+    {
+      title: "Credit Guarantee Scheme for Startups (CGSS)",
+      funding: "Up to ₹10 Crores collateral-free debt",
+      nature: "Institutional credit guarantee for scheduled commercial banks & venture debt funds",
+      eligibility: "DPIIT-recognized startups having audited revenue tracks or institutional venture backing."
+    },
+    {
+      title: "Pradhan Mantri Mudra Yojana (PMMY)",
+      funding: "Up to ₹20 Lakhs",
+      nature: "Term loans and working capital overdrafts with zero collateral",
+      eligibility: "Early-stage micro-enterprises, small manufacturing units, and service businesses."
+    },
+    {
+      title: "Revenue-Based Financing (RBF)",
+      funding: "₹10 Lakhs to ₹3 Crores",
+      nature: "Non-dilutive growth capital repaid via a fixed percentage of monthly revenues",
+      eligibility: "D2C brands, SaaS platforms, and digital startups with minimum ₹5 Lakhs monthly MRR."
+    }
+  ];
 
-const SectionHeader: React.FC<SectionHeaderProps> = ({ children, Icon }) => (
-  <motion.h2
-    className="text-3xl sm:text-4xl font-extrabold text-white mb-4 drop-shadow-lg flex items-center space-x-3 border-b-2 border-indigo-500 pb-3"
-    variants={itemVariants}
-  >
-    <Icon className="w-8 h-8 text-indigo-400" />
-    <span>{children}</span>
-  </motion.h2>
-);
-
-const SubHeader: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <motion.h3
-    className="text-xl sm:text-2xl font-semibold text-indigo-300 mt-8 mb-3"
-    variants={itemVariants}
-  >
-    {children}
-  </motion.h3>
-);
-
-const Paragraph: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <motion.p
-    className="text-lg text-blue-100 mb-4 leading-relaxed"
-    variants={itemVariants}
-  >
-    {children}
-  </motion.p>
-);
-
-const KeyTakeaway: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <motion.div
-    className="border border-yellow-400 bg-yellow-900/40 p-4 rounded-lg my-6 shadow-xl"
-    variants={itemVariants}
-  >
-    <p className="font-bold text-yellow-300">
-      💡 Key Takeaway: <span className="font-normal text-yellow-100">{children}</span>
-    </p>
-  </motion.div>
-);
-
-const BulletPoint: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <motion.li
-    className="text-lg text-blue-100 mb-2 list-disc list-inside ml-4"
-    variants={itemVariants}
-  >
-    {children}
-  </motion.li>
-);
-
-// ====================================================================
-// NEW BLOG PAGE CONTENT
-// ====================================================================
-
-export default function StartupLoanGuide2026() {
   return (
-    <div className="min-h-screen bg-gray-900 p-4 sm:p-8 lg:p-12 text-white">
-      <div className="max-w-6xl mx-auto">
+    <div className="min-h-screen bg-slate-50 font-sans text-slate-800 pt-20 sm:pt-24 pb-16">
+      <Helmet>
+        <title>{`${articleTitle} | BanksCart`}</title>
+        <meta name="description" content={articleDesc} />
+        <link rel="canonical" href={canonicalUrl} />
+        <script type="application/ld+json">
+          {JSON.stringify(blogPostingSchema)}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify(breadcrumbSchema)}
+        </script>
+      </Helmet>
 
-        {/* Article Header & Metadata */}
-        <motion.header
-          className="pb-6 border-b border-indigo-700 mb-8"
-          initial="hidden"
-          animate="visible"
-          variants={pageVariants}
-        >
-          <motion.div variants={itemVariants} className="mb-4">
-            <Link to={BACK_LINK} className="text-indigo-400 hover:text-indigo-300 flex items-center space-x-2">
-              <ArrowLeft className="w-5 h-5" />
-              <span>Back to Startup Finance Blogs</span>
-            </Link>
-          </motion.div>
-          
-          <motion.h1 
-            className="text-4xl sm:text-6xl font-extrabold text-white leading-tight drop-shadow-md"
-            variants={itemVariants}
-          >
-            {ARTICLE_TITLE}
-          </motion.h1>
-          <motion.p 
-            className="text-xl text-indigo-300 mt-3"
-            variants={itemVariants}
-          >
-            {ARTICLE_SUBTITLE}
-          </motion.p>
-
-          <motion.div className="mt-6 flex flex-wrap text-sm text-gray-400 space-x-4" variants={itemVariants}>
-            <span>By: {AUTHOR}</span>
-            <span>|</span>
-            <span>Published: {DATE}</span>
-            <span>|</span>
-            <span>{READ_TIME}</span>
-          </motion.div>
-        </motion.header>
-
-
-        <motion.article
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.05 }}
-          variants={pageVariants}
-          className="space-y-12"
-        >
-
-          {/* Section 1: Introduction to the 2026 Funding Landscape */}
-          <motion.section variants={pageVariants}>
-            <SectionHeader Icon={Rocket}>The 2026 Startup Funding Crossroads</SectionHeader>
-            <Paragraph>
-              The Indian startup ecosystem in 2026 is robust but discerning. Venture Capital remains competitive, forcing early-stage founders to look for non-dilutive capital. Debt funding—from government schemes to aggressive fintech NBFCs—has become the critical bridge for startups with a proven concept but lacking scale.
-            </Paragraph>
-            <Paragraph>
-              Navigating this landscape means understanding the difference between a cheap, slow loan (like Mudra) and a fast, expensive one (like unsecured NBFC credit). Your choice depends entirely on your business stage, runway, and collateral position.
-            </Paragraph>
-          </motion.section>
-          
-          <hr className="border-indigo-700" />
-
-          {/* Section 2: Pradhan Mantri Mudra Yojana (PMMY): The Grassroots Power */}
-          <motion.section variants={pageVariants}>
-            <SectionHeader Icon={Shield}>PMMY (Mudra) Loans: The Collateral-Free Government Shield</SectionHeader>
-            <Paragraph>
-              The **Pradhan Mantri Mudra Yojana (PMMY)** is the cornerstone of micro and small business financing, now extended up to a maximum of **₹20 Lakhs** under the **Tarun+** category. This is the best option for very early-stage startups and lifestyle businesses seeking low-interest, collateral-free term loans or working capital.
-            </Paragraph>
-            <SubHeader>The Four Categories:</SubHeader>
-            <motion.ul variants={pageVariants} className="space-y-2">
-              <BulletPoint>
-                **Shishu:** Loans up to **₹50,000**. Ideal for firms just starting out. Often requires minimal documentation.
-              </BulletPoint>
-              <BulletPoint>
-                **Kishore:** Loans from **₹50,001 to ₹5 Lakhs**. For businesses in their initial growth phase.
-              </BulletPoint>
-              <BulletPoint>
-                **Tarun:** Loans from **₹5 Lakhs to ₹10 Lakhs**. For established small businesses looking for expansion.
-              </BulletPoint>
-              <BulletPoint>
-                **Tarun+:** Loans from **₹10 Lakhs to ₹20 Lakhs**. Specifically for entrepreneurs who have successfully repaid previous Tarun loans and are ready for significant scale.
-              </BulletPoint>
-            </motion.ul>
-            <KeyTakeaway>
-              Mudra Loans are distributed by Public Sector Banks (PSBs) and NBFCs. Apply through the **Udyamimitra** or **JanSamarth** portals for streamlined digital processing. While rates are low, the approval process can be slower than private bank or NBFC options.
-            </KeyTakeaway>
-          </motion.section>
-
-          <hr className="border-indigo-700" />
-
-          {/* Section 3: Startup India Seed Fund Scheme (SISFS) */}
-          <motion.section variants={pageVariants}>
-            <SectionHeader Icon={Target}>Startup India Seed Fund Scheme (SISFS): Non-Dilutive Early Capital</SectionHeader>
-            <Paragraph>
-              Unlike traditional loans, **SISFS** is an innovative scheme providing financial assistance to eligible DPIIT-recognized startups specifically for Proof of Concept (PoC), prototype development, market entry, and commercialisation. The capital comes in two forms:
-            </Paragraph>
-            <SubHeader>Dual Funding Structure:</SubHeader>
-            <motion.ul variants={pageVariants} className="space-y-2">
-              <BulletPoint>
-                **Grant:** Up to **₹20 Lakhs** for PoC, prototype development, or product trials. This is a non-repayable grant disbursed in milestone-based installments.
-              </BulletPoint>
-              <BulletPoint>
-                **Debt/Investment:** Up to **₹50 Lakhs** through convertible debentures or debt-linked instruments for market entry and scaling.
-              </BulletPoint>
-            </motion.ul>
-            <Paragraph>
-              **The Catch:** You do not apply directly to the government. Funds are disbursed via registered incubators. Your team, technology novelty, and fund utilization plan are evaluated by the Incubator Seed Management Committee (ISMC).
-            </Paragraph>
-          </motion.section>
-
-          <hr className="border-indigo-700" />
-
-          {/* Section 4: Secured Loans: Public and Private Banks */}
-          <motion.section variants={pageVariants}>
-            <SectionHeader Icon={Landmark}>Secured Bank Loans: The Lowest Rates for Scaled MSMEs</SectionHeader>
-            <Paragraph>
-              For established startups or MSMEs with assets (machinery, property) or substantial annual turnover (up to ₹25 Cr), traditional commercial banks like **SBI, HDFC Bank, ICICI Bank, and Axis Bank** offer the lowest interest rates. These are generally **Term Loans** (for fixed assets) or **Working Capital** facilities (Cash Credit/Overdraft).
-            </Paragraph>
-            <SubHeader>Key Bank Products & Schemes:</SubHeader>
-            <motion.ul variants={pageVariants} className="space-y-2">
-              <BulletPoint>
-                **PSB Loans in 59 Minutes:** This portal offers quick in-principle approval for MSME loans up to ₹5 Crore, bridging the speed gap between public and private lenders.
-              </BulletPoint>
-              <BulletPoint>
-                **CGTMSE (Credit Guarantee Fund Trust for Micro and Small Enterprises):** This scheme provides a **collateral-free guarantee** to the lender for loans up to ₹2 Crore, making it easier to get an unsecured loan from a bank.
-              </BulletPoint>
-              <BulletPoint>
-                **Stand-Up India:** Exclusive term loans (₹10 Lakh to ₹1 Crore) for SC/ST individuals and women entrepreneurs.
-              </BulletPoint>
-            </motion.ul>
-            <KeyTakeaway>
-              Public Sector Banks (like SBI) start rates lower (around 8.50% p.a.) but require a strong vintage (3+ years operational). Private Banks offer speed and digital processes but usually at a slightly higher starting rate (around 11% p.a.).
-            </KeyTakeaway>
-          </motion.section>
-
-          <hr className="border-indigo-700" />
-
-          {/* Section 5: NBFC/Fintech Unsecured Loans */}
-          <motion.section variants={pageVariants}>
-            <SectionHeader Icon={Bolt}>NBFC & Fintech Loans: The Need for Speed</SectionHeader>
-            <Paragraph>
-              When a startup needs capital **fast**—to fulfill a large order or cover an immediate working capital gap—Non-Banking Financial Companies (NBFCs) and Digital Lenders (Fintechs) are the go-to. They offer minimal documentation and loan disbursals in as little as **24-72 hours**.
-            </Paragraph>
-            <SubHeader>Fintech Advantages & Trade-offs:</SubHeader>
-            <motion.ul variants={pageVariants} className="space-y-2">
-              <BulletPoint>
-                **Speed & Flexibility:** NBFCs like **Bajaj Finance, Tata Capital, and Lendingkart** prioritize cash flow analysis over strict vintage and collateral.
-              </BulletPoint>
-              <BulletPoint>
-                **Higher Cost:** This convenience comes at a higher rate. Unsecured NBFC business loans can have interest rates ranging from **14% p.a. upwards**.
-              </BulletPoint>
-              <BulletPoint>
-                **Invoice Discounting/Factoring:** Many fintech platforms specialize in unlocking working capital by providing immediate finance against your confirmed sales invoices or purchase orders via platforms like TReDS.
-              </BulletPoint>
-            </motion.ul>
-            <Paragraph>
-              Use NBFCs strategically: for short-term, high-impact needs, or when you cannot meet the stringent eligibility of a traditional bank.
-            </Paragraph>
-          </motion.section>
-
-          <hr className="border-indigo-700" />
-          
-          {/* Section 6: The 2026 Eligibility Blueprint */}
-          <motion.section variants={pageVariants}>
-            <SectionHeader Icon={CheckSquare}>The 2026 Eligibility Blueprint: What Lenders Are Checking Now</SectionHeader>
-            <Paragraph>
-              Regardless of the lender type, three non-negotiable criteria dictate your loan rate and approval in 2026.
-            </Paragraph>
-            <SubHeader>1. Business Vintage & Turnover:</SubHeader>
-            <BulletPoint>
-              **Bank Standard:** Most banks require a minimum **3-year vintage** and annual turnover of at least ₹10 Lakhs.
-            </BulletPoint>
-            <BulletPoint>
-              **Fintech Standard:** Many NBFCs may consider businesses with just **6-12 months** of operational history, provided cash flow is strong.
-            </BulletPoint>
-            <SubHeader>2. Credit Score (CIBIL/FIT Rank):</SubHeader>
-            <BulletPoint>
-              A personal and business **CIBIL Score of 750+** remains the gold standard for securing the lowest bank rates.
-            </BulletPoint>
-            <BulletPoint>
-              Lenders are increasingly using the **FIT Rank** (Financial Information and Technology Rank, launched by SIDBI/CIBIL) for MSMEs, which assesses a business’s entire digital footprint, including GST compliance and banking habits.
-            </BulletPoint>
-            <SubHeader>3. Documentation (The Digital-First Mandate):</SubHeader>
-            <BulletPoint>
-              **Must-Haves:** PAN Card, Aadhaar Card, Certificate of Incorporation/Partnership Deed, last **6 months bank statements**, and last two years' Income Tax Returns (ITR).
-            </BulletPoint>
-            <BulletPoint>
-              **Project Report:** For loans over ₹10 Lakhs, a detailed project report (DPR) outlining business projections and marketing strategy is crucial.
-            </BulletPoint>
-          </motion.section>
-
-          <hr className="border-indigo-700" />
-
-          {/* Section 7: Final Negotiation & Application Tactics */}
-          <motion.section variants={pageVariants}>
-            <SectionHeader Icon={Feather}>Negotiation & Application Tactics: Lowering Your Cost of Capital</SectionHeader>
-            <Paragraph>
-              Once you meet the eligibility criteria, the final step is ensuring you get the best deal. Treat the loan application process like a negotiation, not a simple form submission.
-            </Paragraph>
-            <SubHeader>Key Tactics:</SubHeader>
-            <motion.ul variants={pageVariants} className="space-y-2">
-              <BulletPoint>
-                **Compare PSBs and Private Banks:** Use the rate difference between a government bank (low rate, slow approval) and a private bank (higher rate, fast approval) as leverage during negotiation.
-              </BulletPoint>
-              <BulletPoint>
-                **Always Apply for CGTMSE Coverage:** Even if a bank doesn't mention it, insist on getting your unsecured loan proposal covered under **CGTMSE** to dramatically reduce the lender's risk and potentially secure a lower rate.
-              </BulletPoint>
-              <BulletPoint>
-                **Limit Soft Inquiries:** Check your eligibility using a **single soft inquiry** (which does not affect your CIBIL) across multiple digital platforms. Use the resulting offers to negotiate with your primary bank.
-              </BulletPoint>
-              <BulletPoint>
-                **Focus on Repayment:** Propose a slightly shorter tenure than the maximum available. Shorter tenure means lower risk for the lender, which is the strongest argument for a rate reduction.
-              </BulletPoint>
-            </motion.ul>
-          </motion.section>
-
-          <hr className="border-indigo-700" />
-
-
-          {/* Call to Action Section (Replicating the original CTA structure) */}
-          <motion.section 
-            className="bg-indigo-800/60 p-8 rounded-xl text-center shadow-2xl mt-12"
-            variants={pageVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-          >
-            <motion.h2
-              className="text-3xl sm:text-4xl font-extrabold text-white mb-4 drop-shadow-lg flex items-center justify-center space-x-3"
-              variants={itemVariants}
-            >
-              <Zap className="w-8 h-8 text-yellow-300" />
-              <span>Implement the Strategy: Get Your Startup Loan Blueprint</span>
-            </motion.h2>
-            <motion.p
-              className="text-lg text-blue-100 mb-8 max-w-2xl mx-auto leading-relaxed"
-              variants={itemVariants}
-            >
-              Use our proprietary tool to instantly match your startup's vintage, turnover, and funding requirement against all major Government Schemes (Mudra, SISFS) and Top Lender criteria, providing you with a tailored funding strategy in minutes.
-            </motion.p>
-            <motion.div variants={itemVariants}>
-              <button
-                onClick={() => alert("Personalized Startup Loan Blueprint Initiated!")}
-                className="bg-white text-indigo-600 px-8 py-4 rounded-full font-bold text-lg shadow-lg hover:bg-gray-100 transition-all duration-300 ease-in-out transform hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-50"
-              >
-                Launch My Free Funding Blueprint
-              </button>
-            </motion.div>
-          </motion.section>
-
-        </motion.article>
-
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6">
+        <Breadcrumb path={["Home", "Blog", "Startup Loan Blueprint"]} />
       </div>
+
+      <article className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 sm:space-y-12">
+        {/* Header */}
+        <header className="space-y-4 border-b border-slate-200 pb-8">
+          <div className="flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-wider text-blue-700">
+            <span className="bg-blue-50 border border-blue-200 px-3 py-1 rounded-full">
+              Startup Financing Blueprint
+            </span>
+            <span className="text-slate-400">•</span>
+            <span className="text-slate-500 font-mono">Updated November 2026</span>
+            <span className="text-slate-400">•</span>
+            <span className="text-slate-500">14 min read</span>
+          </div>
+
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight">
+            Startup Loan Blueprint: Government Schemes &amp; Capital Options (2026)
+          </h1>
+
+          <p className="text-base sm:text-lg text-slate-600 leading-relaxed">
+            Building a new venture in India? Learn how DPIIT recognition unlocks collateral-free government credit schemes, venture debt lines, and working capital solutions without diluting early-stage founder equity.
+          </p>
+
+          <AuthorByline authorSlug="amit-khurana" />
+        </header>
+
+        {/* Section 1: The 4 Core Programs */}
+        <section className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 shadow-sm space-y-6">
+          <h2 className="text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
+            <Rocket className="w-6 h-6 text-blue-700" />
+            1. Top Startup Financing Instruments in India (2026)
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {schemes.map((s, idx) => (
+              <div key={idx} className="p-6 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+                <div className="flex items-center justify-between">
+                  <h3 className="font-bold text-slate-900 text-base">{s.title}</h3>
+                </div>
+                <div className="text-xs font-bold text-emerald-700 font-mono">
+                  Quantum: {s.funding}
+                </div>
+                <p className="text-xs text-slate-600">
+                  <strong>Structure:</strong> {s.nature}
+                </p>
+                <p className="text-xs text-slate-600">
+                  <strong>Criteria:</strong> {s.eligibility}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Section 2: DPIIT Benefits */}
+        <section className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 shadow-sm space-y-4">
+          <h2 className="text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
+            <Award className="w-6 h-6 text-amber-600" />
+            2. The Critical First Step: DPIIT Recognition
+          </h2>
+          <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
+            To qualify for sovereign seed funds and tax-exempt debt, your enterprise must obtain an official <strong>DPIIT Certificate of Recognition</strong> under the Ministry of Commerce and Industry:
+          </p>
+          <ul className="space-y-2 text-sm text-slate-700 list-disc list-inside leading-relaxed">
+            <li><strong>Section 80-IAC Tax Exemption:</strong> 100% tax holiday on business profits for 3 consecutive years out of the first 10 years of incorporation.</li>
+            <li><strong>Angel Tax Exemption:</strong> Complete immunity from Section 56(2)(viib) valuation inquiries on share issuance above fair market value.</li>
+            <li><strong>Priority Government Procurement:</strong> Exemption from prior experience and turnover requirements in public sector tenders.</li>
+          </ul>
+        </section>
+
+        {/* CTA Card */}
+        <div className="bg-slate-900 text-white rounded-3xl p-8 sm:p-10 shadow-xl border border-slate-800 text-center space-y-4">
+          <span className="text-xs font-bold text-amber-400 uppercase tracking-wider bg-amber-400/10 px-3 py-1 rounded-md border border-amber-400/20 inline-block">
+            Entrepreneur Capital Hub
+          </span>
+          <h3 className="text-2xl sm:text-3xl font-black text-white">
+            Fund Your Startup Without Collateral
+          </h3>
+          <p className="text-sm text-slate-300 max-w-xl mx-auto leading-relaxed">
+            Compare non-dilutive credit lines, commercial working capital loans, and government-backed credit guarantee options on BanksCart.
+          </p>
+          <div className="pt-2 flex flex-wrap justify-center gap-4">
+            <Link
+              to="/loans/business/overview"
+              className="px-6 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm shadow-md transition-all"
+            >
+              Check Business Loan Options &rarr;
+            </Link>
+            <Link
+              to="/blog/MSME-Loan-Without-Collateral"
+              className="px-6 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-sm border border-white/20 transition-all"
+            >
+              Collateral-Free CGTMSE Loans
+            </Link>
+          </div>
+        </div>
+
+        {/* Regulatory Disclosure */}
+        <div className="p-6 bg-slate-100 rounded-2xl border border-slate-200 text-xs text-slate-600 leading-relaxed space-y-2 font-sans">
+          <div className="flex items-center gap-2 text-slate-800 font-bold uppercase tracking-wider">
+            <ShieldCheck className="w-4 h-4 text-blue-700" />
+            <span>Government Framework Notice</span>
+          </div>
+          <p>
+            Startup India Seed Fund Scheme (SISFS) and Credit Guarantee Scheme for Startups (CGSS) are governed by the Department for Promotion of Industry and Internal Trade (DPIIT). BanksCart is an independent digital loan marketplace and does not charge any upfront facilitation fees.
+          </p>
+        </div>
+      </article>
     </div>
   );
 }

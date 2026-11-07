@@ -1,154 +1,147 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { ArrowRight, CheckCircle2 } from "lucide-react";
 
 const offers = [
   {
     bank: "State Bank of India",
-    logo: "/images/sbi.png",
-    rate: "10.30% p.a. onwards",
+    logo: "/logos/sbi.png",
+    rate: "11.00% p.a. onwards",
     maxLoan: "Up to ₹20 Lakhs",
-    tenure: "Up to 72 months",
+    tenure: "Up to 72 Months",
+    fee: "1.50% or Min ₹1,000",
     slug: "sbi-bank",
   },
   {
     bank: "HDFC Bank",
-    logo: "/images/hdfc.png",
+    logo: "/logos/hdfc.png",
     rate: "10.50% p.a. onwards",
     maxLoan: "Up to ₹40 Lakhs",
-    tenure: "Up to 72 months",
+    tenure: "Up to 72 Months",
+    fee: "Up to 1.50% + GST",
     slug: "hdfc-bank",
   },
   {
     bank: "ICICI Bank",
-    logo: "/images/icici.png",
-    rate: "10.65% p.a. onwards",
-    maxLoan: "Up to ₹50 Lakhs",
-    tenure: "Up to 84 months",
+    logo: "/logos/icici.png",
+    rate: "10.75% p.a. onwards",
+    maxLoan: "Up to ₹25 Lakhs",
+    tenure: "Up to 72 Months",
+    fee: "Up to 1.50% + GST",
     slug: "icici-bank",
   },
   {
     bank: "Axis Bank",
-    logo: "/images/axis.png",
-    rate: "10.49% p.a. onwards",
-    maxLoan: "Up to ₹40 Lakhs",
-    tenure: "Up to 84 months",
+    logo: "/logos/axis.png",
+    rate: "10.99% p.a. onwards",
+    maxLoan: "Up to ₹15 Lakhs",
+    tenure: "Up to 60 Months",
+    fee: "1.00% – 2.00% + GST",
     slug: "axis-bank",
   },
   {
     bank: "Kotak Mahindra Bank",
-    logo: "/images/kotak.png",
+    logo: "/logos/kotak.png",
     rate: "10.99% p.a. onwards",
     maxLoan: "Up to ₹35 Lakhs",
-    tenure: "Up to 60 months",
+    tenure: "Up to 60 Months",
+    fee: "Up to 2.00% + GST",
     slug: "kotak-bank",
   },
   {
-    bank: "Bajaj Finserv",
-    logo: "/images/bajaj.png",
-    rate: "11.00% p.a. onwards",
-    maxLoan: "Up to ₹40 Lakhs",
-    tenure: "Up to 96 months",
-    slug: "bajaj-finserv",
+    bank: "Bank of Baroda",
+    logo: "/logos/bob.png",
+    rate: "10.90% p.a. onwards",
+    maxLoan: "Up to ₹10 Lakhs",
+    tenure: "Up to 84 Months",
+    fee: "2.00% or Min ₹1,000",
+    slug: "bank-of-baroda",
   },
 ];
 
 const PreApprovedOffersTable = ({ openApplyModal }) => (
-  <section className="my-14">
+  <section className="my-14 font-ibm">
     <div className="text-center max-w-3xl mx-auto mb-10">
-      <span className="inline-block bg-teal-50 text-teal-700 text-xs sm:text-sm font-semibold px-3 py-1 rounded-full uppercase tracking-wider mb-2">
-        Instant Approvals
+      <span className="inline-block bg-slate-100 text-slate-800 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider mb-2 border border-slate-200">
+        Fast Sanctions
       </span>
-      <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
-        Pre-Approved Personal Loan Rates & Terms
+      <h2 className="text-2xl sm:text-3xl font-bold text-slate-950 tracking-tight">
+        Instant Pre-Approved Personal Loan Rates by Bank
       </h2>
-      <p className="text-gray-600 text-sm sm:text-base mt-2">
-        Browse curated digital lending partner offers with quick pre-approvals and expedited verification.
+      <p className="text-slate-600 text-sm sm:text-base mt-2">
+        Pre-qualified borrowers with high credit ratings (750+) can access lower interest margins and waived processing fees.
       </p>
     </div>
 
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden min-h-[420px]">
+    <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
       <div className="overflow-x-auto">
-        <table className="min-w-full divide-y divide-gray-200 text-left text-sm">
-          <thead className="bg-slate-50">
+        <table className="min-w-full divide-y divide-slate-200 text-left text-sm">
+          <thead className="bg-slate-900 text-white">
             <tr>
-              <th scope="col" className="px-6 py-4 font-bold text-gray-900">
-                Lending Partner
+              <th scope="col" className="px-6 py-4 font-semibold w-1/4">
+                Partner Bank
               </th>
-              <th scope="col" className="px-6 py-4 font-bold text-teal-800">
-                Starting Interest Rate
+              <th scope="col" className="px-6 py-4 font-semibold text-amber-400 w-1/5">
+                Interest Rate
               </th>
-              <th scope="col" className="px-6 py-4 font-bold text-blue-800">
-                Max Loan Limit
+              <th scope="col" className="px-6 py-4 font-semibold text-slate-200 w-1/5">
+                Max Sanction Limit
               </th>
-              <th scope="col" className="px-6 py-4 font-bold text-gray-700">
+              <th scope="col" className="px-6 py-4 font-semibold text-slate-200 w-1/6">
                 Max Tenure
               </th>
-              <th scope="col" className="px-6 py-4 font-bold text-gray-900 text-center">
+              <th scope="col" className="px-6 py-4 font-semibold text-right w-1/6">
                 Action
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-100">
+          <tbody className="divide-y divide-slate-100 bg-white">
             {offers.map((offer, i) => (
-              <tr
-                key={offer.bank}
-                className={i % 2 === 0 ? "bg-white" : "bg-slate-50/50"}
-              >
-                <td className="px-6 py-4 font-semibold text-gray-900">
+              <tr key={offer.bank} className={i % 2 === 0 ? "bg-white" : "bg-slate-50/50"}>
+                <td className="px-6 py-4">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-gray-50 border border-gray-200 rounded-lg p-1.5 flex items-center justify-center shrink-0">
+                    <div className="w-9 h-9 rounded bg-slate-50 border border-slate-100 p-1 flex items-center justify-center shrink-0">
                       <img
                         src={offer.logo}
                         alt={offer.bank}
-                        width="40"
-                        height="40"
-                        style={{ aspectRatio: "1/1" }}
-                        className="max-h-full max-w-full object-contain"
+                        className="max-h-6 max-w-full object-contain"
                         loading="lazy"
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none';
+                        }}
                       />
                     </div>
-                    <span className="font-bold">{offer.bank}</span>
+                    <div>
+                      <span className="font-bold text-slate-900 block">{offer.bank}</span>
+                      <span className="text-[11px] text-slate-500">Processing: {offer.fee}</span>
+                    </div>
                   </div>
                 </td>
-                <td className="px-6 py-4 text-teal-700 font-semibold">
+                <td className="px-6 py-4 font-semibold text-slate-900 tabular-nums">
                   {offer.rate}
                 </td>
-                <td className="px-6 py-4 text-gray-800 font-medium">
+                <td className="px-6 py-4 font-medium text-slate-800 tabular-nums">
                   {offer.maxLoan}
                 </td>
-                <td className="px-6 py-4 text-gray-600">
+                <td className="px-6 py-4 text-slate-700 tabular-nums">
                   {offer.tenure}
                 </td>
-                <td className="px-6 py-4 text-center">
+                <td className="px-6 py-4 text-right">
                   <button
                     type="button"
-                    onClick={() =>
-                      openApplyModal &&
-                      openApplyModal(`Pre-approved Personal Loan - ${offer.bank}`)
-                    }
-                    className="bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded-xl text-xs sm:text-sm shadow-sm transition-all"
+                    onClick={() => {
+                      if (openApplyModal) openApplyModal(`Personal Loan - ${offer.bank}`);
+                    }}
+                    className="h-9 px-4 bg-amber-600 hover:bg-amber-700 active:bg-amber-800 text-white font-semibold rounded-lg text-xs transition-colors inline-flex items-center gap-1.5 cursor-pointer"
                   >
-                    Apply Now
+                    <span>Apply</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
                   </button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-      </div>
-      <div className="p-4 bg-slate-50 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-gray-500">
-        <div>
-          * Pre-approved offers are subject to KYC verification, credit score validation, and lender underwriting criteria.
-        </div>
-        <Link
-          to="/loans/personal/overview"
-          className="text-blue-600 hover:text-blue-800 font-semibold underline shrink-0 inline-flex items-center gap-1"
-        >
-          <span>Compare full mathematical details</span>
-          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-          </svg>
-        </Link>
       </div>
     </div>
   </section>

@@ -130,7 +130,7 @@ export default function BlogPost() {
                 </script>
             </Helmet>
 
-            <article className="max-w-4xl mx-auto py-10 px-4 sm:px-6 lg:px-8 pt-20">
+            <article className="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8 pt-20">
                 {/* Breadcrumbs */}
                 <nav aria-label="Breadcrumb" className="text-xs text-slate-500 mb-6">
                     <ol className="flex items-center space-x-2">

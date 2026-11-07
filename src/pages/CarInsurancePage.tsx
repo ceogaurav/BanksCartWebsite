@@ -1,634 +1,929 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
 import Breadcrumb from '../components/Breadcrumb';
+import ApplyButton from '../components/common/ApplyButton';
 import {
-  Car, 
-  Shield, 
-  CheckCircle, 
-  Star, 
-  ArrowRight, 
-  Phone, 
-  Mail, 
-  MapPin, 
-  Clock,
-  Calculator,
-  Users,
-  Award,
-  TrendingUp,
+  Car,
+  Shield,
+  CheckCircle2,
+  XCircle,
+  HelpCircle,
   ChevronDown,
-  ChevronUp,
-  Play,
-  MessageCircle,
-  Heart,
-  Zap,
-  Globe,
+  Building2,
+  Clock,
+  Sparkles,
+  Award,
+  IndianRupee,
+  FileCheck,
+  Percent,
+  Calculator,
   Lock,
-  Target,
-  Smartphone,
-  CreditCard,
-  FileText,
-  Headphones
+  ArrowRight,
+  Star,
+  Check,
+  Sliders,
+  PhoneCall,
+  Wrench,
+  Fuel,
+  AlertTriangle,
+  RotateCcw,
+  Zap
 } from 'lucide-react';
-import ApplyButton from '../components/common/ApplyButton'; // Add this line
 
 interface CarInsurancePageProps {
   openApplyModal?: (loanType?: string) => void;
 }
 
+interface InsurerRow {
+  name: string;
+  tagline: string;
+  garages: string;
+  csr: string;
+  startingPrice: string;
+  keyBenefit: string;
+  badge?: string;
+}
+
+const CAR_INSURERS: InsurerRow[] = [
+  {
+    name: "HDFC ERGO Car Insurance",
+    tagline: "Overnight Repair Service & 2.5 Min Claim Approval",
+    garages: "8,500+",
+    csr: "91.2%",
+    startingPrice: "₹2,094/yr",
+    keyBenefit: "Zero paperwork, self-inspection video claims via mobile app",
+    badge: "Top Choice"
+  },
+  {
+    name: "ICICI Lombard Motor",
+    tagline: "InstaSpect Digital Survey & High Cashless Garage Density",
+    garages: "7,800+",
+    csr: "89.5%",
+    startingPrice: "₹2,094/yr",
+    keyBenefit: "Digital instant claims settlement within 30 minutes for minor damages",
+    badge: "Fast Settlement"
+  },
+  {
+    name: "Tata AIG Auto Secure",
+    tagline: "Comprehensive Add-On Bundles with Free Key Replacement",
+    garages: "6,500+",
+    csr: "86.8%",
+    startingPrice: "₹2,094/yr",
+    keyBenefit: "High customer satisfaction rating, emergency fuel delivery & RSA",
+  },
+  {
+    name: "Bajaj Allianz DriveSmart",
+    tagline: "Motor On-The-Spot Claim Settlement",
+    garages: "6,000+",
+    csr: "88.0%",
+    startingPrice: "₹2,094/yr",
+    keyBenefit: "Immediate surveyor allocation, 24/7 spot assistance across national highways",
+  },
+  {
+    name: "Reliance General Motor",
+    tagline: "Affordable Comprehensive Coverage for Indian Metros",
+    garages: "5,000+",
+    csr: "84.5%",
+    startingPrice: "₹2,094/yr",
+    keyBenefit: "Free pickup and drop facility for repair at select cashless garages",
+  }
+];
+
 const CarInsurancePage: React.FC<CarInsurancePageProps> = ({ openApplyModal }) => {
   const navigate = useNavigate();
-  const [activeInsuranceType, setActiveInsuranceType] = useState(0);
-  const [activeFaq, setActiveFaq] = useState(null);
-  const [isVisible, setIsVisible] = useState({});
+  const [activeFaq, setActiveFaq] = useState<number | null>(null);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setIsVisible(prev => ({ ...prev, [entry.target.id]: true }));
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
+  // Quick Hero Form States
+  const [carNumber, setCarNumber] = useState('');
+  const [mobileNumber, setMobileNumber] = useState('');
+  const [cityRto, setCityRto] = useState('');
 
-    const elements = document.querySelectorAll('[id^="section-"]');
-    elements.forEach((el) => observer.observe(el));
+  // Interactive Calculator States
+  const [carAgeGroup, setCarAgeGroup] = useState<'new' | '1-2' | '3-5' | '5+'>('1-2');
+  const [idvValue, setIdvValue] = useState<number>(600000); // 6 Lakhs default
+  const [ncbPercentage, setNcbPercentage] = useState<number>(25); // 25% default
+  const [zeroDep, setZeroDep] = useState<boolean>(true);
+  const [engineProtect, setEngineProtect] = useState<boolean>(true);
+  const [rsa, setRsa] = useState<boolean>(true);
 
-    return () => observer.disconnect();
-  }, []);
+  // Dynamic Car Insurance Premium Logic
+  const calculateCarPremium = () => {
+    // IRDAI Mandated Third Party (TP) base rate for private cars (1000cc - 1500cc)
+    const thirdPartyBase = 3416;
 
-  const insuranceTypes = [
-    {
-      title: "Third Party Liability",
-      description: "Mandatory coverage that protects you against claims from third parties",
-      features: ["Legal requirement", "Covers third-party damages", "Injury compensation", "Property damage coverage"],
-      price: "Starting from ₹2,500/year",
-      color: "bg-blue-500",
-      icon: Shield
-    },
-    {
-      title: "Comprehensive Coverage",
-      description: "Complete protection for your vehicle and third parties",
-      features: ["Own damage coverage", "Third-party liability", "Theft protection", "Natural disaster coverage"],
-      price: "Starting from ₹8,500/year",
-      color: "bg-green-500",
-      icon: Car
-    },
-    {
-      title: "Own Damage Coverage",
-      description: "Covers damages to your own vehicle from accidents or disasters",
-      features: ["Accident damage", "Fire coverage", "Theft protection", "Vandalism coverage"],
-      price: "Starting from ₹5,500/year",
-      color: "bg-purple-500",
-      icon: Heart
-    },
-    {
-      title: "Zero Depreciation",
-      description: "Get full claim amount without depreciation deductions",
-      features: ["No depreciation", "Full claim value", "New car protection", "Premium coverage"],
-      price: "Starting from ₹12,000/year",
-      color: "bg-orange-500",
-      icon: Star
+    // Own Damage (OD) base tariff rate (approx 2.8% to 3.2% of IDV depending on age)
+    let odRate = 0.031;
+    if (carAgeGroup === 'new') odRate = 0.033;
+    if (carAgeGroup === '3-5') odRate = 0.029;
+    if (carAgeGroup === '5+') odRate = 0.027;
+
+    const baseOwnDamage = Math.round(idvValue * odRate);
+
+    // NCB discount applies strictly to Own Damage (OD)
+    const ncbDiscount = Math.round((baseOwnDamage * ncbPercentage) / 100);
+    const netOwnDamage = Math.max(1200, baseOwnDamage - ncbDiscount);
+
+    // Add-on calculations
+    let addOnsTotal = 0;
+    if (zeroDep) addOnsTotal += Math.round(idvValue * 0.009); // Zero Dep ~0.9% of IDV
+    if (engineProtect) addOnsTotal += Math.round(idvValue * 0.0035); // Engine Protect ~0.35%
+    if (rsa) addOnsTotal += 499; // Standard RSA add-on
+
+    const netPremium = netOwnDamage + thirdPartyBase + addOnsTotal;
+    const gst18 = Math.round(netPremium * 0.18);
+    const totalPayable = netPremium + gst18;
+
+    return {
+      baseOwnDamage,
+      ncbDiscount,
+      netOwnDamage,
+      thirdPartyBase,
+      addOnsTotal,
+      gst18,
+      totalPayable
+    };
+  };
+
+  const calculated = calculateCarPremium();
+
+  const handleApply = (planName?: string) => {
+    const loanType = planName || `Car Insurance - IDV ₹${(idvValue / 100000).toFixed(1)}L (NCB ${ncbPercentage}%)`;
+    if (openApplyModal) {
+      openApplyModal(loanType);
+    } else {
+      navigate('/loan-apply', { state: { loanType } });
     }
-  ];
+  };
 
-  const insuranceCompanies = [
-    {
-      name: "ICICI Lombard",
-      rating: 4.5,
-      features: ["24/7 Claims", "Instant Policy", "Cashless Network"],
-      price: "₹8,499",
-      cashlessGarages: 4500,
-      claimRatio: "89%",
-      logo: "IL"
-    },
-    {
-      name: "Bajaj Allianz",
-      rating: 4.3,
-      features: ["Quick Settlement", "Digital Claims", "Roadside Assistance"],
-      price: "₹8,299",
-      cashlessGarages: 4200,
-      claimRatio: "87%",
-      logo: "BA"
-    },
-    {
-      name: "HDFC ERGO",
-      rating: 4.4,
-      features: ["Smart Claims", "AI Processing", "Mobile App"],
-      price: "₹8,699",
-      cashlessGarages: 4800,
-      claimRatio: "91%",
-      logo: "HE"
-    },
-    {
-      name: "Tata AIG",
-      rating: 4.2,
-      features: ["Fast Track Claims", "Video Inspection", "E-Policy"],
-      price: "₹8,199",
-      cashlessGarages: 3900,
-      claimRatio: "85%",
-      logo: "TA"
-    },
-    {
-      name: "New India Assurance",
-      rating: 4.1,
-      features: ["Government Backing", "Pan India Service", "Affordable Premium"],
-      price: "₹7,999",
-      cashlessGarages: 3500,
-      claimRatio: "83%",
-      logo: "NI"
-    },
-    {
-      name: "Oriental Insurance",
-      rating: 4.0,
-      features: ["Reliable Service", "Wide Network", "Competitive Pricing"],
-      price: "₹7,799",
-      cashlessGarages: 3200,
-      claimRatio: "81%",
-      logo: "OI"
-    }
-  ];
+  const handleQuickQuoteSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const details = carNumber ? `Car Reg: ${carNumber.toUpperCase()}` : 'Quick Quote';
+    handleApply(`Car Insurance - ${details}`);
+  };
 
   const faqs = [
     {
-      question: "What is the difference between Third Party and Comprehensive insurance?",
-      answer: "Third Party insurance covers only damages to others, while Comprehensive insurance covers both your vehicle and third-party damages. Comprehensive is more expensive but provides complete protection."
+      q: "What is the difference between Comprehensive and Third-Party car insurance?",
+      a: "Third-Party insurance is mandatory by law under the Motor Vehicles Act, 1988, covering damages, injury, or death to external third parties. It does not cover your own car. Comprehensive car insurance covers both third-party liabilities and damages to your own vehicle caused by accidents, fire, theft, floods, and natural calamities."
     },
     {
-      question: "How is the premium calculated for car insurance?",
-      answer: "Premium depends on factors like car model, age, location, driving history, coverage type, and add-ons. Newer cars and higher coverage typically cost more."
+      q: "What is Insured Declared Value (IDV) and how is it calculated?",
+      a: "IDV is the maximum sum insured payable by the insurer in case of total loss (theft or damage beyond repair). It represents the manufacturer's selling price of the vehicle minus IRDAI-mandated depreciation slabs based on the car's age (e.g. 5% for up to 6 months, 20% for 1-2 years, up to 50% for 4-5 years)."
     },
     {
-      question: "What is IDV (Insured Declared Value)?",
-      answer: "IDV is the current market value of your vehicle. It's the maximum amount you'll receive if your car is stolen or completely damaged. It decreases as your car ages."
+      q: "How does the No Claim Bonus (NCB) work and can I transfer it?",
+      a: "NCB is a reward discount given by insurers on the Own Damage premium for every consecutive claim-free year, scaling from 20% in Year 1 up to a maximum of 50% in Year 5. Crucially, NCB belongs to the car owner, not the vehicle. You can obtain an NCB Retention Certificate to transfer your full discount to a brand-new car."
     },
     {
-      question: "Can I transfer my NCB (No Claim Bonus) to a new car?",
-      answer: "Yes, NCB is transferable to a new car within 90 days of policy expiry. It can provide discounts up to 50% on your premium."
+      q: "Why is Zero Depreciation (Bumper-to-Bumper) add-on essential?",
+      a: "In standard car claims, insurers deduct up to 50% depreciation on plastic, rubber, and glass parts, and up to 30% on metal components. With a Zero Depreciation add-on, the insurer pays the complete replacement cost of all parts without any depreciation deductions, saving you thousands in out-of-pocket expenses."
     },
     {
-      question: "What documents are required for car insurance?",
-      answer: "You need RC (Registration Certificate), driving license, previous policy documents, PAN card, and address proof. For new cars, you'll need the invoice."
+      q: "What is a Cashless Garage Network?",
+      a: "A network of automobile repair centers partnering directly with your insurance company (over 5,000+ garages on BanksCart). When you repair your vehicle at a network garage, the insurer pays the repair bill directly to the garage. You only pay the mandatory compulsory deductible (usually ₹1,000 for private cars below 1500cc)."
     },
     {
-      question: "How long does claim settlement take?",
-      answer: "For cashless claims, it's usually instant at network garages. For reimbursement claims, it typically takes 7-30 days depending on the complexity and documentation."
+      q: "Can I renew an expired car insurance policy without physical inspection?",
+      a: "Yes. For policies expired within 90 days, you can renew digitally on BanksCart by conducting a quick 2-minute self-inspection video or photo upload via your smartphone, eliminating the need to wait for a physical surveyor."
+    },
+    {
+      q: "Does car insurance cover water damage to the engine during monsoons?",
+      a: "Standard comprehensive policies exclude engine damage caused by hydrostatic lock (cranking an engine submerged in floodwaters). To ensure complete coverage against water ingression and oil leakage, you must opt for the Engine & Gearbox Protection add-on."
     }
   ];
 
-  const benefits = [
-    {
-      icon: Shield,
-      title: "Complete Protection",
-      description: "Comprehensive coverage for all types of damages and liabilities"
-    },
-    {
-      icon: Clock,
-      title: "24/7 Support",
-      description: "Round-the-clock customer service and emergency assistance"
-    },
-    {
-      icon: Calculator,
-      title: "Instant Quotes",
-      description: "Get personalized quotes in seconds with our smart calculator"
-    },
-    {
-      icon: Smartphone,
-      title: "Mobile Claims",
-      description: "File and track claims easily through our mobile app"
-    },
-    {
-      icon: Users,
-      title: "Cashless Network",
-      description: "Access to 4000+ authorized garages across India"
-    },
-    {
-      icon: Award,
-      title: "Trusted Partner",
-      description: "Partnered with top-rated insurance companies"
-    }
-  ];
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map(f => ({
+      "@type": "Question",
+      "name": f.q,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": f.a
+      }
+    }))
+  };
 
   return (
-    <div className="min-h-screen bg-white">
-      <Breadcrumb path={["Home", "Insurance", "Car Insurance"]} />
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-800 text-white overflow-hidden">
-        <div className="absolute inset-0 bg-black/20"></div>
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-purple-600/20"></div>
+    <div className="min-h-screen bg-slate-50 font-sans pt-20 sm:pt-24 pb-16">
+      <Helmet>
+        <title>Car Insurance Online: Compare Quotes & Renew Instantly - BanksCart</title>
+        <meta 
+          name="description" 
+          content="Compare car insurance quotes online from HDFC ERGO, ICICI Lombard, Tata AIG & Bajaj Allianz. Up to 50% NCB discount, 5,000+ cashless garages & instant 2-minute policy issuance." 
+        />
+        <link rel="canonical" href="https://bankscart.com/insurance/car" />
+        <script type="application/ld+json">
+          {JSON.stringify(faqSchema)}
+        </script>
+      </Helmet>
+
+      {/* Breadcrumb Navigation */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6">
+        <Breadcrumb path={["Home", "Insurance", "Car Insurance"]} />
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-8">
-              <div className="inline-flex items-center bg-white/10 backdrop-blur-sm rounded-full px-4 py-2">
-                <Star className="w-5 h-5 text-yellow-400 mr-2" />
-                <span className="text-sm font-medium">India's Most Trusted Insurance Platform</span>
-              </div>
-              
-              <h1 className="text-5xl lg:text-6xl font-bold leading-tight">
-                Comprehensive 
-                <span className="bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent block">
-                  Car Insurance
-                </span>
-                Made Simple
-              </h1>
-              
-              <p className="text-xl text-blue-100 leading-relaxed">
-                Compare quotes from top insurance companies, get instant coverage, and enjoy peace of mind with our comprehensive car insurance solutions.
-              </p>
-              
-              <div className="flex flex-col sm:flex-row gap-4">
-                {openApplyModal ? (
-                  <ApplyButton
-                    loanType="Car Insurance"
-                    openApplyModal={openApplyModal}
-                    className="bg-white text-blue-600 px-8 py-4 rounded-xl font-semibold hover:bg-blue-50 transition-all transform hover:scale-105 shadow-lg"
-                  >
-                    <div className="flex items-center justify-center space-x-2">
-                      <Calculator className="w-5 h-5" />
-                      <span>Get Instant Quote</span>
-                    </div>
-                  </ApplyButton>
-                ) : (
-                  <button
-                    onClick={() => navigate('/loan-apply', { state: { loanType: 'Car Insurance' } })}
-                    className="bg-white text-blue-600 px-8 py-4 rounded-xl font-semibold hover:bg-blue-50 transition-all transform hover:scale-105 shadow-lg"
-                  >
-                    <div className="flex items-center justify-center space-x-2">
-                      <Calculator className="w-5 h-5" />
-                      <span>Get Instant Quote</span>
-                    </div>
-                  </button>
-                )}
-                <button onClick={() => alert('Demo video coming soon!')}
-                  className="border-2 border-white/30 text-white px-8 py-4 rounded-xl font-semibold hover:bg-white/10 transition-all backdrop-blur-sm">
-                  <div className="flex items-center justify-center space-x-2">
-                    <Play className="w-5 h-5" />
-                    <span>Watch Demo</span>
-                  </div>
-                </button>
-              </div>
-              
-              <div className="flex items-center space-x-8 pt-8">
-                <div className="text-center">
-                  <div className="text-3xl font-bold">10L+</div>
-                  <div className="text-blue-200 text-sm">Policies Sold</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold">4.8★</div>
-                  <div className="text-blue-200 text-sm">Customer Rating</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold">24/7</div>
-                  <div className="text-blue-200 text-sm">Support</div>
-                </div>
-              </div>
-            </div>
+        {/* Hero Section */}
+        <section className="bg-slate-900 rounded-3xl text-white p-8 sm:p-12 mb-12 shadow-2xl relative overflow-hidden border border-slate-800">
+          <div className="absolute -right-8 -bottom-10 opacity-5 select-none pointer-events-none">
+            <span className="text-[220px] font-black text-white leading-none">AUTO</span>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center relative z-10">
             
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-400/20 to-purple-400/20 rounded-3xl blur-3xl"></div>
-              <div className="relative bg-white/10 backdrop-blur-sm rounded-3xl p-8 border border-white/20">
-                <h3 className="text-2xl font-bold mb-6">Quick Quote Calculator</h3>
-                <div className="space-y-4">
-                  <div>
-                    <label className="block text-sm font-medium mb-2">Car Registration Number</label>
-                    <input 
-                      type="text" 
-                      placeholder="Enter your car number"
-                      className="w-full px-4 py-3 rounded-xl bg-white/20 border border-white/30 placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/50"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium mb-2">Mobile Number</label>
-                    <input 
-                      type="text" 
-                      placeholder="Enter mobile number"
-                      className="w-full px-4 py-3 rounded-xl bg-white/20 border border-white/30 placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/50"
-                    />
-                  </div>
-                  {openApplyModal ? (
-                    <ApplyButton
-                      loanType="Car Insurance - Quick Quote"
-                      openApplyModal={openApplyModal}
-                      className="w-full bg-gradient-to-r from-orange-500 to-red-500 text-white px-6 py-3 rounded-xl font-semibold hover:from-orange-600 hover:to-red-600 transition-all transform hover:scale-105"
-                    >
-                      Get Instant Quote
-                    </ApplyButton>
-                  ) : (
-                    <button
-                      onClick={() => navigate('/loan-apply', { state: { loanType: 'Car Insurance - Quick Quote' } })}
-                      className="w-full bg-gradient-to-r from-orange-500 to-red-500 text-white px-6 py-3 rounded-xl font-semibold hover:from-orange-600 hover:to-red-600 transition-all transform hover:scale-105"
-                    >Get Instant Quote
-                    </button>
-                  )}
+            {/* Left Hero Pitch */}
+            <div className="lg:col-span-7 space-y-6">
+              <div className="inline-flex items-center gap-2 bg-amber-500/10 border border-amber-500/30 rounded-full px-3.5 py-1 text-xs font-semibold text-amber-400 uppercase tracking-wider">
+                <Shield className="w-3.5 h-3.5 text-amber-400" />
+                IRDAI Authorized Motor Insurance Aggregator
+              </div>
+
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight text-white">
+                Compare & Save Up to 50% on <br />
+                <span className="text-amber-400">Car Insurance Online</span>
+              </h1>
+
+              <p className="text-slate-300 text-base sm:text-lg leading-relaxed font-normal">
+                Protect your vehicle with top insurers in India. Enjoy cashless repairs at 5,000+ network garages, instant NCB transfer, zero paperwork, and 2-minute digital policy issuance.
+              </p>
+
+              {/* Quick Trust Badges */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4 border-t border-slate-800">
+                <div>
+                  <div className="text-xs font-bold text-white font-mono tabular-nums">5,000+</div>
+                  <div className="text-[11px] text-slate-400">Cashless Garages</div>
+                </div>
+                <div>
+                  <div className="text-xs font-bold text-white font-mono tabular-nums">Up to 50%</div>
+                  <div className="text-[11px] text-slate-400">NCB Discount</div>
+                </div>
+                <div>
+                  <div className="text-xs font-bold text-white">2 Minutes</div>
+                  <div className="text-[11px] text-slate-400">Instant Policy</div>
+                </div>
+                <div>
+                  <div className="text-xs font-bold text-white">24/7 Roadside</div>
+                  <div className="text-[11px] text-slate-400">Assistance (RSA)</div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
 
-      {/* Insurance Types Section */}
-      <section id="section-insurance-types" className={`py-20 bg-gray-50 transition-all duration-1000 ${isVisible['section-insurance-types'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              Types of Motor Insurance
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Choose the right coverage for your needs with our comprehensive insurance options
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {insuranceTypes.map((type, index) => (
-              <div 
-                key={index}
-                className={`group relative bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border-2 border-transparent hover:border-blue-500/20 cursor-pointer ${
-                  activeInsuranceType === index ? 'ring-2 ring-blue-500 shadow-xl' : ''
-                }`}
-                onClick={() => setActiveInsuranceType(index)}
-              >
-                <div className={`w-12 h-12 ${type.color} rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
-                  <type.icon className="w-6 h-6 text-white" />
+            {/* Right Quick Quote Card */}
+            <div className="lg:col-span-5 bg-white text-slate-900 rounded-2xl p-6 sm:p-8 shadow-2xl border border-slate-100">
+              <div className="flex items-center justify-between pb-4 mb-5 border-b border-slate-100">
+                <div>
+                  <h3 className="font-bold text-base text-slate-900">Instant Quote in 2 Minutes</h3>
+                  <p className="text-xs text-slate-500">Save up to ₹8,000 on policy renewals</p>
                 </div>
-                
-                <h3 className="text-xl font-bold text-gray-900 mb-3">{type.title}</h3>
-                <p className="text-gray-600 mb-4 text-sm leading-relaxed">{type.description}</p>
-                
-                <div className="space-y-2 mb-6">
-                  {type.features.map((feature, idx) => (
-                    <div key={idx} className="flex items-center space-x-2">
-                      <CheckCircle className="w-4 h-4 text-green-500" />
-                      <span className="text-sm text-gray-700">{feature}</span>
-                    </div>
-                  ))}
-                </div>
-                
-                <div className="border-t pt-4">
-                  <div className="text-lg font-bold text-blue-600 mb-3">{type.price}</div>
-                  {openApplyModal ? (
-                    <ApplyButton
-                      loanType={`Car Insurance - ${type.title}`}
-                      openApplyModal={openApplyModal}
-                      className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm font-semibold"
-                    >
-                      Get Quote
-                    </ApplyButton>
-                  ) : (
-                    <button
-                      onClick={() => navigate('/loan-apply', { state: { loanType: `Car Insurance - ${type.title}` } })}
-                      className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm font-semibold"
-                    >
-                      Get Quote
-                    </button>
-                  )}
+                <div className="w-9 h-9 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center">
+                  <Car className="w-5 h-5" />
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* Insurance Companies Comparison */}
-      <section id="section-companies" className={`py-20 bg-white transition-all duration-1000 ${isVisible['section-companies'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              Compare Top Insurance Companies
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Find the best deals from India's leading insurance providers
-            </p>
-          </div>
+              <form onSubmit={handleQuickQuoteSubmit} className="space-y-4">
+                <div>
+                  <label htmlFor="hero-car-reg-input" className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                    Car Registration Number
+                  </label>
+                  <input
+                    id="hero-car-reg-input"
+                    type="text"
+                    value={carNumber}
+                    onChange={(e) => setCarNumber(e.target.value.toUpperCase())}
+                    placeholder="e.g. DL-01-AB-1234 or MH-02-CD-5678"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 font-mono text-sm uppercase focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+                  />
+                  <span className="text-[10px] text-slate-400 mt-1 block">Brand new car? Enter your city/RTO below</span>
+                </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {insuranceCompanies.map((company, index) => (
-              <div 
-                key={index}
-                className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100"
-              >
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-500 rounded-xl flex items-center justify-center">
-                      <span className="text-white font-bold text-sm">{company.logo}</span>
-                    </div>
-                    <h3 className="text-lg font-bold text-gray-900">{company.name}</h3>
-                  </div>
-                  <div className="flex items-center space-x-1">
-                    <Star className="w-4 h-4 text-yellow-400 fill-current" />
-                    <span className="text-sm font-semibold text-gray-700">{company.rating}</span>
+                <div>
+                  <label htmlFor="hero-mobile-input" className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                    Mobile Number
+                  </label>
+                  <div className="flex">
+                    <span className="inline-flex items-center px-3 rounded-l-xl border border-r-0 border-slate-300 bg-slate-50 text-slate-500 text-xs font-bold font-mono">
+                      +91
+                    </span>
+                    <input
+                      id="hero-mobile-input"
+                      type="tel"
+                      maxLength={10}
+                      value={mobileNumber}
+                      onChange={(e) => setMobileNumber(e.target.value.replace(/\D/g, ''))}
+                      placeholder="Enter 10-digit mobile"
+                      required
+                      className="w-full px-3.5 py-2.5 rounded-r-xl border border-slate-300 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+                    />
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4 mb-4">
-                  <div className="text-center p-3 bg-blue-50 rounded-lg">
-                    <div className="text-lg font-bold text-blue-600">{company.cashlessGarages}</div>
-                    <div className="text-xs text-blue-600">Cashless Garages</div>
-                  </div>
-                  <div className="text-center p-3 bg-green-50 rounded-lg">
-                    <div className="text-lg font-bold text-green-600">{company.claimRatio}</div>
-                    <div className="text-xs text-green-600">Claim Ratio</div>
-                  </div>
-                </div>
-
-                <div className="space-y-2 mb-4">
-                  {company.features.map((feature, idx) => (
-                    <div key={idx} className="flex items-center space-x-2">
-                      <CheckCircle className="w-4 h-4 text-green-500" />
-                      <span className="text-sm text-gray-700">{feature}</span>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="border-t pt-4">
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="text-sm text-gray-600">Starting from</span>
-                    <span className="text-xl font-bold text-gray-900">{company.price}</span>
-                  </div>
-                  {openApplyModal ? (
-                    <ApplyButton
-                      loanType={`Car Insurance - ${company.name}`}
-                      openApplyModal={openApplyModal}
-                      className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all font-semibold"
-                    >
-                      Get Quote
-                    </ApplyButton>
-                  ) : (
-                    <button
-                      onClick={() => navigate('/loan-apply', { state: { loanType: `Car Insurance - ${company.name}` } })}
-                      className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all font-semibold"
-                    >
-                      Get Quote
-                    </button>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Benefits Section */}
-      <section id="section-benefits" className={`py-20 bg-gray-50 transition-all duration-1000 ${isVisible['section-benefits'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              Why Choose BanksCart for Car Insurance?
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Experience the difference with our comprehensive insurance solutions
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {benefits.map((benefit, index) => (
-              <div 
-                key={index}
-                className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
-              >
-                <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-500 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                  <benefit.icon className="w-8 h-8 text-white" />
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">{benefit.title}</h3>
-                <p className="text-gray-600 leading-relaxed">{benefit.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* How It Works Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              How It Works
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Get insured in just 3 simple steps
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                step: "01",
-                title: "Enter Details",
-                description: "Provide your car registration number and personal details",
-                icon: FileText
-              },
-              {
-                step: "02",
-                title: "Compare Quotes",
-                description: "Compare quotes from top insurance companies instantly",
-                icon: Calculator
-              },
-              {
-                step: "03",
-                title: "Get Covered",
-                description: "Choose your plan and get instant policy issuance",
-                icon: Shield
-              }
-            ].map((step, index) => (
-              <div key={index} className="text-center group">
-                <div className="relative mb-8">
-                  <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                    <step.icon className="w-10 h-10 text-white" />
-                  </div>
-                  <div className="absolute -top-2 -right-2 w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center">
-                    <span className="text-white font-bold text-sm">{step.step}</span>
-                  </div>
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">{step.title}</h3>
-                <p className="text-gray-600 leading-relaxed">{step.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ Section */}
-      <section id="section-faq" className={`py-20 bg-gray-50 transition-all duration-1000 ${isVisible['section-faq'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              Frequently Asked Questions
-            </h2>
-            <p className="text-xl text-gray-600">
-              Get answers to common questions about car insurance
-            </p>
-          </div>
-
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div 
-                key={index}
-                className="bg-white rounded-2xl shadow-lg overflow-hidden"
-              >
                 <button
-                  className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors"
-                  onClick={() => setActiveFaq(activeFaq === index ? null : index)}
+                  type="submit"
+                  className="w-full py-3.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-sm tracking-wide shadow-md transition-all flex items-center justify-center gap-2 mt-2"
                 >
-                  <span className="text-lg font-semibold text-gray-900">{faq.question}</span>
-                  {activeFaq === index ? (
-                    <ChevronUp className="w-5 h-5 text-gray-500" />
-                  ) : (
-                    <ChevronDown className="w-5 h-5 text-gray-500" />
-                  )}
+                  <Calculator className="w-4 h-4" />
+                  View Personalized Quotes &rarr;
                 </button>
-                
+              </form>
+
+              <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500">
+                <span className="flex items-center gap-1">
+                  <Check className="w-3.5 h-3.5 text-emerald-600" />
+                  Zero Spam Promise
+                </span>
+                <span className="flex items-center gap-1">
+                  <Check className="w-3.5 h-3.5 text-emerald-600" />
+                  Free Claims Support
+                </span>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        {/* Interactive Car Premium & IDV Calculator */}
+        <section className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 mb-12 shadow-sm">
+          <div className="max-w-3xl mb-8">
+            <div className="inline-flex items-center gap-2 bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-xs font-bold mb-2">
+              <Sliders className="w-3.5 h-3.5" />
+              Live Motor Tariff Engine
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+              Car Insurance Premium & NCB Calculator
+            </h2>
+            <p className="text-sm text-slate-600 mt-2">
+              Adjust vehicle IDV, claim-free bonus slabs, and critical add-ons to preview exact annual premiums with zero surprises.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            
+            {/* Input Controls */}
+            <div className="lg:col-span-7 space-y-6">
+              
+              {/* Vehicle Age Selector */}
+              <div>
+                <label className="text-xs font-bold text-slate-700 uppercase tracking-wider block mb-2.5">
+                  Vehicle Age Category
+                </label>
+                <div className="grid grid-cols-4 gap-2.5">
+                  {[
+                    { id: 'new', label: 'Brand New' },
+                    { id: '1-2', label: '1 - 2 Years' },
+                    { id: '3-5', label: '3 - 5 Years' },
+                    { id: '5+', label: 'Over 5 Yrs' }
+                  ].map((ageItem) => (
+                    <button
+                      key={ageItem.id}
+                      type="button"
+                      onClick={() => setCarAgeGroup(ageItem.id as any)}
+                      className={`py-2.5 px-2 rounded-xl border text-center font-bold text-xs transition-all ${
+                        carAgeGroup === ageItem.id
+                          ? 'border-blue-700 bg-blue-50 text-blue-800 ring-1 ring-blue-700'
+                          : 'border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100'
+                      }`}
+                    >
+                      {ageItem.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* IDV Slider */}
+              <div>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="car-idv-slider" className="text-xs font-bold text-slate-700 uppercase tracking-wider">
+                    Insured Declared Value (IDV)
+                  </label>
+                  <span className="text-sm font-bold text-blue-700 font-mono tabular-nums bg-blue-50 px-2.5 py-0.5 rounded-md">
+                    ₹{(idvValue / 100000).toFixed(2)} Lakhs
+                  </span>
+                </div>
+                <input
+                  id="car-idv-slider"
+                  type="range"
+                  min="200000"
+                  max="2500000"
+                  step="50000"
+                  value={idvValue}
+                  onChange={(e) => setIdvValue(parseInt(e.target.value))}
+                  aria-label="Insured Declared Value Slider"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-700"
+                />
+                <div className="flex justify-between text-[11px] text-slate-400 mt-1 font-mono">
+                  <span>₹2 Lakhs</span>
+                  <span>₹10 Lakhs</span>
+                  <span>₹18 Lakhs</span>
+                  <span>₹25 Lakhs</span>
+                </div>
+              </div>
+
+              {/* NCB Slabs Selector */}
+              <div>
+                <label className="text-xs font-bold text-slate-700 uppercase tracking-wider block mb-2.5">
+                  Existing No Claim Bonus (NCB) Discount Slab
+                </label>
+                <div className="grid grid-cols-5 gap-2">
+                  {[
+                    { slab: 0, label: "0%" },
+                    { slab: 20, label: "20%" },
+                    { slab: 25, label: "25%" },
+                    { slab: 35, label: "35%" },
+                    { slab: 50, label: "50% (Max)" }
+                  ].map((ncbItem) => (
+                    <button
+                      key={ncbItem.slab}
+                      type="button"
+                      onClick={() => setNcbPercentage(ncbItem.slab)}
+                      className={`py-2 px-1 rounded-xl border text-center font-bold text-xs font-mono transition-all ${
+                        ncbPercentage === ncbItem.slab
+                          ? 'border-emerald-600 bg-emerald-600 text-white shadow-sm'
+                          : 'border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100'
+                      }`}
+                    >
+                      {ncbItem.label}
+                    </button>
+                  ))}
+                </div>
+                <span className="text-[11px] text-slate-500 mt-1.5 block">
+                  Applicable discount on Own Damage premium for consecutive claim-free policy years.
+                </span>
+              </div>
+
+              {/* Add-On Toggles */}
+              <div className="space-y-2.5 pt-2">
+                <label className="text-xs font-bold text-slate-700 uppercase tracking-wider block">
+                  Select Recommended Add-On Covers
+                </label>
+
+                {/* Zero Dep */}
+                <div className="flex items-center justify-between p-3.5 bg-slate-50 rounded-xl border border-slate-200">
+                  <div className="flex items-center gap-3">
+                    <div className="w-7 h-7 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-xs">
+                      ZD
+                    </div>
+                    <div>
+                      <span className="font-bold text-slate-900 text-xs sm:text-sm block">Zero Depreciation Cover (Bumper to Bumper)</span>
+                      <span className="text-[11px] text-slate-500">100% claim on plastic, rubber & metal components</span>
+                    </div>
+                  </div>
+                  <input
+                    id="car-zero-dep-toggle"
+                    type="checkbox"
+                    checked={zeroDep}
+                    onChange={(e) => setZeroDep(e.target.checked)}
+                    aria-label="Zero depreciation cover"
+                    className="w-5 h-5 rounded text-blue-700 focus:ring-blue-500 cursor-pointer"
+                  />
+                </div>
+
+                {/* Engine Protect */}
+                <div className="flex items-center justify-between p-3.5 bg-slate-50 rounded-xl border border-slate-200">
+                  <div className="flex items-center gap-3">
+                    <div className="w-7 h-7 rounded-lg bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-xs">
+                      EP
+                    </div>
+                    <div>
+                      <span className="font-bold text-slate-900 text-xs sm:text-sm block">Engine & Gearbox Protection</span>
+                      <span className="text-[11px] text-slate-500">Safeguards against hydrostatic lock and water ingression in rains</span>
+                    </div>
+                  </div>
+                  <input
+                    id="car-engine-protect-toggle"
+                    type="checkbox"
+                    checked={engineProtect}
+                    onChange={(e) => setEngineProtect(e.target.checked)}
+                    aria-label="Engine and gearbox protection"
+                    className="w-5 h-5 rounded text-blue-700 focus:ring-blue-500 cursor-pointer"
+                  />
+                </div>
+
+                {/* RSA */}
+                <div className="flex items-center justify-between p-3.5 bg-slate-50 rounded-xl border border-slate-200">
+                  <div className="flex items-center gap-3">
+                    <div className="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold text-xs">
+                      RSA
+                    </div>
+                    <div>
+                      <span className="font-bold text-slate-900 text-xs sm:text-sm block">24/7 Roadside Assistance (RSA)</span>
+                      <span className="text-[11px] text-slate-500">Emergency towing, flat tyre repair, emergency fuel & battery jumpstart</span>
+                    </div>
+                  </div>
+                  <input
+                    id="car-rsa-toggle"
+                    type="checkbox"
+                    checked={rsa}
+                    onChange={(e) => setRsa(e.target.checked)}
+                    aria-label="24/7 roadside assistance"
+                    className="w-5 h-5 rounded text-blue-700 focus:ring-blue-500 cursor-pointer"
+                  />
+                </div>
+              </div>
+
+            </div>
+
+            {/* Calculated Output Card */}
+            <div className="lg:col-span-5 bg-slate-900 text-white p-6 sm:p-8 rounded-2xl border border-slate-800 shadow-xl space-y-6">
+              <span className="text-[11px] font-bold text-amber-400 uppercase tracking-wider bg-amber-400/10 px-2.5 py-1 rounded-md border border-amber-400/20 inline-block">
+                Transparent Tariff Breakdown
+              </span>
+
+              <div className="pb-6 border-b border-slate-800">
+                <span className="text-xs text-slate-400 block font-medium">Net Annual Premium (inc. 18% GST)</span>
+                <div className="flex items-baseline gap-2 mt-1">
+                  <span className="text-4xl sm:text-5xl font-black text-white font-mono tabular-nums">
+                    ₹{calculated.totalPayable.toLocaleString('en-IN')}
+                  </span>
+                  <span className="text-xs text-slate-400 font-semibold">/ year</span>
+                </div>
+                <span className="text-xs text-emerald-400 font-medium block mt-1.5 font-mono">
+                  ✔ You save ₹{calculated.ncbDiscount.toLocaleString('en-IN')} with {ncbPercentage}% NCB discount
+                </span>
+              </div>
+
+              {/* Itemized Calculation */}
+              <div className="space-y-3 text-xs">
+                <div className="flex items-center justify-between">
+                  <span className="text-slate-400">Base Own Damage (OD):</span>
+                  <span className="font-bold text-white font-mono tabular-nums">₹{calculated.baseOwnDamage.toLocaleString('en-IN')}</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-emerald-400 font-medium">NCB Discount ({ncbPercentage}%):</span>
+                  <span className="font-bold text-emerald-400 font-mono tabular-nums">-₹{calculated.ncbDiscount.toLocaleString('en-IN')}</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-slate-400">Third-Party Cover (IRDAI Mandatory):</span>
+                  <span className="font-bold text-white font-mono tabular-nums">₹{calculated.thirdPartyBase.toLocaleString('en-IN')}</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-slate-400">Selected Add-on Covers:</span>
+                  <span className="font-bold text-white font-mono tabular-nums">₹{calculated.addOnsTotal.toLocaleString('en-IN')}</span>
+                </div>
+                <div className="flex items-center justify-between pt-2 border-t border-slate-800">
+                  <span className="text-slate-400">Goods & Service Tax (18% GST):</span>
+                  <span className="font-bold text-slate-300 font-mono tabular-nums">₹{calculated.gst18.toLocaleString('en-IN')}</span>
+                </div>
+              </div>
+
+              {/* Action Button */}
+              <button
+                onClick={() => handleApply()}
+                className="w-full py-4 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-sm tracking-wide shadow-lg transition-all flex items-center justify-center gap-2"
+              >
+                Apply for Policy at this Rate &rarr;
+              </button>
+
+              <p className="text-[10px] text-slate-400 text-center leading-normal">
+                Compulsory deductible of ₹1,000 applies per accident claim under IRDAI guidelines.
+              </p>
+            </div>
+
+          </div>
+        </section>
+
+        {/* Top Motor Insurers Comparison Table */}
+        <section className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 mb-12 shadow-sm">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+            <div>
+              <h3 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
+                Compare Top Car Insurance Companies in India
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-600 mt-1">
+                Verified figures from official IRDAI public disclosures and authorized network garage directories.
+              </p>
+            </div>
+            <span className="text-xs font-semibold text-slate-500 bg-slate-100 px-3 py-1.5 rounded-lg whitespace-nowrap self-start sm:self-auto">
+              Updated: Q1 2026
+            </span>
+          </div>
+
+          <div className="overflow-x-auto">
+            <table className="w-full text-left border-collapse text-xs sm:text-sm">
+              <thead>
+                <tr className="bg-slate-100 border-b border-slate-200 text-slate-800">
+                  <th className="p-3.5 font-bold">Insurance Provider & Feature</th>
+                  <th className="p-3.5 font-bold">Cashless Garages</th>
+                  <th className="p-3.5 font-bold">Settlement Ratio (CSR)</th>
+                  <th className="p-3.5 font-bold">Starting Price</th>
+                  <th className="p-3.5 font-bold">Key Benefit</th>
+                  <th className="p-3.5 font-bold text-right">Action</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100">
+                {CAR_INSURERS.map((insurer, idx) => (
+                  <tr key={idx} className="hover:bg-slate-50/70 transition-colors">
+                    <td className="p-3.5">
+                      <div className="font-bold text-slate-900 text-sm flex items-center gap-2">
+                        {insurer.name}
+                        {insurer.badge && (
+                          <span className="text-[10px] font-extrabold uppercase tracking-wider bg-amber-100 text-amber-800 px-2 py-0.5 rounded">
+                            {insurer.badge}
+                          </span>
+                        )}
+                      </div>
+                      <span className="text-xs text-slate-500 font-normal block mt-0.5">{insurer.tagline}</span>
+                    </td>
+                    <td className="p-3.5 font-bold text-slate-800 font-mono tabular-nums">{insurer.garages}</td>
+                    <td className="p-3.5 font-bold text-emerald-700 font-mono tabular-nums">{insurer.csr}</td>
+                    <td className="p-3.5 font-bold text-slate-900 font-mono tabular-nums">{insurer.startingPrice}</td>
+                    <td className="p-3.5 text-slate-600 text-xs leading-relaxed max-w-xs">{insurer.keyBenefit}</td>
+                    <td className="p-3.5 text-right">
+                      <button
+                        onClick={() => handleApply(insurer.name)}
+                        className="px-4 py-2 rounded-lg bg-blue-700 hover:bg-blue-800 text-white font-bold text-xs transition-colors whitespace-nowrap shadow-sm"
+                      >
+                        Get Quote
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        {/* 4 Types of Motor Insurance */}
+        <section className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 mb-12 shadow-sm">
+          <div className="max-w-3xl mb-8">
+            <h3 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
+              Types of Motor Insurance Policies
+            </h3>
+            <p className="text-sm text-slate-600 mt-1">
+              Understand the legal requirements and scope of protection under each car insurance category.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="border border-slate-200 rounded-2xl p-5 bg-slate-50/50 hover:border-blue-200 transition-colors">
+              <div className="w-9 h-9 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-bold mb-3">
+                <Shield className="w-5 h-5" />
+              </div>
+              <h4 className="font-bold text-slate-900 text-sm mb-1.5">Third-Party Liability</h4>
+              <p className="text-xs text-slate-600 leading-relaxed mb-3">
+                Mandatory under Indian law. Covers death, physical injury, and property damage caused to external third parties.
+              </p>
+              <span className="text-[11px] font-bold text-blue-700 font-mono">Rates fixed by IRDAI</span>
+            </div>
+
+            <div className="border border-slate-200 rounded-2xl p-5 bg-slate-50/50 hover:border-blue-200 transition-colors">
+              <div className="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold mb-3">
+                <Car className="w-5 h-5" />
+              </div>
+              <h4 className="font-bold text-slate-900 text-sm mb-1.5">Comprehensive Cover</h4>
+              <p className="text-xs text-slate-600 leading-relaxed mb-3">
+                All-in-one protection covering third-party liability plus own damage from accidents, fires, theft, and natural floods.
+              </p>
+              <span className="text-[11px] font-bold text-emerald-700 font-mono">Most Recommended</span>
+            </div>
+
+            <div className="border border-slate-200 rounded-2xl p-5 bg-slate-50/50 hover:border-blue-200 transition-colors">
+              <div className="w-9 h-9 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center font-bold mb-3">
+                <Wrench className="w-5 h-5" />
+              </div>
+              <h4 className="font-bold text-slate-900 text-sm mb-1.5">Standalone Own Damage</h4>
+              <p className="text-xs text-slate-600 leading-relaxed mb-3">
+                For vehicle owners who already hold an active multi-year third-party cover and require annual protection for their own car.
+              </p>
+              <span className="text-[11px] font-bold text-amber-700 font-mono">Flexible Renewal</span>
+            </div>
+
+            <div className="border border-slate-200 rounded-2xl p-5 bg-slate-50/50 hover:border-blue-200 transition-colors">
+              <div className="w-9 h-9 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center font-bold mb-3">
+                <Sparkles className="w-5 h-5" />
+              </div>
+              <h4 className="font-bold text-slate-900 text-sm mb-1.5">Zero Depreciation Cover</h4>
+              <p className="text-xs text-slate-600 leading-relaxed mb-3">
+                Premium bumper-to-bumper protection where zero depreciation is deducted on plastic, metal, and glass parts during claims.
+              </p>
+              <span className="text-[11px] font-bold text-purple-700 font-mono">Best for Cars &lt; 5 Yrs</span>
+            </div>
+          </div>
+        </section>
+
+        {/* Must-Have Add-On Covers Grid */}
+        <section className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 mb-12 shadow-sm">
+          <div className="max-w-3xl mb-8">
+            <h3 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
+              Essential Car Insurance Add-On Covers
+            </h3>
+            <p className="text-sm text-slate-600 mt-1">
+              Customize your policy to protect against specific road and weather hazards:
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="p-5 rounded-2xl border border-slate-200 bg-slate-50/50 space-y-2">
+              <div className="font-bold text-slate-900 text-sm flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-blue-700" />
+                Zero Depreciation (Bumper to Bumper)
+              </div>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                Guarantees complete compensation for vehicle parts without deducting depreciation value for age or materials.
+              </p>
+            </div>
+
+            <div className="p-5 rounded-2xl border border-slate-200 bg-slate-50/50 space-y-2">
+              <div className="font-bold text-slate-900 text-sm flex items-center gap-2">
+                <Zap className="w-4 h-4 text-amber-600" />
+                Engine & Gearbox Protection
+              </div>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                Covers repair costs arising from hydrostatic lock, water ingression, and lubricating oil leakage during monsoon floods.
+              </p>
+            </div>
+
+            <div className="p-5 rounded-2xl border border-slate-200 bg-slate-50/50 space-y-2">
+              <div className="font-bold text-slate-900 text-sm flex items-center gap-2">
+                <RotateCcw className="w-4 h-4 text-emerald-600" />
+                Return to Invoice (RTI) Cover
+              </div>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                In the event of total loss or theft, RTI pays the original purchase invoice value of the vehicle, including road tax and registration charges.
+              </p>
+            </div>
+
+            <div className="p-5 rounded-2xl border border-slate-200 bg-slate-50/50 space-y-2">
+              <div className="font-bold text-slate-900 text-sm flex items-center gap-2">
+                <Wrench className="w-4 h-4 text-purple-600" />
+                24/7 Roadside Assistance (RSA)
+              </div>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                Instant highway towing, emergency fuel delivery, puncture repairs, battery jumpstarts, and on-spot minor mechanical assistance.
+              </p>
+            </div>
+
+            <div className="p-5 rounded-2xl border border-slate-200 bg-slate-50/50 space-y-2">
+              <div className="font-bold text-slate-900 text-sm flex items-center gap-2">
+                <FileCheck className="w-4 h-4 text-rose-600" />
+                Consumables Cover
+              </div>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                Covers the cost of consumables such as engine oil, nuts, bolts, screws, grease, AC gas, and washers that standard policies exclude.
+              </p>
+            </div>
+
+            <div className="p-5 rounded-2xl border border-slate-200 bg-slate-50/50 space-y-2">
+              <div className="font-bold text-slate-900 text-sm flex items-center gap-2">
+                <Shield className="w-4 h-4 text-indigo-600" />
+                Key Replacement Cover
+              </div>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                Reimburses the cost of replacing modern electronic smart keys and reprogramming vehicle lock transmitters when lost or stolen.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* No Claim Bonus (NCB) Guide Table */}
+        <section className="bg-slate-900 text-white rounded-3xl p-8 sm:p-10 mb-12 shadow-xl border border-slate-800">
+          <div className="max-w-3xl mb-8">
+            <span className="text-xs font-bold text-amber-400 uppercase tracking-wider bg-amber-400/10 px-3 py-1 rounded-md border border-amber-400/20 inline-block mb-2">
+              Reward for Safe Driving
+            </span>
+            <h3 className="text-2xl sm:text-3xl font-black text-white">
+              No Claim Bonus (NCB) Slabs & Transfer Guide
+            </h3>
+            <p className="text-sm text-slate-300 mt-2">
+              Every year you drive without making an insurance claim, your discount on Own Damage premium escalates:
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 text-center">
+            <div className="bg-white/10 rounded-xl p-4 border border-white/10">
+              <span className="text-xs text-slate-400 block font-medium">1st Year Clean</span>
+              <div className="text-2xl font-black text-white font-mono mt-1 tabular-nums">20% Off</div>
+            </div>
+            <div className="bg-white/10 rounded-xl p-4 border border-white/10">
+              <span className="text-xs text-slate-400 block font-medium">2nd Year Clean</span>
+              <div className="text-2xl font-black text-white font-mono mt-1 tabular-nums">25% Off</div>
+            </div>
+            <div className="bg-white/10 rounded-xl p-4 border border-white/10">
+              <span className="text-xs text-slate-400 block font-medium">3rd Year Clean</span>
+              <div className="text-2xl font-black text-white font-mono mt-1 tabular-nums">35% Off</div>
+            </div>
+            <div className="bg-white/10 rounded-xl p-4 border border-white/10">
+              <span className="text-xs text-slate-400 block font-medium">4th Year Clean</span>
+              <div className="text-2xl font-black text-white font-mono mt-1 tabular-nums">45% Off</div>
+            </div>
+            <div className="bg-white/10 rounded-xl p-4 border border-white/10 col-span-2 sm:col-span-1">
+              <span className="text-xs text-amber-400 block font-bold">5th Year (Max)</span>
+              <div className="text-2xl font-black text-amber-400 font-mono mt-1 tabular-nums">50% Off</div>
+            </div>
+          </div>
+
+          <p className="text-xs text-slate-400 mt-6 leading-relaxed">
+            <strong>Pro Tip:</strong> When selling your old car, preserve your NCB with an NCB Retention Certificate. You can apply your 50% discount to your new car purchase, saving up to ₹25,000 on its first policy.
+          </p>
+        </section>
+
+        {/* Cashless Claim Process: 4 Steps */}
+        <section className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 mb-12 shadow-sm">
+          <div className="max-w-3xl mb-8">
+            <h3 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
+              Cashless Claim Settlement in 4 Simple Steps
+            </h3>
+            <p className="text-sm text-slate-600 mt-1">
+              Get back on the road quickly with seamless repair coordination across 5,000+ network garages.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-4 gap-6">
+            <div className="border border-slate-200 rounded-2xl p-5 bg-slate-50/50">
+              <div className="w-8 h-8 rounded-full bg-blue-100 text-blue-700 font-bold flex items-center justify-center text-sm mb-3">1</div>
+              <h4 className="font-bold text-slate-900 text-sm mb-1.5">Intimate the Claim</h4>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                Notify BanksCart / Insurer toll-free or upload incident photos directly through the insurer's mobile app.
+              </p>
+            </div>
+
+            <div className="border border-slate-200 rounded-2xl p-5 bg-slate-50/50">
+              <div className="w-8 h-8 rounded-full bg-blue-100 text-blue-700 font-bold flex items-center justify-center text-sm mb-3">2</div>
+              <h4 className="font-bold text-slate-900 text-sm mb-1.5">Towing to Garage</h4>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                Avail complimentary RSA towing to the nearest authorized cashless network garage.
+              </p>
+            </div>
+
+            <div className="border border-slate-200 rounded-2xl p-5 bg-slate-50/50">
+              <div className="w-8 h-8 rounded-full bg-blue-100 text-blue-700 font-bold flex items-center justify-center text-sm mb-3">3</div>
+              <h4 className="font-bold text-slate-900 text-sm mb-1.5">Digital Video Survey</h4>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                A certified surveyor inspects the vehicle via digital video link, approving repairs within 3 hours.
+              </p>
+            </div>
+
+            <div className="border border-slate-200 rounded-2xl p-5 bg-slate-50/50">
+              <div className="w-8 h-8 rounded-full bg-blue-100 text-blue-700 font-bold flex items-center justify-center text-sm mb-3">4</div>
+              <h4 className="font-bold text-slate-900 text-sm mb-1.5">Drive Away Repaired</h4>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                The insurer settles the repair bill directly with the garage. You pay only the compulsory deductible.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQs Accordion */}
+        <section className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 mb-12 shadow-sm">
+          <h3 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight mb-6 flex items-center gap-2">
+            <HelpCircle className="w-5 h-5 text-blue-700" />
+            Frequently Asked Questions on Car Insurance
+          </h3>
+
+          <div className="space-y-3">
+            {faqs.map((faq, index) => (
+              <div key={index} className="border border-slate-200 rounded-xl overflow-hidden">
+                <button
+                  onClick={() => setActiveFaq(activeFaq === index ? null : index)}
+                  className="w-full flex justify-between items-center p-4 bg-slate-50/70 hover:bg-slate-50 text-left font-bold text-slate-800 text-xs sm:text-sm transition-colors"
+                  aria-expanded={activeFaq === index}
+                >
+                  <span className="pr-4">{faq.q}</span>
+                  <ChevronDown className={`w-4 h-4 text-slate-500 transition-transform flex-shrink-0 ${activeFaq === index ? 'rotate-180 text-blue-700' : ''}`} />
+                </button>
                 {activeFaq === index && (
-                  <div className="px-6 pb-4 border-t">
-                    <p className="text-gray-600 leading-relaxed pt-4">{faq.answer}</p>
+                  <div className="p-4 text-xs sm:text-sm text-slate-600 border-t border-slate-200 bg-white leading-relaxed">
+                    {faq.a}
                   </div>
                 )}
               </div>
             ))}
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-4xl font-bold mb-6">
-            Ready to Get Protected?
-          </h2>
-          <p className="text-xl mb-8 text-blue-100">
-            Join millions of satisfied customers who trust BanksCart for their car insurance needs
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            {openApplyModal ? (
-              <ApplyButton
-                loanType="Car Insurance"
-                openApplyModal={openApplyModal}
-                className="bg-white text-blue-600 px-8 py-4 rounded-xl font-semibold hover:bg-blue-50 transition-all transform hover:scale-105"
-              >
-                Get Instant Quote
-              </ApplyButton>
-            ) : (
+        {/* Final CTA Banner */}
+        <section className="bg-slate-900 text-white rounded-3xl p-8 sm:p-12 text-center relative overflow-hidden border border-slate-800">
+          <div className="max-w-2xl mx-auto space-y-4">
+            <h3 className="text-2xl sm:text-3xl font-black text-white">
+              Drive with 100% Peace of Mind Today
+            </h3>
+            <p className="text-sm text-slate-300 leading-relaxed">
+              Renew in 2 minutes or switch to top-tier motor protection with guaranteed cashless garage support across India.
+            </p>
+            <div className="pt-4 flex flex-wrap justify-center gap-4">
               <button
-                onClick={() => navigate('/loan-apply', { state: { loanType: 'Car Insurance' } })}
-                className="bg-white text-blue-600 px-8 py-4 rounded-xl font-semibold hover:bg-blue-50 transition-all transform hover:scale-105"
+                onClick={() => handleApply()}
+                className="px-8 py-3.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-sm shadow-lg transition-all"
               >
-                Get Instant Quote
+                Get Instant Car Quote
               </button>
-            )}
-            <button onClick={() => window.location.href = 'tel:+919686859296'} className="border-2 border-white/30 text-white px-8 py-4 rounded-xl font-semibold hover:bg-white/10 transition-all">
-              <div className="flex items-center justify-center space-x-2">
-                <Phone className="w-5 h-5" />
-                <span>Call Us Now</span>
-              </div>
-            </button>
+              <a
+                href="tel:+919686859296"
+                className="px-8 py-3.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-sm border border-white/20 transition-all flex items-center gap-2"
+              >
+                <PhoneCall className="w-4 h-4 text-emerald-400" />
+                Call +91 96868 59296
+              </a>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+
+      </div>
     </div>
   );
-}
+};
 
 export default CarInsurancePage;

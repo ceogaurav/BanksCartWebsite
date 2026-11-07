@@ -5,6 +5,7 @@ export default {
     extend: {
       fontFamily: {
         'inter': ['Inter', 'sans-serif'],
+        'ibm': ['"IBM Plex Sans"', 'Inter', 'sans-serif'],
       },
       colors: {
         primary: {

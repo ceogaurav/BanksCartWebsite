@@ -7,7 +7,8 @@ import {
   HandCoins, CreditCard, Clock, Hourglass, PiggyBank as SavingsIcon, ArrowRightLeft, Globe,
   RefreshCcw, Banknote, Landmark, Plane, Users // Icons for foreign exchange
 } from 'lucide-react'; // Lucide icons
-import ApplyButton from '../../components/common/ApplyButton'; // Assuming this path is correct
+import ApplyButton from '../../components/common/ApplyButton';
+import Breadcrumb from '../../components/Breadcrumb'; // Assuming this path is correct
 
 // --- Helper Functions ---
 // Formats a number into currency format (default to 2 decimal places)
@@ -287,11 +288,20 @@ const ForeignExchangeRateCalculatorPage: React.FC<ForeignExchangeRateCalculatorP
 
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-cyan-50 py-8 font-inter text-gray-800">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-slate-50 py-8 font-sans text-slate-800">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Breadcrumb Navigation */}
+        <div className="mb-6">
+          <Breadcrumb
+            items={[
+              { label: 'Calculators', path: '/calculators' },
+              { label: 'Forex Markup Calculator' }
+            ]}
+          />
+        </div>
         {/* Hero Section */}
         <motion.div
-          className="text-center mb-12 bg-gradient-to-r from-indigo-600 to-cyan-700 text-white p-8 rounded-3xl shadow-xl"
+          className="text-center mb-8 bg-gradient-to-r from-[#0F172A] via-[#1E3A8A] to-[#0F172A] text-white p-8 sm:p-10 rounded-2xl shadow-xl border border-slate-700/50"
           variants={sectionVariants}
           initial="hidden"
           whileInView="visible"
@@ -302,7 +312,7 @@ const ForeignExchangeRateCalculatorPage: React.FC<ForeignExchangeRateCalculatorP
             variants={itemVariants}
           >
             Navigate Global Currencies with Our{' '}
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 to-orange-300">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-amber-300 to-amber-100">
               Foreign Exchange Rate Calculator.
             </span>
           </motion.h1>
@@ -318,9 +328,7 @@ const ForeignExchangeRateCalculatorPage: React.FC<ForeignExchangeRateCalculatorP
               <ApplyButton
                 loanType="Foreign Exchange Services Inquiry"
                 openApplyModal={openApplyModal}
-                className="bg-white text-indigo-600 px-8 py-4 rounded-full font-bold text-lg shadow-lg
-                           hover:bg-gray-100 transition-all duration-300 ease-in-out transform hover:-translate-y-1
-                           focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-50"
+                className="bg-amber-500 hover:bg-amber-400 text-slate-950 px-8 py-3.5 rounded-xl font-bold text-base shadow-lg transition-all inline-block"
               >
                 Explore Forex Solutions
               </ApplyButton>
@@ -330,19 +338,19 @@ const ForeignExchangeRateCalculatorPage: React.FC<ForeignExchangeRateCalculatorP
 
         {/* Foreign Exchange Rate Calculator Section */}
         <motion.div
-          className="bg-white rounded-3xl shadow-2xl p-6 md:p-10 w-full border border-indigo-100 mb-12"
+          className="bg-white rounded-2xl shadow-sm p-6 sm:p-8 w-full border border-slate-200 mb-10"
           variants={sectionVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
         >
-          <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-cyan-600 to-indigo-600 drop-shadow-md">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-8 text-center flex items-center justify-center">
             <Calculator className="inline-block w-9 h-9 mr-3 text-cyan-500" /> International Money Transfer Estimator
           </h2>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
             {/* Input Controls Section */}
-            <div className="space-y-8 p-4 bg-gray-50 rounded-2xl border border-gray-100 shadow-inner">
+            <div className="space-y-6 p-6 bg-slate-50/70 rounded-xl border border-slate-200">
               <h3 className="text-2xl font-bold text-gray-800 mb-4 flex items-center">
                 <Banknote className="w-6 h-6 mr-2 text-indigo-600" /> Transfer Details
               </h3>
@@ -416,14 +424,14 @@ const ForeignExchangeRateCalculatorPage: React.FC<ForeignExchangeRateCalculatorP
             </div>
 
             {/* Results Display Section */}
-            <div className="p-6 bg-gradient-to-br from-indigo-500 to-cyan-600 text-white rounded-2xl shadow-xl flex flex-col justify-center items-center text-center">
+            <div className="p-6 sm:p-8 bg-[#0F172A] text-white rounded-2xl shadow-xl border border-slate-800 flex flex-col justify-between text-left">
               <h3 className="text-2xl md:text-3xl font-bold mb-4">You Will Receive</h3>
               <motion.div
                 key={conversionResult.convertedAmount} // Key for re-animation on value change
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, type: 'spring', damping: 20, stiffness: 300 }}
-                className="text-5xl md:text-6xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 to-orange-300 drop-shadow-lg"
+                className="text-5xl md:text-6xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-amber-300 to-amber-100 drop-shadow-lg"
               >
                 {formatCurrency(conversionResult.convertedAmount, toCurrency)}
               </motion.div>
@@ -432,15 +440,15 @@ const ForeignExchangeRateCalculatorPage: React.FC<ForeignExchangeRateCalculatorP
               </p>
 
               <div className="w-full space-y-4 text-lg mt-8">
-                <motion.div variants={itemVariants} className="flex justify-between items-center bg-indigo-700/30 p-3 rounded-lg">
+                <motion.div variants={itemVariants} className="flex justify-between items-center bg-slate-800/80 border border-slate-700/60 p-3 rounded-xl text-sm sm:text-base font-mono tabular-nums">
                   <span className="font-medium flex items-center gap-2"><Banknote className="w-5 h-5" /> From Currency</span>
                   <span className="font-bold text-white">{fromCurrency}</span>
                 </motion.div>
-                <motion.div variants={itemVariants} className="flex justify-between items-center bg-indigo-700/30 p-3 rounded-lg">
+                <motion.div variants={itemVariants} className="flex justify-between items-center bg-slate-800/80 border border-slate-700/60 p-3 rounded-xl text-sm sm:text-base font-mono tabular-nums">
                   <span className="font-medium flex items-center gap-2"><Banknote className="w-5 h-5" /> To Currency</span>
                   <span className="font-bold text-white">{toCurrency}</span>
                 </motion.div>
-                <motion.div variants={itemVariants} className="flex justify-between items-center bg-indigo-700/30 p-3 rounded-lg">
+                <motion.div variants={itemVariants} className="flex justify-between items-center bg-slate-800/80 border border-slate-700/60 p-3 rounded-xl text-sm sm:text-base font-mono tabular-nums">
                   <span className="font-medium flex items-center gap-2"><ArrowRightLeft className="w-5 h-5" /> Exchange Rate</span>
                   <span className="font-bold text-white">
                     1 {fromCurrency} = {conversionResult.rate.toFixed(4)} {toCurrency}
@@ -466,7 +474,7 @@ const ForeignExchangeRateCalculatorPage: React.FC<ForeignExchangeRateCalculatorP
         </motion.div>
 
         {/* Informational Sections */}
-        <div className="bg-white border border-gray-100 rounded-2xl p-8 shadow-lg mt-6 space-y-10">
+        <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm mt-8 space-y-10">
           <motion.section variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }}>
             <h2 className="text-3xl font-bold text-gray-900 mb-4 flex items-center">
               <Lightbulb className="w-8 h-8 mr-3 text-yellow-500" /> What is a Foreign Exchange Rate Calculator?
@@ -561,7 +569,7 @@ const ForeignExchangeRateCalculatorPage: React.FC<ForeignExchangeRateCalculatorP
               {whyUseBanksCart.map((reason, index) => (
                 <motion.div
                   key={index}
-                  className="flex flex-col items-center text-center p-6 rounded-xl shadow-lg bg-gradient-to-br from-indigo-50 to-cyan-50 border border-indigo-100"
+                  className="flex flex-col items-center text-center p-6 rounded-xl shadow-sm bg-slate-50 border border-slate-200"
                   variants={cardVariants}
                 >
                   {reason.icon}
@@ -574,7 +582,7 @@ const ForeignExchangeRateCalculatorPage: React.FC<ForeignExchangeRateCalculatorP
 
           {/* Final Call to Action */}
           <motion.section
-            className="text-center mt-12 p-8 bg-gradient-to-r from-indigo-600 to-cyan-700 rounded-2xl shadow-xl"
+            className="text-center mt-12 p-8 sm:p-10 bg-gradient-to-r from-[#0F172A] via-[#1E3A8A] to-[#0F172A] text-white rounded-2xl shadow-xl border border-slate-700/50"
             variants={sectionVariants}
             initial="hidden"
             whileInView="visible"
@@ -598,9 +606,7 @@ const ForeignExchangeRateCalculatorPage: React.FC<ForeignExchangeRateCalculatorP
                 <ApplyButton
                   loanType="International Money Transfer Services"
                   openApplyModal={openApplyModal}
-                  className="bg-white text-indigo-600 px-8 py-4 rounded-full font-bold text-lg shadow-lg
-                             hover:bg-gray-100 transition-all duration-300 ease-in-out transform hover:-translate-y-1
-                             focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-50"
+                  className="bg-amber-500 hover:bg-amber-400 text-slate-950 px-8 py-3.5 rounded-xl font-bold text-base shadow-lg transition-all inline-block"
                 >
                   Explore Transfer Options
                 </ApplyButton>

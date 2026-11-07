@@ -1,4 +1,5 @@
 import React from "react";
+import { CheckCircle2, Sparkles, Layers, ShieldCheck } from "lucide-react";
 
 const loanTypes = [
   {
@@ -14,7 +15,7 @@ const loanTypes = [
   {
     title: "Home Renovation",
     desc: "Finance home repairs, interior furnishing, painting, or solar rooftop installations without mortgaging property.",
-    tag: "No Property Hypothecation",
+    tag: "No Collateral",
   },
   {
     title: "Wedding & Celebrations",
@@ -51,7 +52,7 @@ const benefits = [
     desc: "Choose monthly repayment schedules from 1 to 6 years matching your cash flow.",
   },
   {
-    title: "Transparent Fixed / Floating Rates",
+    title: "Transparent Reducing-Balance Rates",
     desc: "Clear reducing-balance interest calculations with zero hidden maintenance overheads.",
   },
   {
@@ -61,69 +62,63 @@ const benefits = [
 ];
 
 const LoanTypesBenefits = () => (
-  <section className="my-14">
+  <section className="my-14 font-ibm">
+    {/* Common Purposes */}
     <div className="text-center max-w-3xl mx-auto mb-10">
-      <span className="inline-block bg-teal-50 text-teal-700 text-xs sm:text-sm font-semibold px-3 py-1 rounded-full uppercase tracking-wider mb-2">
-        Versatility
+      <span className="inline-block bg-slate-100 text-slate-800 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider mb-2 border border-slate-200">
+        Versatile Financing
       </span>
-      <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
-        Personal Loan Types & Core Benefits
+      <h2 className="text-2xl sm:text-3xl font-bold text-slate-950 tracking-tight">
+        Popular Purposes for Personal Loans in India
       </h2>
-      <p className="text-gray-600 text-sm sm:text-base mt-2">
-        Tailored financial solutions designed to support every milestone with complete peace of mind.
+      <p className="text-slate-600 text-sm sm:text-base mt-2">
+        Personal loans offer unconditional end-use flexibility, making them suitable for planned milestones and unforeseen emergencies.
       </p>
     </div>
 
-    {/* Loan Types Grid */}
-    <div className="mb-12">
-      <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
-        <span className="w-2.5 h-2.5 rounded-full bg-teal-500" />
-        Popular Personal Loan Categories
-      </h3>
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-        {loanTypes.map((type) => (
-          <div
-            key={type.title}
-            className="bg-white rounded-2xl p-5 shadow-sm border border-gray-200 hover:border-teal-400 hover:shadow-md transition-all duration-200 flex flex-col justify-between"
-          >
-            <div>
-              <div className="flex items-center justify-between gap-2 mb-2">
-                <h4 className="font-bold text-gray-900 text-base">
-                  {type.title}
-                </h4>
-                <span className="text-[10px] font-semibold text-teal-700 bg-teal-50 px-2 py-0.5 rounded-full shrink-0">
-                  {type.tag}
-                </span>
-              </div>
-              <p className="text-xs text-gray-600 leading-relaxed">
-                {type.desc}
-              </p>
+    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-14">
+      {loanTypes.map((t) => (
+        <div
+          key={t.title}
+          className="bg-white rounded-xl p-6 shadow-sm border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all duration-200 flex flex-col justify-between"
+        >
+          <div>
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-[11px] font-semibold text-emerald-800 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded">
+                {t.tag}
+              </span>
             </div>
+            <h3 className="font-bold text-slate-900 text-base mb-2">
+              {t.title}
+            </h3>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              {t.desc}
+            </p>
           </div>
-        ))}
-      </div>
+        </div>
+      ))}
     </div>
 
-    {/* Benefits Grid */}
-    <div>
-      <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
-        <span className="w-2.5 h-2.5 rounded-full bg-blue-500" />
-        Why Choose an Unsecured Personal Loan?
-      </h3>
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+    {/* Key Benefits Grid */}
+    <div className="bg-slate-50 rounded-2xl p-6 sm:p-10 border border-slate-200">
+      <div className="text-center max-w-3xl mx-auto mb-8">
+        <h3 className="text-xl sm:text-2xl font-bold text-slate-950 tracking-tight">
+          Core Advantages of Borrowing via BanksCart
+        </h3>
+        <p className="text-slate-600 text-xs sm:text-sm mt-1">
+          Enjoy streamlined banking with zero brokerage, unbiased comparisons, and bank-grade data encryption.
+        </p>
+      </div>
+
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {benefits.map((b) => (
-          <div
-            key={b.title}
-            className="bg-gradient-to-br from-slate-50 to-blue-50/40 rounded-2xl p-5 border border-blue-100 flex items-start gap-3.5"
-          >
-            <div className="w-8 h-8 rounded-xl bg-teal-600 text-white flex items-center justify-center shrink-0 shadow-sm mt-0.5">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" />
-              </svg>
+          <div key={b.title} className="flex items-start gap-3 bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+            <div className="w-6 h-6 rounded-full bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5 border border-emerald-200 font-bold">
+              <CheckCircle2 className="w-4 h-4" />
             </div>
             <div>
-              <h4 className="font-bold text-gray-900 text-sm mb-1">{b.title}</h4>
-              <p className="text-xs text-gray-600 leading-relaxed">{b.desc}</p>
+              <h4 className="font-bold text-slate-900 text-sm mb-1">{b.title}</h4>
+              <p className="text-xs text-slate-600 leading-relaxed">{b.desc}</p>
             </div>
           </div>
         ))}

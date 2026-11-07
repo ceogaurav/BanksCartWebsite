@@ -7,7 +7,8 @@ import {
   ArrowRightLeft, ArrowUpCircle, ArrowDownCircle, Home, Car, Utensils, Zap, BookOpen, HeartPulse, Landmark,
   Film, ShoppingBag, PlusCircle, MinusCircle, CreditCard, PiggyBank as SavingsIcon, Layers, GraduationCap, Stethoscope
 } from 'lucide-react'; // Lucide icons
-import ApplyButton from '../../components/common/ApplyButton'; // Assuming this path is correct
+import ApplyButton from '../../components/common/ApplyButton';
+import Breadcrumb from '../../components/Breadcrumb'; // Assuming this path is correct
 
 // --- Helper Functions ---
 // Formats a number into INR currency format
@@ -235,11 +236,20 @@ const ExpenseCalculatorPage: React.FC<ExpenseCalculatorPageProps> = ({ openApply
 
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-50 py-8 font-inter text-gray-800">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-slate-50 py-8 font-sans text-slate-800">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Breadcrumb Navigation */}
+        <div className="mb-6">
+          <Breadcrumb
+            items={[
+              { label: 'Calculators', path: '/calculators' },
+              { label: 'Expense & Savings Calculator' }
+            ]}
+          />
+        </div>
         {/* Hero Section */}
         <motion.div
-          className="text-center mb-12 bg-gradient-to-r from-purple-600 to-indigo-700 text-white p-8 rounded-3xl shadow-xl"
+          className="text-center mb-8 bg-gradient-to-r from-[#0F172A] via-[#1E3A8A] to-[#0F172A] text-white p-8 sm:p-10 rounded-2xl shadow-xl border border-slate-700/50"
           variants={sectionVariants}
           initial="hidden"
           whileInView="visible"
@@ -250,7 +260,7 @@ const ExpenseCalculatorPage: React.FC<ExpenseCalculatorPageProps> = ({ openApply
             variants={itemVariants}
           >
             Track & Categorize Your{' '}
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 to-orange-300">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-amber-300 to-amber-100">
               Monthly Expenses.
             </span>
           </motion.h1>
@@ -266,9 +276,7 @@ const ExpenseCalculatorPage: React.FC<ExpenseCalculatorPageProps> = ({ openApply
               <ApplyButton
                 loanType="Expense Tracking & Financial Planning Inquiry"
                 openApplyModal={openApplyModal}
-                className="bg-white text-purple-600 px-8 py-4 rounded-full font-bold text-lg shadow-lg
-                           hover:bg-gray-100 transition-all duration-300 ease-in-out transform hover:-translate-y-1
-                           focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-50"
+                className="bg-amber-500 hover:bg-amber-400 text-slate-950 px-8 py-3.5 rounded-xl font-bold text-base shadow-lg transition-all inline-block"
               >
                 Get Financial Planning Advice
               </ApplyButton>
@@ -278,28 +286,40 @@ const ExpenseCalculatorPage: React.FC<ExpenseCalculatorPageProps> = ({ openApply
 
         {/* Expense Calculator Section */}
         <motion.div
-          className="bg-white rounded-3xl shadow-2xl p-6 md:p-10 w-full border border-purple-100 mb-12"
+          className="bg-white rounded-2xl shadow-sm p-6 sm:p-8 w-full border border-slate-200 mb-10"
           variants={sectionVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
         >
-          <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600 drop-shadow-md">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-8 text-center flex items-center justify-center">
             <Calculator className="inline-block w-9 h-9 mr-3 text-indigo-500" /> Monthly Expense Tracker
           </h2>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
             {/* Input Controls Section */}
-            <div className="space-y-8 p-4 bg-gray-50 rounded-2xl border border-gray-100 shadow-inner">
+            <div className="space-y-6 p-6 bg-slate-50/70 rounded-xl border border-slate-200">
               <h3 className="text-2xl font-bold text-gray-800 mb-4 flex items-center">
                 <Wallet className="w-6 h-6 mr-2 text-purple-600" /> Your Monthly Financials
               </h3>
 
               {/* Monthly Income */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="monthlyIncome" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Total Monthly Income: <span className="text-green-600">{formatCurrency(monthlyIncome)}</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="monthlyIncome" className="text-sm font-semibold text-slate-700">
+                    Total Monthly Income
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="text"
+                  value={formatNumberWithCommas(monthlyIncome)}
+                  onChange={handleMonthlyIncomeChange}
+                  onBlur={(e) => setMonthlyIncome(Number(e.target.value.replace(/,/g, '')))}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  inputMode="numeric"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="monthlyIncome"
@@ -308,15 +328,7 @@ const ExpenseCalculatorPage: React.FC<ExpenseCalculatorPageProps> = ({ openApply
                   step="1000"
                   value={monthlyIncome}
                   onChange={handleMonthlyIncomeChange}
-                  className="w-full h-2 bg-gradient-to-r from-green-300 to-green-500 rounded-lg appearance-none cursor-pointer accent-green-600"
-                />
-                <input
-                  type="text"
-                  value={formatNumberWithCommas(monthlyIncome)}
-                  onChange={handleMonthlyIncomeChange}
-                  onBlur={(e) => setMonthlyIncome(Number(e.target.value.replace(/,/g, '')))}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-green-500 focus:border-green-500 transition-all"
-                  inputMode="numeric"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
 
@@ -354,7 +366,7 @@ const ExpenseCalculatorPage: React.FC<ExpenseCalculatorPageProps> = ({ openApply
             </div>
 
             {/* Results Display Section */}
-            <div className="p-6 bg-gradient-to-br from-indigo-500 to-purple-600 text-white rounded-2xl shadow-xl flex flex-col justify-center items-center text-center">
+            <div className="p-6 sm:p-8 bg-[#0F172A] text-white rounded-2xl shadow-xl border border-slate-800 flex flex-col justify-between text-left">
               <h3 className="text-2xl md:text-3xl font-bold mb-4">Your Expense Summary</h3>
               <motion.div
                 key={calculations.totalExpenses} // Key for re-animation on value change
@@ -368,11 +380,11 @@ const ExpenseCalculatorPage: React.FC<ExpenseCalculatorPageProps> = ({ openApply
               <p className="text-xl text-purple-100 mb-8">Total Monthly Expenses</p>
 
               <div className="w-full space-y-4 text-lg">
-                <motion.div variants={itemVariants} className="flex justify-between items-center bg-purple-700/30 p-3 rounded-lg">
+                <motion.div variants={itemVariants} className="flex justify-between items-center bg-slate-800/80 border border-slate-700/60 p-3 rounded-xl text-sm sm:text-base font-mono tabular-nums">
                   <span className="font-medium flex items-center gap-2"><ArrowUpCircle className="w-5 h-5" /> Total Monthly Income</span>
                   <span className="font-bold text-white">{formatCurrency(monthlyIncome)}</span>
                 </motion.div>
-                <motion.div variants={itemVariants} className="flex justify-between items-center bg-purple-700/30 p-3 rounded-lg">
+                <motion.div variants={itemVariants} className="flex justify-between items-center bg-slate-800/80 border border-slate-700/60 p-3 rounded-xl text-sm sm:text-base font-mono tabular-nums">
                   <span className="font-medium flex items-center gap-2"><SavingsIcon className="w-5 h-5" /> Net Savings/Deficit</span>
                   <span className={`font-bold ${calculations.isSurplus ? 'text-green-300' : 'text-red-300'}`}>
                     {formatCurrency(calculations.netSavingsOrDeficit)}
@@ -468,7 +480,7 @@ const ExpenseCalculatorPage: React.FC<ExpenseCalculatorPageProps> = ({ openApply
         </motion.div>
 
         {/* Informational Sections */}
-        <div className="bg-white border border-gray-100 rounded-2xl p-8 shadow-lg mt-6 space-y-10">
+        <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm mt-8 space-y-10">
           <motion.section variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }}>
             <h2 className="text-3xl font-bold text-gray-900 mb-4 flex items-center">
               <Lightbulb className="w-8 h-8 mr-3 text-yellow-500" /> What is an Expense Calculator?
@@ -563,7 +575,7 @@ const ExpenseCalculatorPage: React.FC<ExpenseCalculatorPageProps> = ({ openApply
               {whyUseBanksCart.map((reason, index) => (
                 <motion.div
                   key={index}
-                  className="flex flex-col items-center text-center p-6 rounded-xl shadow-lg bg-gradient-to-br from-purple-50 to-indigo-50 border border-purple-100"
+                  className="flex flex-col items-center text-center p-6 rounded-xl shadow-sm bg-slate-50 border border-slate-200"
                   variants={cardVariants}
                 >
                   {reason.icon}
@@ -576,7 +588,7 @@ const ExpenseCalculatorPage: React.FC<ExpenseCalculatorPageProps> = ({ openApply
 
           {/* Final Call to Action */}
           <motion.section
-            className="text-center mt-12 p-8 bg-gradient-to-r from-purple-600 to-indigo-700 rounded-2xl shadow-xl"
+            className="text-center mt-12 p-8 sm:p-10 bg-gradient-to-r from-[#0F172A] via-[#1E3A8A] to-[#0F172A] text-white rounded-2xl shadow-xl border border-slate-700/50"
             variants={sectionVariants}
             initial="hidden"
             whileInView="visible"
@@ -600,9 +612,7 @@ const ExpenseCalculatorPage: React.FC<ExpenseCalculatorPageProps> = ({ openApply
                 <ApplyButton
                   loanType="Expense Management Advisory"
                   openApplyModal={openApplyModal}
-                  className="bg-white text-purple-600 px-8 py-4 rounded-full font-bold text-lg shadow-lg
-                             hover:bg-gray-100 transition-all duration-300 ease-in-out transform hover:-translate-y-1
-                             focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-50"
+                  className="bg-amber-500 hover:bg-amber-400 text-slate-950 px-8 py-3.5 rounded-xl font-bold text-base shadow-lg transition-all inline-block"
                 >
                   Connect with a Financial Advisor
                 </ApplyButton>

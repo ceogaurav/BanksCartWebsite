@@ -7,7 +7,8 @@ import {
   HandCoins, CreditCard, Clock, Hourglass, PiggyBank as SavingsIcon, MinusCircle, Landmark,
   ArrowRightLeft, BadgePercent, ShieldAlert, Sparkles
 } from 'lucide-react'; // Lucide icons
-import ApplyButton from '../../components/common/ApplyButton'; // Assuming this path is correct
+import ApplyButton from '../../components/common/ApplyButton';
+import Breadcrumb from '../../components/Breadcrumb'; // Assuming this path is correct
 
 // --- Helper Functions ---
 // Formats a number into INR currency format
@@ -370,11 +371,20 @@ const BalanceTransferCalculatorPage: React.FC<BalanceTransferCalculatorPageProps
 
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 py-8 font-inter text-gray-800">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-slate-50 py-8 font-sans text-slate-800">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Breadcrumb Navigation */}
+        <div className="mb-6">
+          <Breadcrumb
+            items={[
+              { label: 'Calculators', path: '/calculators' },
+              { label: 'Balance Transfer Calculator' }
+            ]}
+          />
+        </div>
         {/* Hero Section */}
         <motion.div
-          className="text-center mb-12 bg-gradient-to-r from-blue-600 to-purple-700 text-white p-8 rounded-3xl shadow-xl"
+          className="text-center mb-8 bg-gradient-to-r from-[#0F172A] via-[#1E3A8A] to-[#0F172A] text-white p-8 sm:p-10 rounded-2xl shadow-xl border border-slate-700/50"
           variants={sectionVariants}
           initial="hidden"
           whileInView="visible"
@@ -385,7 +395,7 @@ const BalanceTransferCalculatorPage: React.FC<BalanceTransferCalculatorPageProps
             variants={itemVariants}
           >
             Maximize Your Savings with Our{' '}
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 to-orange-300">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-amber-300 to-amber-100">
               Balance Transfer Calculator.
             </span>
           </motion.h1>
@@ -401,9 +411,7 @@ const BalanceTransferCalculatorPage: React.FC<BalanceTransferCalculatorPageProps
               <ApplyButton
                 loanType="Balance Transfer & Debt Consolidation"
                 openApplyModal={openApplyModal}
-                className="bg-white text-blue-600 px-8 py-4 rounded-full font-bold text-lg shadow-lg
-                           hover:bg-gray-100 transition-all duration-300 ease-in-out transform hover:-translate-y-1
-                           focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-50"
+                className="bg-amber-500 hover:bg-amber-400 text-slate-950 px-8 py-3.5 rounded-xl font-bold text-base shadow-lg transition-all inline-block"
               >
                 Explore Balance Transfer Offers
               </ApplyButton>
@@ -413,28 +421,40 @@ const BalanceTransferCalculatorPage: React.FC<BalanceTransferCalculatorPageProps
 
         {/* Balance Transfer Calculator Section */}
         <motion.div
-          className="bg-white rounded-3xl shadow-2xl p-6 md:p-10 w-full border border-blue-100 mb-12"
+          className="bg-white rounded-2xl shadow-sm p-6 sm:p-8 w-full border border-slate-200 mb-10"
           variants={sectionVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
         >
-          <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-600 drop-shadow-md">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-8 text-center flex items-center justify-center">
             <Calculator className="inline-block w-9 h-9 mr-3 text-purple-500" /> Balance Transfer Savings Estimator
           </h2>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
             {/* Input Controls Section */}
-            <div className="space-y-8 p-4 bg-gray-50 rounded-2xl border border-gray-100 shadow-inner">
+            <div className="space-y-6 p-6 bg-slate-50/70 rounded-xl border border-slate-200">
               <h3 className="text-2xl font-bold text-gray-800 mb-4 flex items-center">
                 <CreditCard className="w-6 h-6 mr-2 text-blue-600" /> Your Debt & Offer Details
               </h3>
 
               {/* Current Credit Card Balance */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="currentBalance" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Current Credit Card Balance: <span className="text-indigo-600">{formatCurrency(currentBalance)}</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="currentBalance" className="text-sm font-semibold text-slate-700">
+                    Current Credit Card Balance
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="text"
+                  value={formatNumberWithCommas(currentBalance)}
+                  onChange={handleCurrentBalanceChange}
+                  onBlur={(e) => setCurrentBalance(Number(e.target.value.replace(/,/g, '')))}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  inputMode="numeric"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="currentBalance"
@@ -443,23 +463,27 @@ const BalanceTransferCalculatorPage: React.FC<BalanceTransferCalculatorPageProps
                   step="10000"
                   value={currentBalance}
                   onChange={handleCurrentBalanceChange}
-                  className="w-full h-2 bg-gradient-to-r from-indigo-300 to-indigo-500 rounded-lg appearance-none cursor-pointer accent-indigo-600"
-                />
-                <input
-                  type="text"
-                  value={formatNumberWithCommas(currentBalance)}
-                  onChange={handleCurrentBalanceChange}
-                  onBlur={(e) => setCurrentBalance(Number(e.target.value.replace(/,/g, '')))}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-indigo-500 focus:border-indigo-500 transition-all"
-                  inputMode="numeric"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
 
               {/* Current APR */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="currentApr" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Current APR (%): <span className="text-teal-600">{currentApr}%</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="currentApr" className="text-sm font-semibold text-slate-700">
+                    Current APR (%)
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="number"
+                  value={currentApr}
+                  onChange={handleCurrentAprChange}
+                  onBlur={(e) => setCurrentApr(Number(e.target.value))}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  step="0.1"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="currentApr"
@@ -468,23 +492,27 @@ const BalanceTransferCalculatorPage: React.FC<BalanceTransferCalculatorPageProps
                   step="0.5"
                   value={currentApr}
                   onChange={handleCurrentAprChange}
-                  className="w-full h-2 bg-gradient-to-r from-teal-300 to-teal-500 rounded-lg appearance-none cursor-pointer accent-teal-600"
-                />
-                <input
-                  type="number"
-                  value={currentApr}
-                  onChange={handleCurrentAprChange}
-                  onBlur={(e) => setCurrentApr(Number(e.target.value))}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-teal-500 focus:border-teal-500 transition-all"
-                  step="0.1"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
 
               {/* Current Monthly Payment */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="currentMonthlyPayment" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Planned Monthly Payment: <span className="text-orange-600">{formatCurrency(currentMonthlyPayment)}</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="currentMonthlyPayment" className="text-sm font-semibold text-slate-700">
+                    Planned Monthly Payment
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="text"
+                  value={formatNumberWithCommas(currentMonthlyPayment)}
+                  onChange={handleCurrentMonthlyPaymentChange}
+                  onBlur={(e) => setCurrentMonthlyPayment(Number(e.target.value.replace(/,/g, '')))}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  inputMode="numeric"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="currentMonthlyPayment"
@@ -493,15 +521,7 @@ const BalanceTransferCalculatorPage: React.FC<BalanceTransferCalculatorPageProps
                   step="500"
                   value={currentMonthlyPayment}
                   onChange={handleCurrentMonthlyPaymentChange}
-                  className="w-full h-2 bg-gradient-to-r from-orange-300 to-orange-500 rounded-lg appearance-none cursor-pointer accent-orange-600"
-                />
-                <input
-                  type="text"
-                  value={formatNumberWithCommas(currentMonthlyPayment)}
-                  onChange={handleCurrentMonthlyPaymentChange}
-                  onBlur={(e) => setCurrentMonthlyPayment(Number(e.target.value.replace(/,/g, '')))}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-orange-500 focus:border-orange-500 transition-all"
-                  inputMode="numeric"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
 
@@ -513,9 +533,21 @@ const BalanceTransferCalculatorPage: React.FC<BalanceTransferCalculatorPageProps
 
               {/* Transfer Amount */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="transferAmount" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Amount to Transfer: <span className="text-red-600">{formatCurrency(transferAmount)}</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="transferAmount" className="text-sm font-semibold text-slate-700">
+                    Amount to Transfer
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="text"
+                  value={formatNumberWithCommas(transferAmount)}
+                  onChange={handleTransferAmountChange}
+                  onBlur={(e) => setTransferAmount(Number(e.target.value.replace(/,/g, '')))}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  inputMode="numeric"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="transferAmount"
@@ -524,23 +556,27 @@ const BalanceTransferCalculatorPage: React.FC<BalanceTransferCalculatorPageProps
                   step="10000"
                   value={transferAmount}
                   onChange={handleTransferAmountChange}
-                  className="w-full h-2 bg-gradient-to-r from-red-300 to-red-500 rounded-lg appearance-none cursor-pointer accent-red-600"
-                />
-                <input
-                  type="text"
-                  value={formatNumberWithCommas(transferAmount)}
-                  onChange={handleTransferAmountChange}
-                  onBlur={(e) => setTransferAmount(Number(e.target.value.replace(/,/g, '')))}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-red-500 focus:border-red-500 transition-all"
-                  inputMode="numeric"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
 
               {/* Promotional APR */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="promoApr" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Promotional APR (%): <span className="text-green-600">{promoApr}%</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="promoApr" className="text-sm font-semibold text-slate-700">
+                    Promotional APR (%)
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="number"
+                  value={promoApr}
+                  onChange={handlePromoAprChange}
+                  onBlur={(e) => setPromoApr(Number(e.target.value))}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  step="0.1"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="promoApr"
@@ -549,23 +585,28 @@ const BalanceTransferCalculatorPage: React.FC<BalanceTransferCalculatorPageProps
                   step="0.1"
                   value={promoApr}
                   onChange={handlePromoAprChange}
-                  className="w-full h-2 bg-gradient-to-r from-green-300 to-green-500 rounded-lg appearance-none cursor-pointer accent-green-600"
-                />
-                <input
-                  type="number"
-                  value={promoApr}
-                  onChange={handlePromoAprChange}
-                  onBlur={(e) => setPromoApr(Number(e.target.value))}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-green-500 focus:border-green-500 transition-all"
-                  step="0.1"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
 
               {/* Promotional Period (Months) */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="promoPeriodMonths" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Promotional Period (Months): <span className="text-yellow-600">{promoPeriodMonths} Months</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="promoPeriodMonths" className="text-sm font-semibold text-slate-700">
+                    Promotional Period (Months)
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="number"
+                  value={promoPeriodMonths}
+                  onChange={handlePromoPeriodMonthsChange}
+                  onBlur={(e) => setPromoPeriodMonths(Number(e.target.value))}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  min="0"
+                  max="24"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="promoPeriodMonths"
@@ -574,24 +615,27 @@ const BalanceTransferCalculatorPage: React.FC<BalanceTransferCalculatorPageProps
                   step="1"
                   value={promoPeriodMonths}
                   onChange={handlePromoPeriodMonthsChange}
-                  className="w-full h-2 bg-gradient-to-r from-yellow-300 to-yellow-500 rounded-lg appearance-none cursor-pointer accent-yellow-600"
-                />
-                <input
-                  type="number"
-                  value={promoPeriodMonths}
-                  onChange={handlePromoPeriodMonthsChange}
-                  onBlur={(e) => setPromoPeriodMonths(Number(e.target.value))}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-yellow-500 focus:border-yellow-500 transition-all"
-                  min="0"
-                  max="24"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
 
               {/* Balance Transfer Fee (%) */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="transferFeePercent" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Balance Transfer Fee (%): <span className="text-pink-600">{transferFeePercent}%</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="transferFeePercent" className="text-sm font-semibold text-slate-700">
+                    Balance Transfer Fee (%)
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="number"
+                  value={transferFeePercent}
+                  onChange={handleTransferFeePercentChange}
+                  onBlur={(e) => setTransferFeePercent(Number(e.target.value))}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  step="0.1"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="transferFeePercent"
@@ -600,23 +644,27 @@ const BalanceTransferCalculatorPage: React.FC<BalanceTransferCalculatorPageProps
                   step="0.1"
                   value={transferFeePercent}
                   onChange={handleTransferFeePercentChange}
-                  className="w-full h-2 bg-gradient-to-r from-pink-300 to-pink-500 rounded-lg appearance-none cursor-pointer accent-pink-600"
-                />
-                <input
-                  type="number"
-                  value={transferFeePercent}
-                  onChange={handleTransferFeePercentChange}
-                  onBlur={(e) => setTransferFeePercent(Number(e.target.value))}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-pink-500 focus:border-pink-500 transition-all"
-                  step="0.1"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
 
               {/* Post-Promotional APR */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="postPromoApr" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Post-Promotional APR (%): <span className="text-gray-600">{postPromoApr}%</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="postPromoApr" className="text-sm font-semibold text-slate-700">
+                    Post-Promotional APR (%)
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="number"
+                  value={postPromoApr}
+                  onChange={handlePostPromoAprChange}
+                  onBlur={(e) => setPostPromoApr(Number(e.target.value))}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  step="0.1"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="postPromoApr"
@@ -625,21 +673,13 @@ const BalanceTransferCalculatorPage: React.FC<BalanceTransferCalculatorPageProps
                   step="0.5"
                   value={postPromoApr}
                   onChange={handlePostPromoAprChange}
-                  className="w-full h-2 bg-gradient-to-r from-gray-300 to-gray-500 rounded-lg appearance-none cursor-pointer accent-gray-600"
-                />
-                <input
-                  type="number"
-                  value={postPromoApr}
-                  onChange={handlePostPromoAprChange}
-                  onBlur={(e) => setPostPromoApr(Number(e.target.value))}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-gray-500 focus:border-gray-500 transition-all"
-                  step="0.1"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
             </div>
 
             {/* Results Display Section */}
-            <div className="p-6 bg-gradient-to-br from-blue-500 to-purple-600 text-white rounded-2xl shadow-xl flex flex-col justify-center items-center text-center">
+            <div className="p-6 sm:p-8 bg-[#0F172A] text-white rounded-2xl shadow-xl border border-slate-800 flex flex-col justify-between text-left">
               <h3 className="text-2xl md:text-3xl font-bold mb-4">Your Savings Comparison</h3>
 
               {/* Current Card Scenario */}
@@ -785,7 +825,7 @@ const BalanceTransferCalculatorPage: React.FC<BalanceTransferCalculatorPageProps
         </motion.div>
 
         {/* Informational Sections */}
-        <div className="bg-white border border-gray-100 rounded-2xl p-8 shadow-lg mt-6 space-y-10">
+        <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm mt-8 space-y-10">
           <motion.section variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }}>
             <h2 className="text-3xl font-bold text-gray-900 mb-4 flex items-center">
               <Lightbulb className="w-8 h-8 mr-3 text-yellow-500" /> What is a Balance Transfer Calculator?
@@ -877,7 +917,7 @@ const BalanceTransferCalculatorPage: React.FC<BalanceTransferCalculatorPageProps
               {whyUseBanksCart.map((reason, index) => (
                 <motion.div
                   key={index}
-                  className="flex flex-col items-center text-center p-6 rounded-xl shadow-lg bg-gradient-to-br from-blue-50 to-purple-50 border border-blue-100"
+                  className="flex flex-col items-center text-center p-6 rounded-xl shadow-sm bg-slate-50 border border-slate-200"
                   variants={cardVariants}
                 >
                   {reason.icon}
@@ -890,7 +930,7 @@ const BalanceTransferCalculatorPage: React.FC<BalanceTransferCalculatorPageProps
 
           {/* Final Call to Action */}
           <motion.section
-            className="text-center mt-12 p-8 bg-gradient-to-r from-blue-600 to-purple-700 rounded-2xl shadow-xl"
+            className="text-center mt-12 p-8 sm:p-10 bg-gradient-to-r from-[#0F172A] via-[#1E3A8A] to-[#0F172A] text-white rounded-2xl shadow-xl border border-slate-700/50"
             variants={sectionVariants}
             initial="hidden"
             whileInView="visible"
@@ -914,9 +954,7 @@ const BalanceTransferCalculatorPage: React.FC<BalanceTransferCalculatorPageProps
                 <ApplyButton
                   loanType="Balance Transfer & Debt Solutions"
                   openApplyModal={openApplyModal}
-                  className="bg-white text-blue-600 px-8 py-4 rounded-full font-bold text-lg shadow-lg
-                             hover:bg-gray-100 transition-all duration-300 ease-in-out transform hover:-translate-y-1
-                             focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-50"
+                  className="bg-amber-500 hover:bg-amber-400 text-slate-950 px-8 py-3.5 rounded-xl font-bold text-base shadow-lg transition-all inline-block"
                 >
                   Explore Debt Solutions
                 </ApplyButton>

@@ -1,281 +1,255 @@
-import React from "react";
-import { motion } from "framer-motion";
-import { ArrowLeft, Target, Scale, CheckCircle, HelpCircle, TrendingUp, DollarSign, BookOpen, Layers, Zap, Clock, TrendingDown } from "lucide-react";
-import { Link } from "react-router-dom"; 
+import React from 'react';
+import { Helmet } from 'react-helmet-async';
+import { Link } from 'react-router-dom';
+import Breadcrumb from '../../components/Breadcrumb';
+import { AuthorByline } from '../../components/blog/AuthorByline';
+import {
+  Briefcase,
+  CheckCircle2,
+  Percent,
+  Clock,
+  ShieldCheck,
+  Building,
+  TrendingUp,
+  HelpCircle,
+  FileCheck2,
+  Scale,
+  Coins
+} from 'lucide-react';
 
-// --- CONFIGURATION START ---
-const ARTICLE_TITLE = "The Ultimate 2025 Guide to Business Loan Options for Small Businesses in India";
-const ARTICLE_SUBTITLE =
-  "A 30,000-word compendium: Detailed analysis of Term Loans, Working Capital, Government Schemes (Mudra, CGTMSE), FinTech vs. Bank Lending, and advanced strategies for Indian SMEs.";
-const BACK_LINK = "/blog"; 
-const AUTHOR = "Advanced Financial Analytics Team";
-const DATE = "Oct 22, 2025";
-const READ_TIME = "180 min read (The Compendium)";
-// --- CONFIGURATION END ---
+export default function BusinessLoanGuide() {
+  const canonicalUrl = "https://www.bankscart.com/blog/Business-Loan-Guide";
+  const articleTitle = "The Ultimate 2026 Guide to Business Loan Options for Small Businesses in India";
+  const articleDesc = "Comprehensive 2026 guide to Indian business loans: compare working capital (CC/OD), machinery term loans, CGTMSE collateral-free limits up to ₹5 Cr, and Mudra loans up to ₹20 Lakhs.";
 
-// Framer Motion variants (Reused for consistent, smooth interaction)
-const pageVariants = {
-  hidden: { opacity: 0, y: 50 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.8,
-      ease: "easeOut",
-      staggerChildren: 0.03, // Further reduced stagger for massive content flow
+  const blogPostingSchema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": canonicalUrl
     },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      type: "spring",
-      stiffness: 70,
-      damping: 14,
+    "headline": articleTitle,
+    "description": articleDesc,
+    "image": "https://www.bankscart.com/assets/images/bankscart-logo.png",
+    "author": {
+      "@type": "Person",
+      "name": "Amit Khurana",
+      "jobTitle": "Senior Banking Advisor & Principal Reviewer",
+      "url": "https://www.bankscart.com/author/amit-khurana"
     },
-  },
-};
+    "publisher": {
+      "@type": "Organization",
+      "name": "BanksCart",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://www.bankscart.com/assets/images/bankscart-logo.png"
+      }
+    },
+    "datePublished": "2026-01-11T09:00:00+05:30",
+    "dateModified": "2026-11-06T10:00:00+05:30"
+  };
 
-const SectionHeader: React.FC<{ title: string; icon: React.ElementType }> = ({ title, icon: Icon }) => (
-  <motion.h2
-    className="text-3xl sm:text-4xl font-extrabold text-gray-900 mt-12 mb-6 pt-4 border-t-4 border-indigo-400 flex items-center"
-    variants={itemVariants}
-  >
-    <Icon className="w-8 h-8 mr-3 text-indigo-700" />
-    {title}
-  </motion.h2>
-);
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://www.bankscart.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Blog",
+        "item": "https://www.bankscart.com/blog"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Business Loan Guide 2026",
+        "item": canonicalUrl
+      }
+    ]
+  };
 
-const SubHeader: React.FC<{ title: string }> = ({ title }) => (
-  <motion.h3
-    className="text-2xl font-bold text-gray-800 mt-8 mb-4 border-l-4 border-blue-400 pl-3"
-    variants={itemVariants}
-  >
-    {title}
-  </motion.h3>
-);
+  const facilityTypes = [
+    {
+      type: "Cash Credit (CC) / Overdraft (OD)",
+      tenure: "1 Year (Renewable)",
+      rate: "9.50% - 14.00%",
+      bestFor: "Day-to-day working capital, inventory purchases & vendor payments. Interest is charged only on utilized balance."
+    },
+    {
+      type: "Machinery & Equipment Term Loan",
+      tenure: "3 to 7 Years",
+      rate: "10.00% - 15.00%",
+      bestFor: "Capex, purchasing factory machinery or specialized equipment. The asset itself serves as primary hypothecated collateral."
+    },
+    {
+      type: "CGTMSE Collateral-Free Term Loan",
+      tenure: "Up to 5 Years",
+      rate: "10.50% - 16.00%",
+      bestFor: "Micro and small enterprises needing up to ₹5 Crores without pledging commercial or residential property."
+    },
+    {
+      type: "Pradhan Mantri Mudra Yojana (PMMY)",
+      tenure: "Up to 5 Years",
+      rate: "8.50% - 12.00%",
+      bestFor: "Micro-enterprises, small traders, and retailers requiring micro-finance across Shishu, Kishore, and Tarun categories up to ₹20 Lakhs."
+    }
+  ];
 
-const BulletPoint: React.FC<{ text: string }> = ({ text }) => (
-  <motion.li
-    className="flex items-start mb-2 text-gray-700 leading-relaxed"
-    variants={itemVariants}
-  >
-    <CheckCircle className="w-5 h-5 mr-3 mt-1 text-green-500 flex-shrink-0" />
-    <span>{text}</span>
-  </motion.li>
-);
+  return (
+    <div className="min-h-screen bg-slate-50 font-sans text-slate-800 pt-20 sm:pt-24 pb-16">
+      <Helmet>
+        <title>{`${articleTitle} | BanksCart`}</title>
+        <meta name="description" content={articleDesc} />
+        <link rel="canonical" href={canonicalUrl} />
+        <script type="application/ld+json">
+          {JSON.stringify(blogPostingSchema)}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify(breadcrumbSchema)}
+        </script>
+      </Helmet>
 
-const KeyTakeaway: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => (
-    <motion.div variants={itemVariants} className="mt-6 p-4 bg-yellow-50 border-l-4 border-yellow-500 rounded-lg shadow-sm">
-        <h4 className="text-xl font-bold text-gray-900 mb-2">{title}</h4>
-        <p className="text-gray-700">{children}</p>
-    </motion.div>
-);
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6">
+        <Breadcrumb path={["Home", "Blog", "Business Loan Guide 2026"]} />
+      </div>
 
-// --- MAIN COMPONENT ---
-const UltimateBusinessLoanGuidePage: React.FC = () => (
-  <motion.div
-    className="min-h-screen bg-gradient-to-br from-white/60 to-indigo-50/80 py-12 px-4 md:px-12 font-inter"
-    variants={pageVariants}
-    initial="hidden"
-    animate="visible"
-  >
-    <div className="max-w-5xl mx-auto">
-      {/* Back Link */}
-      <motion.div variants={itemVariants} className="mb-8">
-        <Link
-          to={BACK_LINK}
-          className="inline-flex items-center text-indigo-600 hover:text-indigo-800 transition-colors font-semibold"
-        >
-          <ArrowLeft className="w-5 h-5 mr-2" />
-          Back to Financial Guides
-        </Link>
-      </motion.div>
+      <article className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 sm:space-y-12">
+        {/* Header */}
+        <header className="space-y-4 border-b border-slate-200 pb-8">
+          <div className="flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-wider text-blue-700">
+            <span className="bg-blue-50 border border-blue-200 px-3 py-1 rounded-full">
+              SME Commercial Finance Guide
+            </span>
+            <span className="text-slate-400">•</span>
+            <span className="text-slate-500 font-mono">Updated November 2026</span>
+            <span className="text-slate-400">•</span>
+            <span className="text-slate-500">18 min read</span>
+          </div>
 
-      {/* Article Header (SEO H1) */}
-      <motion.header variants={itemVariants} className="mb-10 pb-6 border-b border-indigo-300">
-        <h1 className="text-4xl sm:text-6xl font-extrabold text-gray-900 mb-4 drop-shadow-sm bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-blue-700 leading-tight">
-          {ARTICLE_TITLE}
-        </h1>
-        <p className="text-xl text-gray-700 leading-relaxed italic mt-4">
-          {ARTICLE_SUBTITLE}
-        </p>
-        <div className="flex text-sm text-gray-500 mt-6 space-x-6">
-          <span>By **{AUTHOR}**</span>
-          <span>•</span>
-          <span>{DATE}</span>
-          <span>•</span>
-          <span>{READ_TIME}</span>
-        </div>
-      </motion.header>
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight">
+            The Ultimate 2026 Guide to Business Loan Options for Small Businesses in India
+          </h1>
 
-      {/* Article Content */}
-      <article className="text-gray-800 leading-relaxed space-y-8">
-
-        <motion.p variants={itemVariants} className="text-xl font-semibold p-4 bg-blue-50 rounded-lg border-l-4 border-blue-600">
-          The landscape of **Small and Medium Enterprise (SME) finance in India** is undergoing a rapid, digital transformation. For 2025, accessing capital requires more than just decent financials—it demands strategic knowledge of **FinTech algorithms, regulatory schemes (like Mudra),** and the core differences between banks and NBFCs. This compendium serves as your definitive guide to securing the best terms for business growth.
-        </motion.p>
-        
-        {/* SECTION 1: Executive Summary & The State of Indian SME Finance */}
-        <SectionHeader title="1. Executive Summary: The State of Indian SME Finance" icon={BookOpen} />
-        
-        <SubHeader title="1.1. The MSME Sector Powerhouse and The Persistent Credit Gap" />
-        <motion.p variants={itemVariants}>
-          The MSME sector is the backbone of the Indian economy, contributing over **30% to the GDP** and generating massive employment. Despite this, the formal **Credit Gap**—the difference between the potential demand for credit and the supply from formal channels—remains staggering. This gap is the primary driver for high-interest financing and the adoption of new digital lending models.
-        </motion.p>
-
-        <SubHeader title="1.2. The Digital Transformation: FinTech and the Account Aggregator Framework" />
-        <motion.p variants={itemVariants}>
-          The key shift in 2025 lending is the integration of digital data. FinTechs use **AI/ML** to analyze unstructured data (e.g., utility bills, platform sales) for faster decisions. Critically, the RBI-backed **Account Aggregator (AA) Framework** allows businesses to share secure, consent-based bank data instantly, dramatically reducing the time for loan appraisal from weeks to hours.
-        </motion.p>
-        
-        <SubHeader title="1.3. Eligibility Check: The 5 Non-Negotiable Criteria for Lenders" />
-        <ul className="list-none space-y-3">
-          <BulletPoint text="**Business Vintage:** Minimum 3 years of operation for most competitive term loans." />
-          <BulletPoint text="**Business CIBIL Score:** A score above 750 is mandatory for the lowest interest rates." />
-          <BulletPoint text="**Turnover and Profitability:** Lenders scrutinize cash flow stability, often demanding a minimum monthly turnover and consistent PBT (Profit Before Tax)." />
-        </ul>
-
-        <KeyTakeaway title="The 2025 Financing Axiom">
-            Your personal and business credit scores are inseparable. A clean **CIBIL above 750** for the promoter drastically reduces the risk premium on the business loan.
-        </KeyTakeaway>
-        
-        {/* --- SECTION 2: Decoding Business Loan Types --- */}
-        <SectionHeader title="2. Decoding Business Loan Types: The Full Spectrum (Secured vs. Unsecured)" icon={Layers} />
-
-        <SubHeader title="2.1. Term Loans: The Cornerstone of Fixed Asset Growth" />
-        <motion.p variants={itemVariants}>
-          Term loans provide a fixed lump sum with a pre-determined repayment schedule. We must distinguish between **Short-Term (up to 3 years)** for immediate needs like inventory, and **Long-Term (5-10+ years)** for major capital expenditure like factory infrastructure or land acquisition. Detailed analysis shows that long-term term loans are nearly always secured by the assets purchased.
-        </motion.p>
-        
-        <SubHeader title="2.2. Working Capital Solutions: Cash Credit (CC) and Overdraft (OD)" />
-        <motion.p variants={itemVariants}>
-          The **Cash Credit (CC)** and **Overdraft (OD)** facilities are revolving credit limits sanctioned against the security of current assets (stock/receivables). This is the lifeblood of day-to-day operations. Interest is charged only on the *utilized* portion, making it highly efficient. Understanding the drawing power calculation is key here.
-        </motion.p>
-        
-        <SubHeader title="2.3. Specialized Secured Lending: Loan Against Property (LAP) and Equipment Finance" />
-        <motion.p variants={itemVariants}>
-          **LAP** offers the lowest interest rates due to the high-value, liquid collateral (commercial or residential property). The **Loan-to-Value (LTV)** ratio, typically restricted to **50%-70%** of the property's market value, dictates the maximum loan amount. Equipment finance is a specific type of secured loan where the newly purchased machinery acts as the primary collateral.
-        </motion.p>
-        
-        {/* --- SECTION 3: The Government & Regulatory Basket --- */}
-        <SectionHeader title="3. Government Schemes: Mudra, SIDBI, and CGTMSE" icon={Target} />
-        
-        <SubHeader title="3.1. Pradhan Mantri Mudra Yojana (PMMY): Shishu, Kishore, Tarun" />
-        <motion.p variants={itemVariants}>
-          Mudra loans are designed to finance micro-enterprises up to **₹10 Lakh**. The division into Shishu (up to ₹50k), Kishore (₹50k to ₹5 Lakh), and Tarun (₹5 Lakh to ₹10 Lakh) reflects the risk and documentation requirements. We provide a step-by-step application guide, noting that NBFCs often process Mudra loans faster than PSU banks.
-        </motion.p>
-
-        <SubHeader title="3.2. Collateral-Free Loans via CGTMSE (Up to ₹2 Crores)" />
-        <motion.p variants={itemVariants}>
-          The **Credit Guarantee Fund Trust for Micro and Small Enterprises (CGTMSE)** scheme is vital, offering a **collateral-free** guarantee up to **₹2 Crores**. The lender pays an annual guarantee fee, and the government covers a significant portion (75%-85%) of the default risk. This removes the biggest barrier to entry for small businesses.
-          
-        </motion.p>
-
-        {/* --- SECTION 4: Cost of Borrowing --- */}
-        <SectionHeader title="4. Cost of Borrowing: Interest, Fees, and Hidden Charges" icon={DollarSign} />
-        
-        <SubHeader title="4.1. From MCLR to EBLR: The Anatomy of an Interest Rate" />
-        <motion.p variants={itemVariants}>
-          In 2025, almost all new floating-rate loans are linked to the **External Benchmark-based Lending Rate (EBLR)**, typically the RBI Repo Rate. This shift ensures faster transmission of RBI policy rates to borrowers. The final interest rate applied to your loan is $EBLR + Risk\,Premium + Markup$. We detail how banks calculate your specific Risk Premium based on your D/E ratio and profitability.
-        </motion.p>
-        
-        <SubHeader title="4.2. Negotiating Foreclosure and Processing Fees" />
-        <motion.p variants={itemVariants}>
-          While the Processing Fee (0.5% - 3.0%) is standard, it is often negotiable for high-value customers. The real cost trap lies in **Foreclosure/Prepayment Charges** (2%-5% of the outstanding principal). We analyze RBI guidelines, which generally mandate no prepayment penalty on floating-rate loans for individuals, but this protection often doesn't extend to large corporate or secured MSME loans.
-        </motion.p>
-        
-        {/* --- SECTION 5: The Application and Approval Lifecycle --- */}
-        <SectionHeader title="5. Application, Underwriting, and Rejection Analysis" icon={Clock} />
-
-        <SubHeader title="5.1. The 5 Stages of Underwriting and Sanction" />
-        <motion.p variants={itemVariants}>
-          The **Appraisal Stage (Underwriting)** involves a deep dive into your financials. Banks assess two key metrics: **DSCR (Debt Service Coverage Ratio)**, which must typically be above 1.5x, and the overall business solvency. We break down the documents required for the final **Sanction Letter** and the specific conditions that must be met before final **Disbursement**.
-        </motion.p>
-        
-        <SubHeader title="5.2. Top 3 Reasons for Loan Rejection and Mitigation" />
-        <ul className="list-none space-y-3">
-          <BulletPoint text="**Negative Cash Flow:** The most common reason. Showing high paper profit but poor bank statement flow is an instant rejection." />
-          <BulletPoint text="**High Credit Utilization:** Already having too many active loans relative to your revenue is a major red flag (The Credit Hungry Profile)." />
-          <BulletPoint text="**Business CIBIL Irregularities:** Any delayed payments (DPD) on past loans, even small ones, will severely impact the approval decision." />
-        </ul>
-
-        {/* --- SECTION 6: Specialized Sector Lending (Placeholder for 3,000 words) --- */}
-        <SectionHeader title="6. Specialized Finance: Agriculture, Manufacturing, and Service Sectors" icon={Scale} />
-        <motion.p variants={itemVariants}>
-          This comprehensive section details niche financing solutions: **Project Finance** for large-scale manufacturing unit setups, **Factoring & Forfaiting** for realizing domestic and international receivables instantly, and specific **NABARD/SIDBI** schemes targeting agricultural infrastructure and green energy initiatives within the MSME space.
-        </motion.p>
-
-        {/* --- SECTION 7: Lender Comparison (Placeholder for 4,000 words) --- */}
-        <SectionHeader title="7. Lender Comparison: Banks vs. NBFCs vs. FinTech P2P" icon={TrendingUp} />
-        
-        <SubHeader title="7.1. Public Sector Banks (PSBs): Low Cost, High Documentation" />
-        <motion.p variants={itemVariants}>
-          PSBs like SBI or PNB offer the lowest rates and highest loan quantum but have strict, often slow, due diligence. They are the ideal choice for established businesses with high collateral but low urgency.
-        </motion.p>
-
-        <SubHeader title="7.2. NBFCs and FinTechs: Speed, Flexibility, and Risk Premium" />
-        <motion.p variants={itemVariants}>
-          NBFCs (e.g., Bajaj Finserv) and Digital Lenders (e.g., Lendingkart) offer 24-72 hour approvals and lighter documentation, perfect for urgent working capital. However, the interest rates often carry a 500-800 basis point (5%-8%) higher **Risk Premium** than secured bank loans, reflecting the lack of collateral.
-        </motion.p>
-
-        {/* --- SECTION 8: Financial Health & Risk Management (Placeholder for 2,000 words) --- */}
-        <SectionHeader title="8. Financial Health, Risk Metrics, and Covenant Compliance" icon={TrendingDown} />
-        <motion.p variants={itemVariants}>
-          Lenders require compliance with specific **Financial Covenants** post-disbursement, such as maintaining a minimum Debt-to-Equity (D/E) ratio and Current Ratio. Failure to comply can trigger penalties or even recall the loan. This section provides the formulas and target ranges for Indian SMEs.
-        </motion.p>
-
-        {/* --- SECTION 9: Advanced Case Studies (Placeholder for 3,000 words) --- */}
-        <SectionHeader title="9. Real-World Scenarios and Case Studies (From E-commerce to Manufacturing)" icon={HelpCircle} />
-        <motion.p variants={itemVariants}>
-          Detailed case studies analyzing how E-commerce sellers leverage **Invoice Discounting** based on platform sales data, and how manufacturing units utilize **Acquisition Finance** for strategic business purchases, illustrating practical application of the concepts discussed.
-        </motion.p>
-
-        {/* CONCLUSION */}
-        <motion.section variants={itemVariants} className="mt-12 p-6 bg-yellow-50 border-l-4 border-yellow-500 rounded-lg">
-          <h4 className="text-xl font-bold text-gray-900 mb-3">Final Thoughts on Financial Mastery</h4>
-          <p>
-            Securing a business loan in 2025 is a strategic endeavor. It’s no longer about submitting documents; it’s about presenting a stable, digitally optimized financial profile. By understanding the intricacies of the **Account Aggregator**, leveraging **CGTMSE**, and choosing the right lender (Bank vs. NBFC) for your specific need, you can unlock capital at the most competitive rates and fuel your business's aggressive growth trajectory.
+          <p className="text-base sm:text-lg text-slate-600 leading-relaxed">
+            Securing business credit is the catalyst for scaling your enterprise. From working capital lines and machinery finance to sovereign credit guarantee schemes like CGTMSE and Mudra, here is everything Indian business owners must know.
           </p>
-        </motion.section>
 
-        {/* CTA Section */}
-        <motion.section
-          className="text-center mt-16 p-8 bg-gradient-to-r from-indigo-600 to-blue-700 rounded-2xl shadow-xl"
-          variants={pageVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-        >
-          <motion.h2
-            className="text-3xl sm:text-4xl font-extrabold text-white mb-4 drop-shadow-lg"
-            variants={itemVariants}
-          >
-            Start Your Loan Pre-Approval Process
-          </motion.h2>
-          <motion.p
-            className="text-lg text-blue-100 mb-8 max-w-2xl mx-auto leading-relaxed"
-            variants={itemVariants}
-          >
-            Receive a personalized lender match and a detailed rate estimate in under 5 minutes.
-          </motion.p>
-          <motion.div variants={itemVariants}>
-            <button
-              onClick={() => alert("Personalized Lender Match Initiated!")}
-              className="bg-white text-indigo-600 px-8 py-4 rounded-full font-bold text-lg shadow-lg hover:bg-gray-100 transition-all duration-300 ease-in-out transform hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-50"
+          <AuthorByline authorSlug="amit-khurana" />
+        </header>
+
+        {/* Section 1: Types of Business Credit */}
+        <section className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 shadow-sm space-y-6">
+          <h2 className="text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
+            <Briefcase className="w-6 h-6 text-blue-700" />
+            1. Core Business Credit Facilities Explained
+          </h2>
+
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-sm border-collapse">
+              <thead>
+                <tr className="bg-slate-100 text-slate-900 border-b border-slate-200">
+                  <th className="p-3 font-bold">Credit Facility</th>
+                  <th className="p-3 font-bold">Tenure</th>
+                  <th className="p-3 font-bold">Typical Interest Rate</th>
+                  <th className="p-3 font-bold">Purpose &amp; Best Fit</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-200 text-slate-700 font-sans">
+                {facilityTypes.map((fac, idx) => (
+                  <tr key={idx} className="hover:bg-slate-50">
+                    <td className="p-3 font-semibold text-slate-900">{fac.type}</td>
+                    <td className="p-3">{fac.tenure}</td>
+                    <td className="p-3 tabular-nums font-mono font-bold text-emerald-700">{fac.rate}</td>
+                    <td className="p-3 text-xs text-slate-600">{fac.bestFor}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        {/* Section 2: Mudra & CGTMSE Overview */}
+        <section className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 shadow-sm space-y-4">
+          <h2 className="text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
+            <Building className="w-6 h-6 text-blue-700" />
+            2. Sovereign Collateral-Free Schemes: CGTMSE &amp; Mudra
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+            <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+              <h3 className="font-bold text-slate-900 text-base">CGTMSE Scheme (Up to ₹5 Crores)</h3>
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                Set up jointly by the Ministry of MSME and SIDBI, CGTMSE provides credit guarantee coverage up to 85% for micro-enterprises and 75% for small enterprises, allowing banks to lend without third-party physical collateral.
+              </p>
+            </div>
+            <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+              <h3 className="font-bold text-slate-900 text-base">Mudra Yojana (Up to ₹20 Lakhs)</h3>
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                Expanded under recent Union Budget provisions: Shishu (loans up to ₹50,000), Kishore (₹50,000 to ₹5 Lakhs), and Tarun Plus (₹10 Lakhs to ₹20 Lakhs for established entrepreneurs).
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Section 3: Essential Documents */}
+        <section className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 shadow-sm space-y-4">
+          <h2 className="text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
+            <FileCheck2 className="w-6 h-6 text-emerald-600" />
+            3. Standard Document Checklist for Commercial Sanction
+          </h2>
+          <ul className="space-y-2 text-sm text-slate-700 list-disc list-inside leading-relaxed">
+            <li><strong>KYC of Entity &amp; Promoters:</strong> PAN cards, Aadhaar, MOA/AOA or Partnership Deed, Certificate of Incorporation.</li>
+            <li><strong>Udyam Registration:</strong> Verified MSME certificate from the central portal.</li>
+            <li><strong>Banking Statements:</strong> 12 months current account bank statements for all active operational accounts.</li>
+            <li><strong>GST Returns:</strong> 12 months GSTR-3B and GSTR-1 filings reconciled with bank credits.</li>
+            <li><strong>Audited Financials:</strong> Balance sheet and P&amp;L accounts for the last 2-3 financial years certified by a Chartered Accountant.</li>
+          </ul>
+        </section>
+
+        {/* CTA Card */}
+        <div className="bg-slate-900 text-white rounded-3xl p-8 sm:p-10 shadow-xl border border-slate-800 text-center space-y-4">
+          <span className="text-xs font-bold text-amber-400 uppercase tracking-wider bg-amber-400/10 px-3 py-1 rounded-md border border-amber-400/20 inline-block">
+            MSME Capital Solutions
+          </span>
+          <h3 className="text-2xl sm:text-3xl font-black text-white">
+            Fund Your Business Growth Today
+          </h3>
+          <p className="text-sm text-slate-300 max-w-xl mx-auto leading-relaxed">
+            Compare business loans, cash credit limits, and machinery finance across 30+ top commercial lenders in India.
+          </p>
+          <div className="pt-2 flex flex-wrap justify-center gap-4">
+            <Link
+              to="/loans/business/overview"
+              className="px-6 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm shadow-md transition-all"
             >
-              Get My Free Loan Report
-            </button>
-          </motion.div>
-        </motion.section>
+              Explore Business Loans &rarr;
+            </Link>
+            <Link
+              to="/blog/MSME-Loan-Without-Collateral"
+              className="px-6 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-sm border border-white/20 transition-all"
+            >
+              Collateral-Free CGTMSE Loans
+            </Link>
+          </div>
+        </div>
 
+        {/* Regulatory Disclosure */}
+        <div className="p-6 bg-slate-100 rounded-2xl border border-slate-200 text-xs text-slate-600 leading-relaxed space-y-2 font-sans">
+          <div className="flex items-center gap-2 text-slate-800 font-bold uppercase tracking-wider">
+            <ShieldCheck className="w-4 h-4 text-blue-700" />
+            <span>Commercial Lending Regulatory Notice</span>
+          </div>
+          <p>
+            Business loan terms, assessment of working capital margins, and interest spreads are determined exclusively by the lending bank or financial institution in accordance with Reserve Bank of India lending norms. BanksCart operates strictly as an independent digital credit marketplace.
+          </p>
+        </div>
       </article>
     </div>
-  </motion.div>
-);
-
-export default UltimateBusinessLoanGuidePage;
+  );
+}

@@ -1,375 +1,252 @@
-import React from "react";
-import { motion } from "framer-motion";
-import { 
-  ArrowLeft, 
-  Target, // Used for Eligibility Focus
-  Shield, // Used for Guarantee/Risk
-  Activity, // Used for Process/Steps
-  TrendingDown, // Used for Cost/Rates
-  Briefcase, // Used for MSME Focus
-  Users, // Used for Lending Platform/Ecosystem
-  Feather, // Used for Documentation & Paperwork
-  CheckSquare, // Used for Eligibility Checklist
-  Gavel, // Used for Legal/Policy (CGTMSE) 
-  Zap, // Used for CTA
-} from "lucide-react";
-// Since this environment doesn't have a real router, Link should be a simple anchor tag/button.
-// For demonstration purposes, I'll define a simple Link component.
-const Link = ({ to, children, className }) => (
-  <a href={to} className={className}>{children}</a>
-);
+import React from 'react';
+import { Helmet } from 'react-helmet-async';
+import { Link } from 'react-router-dom';
+import Breadcrumb from '../../components/Breadcrumb';
+import { AuthorByline } from '../../components/blog/AuthorByline';
+import {
+  Briefcase,
+  CheckCircle2,
+  Percent,
+  Clock,
+  ShieldCheck,
+  Building,
+  TrendingUp,
+  HelpCircle,
+  FileCheck2,
+  Coins,
+  Scale
+} from 'lucide-react';
 
-// --- CONFIGURATION START ---
-const ARTICLE_TITLE = "MSME Loan Without Collateral: The Ultimate Guide for Indian Businesses";
-const ARTICLE_SUBTITLE =
-  "Unlock Unsecured Business Funding: Full Eligibility Checklist, Step-by-Step Application Process, and Deep Dive into CGTMSE and Fintech Lending.";
-const BACK_LINK = "#"; // Updated to a placeholder
-const AUTHOR = "Insider Banking Analyst";
-const DATE = "Nov 20, 2025";
-const READ_TIME = "28 min read (The Funding Manual)"; 
-// --- CONFIGURATION END ---
+export default function MSMELoanWithoutCollateral() {
+  const canonicalUrl = "https://www.bankscart.com/blog/MSME-Loan-Without-Collateral";
+  const articleTitle = "MSME Loan Without Collateral: CGTMSE & Mudra Schemes Guide (2026)";
+  const articleDesc = "Complete 2026 guide to collateral-free MSME business loans: discover how the CGTMSE guarantee covers up to ₹5 Crores, Mudra up to ₹20 Lakhs, eligibility rules, and approval steps.";
 
-// ====================================================================
-// FRAMEWORK COMPONENTS (Replicating the modular structure)
-// ====================================================================
-
-// Framer Motion variants
-const pageVariants = {
-  hidden: { opacity: 0, y: 50 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.8,
-      ease: "easeOut",
-      staggerChildren: 0.03,
+  const blogPostingSchema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": canonicalUrl
     },
-  },
-};
-
-const itemVariants = {
-  // FIX: Removed the duplicate 'opacity' key. Standard hidden state should have opacity 0.
-  hidden: { opacity: 0, y: 30 }, 
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.5,
-      ease: "easeOut",
+    "headline": articleTitle,
+    "description": articleDesc,
+    "image": "https://www.bankscart.com/assets/images/bankscart-logo.png",
+    "author": {
+      "@type": "Person",
+      "name": "Amit Khurana",
+      "jobTitle": "Senior Banking Advisor & Principal Reviewer",
+      "url": "https://www.bankscart.com/author/amit-khurana"
     },
-  },
-};
+    "publisher": {
+      "@type": "Organization",
+      "name": "BanksCart",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://www.bankscart.com/assets/images/bankscart-logo.png"
+      }
+    },
+    "datePublished": "2026-01-17T09:00:00+05:30",
+    "dateModified": "2026-11-06T10:00:00+05:30"
+  };
 
-// Component for Section Headers
-// This interface definition now works correctly in the .tsx file
-interface SectionHeaderProps {
-  title: string;
-  icon: React.ElementType;
-}
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://www.bankscart.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Blog",
+        "item": "https://www.bankscart.com/blog"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Collateral-Free MSME Loan",
+        "item": canonicalUrl
+      }
+    ]
+  };
 
-const SectionHeader: React.FC<SectionHeaderProps> = ({ title, icon: Icon }) => (
-  <motion.div 
-    className="flex items-center space-x-4 mb-6 pt-4 border-t border-gray-200/50 dark:border-gray-700"
-    variants={itemVariants}
-  >
-    <Icon className="w-8 h-8 text-indigo-600 dark:text-indigo-400 flex-shrink-0" />
-    <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 dark:text-white leading-tight">
-      {title}
-    </h2>
-  </motion.div>
-);
+  const schemeComparison = [
+    {
+      scheme: "CGTMSE Scheme",
+      maxAmount: "Up to ₹5.00 Crores",
+      guaranteeCover: "Up to 85% for Micro, 75% for Small",
+      interestRate: "10.00% - 14.50%",
+      targetAudience: "Manufacturing & Service Micro/Small Enterprises"
+    },
+    {
+      scheme: "PM Mudra Yojana (Tarun Plus)",
+      maxAmount: "Up to ₹20.00 Lakhs",
+      guaranteeCover: "Credit Guarantee Fund for Micro Units (CGFMU)",
+      interestRate: "8.50% - 12.00%",
+      targetAudience: "Micro-enterprises, small retail traders, artisans"
+    },
+    {
+      scheme: "Stand-Up India",
+      maxAmount: "₹10 Lakhs to ₹1.00 Crore",
+      guaranteeCover: "National Credit Guarantee Trustee Company (NCGTC)",
+      interestRate: "Base rate + 3% tenor premium",
+      targetAudience: "Women and SC/ST greenfield enterprise promoters"
+    },
+    {
+      scheme: "Fintech Cash-Flow Loans",
+      maxAmount: "Up to ₹50.00 Lakhs",
+      guaranteeCover: "Unsecured (Account Aggregator Underwriting)",
+      interestRate: "14.00% - 24.00%",
+      targetAudience: "Fast-growing digital D2C brands & service agencies"
+    }
+  ];
 
-// Component for Sub Headers
-interface SubHeaderProps {
-  title: string;
-  id?: string;
-}
-
-const SubHeader: React.FC<SubHeaderProps> = ({ title, id }) => (
-  <motion.h3 
-    id={id}
-    className="text-2xl font-bold mt-10 mb-4 text-indigo-700 dark:text-indigo-300"
-    variants={itemVariants}
-  >
-    {title}
-  </motion.h3>
-);
-
-// Component for Standard Paragraphs (with motion)
-const Paragraph: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <motion.p 
-    className="text-lg text-gray-700 dark:text-gray-300 mb-6 leading-relaxed"
-    variants={itemVariants}
-  >
-    {children}
-  </motion.p>
-);
-
-// Component for Bullet Points
-interface BulletPointProps {
-  children: React.ReactNode;
-}
-
-const BulletPoint: React.FC<BulletPointProps> = ({ children }) => (
-  <motion.li 
-    className="flex items-start mb-3 text-lg text-gray-700 dark:text-gray-300"
-    variants={itemVariants}
-  >
-    <CheckSquare className="w-5 h-5 mt-1 mr-3 text-green-500 flex-shrink-0" />
-    <span>{children}</span>
-  </motion.li>
-);
-
-// Component for Key Takeaways/Tips
-interface KeyTakeawayProps {
-  children: React.ReactNode;
-}
-
-const KeyTakeaway: React.FC<KeyTakeawayProps> = ({ children }) => (
-  <motion.div
-    className="mt-6 mb-6 p-5 bg-yellow-50 dark:bg-yellow-900/20 border-l-4 border-yellow-500 rounded-lg shadow-md"
-    variants={itemVariants}
-  >
-    <p className="font-semibold text-yellow-800 dark:text-yellow-200">
-      <span className="font-extrabold mr-2">💡 Crucial Note:</span>
-      {children}
-    </p>
-  </motion.div>
-);
-
-// Using a custom alert function to avoid window.alert()
-const showInfoMessage = (message: string) => {
-  // In a real application, this would trigger a modal or toast notification.
-  console.log(`[INFO MESSAGE]: ${message}`);
-  const messageBox = document.getElementById('info-message-box');
-  if (messageBox) {
-    messageBox.textContent = message;
-    messageBox.classList.remove('hidden');
-    messageBox.classList.add('block');
-    setTimeout(() => {
-      messageBox.classList.remove('block');
-      messageBox.classList.add('hidden');
-    }, 3000);
-  }
-};
-
-// ====================================================================
-// MAIN COMPONENT
-// ====================================================================
-
-const MSMELoanWithoutCollateral: React.FC = () => {
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pt-12 pb-20 font-[Inter]">
-      {/* Custom Info/Alert Box */}
-      <div 
-        id="info-message-box" 
-        className="fixed top-5 right-5 z-50 p-4 bg-indigo-500 text-white rounded-lg shadow-xl hidden transition-opacity duration-300"
-      >
-        Message Content
+    <div className="min-h-screen bg-slate-50 font-sans text-slate-800 pt-20 sm:pt-24 pb-16">
+      <Helmet>
+        <title>{`${articleTitle} | BanksCart`}</title>
+        <meta name="description" content={articleDesc} />
+        <link rel="canonical" href={canonicalUrl} />
+        <script type="application/ld+json">
+          {JSON.stringify(blogPostingSchema)}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify(breadcrumbSchema)}
+        </script>
+      </Helmet>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6">
+        <Breadcrumb path={["Home", "Blog", "Collateral-Free MSME Loan"]} />
       </div>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-        
-        {/* Back Link */}
-        <Link to={BACK_LINK} className="inline-flex items-center text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-200 transition-colors duration-200 mb-8">
-          <ArrowLeft className="w-5 h-5 mr-2" />
-          Back to all Finance Guides
-        </Link>
-
-        {/* Hero Section */}
-        <motion.header
-          className="text-center mb-16 p-8 bg-white dark:bg-gray-800 rounded-xl shadow-2xl"
-          variants={pageVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }}
-        >
-          <motion.h1 
-            className="text-5xl sm:text-7xl font-extrabold tracking-tight"
-            variants={itemVariants}
-          >
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-blue-500 dark:from-indigo-400 dark:to-blue-300">
-              {ARTICLE_TITLE}
+      <article className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 sm:space-y-12">
+        {/* Header */}
+        <header className="space-y-4 border-b border-slate-200 pb-8">
+          <div className="flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-wider text-blue-700">
+            <span className="bg-blue-50 border border-blue-200 px-3 py-1 rounded-full">
+              Government MSME Schemes
             </span>
-          </motion.h1>
-          <motion.p 
-            className="mt-4 text-xl text-gray-600 dark:text-gray-400 max-w-4xl mx-auto"
-            variants={itemVariants}
-          >
-            {ARTICLE_SUBTITLE}
-          </motion.p>
-          <motion.div 
-            className="mt-6 flex justify-center space-x-6 text-sm font-medium text-gray-500 dark:text-gray-400"
-            variants={itemVariants}
-          >
-            <span>{AUTHOR}</span>
-            <span>•</span>
-            <span>{DATE}</span>
-            <span>•</span>
-            <span>{READ_TIME}</span>
-          </motion.div>
-        </motion.header>
+            <span className="text-slate-400">•</span>
+            <span className="text-slate-500 font-mono">Updated November 2026</span>
+            <span className="text-slate-400">•</span>
+            <span className="text-slate-500">14 min read</span>
+          </div>
 
-        {/* Main Content Sections */}
-        <motion.article 
-          className="bg-white dark:bg-gray-800 p-8 sm:p-12 rounded-xl shadow-2xl space-y-12"
-          variants={pageVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }}
-        >
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight">
+            MSME Loan Without Collateral: CGTMSE &amp; Mudra Schemes Guide (2026)
+          </h1>
 
-          {/* Section 1: Understanding Unsecured MSME Funding */}
-          <motion.section variants={itemVariants}>
-            <SectionHeader title="1. The Unsecured Reality: Why Collateral is Optional" icon={Briefcase} />
-            <Paragraph>
-              For decades, MSMEs (Micro, Small, and Medium Enterprises) viewed collateral as a non-negotiable prerequisite for large loans. Today, a paradigm shift, driven by government policy and Fintech innovation, has made **unsecured business loans** a viable and often superior option. The key is understanding that lenders are now primarily evaluating **cash flow stability and business performance**, not just asset value.
-            </Paragraph>
-            <SubHeader title="The Primary Source: CGTMSE Scheme" id="cgtmse-intro" />
-            <Paragraph>
-              The most significant driver of unsecured lending is the **Credit Guarantee Fund Trust for Micro and Small Enterprises (CGTMSE)**.  This government-backed scheme provides collateral-free term loans and working capital to MSMEs up to a limit of ₹5 crore (though most banks cap individual unsecured loans lower). Lenders are willing to forgo physical collateral because the CGTMSE trust guarantees a major portion (typically 75-85%) of the loan amount to the lender in case of default.
-            </Paragraph>
-            <KeyTakeaway>
-              CGTMSE is the invisible collateral. If your business is eligible for the CGTMSE scheme, the bank's risk is minimized, significantly increasing your chances of approval for a collateral-free loan. Always confirm your lender is a Member Lending Institution (MLI) under the scheme.
-            </KeyTakeaway>
-            <SubHeader title="The Fintech Disruption: Data-Driven Lending" id="fintech-lending" />
-            <Paragraph>
-              Modern Non-Banking Financial Companies (NBFCs) and Fintech lenders rely on **digital trails** rather than deeds. They analyze bank account statements, GST returns, PoS transaction data, and e-commerce platform sales to create a highly accurate picture of your business's creditworthiness. This rapid, data-driven approach often leads to faster approvals and more flexible terms than traditional banks.
-            </Paragraph>
-          </motion.section>
+          <p className="text-base sm:text-lg text-slate-600 leading-relaxed">
+            Lack of commercial real estate collateral shouldn't throttle your business expansion. Discover how central government credit guarantee frameworks enable Indian banks to lend up to ₹5 Crores without asking for personal property deeds.
+          </p>
 
-          {/* Section 2: Core Eligibility Criteria Checklist */}
-          <motion.section variants={itemVariants}>
-            <SectionHeader title="2. The Eligibility Mandate: What Lenders Really Look For" icon={Target} />
-            <Paragraph>
-              Since there is no asset to seize, lenders scrutinize your financial health with greater intensity. Meeting the minimum criteria is essential, but aiming for **benchmark performance** guarantees better rates and higher loan amounts.
-            </Paragraph>
-            <SubHeader title="Key Business and Financial Requirements" id="financial-requirements" />
-            <ul className="list-disc ml-6 mt-3 space-y-2">
-              <BulletPoint>Business Vintage: Typically requires a minimum of **1 to 3 years** of continuous business operation. Longer vintage is preferred.</BulletPoint>
-              <BulletPoint>Minimum Annual Turnover: Varies widely, but most lenders require a turnover between **₹15 Lakh to ₹1 Crore** to ensure repayment capacity.</BulletPoint>
-              <BulletPoint>Profitability: The business must demonstrate **positive net profit** in the last 1-2 financial years (as per ITRs).</BulletPoint>
-              <BulletPoint>GST Compliance: Mandatory and consistent filing of **GST returns (GSTR-3B/GSTR-1)** is crucial for revenue verification.</BulletPoint>
-            </ul>
-            <SubHeader title="The Credit Score Threshold" id="credit-score-threshold" />
-            <Paragraph>
-              For unsecured loans, the personal and business credit score is paramount. Lenders usually require:
-              <ul className="list-disc ml-6 mt-3 space-y-2">
-                <BulletPoint>Personal CIBIL Score: **750+** is considered excellent and necessary for competitive rates. </BulletPoint>
-                <BulletPoint>Business CIBIL (or Experian/Equifax) Score: A high score here (usually 700+) indicates reliable payment history on existing business loans or working capital.</BulletPoint>
-              </ul>
-            </Paragraph>
-            <KeyTakeaway>
-              Lenders will often check the personal credit score of all major directors/partners, as they act as the corporate guarantor. Ensure all personal credit card and EMI payments are pristine for at least 12 months before applying.
-            </KeyTakeaway>
-          </motion.section>
-          
-          {/* Section 3: Step-by-Step Application Process */}
-          <motion.section variants={itemVariants}>
-            <SectionHeader title="3. Full Process: From Preparation to Disbursement" icon={Activity} />
-            <Paragraph>
-              The digital age has streamlined the application, but preparation remains the most important step. Follow this structured process for the highest success rate.
-            </Paragraph>
-            <SubHeader title="Step 1: Document Gathering & Digital Audit" id="step1-document" />
-            <Paragraph>
-              Gather the required documents (listed in Section 4). Crucially, conduct a **digital audit**: ensure your bank statements are clean, your GST filings match your ITRs, and your company registration details are up-to-date. Any inconsistency here will lead to a swift rejection.
-            </Paragraph>
-            <SubHeader title="Step 2: Lender Selection & Rate Comparison" id="step2-lender" />
-            <Paragraph>
-              Identify the right lender:
-              <ul className="list-disc ml-6 mt-3 space-y-2">
-                <BulletPoint>For Lower Rates/Longer Tenure: Approach **Public Sector Banks (PSBs)** if your financial records are spotless and you are eligible for CGTMSE. Expect longer processing times.</BulletPoint>
-                <BulletPoint>For Speed/Flexibility: Approach **NBFCs/Fintech Platforms** for faster approval (often 24-72 hours) based on transactional data. Rates may be slightly higher.</BulletPoint>
-              </ul>
-              Use a soft inquiry (pre-qualification) tool to compare rates before submitting a formal application.
-            </Paragraph>
-            <SubHeader title="Step 3: Digital Application and Verification" id="step3-verification" />
-            <Paragraph>
-              Submit the application online. Most modern applications involve a **digital KYC** process and an instant fetching of your GST/Bank Statement data through secure APIs. Be prepared for a physical verification (PV) visit to your business premises to confirm your operational status.
-            </Paragraph>
-            <SubHeader title="Step 4: Loan Sanction & Agreement Execution" id="step4-disbursement" />
-            <Paragraph>
-              Upon sanction, you will receive a sanction letter detailing the loan amount, interest rate, tenure, processing fee, and repayment schedule. Read the fine print carefully, especially regarding prepayment penalties. After signing the loan agreement, the funds are disbursed directly to your business bank account.
-            </Paragraph>
-          </motion.section>
+          <AuthorByline authorSlug="amit-khurana" />
+        </header>
 
-          {/* Section 4: Mandatory Documentation Checklist */}
-          <motion.section variants={itemVariants}>
-            <SectionHeader title="4. Documentation: The Non-Negotiable Paperwork" icon={Feather} />
-            <Paragraph>
-              A complete, accurate set of documents is the fastest way to loan approval. Never provide handwritten or incomplete statements.
-            </Paragraph>
-            <SubHeader title="Business and Identity Proof" id="identity-proof" />
-            <ul className="list-disc ml-6 mt-3 space-y-2">
-              <BulletPoint>KYC Documents of Proprietor/Partners/Directors: PAN Card and Aadhaar Card.</BulletPoint>
-              <BulletPoint>Proof of Business Existence: **Udyam Registration Certificate** (mandatory for MSME status), Shop & Establishment Certificate, or Gumasta/SSI Registration. </BulletPoint>
-              <BulletPoint>Business PAN Card.</BulletPoint>
-            </ul>
-            <SubHeader title="Financial Documents" id="financial-docs" />
-            <ul className="list-disc ml-6 mt-3 space-y-2">
-              <BulletPoint>Bank Statements: Last **6 to 12 months** of the primary business bank account.</BulletPoint>
-              <BulletPoint>Income Tax Returns (ITR): Last **2 to 3 years** of ITR along with computation of income, profit and loss account, and balance sheet (audited by a CA).</BulletPoint>
-              <BulletPoint>Goods and Services Tax (GST) Returns: Copies of GSTR-3B for the last 12 months.</BulletPoint>
-              <BulletPoint>Loan Requirement Details: A detailed purpose of the loan, often in a simple proposal format (e.g., purchasing inventory, funding working capital, buying equipment).</BulletPoint>
-            </ul>
-          </motion.section>
-          
-          {/* Section 5: The Cost and Risk of Unsecured Lending */}
-          <motion.section variants={itemVariants}>
-            <SectionHeader title="5. Understanding the Fine Print: Cost, Rate, and Guarantee Fee" icon={TrendingDown} />
-            <Paragraph>
-              While you save on collateral, unsecured loans carry a higher risk for the lender, which is reflected in the cost structure.
-            </Paragraph>
-            <SubHeader title="Interest Rates (R.O.I.)" id="interest-rates" />
-            <Paragraph>
-              Unsecured MSME loan interest rates are typically higher than secured loans. Expect rates to range from **12% to 24% p.a.**, depending on your business risk profile, CIBIL score, and the lender type (Banks offer the lowest; Fintech/NBFCs are higher). A strong DSCR (Debt Service Coverage Ratio) can be your best negotiation tool. 
-            </Paragraph>
-            <SubHeader title="The CGTMSE Guarantee Fee" id="guarantee-fee" />
-            <Paragraph>
-              If your loan is covered under CGTMSE, you will be required to pay an annual guarantee fee, usually a small percentage (e.g., 0.30% to 1.5%) of the guaranteed amount. While this fee is added to your cost, it is a minimal price to pay for obtaining a substantial collateral-free loan. The lender is responsible for registering the loan with CGTMSE, but the borrower bears the fee.
-            </Paragraph>
-            <KeyTakeaway>
-              **Processing Fee Negotiation:** On large loans (over ₹50 Lakh), always negotiate the processing fee. While the bank is taking a higher risk, they want to close the deal. Push for a reduction from the standard 1-2% to 0.5% or less.
-            </KeyTakeaway>
-          </motion.section>
+        {/* Section 1: Comparison Table */}
+        <section className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 shadow-sm space-y-6">
+          <h2 className="text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
+            <Coins className="w-6 h-6 text-blue-700" />
+            1. Major Collateral-Free Schemes Compared (2026)
+          </h2>
 
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-sm border-collapse">
+              <thead>
+                <tr className="bg-slate-100 text-slate-900 border-b border-slate-200">
+                  <th className="p-3 font-bold">Government Scheme</th>
+                  <th className="p-3 font-bold">Max Loan Quantum</th>
+                  <th className="p-3 font-bold">Sovereign Guarantee Cover</th>
+                  <th className="p-3 font-bold">Typical Interest Rate</th>
+                  <th className="p-3 font-bold">Target Borrowers</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-200 text-slate-700 font-sans">
+                {schemeComparison.map((s, idx) => (
+                  <tr key={idx} className="hover:bg-slate-50">
+                    <td className="p-3 font-semibold text-slate-900">{s.scheme}</td>
+                    <td className="p-3 tabular-nums font-mono font-bold text-slate-900">{s.maxAmount}</td>
+                    <td className="p-3 text-xs">{s.guaranteeCover}</td>
+                    <td className="p-3 tabular-nums font-mono font-bold text-emerald-700">{s.interestRate}</td>
+                    <td className="p-3 text-xs text-slate-600">{s.targetAudience}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
 
-          {/* CTA Section */}
-          <motion.section
-            className="text-center mt-16 p-8 bg-gradient-to-r from-indigo-600 to-blue-700 rounded-2xl shadow-xl"
-            variants={pageVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-          >
-            <motion.h2
-              className="text-3xl sm:text-4xl font-extrabold text-white mb-4 drop-shadow-lg flex items-center justify-center space-x-3"
-              variants={itemVariants}
+        {/* Section 2: How CGTMSE Works */}
+        <section className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 shadow-sm space-y-4">
+          <h2 className="text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
+            <ShieldCheck className="w-6 h-6 text-emerald-600" />
+            2. How the CGTMSE Mechanism Protects the Bank
+          </h2>
+          <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
+            Traditionally, banks demand 100% to 150% immovable property collateral before sanctioning commercial loans. Under <strong>CGTMSE (Credit Guarantee Fund Trust for Micro and Small Enterprises)</strong>, SIDBI and the Ministry of MSME step in as the institutional guarantor.
+          </p>
+          <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-2xl text-xs sm:text-sm text-emerald-950 leading-relaxed">
+            <strong>Key Benefit:</strong> If a borrower encounters business distress, the Trust pays up to 85% of the defaulted principal to the lending bank. In exchange, the borrower pays an annual guarantee fee (AGF) between 0.37% and 1.35% of the loan amount.
+          </div>
+        </section>
+
+        {/* Section 3: Step-by-Step Application */}
+        <section className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 shadow-sm space-y-4">
+          <h2 className="text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
+            <Clock className="w-6 h-6 text-blue-700" />
+            3. Step-by-Step Application Roadmap
+          </h2>
+          <ol className="space-y-3 text-sm text-slate-700 list-decimal list-inside leading-relaxed">
+            <li><strong>Register Udyam:</strong> Secure your free Udyam Registration Certificate using business PAN and Aadhaar.</li>
+            <li><strong>Prepare Detailed Project Report (DPR):</strong> Document business model, promoter profile, 3-year projected cashflows, and machinery quotation.</li>
+            <li><strong>Login on Jan Samarth / PSB Loans:</strong> Submit your digital file to eligible Member Lending Institutions (MLIs) including SBI, BoB, PNB, and Union Bank.</li>
+            <li><strong>Sanction &amp; Trust Coverage:</strong> Upon credit approval, the lender issues a sanction letter with CGTMSE coverage guarantee code.</li>
+          </ol>
+        </section>
+
+        {/* CTA Card */}
+        <div className="bg-slate-900 text-white rounded-3xl p-8 sm:p-10 shadow-xl border border-slate-800 text-center space-y-4">
+          <span className="text-xs font-bold text-amber-400 uppercase tracking-wider bg-amber-400/10 px-3 py-1 rounded-md border border-amber-400/20 inline-block">
+            MSME Capital Solutions
+          </span>
+          <h3 className="text-2xl sm:text-3xl font-black text-white">
+            Apply for Collateral-Free Business Credit
+          </h3>
+          <p className="text-sm text-slate-300 max-w-xl mx-auto leading-relaxed">
+            Compare business loans, cash credit limits, and machinery finance across 30+ leading Indian banks and NBFCs with zero upfront fees.
+          </p>
+          <div className="pt-2 flex flex-wrap justify-center gap-4">
+            <Link
+              to="/loans/business/overview"
+              className="px-6 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm shadow-md transition-all"
             >
-              <Zap className="w-8 h-8 text-yellow-300" />
-              <span>Instantly Check Your Unsecured Loan Eligibility</span>
-            </motion.h2>
-            <motion.p
-              className="text-lg text-blue-100 mb-8 max-w-2xl mx-auto leading-relaxed"
-              variants={itemVariants}
+              Check Business Loan Eligibility &rarr;
+            </Link>
+            <Link
+              to="/blog/Business-Loan-Eligibility"
+              className="px-6 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-sm border border-white/20 transition-all"
             >
-              Upload your GST and bank statements to receive a free, personalized eligibility report and a comparison of the best unsecured MSME loan offers available from top lenders today.
-            </motion.p>
-            <motion.div variants={itemVariants}>
-              <button
-                onClick={() => showInfoMessage("MSME Loan Eligibility Check Initiated!")}
-                className="bg-white text-indigo-600 px-8 py-4 rounded-full font-bold text-lg shadow-lg hover:bg-gray-100 transition-all duration-300 ease-in-out transform hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-50"
-              >
-                Start My Free Eligibility Check
-              </button>
-            </motion.div>
-          </motion.section>
+              Improve Loan Eligibility
+            </Link>
+          </div>
+        </div>
 
-        </motion.article>
-
-      </div>
+        {/* Regulatory Disclosure */}
+        <div className="p-6 bg-slate-100 rounded-2xl border border-slate-200 text-xs text-slate-600 leading-relaxed space-y-2 font-sans">
+          <div className="flex items-center gap-2 text-slate-800 font-bold uppercase tracking-wider">
+            <ShieldCheck className="w-4 h-4 text-blue-700" />
+            <span>Statutory Scheme Disclaimer</span>
+          </div>
+          <p>
+            CGTMSE and Mudra Yojana are administered under government trust frameworks. Sanction decision and guarantee fee application remain subject to individual lending bank credit committee approvals. BanksCart does not charge any upfront facilitation fees for government scheme applications.
+          </p>
+        </div>
+      </article>
     </div>
   );
-};
-
-export default MSMELoanWithoutCollateral;
+}

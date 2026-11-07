@@ -1,430 +1,248 @@
-import React from "react";
-import { motion } from "framer-motion";
+import React from 'react';
+import { Helmet } from 'react-helmet-async';
+import { Link } from 'react-router-dom';
+import Breadcrumb from '../../components/Breadcrumb';
+import { AuthorByline } from '../../components/blog/AuthorByline';
 import {
-  ArrowLeft,
-  Landmark, // Used for Regime Choice (The Foundation)
-  DollarSign, // Used for Section 80C (Core Investments)
-  TrendingUp, // Used for NPS (The Additional Rs. 50k)
-  HeartPulse, // Used for Section 80D (Health)
-  Home, // Used for Home Loan Strategies
-  GraduationCap, // Used for Education Loan (80E)
-  Briefcase, // Used for Salaried/New Regime Strategy
-  Gavel, // Used for Advanced Tax Moves (HUF/Donations)
-  Zap, // Used for CTA
-} from "lucide-react";
-import { Link } from "react-router-dom";
+  FileText,
+  CheckCircle2,
+  Percent,
+  Clock,
+  ShieldCheck,
+  Building,
+  TrendingUp,
+  HelpCircle,
+  FileCheck2,
+  Scale,
+  DollarSign
+} from 'lucide-react';
 
-// --- CONFIGURATION START ---
-const ARTICLE_TITLE = "Best Ways to Save Tax in India (2026 Updated Guide)";
-const ARTICLE_SUBTITLE =
-  "FY 2025-26 (AY 2026-27): Your Comprehensive Guide to Maximizing Deductions Under Both Old and New Tax Regimes, including the new ₹12 Lakh tax-free limit.";
-const BACK_LINK = "/blog";
-const AUTHOR = "Financial Planning Expert";
-const DATE = "Nov 19, 2025";
-const READ_TIME = "25 min read (The Complete Tax Manual)";
-// --- CONFIGURATION END ---
+export default function TaxSavingGuide() {
+  const canonicalUrl = "https://www.bankscart.com/blog/Tax-Saving-Guide";
+  const articleTitle = "Best Ways to Save Tax in India: Old vs. New Regime Analysis (2026)";
+  const articleDesc = "Complete FY 2025-26 / AY 2026-27 tax planning guide: Old vs New Tax Regime slabs, Section 80C, 80D health insurance, NPS 80CCD(1B), and home loan interest 24(b).";
 
-// ====================================================================
-// FRAMEWORK COMPONENTS (Replicating the modular structure)
-// ====================================================================
-
-// Framer Motion variants (Reused for consistent, smooth interaction)
-const pageVariants = {
-  hidden: { opacity: 0, y: 50 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.6,
-      ease: "easeOut",
-      when: "beforeChildren",
-      staggerChildren: 0.1,
+  const blogPostingSchema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": canonicalUrl
     },
-  },
-};
+    "headline": articleTitle,
+    "description": articleDesc,
+    "image": "https://www.bankscart.com/assets/images/bankscart-logo.png",
+    "author": {
+      "@type": "Person",
+      "name": "Raghav Singhal",
+      "jobTitle": "Lead Financial Analyst & Debt Strategist",
+      "url": "https://www.bankscart.com/author/raghav-singhal"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "BanksCart",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://www.bankscart.com/assets/images/bankscart-logo.png"
+      }
+    },
+    "datePublished": "2026-01-16T09:00:00+05:30",
+    "dateModified": "2026-11-06T10:00:00+05:30"
+  };
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-};
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://www.bankscart.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Blog",
+        "item": "https://www.bankscart.com/blog"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Tax Saving Guide",
+        "item": canonicalUrl
+      }
+    ]
+  };
 
-// Reusable animated components
-const SectionHeader: React.FC<{ title: string; icon: React.ReactNode }> = ({
-  title,
-  icon,
-}) => (
-  <motion.h2
-    className="text-3xl sm:text-4xl font-extrabold text-white mt-12 mb-4 pt-6 flex items-center space-x-3 border-b-2 border-indigo-700 pb-2"
-    variants={itemVariants}
-  >
-    {icon}
-    <span>{title}</span>
-  </motion.h2>
-);
+  const taxSlabs = [
+    { incomeRange: "Up to ₹3,00,000", newRegime: "0% (Nil)", oldRegime: "0% (Nil)" },
+    { incomeRange: "₹3,00,001 to ₹6,00,000", newRegime: "5% (Rebate u/s 87A)", oldRegime: "5% (Above ₹2.5L)" },
+    { incomeRange: "₹6,00,001 to ₹7,00,000", newRegime: "5% (Effectively 0% with 87A rebate)", oldRegime: "20%" },
+    { incomeRange: "₹7,00,001 to ₹9,00,000", newRegime: "10%", oldRegime: "20%" },
+    { incomeRange: "₹9,00,001 to ₹12,00,000", newRegime: "15%", oldRegime: "20%" },
+    { incomeRange: "₹12,00,001 to ₹15,00,000", newRegime: "20%", oldRegime: "30%" },
+    { incomeRange: "Above ₹15,00,000", newRegime: "30%", oldRegime: "30%" }
+  ];
 
-const SubHeader: React.FC<{ title: string }> = ({ title }) => (
-  <motion.h3
-    className="text-xl sm:text-2xl font-bold text-indigo-300 mt-8 mb-4"
-    variants={itemVariants}
-  >
-    {title}
-  </motion.h3>
-);
-
-const Paragraph: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <motion.p
-    className="text-base text-gray-200 mb-4 leading-relaxed"
-    variants={itemVariants}
-  >
-    {children}
-  </motion.p>
-);
-
-const BulletPoint: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <motion.li
-    className="text-base text-gray-200 mb-2 ml-5 list-disc"
-    variants={itemVariants}
-  >
-    {children}
-  </motion.li>
-);
-
-const KeyTakeaway: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <motion.div
-    className="p-5 my-6 bg-yellow-900 border-l-4 border-yellow-500 rounded-lg shadow-xl"
-    variants={itemVariants}
-  >
-    <p className="font-bold text-yellow-300 text-lg">Key Takeaway:</p>
-    <p className="text-sm text-yellow-100 italic">{children}</p>
-  </motion.div>
-);
-
-// ====================================================================
-// MAIN PAGE COMPONENT
-// ====================================================================
-
-const TaxSavingGuide: React.FC = () => {
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
-      <div className="max-w-4xl mx-auto p-4 sm:p-8">
-        {/* Header Section */}
-        <header className="py-6 border-b border-indigo-700">
-          <Link to={BACK_LINK} className="text-indigo-400 hover:text-indigo-200 flex items-center transition duration-300">
-            <ArrowLeft className="w-5 h-5 mr-2" />
-            Back to Finance Strategy
-          </Link>
-          <motion.h1
-            className="text-4xl sm:text-5xl font-extrabold mt-4 drop-shadow-md"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            {ARTICLE_TITLE}
-          </motion.h1>
-          <motion.p
-            className="text-xl text-indigo-400 mt-2"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-          >
-            {ARTICLE_SUBTITLE}
-          </motion.p>
-          <div className="flex justify-between items-center text-sm text-gray-400 mt-4">
-            <span>By: {AUTHOR}</span>
-            <span>Published: {DATE}</span>
-            <span>{READ_TIME}</span>
+    <div className="min-h-screen bg-slate-50 font-sans text-slate-800 pt-20 sm:pt-24 pb-16">
+      <Helmet>
+        <title>{`${articleTitle} | BanksCart`}</title>
+        <meta name="description" content={articleDesc} />
+        <link rel="canonical" href={canonicalUrl} />
+        <script type="application/ld+json">
+          {JSON.stringify(blogPostingSchema)}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify(breadcrumbSchema)}
+        </script>
+      </Helmet>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6">
+        <Breadcrumb path={["Home", "Blog", "Tax Saving Guide"]} />
+      </div>
+
+      <article className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 sm:space-y-12">
+        {/* Header */}
+        <header className="space-y-4 border-b border-slate-200 pb-8">
+          <div className="flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-wider text-blue-700">
+            <span className="bg-blue-50 border border-blue-200 px-3 py-1 rounded-full">
+              Tax Strategy Masterclass
+            </span>
+            <span className="text-slate-400">•</span>
+            <span className="text-slate-500 font-mono">Updated November 2026</span>
+            <span className="text-slate-400">•</span>
+            <span className="text-slate-500">16 min read</span>
           </div>
+
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight">
+            Best Ways to Save Tax in India: Old vs. New Regime Analysis (2026)
+          </h1>
+
+          <p className="text-base sm:text-lg text-slate-600 leading-relaxed">
+            Which income tax regime saves you more money? We break down the mathematical breakeven between the simplified New Tax Regime and deduction-packed Old Tax Regime, detailing Section 80C, 80D, NPS, and home loan interest strategies.
+          </p>
+
+          <AuthorByline authorSlug="raghav-singhal" />
         </header>
 
-        {/* Article Body */}
-        <motion.article
-          className="mt-8"
-          initial="hidden"
-          animate="visible"
-          variants={pageVariants}
-        >
-          {/* Section 1: The Critical Choice: Old vs. New Regime */}
-          <motion.section variants={itemVariants}>
-            <SectionHeader
-              title="1. Master the Regime Choice: The Foundation of Your Tax Plan"
-              icon={<Landmark className="w-6 h-6 text-yellow-400" />}
-            />
-            <Paragraph>
-              The first and most critical step for tax saving in India is choosing between the Old Tax Regime (with deductions) and the New Tax Regime (simplified, lower rates, few exemptions). For FY 2025-26, the New Regime has become the default, but the Old Regime remains beneficial for those who maximize deductions.
-            </Paragraph>
-            <SubHeader title="The Key Decision Factors for FY 2025-26" />
-            <ul className="space-y-2 mb-4">
-              <BulletPoint>
-                <span className="font-semibold text-white">Old Regime (The Investor's Choice):</span> Best if your deductions (80C, 80D, HRA, Home Loan Interest) exceed ₹2.5 Lakh. It rewards disciplined savings.
-              </BulletPoint>
-              <BulletPoint>
-                <span className="font-semibold text-white">New Regime (The Simplifier's Choice):</span> Best if you prefer lower tax rates without the hassle of investment proof. The rebate has been enhanced, making income up to ₹12 Lakh effectively tax-free for salaried individuals.
-              </BulletPoint>
-            </ul>
-            <KeyTakeaway>
-              Calculate your exact tax liability under both regimes. Do not blindly stick to the Old Regime; the new system's lower slabs and increased rebate (₹60,000 u/s 87A) make it highly competitive, especially for income up to ₹12 Lakh.
-            </KeyTakeaway>
-          </motion.section>
+        {/* Section 1: Slab Comparison */}
+        <section className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 shadow-sm space-y-6">
+          <h2 className="text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
+            <Scale className="w-6 h-6 text-blue-700" />
+            1. Income Tax Slab Comparison (FY 2025-26 / AY 2026-27)
+          </h2>
 
-          {/* Section 2: Maximize Section 80C: The Core ₹1.5 Lakh Basket */}
-          <motion.section variants={itemVariants}>
-            <SectionHeader
-              title="2. Exhaust the ₹1.5 Lakh 80C Limit (Old Regime Only)"
-              icon={<DollarSign className="w-6 h-6 text-green-400" />}
-            />
-            <Paragraph>
-              Section 80C is the bedrock of tax planning under the Old Regime, allowing a maximum deduction of ₹1,50,000. It covers a diverse range of instruments, allowing you to align your savings with your financial goals (retirement, child's education, guaranteed returns).
-            </Paragraph>
-            <SubHeader title="Top 80C Instruments for 2026" />
-            <ul className="space-y-2 mb-4">
-              <BulletPoint>
-                <span className="font-semibold text-white">Public Provident Fund (PPF):</span> EEE status (Exempt, Exempt, Exempt). A low-risk, 15-year maturity option offering guaranteed, tax-free returns.
-              </BulletPoint>
-              <BulletPoint>
-                <span className="font-semibold text-white">Equity-Linked Savings Scheme (ELSS):</span> The only mutual fund to offer 80C benefits. It has the shortest lock-in (3 years) but involves market risk and capital gains tax (LTCG above ₹1 Lakh).
-              </BulletPoint>
-              <BulletPoint>
-                <span className="font-semibold text-white">Tax-Saving Fixed Deposit (FD):</span> 5-year lock-in with guaranteed returns. Best for extremely conservative investors, though the interest earned is fully taxable.
-              </BulletPoint>
-              <BulletPoint>
-                <span className="font-semibold text-white">Tuition Fees & Home Loan Principal:</span> Expenses like tuition fees for up to two children and the principal repayment component of a home loan EMI are deductible under this section.
-              </BulletPoint>
-            </ul>
-            <KeyTakeaway>
-              Prioritize ELSS for growth and liquidity (3-year lock-in) and PPF for guaranteed, long-term, tax-free corpus building. Always utilize the entire ₹1.5 Lakh limit first if you are in the Old Regime.
-            </KeyTakeaway>
-          </motion.section>
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-sm border-collapse">
+              <thead>
+                <tr className="bg-slate-100 text-slate-900 border-b border-slate-200">
+                  <th className="p-3 font-bold">Annual Taxable Income Slab</th>
+                  <th className="p-3 font-bold text-emerald-800">New Tax Regime (Default)</th>
+                  <th className="p-3 font-bold text-blue-800">Old Tax Regime (Optional)</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-200 text-slate-700 font-sans">
+                {taxSlabs.map((s, idx) => (
+                  <tr key={idx} className="hover:bg-slate-50">
+                    <td className="p-3 font-semibold text-slate-900">{s.incomeRange}</td>
+                    <td className="p-3 tabular-nums font-mono font-bold text-emerald-700 bg-emerald-50/20">{s.newRegime}</td>
+                    <td className="p-3 tabular-nums font-mono text-slate-700">{s.oldRegime}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
 
-          {/* Section 3: The NPS Supercharger: Additional ₹50,000 */}
-          <motion.section variants={itemVariants}>
-            <SectionHeader
-              title="3. Claim ₹50,000 Over-and-Above 80C with NPS (80CCD(1B))"
-              icon={<TrendingUp className="w-6 h-6 text-teal-400" />}
-            />
-            <Paragraph>
-              The National Pension System (NPS) Tier I account provides a unique tax benefit: an exclusive deduction of up to ₹50,000 under Section 80CCD(1B). This is over and above the ₹1.5 Lakh limit under 80C/CCE, potentially raising your total deduction to ₹2 Lakh.
-            </Paragraph>
-            <SubHeader title="The Triple Advantage of NPS" />
-            <ul className="space-y-2 mb-4">
-              <BulletPoint>
-                <span className="font-semibold text-white">Tier I Contribution (Self):</span> Eligible for the ₹50,000 deduction u/s 80CCD(1B).
-              </BulletPoint>
-              <BulletPoint>
-                <span className="font-semibold text-white">Employer Contribution (80CCD(2)):</span> Salaried employees can claim a deduction on their employer's contribution (up to 10% of Basic + DA or 14% for Central Govt. employees). This deduction is <span className="text-yellow-300">available under BOTH the Old and the New Tax Regimes.</span>
-              </BulletPoint>
-              <BulletPoint>
-                <span className="font-semibold text-white">Tax-Free Withdrawal:</span> Up to 60% of the corpus withdrawn at retirement is tax-exempt.
-              </BulletPoint>
-            </ul>
-            <KeyTakeaway>
-              For tax planning, the NPS ₹50,000 deduction is mandatory if you are in the Old Regime and haven't utilized your entire tax-saving potential. It is the cheapest way to buy an extra slab of deduction.
-            </KeyTakeaway>
-          </motion.section>
+        {/* Section 2: When Does Old Regime Win? */}
+        <section className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 shadow-sm space-y-4">
+          <h2 className="text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
+            <TrendingUp className="w-6 h-6 text-blue-700" />
+            2. The Mathematical Breakeven: When Does the Old Regime Win?
+          </h2>
+          <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
+            The New Regime offers lower tax rates and a standard deduction of <strong>₹75,000</strong> for salaried employees, but disallows almost all deductions.
+          </p>
+          <div className="p-4 bg-blue-50 border border-blue-200 rounded-2xl text-xs sm:text-sm text-blue-950 space-y-2 leading-relaxed">
+            <p><strong>The Golden Breakeven Threshold:</strong> For salaries between ₹10 Lakhs and ₹20 Lakhs, the <strong>Old Tax Regime becomes more beneficial ONLY IF your total deductions exceed ₹3,75,000 to ₹4,25,000 per year</strong>.</p>
+            <p>You can easily cross this threshold if you combine: Standard Deduction (₹50k) + Sec 80C (₹1.5L) + Sec 24b Home Loan Interest (₹2L) + Sec 80CCD NPS (₹50k) + Sec 80D Health Insurance (₹25k) = <strong>₹4,75,000 in deductions</strong>!</p>
+          </div>
+        </section>
 
-          {/* Section 4: Secure Your Health, Reduce Your Tax (Section 80D) */}
-          <motion.section variants={itemVariants}>
-            <SectionHeader
-              title="4. Secure Your Health, Reduce Your Tax (Section 80D)"
-              icon={<HeartPulse className="w-6 h-6 text-red-400" />}
-            />
-            <Paragraph>
-              Deductions under Section 80D cover health insurance premiums and medical expenses, and are available *over and above* the 80C limit in the Old Regime. The limits are structured around age.
-            </Paragraph>
-            <SubHeader title="Maximum Limits for FY 2025-26" />
-            <ul className="space-y-2 mb-4">
-              <BulletPoint>
-                <span className="font-semibold text-white">Self, Spouse, & Children (Below 60):</span> Up to ₹25,000 deduction on premium.
-              </BulletPoint>
-              <BulletPoint>
-                <span className="font-semibold text-white">Self, Spouse, & Children (Senior Citizen):</span> Up to ₹50,000 deduction on premium/medical expenses.
-              </BulletPoint>
-              <BulletPoint>
-                <span className="font-semibold text-white">Parents (Below 60):</span> An additional deduction of up to ₹25,000.
-              </BulletPoint>
-              <BulletPoint>
-                <span className="font-semibold text-white">Parents (Senior Citizen):</span> An additional deduction of up to ₹50,000.
-              </BulletPoint>
-              <BulletPoint>
-                <span className="font-semibold text-white">Preventive Health Check-up:</span> Up to ₹5,000 can be claimed (within the overall limit) and can be paid in cash.
-              </BulletPoint>
-            </ul>
-            <KeyTakeaway>
-              If both you (or your spouse) and your parents are senior citizens (60+), your total 80D deduction can reach an impressive <span className="text-red-400 font-bold">₹1,00,000</span>. Always pay premiums digitally, as cash payments are not allowed for the insurance deduction.
-            </KeyTakeaway>
-          </motion.section>
+        {/* Section 3: Core Deductions Summary */}
+        <section className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 shadow-sm space-y-4">
+          <h2 className="text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
+            <FileCheck2 className="w-6 h-6 text-emerald-600" />
+            3. Master List of Top Tax-Saving Deductions (Old Regime)
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+            <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+              <h3 className="font-bold text-slate-900 text-base">Section 80C (Up to ₹1,50,000)</h3>
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                Covers Employee Provident Fund (EPF), Public Provident Fund (PPF), ELSS Mutual Funds, Sukanya Samriddhi Yojana (SSY), Life Insurance premiums, and Home Loan Principal repayment.
+              </p>
+            </div>
+            <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+              <h3 className="font-bold text-slate-900 text-base">Section 80CCD(1B) - NPS (₹50,000)</h3>
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                Exclusive additional deduction over and above the ₹1.5L 80C limit for voluntary contributions to Tier-1 National Pension System accounts.
+              </p>
+            </div>
+            <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+              <h3 className="font-bold text-slate-900 text-base">Section 80D - Medical Insurance (Up to ₹75,000)</h3>
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                Deduct up to ₹25,000 for self/family health cover + an additional ₹50,000 for senior citizen parents' medical insurance policies.
+              </p>
+            </div>
+            <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+              <h3 className="font-bold text-slate-900 text-base">Section 24(b) - Home Loan Interest (₹2,00,000)</h3>
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                Direct deduction of up to ₹2 Lakhs per financial year on home loan interest paid for a self-occupied property.
+              </p>
+            </div>
+          </div>
+        </section>
 
-          {/* Section 5: Leveraging Home Loans Beyond 80C */}
-          <motion.section variants={itemVariants}>
-            <SectionHeader
-              title="5. Leveraging Home Loans Beyond 80C: Interest & Principle"
-              icon={<Home className="w-6 h-6 text-sky-400" />}
-            />
-            <Paragraph>
-              A home loan offers one of the most substantial tax benefits, splitting the EMI into two deductible components:
-            </Paragraph>
-            <SubHeader title="Tax Benefits on Home Loan" />
-            <ul className="space-y-2 mb-4">
-              <BulletPoint>
-                <span className="font-semibold text-white">Principal Repayment (Section 80C):</span> Covered under the ₹1.5 Lakh limit.
-              </BulletPoint>
-              <BulletPoint>
-                <span className="font-semibold text-white">Interest Paid (Section 24B):</span> Allows a deduction of up to ₹2,00,000 for a self-occupied property. This is a crucial deduction *outside* the ₹1.5 Lakh 80C limit.
-              </BulletPoint>
-              <BulletPoint>
-                <span className="font-semibold text-white">Additional Interest (Section 80EE/EEA):</span> While specific sections like 80EE (₹50,000) have expired, interest on let-out property has no limit and is treated under the head 'Income from House Property'.
-              </BulletPoint>
-            </ul>
-            <KeyTakeaway>
-              For a self-occupied property, you can potentially claim ₹1.5 Lakh (Principal u/s 80C) + ₹2 Lakh (Interest u/s 24B) for a total deduction of ₹3.5 Lakh, dramatically reducing your taxable income in the Old Regime.
-            </KeyTakeaway>
-          </motion.section>
-
-          {/* Section 6: Education Loan Interest (Section 80E) */}
-          <motion.section variants={itemVariants}>
-            <SectionHeader
-              title="6. The Unlimited Deduction: Interest on Education Loan (80E)"
-              icon={<GraduationCap className="w-6 h-6 text-purple-400" />}
-            />
-            <Paragraph>
-              Section 80E is arguably the best education-related tax benefit. It allows you to claim 100% of the interest paid on a loan taken for higher education (for self, spouse, or children) without any monetary cap.
-            </Paragraph>
-            <SubHeader title="Key Provisions of Section 80E" />
-            <ul className="space-y-2 mb-4">
-              <BulletPoint>
-                <span className="font-semibold text-white">No Monetary Limit:</span> If you pay ₹4 Lakh in interest, you claim ₹4 Lakh in deduction.
-              </BulletPoint>
-              <BulletPoint>
-                <span className="font-semibold text-white">Higher Education Focus:</span> Must be for full-time higher education (post-class XII) in India or abroad.
-              </BulletPoint>
-              <BulletPoint>
-                <span className="font-semibold text-white">Time Limit:</span> The deduction can be claimed for a maximum of 8 consecutive assessment years, starting from the year you begin paying the interest.
-              </BulletPoint>
-            </ul>
-            <KeyTakeaway>
-              This deduction is only for the <span className="font-bold text-purple-300">interest component</span>, not the principal. Always get an annual interest certificate from your lender for smooth filing.
-            </KeyTakeaway>
-          </motion.section>
-
-          {/* Section 7: Strategic Allocations for Salaried Employees */}
-          <motion.section variants={itemVariants}>
-            <SectionHeader
-              title="7. Strategic Allocations for Salaried Employees (HRA, Standard)"
-              icon={<Briefcase className="w-6 h-6 text-orange-400" />}
-            />
-            <Paragraph>
-              Salaried individuals have unique deductions built into their structure, even in the New Regime.
-            </Paragraph>
-            <SubHeader title="Mandatory & Elective Employee Deductions" />
-            <ul className="space-y-2 mb-4">
-              <BulletPoint>
-                <span className="font-semibold text-white">Standard Deduction:</span> A flat deduction of <span className="font-bold text-white">₹50,000</span> for transport and other expenses is now available under both the Old and New Tax Regimes.
-              </BulletPoint>
-              <BulletPoint>
-                <span className="font-semibold text-white">House Rent Allowance (HRA):</span> This is a partial or full exemption available only under the Old Regime, based on a formula involving salary, rent paid, and city location.
-              </BulletPoint>
-              <BulletPoint>
-                <span className="font-semibold text-white">Leave Travel Allowance (LTA):</span> An exemption for travel expenses incurred during leave, available twice in a block of four calendar years (Old Regime only).
-              </BulletPoint>
-              <BulletPoint>
-                <span className="font-semibold text-white">NPS Employer Contribution (80CCD(2)):</span> As mentioned in Section 3, this is a powerful deduction available in <span className="text-yellow-300">both regimes</span> and helps lower your taxable salary.
-              </BulletPoint>
-            </ul>
-            <KeyTakeaway>
-              The Standard Deduction is a baseline benefit. For high-rent payers, the HRA exemption often makes the Old Regime significantly more beneficial than the New Regime, even if other deductions are minimal.
-            </KeyTakeaway>
-          </motion.section>
-
-          {/* Section 8: The New Regime's Zero-Tax Threshold for 2026 */}
-          <motion.section variants={itemVariants}>
-            <SectionHeader
-              title="8. The New Regime's Zero-Tax Threshold for 2026 (Up to ₹12 Lakh)"
-              icon={<Zap className="w-6 h-6 text-yellow-300" />}
-            />
-            <Paragraph>
-              A major change for FY 2025-26 makes the New Tax Regime highly appealing for middle-income earners who don't utilize many deductions.
-            </Paragraph>
-            <SubHeader title="How to Make ₹12 Lakh Tax-Free" />
-            <ul className="space-y-2 mb-4">
-              <BulletPoint>
-                The new tax-free income limit is ₹4 Lakh (up from ₹3 Lakh).
-              </BulletPoint>
-              <BulletPoint>
-                The Section 87A Rebate has been increased to ₹60,000 (up from ₹25,000).
-              </BulletPoint>
-              <BulletPoint>
-                <span className="font-bold text-green-400">Calculation:</span> Due to the enhanced rebate, the entire tax liability on a taxable income of up to ₹12 Lakh becomes NIL under the New Regime.
-              </BulletPoint>
-              <BulletPoint>
-                <span className="font-bold text-green-400">Salaried Bonus:</span> With the Standard Deduction of ₹50,000, a salaried person can earn up to <span className="font-bold text-white">₹12.5 Lakh (Gross Salary)</span> and pay zero tax.
-              </BulletPoint>
-            </ul>
-            <KeyTakeaway>
-              If your investments/expenses do not easily cross the ₹2.5 Lakh deduction mark, the New Regime is likely the superior choice for simplicity and zero tax up to ₹12 Lakh.
-            </KeyTakeaway>
-          </motion.section>
-
-          {/* Section 9: Advanced Moves and Legal Exemptions */}
-          <motion.section variants={itemVariants}>
-            <SectionHeader
-              title="9. Advanced Moves and Legal Exemptions (80G, HUF, Agriculture)"
-              icon={<Gavel className="w-6 h-6 text-gray-400" />}
-            />
-            <Paragraph>
-              These are sophisticated methods to reduce your Gross Total Income, available primarily under the Old Regime:
-            </Paragraph>
-            <SubHeader title="Tax Reduction Strategies" />
-            <ul className="space-y-2 mb-4">
-              <BulletPoint>
-                <span className="font-semibold text-white">Donations (Section 80G):</span> Donations to eligible charitable institutions or relief funds can fetch a deduction of 50% or 100% of the donated amount. Always use a digital payment and retain the stamped receipt.
-              </BulletPoint>
-              <BulletPoint>
-                <span className="font-semibold text-white">Interest on Savings Account (80TTA/TTB):</span> Individuals (below 60) can claim up to ₹10,000 deduction on savings account interest (80TTA). For senior citizens, this limit is enhanced to ₹50,000 (80TTB) and covers FD/RD interest as well.
-              </BulletPoint>
-              <BulletPoint>
-                <span className="font-semibold text-white">Hindu Undivided Family (HUF):</span> An HUF is a separate taxable entity. Contributions made by the Karta (head) can be claimed as deductions for the HUF, effectively allowing a second set of exemptions (requires proper legal formation).
-              </BulletPoint>
-              <BulletPoint>
-                <span className="font-semibold text-white">Agricultural Income:</span> Income derived from agricultural operations in India is completely exempt from tax under Section 10(1).
-              </BulletPoint>
-            </ul>
-            <KeyTakeaway>
-              The most common "beyond 80C" deductions are 80D (Health) and 80E (Education Loan Interest). Strategic use of these, combined with 80TTA/TTB and a calculated regime choice, defines advanced tax planning.
-            </KeyTakeaway>
-          </motion.section>
-
-          {/* Final Call to Action Section (Replicating Original CTA Styling) */}
-          <motion.section
-            className="text-center mt-16 p-10 bg-indigo-600 rounded-xl shadow-2xl"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-          >
-            <motion.h2
-              className="text-3xl sm:text-4xl font-extrabold text-white mb-4 drop-shadow-lg flex items-center justify-center space-x-3"
-              variants={itemVariants}
+        {/* CTA Card */}
+        <div className="bg-slate-900 text-white rounded-3xl p-8 sm:p-10 shadow-xl border border-slate-800 text-center space-y-4">
+          <span className="text-xs font-bold text-amber-400 uppercase tracking-wider bg-amber-400/10 px-3 py-1 rounded-md border border-amber-400/20 inline-block">
+            Tax Optimization Tools
+          </span>
+          <h3 className="text-2xl sm:text-3xl font-black text-white">
+            Optimize Your Tax Liability Before March 31
+          </h3>
+          <p className="text-sm text-slate-300 max-w-xl mx-auto leading-relaxed">
+            Compare tax-deductible home loans, health insurance policies, and ELSS investment plans with BanksCart's free financial engines.
+          </p>
+          <div className="pt-2 flex flex-wrap justify-center gap-4">
+            <Link
+              to="/loans/home/overview"
+              className="px-6 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm shadow-md transition-all"
             >
-              <Zap className="w-8 h-8 text-yellow-300" />
-              <span>Ready to Optimize Your Tax Return?</span>
-            </motion.h2>
-            <motion.p
-              className="text-lg text-blue-100 mb-8 max-w-2xl mx-auto leading-relaxed"
-              variants={itemVariants}
+              Check Tax-Saver Home Loans &rarr;
+            </Link>
+            <Link
+              to="/insurance/health"
+              className="px-6 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-sm border border-white/20 transition-all"
             >
-              Use a personalized tax calculator tool to determine the exact tax you will save under the Old Regime versus the New Regime for FY 2025-26. Plan your investments and file with confidence.
-            </motion.p>
-            <motion.div variants={itemVariants}>
-              <button
-                onClick={() => alert("Tax Planning Tool Launched!")}
-                className="bg-white text-indigo-600 px-8 py-4 rounded-full font-bold text-lg shadow-lg hover:bg-gray-100 transition-all duration-300 ease-in-out transform hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-50"
-              >
-                Start My Free Tax Optimization Check
-              </button>
-            </motion.div>
-          </motion.section>
-        </motion.article>
-      </div>
+              Compare 80D Health Insurance
+            </Link>
+          </div>
+        </div>
+
+        {/* Regulatory Disclosure */}
+        <div className="p-6 bg-slate-100 rounded-2xl border border-slate-200 text-xs text-slate-600 leading-relaxed space-y-2 font-sans">
+          <div className="flex items-center gap-2 text-slate-800 font-bold uppercase tracking-wider">
+            <ShieldCheck className="w-4 h-4 text-blue-700" />
+            <span>Taxation Advisory Notice</span>
+          </div>
+          <p>
+            Tax laws are governed by the Income Tax Act, 1961, and are subject to amendments introduced in the Union Budget. Individual taxpayers should evaluate employer declaration windows and consult a qualified Chartered Accountant before choosing between the Old and New Tax Regimes.
+          </p>
+        </div>
+      </article>
     </div>
   );
-};
-
-export default TaxSavingGuide;
+}

@@ -19,8 +19,30 @@ import {
   Info,
   HelpCircle,
   Layers,
-  Award
+  Award,
+  ChevronRight,
+  Zap,
+  Percent,
+  ExternalLink,
+  Lock
 } from 'lucide-react';
+import { getBankById } from '../data/banks';
+
+const getBankIdFromName = (name: string): string => {
+  const n = name.toLowerCase();
+  if (n.includes('sbi') || n.includes('state bank')) return 'sbi';
+  if (n.includes('hdfc')) return 'hdfc';
+  if (n.includes('icici')) return 'icici';
+  if (n.includes('axis')) return 'axis';
+  if (n.includes('kotak')) return 'kotak';
+  if (n.includes('baroda')) return 'bob';
+  if (n.includes('pnb') || n.includes('punjab')) return 'pnb';
+  if (n.includes('indusind')) return 'indusind';
+  if (n.includes('idfc')) return 'idfc-first';
+  if (n.includes('tata')) return 'tata-capital';
+  if (n.includes('bajaj')) return 'bajaj-finance';
+  return '';
+};
 
 interface PersonalLoanOverviewPageProps {
   openApplyModal?: (loanType?: string) => void;
@@ -101,13 +123,22 @@ const TOP_BANKS: BankOffer[] = [
     maxTenure: "Up to 60 Months",
     highlight: "Special interest concessions for public sector personnel",
     bestFor: "Public Sector & Defense"
+  },
+  {
+    name: "IndusInd Bank",
+    rateRange: "10.49% - 21.50% p.a.",
+    processingFee: "Up to 2.50% + GST",
+    maxAmount: "Up to ₹30 Lakhs",
+    maxTenure: "Up to 60 Months",
+    highlight: "Minimal paperwork with direct doorstep digital verification",
+    bestFor: "Fast Disbursals"
   }
 ];
 
 const FAQS = [
   {
     q: "What is the difference between a Reducing Balance Rate and a Flat Interest Rate?",
-    a: "In a Flat Interest Rate loan, interest is calculated on the entire original principal amount throughout the tenure, which means your interest outgo remains high even as you repay the loan. In a Reducing Balance loan (which BanksCart recommends and top banks use), interest is recalculated every month solely on the remaining unpaid principal balance. For example, a 12% reducing rate on ₹5 Lakhs over 3 years costs ~₹98,350 in interest, whereas a 12% flat rate costs ₹1,80,000—costing you over ₹81,000 more!"
+    a: "In a Flat Interest Rate loan, interest is calculated on the entire original principal amount throughout the tenure, which means your interest outgo remains high even as you repay the loan. In a Reducing Balance loan (which BanksCart recommends and top banks use), interest is recalculated every month solely on the remaining unpaid principal balance. For example, a 12% reducing rate on ₹5 Lakhs over 3 years costs ~₹97,858 in interest, whereas a 12% flat rate costs ₹1,80,000—costing you over ₹82,000 more!"
   },
   {
     q: "What is the minimum CIBIL credit score required for personal loan approval?",
@@ -146,7 +177,7 @@ export const PersonalLoanOverviewPage: React.FC<PersonalLoanOverviewPageProps> =
 }) => {
   const navigate = useNavigate();
 
-    // Immediate Display States
+  // Immediate Display States
   const [displayLoanAmount, setDisplayLoanAmount] = useState<number>(500000);
   const [displayInterestRate, setDisplayInterestRate] = useState<number>(10.5);
   const [displayTenureMonths, setDisplayTenureMonths] = useState<number>(36);
@@ -230,11 +261,11 @@ export const PersonalLoanOverviewPage: React.FC<PersonalLoanOverviewPageProps> =
   const [activeTab, setActiveTab] = useState<'salaried' | 'selfEmployed'>('salaried');
 
   // FAQ Accordion State
-  const [activeFaq, setActiveFaq] = useState<number | null>(null);
+  const [activeFaq, setActiveFaq] = useState<number | null>(0);
 
-  const handleApplyClick = () => {
+  const handleApplyClick = (bankName?: string) => {
     if (openApplyModal) {
-      openApplyModal('Personal Loan');
+      openApplyModal(bankName ? `Personal Loan - ${bankName}` : 'Personal Loan');
     } else {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -317,17 +348,17 @@ export const PersonalLoanOverviewPage: React.FC<PersonalLoanOverviewPageProps> =
   };
 
   return (
-    <main className="min-h-screen bg-slate-50 text-slate-800 font-sans pt-24 pb-24 selection:bg-blue-100 selection:text-blue-900">
+    <main className="min-h-screen bg-slate-50 text-slate-800 font-sans selection:bg-amber-100 selection:text-amber-900 pt-4 sm:pt-6 pb-20">
       <Helmet>
-        {/* Primary Meta Tags */}
+        <html lang="en-IN" />
         <title>Personal Loans in India: Compare Rates & EMIs | BanksCart</title>
         <meta
           name="description"
-          content="Explore personal loan eligibility, interest rates, fees and EMI calculations. Compare available options and understand repayment costs with BanksCart."
+          content="Explore personal loan eligibility, interest rates starting from 10.25% p.a., fees, and reducing EMI calculations. Compare top Indian banks on BanksCart with zero credit impact."
         />
         <link rel="canonical" href="https://www.bankscart.com/loans/personal/overview" />
 
-        {/* Open Graph / Facebook */}
+        {/* Open Graph */}
         <meta property="og:type" content="website" />
         <meta property="og:title" content="Personal Loans in India: Compare Rates & EMIs | BanksCart" />
         <meta
@@ -347,76 +378,76 @@ export const PersonalLoanOverviewPage: React.FC<PersonalLoanOverviewPageProps> =
         />
         <meta name="twitter:image" content="https://www.bankscart.com/favicon-32x32.png" />
 
-        {/* Structured Data Scripts */}
+        {/* Structured Data */}
         <script type="application/ld+json">{JSON.stringify(breadcrumbSchema)}</script>
         <script type="application/ld+json">{JSON.stringify(financialProductSchema)}</script>
         <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>
       </Helmet>
 
-      {/* Page Content Container */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 sm:space-y-16">
+      {/* Main Content Container */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 sm:space-y-14">
         
-        {/* 1. Breadcrumbs */}
+        {/* 1. Accessible Institutional Breadcrumbs */}
         <nav aria-label="Breadcrumb" className="pt-2">
           <ol className="flex items-center flex-wrap gap-2 text-xs sm:text-sm text-slate-500 font-medium">
             <li>
-              <Link to="/" className="text-slate-600 hover:text-blue-600 transition-colors">
+              <Link to="/" className="text-slate-600 hover:text-blue-900 transition-colors">
                 Home
               </Link>
             </li>
             <li aria-hidden="true" className="text-slate-400">/</li>
             <li>
-              <Link to="/loans" className="text-slate-600 hover:text-blue-600 transition-colors">
+              <Link to="/loans" className="text-slate-600 hover:text-blue-900 transition-colors">
                 Loans
               </Link>
             </li>
             <li aria-hidden="true" className="text-slate-400">/</li>
-            <li aria-current="page" className="text-blue-700 font-semibold">
+            <li aria-current="page" className="text-blue-900 font-bold">
               Personal Loan Overview
             </li>
           </ol>
         </nav>
 
-        {/* 2. Hero Header & Quick Summary */}
-        <header className="relative bg-gradient-to-br from-blue-900 via-indigo-900 to-slate-900 rounded-3xl text-white p-6 sm:p-10 lg:p-14 shadow-2xl overflow-hidden border border-blue-800/40">
-          {/* Subtle Ambient Background */}
-          <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute bottom-0 left-1/3 w-80 h-80 bg-teal-500/10 rounded-full blur-3xl pointer-events-none" />
+        {/* 2. Hero Section — Trust Navy / Deep Slate with Gold Accent */}
+        <header className="relative bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 rounded-3xl text-white p-6 sm:p-10 lg:p-12 shadow-xl overflow-hidden border border-blue-900/60">
+          {/* Subtle Ambient Radial Lighting */}
+          <div className="absolute top-0 right-0 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute bottom-0 left-1/4 w-80 h-80 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
 
           <div className="relative z-10 max-w-4xl space-y-6">
-            <div className="inline-flex items-center gap-2 bg-blue-500/20 border border-blue-400/30 text-blue-200 px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wide uppercase">
-              <Sparkles className="w-3.5 h-3.5 text-amber-300" />
-              Verified 2026 Lending Rates & Guidelines
+            <div className="inline-flex items-center gap-2 bg-white/10 border border-white/15 text-blue-200 px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wide uppercase">
+              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+              Verified 2026 Lending Rates & RBI Compliance
             </div>
 
             <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight text-white">
-              Personal Loans in India: Compare Interest Rates, Eligibility & EMIs
+              Personal Loans in India: Compare Rates, Eligibility & EMIs
             </h1>
 
             <p className="text-base sm:text-lg text-slate-200 leading-relaxed font-normal">
-              A personal loan is an unsecured credit facility designed to meet immediate cash needs without pledging gold, property, or investments. Whether consolidating high-interest debt, addressing medical emergencies, funding higher education, or financing major life milestones, BanksCart lets you compare verified offerings from India&apos;s leading banks and NBFCs, simulate monthly EMIs, and verify eligibility with zero impact on your CIBIL score.
+              A personal loan is an unsecured credit facility designed to meet immediate liquidity requirements without pledging gold, property, or investments. Whether consolidating high-interest debt, addressing medical emergencies, funding higher education, or financing major life milestones, BanksCart lets you compare verified offerings from India&apos;s leading banks and NBFCs, simulate monthly EMIs, and verify eligibility with zero impact on your CIBIL score.
             </p>
 
             {/* Key Statistics Grid */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 pt-2 pb-2">
               <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/10 text-center">
                 <div className="text-xs text-blue-200 font-medium uppercase tracking-wider">Interest Rates</div>
-                <div className="text-lg sm:text-2xl font-black text-amber-300 mt-1">From 10.25%</div>
+                <div className="text-lg sm:text-2xl font-black text-amber-300 mt-1 tabular-nums">From 10.25%</div>
                 <div className="text-[11px] text-slate-300 mt-0.5">Reducing balance p.a.</div>
               </div>
               <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/10 text-center">
                 <div className="text-xs text-blue-200 font-medium uppercase tracking-wider">Loan Amounts</div>
-                <div className="text-lg sm:text-2xl font-black text-white mt-1">Up to ₹50 Lakhs</div>
+                <div className="text-lg sm:text-2xl font-black text-white mt-1 tabular-nums">Up to ₹50 Lakhs</div>
                 <div className="text-[11px] text-slate-300 mt-0.5">Subject to income criteria</div>
               </div>
               <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/10 text-center">
                 <div className="text-xs text-blue-200 font-medium uppercase tracking-wider">Repayment Tenure</div>
-                <div className="text-lg sm:text-2xl font-black text-white mt-1">12 - 72 Months</div>
+                <div className="text-lg sm:text-2xl font-black text-white mt-1 tabular-nums">12 - 72 Months</div>
                 <div className="text-[11px] text-slate-300 mt-0.5">Flexible monthly EMIs</div>
               </div>
               <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/10 text-center">
                 <div className="text-xs text-blue-200 font-medium uppercase tracking-wider">Collateral</div>
-                <div className="text-lg sm:text-2xl font-black text-teal-300 mt-1">Zero Assets</div>
+                <div className="text-lg sm:text-2xl font-black text-emerald-400 mt-1">Zero Assets</div>
                 <div className="text-[11px] text-slate-300 mt-0.5">100% unsecured credit</div>
               </div>
             </div>
@@ -426,7 +457,7 @@ export const PersonalLoanOverviewPage: React.FC<PersonalLoanOverviewPageProps> =
               <button
                 type="button"
                 onClick={handleEligibilityClick}
-                className="bg-blue-600 hover:bg-blue-500 text-white font-bold px-6 py-3.5 rounded-xl shadow-lg hover:shadow-blue-500/30 transition-all flex items-center gap-2 text-sm sm:text-base cursor-pointer"
+                className="bg-amber-700 hover:bg-amber-800 text-white font-bold px-6 py-3.5 rounded-xl shadow-lg hover:shadow-amber-700/30 transition-all flex items-center gap-2 text-sm sm:text-base cursor-pointer"
               >
                 <span>Check Your Eligibility</span>
                 <ArrowRight className="w-4 h-4" />
@@ -434,7 +465,7 @@ export const PersonalLoanOverviewPage: React.FC<PersonalLoanOverviewPageProps> =
               <button
                 type="button"
                 onClick={scrollToCalculator}
-                className="bg-white/15 hover:bg-white/20 text-white font-semibold px-6 py-3.5 rounded-xl border border-white/20 transition-all flex items-center gap-2 text-sm sm:text-base cursor-pointer"
+                className="bg-white/15 hover:bg-white/20 text-white font-semibold px-6 py-3.5 rounded-xl border border-white/20 transition-all flex items-center gap-2 text-sm sm:text-base cursor-pointer backdrop-blur-sm"
               >
                 <Calculator className="w-4 h-4 text-amber-300" />
                 <span>Calculate Monthly EMI</span>
@@ -442,7 +473,7 @@ export const PersonalLoanOverviewPage: React.FC<PersonalLoanOverviewPageProps> =
               <button
                 type="button"
                 onClick={handleCibilClick}
-                className="text-blue-200 hover:text-white px-4 py-3.5 text-xs sm:text-sm font-medium underline-offset-4 hover:underline flex items-center gap-1.5 transition-colors cursor-pointer"
+                className="text-blue-200 hover:text-white px-4 py-3.5 text-xs sm:text-sm font-semibold underline-offset-4 hover:underline flex items-center gap-1.5 transition-colors cursor-pointer"
               >
                 <ShieldCheck className="w-4 h-4 text-emerald-400" />
                 <span>Free CIBIL Score Check</span>
@@ -467,8 +498,8 @@ export const PersonalLoanOverviewPage: React.FC<PersonalLoanOverviewPageProps> =
         {/* 3. Compare Top Personal Loan Lenders in India */}
         <section aria-labelledby="lender-comparison-heading" className="bg-white rounded-3xl p-6 sm:p-8 lg:p-10 border border-slate-200/80 shadow-sm space-y-6">
           <div className="max-w-3xl space-y-2">
-            <div className="inline-flex items-center gap-2 text-blue-700 font-semibold text-xs tracking-wider uppercase">
-              <Building2 className="w-4 h-4 text-blue-600" />
+            <div className="inline-flex items-center gap-2 text-blue-900 font-bold text-xs tracking-wider uppercase">
+              <Building2 className="w-4 h-4 text-blue-700" />
               Transparent Rate Comparison
             </div>
             <h2 id="lender-comparison-heading" className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
@@ -484,7 +515,7 @@ export const PersonalLoanOverviewPage: React.FC<PersonalLoanOverviewPageProps> =
             <table className="w-full text-left border-collapse text-xs sm:text-sm">
               <caption className="sr-only">Personal loan interest rates and fees comparison across Indian banks</caption>
               <thead>
-                <tr className="bg-slate-100/80 border-b border-slate-200 text-slate-700 font-bold uppercase text-[11px] sm:text-xs tracking-wider">
+                <tr className="bg-slate-100/90 border-b border-slate-200 text-slate-700 font-bold uppercase text-[11px] sm:text-xs tracking-wider">
                   <th scope="col" className="p-4 sm:p-5">Bank / Lender</th>
                   <th scope="col" className="p-4 sm:p-5">Interest Rate (p.a.)</th>
                   <th scope="col" className="p-4 sm:p-5">Processing Fee</th>
@@ -494,41 +525,67 @@ export const PersonalLoanOverviewPage: React.FC<PersonalLoanOverviewPageProps> =
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
-                {TOP_BANKS.map((bank, idx) => (
-                  <tr key={idx} className="hover:bg-blue-50/40 transition-colors">
-                    <td className="p-4 sm:p-5 font-bold text-slate-900">
-                      <div>{bank.name}</div>
-                      <div className="text-[11px] font-normal text-slate-500 mt-0.5">{bank.bestFor}</div>
-                    </td>
-                    <td className="p-4 sm:p-5 font-bold text-blue-700 whitespace-nowrap">
-                      {bank.rateRange}
-                    </td>
-                    <td className="p-4 sm:p-5 text-slate-600">
-                      {bank.processingFee}
-                    </td>
-                    <td className="p-4 sm:p-5 text-slate-700 font-semibold whitespace-nowrap">
-                      {bank.maxAmount}
-                    </td>
-                    <td className="p-4 sm:p-5 text-slate-600 whitespace-nowrap">
-                      {bank.maxTenure}
-                    </td>
-                    <td className="p-4 sm:p-5 text-right">
-                      <button
-                        type="button"
-                        onClick={handleApplyClick}
-                        className="bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs px-4 py-2 rounded-lg transition-colors cursor-pointer"
-                      >
-                        Check Offer
-                      </button>
-                    </td>
-                  </tr>
-                ))}
+                {TOP_BANKS.map((bank, idx) => {
+                  const bankId = getBankIdFromName(bank.name);
+                  const bankInfo = bankId ? getBankById(bankId) : undefined;
+                  const logoSrc = bankInfo?.logo;
+
+                  return (
+                    <tr key={idx} className="hover:bg-slate-50 transition-colors">
+                      <td className="p-4 sm:p-5 font-bold text-slate-900">
+                        <div className="flex items-center gap-3">
+                          {logoSrc ? (
+                            <div className="w-8 h-8 rounded-lg bg-white border border-slate-200 p-0.5 flex items-center justify-center flex-shrink-0 shadow-xs overflow-hidden">
+                              <img
+                                src={logoSrc}
+                                alt={`${bank.name} logo`}
+                                className="w-full h-full object-contain"
+                                loading="lazy"
+                              />
+                            </div>
+                          ) : null}
+                          <div>
+                            {bankId ? (
+                              <Link to={`/bank-details/${bankId}`} className="text-slate-900 hover:text-blue-900 hover:underline">
+                                {bank.name}
+                              </Link>
+                            ) : (
+                              <div>{bank.name}</div>
+                            )}
+                            <div className="text-[11px] font-normal text-slate-500 mt-0.5">{bank.bestFor}</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="p-4 sm:p-5 font-bold text-blue-900 whitespace-nowrap tabular-nums">
+                        {bank.rateRange}
+                      </td>
+                      <td className="p-4 sm:p-5 text-slate-600">
+                        {bank.processingFee}
+                      </td>
+                      <td className="p-4 sm:p-5 text-slate-800 font-semibold whitespace-nowrap tabular-nums">
+                        {bank.maxAmount}
+                      </td>
+                      <td className="p-4 sm:p-5 text-slate-600 whitespace-nowrap tabular-nums">
+                        {bank.maxTenure}
+                      </td>
+                      <td className="p-4 sm:p-5 text-right">
+                        <button
+                          type="button"
+                          onClick={() => handleApplyClick(bank.name)}
+                          className="bg-amber-700 hover:bg-amber-800 text-white font-bold text-xs px-4 py-2 rounded-lg transition-colors shadow-sm cursor-pointer"
+                        >
+                          Check Offer
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
 
-          <div className="p-4 rounded-xl bg-amber-50/70 border border-amber-200/60 text-xs text-amber-900 leading-relaxed flex items-start gap-3">
-            <Info className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
+          <div className="p-4 rounded-xl bg-amber-50/80 border border-amber-200/80 text-xs text-amber-900 leading-relaxed flex items-start gap-3">
+            <Info className="w-4 h-4 text-amber-700 flex-shrink-0 mt-0.5" />
             <div>
               <strong>Financial Accuracy Note:</strong> The interest rates and processing fees listed above reflect typical starting ranges offered by respective lenders under reducing balance calculation models. Final terms, interest rate margins, and approved credit amounts depend strictly on individual credit underwriting, Debt-to-Income (DTI) ratio, CIBIL score, and lender policies. BanksCart does not charge any upfront application fee.
             </div>
@@ -548,60 +605,60 @@ export const PersonalLoanOverviewPage: React.FC<PersonalLoanOverviewPageProps> =
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div className="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-sm space-y-3 hover:border-blue-300 transition-all">
-              <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold">
-                <ShieldCheck className="w-5 h-5" />
+              <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-900 flex items-center justify-center font-bold">
+                <ShieldCheck className="w-5 h-5 text-blue-700" />
               </div>
-              <h3 className="text-base font-bold text-slate-800">100% Unsecured (No Collateral)</h3>
+              <h3 className="text-base font-bold text-slate-900">100% Unsecured (No Collateral)</h3>
               <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
                 You do not need to pledge property, mutual funds, or gold as security. Loan approval is based strictly on your monthly income reliability and credit repayment track record.
               </p>
             </div>
 
             <div className="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-sm space-y-3 hover:border-blue-300 transition-all">
-              <div className="w-10 h-10 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center font-bold">
-                <Layers className="w-5 h-5" />
+              <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center font-bold">
+                <Layers className="w-5 h-5 text-emerald-600" />
               </div>
-              <h3 className="text-base font-bold text-slate-800">Flexible End-Use Freedom</h3>
+              <h3 className="text-base font-bold text-slate-900">Flexible End-Use Freedom</h3>
               <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
                 Unlike housing loans or auto loans that can only fund specified assets, personal loan funds can be utilized for medical treatment, home renovation, wedding costs, or credit card debt consolidation.
               </p>
             </div>
 
             <div className="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-sm space-y-3 hover:border-blue-300 transition-all">
-              <div className="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold">
-                <Clock className="w-5 h-5" />
+              <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-900 flex items-center justify-center font-bold">
+                <Clock className="w-5 h-5 text-blue-700" />
               </div>
-              <h3 className="text-base font-bold text-slate-800">Swift Digital Disbursals</h3>
+              <h3 className="text-base font-bold text-slate-900">Swift Digital Disbursals</h3>
               <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
                 Through digital KYC authentication (Aadhaar OTP) and Account Aggregator banking verification, pre-approved borrowers receive instant fund credits within hours.
               </p>
             </div>
 
             <div className="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-sm space-y-3 hover:border-blue-300 transition-all">
-              <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center font-bold">
-                <BadgePercent className="w-5 h-5" />
+              <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center font-bold">
+                <BadgePercent className="w-5 h-5 text-amber-700" />
               </div>
-              <h3 className="text-base font-bold text-slate-800">Reducing Balance Calculations</h3>
+              <h3 className="text-base font-bold text-slate-900">Reducing Balance Calculations</h3>
               <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
                 Interest is computed on monthly reducing balances rather than flat initial principal, meaning your effective borrowing costs decrease steadily as principal is paid down.
               </p>
             </div>
 
             <div className="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-sm space-y-3 hover:border-blue-300 transition-all">
-              <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold">
-                <FileText className="w-5 h-5" />
+              <div className="w-10 h-10 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center font-bold">
+                <FileText className="w-5 h-5 text-slate-700" />
               </div>
-              <h3 className="text-base font-bold text-slate-800">Minimal Documentation</h3>
+              <h3 className="text-base font-bold text-slate-900">Minimal Documentation</h3>
               <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
                 No physical paperwork stacks or branch visits required. Only your PAN, Aadhaar, past 3 months&apos; salary slips, and 6 months&apos; bank statements are needed online.
               </p>
             </div>
 
             <div className="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-sm space-y-3 hover:border-blue-300 transition-all">
-              <div className="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center font-bold">
-                <Scale className="w-5 h-5" />
+              <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-900 flex items-center justify-center font-bold">
+                <Scale className="w-5 h-5 text-blue-700" />
               </div>
-              <h3 className="text-base font-bold text-slate-800">Flexible Sized Tenures</h3>
+              <h3 className="text-base font-bold text-slate-900">Flexible Sized Tenures</h3>
               <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
                 Choose repayment tenures ranging from 12 months up to 72 months to customize an EMI schedule that comfortably fits inside your monthly household budget.
               </p>
@@ -613,11 +670,11 @@ export const PersonalLoanOverviewPage: React.FC<PersonalLoanOverviewPageProps> =
         <section
           id="emi-calculator"
           aria-labelledby="calculator-heading"
-          className="bg-gradient-to-br from-slate-900 via-indigo-950 to-blue-950 rounded-3xl p-6 sm:p-10 lg:p-12 text-white shadow-xl border border-blue-900/50 space-y-8"
+          className="bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 rounded-3xl p-6 sm:p-10 lg:p-12 text-white shadow-xl border border-blue-900/60 space-y-8"
         >
           <div className="max-w-3xl space-y-2">
-            <div className="inline-flex items-center gap-2 text-amber-300 font-semibold text-xs tracking-wider uppercase">
-              <Calculator className="w-4 h-4" />
+            <div className="inline-flex items-center gap-2 text-amber-300 font-bold text-xs tracking-wider uppercase">
+              <Calculator className="w-4 h-4 text-amber-400" />
               Real-Time Repayment Planner
             </div>
             <h2 id="calculator-heading" className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white">
@@ -637,7 +694,7 @@ export const PersonalLoanOverviewPage: React.FC<PersonalLoanOverviewPageProps> =
                   <label htmlFor="amount-slider" className="font-semibold text-slate-200">
                     Required Loan Amount
                   </label>
-                  <div className="bg-white/10 px-3 py-1 rounded-lg border border-white/20 font-bold text-white text-base">
+                  <div className="bg-white/10 px-3 py-1 rounded-lg border border-white/20 font-bold text-white text-base tabular-nums">
                     ₹{displayLoanAmount.toLocaleString('en-IN')}
                   </div>
                 </div>
@@ -649,9 +706,9 @@ export const PersonalLoanOverviewPage: React.FC<PersonalLoanOverviewPageProps> =
                   step={10000}
                   value={displayLoanAmount}
                   onChange={(e) => handleAmountChange(Number(e.target.value))}
-                  className="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-blue-500"
+                  className="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-amber-500"
                 />
-                <div className="flex justify-between text-[11px] text-slate-400">
+                <div className="flex justify-between text-[11px] text-slate-400 tabular-nums">
                   <span>₹50,000</span>
                   <span>₹25 Lakhs</span>
                   <span>₹50 Lakhs</span>
@@ -666,7 +723,7 @@ export const PersonalLoanOverviewPage: React.FC<PersonalLoanOverviewPageProps> =
                       onClick={() => handleAmountChange(preset)}
                       className={`text-xs px-2.5 py-1 rounded-md transition-all cursor-pointer ${
                         displayLoanAmount === preset
-                          ? 'bg-blue-600 text-white font-bold'
+                          ? 'bg-amber-700 text-white font-bold'
                           : 'bg-white/10 hover:bg-white/20 text-slate-300'
                       }`}
                     >
@@ -682,7 +739,7 @@ export const PersonalLoanOverviewPage: React.FC<PersonalLoanOverviewPageProps> =
                   <label htmlFor="rate-slider" className="font-semibold text-slate-200">
                     Annual Interest Rate (% p.a.)
                   </label>
-                  <div className="bg-white/10 px-3 py-1 rounded-lg border border-white/20 font-bold text-amber-300 text-base">
+                  <div className="bg-white/10 px-3 py-1 rounded-lg border border-white/20 font-bold text-amber-300 text-base tabular-nums">
                     {displayInterestRate.toFixed(2)}%
                   </div>
                 </div>
@@ -694,9 +751,9 @@ export const PersonalLoanOverviewPage: React.FC<PersonalLoanOverviewPageProps> =
                   step={0.25}
                   value={displayInterestRate}
                   onChange={(e) => handleRateChange(Number(e.target.value))}
-                  className="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-amber-400"
+                  className="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-amber-500"
                 />
-                <div className="flex justify-between text-[11px] text-slate-400">
+                <div className="flex justify-between text-[11px] text-slate-400 tabular-nums">
                   <span>8.5% (Prime)</span>
                   <span>14.0%</span>
                   <span>28.0% (Subprime)</span>
@@ -709,7 +766,7 @@ export const PersonalLoanOverviewPage: React.FC<PersonalLoanOverviewPageProps> =
                   <label htmlFor="tenure-slider" className="font-semibold text-slate-200">
                     Repayment Tenure (Months)
                   </label>
-                  <div className="bg-white/10 px-3 py-1 rounded-lg border border-white/20 font-bold text-teal-300 text-base">
+                  <div className="bg-white/10 px-3 py-1 rounded-lg border border-white/20 font-bold text-blue-200 text-base tabular-nums">
                     {displayTenureMonths} Months ({Math.round(displayTenureMonths / 12)} Yrs)
                   </div>
                 </div>
@@ -721,9 +778,9 @@ export const PersonalLoanOverviewPage: React.FC<PersonalLoanOverviewPageProps> =
                   step={6}
                   value={displayTenureMonths}
                   onChange={(e) => handleTenureChange(Number(e.target.value))}
-                  className="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-teal-400"
+                  className="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-amber-500"
                 />
-                <div className="flex justify-between text-[11px] text-slate-400">
+                <div className="flex justify-between text-[11px] text-slate-400 tabular-nums">
                   <span>12 Mos (1 Yr)</span>
                   <span>36 Mos (3 Yrs)</span>
                   <span>84 Mos (7 Yrs)</span>
@@ -737,15 +794,17 @@ export const PersonalLoanOverviewPage: React.FC<PersonalLoanOverviewPageProps> =
                 <span className="text-xs uppercase font-semibold text-slate-300 tracking-wider">
                   Calculated Monthly EMI
                 </span>
-                <div className="text-3xl sm:text-4xl font-black text-amber-300 mt-2">
+                <div className="text-3xl sm:text-4xl font-black text-amber-300 mt-2 tabular-nums">
                   ₹{monthlyEmi.toLocaleString('en-IN')}
                 </div>
-                <div className="text-xs text-slate-300 mt-1">Per month for {tenureMonths} installments</div>
+                <div className="text-xs text-slate-300 mt-1">
+                  Per month for <span className="font-semibold text-white tabular-nums">{displayTenureMonths}</span> installments
+                </div>
               </div>
 
               {/* Visual Split Bar */}
               <div className="space-y-2">
-                <div className="flex justify-between text-xs text-slate-300 font-medium">
+                <div className="flex justify-between text-xs text-slate-300 font-medium tabular-nums">
                   <span>Principal ({principalPercent}%)</span>
                   <span>Interest ({interestPercent}%)</span>
                 </div>
@@ -767,29 +826,29 @@ export const PersonalLoanOverviewPage: React.FC<PersonalLoanOverviewPageProps> =
               <div className="space-y-3 text-sm">
                 <div className="flex justify-between items-center py-1.5 border-b border-white/10 text-slate-200">
                   <span>Principal Borrowed</span>
-                  <span className="font-bold text-white">₹{loanAmount.toLocaleString('en-IN')}</span>
+                  <span className="font-bold text-white tabular-nums">₹{displayLoanAmount.toLocaleString('en-IN')}</span>
                 </div>
                 <div className="flex justify-between items-center py-1.5 border-b border-white/10 text-slate-200">
                   <span>Total Interest Payable</span>
-                  <span className="font-bold text-amber-300">₹{totalInterest.toLocaleString('en-IN')}</span>
+                  <span className="font-bold text-amber-300 tabular-nums">₹{totalInterest.toLocaleString('en-IN')}</span>
                 </div>
                 <div className="flex justify-between items-center py-1.5 text-slate-200 font-semibold">
                   <span>Total Repayment (P + I)</span>
-                  <span className="font-black text-white text-base">₹{totalPayment.toLocaleString('en-IN')}</span>
+                  <span className="font-black text-white text-base tabular-nums">₹{totalPayment.toLocaleString('en-IN')}</span>
                 </div>
               </div>
 
               <button
                 type="button"
-                onClick={handleApplyClick}
-                className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3.5 rounded-xl shadow-lg transition-all text-sm sm:text-base flex items-center justify-center gap-2 cursor-pointer"
+                onClick={() => handleApplyClick(`Calculated EMI - ₹${displayLoanAmount.toLocaleString('en-IN')}`)}
+                className="w-full bg-amber-700 hover:bg-amber-800 text-white font-bold py-3.5 rounded-xl shadow-lg transition-all text-sm sm:text-base flex items-center justify-center gap-2 cursor-pointer"
               >
                 <span>Apply for this Loan</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
 
               <p className="text-[11px] text-center text-slate-400 leading-tight">
-                Standard amortization formula: E = [P × r × (1+r)ⁿ] / [(1+r)ⁿ – 1]. Actual EMI may vary based on exact sanction date and fee deductions.
+                Standard reducing amortization formula: E = [P × r × (1+r)ⁿ] / [(1+r)ⁿ – 1]. Actual EMI may vary based on exact sanction date and fee deductions.
               </p>
             </div>
           </div>
@@ -798,7 +857,7 @@ export const PersonalLoanOverviewPage: React.FC<PersonalLoanOverviewPageProps> =
         {/* 6. Eligibility Criteria Breakdown */}
         <section aria-labelledby="eligibility-criteria-heading" className="bg-white rounded-3xl p-6 sm:p-8 lg:p-10 border border-slate-200/80 shadow-sm space-y-6">
           <div className="max-w-3xl space-y-2">
-            <div className="inline-flex items-center gap-2 text-blue-700 font-semibold text-xs tracking-wider uppercase">
+            <div className="inline-flex items-center gap-2 text-blue-900 font-bold text-xs tracking-wider uppercase">
               <CheckCircle2 className="w-4 h-4 text-emerald-600" />
               Approval Requirements
             </div>
@@ -817,7 +876,7 @@ export const PersonalLoanOverviewPage: React.FC<PersonalLoanOverviewPageProps> =
               onClick={() => setActiveTab('salaried')}
               className={`px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${
                 activeTab === 'salaried'
-                  ? 'bg-blue-600 text-white shadow-md'
+                  ? 'bg-blue-900 text-white shadow-md'
                   : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
               }`}
             >
@@ -828,7 +887,7 @@ export const PersonalLoanOverviewPage: React.FC<PersonalLoanOverviewPageProps> =
               onClick={() => setActiveTab('selfEmployed')}
               className={`px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${
                 activeTab === 'selfEmployed'
-                  ? 'bg-blue-600 text-white shadow-md'
+                  ? 'bg-blue-900 text-white shadow-md'
                   : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
               }`}
             >
@@ -841,7 +900,7 @@ export const PersonalLoanOverviewPage: React.FC<PersonalLoanOverviewPageProps> =
             <table className="w-full text-left border-collapse text-xs sm:text-sm">
               <caption className="sr-only">Eligibility criteria for personal loans</caption>
               <thead>
-                <tr className="bg-slate-100/80 border-b border-slate-200 text-slate-700 font-bold uppercase text-[11px] sm:text-xs">
+                <tr className="bg-slate-100/90 border-b border-slate-200 text-slate-700 font-bold uppercase text-[11px] sm:text-xs">
                   <th scope="col" className="p-4 sm:p-5 w-1/3">Parameter</th>
                   <th scope="col" className="p-4 sm:p-5">Detailed Requirement</th>
                 </tr>
@@ -930,8 +989,8 @@ export const PersonalLoanOverviewPage: React.FC<PersonalLoanOverviewPageProps> =
         {/* 7. Documents Required Checklist */}
         <section aria-labelledby="documents-heading" className="bg-white rounded-3xl p-6 sm:p-8 lg:p-10 border border-slate-200/80 shadow-sm space-y-6">
           <div className="max-w-3xl space-y-2">
-            <div className="inline-flex items-center gap-2 text-blue-700 font-semibold text-xs tracking-wider uppercase">
-              <FileText className="w-4 h-4 text-blue-600" />
+            <div className="inline-flex items-center gap-2 text-blue-900 font-bold text-xs tracking-wider uppercase">
+              <FileText className="w-4 h-4 text-blue-700" />
               Paperless Verification
             </div>
             <h2 id="documents-heading" className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
@@ -946,8 +1005,8 @@ export const PersonalLoanOverviewPage: React.FC<PersonalLoanOverviewPageProps> =
             {/* Salaried Checklist */}
             <div className="border border-slate-200 rounded-2xl p-6 space-y-4 bg-slate-50/50">
               <div className="flex items-center gap-2 border-b border-slate-200 pb-3">
-                <Building2 className="w-5 h-5 text-blue-600" />
-                <h3 className="font-bold text-base text-slate-800">For Salaried Applicants</h3>
+                <Building2 className="w-5 h-5 text-blue-900" />
+                <h3 className="font-bold text-base text-slate-900">For Salaried Applicants</h3>
               </div>
               <ul className="space-y-3 text-xs sm:text-sm text-slate-700">
                 <li className="flex items-start gap-2.5">
@@ -976,8 +1035,8 @@ export const PersonalLoanOverviewPage: React.FC<PersonalLoanOverviewPageProps> =
             {/* Self-Employed Checklist */}
             <div className="border border-slate-200 rounded-2xl p-6 space-y-4 bg-slate-50/50">
               <div className="flex items-center gap-2 border-b border-slate-200 pb-3">
-                <Building2 className="w-5 h-5 text-indigo-600" />
-                <h3 className="font-bold text-base text-slate-800">For Self-Employed Professionals</h3>
+                <Building2 className="w-5 h-5 text-indigo-900" />
+                <h3 className="font-bold text-base text-slate-900">For Self-Employed Professionals</h3>
               </div>
               <ul className="space-y-3 text-xs sm:text-sm text-slate-700">
                 <li className="flex items-start gap-2.5">
@@ -998,7 +1057,7 @@ export const PersonalLoanOverviewPage: React.FC<PersonalLoanOverviewPageProps> =
                 </li>
                 <li className="flex items-start gap-2.5">
                   <Check className="w-4 h-4 text-emerald-600 flex-shrink-0 mt-0.5" />
-                  <span><strong>Professional Practice Proof:</strong> Medical council / ICAI / Bar Council certificates (for professionals)</span>
+                  <span><strong>Professional Practice Proof:</strong> Medical council / ICAI / Bar Council certificates</span>
                 </li>
               </ul>
             </div>
@@ -1008,8 +1067,8 @@ export const PersonalLoanOverviewPage: React.FC<PersonalLoanOverviewPageProps> =
         {/* 8. Interest Rates, Reducing-Balance Math, and Fee Transparency */}
         <section aria-labelledby="fee-structure-heading" className="bg-white rounded-3xl p-6 sm:p-8 lg:p-10 border border-slate-200/80 shadow-sm space-y-8">
           <div className="max-w-3xl space-y-2">
-            <div className="inline-flex items-center gap-2 text-blue-700 font-semibold text-xs tracking-wider uppercase">
-              <TrendingDown className="w-4 h-4 text-blue-600" />
+            <div className="inline-flex items-center gap-2 text-blue-900 font-bold text-xs tracking-wider uppercase">
+              <TrendingDown className="w-4 h-4 text-blue-700" />
               Borrowing Cost Transparency
             </div>
             <h2 id="fee-structure-heading" className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
@@ -1021,32 +1080,32 @@ export const PersonalLoanOverviewPage: React.FC<PersonalLoanOverviewPageProps> =
           </div>
 
           {/* Mathematical Comparison Box */}
-          <div className="bg-gradient-to-r from-blue-50 via-indigo-50 to-teal-50 rounded-2xl p-6 sm:p-8 border border-blue-200/60 space-y-4">
+          <div className="bg-gradient-to-r from-blue-50/70 via-indigo-50/40 to-slate-50 rounded-2xl p-6 sm:p-8 border border-blue-200/60 space-y-4">
             <h3 className="font-bold text-slate-900 text-lg flex items-center gap-2">
-              <Scale className="w-5 h-5 text-blue-600" />
+              <Scale className="w-5 h-5 text-blue-900" />
               The Math: Reducing Balance vs. Flat Rate Interest
             </h3>
             <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
               Consider a <strong>₹5,00,000 personal loan</strong> taken for a <strong>3-year tenure (36 months)</strong> at a quoted <strong>12.00% annual interest rate</strong>:
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-              <div className="bg-white rounded-xl p-4 border border-blue-200 space-y-2">
-                <div className="text-xs font-bold uppercase text-slate-500">Under Reducing Balance Model (BanksCart Standard)</div>
-                <div className="text-lg font-black text-blue-700">Monthly EMI: ~₹16,607</div>
-                <div className="text-xs text-slate-600">Total Interest Paid: <strong>₹97,858</strong></div>
-                <div className="text-xs text-slate-600">Total Repayment: <strong>₹5,97,858</strong></div>
-                <p className="text-[11px] text-emerald-700 font-medium pt-1">
-                  Interest is recalculated monthly strictly on unpaid principal, saving you over ₹82,000!
+              <div className="bg-white rounded-xl p-5 border border-blue-200 shadow-sm space-y-2">
+                <div className="text-xs font-bold uppercase text-blue-900">Under Reducing Balance Model (BanksCart Standard)</div>
+                <div className="text-xl font-black text-blue-900 tabular-nums">Monthly EMI: ~₹16,607</div>
+                <div className="text-xs text-slate-600">Total Interest Paid: <strong className="tabular-nums">₹97,858</strong></div>
+                <div className="text-xs text-slate-600">Total Repayment: <strong className="tabular-nums">₹5,97,858</strong></div>
+                <p className="text-[11px] text-emerald-700 font-semibold pt-1">
+                  ✓ Interest is recalculated monthly strictly on unpaid principal, saving you ₹82,142!
                 </p>
               </div>
 
-              <div className="bg-white rounded-xl p-4 border border-rose-200 space-y-2">
-                <div className="text-xs font-bold uppercase text-slate-500">Under Flat Rate Model (Traditional NBFCs)</div>
-                <div className="text-lg font-black text-rose-700">Monthly EMI: ~₹18,889</div>
-                <div className="text-xs text-slate-600">Total Interest Paid: <strong>₹1,80,000</strong></div>
-                <div className="text-xs text-slate-600">Total Repayment: <strong>₹6,80,000</strong></div>
-                <p className="text-[11px] text-rose-700 font-medium pt-1">
-                  Interest is charged on the initial ₹5L continuously for 3 years. The effective APR is ~21.5%!
+              <div className="bg-white rounded-xl p-5 border border-rose-200 shadow-sm space-y-2">
+                <div className="text-xs font-bold uppercase text-rose-700">Under Flat Rate Model (Traditional NBFCs)</div>
+                <div className="text-xl font-black text-rose-700 tabular-nums">Monthly EMI: ~₹18,889</div>
+                <div className="text-xs text-slate-600">Total Interest Paid: <strong className="tabular-nums">₹1,80,000</strong></div>
+                <div className="text-xs text-slate-600">Total Repayment: <strong className="tabular-nums">₹6,80,000</strong></div>
+                <p className="text-[11px] text-rose-700 font-semibold pt-1">
+                  ⚠ Interest is charged on the initial ₹5L continuously for 3 years. The effective APR is ~21.5%!
                 </p>
               </div>
             </div>
@@ -1059,7 +1118,7 @@ export const PersonalLoanOverviewPage: React.FC<PersonalLoanOverviewPageProps> =
               <table className="w-full text-left border-collapse text-xs sm:text-sm">
                 <caption className="sr-only">Schedule of personal loan processing fees and charges</caption>
                 <thead>
-                  <tr className="bg-slate-100/80 border-b border-slate-200 text-slate-700 font-bold uppercase text-[11px] sm:text-xs">
+                  <tr className="bg-slate-100/90 border-b border-slate-200 text-slate-700 font-bold uppercase text-[11px] sm:text-xs">
                     <th scope="col" className="p-4 sm:p-5 w-1/3">Fee / Charge Name</th>
                     <th scope="col" className="p-4 sm:p-5">Standard Industry Range & Policy</th>
                   </tr>
@@ -1074,7 +1133,7 @@ export const PersonalLoanOverviewPage: React.FC<PersonalLoanOverviewPageProps> =
                   <tr className="hover:bg-slate-50">
                     <td className="p-4 sm:p-5 font-bold text-slate-900">Prepayment / Foreclosure Charges</td>
                     <td className="p-4 sm:p-5">
-                      <strong>NIL (Zero)</strong> for individual borrowers under floating interest rates per RBI circulars. For fixed rate loans: 2% to 4% + GST after 6-12 months.
+                      <strong className="text-emerald-700 font-bold">NIL (Zero)</strong> for individual borrowers under floating interest rates per RBI circulars. For fixed rate loans: 2% to 4% + GST after 6-12 months.
                     </td>
                   </tr>
                   <tr className="hover:bg-slate-50">
@@ -1176,8 +1235,8 @@ export const PersonalLoanOverviewPage: React.FC<PersonalLoanOverviewPageProps> =
         {/* 10. Step-by-Step Application Process */}
         <section aria-labelledby="application-steps-heading" className="bg-white rounded-3xl p-6 sm:p-8 lg:p-10 border border-slate-200/80 shadow-sm space-y-8">
           <div className="max-w-3xl space-y-2">
-            <div className="inline-flex items-center gap-2 text-blue-700 font-semibold text-xs tracking-wider uppercase">
-              <ArrowRight className="w-4 h-4 text-blue-600" />
+            <div className="inline-flex items-center gap-2 text-blue-900 font-bold text-xs tracking-wider uppercase">
+              <ArrowRight className="w-4 h-4 text-blue-700" />
               End-to-End Application
             </div>
             <h2 id="application-steps-heading" className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
@@ -1190,60 +1249,60 @@ export const PersonalLoanOverviewPage: React.FC<PersonalLoanOverviewPageProps> =
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div className="border border-slate-200 rounded-2xl p-5 space-y-2 bg-slate-50/50 relative">
-              <span className="w-7 h-7 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-xs">
+              <span className="w-7 h-7 bg-blue-900 text-white rounded-full flex items-center justify-center font-bold text-xs">
                 1
               </span>
-              <h3 className="font-bold text-base text-slate-800">Check Eligibility</h3>
+              <h3 className="font-bold text-base text-slate-900">Check Eligibility</h3>
               <p className="text-xs text-slate-600 leading-relaxed">
                 Provide your basic income, employer details, and city to view eligible pre-approved loan slabs with zero impact on credit scores.
               </p>
             </div>
 
             <div className="border border-slate-200 rounded-2xl p-5 space-y-2 bg-slate-50/50 relative">
-              <span className="w-7 h-7 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-xs">
+              <span className="w-7 h-7 bg-blue-900 text-white rounded-full flex items-center justify-center font-bold text-xs">
                 2
               </span>
-              <h3 className="font-bold text-base text-slate-800">Compare Bank Offers</h3>
+              <h3 className="font-bold text-base text-slate-900">Compare Bank Offers</h3>
               <p className="text-xs text-slate-600 leading-relaxed">
                 Compare side-by-side interest rate quotes, processing fee slabs, and tenure options across 20+ RBI-licensed banks and NBFCs.
               </p>
             </div>
 
             <div className="border border-slate-200 rounded-2xl p-5 space-y-2 bg-slate-50/50 relative">
-              <span className="w-7 h-7 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-xs">
+              <span className="w-7 h-7 bg-blue-900 text-white rounded-full flex items-center justify-center font-bold text-xs">
                 3
               </span>
-              <h3 className="font-bold text-base text-slate-800">Digital KYC Verification</h3>
+              <h3 className="font-bold text-base text-slate-900">Digital KYC Verification</h3>
               <p className="text-xs text-slate-600 leading-relaxed">
                 Complete identity verification online via Aadhaar OTP and DigiLocker integration without paper photocopies.
               </p>
             </div>
 
             <div className="border border-slate-200 rounded-2xl p-5 space-y-2 bg-slate-50/50 relative">
-              <span className="w-7 h-7 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-xs">
+              <span className="w-7 h-7 bg-blue-900 text-white rounded-full flex items-center justify-center font-bold text-xs">
                 4
               </span>
-              <h3 className="font-bold text-base text-slate-800">Upload Income Documents</h3>
+              <h3 className="font-bold text-base text-slate-900">Upload Income Documents</h3>
               <p className="text-xs text-slate-600 leading-relaxed">
                 Verify salary credits instantly via secure Account Aggregator OTP or upload past 3 months&apos; salary slips.
               </p>
             </div>
 
             <div className="border border-slate-200 rounded-2xl p-5 space-y-2 bg-slate-50/50 relative">
-              <span className="w-7 h-7 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-xs">
+              <span className="w-7 h-7 bg-blue-900 text-white rounded-full flex items-center justify-center font-bold text-xs">
                 5
               </span>
-              <h3 className="font-bold text-base text-slate-800">Review Sanction Letter</h3>
+              <h3 className="font-bold text-base text-slate-900">Review Sanction Letter</h3>
               <p className="text-xs text-slate-600 leading-relaxed">
                 Review your digital sanction letter detailing exact reducing interest rate, repayment schedule, and loan agreement clauses.
               </p>
             </div>
 
             <div className="border border-slate-200 rounded-2xl p-5 space-y-2 bg-slate-50/50 relative">
-              <span className="w-7 h-7 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-xs">
+              <span className="w-7 h-7 bg-blue-900 text-white rounded-full flex items-center justify-center font-bold text-xs">
                 6
               </span>
-              <h3 className="font-bold text-base text-slate-800">e-NACH Mandate & Disbursal</h3>
+              <h3 className="font-bold text-base text-slate-900">e-NACH Mandate & Disbursal</h3>
               <p className="text-xs text-slate-600 leading-relaxed">
                 Configure auto-debit through NetBanking/Debit Card and receive loan funds directly into your verified bank account.
               </p>
@@ -1253,8 +1312,8 @@ export const PersonalLoanOverviewPage: React.FC<PersonalLoanOverviewPageProps> =
           <div className="pt-2 text-center">
             <button
               type="button"
-              onClick={handleApplyClick}
-              className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-8 py-3.5 rounded-xl shadow-md transition-all text-sm sm:text-base cursor-pointer"
+              onClick={() => handleApplyClick()}
+              className="bg-amber-700 hover:bg-amber-800 text-white font-bold px-8 py-3.5 rounded-xl shadow-md transition-all text-sm sm:text-base cursor-pointer"
             >
               Start Your Online Application
             </button>
@@ -1264,8 +1323,8 @@ export const PersonalLoanOverviewPage: React.FC<PersonalLoanOverviewPageProps> =
         {/* 11. Frequently Asked Questions */}
         <section aria-labelledby="faqs-heading" className="bg-white rounded-3xl p-6 sm:p-8 lg:p-10 border border-slate-200/80 shadow-sm space-y-6">
           <div className="max-w-3xl space-y-2">
-            <div className="inline-flex items-center gap-2 text-blue-700 font-semibold text-xs tracking-wider uppercase">
-              <HelpCircle className="w-4 h-4 text-blue-600" />
+            <div className="inline-flex items-center gap-2 text-blue-900 font-bold text-xs tracking-wider uppercase">
+              <HelpCircle className="w-4 h-4 text-blue-700" />
               Borrower FAQs
             </div>
             <h2 id="faqs-heading" className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
@@ -1286,12 +1345,12 @@ export const PersonalLoanOverviewPage: React.FC<PersonalLoanOverviewPageProps> =
                   type="button"
                   onClick={() => setActiveFaq(activeFaq === idx ? null : idx)}
                   aria-expanded={activeFaq === idx}
-                  className="w-full flex justify-between items-center p-4 sm:p-5 text-left font-bold text-slate-800 text-sm sm:text-base cursor-pointer gap-4"
+                  className="w-full flex justify-between items-center p-4 sm:p-5 text-left font-bold text-slate-900 text-sm sm:text-base cursor-pointer gap-4"
                 >
                   <span>{faq.q}</span>
                   <ChevronDown
                     className={`w-5 h-5 text-slate-400 flex-shrink-0 transition-transform duration-200 ${
-                      activeFaq === idx ? 'rotate-180 text-blue-600' : ''
+                      activeFaq === idx ? 'rotate-180 text-blue-900' : ''
                     }`}
                   />
                 </button>
@@ -1318,12 +1377,12 @@ export const PersonalLoanOverviewPage: React.FC<PersonalLoanOverviewPageProps> =
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             <Link
-              to="/calculators"
+              to="/personal-loan-emi-calculator"
               className="bg-white p-5 rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition-all group"
             >
-              <div className="font-bold text-sm text-slate-800 group-hover:text-blue-600 flex items-center justify-between">
+              <div className="font-bold text-sm text-slate-900 group-hover:text-blue-900 flex items-center justify-between">
                 <span>Personal Loan EMI Calculator</span>
-                <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600 group-hover:translate-x-1 transition-all" />
+                <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-blue-900 group-hover:translate-x-1 transition-all" />
               </div>
               <p className="text-xs text-slate-500 mt-1.5 leading-relaxed">
                 Plan exact tenure milestones and generate comprehensive amortization tables.
@@ -1334,9 +1393,9 @@ export const PersonalLoanOverviewPage: React.FC<PersonalLoanOverviewPageProps> =
               to="/credit-score"
               className="bg-white p-5 rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition-all group"
             >
-              <div className="font-bold text-sm text-slate-800 group-hover:text-blue-600 flex items-center justify-between">
+              <div className="font-bold text-sm text-slate-900 group-hover:text-blue-900 flex items-center justify-between">
                 <span>Free CIBIL Credit Score Check</span>
-                <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600 group-hover:translate-x-1 transition-all" />
+                <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-blue-900 group-hover:translate-x-1 transition-all" />
               </div>
               <p className="text-xs text-slate-500 mt-1.5 leading-relaxed">
                 Check your bureau credit report with detailed factors and zero impact on score.
@@ -1347,9 +1406,9 @@ export const PersonalLoanOverviewPage: React.FC<PersonalLoanOverviewPageProps> =
               to="/loans/home"
               className="bg-white p-5 rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition-all group"
             >
-              <div className="font-bold text-sm text-slate-800 group-hover:text-blue-600 flex items-center justify-between">
+              <div className="font-bold text-sm text-slate-900 group-hover:text-blue-900 flex items-center justify-between">
                 <span>Home Loans Comparison</span>
-                <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600 group-hover:translate-x-1 transition-all" />
+                <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-blue-900 group-hover:translate-x-1 transition-all" />
               </div>
               <p className="text-xs text-slate-500 mt-1.5 leading-relaxed">
                 Compare secured home loan interest rates starting from 8.35% p.a.
@@ -1357,12 +1416,12 @@ export const PersonalLoanOverviewPage: React.FC<PersonalLoanOverviewPageProps> =
             </Link>
 
             <Link
-              to="/loans/business"
+              to="/business-loan"
               className="bg-white p-5 rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition-all group"
             >
-              <div className="font-bold text-sm text-slate-800 group-hover:text-blue-600 flex items-center justify-between">
+              <div className="font-bold text-sm text-slate-900 group-hover:text-blue-900 flex items-center justify-between">
                 <span>Business Loans for MSMEs</span>
-                <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600 group-hover:translate-x-1 transition-all" />
+                <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-blue-900 group-hover:translate-x-1 transition-all" />
               </div>
               <p className="text-xs text-slate-500 mt-1.5 leading-relaxed">
                 Unsecured commercial capital and working capital lines for expanding enterprises.
@@ -1373,9 +1432,9 @@ export const PersonalLoanOverviewPage: React.FC<PersonalLoanOverviewPageProps> =
               to="/cards/credit"
               className="bg-white p-5 rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition-all group"
             >
-              <div className="font-bold text-sm text-slate-800 group-hover:text-blue-600 flex items-center justify-between">
+              <div className="font-bold text-sm text-slate-900 group-hover:text-blue-900 flex items-center justify-between">
                 <span>Best Credit Cards in India</span>
-                <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600 group-hover:translate-x-1 transition-all" />
+                <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-blue-900 group-hover:translate-x-1 transition-all" />
               </div>
               <p className="text-xs text-slate-500 mt-1.5 leading-relaxed">
                 Compare lifetime-free, cashback, fuel surcharge waiver, and travel lounge cards.
@@ -1383,15 +1442,15 @@ export const PersonalLoanOverviewPage: React.FC<PersonalLoanOverviewPageProps> =
             </Link>
 
             <Link
-              to="/blog/personal-loan-balance-transfer"
+              to="/loans/two-wheeler"
               className="bg-white p-5 rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-md transition-all group"
             >
-              <div className="font-bold text-sm text-slate-800 group-hover:text-blue-600 flex items-center justify-between">
-                <span>Personal Loan Balance Transfer Guide</span>
-                <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600 group-hover:translate-x-1 transition-all" />
+              <div className="font-bold text-sm text-slate-900 group-hover:text-blue-900 flex items-center justify-between">
+                <span>Two-Wheeler & Bike Loans</span>
+                <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-blue-900 group-hover:translate-x-1 transition-all" />
               </div>
               <p className="text-xs text-slate-500 mt-1.5 leading-relaxed">
-                How to switch your high-interest personal loan to a cheaper lender and save on EMI.
+                Compare instant approvals, up to 100% on-road funding, and flexible 12–48 month tenures.
               </p>
             </Link>
           </div>
@@ -1401,14 +1460,14 @@ export const PersonalLoanOverviewPage: React.FC<PersonalLoanOverviewPageProps> =
         <footer className="border-t border-slate-200 pt-8 pb-4 space-y-4 text-xs text-slate-500 leading-relaxed">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 text-slate-600 pb-3 border-b border-slate-200/60">
             <div className="flex items-center gap-2">
-              <Award className="w-4 h-4 text-blue-600" />
+              <Award className="w-4 h-4 text-blue-900" />
               <span>Editorial & Financial Accuracy Review by <strong>BanksCart Research Team</strong></span>
             </div>
             <div>Last Updated & Rate Audit: October 2026</div>
           </div>
 
           <p>
-            <strong>Regulatory & Financial Marketplace Disclaimer:</strong> BanksCart is an independent online lending marketplace and technology distributor, not an RBI-licensed commercial bank or Non-Banking Financial Company (NBFC). We partner with scheduled commercial banks and RBI-registered NBFCs to facilitate transparent loan comparisons and digital customer onboarding. Loan sanctions, approved interest rates, processing fee concessions, and disbursement timelines are at the sole discretion of the lending partners, determined strictly by the applicant&apos;s credit score, Debt-to-Income (DTI) ratio, monthly verifiable income, and underwriting audits. BanksCart does not promise or guarantee loan approval or specific interest rate brackets.
+            <strong>Regulatory & Financial Marketplace Disclaimer:</strong> BanksCart (operated by BanksCart Financial Technologies Pvt. Ltd., CIN: U67190DL2024PTC428910) is an independent online lending marketplace and technology distributor, not an RBI-licensed commercial bank or Non-Banking Financial Company (NBFC). We partner with scheduled commercial banks and RBI-registered NBFCs to facilitate transparent loan comparisons and digital customer onboarding. Loan sanctions, approved interest rates, processing fee concessions, and disbursement timelines are at the sole discretion of the lending partners, determined strictly by the applicant&apos;s credit score, Debt-to-Income (DTI) ratio, monthly verifiable income, and underwriting audits. BanksCart does not promise or guarantee loan approval or specific interest rate brackets.
           </p>
 
           <p>

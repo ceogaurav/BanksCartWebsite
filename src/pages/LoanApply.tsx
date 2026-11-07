@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { X, CheckCircle, Loader2 } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom'; // Import useLocation
-import { initializeApp } from 'firebase/app';
+import { initializeApp, getApps, getApp } from 'firebase/app';
 import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from 'firebase/auth';
 import { getFirestore, collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
@@ -55,7 +55,7 @@ const LoanApplyPage: React.FC<LoanApplyPageProps> = ({ initialLoanType = '' }) =
 
   const appId = typeof __app_id !== 'undefined' ? __app_id : firebaseConfig.projectId || 'default-app-id';
 
-  const app = initializeApp(firebaseConfig);
+  const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
   const db = getFirestore(app);
   const auth = getAuth(app);
 
@@ -64,16 +64,21 @@ const LoanApplyPage: React.FC<LoanApplyPageProps> = ({ initialLoanType = '' }) =
 
   // Authenticate user on component mount
   useEffect(() => {
+    const isDummyKey = !firebaseConfig.apiKey || firebaseConfig.apiKey.startsWith('AIzaSyDummy');
     const authenticate = async () => {
       try {
         if (typeof __initial_auth_token !== 'undefined') {
           await signInWithCustomToken(auth, __initial_auth_token);
-        } else {
+        } else if (!isDummyKey) {
           await signInAnonymously(auth);
+        } else {
+          setUserId((prev) => prev || crypto.randomUUID());
+          setIsAuthReady(true);
         }
       } catch (error) {
-        console.error("Firebase authentication error:", error);
-        setSubmissionError("Failed to authenticate for submission.");
+        console.warn("Firebase authentication note:", error);
+        setUserId((prev) => prev || crypto.randomUUID());
+        setIsAuthReady(true);
       }
     };
 
@@ -81,7 +86,7 @@ const LoanApplyPage: React.FC<LoanApplyPageProps> = ({ initialLoanType = '' }) =
       if (user) {
         setUserId(user.uid);
       } else {
-        setUserId(crypto.randomUUID());
+        setUserId((prev) => prev || crypto.randomUUID());
       }
       setIsAuthReady(true);
     });

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { HelpCircle, ChevronDown, Check, Star, ShieldAlert, Sparkles, BookOpen, AlertCircle, Info, Landmark, Percent, Award, ShieldCheck, ArrowRight, Play, MessageSquare, TrendingUp, CreditCard } from 'lucide-react';
+import Breadcrumb from '../../components/Breadcrumb';
 import CibilCheckerForm from '../../components/common/CibilCheckerForm';
 import { CALCULATOR_PAGE_MAP, CalculatorPageContent } from '../../data/calculatorPageData';
 
@@ -257,11 +258,21 @@ const DynamicCalculatorPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 pt-24 pb-16 font-sans">
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-slate-50 py-8 font-sans text-slate-800">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Breadcrumb Navigation */}
+        <div className="mb-6">
+          <Breadcrumb
+            items={[
+              { label: 'Calculators', path: '/calculators' },
+              { label: config.title }
+            ]}
+          />
+        </div>
         
         {/* Header Title */}
-        <div className="bg-gradient-to-r from-blue-700 via-indigo-700 to-purple-800 rounded-3xl text-white p-8 sm:p-12 mb-12 shadow-xl relative overflow-hidden">
+        <div className="bg-gradient-to-r from-[#0F172A] via-[#1E3A8A] to-[#0F172A] rounded-2xl text-white p-8 sm:p-12 mb-8 shadow-xl border border-slate-700/50 relative overflow-hidden">
           <div className="absolute right-0 bottom-0 opacity-10 transform translate-x-12 translate-y-12">
             <span className="text-[200px] font-black leading-none select-none">%</span>
           </div>

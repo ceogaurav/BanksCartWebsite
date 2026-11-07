@@ -1,204 +1,308 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { ArrowRight, CheckCircle2, Shield, Zap, Sparkles, Building2 } from "lucide-react";
 
-const offers = [
+const personalLoanOffers = [
   {
+    id: "hdfc",
     bank: "HDFC Bank",
-    logo: "/images/hdfc.png",
-    maxAmount: 4000000,
-    tenure: "12 - 72 months",
-    processingFee: "Up to 1.5% + GST",
-    interestRate: "10.50% - 14.50%",
-    badges: ["Instant Digital Disbursal", "Top Corporate Rates"],
+    fullName: "HDFC Bank Personal Loan",
+    logo: "/logos/hdfc.png",
+    category: "private",
+    interestRate: "10.50% – 21.00%",
+    minRate: 10.50,
+    maxAmount: "Up to ₹40 Lakhs",
+    tenure: "12 - 72 Months",
+    processingFee: "Up to 1.50% + GST",
+    disbursalSpeed: "Instant (10 Seconds for Pre-approved)",
+    badges: ["Most Popular", "Instant Disbursal"],
     featured: true,
-    slug: "hdfc-bank",
+    highlights: ["Minimal documentation for existing customers", "Zero foreclosure charges after 12 EMIs", "Special rates for corporate salaried"],
+    applyTag: "Personal Loan - HDFC Bank"
   },
   {
+    id: "sbi",
     bank: "State Bank of India",
-    logo: "/images/sbi.png",
-    maxAmount: 2000000,
-    tenure: "12 - 72 months",
-    processingFee: "0.50% - 1.00% + GST",
-    interestRate: "10.30% - 13.60%",
-    badges: ["Lowest Benchmark Rates", "PSU Stability"],
+    fullName: "SBI Xpress Credit Personal Loan",
+    logo: "/logos/sbi.png",
+    category: "psu",
+    interestRate: "11.00% – 15.10%",
+    minRate: 11.00,
+    maxAmount: "Up to ₹20 Lakhs",
+    tenure: "12 - 72 Months",
+    processingFee: "1.50% or Min ₹1,000",
+    disbursalSpeed: "24 to 48 Hours",
+    badges: ["Lowest Benchmark", "PSU Reliability"],
     featured: false,
-    slug: "sbi-bank",
+    highlights: ["Zero prepayment penalty on floating rates", "Concessional rates for defense & government staff", "Transparent sovereign banking terms"],
+    applyTag: "Personal Loan - State Bank of India"
   },
   {
+    id: "icici",
     bank: "ICICI Bank",
-    logo: "/images/icici.png",
-    maxAmount: 5000000,
-    tenure: "12 - 84 months",
-    processingFee: "Up to 1.5% + GST",
-    interestRate: "10.65% - 14.99%",
-    badges: ["Pre-approved Offers", "3-Second Approval"],
+    fullName: "ICICI Bank Personal Loan",
+    logo: "/logos/icici.png",
+    category: "private",
+    interestRate: "10.75% – 19.00%",
+    minRate: 10.75,
+    maxAmount: "Up to ₹25 Lakhs",
+    tenure: "12 - 72 Months",
+    processingFee: "Up to 1.50% + GST",
+    disbursalSpeed: "3-Second Disbursal (Pre-approved)",
+    badges: ["Fast Disbursal", "High Approval Rate"],
     featured: false,
-    slug: "icici-bank",
+    highlights: ["100% paperless digital onboarding", "Pre-approved limits on iMobile app", "Flexible part-payment options"],
+    applyTag: "Personal Loan - ICICI Bank"
   },
   {
+    id: "axis",
     bank: "Axis Bank",
-    logo: "/images/axis.png",
-    maxAmount: 4000000,
-    tenure: "12 - 84 months",
-    processingFee: "1.0% - 2.0% + GST",
-    interestRate: "10.49% - 15.00%",
-    badges: ["Quick Turnaround", "Flexible Repayment"],
+    fullName: "Axis Bank 24x7 Personal Loan",
+    logo: "/logos/axis.png",
+    category: "private",
+    interestRate: "10.99% – 21.00%",
+    minRate: 10.99,
+    maxAmount: "Up to ₹15 Lakhs",
+    tenure: "12 - 60 Months",
+    processingFee: "1.00% – 2.00% + GST",
+    disbursalSpeed: "Same-Day Disbursal",
+    badges: ["Zero Physical KYC", "Quick Sanction"],
     featured: false,
-    slug: "axis-bank",
+    highlights: ["End-to-end digital approval", "Convenient auto-debit facility", "Custom tenure from 1 to 5 years"],
+    applyTag: "Personal Loan - Axis Bank"
   },
   {
+    id: "bob",
+    bank: "Bank of Baroda",
+    fullName: "Bank of Baroda Baroda Yodha / Personal Loan",
+    logo: "/logos/bob.png",
+    category: "psu",
+    interestRate: "10.90% – 18.25%",
+    minRate: 10.90,
+    maxAmount: "Up to ₹10 Lakhs",
+    tenure: "12 - 84 Months",
+    processingFee: "2.00% or Min ₹1,000",
+    disbursalSpeed: "1 to 2 Business Days",
+    badges: ["Long Tenure (7 Yrs)", "PSU Benchmark"],
+    featured: false,
+    highlights: ["Extended tenure up to 84 months", "Special scheme for pensioners & government employees", "Zero hidden annual maintenance fees"],
+    applyTag: "Personal Loan - Bank of Baroda"
+  },
+  {
+    id: "kotak",
     bank: "Kotak Mahindra Bank",
-    logo: "/images/kotak.png",
-    maxAmount: 3500000,
-    tenure: "12 - 60 months",
-    processingFee: "Up to 2.0% + GST",
-    interestRate: "10.99% - 16.99%",
-    badges: ["100% Online KYC", "Zero Hidden Charges"],
+    fullName: "Kotak Mahindra Personal Loan",
+    logo: "/logos/kotak.png",
+    category: "private",
+    interestRate: "10.99% – 16.99%",
+    minRate: 10.99,
+    maxAmount: "Up to ₹35 Lakhs",
+    tenure: "12 - 60 Months",
+    processingFee: "Up to 2.00% + GST",
+    disbursalSpeed: "Within 2 Hours",
+    badges: ["Instant e-Sign", "Low Cap Rate"],
     featured: false,
-    slug: "kotak-bank",
-  },
-  {
-    bank: "Bajaj Finserv",
-    logo: "/images/bajaj.png",
-    maxAmount: 4000000,
-    tenure: "12 - 96 months",
-    processingFee: "Up to 2.5% + GST",
-    interestRate: "11.00% - 22.00%",
-    badges: ["Flexi Loan Option", "High Loan Cap"],
-    featured: false,
-    slug: "bajaj-finserv",
-  },
+    highlights: ["Digital loan sanction via Aadhaar OTP", "Zero physical branch visit required", "Transparent Key Fact Statement (KFS) upfront"],
+    applyTag: "Personal Loan - Kotak Mahindra Bank"
+  }
 ];
 
 const LoanOffersGrid = ({ openApplyModal, openEligibilityModal }) => {
+  const [selectedFilter, setSelectedFilter] = useState("all");
+
+  const filteredOffers = personalLoanOffers.filter((offer) => {
+    if (selectedFilter === "all") return true;
+    if (selectedFilter === "psu") return offer.category === "psu";
+    if (selectedFilter === "private") return offer.category === "private";
+    if (selectedFilter === "instant") return offer.disbursalSpeed.toLowerCase().includes("instant") || offer.disbursalSpeed.toLowerCase().includes("second");
+    return true;
+  });
+
   return (
-    <section id="offers-grid" className="my-14 scroll-mt-24">
+    <section id="offers-grid" className="my-14 scroll-mt-24 font-ibm">
       <div className="text-center max-w-3xl mx-auto mb-10">
-        <span className="inline-block bg-blue-50 text-blue-700 text-xs sm:text-sm font-semibold px-3 py-1 rounded-full uppercase tracking-wider mb-2">
-          Lender Comparison
+        <span className="inline-block bg-slate-100 text-slate-800 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider mb-2 border border-slate-200">
+          Verified Lender Comparison
         </span>
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
-          Compare Personal Loan Interest Rates &amp; Processing Fees (Updated Monthly)
+        <h2 className="text-2xl sm:text-3xl font-bold text-slate-950 tracking-tight">
+          Compare Top Personal Loan Interest Rates &amp; Processing Fees
         </h2>
-        <p className="text-gray-600 text-sm sm:text-base mt-2">
-          Compare verified interest rates, processing charges, and borrowing limits from leading banks and NBFCs.
+        <p className="text-slate-600 text-sm sm:text-base mt-2">
+          Compare verified interest rate spreads, borrowing limits, and processing charges across India&apos;s leading scheduled banks and NBFCs.
         </p>
+
+        {/* Filter Tabs */}
+        <div className="flex flex-wrap items-center justify-center gap-2 mt-6">
+          <button
+            type="button"
+            onClick={() => setSelectedFilter("all")}
+            className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+              selectedFilter === "all"
+                ? "bg-slate-900 text-white shadow-sm"
+                : "bg-white text-slate-700 border border-slate-200 hover:bg-slate-50"
+            }`}
+          >
+            All Lenders ({personalLoanOffers.length})
+          </button>
+          <button
+            type="button"
+            onClick={() => setSelectedFilter("psu")}
+            className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+              selectedFilter === "psu"
+                ? "bg-slate-900 text-white shadow-sm"
+                : "bg-white text-slate-700 border border-slate-200 hover:bg-slate-50"
+            }`}
+          >
+            Public Sector / PSU Banks
+          </button>
+          <button
+            type="button"
+            onClick={() => setSelectedFilter("private")}
+            className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+              selectedFilter === "private"
+                ? "bg-slate-900 text-white shadow-sm"
+                : "bg-white text-slate-700 border border-slate-200 hover:bg-slate-50"
+            }`}
+          >
+            Private Sector Banks
+          </button>
+          <button
+            type="button"
+            onClick={() => setSelectedFilter("instant")}
+            className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
+              selectedFilter === "instant"
+                ? "bg-slate-900 text-white shadow-sm"
+                : "bg-white text-slate-700 border border-slate-200 hover:bg-slate-50"
+            }`}
+          >
+            <Zap className="w-3.5 h-3.5 text-amber-500" />
+            <span>Instant Disbursal</span>
+          </button>
+        </div>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 min-h-[580px]">
-        {offers.map((offer) => (
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {filteredOffers.map((offer) => (
           <div
-            key={offer.bank}
-            className={`relative bg-white rounded-2xl p-6 sm:p-7 shadow-sm border transition-all duration-300 hover:shadow-xl hover:-translate-y-1 flex flex-col justify-between ${
+            key={offer.id}
+            className={`relative bg-white rounded-xl p-6 shadow-sm border transition-all duration-200 hover:shadow-md flex flex-col justify-between ${
               offer.featured
-                ? "border-teal-400 ring-1 ring-teal-200"
-                : "border-gray-200 hover:border-blue-300"
+                ? "border-amber-400/80 ring-1 ring-amber-300/40"
+                : "border-slate-200 hover:border-slate-300"
             }`}
           >
             {offer.featured && (
-              <div className="absolute -top-3 left-6 bg-gradient-to-r from-teal-600 to-emerald-600 text-white px-3 py-0.5 rounded-full text-xs font-bold shadow-sm uppercase tracking-wider">
-                ★ Best Match
+              <div className="absolute -top-3 left-6 bg-slate-900 text-amber-400 px-3 py-0.5 rounded-full text-xs font-bold shadow-sm uppercase tracking-wider flex items-center gap-1">
+                <Sparkles className="w-3 h-3 text-amber-400" />
+                <span>Featured Pick</span>
               </div>
             )}
 
             <div>
-              <div className="flex items-center justify-between gap-4 mb-4">
-                <div>
-                  <h3 className="font-extrabold text-xl text-gray-900 tracking-tight">
-                    {offer.bank}
-                  </h3>
-                  <div className="text-xs text-teal-700 font-semibold mt-0.5">
-                    Starting at {offer.interestRate.split("-")[0].trim()} p.a.
+              {/* Header: Logo & Bank Name */}
+              <div className="flex items-center justify-between gap-4 mb-4 pb-4 border-b border-slate-100">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-lg bg-slate-50 border border-slate-100 p-1 flex items-center justify-center shrink-0">
+                    <img
+                      src={offer.logo}
+                      alt={offer.bank}
+                      className="max-h-8 max-w-full object-contain"
+                      loading="lazy"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                      }}
+                    />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-slate-950 text-base leading-snug">
+                      {offer.bank}
+                    </h3>
+                    <span className="text-xs text-slate-500 block">
+                      {offer.category === "psu" ? "Public Sector Bank" : "Scheduled Commercial Bank"}
+                    </span>
                   </div>
                 </div>
-                <div className="w-14 h-14 bg-gray-50 border border-gray-100 rounded-xl p-2 flex items-center justify-center shrink-0">
-                  <img
-                    src={offer.logo}
-                    alt={`${offer.bank} logo`}
-                    width="48"
-                    height="48"
-                    style={{ aspectRatio: "1/1" }}
-                    className="max-h-full max-w-full object-contain"
-                    loading="lazy"
-                  />
+
+                <div className="text-right">
+                  <span className="text-[11px] font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full inline-block">
+                    Verified
+                  </span>
                 </div>
               </div>
 
               {/* Badges */}
               <div className="flex flex-wrap gap-1.5 mb-5">
-                {offer.badges.map((badge) => (
+                {offer.badges.map((b) => (
                   <span
-                    key={badge}
-                    className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium bg-blue-50 text-blue-800 border border-blue-100"
+                    key={b}
+                    className="text-[11px] font-medium bg-slate-100 text-slate-700 px-2 py-0.5 rounded border border-slate-200"
                   >
-                    {badge}
+                    {b}
                   </span>
                 ))}
               </div>
 
-              {/* Data Table */}
-              <div className="space-y-2.5 text-xs sm:text-sm text-gray-600 border-t border-b border-gray-100 py-4 mb-6">
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-500">Max Loan Amount</span>
-                  <span className="font-bold text-gray-900">
-                    ₹{offer.maxAmount.toLocaleString("en-IN")}
-                  </span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-500">Interest Rate Range</span>
-                  <span className="font-semibold text-gray-800">
+              {/* 3-Column Metric Box */}
+              <div className="grid grid-cols-2 gap-3 bg-slate-50 p-3.5 rounded-lg border border-slate-100 mb-5 text-left">
+                <div>
+                  <span className="text-xs text-slate-500 font-medium block">Interest Rate</span>
+                  <span className="text-sm font-bold text-slate-900 tabular-nums">
                     {offer.interestRate}
                   </span>
                 </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-500">Processing Fee</span>
-                  <span className="font-medium text-gray-800">
+                <div>
+                  <span className="text-xs text-slate-500 font-medium block">Max Loan</span>
+                  <span className="text-sm font-bold text-slate-900 tabular-nums">
+                    {offer.maxAmount}
+                  </span>
+                </div>
+                <div>
+                  <span className="text-xs text-slate-500 font-medium block">Tenure Range</span>
+                  <span className="text-sm font-bold text-slate-900 tabular-nums">
+                    {offer.tenure}
+                  </span>
+                </div>
+                <div>
+                  <span className="text-xs text-slate-500 font-medium block">Processing Fee</span>
+                  <span className="text-sm font-bold text-slate-900 tabular-nums">
                     {offer.processingFee}
                   </span>
                 </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-500">Tenure</span>
-                  <span className="font-medium text-gray-800">{offer.tenure}</span>
-                </div>
               </div>
+
+              {/* Key Bullet Features */}
+              <ul className="space-y-1.5 mb-6 text-xs text-slate-600">
+                {offer.highlights.map((h, i) => (
+                  <li key={i} className="flex items-start gap-1.5">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
+                    <span>{h}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
 
-            {/* Action Buttons */}
-            <div className="space-y-2 pt-2">
-              <div className="flex gap-2">
+            {/* Actions */}
+            <div className="space-y-2 pt-2 border-t border-slate-100">
+              <button
+                type="button"
+                onClick={() => {
+                  if (openApplyModal) openApplyModal(offer.applyTag);
+                }}
+                className="w-full h-11 bg-amber-600 hover:bg-amber-700 active:bg-amber-800 text-white font-semibold rounded-lg shadow-sm hover:shadow transition-all flex items-center justify-center gap-2 cursor-pointer text-sm"
+              >
+                <span>Apply Instantly</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+
+              {openEligibilityModal && (
                 <button
                   type="button"
-                  onClick={() => openApplyModal && openApplyModal(`Personal Loan - ${offer.bank}`)}
-                  className="flex-1 bg-teal-600 hover:bg-teal-700 text-white font-bold py-2.5 px-3 rounded-xl shadow-sm transition-colors text-sm flex items-center justify-center gap-1.5"
+                  onClick={() => openEligibilityModal(offer.applyTag)}
+                  className="w-full h-9 bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 font-medium rounded-lg transition-colors text-xs cursor-pointer"
                 >
-                  <span>Apply Now</span>
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                  </svg>
+                  Check Eligibility
                 </button>
-
-                {openEligibilityModal && (
-                  <button
-                    type="button"
-                    onClick={openEligibilityModal}
-                    className="bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold py-2.5 px-3 rounded-xl transition-colors text-xs sm:text-sm"
-                  >
-                    Eligibility
-                  </button>
-                )}
-              </div>
-
-              <div className="text-center">
-                <Link
-                  to="/loans/personal/overview"
-                  className="text-xs text-blue-600 hover:text-blue-800 font-medium hover:underline inline-flex items-center gap-1"
-                >
-                  <span>View comprehensive {offer.bank} breakdown</span>
-                  <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-                  </svg>
-                </Link>
-              </div>
+              )}
             </div>
           </div>
         ))}

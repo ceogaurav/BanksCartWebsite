@@ -1,375 +1,1004 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate, useLocation } from 'react-router-dom';
-import { HelpCircle, ChevronDown, Check, Star, ShieldAlert, Sparkles, BookOpen, AlertCircle, Info, Landmark, Percent, Award, ShieldCheck, ArrowRight, Play, MessageSquare, TrendingUp, CreditCard, Smartphone, Zap, Tv, Receipt } from 'lucide-react';
+import { useParams, useNavigate, useLocation, Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
+import { 
+  Smartphone, 
+  Receipt, 
+  Zap, 
+  Tv, 
+  Car, 
+  Flame, 
+  CreditCard, 
+  ShieldCheck, 
+  Wifi, 
+  Droplets,
+  ChevronDown, 
+  Check, 
+  CheckCircle2, 
+  ArrowRight, 
+  Lock, 
+  HelpCircle, 
+  Download, 
+  Printer, 
+  Share2, 
+  AlertCircle,
+  Copy,
+  Building2,
+  Clock,
+  Sparkles,
+  Search,
+  ExternalLink,
+  RefreshCw,
+  Tag
+} from 'lucide-react';
+import Breadcrumb from '../../components/Breadcrumb';
 import CibilCheckerForm from '../../components/common/CibilCheckerForm';
-import { RECHARGE_PAGE_MAP, RechargePageContent } from '../../data/rechargePageData';
+import { 
+  RECHARGE_PAGE_MAP, 
+  RechargePageContent, 
+  RechargePlan, 
+  INDIAN_TELECOM_CIRCLES, 
+  MOBILE_PREPAID_PLANS,
+  ELECTRICITY_BILLERS,
+  FASTAG_BANKS,
+  DTH_OPERATORS,
+  LPG_PROVIDERS,
+  LOAN_EMI_LENDERS,
+  INSURANCE_COMPANIES,
+  BROADBAND_OPERATORS,
+  WATER_BOARDS
+} from '../../data/rechargePageData';
 
-interface EditorialArticle {
-  title: string;
-  content: string[];
+const SERVICE_CATEGORIES = [
+  { key: 'mobile', label: 'Mobile Prepaid', icon: Smartphone, path: '/recharge/mobile' },
+  { key: 'postpaid', label: 'Mobile Postpaid', icon: Receipt, path: '/recharge/postpaid' },
+  { key: 'electricity', label: 'Electricity', icon: Zap, path: '/recharge/electricity' },
+  { key: 'dth', label: 'DTH Satellite', icon: Tv, path: '/recharge/dth' },
+  { key: 'fastag', label: 'FASTag Toll', icon: Car, path: '/recharge/fastag' },
+  { key: 'lpg', label: 'LPG Gas Booking', icon: Flame, path: '/recharge/lpg' },
+  { key: 'loan-emi', label: 'Loan EMI', icon: CreditCard, path: '/recharge/loan-emi' },
+  { key: 'insurance', label: 'Insurance Premium', icon: ShieldCheck, path: '/recharge/insurance' },
+  { key: 'broadband', label: 'Broadband & Fiber', icon: Wifi, path: '/recharge/broadband' },
+  { key: 'water', label: 'Municipal Water', icon: Droplets, path: '/recharge/water' },
+];
+
+interface VerifiedBillDetails {
+  consumerName: string;
+  accountNumber: string;
+  billNumber: string;
+  billDate: string;
+  dueDate: string;
+  billPeriod: string;
+  amount: number;
+  convenienceFee: number;
 }
-
-const getRechargeDetailedArticles = (slug: string): EditorialArticle[] => {
-  const formatSlug = (s: string) => {
-    if (s === 'dth') return 'DTH Recharge';
-    if (s === 'lpg') return 'LPG Gas Booking';
-    return s
-      .split('-')
-      .map(word => {
-        if (word.toUpperCase() === 'EMI') return 'EMI';
-        if (word.toUpperCase() === 'BBPS') return 'BBPS';
-        if (word.toUpperCase() === 'UPI') return 'UPI';
-        return word.charAt(0).toUpperCase() + word.slice(1);
-      })
-      .join(' ');
-  };
-  const readableName = formatSlug(slug);
-
-  return [
-    {
-      title: `The Architecture of Digital Payment Settlements under the Bharat Bill Payment System (BBPS)`,
-      content: [
-        `Settling your monthly statements under the broader **${readableName}** framework represents a core administrative necessity for maintaining uninterrupted services and shielding your credit rating. Operating under strict guidelines set by the National Payments Corporation of India (NPCI), the Bharat Bill Payment System (BBPS) provides a unified, highly interoperable, and fully regulated network. This secure digital infrastructure ensures that payments made online are instantly matched against billing accounts in real-time.`,
-        `By leveraging BanksCart's instant utility clearance gateway, you can bypass manual queues and manage your payments in seconds. Our direct bank-to-merchant API interfaces fetch the exact billing outstanding, confirm account name details, and generate secure digital receipt files, eliminating the risks of missing due dates or paying late fees.`
-      ]
-    },
-    {
-      title: `Security Auditing and Encrypted Gateways: Protecting Your Digital Transactions`,
-      content: [
-        `Consumer safety is paramount within the **${readableName}** digital payments ecosystem. To shield against phishing, fraudulent billing notifications, or payment redirections, all transactions utilize state-of-the-art encryption protocols (SSL/TLS 256-bit keys) and multi-factor UPI security. The two-tier authentication (UPI Pin and mobile OTPs) guarantees that payments are authorized solely by the verified cardholder.`,
-        `Furthermore, our system implements proactive transaction status tracking. In the rare event of a network timeout or auto-debit failure, the deducted money is held securely in escrow and automatically credited back to your original source account within 2 to 3 working days. Settle your statements with absolute peace of mind, fully backed by RBI-regulated banking security.`
-      ]
-    },
-    {
-      title: `Tax Slabs, Billing Invoices, and Commercial Deductions on Utilities`,
-      content: [
-        `For corporate taxpayers and sole proprietors, utility payments under **${readableName}** carry substantial tax benefits and operational savings. As per Indian direct and indirect tax codes, electricity bills, commercial mobile postpaid connections, and LPG transactions are fully deductible as legitimate business operational expenses (OPEX). This standard accounting allowance reduces your net taxable income and boosts annual profitability.`,
-        `To optimize your claims, businesses must secure valid GST invoices containing their active GSTIN. This enables registered entities to claim Input Tax Credit (ITC) on the GST paid for commercial utility bills. Consistently archiving your digital payment receipts and bank statements on BanksCart ensures you compile perfect audit logs and maximize compliance margins.`
-      ]
-    }
-  ];
-};
 
 const DynamicRechargePage: React.FC = () => {
   const { subPath } = useParams<{ subPath: string }>();
   const navigate = useNavigate();
   const location = useLocation();
+
+  // Normalize active service key
+  const getActiveKey = (): string => {
+    if (!subPath || subPath === 'overview') {
+      return location.pathname === '/recharge' || location.pathname === '/recharge/overview' ? 'overview' : 'mobile';
+    }
+    if (subPath === 'prepaid' || subPath === 'prepaid-mobile-recharge') return 'mobile';
+    if (subPath === 'bill-payment' || subPath === 'bills') return 'overview';
+    return subPath.toLowerCase();
+  };
+
+  const activeKey = getActiveKey();
+  const activeContent: RechargePageContent = RECHARGE_PAGE_MAP[activeKey] || RECHARGE_PAGE_MAP['overview'];
+
+  // Form State
+  const [consumerNum, setConsumerNum] = useState('');
+  const [operator, setOperator] = useState('');
+  const [circle, setCircle] = useState(INDIAN_TELECOM_CIRCLES[0]);
+  const [selectedState, setSelectedState] = useState('');
+  const [amount, setAmount] = useState('');
+  const [paymentMode, setPaymentMode] = useState<'upi' | 'card' | 'netbanking'>('upi');
+  const [upiId, setUpiId] = useState('');
+  const [cardNumber, setCardNumber] = useState('');
+  const [cardExpiry, setCardExpiry] = useState('');
+  const [cardCvv, setCardCvv] = useState('');
+  const [netBank, setNetBank] = useState('HDFC Bank');
+  const [promoCode, setPromoCode] = useState('');
+  const [appliedPromo, setAppliedPromo] = useState<string | null>(null);
+
+  // Plan Browser state (for Mobile / DTH)
+  const [selectedPlanTab, setSelectedPlanTab] = useState<'Popular' | '5G Unlimited' | 'Long Term' | 'Data Add-on' | 'Talktime'>('Popular');
+  const [planSearch, setPlanSearch] = useState('');
+
+  // Bill Fetching State
+  const [isFetchingBill, setIsFetchingBill] = useState(false);
+  const [fetchedBill, setFetchedBill] = useState<VerifiedBillDetails | null>(null);
+
+  // Payment Execution State
+  const [isPaying, setIsPaying] = useState(false);
+  const [paymentStep, setPaymentStep] = useState<'form' | 'processing' | 'success'>('form');
+  const [txDetails, setTxDetails] = useState<{
+    txId: string;
+    bbpsRef: string;
+    billerApproval: string;
+    timestamp: string;
+    amount: number;
+    consumerId: string;
+    consumerName: string;
+    billerName: string;
+    mode: string;
+  } | null>(null);
+
+  // FAQ Accordion State
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
+  const [copyFeedback, setCopyFeedback] = useState(false);
 
-  // Helper to convert slug/subPath to a readable title
-  const formatSlug = (slug: string) => {
-    let name = slug
-      .split('-')
-      .map(word => {
-        if (word.toUpperCase() === 'EMI') return 'EMI';
-        return word.charAt(0).toUpperCase() + word.slice(1);
-      })
-      .join(' ');
-    
-    if (location.pathname.includes('prepaid-mobile-recharge')) {
-      return `${name} Prepaid Mobile Recharge`;
-    }
-    if (location.pathname.includes('mobile-postpaid-bill-payment')) {
-      return `${name} Mobile Postpaid Bill Payment`;
-    }
-    return name;
-  };
-
-  // Safe fallback procedural configurations for 100% dynamic paths coverage
-  const generateFallbackConfig = (slug: string): RechargePageContent => {
-    const readableSlug = formatSlug(slug);
-    
-    let numLabel = "Consumer/Connection Number";
-    let numPlaceholder = "Enter consumer account number";
-    let operatorsList = ["National Utility Operator A", "National Utility Operator B", "Regional Power Board C", "Public Service Board D"];
-    
-    if (slug.includes('mobile') || slug.includes('postpaid') || slug === 'airtel') {
-      numLabel = "10-Digit Mobile Number";
-      numPlaceholder = "Enter 10-digit mobile number";
-      operatorsList = ["Bharti Airtel", "Reliance Jio", "Vodafone Idea (Vi)", "BSNL"];
-    } else if (slug.includes('dth')) {
-      numLabel = "DTH Subscriber ID / Smart Card Number";
-      numPlaceholder = "Enter DTH subscriber ID";
-      operatorsList = ["Tata Play (Tata Sky)", "Airtel Digital TV", "Dish TV", "Sun Direct", "Videocon d2h"];
-    } else if (slug.includes('gas') || slug.includes('lpg')) {
-      numLabel = "LPG Consumer Number / Mobile Number";
-      numPlaceholder = "Enter LPG connection details";
-      operatorsList = ["Indane Gas", "HP Gas", "Bharat Gas"];
-    }
-
-    let customFAQs = [
-      { q: `What is a ${readableSlug}?`, a: `A ${readableSlug} portal represents a secure digital gateway built under BanksCart BBPS to settle active utility statements, recharges, or co-branded monthly fees online.` },
-      { q: "Is the transaction processed instantly?", a: "Yes. All utility recharges and bill payments are settled in real-time, and credit is cleared immediately." },
-      { q: "Do you charge extra convenience fees?", a: "No. BanksCart charges absolutely zero convenience fees or intermediate commissions on standard utility bills." },
-      { q: "What should I do if my payment fails?", a: "If money is deducted but the transaction fails, your bank triggers a secure reversal automatically within 2 to 3 business days." },
-      { q: "How do I download my payment receipt?", a: "A digital invoice receipt is instantly rendered on-screen after authorization, and a copy is sent directly to your email." },
-      { q: "Can I save connection details for future bills?", a: "Yes. Registered users can save consumer numbers in their account dashboard for one-click payments." },
-      { q: "Do you support credit card bill payments?", a: "Yes, you can settle national credit card dues securely under the 'Bill Payments' tab." },
-      { q: "Is the payment portal regulated?", a: "Yes, our utility gateways comply with the NPCI Bharat Bill Payment System (BBPS) safety standards." },
-      { q: "Can I convert large utility payments into EMIs?", a: "Yes. Using a credit card to pay allows you to convert single statements above ₹2,500 into easy EMIs." },
-      { q: "What is an automated bill scheduler?", a: "An upcoming feature that automatically notifies you and schedules payments 48 hours before active utility bills reach their due date." }
-    ];
-
-    if (slug === 'airtel') {
-      const isPrepaid = location.pathname.includes('prepaid-mobile-recharge');
-      const isPostpaid = location.pathname.includes('mobile-postpaid-bill-payment');
-      
-      if (isPrepaid) {
-        numLabel = "10-Digit Airtel Mobile Number";
-        numPlaceholder = "Enter 10-digit Airtel prepaid mobile number";
-        operatorsList = ["Bharti Airtel"];
-        customFAQs = [
-          { q: "What is Airtel Prepaid Mobile Recharge?", a: "Airtel Prepaid Mobile Recharge is a simple digital gateway that allows you to buy internet data packs, unlimited calling plans, and talktime vouchers instantly using UPI or card networks on BanksCart." },
-          { q: "What are the most popular Airtel prepaid plans?", a: "Popular packs include the ₹299 plan (1.5GB/day, 28 days), the ₹839 plan (2GB/day, 84 days), and the annual ₹2999 pack offering 2GB/day with unlimited calls." },
-          { q: "How long does the recharge credit take to arrive?", a: "Recharges are processed instantly by Airtel's server, and you will receive an SMS confirmation in under 5 seconds." }
-        ];
-      } else if (isPostpaid) {
-        numLabel = "10-Digit Airtel Postpaid Mobile Number";
-        numPlaceholder = "Enter 10-digit Airtel postpaid billing number";
-        operatorsList = ["Bharti Airtel"];
-        customFAQs = [
-          { q: "What is Airtel Mobile Postpaid Bill Payment?", a: "Airtel Mobile Postpaid Bill Payment is a secure gateway to clear your monthly postpaid statement dues using BBPS on BanksCart." },
-          { q: "How do I claim GST input tax credits on Airtel bills?", a: "Ensure your active corporate GSTIN is mapped to your Airtel billing profile. You can retrieve invoices showing the GST split to claim input tax credits." }
-        ];
-      }
-    }
-
-    return {
-      title: `${readableSlug} Online: Compare & Settle Instantly`,
-      badge: "Utility Payments Hub",
-      intro: `Pay your **${readableSlug}** online securely at BanksCart. Experience real-time billing logs, zero convenience fees, and automated due date notifications.`,
-      numLabel,
-      numPlaceholder,
-      operators: operatorsList,
-      checklistTitle: "Investor Action Checklist",
-      checklist: [
-        `Select operator: Choose your verified service provider or state utility board.`,
-        `Fetch active bill: Enter your connection details to retrieve exact payment details.`,
-        "Settle instantly: Complete authorization safely using direct UPI or card networks."
-      ],
-      faqs: customFAQs
-    };
-  };
-
-  const currentSlug = subPath || 'overview';
-  const config = RECHARGE_PAGE_MAP[currentSlug] || generateFallbackConfig(currentSlug);
-  const detailedArticles = getRechargeDetailedArticles(currentSlug);
-
-  // Real-Time Interactive Payment Mock States
-  const [consumerNum, setConsumerNum] = useState<string>('');
-  const [operator, setOperator] = useState<string>('');
-  const [amount, setAmount] = useState<string>('');
-  const [showPinModal, setShowPinModal] = useState<boolean>(false);
-  const [paymentPin, setPaymentPin] = useState<string>('');
-  const [isPaying, setIsPaying] = useState<boolean>(false);
-  const [isSuccess, setIsSuccess] = useState<boolean>(false);
-  const [txId, setTxId] = useState<string>('');
-
-  // Settle operators on path changes
+  // Reset or initialize when activeKey changes
   useEffect(() => {
-    setConsumerNum('');
-    setOperator(config.operators[0]);
-    setAmount('');
-    setShowPinModal(false);
-    setPaymentPin('');
-    setIsPaying(false);
-    setIsSuccess(false);
-    setActiveFaq(null);
     window.scrollTo(0, 0);
-  }, [subPath]);
+    setConsumerNum('');
+    setAmount('');
+    setFetchedBill(null);
+    setPaymentStep('form');
+    setIsPaying(false);
+    setActiveFaq(null);
+    setAppliedPromo(null);
 
-  // Handler for Proceed to Pay
-  const handleProceedToPay = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!consumerNum || !operator || !amount) {
-      alert("Please fill in all the payment details first.");
-      return;
+    // Default operator based on active category
+    if (activeKey === 'mobile' || activeKey === 'postpaid') {
+      setOperator(activeContent.operators[0] || 'Reliance Jio Prepaid');
+    } else if (activeContent.billers && activeContent.billers.length > 0) {
+      setOperator(activeContent.billers[0].name);
+    } else {
+      setOperator(activeContent.operators[0] || '');
     }
-    setShowPinModal(true);
+  }, [activeKey]);
+
+  // Handle service category tab switch
+  const handleCategorySwitch = (targetKey: string, targetPath: string) => {
+    navigate(targetPath);
   };
 
-  // Handler for secure Pin authorization simulation
-  const handleAuthorizePayment = (e: React.FormEvent) => {
+  // Simulated Bill Fetch
+  const handleFetchBill = (e: React.FormEvent) => {
     e.preventDefault();
-    if (paymentPin.length < 4) {
-      alert("Please enter a valid 4-digit or 6-digit secure UPI Pin.");
+    if (!consumerNum || consumerNum.trim().length < 4) {
+      alert(`Please enter a valid ${activeContent.numLabel}`);
       return;
     }
-    setShowPinModal(false);
+
+    setIsFetchingBill(true);
+    setTimeout(() => {
+      setIsFetchingBill(false);
+      // Realistic simulated customer name and bill details based on consumer number
+      const names = ["AMIT VERMA", "PRIYA SHARMA", "RAJESH KUMAR", "SUNITA PATEL", "DEEPAK JOSHI"];
+      const seed = Math.abs(consumerNum.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0));
+      const simulatedName = names[seed % names.length];
+      const simulatedAmount = activeContent.quickAmounts[1] || 1250;
+
+      const dueDateObj = new Date();
+      dueDateObj.setDate(dueDateObj.getDate() + 14);
+      const dueDateStr = dueDateObj.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+
+      setFetchedBill({
+        consumerName: simulatedName,
+        accountNumber: consumerNum.toUpperCase(),
+        billNumber: `BILL-${Math.floor(10000000 + Math.random() * 90000000)}`,
+        billDate: new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }),
+        dueDate: dueDateStr,
+        billPeriod: "Current Billing Cycle (30 Days)",
+        amount: simulatedAmount,
+        convenienceFee: 0
+      });
+      setAmount(simulatedAmount.toString());
+    }, 700);
+  };
+
+  // Plan Selection for Mobile / DTH
+  const handleSelectPlan = (plan: RechargePlan) => {
+    setAmount(plan.price.toString());
+  };
+
+  // Apply Promo
+  const handleApplyPromo = (code: string) => {
+    setPromoCode(code);
+    setAppliedPromo(code);
+  };
+
+  // Payment Execution Simulation
+  const handleProceedToPayment = (e: React.FormEvent) => {
+    e.preventDefault();
+    const finalAmount = parseFloat(amount);
+    if (!finalAmount || isNaN(finalAmount) || finalAmount <= 0) {
+      alert("Please enter or select a valid payment amount.");
+      return;
+    }
+    if (!consumerNum || consumerNum.trim().length < 4) {
+      alert(`Please input a valid ${activeContent.numLabel}`);
+      return;
+    }
+
+    setPaymentStep('processing');
     setIsPaying(true);
 
-    // Simulate secure banking clearance for 1.5 seconds
+    // Multi-stage BBPS settlement simulation
     setTimeout(() => {
+      const now = new Date();
+      const timeStr = now.toLocaleDateString('en-IN', { 
+        day: '2-digit', 
+        month: 'short', 
+        year: 'numeric' 
+      }) + ', ' + now.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+
+      setTxDetails({
+        txId: `TXN${Math.floor(1000000000 + Math.random() * 9000000000)}`,
+        bbpsRef: `BBPS-IN-${Math.floor(100000000000 + Math.random() * 900000000000)}`,
+        billerApproval: `APR-${Math.floor(100000 + Math.random() * 900000)}`,
+        timestamp: timeStr,
+        amount: finalAmount,
+        consumerId: consumerNum,
+        consumerName: fetchedBill ? fetchedBill.consumerName : "VERIFIED CONSUMER",
+        billerName: operator || activeContent.title,
+        mode: paymentMode === 'upi' ? `UPI (${upiId || 'GPay / PhonePe'})` : paymentMode === 'card' ? 'Debit/Credit Card' : `Net Banking (${netBank})`
+      });
+
       setIsPaying(false);
-      setIsSuccess(true);
-      setTxId(`TXN${Math.floor(1000000000 + Math.random() * 9000000000)}`);
-    }, 1500);
+      setPaymentStep('success');
+    }, 1800);
   };
 
-  // Reset payment states to make another transaction
+  // Reset payment console
   const handleMakeAnotherPayment = () => {
     setConsumerNum('');
     setAmount('');
-    setPaymentPin('');
-    setIsSuccess(false);
+    setFetchedBill(null);
+    setPaymentStep('form');
+    setTxDetails(null);
+  };
+
+  // Trigger Print Receipt
+  const handlePrintReceipt = () => {
+    window.print();
+  };
+
+  // Copy Receipt URL / Reference
+  const handleCopyReceipt = () => {
+    if (!txDetails) return;
+    const text = `BanksCart BBPS Payment Verified\nReference: ${txDetails.bbpsRef}\nAmount: ₹${txDetails.amount}\nBiller: ${txDetails.billerName}\nDate: ${txDetails.timestamp}`;
+    navigator.clipboard.writeText(text);
+    setCopyFeedback(true);
+    setTimeout(() => setCopyFeedback(false), 2500);
+  };
+
+  // Get active operator plans for Mobile Prepaid
+  const currentOperatorPlans: RechargePlan[] = 
+    activeKey === 'mobile' && MOBILE_PREPAID_PLANS[operator] 
+      ? MOBILE_PREPAID_PLANS[operator] 
+      : (MOBILE_PREPAID_PLANS["Reliance Jio Prepaid"] || []);
+
+  const filteredPlans = currentOperatorPlans.filter(p => {
+    const matchesTab = selectedPlanTab === 'Popular' ? true : p.category === selectedPlanTab;
+    const matchesSearch = planSearch === '' 
+      || p.price.toString().includes(planSearch) 
+      || p.description.toLowerCase().includes(planSearch.toLowerCase())
+      || p.perks.toLowerCase().includes(planSearch.toLowerCase());
+    return matchesTab && matchesSearch;
+  });
+
+  // Canonical & SEO Data
+  const canonicalUrl = `https://bankscart.com/recharge${activeKey === 'overview' ? '' : `/${activeKey}`}`;
+  const schemaJsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": canonicalUrl,
+        "url": canonicalUrl,
+        "name": activeContent.metaTitle,
+        "description": activeContent.metaDescription,
+        "isPartOf": {
+          "@type": "WebSite",
+          "@id": "https://bankscart.com/#website",
+          "name": "BanksCart",
+          "url": "https://bankscart.com"
+        }
+      },
+      {
+        "@type": "Service",
+        "name": activeContent.title,
+        "serviceType": "Financial & Utility Payment Service",
+        "provider": {
+          "@type": "Organization",
+          "name": "BanksCart",
+          "url": "https://bankscart.com"
+        },
+        "areaServed": "IN",
+        "termsOfService": "https://bankscart.com/terms"
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://bankscart.com/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Recharge & Bill Payments",
+            "item": "https://bankscart.com/recharge"
+          },
+          ...(activeKey !== 'overview' ? [{
+            "@type": "ListItem",
+            "position": 3,
+            "name": activeContent.badge,
+            "item": canonicalUrl
+          }] : [])
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": activeContent.faqs.map(faq => ({
+          "@type": "Question",
+          "name": faq.q,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": faq.a
+          }
+        }))
+      }
+    ]
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 pt-24 pb-16 font-sans">
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Banner Header */}
-        <div className="bg-gradient-to-r from-blue-700 via-sky-700 to-indigo-800 rounded-3xl text-white p-8 sm:p-12 mb-12 shadow-xl relative overflow-hidden">
-          <div className="absolute right-0 bottom-0 opacity-10 transform translate-x-12 translate-y-12">
-            <span className="text-[200px] font-black leading-none select-none">BILL</span>
-          </div>
-          <div className="max-w-3xl relative z-10">
-            <span className="bg-white/10 backdrop-blur-md text-white border border-white/20 rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-wider">
-              {config.badge}
-            </span>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black mt-6 tracking-tight leading-tight">
-              {config.title}
-            </h1>
-            <p className="text-sky-100 text-base sm:text-lg mt-4 leading-relaxed max-w-2xl font-medium">
-              {config.intro}
-            </p>
-          </div>
-        </div>
+    <div className="min-h-screen bg-[#F8FAFC] font-sans pt-20 sm:pt-24 pb-16 antialiased text-slate-800">
+      <Helmet>
+        <title>{activeContent.metaTitle}</title>
+        <meta name="description" content={activeContent.metaDescription} />
+        <link rel="canonical" href={canonicalUrl} />
+        <meta property="og:title" content={activeContent.metaTitle} />
+        <meta property="og:description" content={activeContent.metaDescription} />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:type" content="website" />
+        <script type="application/ld+json">
+          {JSON.stringify(schemaJsonLd)}
+        </script>
+      </Helmet>
 
-        {/* Split Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+      {/* Main Container */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+        
+        {/* Breadcrumb Navigation */}
+        <Breadcrumb path={["Home", "Recharge & Bill Payments", activeKey === 'overview' ? 'Overview' : activeContent.badge]} />
+
+        {/* Hero Section: Institutional Trust Navy / Deep Slate */}
+        <section className="bg-gradient-to-r from-slate-900 via-[#1E3A8A] to-slate-900 rounded-2xl text-white p-6 sm:p-10 shadow-lg border border-slate-800 relative overflow-hidden">
+          <div className="max-w-3xl space-y-4 relative z-10">
+            <div className="inline-flex items-center gap-2 bg-blue-500/15 border border-blue-400/30 rounded-full px-3.5 py-1 text-xs font-semibold text-blue-200 uppercase tracking-wider">
+              <ShieldCheck className="w-3.5 h-3.5 text-blue-400" />
+              NPCI Bharat BillPay (BBPS) Clearinghouse
+            </div>
+
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight text-white">
+              {activeContent.title}
+            </h1>
+
+            <p className="text-slate-200 text-base sm:text-lg leading-relaxed max-w-2xl font-normal">
+              {activeContent.intro}
+            </p>
+
+            {/* Trust Indicators */}
+            <div className="pt-2 flex flex-wrap gap-4 text-xs font-medium text-slate-300">
+              <span className="flex items-center gap-1.5 bg-slate-800/60 px-3 py-1 rounded-md border border-slate-700/60">
+                <CheckCircle2 className="w-4 h-4 text-emerald-400" /> 100% Free Convenience Fee
+              </span>
+              <span className="flex items-center gap-1.5 bg-slate-800/60 px-3 py-1 rounded-md border border-slate-700/60">
+                <CheckCircle2 className="w-4 h-4 text-emerald-400" /> Instant Clearance Receipts
+              </span>
+              <span className="flex items-center gap-1.5 bg-slate-800/60 px-3 py-1 rounded-md border border-slate-700/60">
+                <Lock className="w-4 h-4 text-emerald-400" /> 256-Bit SSL Secured Escrow
+              </span>
+            </div>
+          </div>
+        </section>
+
+        {/* Service Switcher Category Navigation Bar */}
+        <section className="bg-white rounded-2xl border border-slate-200/90 shadow-sm p-3 overflow-x-auto scrollbar-none">
+          <div className="flex items-center gap-2 min-w-max">
+            {SERVICE_CATEGORIES.map((item) => {
+              const Icon = item.icon;
+              const isActive = activeKey === item.key;
+              return (
+                <button
+                  key={item.key}
+                  onClick={() => handleCategorySwitch(item.key, item.path)}
+                  className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 ${
+                    isActive
+                      ? 'bg-[#1E3A8A] text-white shadow-md shadow-blue-900/20'
+                      : 'bg-slate-50 text-slate-700 hover:bg-slate-100 hover:text-slate-900 border border-slate-200/60'
+                  }`}
+                >
+                  <Icon className={`w-4 h-4 ${isActive ? 'text-amber-300' : 'text-slate-500'}`} />
+                  <span>{item.label}</span>
+                </button>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* Two-Column Interactive Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
           
-          {/* Left Column: Interactive Payment Mock Portal */}
+          {/* Main Action Console (7 cols) */}
           <div className="lg:col-span-7 space-y-8">
             
-            {!isSuccess && !isPaying && (
-              <div className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm">
-                <h3 className="text-lg font-bold text-slate-800 mb-6 flex items-center gap-2">
-                  <Receipt className="w-5 h-5 text-blue-600" />
-                  Instant Bill Clearance Portal
-                </h3>
-                
-                <form onSubmit={handleProceedToPay} className="space-y-6">
+            {/* Payment Console Card */}
+            <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8">
+              
+              {/* STAGE 1: Form Input */}
+              {paymentStep === 'form' && (
+                <div className="space-y-6">
                   
-                  {/* Select Operator */}
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Select Operator / Service Board</label>
-                    <select
-                      value={operator}
-                      onChange={(e) => setOperator(e.target.value)}
-                      className="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 bg-white focus:outline-none focus:border-blue-500 transition-colors"
+                  <div className="flex items-center justify-between border-b border-slate-100 pb-4">
+                    <div>
+                      <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
+                        <span className="w-1.5 h-5 bg-[#1E3A8A] rounded-full"></span>
+                        {activeContent.badge} Console
+                      </h2>
+                      <p className="text-xs text-slate-500 mt-0.5">
+                        Enter your connection identifiers to process payment instantly.
+                      </p>
+                    </div>
+                    <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded border border-emerald-200">
+                      <Check className="w-3.5 h-3.5" /> BBPS Live
+                    </span>
+                  </div>
+
+                  <form onSubmit={handleProceedToPayment} className="space-y-5">
+                    
+                    {/* Operator or Biller Selector */}
+                    <div>
+                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">
+                        Select Operator / Utility Board
+                      </label>
+                      <select
+                        value={operator}
+                        onChange={(e) => setOperator(e.target.value)}
+                        className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#1E3A8A] transition-colors"
+                      >
+                        {activeContent.billers && activeContent.billers.length > 0 ? (
+                          activeContent.billers.map((b) => (
+                            <option key={b.id} value={b.name}>
+                              {b.name} {b.state ? `(${b.state})` : ''}
+                            </option>
+                          ))
+                        ) : (
+                          activeContent.operators.map((op, idx) => (
+                            <option key={idx} value={op}>{op}</option>
+                          ))
+                        )}
+                      </select>
+                    </div>
+
+                    {/* Telecom Circle (Only for Mobile Prepaid) */}
+                    {activeKey === 'mobile' && (
+                      <div>
+                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">
+                          Telecom Circle / Region
+                        </label>
+                        <select
+                          value={circle}
+                          onChange={(e) => setCircle(e.target.value)}
+                          className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#1E3A8A] transition-colors"
+                        >
+                          {INDIAN_TELECOM_CIRCLES.map((c, i) => (
+                            <option key={i} value={c}>{c}</option>
+                          ))}
+                        </select>
+                      </div>
+                    )}
+
+                    {/* Consumer Identifier / Mobile / CA Number */}
+                    <div>
+                      <div className="flex items-center justify-between mb-1.5">
+                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-600">
+                          {activeContent.numLabel}
+                        </label>
+                        <span className="text-[11px] text-slate-400">
+                          {activeContent.numHint}
+                        </span>
+                      </div>
+                      <div className="relative">
+                        <input
+                          type={activeContent.numType || "text"}
+                          value={consumerNum}
+                          onChange={(e) => setConsumerNum(e.target.value)}
+                          placeholder={activeContent.numPlaceholder}
+                          className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#1E3A8A] transition-colors uppercase"
+                          required
+                        />
+                        {/* Optional Fetch Bill trigger for utility boards */}
+                        {activeKey !== 'mobile' && activeKey !== 'overview' && (
+                          <button
+                            type="button"
+                            onClick={handleFetchBill}
+                            disabled={isFetchingBill || consumerNum.length < 3}
+                            className="absolute right-2 top-2 bottom-2 px-3.5 bg-[#1E3A8A] text-white text-xs font-bold rounded-lg hover:bg-blue-900 disabled:opacity-40 transition-colors flex items-center gap-1.5"
+                          >
+                            {isFetchingBill ? (
+                              <>
+                                <RefreshCw className="w-3.5 h-3.5 animate-spin" /> Fetching...
+                              </>
+                            ) : (
+                              'Fetch Bill'
+                            )}
+                          </button>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Fetched Bill Details Card (If Bill Fetched) */}
+                    {fetchedBill && (
+                      <div className="p-4 bg-blue-50/60 border border-blue-200 rounded-xl space-y-3">
+                        <div className="flex items-center justify-between border-b border-blue-200/60 pb-2">
+                          <span className="text-xs font-bold text-blue-900 uppercase tracking-wider flex items-center gap-1.5">
+                            <CheckCircle2 className="w-4 h-4 text-emerald-600" /> Verified Biller Statement
+                          </span>
+                          <span className="text-xs text-blue-700 font-medium">Due: {fetchedBill.dueDate}</span>
+                        </div>
+                        <div className="grid grid-cols-2 gap-3 text-xs">
+                          <div>
+                            <span className="text-slate-500 block">Consumer Name:</span>
+                            <span className="font-bold text-slate-900">{fetchedBill.consumerName}</span>
+                          </div>
+                          <div>
+                            <span className="text-slate-500 block">Account Number:</span>
+                            <span className="font-mono font-semibold text-slate-800">{fetchedBill.accountNumber}</span>
+                          </div>
+                          <div>
+                            <span className="text-slate-500 block">Bill Number:</span>
+                            <span className="font-mono text-slate-700">{fetchedBill.billNumber}</span>
+                          </div>
+                          <div>
+                            <span className="text-slate-500 block">Bill Period:</span>
+                            <span className="text-slate-700">{fetchedBill.billPeriod}</span>
+                          </div>
+                        </div>
+                        <div className="pt-2 border-t border-blue-200/60 flex items-center justify-between">
+                          <span className="text-xs font-bold text-slate-700">Total Billed Amount:</span>
+                          <span className="text-lg font-bold font-mono text-[#1E3A8A] tabular-nums">
+                            ₹{fetchedBill.amount.toLocaleString('en-IN')}
+                          </span>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Amount & Quick Chips */}
+                    <div>
+                      <div className="flex items-center justify-between mb-1.5">
+                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-600">
+                          Recharge / Payment Amount (₹)
+                        </label>
+                        <span className="text-xs font-semibold text-emerald-700">
+                          0% Convenience Surcharge
+                        </span>
+                      </div>
+                      <div className="relative">
+                        <span className="absolute left-4 top-3 text-slate-400 font-bold text-base">₹</span>
+                        <input
+                          type="number"
+                          value={amount}
+                          onChange={(e) => setAmount(e.target.value)}
+                          placeholder="Enter payment amount"
+                          className="w-full pl-9 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-base font-bold font-mono text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#1E3A8A] transition-colors tabular-nums"
+                          required
+                        />
+                      </div>
+
+                      {/* Quick Amount Chips */}
+                      <div className="mt-2.5 flex flex-wrap gap-2">
+                        {activeContent.quickAmounts.map((qVal) => (
+                          <button
+                            key={qVal}
+                            type="button"
+                            onClick={() => setAmount(qVal.toString())}
+                            className={`px-3 py-1 rounded-lg text-xs font-bold font-mono transition-colors border ${
+                              amount === qVal.toString()
+                                ? 'bg-[#1E3A8A] text-white border-[#1E3A8A]'
+                                : 'bg-slate-100 text-slate-700 hover:bg-slate-200 border-slate-200/80'
+                            }`}
+                          >
+                            ₹{qVal}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Plan Browser for Mobile Prepaid */}
+                    {activeKey === 'mobile' && (
+                      <div className="pt-3 border-t border-slate-100 space-y-3">
+                        <div className="flex items-center justify-between">
+                          <h3 className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+                            <Sparkles className="w-3.5 h-3.5 text-amber-500" /> Browse Tariff Plans for {operator}
+                          </h3>
+                        </div>
+
+                        {/* Plan Tabs */}
+                        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none text-xs font-semibold">
+                          {(['Popular', '5G Unlimited', 'Long Term', 'Data Add-on', 'Talktime'] as const).map((tab) => (
+                            <button
+                              key={tab}
+                              type="button"
+                              onClick={() => setSelectedPlanTab(tab)}
+                              className={`px-3 py-1.5 rounded-lg whitespace-nowrap transition-colors ${
+                                selectedPlanTab === tab
+                                  ? 'bg-[#1E3A8A] text-white'
+                                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                              }`}
+                            >
+                              {tab}
+                            </button>
+                          ))}
+                        </div>
+
+                        {/* Plan Cards Grid */}
+                        <div className="space-y-2 max-h-64 overflow-y-auto pr-1">
+                          {filteredPlans.map((plan) => (
+                            <div
+                              key={plan.id}
+                              onClick={() => handleSelectPlan(plan)}
+                              className={`p-3 rounded-xl border text-xs cursor-pointer transition-all flex items-center justify-between gap-4 ${
+                                amount === plan.price.toString()
+                                  ? 'border-[#1E3A8A] bg-blue-50/50 shadow-sm'
+                                  : 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50'
+                              }`}
+                            >
+                              <div className="space-y-1">
+                                <div className="flex items-center gap-2">
+                                  <span className="font-mono font-bold text-sm text-[#1E3A8A]">₹{plan.price}</span>
+                                  <span className="font-semibold text-slate-700 bg-slate-100 px-2 py-0.5 rounded text-[11px]">
+                                    {plan.validity}
+                                  </span>
+                                  <span className="font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded text-[11px]">
+                                    {plan.data}
+                                  </span>
+                                </div>
+                                <p className="text-slate-500 text-[11px]">{plan.description}</p>
+                                {plan.perks && (
+                                  <p className="text-[10px] text-amber-700 font-medium">★ {plan.perks}</p>
+                                )}
+                              </div>
+                              <button
+                                type="button"
+                                className={`px-3 py-1.5 rounded-lg font-bold text-xs flex-shrink-0 transition-colors ${
+                                  amount === plan.price.toString()
+                                    ? 'bg-[#1E3A8A] text-white'
+                                    : 'bg-slate-100 text-slate-700 hover:bg-[#1E3A8A] hover:text-white'
+                                }`}
+                              >
+                                {amount === plan.price.toString() ? 'Selected' : 'Select'}
+                              </button>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Payment Mode Selection */}
+                    <div className="pt-3 border-t border-slate-100 space-y-3">
+                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-600">
+                        Select Payment Method
+                      </label>
+                      <div className="grid grid-cols-3 gap-2">
+                        <button
+                          type="button"
+                          onClick={() => setPaymentMode('upi')}
+                          className={`p-3 rounded-xl border text-center text-xs font-bold transition-all ${
+                            paymentMode === 'upi'
+                              ? 'border-[#1E3A8A] bg-blue-50/60 text-[#1E3A8A]'
+                              : 'border-slate-200 text-slate-600 hover:bg-slate-50'
+                          }`}
+                        >
+                          UPI (GPay / PhonePe)
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setPaymentMode('card')}
+                          className={`p-3 rounded-xl border text-center text-xs font-bold transition-all ${
+                            paymentMode === 'card'
+                              ? 'border-[#1E3A8A] bg-blue-50/60 text-[#1E3A8A]'
+                              : 'border-slate-200 text-slate-600 hover:bg-slate-50'
+                          }`}
+                        >
+                          Debit / Credit Card
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setPaymentMode('netbanking')}
+                          className={`p-3 rounded-xl border text-center text-xs font-bold transition-all ${
+                            paymentMode === 'netbanking'
+                              ? 'border-[#1E3A8A] bg-blue-50/60 text-[#1E3A8A]'
+                              : 'border-slate-200 text-slate-600 hover:bg-slate-50'
+                          }`}
+                        >
+                          Net Banking
+                        </button>
+                      </div>
+
+                      {/* Payment Sub-fields */}
+                      {paymentMode === 'upi' && (
+                        <div className="p-3 bg-slate-50 rounded-xl border border-slate-200">
+                          <label className="block text-[11px] font-semibold text-slate-600 mb-1">
+                            Enter UPI VPA ID (Optional / Instant QR)
+                          </label>
+                          <input
+                            type="text"
+                            value={upiId}
+                            onChange={(e) => setUpiId(e.target.value)}
+                            placeholder="e.g. mobile@upi or username@okhdfcbank"
+                            className="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-xs font-medium text-slate-800 focus:outline-none focus:ring-1 focus:ring-[#1E3A8A]"
+                          />
+                        </div>
+                      )}
+
+                      {paymentMode === 'card' && (
+                        <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
+                          <input
+                            type="text"
+                            value={cardNumber}
+                            onChange={(e) => setCardNumber(e.target.value)}
+                            placeholder="Card Number (16-digits)"
+                            maxLength={19}
+                            className="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-xs font-mono font-medium"
+                          />
+                          <div className="grid grid-cols-2 gap-2">
+                            <input
+                              type="text"
+                              value={cardExpiry}
+                              onChange={(e) => setCardExpiry(e.target.value)}
+                              placeholder="MM / YY"
+                              maxLength={5}
+                              className="px-3 py-2 bg-white border border-slate-200 rounded-lg text-xs font-mono text-center"
+                            />
+                            <input
+                              type="password"
+                              value={cardCvv}
+                              onChange={(e) => setCardCvv(e.target.value)}
+                              placeholder="CVV"
+                              maxLength={3}
+                              className="px-3 py-2 bg-white border border-slate-200 rounded-lg text-xs font-mono text-center"
+                            />
+                          </div>
+                        </div>
+                      )}
+
+                      {paymentMode === 'netbanking' && (
+                        <div className="p-3 bg-slate-50 rounded-xl border border-slate-200">
+                          <label className="block text-[11px] font-semibold text-slate-600 mb-1">
+                            Select Net Banking Gateway
+                          </label>
+                          <select
+                            value={netBank}
+                            onChange={(e) => setNetBank(e.target.value)}
+                            className="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-xs font-semibold text-slate-800"
+                          >
+                            <option value="HDFC Bank">HDFC Bank</option>
+                            <option value="State Bank of India">State Bank of India (SBI)</option>
+                            <option value="ICICI Bank">ICICI Bank</option>
+                            <option value="Axis Bank">Axis Bank</option>
+                            <option value="Kotak Mahindra Bank">Kotak Mahindra Bank</option>
+                            <option value="Punjab National Bank">Punjab National Bank (PNB)</option>
+                            <option value="Bank of Baroda">Bank of Baroda</option>
+                          </select>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Bill Summary Breakdown */}
+                    <div className="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-2 text-xs">
+                      <div className="flex justify-between text-slate-600">
+                        <span>Bill Amount:</span>
+                        <span className="font-mono font-semibold tabular-nums text-slate-900">
+                          ₹{amount ? parseFloat(amount).toLocaleString('en-IN') : '0.00'}
+                        </span>
+                      </div>
+                      <div className="flex justify-between text-slate-600">
+                        <span>Platform Convenience Fee:</span>
+                        <span className="font-mono font-bold text-emerald-600">₹0.00 (FREE)</span>
+                      </div>
+                      <div className="flex justify-between text-slate-600">
+                        <span>BBPS NPCI Processing:</span>
+                        <span className="font-mono font-semibold text-slate-500">₹0.00</span>
+                      </div>
+                      <div className="pt-2 border-t border-slate-200 flex justify-between text-sm font-bold text-slate-900">
+                        <span>Total Payable:</span>
+                        <span className="font-mono text-lg text-[#1E3A8A] tabular-nums">
+                          ₹{amount ? parseFloat(amount).toLocaleString('en-IN') : '0.00'}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Submit CTA Button */}
+                    <button
+                      type="submit"
+                      disabled={isPaying || !amount || parseFloat(amount) <= 0 || !consumerNum}
+                      className="w-full py-4 bg-amber-600 hover:bg-amber-700 active:scale-[0.99] text-white font-extrabold rounded-xl text-base shadow-md transition-all flex items-center justify-center gap-2 disabled:opacity-40"
                     >
-                      {config.operators.map((op, idx) => (
-                        <option key={idx} value={op}>{op}</option>
-                      ))}
-                    </select>
+                      <span>Proceed to Pay ₹{amount || '0'} Securely</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </button>
+                  </form>
+                </div>
+              )}
+
+              {/* STAGE 2: Processing Live Clearance Spinner */}
+              {paymentStep === 'processing' && (
+                <div className="py-16 text-center space-y-6">
+                  <div className="relative w-20 h-20 mx-auto">
+                    <div className="absolute inset-0 border-4 border-blue-200 rounded-full animate-ping opacity-30"></div>
+                    <div className="w-20 h-20 border-4 border-[#1E3A8A] border-t-transparent rounded-full animate-spin"></div>
+                  </div>
+                  <div className="space-y-2 max-w-sm mx-auto">
+                    <h3 className="text-xl font-bold text-slate-900">
+                      Authorizing with NPCI BBPS...
+                    </h3>
+                    <p className="text-xs text-slate-500 leading-relaxed">
+                      Securing 256-bit SSL encrypted connection and validating transaction against official biller clearing switch.
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              {/* STAGE 3: Official Digital BBPS Payment Receipt */}
+              {paymentStep === 'success' && txDetails && (
+                <div className="space-y-6">
+                  {/* Success Alert Banner */}
+                  <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4 flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-emerald-600 text-white flex items-center justify-center flex-shrink-0">
+                      <Check className="w-6 h-6 stroke-[3]" />
+                    </div>
+                    <div>
+                      <h3 className="text-base font-extrabold text-emerald-900">
+                        Payment Cleared Successfully!
+                      </h3>
+                      <p className="text-xs text-emerald-700">
+                        Official BBPS acknowledgment received. Operator ledger updated.
+                      </p>
+                    </div>
                   </div>
 
-                  {/* Consumer / Connection Number */}
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">{config.numLabel}</label>
-                    <input
-                      type="text"
-                      value={consumerNum}
-                      onChange={(e) => setConsumerNum(e.target.value)}
-                      placeholder={config.numPlaceholder}
-                      className="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 focus:outline-none focus:border-blue-500 transition-colors"
-                    />
+                  {/* Printable Formal BBPS Receipt Card */}
+                  <div id="printable-receipt" className="p-6 bg-slate-50 border-2 border-slate-200 rounded-2xl space-y-5">
+                    
+                    {/* Receipt Header */}
+                    <div className="flex items-center justify-between border-b border-slate-200 pb-4">
+                      <div>
+                        <div className="text-base font-black text-[#1E3A8A] tracking-tight">
+                          BanksCart Bharat BillPay
+                        </div>
+                        <span className="text-[10px] uppercase tracking-wider font-bold text-slate-500">
+                          Official Digital Transaction Receipt
+                        </span>
+                      </div>
+                      <div className="text-right">
+                        <span className="inline-block bg-emerald-100 text-emerald-800 text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded">
+                          Settled
+                        </span>
+                        <div className="text-[10px] text-slate-400 mt-0.5">
+                          {txDetails.timestamp}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Paid Amount Callout */}
+                    <div className="p-4 bg-white rounded-xl border border-slate-200 text-center">
+                      <span className="text-xs text-slate-500 font-medium">Total Amount Paid</span>
+                      <div className="text-3xl font-black font-mono text-[#1E3A8A] tabular-nums mt-0.5">
+                        ₹{txDetails.amount.toLocaleString('en-IN')}.00
+                      </div>
+                      <span className="text-[11px] text-emerald-600 font-semibold block mt-1">
+                        Convenience Fee Charged: ₹0.00 (Zero Fee Guarantee)
+                      </span>
+                    </div>
+
+                    {/* Line Item Receipt Matrix */}
+                    <div className="divide-y divide-slate-200/80 text-xs">
+                      <div className="py-2.5 flex justify-between">
+                        <span className="text-slate-500">BBPS Reference ID:</span>
+                        <span className="font-mono font-bold text-slate-900">{txDetails.bbpsRef}</span>
+                      </div>
+                      <div className="py-2.5 flex justify-between">
+                        <span className="text-slate-500">BanksCart Transaction ID:</span>
+                        <span className="font-mono font-semibold text-slate-800">{txDetails.txId}</span>
+                      </div>
+                      <div className="py-2.5 flex justify-between">
+                        <span className="text-slate-500">Service Category:</span>
+                        <span className="font-semibold text-slate-900">{activeContent.badge}</span>
+                      </div>
+                      <div className="py-2.5 flex justify-between">
+                        <span className="text-slate-500">Biller / Operator Name:</span>
+                        <span className="font-semibold text-slate-900 text-right">{txDetails.billerName}</span>
+                      </div>
+                      <div className="py-2.5 flex justify-between">
+                        <span className="text-slate-500">{activeContent.numLabel}:</span>
+                        <span className="font-mono font-bold text-slate-900">{txDetails.consumerId}</span>
+                      </div>
+                      <div className="py-2.5 flex justify-between">
+                        <span className="text-slate-500">Consumer Name:</span>
+                        <span className="font-bold text-slate-900">{txDetails.consumerName}</span>
+                      </div>
+                      <div className="py-2.5 flex justify-between">
+                        <span className="text-slate-500">Payment Channel:</span>
+                        <span className="text-slate-700">{txDetails.mode}</span>
+                      </div>
+                      <div className="py-2.5 flex justify-between">
+                        <span className="text-slate-500">NPCI Clearing Approval:</span>
+                        <span className="font-mono text-emerald-700 font-semibold">{txDetails.billerApproval}</span>
+                      </div>
+                    </div>
+
+                    <div className="pt-2 text-[10px] text-slate-400 text-center leading-normal">
+                      This is a computer-generated official BBPS receipt under the National Payments Corporation of India (NPCI) clearing guidelines and does not require a physical signature.
+                    </div>
                   </div>
 
-                  {/* Payment Amount */}
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Amount Payable (₹)</label>
-                    <input
-                      type="number"
-                      value={amount}
-                      onChange={(e) => setAmount(e.target.value)}
-                      placeholder="Enter billing or recharge amount in ₹"
-                      className="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 focus:outline-none focus:border-blue-500 transition-colors font-mono"
-                    />
+                  {/* Receipt Actions */}
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                    <button
+                      onClick={handlePrintReceipt}
+                      className="py-2.5 px-4 bg-slate-900 text-white rounded-xl text-xs font-bold hover:bg-slate-800 transition-colors flex items-center justify-center gap-1.5"
+                    >
+                      <Printer className="w-3.5 h-3.5" /> Print / Save PDF
+                    </button>
+                    <button
+                      onClick={handleCopyReceipt}
+                      className="py-2.5 px-4 bg-slate-100 text-slate-800 rounded-xl text-xs font-bold hover:bg-slate-200 transition-colors flex items-center justify-center gap-1.5"
+                    >
+                      <Copy className="w-3.5 h-3.5" /> {copyFeedback ? 'Copied!' : 'Copy Reference'}
+                    </button>
+                    <button
+                      onClick={handleMakeAnotherPayment}
+                      className="py-2.5 px-4 bg-blue-50 text-[#1E3A8A] rounded-xl text-xs font-bold hover:bg-blue-100 transition-colors flex items-center justify-center gap-1.5 col-span-2 sm:col-span-1"
+                    >
+                      <RefreshCw className="w-3.5 h-3.5" /> Another Bill
+                    </button>
                   </div>
+                </div>
+              )}
+            </div>
 
-                  {/* Action Button */}
-                  <button
-                    type="submit"
-                    className="w-full py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl font-bold hover:shadow-lg active:scale-95 transition-all text-sm flex justify-center items-center gap-2"
-                  >
-                    Proceed to Pay Outstanding
-                    <ArrowRight className="w-4 h-4" />
-                  </button>
-
-                </form>
+            {/* Checklist: Why Settle through BanksCart BBPS */}
+            <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 space-y-4">
+              <h3 className="text-lg font-bold text-slate-900 flex items-center gap-2">
+                <span className="w-1.5 h-5 bg-[#1E3A8A] rounded-full"></span>
+                {activeContent.checklistTitle}
+              </h3>
+              <div className="space-y-3">
+                {activeContent.checklist.map((item, i) => (
+                  <div key={i} className="flex items-start gap-3 p-3 bg-slate-50 rounded-xl border border-slate-200/60">
+                    <div className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">
+                      ✓
+                    </div>
+                    <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-medium">
+                      {item}
+                    </p>
+                  </div>
+                ))}
               </div>
-            )}
+            </div>
 
-            {/* Simulated Payment Loading State */}
-            {isPaying && (
-              <div className="bg-white rounded-2xl border border-slate-100 p-12 shadow-sm text-center space-y-6">
-                <div className="w-16 h-16 border-4 border-slate-100 border-t-blue-600 rounded-full animate-spin mx-auto"></div>
-                <h4 className="text-base font-bold text-slate-700">Authorizing secure transaction...</h4>
-                <p className="text-xs text-slate-400 font-medium">Please do not refresh the page or exit the browser window.</p>
-              </div>
-            )}
-
-            {/* Interactive Transaction Successful Overlay */}
-            {isSuccess && (
-              <div className="bg-white rounded-3xl border border-slate-100 p-8 shadow-md text-center max-w-xl mx-auto space-y-8 animate-in zoom-in-95 duration-200">
-                <div className="w-16 h-16 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center mx-auto shadow-sm border border-emerald-100">
-                  <Check className="w-8 h-8 stroke-[3]" />
-                </div>
-                <div>
-                  <h3 className="text-xl sm:text-2xl font-black text-slate-800">Transaction Successful!</h3>
-                  <p className="text-xs text-emerald-600 font-bold uppercase tracking-wider mt-2">Bill Settle Reference Generated</p>
-                </div>
-
-                {/* Receipt Grid */}
-                <div className="bg-slate-50 border border-slate-100 rounded-2xl p-6 text-left space-y-4 text-xs font-semibold text-slate-600 font-mono">
-                  <div className="flex justify-between items-center pb-2 border-b border-slate-200/60">
-                    <span>Transaction ID</span>
-                    <span className="text-slate-800 font-bold">{txId}</span>
-                  </div>
-                  <div className="flex justify-between items-center pb-2 border-b border-slate-200/60">
-                    <span>Service Operator</span>
-                    <span className="text-slate-800 font-bold">{operator}</span>
-                  </div>
-                  <div className="flex justify-between items-center pb-2 border-b border-slate-200/60">
-                    <span>Consumer Account</span>
-                    <span className="text-slate-800 font-bold">{consumerNum}</span>
-                  </div>
-                  <div className="flex justify-between items-center py-2 bg-indigo-50/50 rounded-lg px-3">
-                    <span className="text-indigo-900 font-bold">Amount Paid</span>
-                    <span className="text-indigo-700 text-sm font-black">₹{amount}</span>
-                  </div>
-                </div>
-
-                <div className="flex gap-4">
-                  <button
-                    onClick={handleMakeAnotherPayment}
-                    className="flex-1 py-3.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-bold text-sm active:scale-95 transition-all"
-                  >
-                    Settle Another Bill
-                  </button>
-                  <button
-                    onClick={() => window.print()}
-                    className="flex-1 py-3.5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl font-bold text-sm hover:shadow-lg active:scale-95 transition-all"
-                  >
-                    Print Receipt
-                  </button>
-                </div>
-              </div>
-            )}
-
-            {/* Detailed Editorial Sections - Rich Data like the Zero Coupon Bonds Sample */}
-            {detailedArticles.length > 0 && (
-              <div className="space-y-8 mb-8">
-                {detailedArticles.map((art, idx) => (
-                  <div key={idx} className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm space-y-4 hover:shadow-md transition-shadow">
-                    <h3 className="text-xl font-bold text-slate-800 flex items-center gap-2 border-b border-slate-100 pb-3">
-                      <span className="w-1.5 h-6 bg-blue-600 rounded-full"></span>
+            {/* High-Density Editorial Article Sections (No raw markdown!) */}
+            {activeContent.editorialArticles && activeContent.editorialArticles.length > 0 && (
+              <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 space-y-6">
+                {activeContent.editorialArticles.map((art, idx) => (
+                  <div key={idx} className="space-y-3 border-b border-slate-100 last:border-b-0 pb-6 last:pb-0">
+                    <h3 className="text-base sm:text-lg font-bold text-slate-900">
                       {art.title}
                     </h3>
-                    {art.content.map((p, pIdx) => (
-                      <p key={pIdx} className="text-slate-600 text-sm leading-relaxed font-sans font-medium text-justify">
+                    {art.paragraphs.map((p, pIdx) => (
+                      <p key={pIdx} className="text-xs sm:text-sm text-slate-600 leading-relaxed">
                         {p}
                       </p>
                     ))}
@@ -377,100 +1006,158 @@ const DynamicRechargePage: React.FC = () => {
                 ))}
               </div>
             )}
+          </div>
 
-            {/* Checklist guidelines */}
-            <div className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm">
-              <h3 className="text-base font-bold text-slate-800 mb-6">{config.checklistTitle}</h3>
-              <div className="space-y-4">
-                {config.checklist.map((tip, idx) => (
-                  <div key={idx} className="flex gap-4 items-start pb-4 border-b border-slate-50 last:border-0 last:pb-0">
-                    <div className="w-6 h-6 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center flex-shrink-0 font-bold text-xs mt-0.5">
-                      {idx + 1}
-                    </div>
-                    <p className="text-sm text-slate-600 leading-relaxed font-semibold">{tip}</p>
-                  </div>
-                ))}
+          {/* Right Sidebar Widgets (5 cols) */}
+          <div className="lg:col-span-5 space-y-6">
+            
+            {/* BBPS Official Framework Assurance Card */}
+            <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-blue-50 text-[#1E3A8A] flex items-center justify-center font-black">
+                  <ShieldCheck className="w-6 h-6" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-slate-900 text-sm">NPCI BBPS Protection Shield</h3>
+                  <span className="text-[11px] text-slate-500">RBI Regulated National Switch</span>
+                </div>
+              </div>
+
+              <div className="space-y-3 text-xs text-slate-600">
+                <div className="flex gap-2">
+                  <span className="text-emerald-600 font-bold">✓</span>
+                  <span><strong>Zero Surcharge Guarantee:</strong> Never pay platform fees or credit card handling surcharges on utility bills.</span>
+                </div>
+                <div className="flex gap-2">
+                  <span className="text-emerald-600 font-bold">✓</span>
+                  <span><strong>Escrow Refund SLA:</strong> In the rare event of network failure, funds return to source accounts in 24–48 hours.</span>
+                </div>
+                <div className="flex gap-2">
+                  <span className="text-emerald-600 font-bold">✓</span>
+                  <span><strong>Official Biller References:</strong> Every receipt includes a unique 16-digit NPCI transaction audit number.</span>
+                </div>
               </div>
             </div>
 
-            {/* FAQs Accordion */}
-            <div className="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm">
-              <h3 className="text-lg font-bold text-slate-800 mb-6 flex items-center gap-2">
-                <HelpCircle className="w-5 h-5 text-blue-600" />
-                Frequently Asked Questions
+            {/* Exclusive Cashback & Coupon Tokens */}
+            <div className="bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-200 rounded-2xl p-6 space-y-3">
+              <div className="flex items-center gap-2 text-amber-900 font-bold text-sm">
+                <Tag className="w-4 h-4 text-amber-600" />
+                Active Cashback & Discount Tokens
+              </div>
+              <p className="text-xs text-amber-800">
+                Apply verified promo tokens to claim instant bill discounts:
+              </p>
+
+              <div className="space-y-2">
+                <div 
+                  onClick={() => handleApplyPromo('BANKSCARTUPI')}
+                  className="p-3 bg-white rounded-xl border border-amber-200 flex items-center justify-between cursor-pointer hover:border-amber-400 transition-colors"
+                >
+                  <div>
+                    <span className="font-mono font-bold text-xs text-slate-900 block">BANKSCARTUPI</span>
+                    <span className="text-[11px] text-slate-500">Flat ₹25 cashback on first bill payment above ₹200.</span>
+                  </div>
+                  <span className={`px-2 py-1 rounded text-[10px] font-bold ${
+                    appliedPromo === 'BANKSCARTUPI' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'
+                  }`}>
+                    {appliedPromo === 'BANKSCARTUPI' ? 'Applied' : 'Apply'}
+                  </span>
+                </div>
+
+                <div 
+                  onClick={() => handleApplyPromo('SAVENOW')}
+                  className="p-3 bg-white rounded-xl border border-amber-200 flex items-center justify-between cursor-pointer hover:border-amber-400 transition-colors"
+                >
+                  <div>
+                    <span className="font-mono font-bold text-xs text-slate-900 block">SAVENOW</span>
+                    <span className="text-[11px] text-slate-500">100% waiver on processing and utility taxes.</span>
+                  </div>
+                  <span className={`px-2 py-1 rounded text-[10px] font-bold ${
+                    appliedPromo === 'SAVENOW' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'
+                  }`}>
+                    {appliedPromo === 'SAVENOW' ? 'Applied' : 'Apply'}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Embedded CIBIL Check Callout (For EMI / Loan Borrowers) */}
+            <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-4">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                  Credit Score Health
+                </span>
+                <span className="text-[10px] font-bold bg-blue-50 text-blue-700 px-2 py-0.5 rounded">
+                  Free Check
+                </span>
+              </div>
+              <h3 className="font-bold text-slate-900 text-sm">
+                Paying Loan EMIs or Bills? Verify CIBIL Score Impact
               </h3>
-              <div className="space-y-4">
-                {config.faqs.map((faq, index) => (
-                  <div key={index} className="border border-slate-100 rounded-xl overflow-hidden transition-colors">
-                    <button
-                      onClick={() => setActiveFaq(activeFaq === index ? null : index)}
-                      className="w-full flex justify-between items-center p-4 bg-slate-50/50 hover:bg-slate-50 text-left font-bold text-slate-700 text-sm outline-none transition-colors"
-                    >
-                      {faq.q}
-                      <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform ${activeFaq === index ? 'rotate-180 text-blue-600' : ''}`} />
-                    </button>
-                    {activeFaq === index && (
-                      <div className="p-4 text-xs sm:text-sm text-slate-600 border-t border-slate-100 bg-white leading-relaxed font-semibold">
-                        {faq.a}
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                Timely utility and loan clearances shield your credit score from defaults. Check your official bureau rating instantly with zero score impact.
+              </p>
+              <Link
+                to="/cibil/how-to-check-cibil-score-by-pan-card"
+                className="w-full py-2.5 bg-[#1E3A8A] text-white rounded-xl text-xs font-bold hover:bg-blue-900 transition-colors flex items-center justify-center gap-1.5"
+              >
+                <span>Check Credit Score Free</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
             </div>
 
+            {/* BBPS National Grievance Desk */}
+            <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5 space-y-2 text-xs text-slate-600">
+              <div className="flex items-center gap-2 font-bold text-slate-800">
+                <Clock className="w-4 h-4 text-blue-600" />
+                BBPS Grievance & Dispute Redressal Desk
+              </div>
+              <p className="text-[11px] leading-relaxed">
+                For failed transactions, unauthorized debits, or biller status delays, quote your 16-digit BBPS reference number to the National BBPS Grievance Cell:
+              </p>
+              <div className="pt-1 flex items-center justify-between text-xs font-mono font-bold text-slate-900">
+                <span>National Helpline: 1800-11-2222</span>
+                <span className="text-[10px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded font-sans">24/7 Toll-Free</span>
+              </div>
+            </div>
           </div>
-
-          {/* Right Column: Sticky Quick Apply Lead Form */}
-          <div className="lg:col-span-5 lg:sticky lg:top-24">
-            <CibilCheckerForm sourcePage={`${config.title} Payment Page`} />
-          </div>
-
         </div>
 
-      </div>
+        {/* Frequently Asked Questions Accordions */}
+        <section className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-10 space-y-6">
+          <div className="max-w-2xl">
+            <h2 className="text-2xl font-bold text-slate-900 flex items-center gap-2.5">
+              <span className="w-1.5 h-6 bg-[#1E3A8A] rounded-full"></span>
+              {activeContent.badge} Frequently Asked Questions
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-500 mt-1">
+              Clear answers on BBPS clearance times, refund settlement SLAs, and tax receipts.
+            </p>
+          </div>
 
-      {/* Simulated Secure UPI Pin Modal Overlay */}
-      {showPinModal && (
-        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-slate-100 space-y-6 animate-in slide-in-from-bottom-4 duration-200">
-            <div className="text-center">
-              <div className="w-12 h-12 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-3">
-                <ShieldCheck className="w-6 h-6 stroke-[2.5]" />
-              </div>
-              <h4 className="text-base font-black text-slate-800">Secure UPI Pin Required</h4>
-              <p className="text-xs text-slate-400 mt-1 font-medium">Verify transaction amount of <span className="font-bold text-slate-700">₹{amount}</span> to proceed.</p>
-            </div>
-
-            <form onSubmit={handleAuthorizePayment} className="space-y-4">
-              <input
-                type="password"
-                maxLength={6}
-                value={paymentPin}
-                onChange={(e) => setPaymentPin(e.target.value.replace(/\D/g, ''))}
-                placeholder="Enter 4 or 6-digit UPI Pin"
-                className="w-full px-4 py-3 border border-slate-200 rounded-xl text-center text-lg font-bold text-slate-800 tracking-[8px] focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 font-mono"
-              />
-              <div className="flex gap-3">
+          <div className="divide-y divide-slate-100">
+            {activeContent.faqs.map((faq, idx) => (
+              <div key={idx} className="py-4">
                 <button
                   type="button"
-                  onClick={() => setShowPinModal(false)}
-                  className="flex-1 py-3 bg-slate-100 text-slate-700 rounded-xl font-bold text-xs active:scale-95 transition-all"
+                  onClick={() => setActiveFaq(activeFaq === idx ? null : idx)}
+                  className="w-full flex items-center justify-between text-left text-sm sm:text-base font-bold text-slate-900 hover:text-[#1E3A8A] transition-colors"
                 >
-                  Cancel
+                  <span>{faq.q}</span>
+                  <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform ${activeFaq === idx ? 'rotate-180 text-[#1E3A8A]' : ''}`} />
                 </button>
-                <button
-                  type="submit"
-                  className="flex-1 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl font-bold text-xs hover:shadow-lg active:scale-95 transition-all"
-                >
-                  Submit Pin
-                </button>
+                {activeFaq === idx && (
+                  <div className="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed pr-6">
+                    {faq.a}
+                  </div>
+                )}
               </div>
-            </form>
+            ))}
           </div>
-        </div>
-      )}
+        </section>
 
+      </div>
     </div>
   );
 };

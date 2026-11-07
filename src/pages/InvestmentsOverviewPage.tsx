@@ -1,76 +1,78 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
+import { Link } from "react-router-dom";
 import Breadcrumb from "../components/Breadcrumb";
-import InvestmentCard from "../components/investments/InvestmentCard";
-import { motion } from 'framer-motion';
-import { PiggyBank, TrendingUp, LineChart, Wallet, Briefcase, DollarSign, Home, Gem } from "lucide-react"; // Importing Lucide icons
+import { 
+  PiggyBank, 
+  TrendingUp, 
+  ShieldCheck, 
+  Landmark, 
+  FileCheck, 
+  Sparkles, 
+  ArrowRight, 
+  CheckCircle2, 
+  Lock, 
+  Scale, 
+  Calculator,
+  Building2
+} from "lucide-react";
 
-// Define the types of investments offered
-const investmentTypes = [
+const investmentCategories = [
   {
-    title: "Fixed Deposits (FD)",
-    description: "Secure your savings with guaranteed returns. Explore competitive interest rates and flexible tenures.",
-    icon: PiggyBank, // Lucide PiggyBank icon
+    title: "Bank Fixed Deposits (FD)",
+    description: "Lock in guaranteed returns up to 9.00% p.a. Backed by DICGC sovereign protection up to ₹5 Lakhs per bank.",
+    badge: "Guaranteed Return",
+    yieldHighlight: "Up to 9.00% p.a.",
+    icon: PiggyBank,
     to: "/investment/fixed-deposit",
+    actionLabel: "Compare Bank FDs"
   },
   {
-    title: "Mutual Funds",
-    description: "Diversify your portfolio with professionally managed funds. Invest in equity, debt, or hybrid options.",
-    icon: TrendingUp, // Lucide TrendingUp icon
+    title: "Direct Mutual Funds",
+    description: "Build long-term wealth with zero-commission direct mutual funds. Set up automated monthly SIPs starting from ₹100.",
+    badge: "Zero Commission",
+    yieldHighlight: "12% - 18% Target CAGR",
+    icon: TrendingUp,
     to: "/investment/mutual-funds",
+    actionLabel: "Explore Mutual Funds"
   },
   {
-    title: "Stocks & Equities",
-    description: "Invest directly in companies and participate in market growth. Expert insights and trading platforms available.",
-    icon: LineChart, // Lucide LineChart icon
-    to: "/investment/stocks", // Assuming you might add a stocks page later
+    title: "Government Bonds & G-Secs",
+    description: "Invest directly in Central Government dated securities and T-Bills with zero default risk via RBI Retail Direct.",
+    badge: "Sovereign Guarantee",
+    yieldHighlight: "7.05% - 7.50% p.a.",
+    icon: Landmark,
+    to: "/investment/bonds/government",
+    actionLabel: "Explore G-Secs"
   },
   {
-    title: "Bonds",
-    description: "Generate stable income with government and corporate bonds. A lower-risk investment option for your portfolio.",
-    icon: DollarSign, // Lucide DollarSign icon (representing value/income)
-    to: "/investment/bonds", // Assuming you might add a bonds page later
+    title: "Corporate Bonds & NCDs",
+    description: "Earn 1.5% to 3.0% higher yields than regular FDs from CRISIL AAA-rated corporate houses and financial institutions.",
+    badge: "High-Yield Debt",
+    yieldHighlight: "8.25% - 9.50% p.a.",
+    icon: Building2,
+    to: "/investment/bonds/corporate",
+    actionLabel: "View Corporate Bonds"
   },
   {
-    title: "Real Estate",
-    description: "Explore opportunities in property investment for long-term appreciation and rental income.",
-    icon: Home, // Lucide Home icon (assuming it's imported from lucide-react)
-    to: "/investment/real-estate", // Assuming you might add a real estate page later
+    title: "Sovereign Gold Bonds (SGB)",
+    description: "Earn 2.50% annual interest on gold with 100% tax-free capital gains at maturity. Backed by the Reserve Bank of India.",
+    badge: "Tax-Free Capital Gains",
+    yieldHighlight: "2.5% + Gold Gains",
+    icon: Sparkles,
+    to: "/investment/bonds/sovereign-gold",
+    actionLabel: "View Gold Bonds"
   },
   {
-    title: "Gold & Precious Metals",
-    description: "Invest in physical or digital gold for a hedge against inflation and market volatility.",
-    icon: Gem, // Lucide Gem icon (assuming it's imported from lucide-react)
-    to: "/investment/gold", // Assuming you might add a gold investment page later
-  },
+    title: "Tax-Saving Plans (Sec 80C)",
+    description: "Save up to ₹46,800 in income tax with Section 80C compliant ELSS funds, tax-saving FDs, and national retirement schemes.",
+    badge: "Tax Optimization",
+    yieldHighlight: "Save up to ₹46,800 Tax",
+    icon: FileCheck,
+    to: "/investment/more-plans",
+    actionLabel: "Compare Tax Plans"
+  }
 ];
-
-// Framer Motion variants for page entry animation
-const pageVariants = {
-  hidden: { opacity: 0, y: 50 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.8,
-      ease: "easeOut",
-      staggerChildren: 0.1
-    }
-  }
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      type: "spring",
-      stiffness: 80,
-      damping: 15
-    }
-  }
-};
 
 const breadcrumbSchema = {
   "@context": "https://schema.org",
@@ -80,129 +82,199 @@ const breadcrumbSchema = {
       "@type": "ListItem",
       "position": 1,
       "name": "Home",
-      "item": "https://www.bankscart.com/"
+      "item": "https://bankscart.com/"
     },
     {
       "@type": "ListItem",
       "position": 2,
       "name": "Investments",
-      "item": "https://www.bankscart.com/investment"
+      "item": "https://bankscart.com/investment"
     }
   ]
 };
 
-const InvestmentsOverviewPage: React.FC = () => (
-  <>
-    <Helmet>
-      <title>Best Investment Plans & Options in India: FD, Mutual Funds & Stocks | BanksCart</title>
-      <meta name="description" content="Discover high-return investment plans in India. Compare fixed deposits, mutual funds, gold bonds, and retirement options with BanksCart." />
-      <link rel="canonical" href="https://www.bankscart.com/investment" />
-      <script type="application/ld+json">
-        {JSON.stringify(breadcrumbSchema)}
-      </script>
-    </Helmet>
-    <Breadcrumb path={["Home", "Investments"]} />
-  <motion.div
-    className="min-h-screen bg-gradient-to-br from-white/60 to-green-50/80 py-12 px-4 md:px-12 font-inter"
-    variants={pageVariants}
-    initial="hidden"
-    animate="visible"
-  >
-    <motion.h1
-      className="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-12 text-center drop-shadow-lg
-                 bg-clip-text text-transparent bg-gradient-to-r from-green-600 to-teal-700"
-      variants={itemVariants}
-    >
-      Grow Your Wealth with Smart Investments
-    </motion.h1>
+const InvestmentsOverviewPage: React.FC = () => {
+  return (
+    <div className="min-h-screen bg-[#F8FAFC] font-sans text-slate-800 pt-20 sm:pt-24 pb-16 antialiased">
+      <Helmet>
+        <title>Best Investment Plans in India: FD, Mutual Funds, Bonds & SGB | BanksCart</title>
+        <meta 
+          name="description" 
+          content="Explore and compare India's top investment options. Guaranteed bank fixed deposits, zero-commission mutual funds, Government G-Secs, and Sovereign Gold Bonds." 
+        />
+        <link rel="canonical" href="https://bankscart.com/investment" />
+        <script type="application/ld+json">
+          {JSON.stringify(breadcrumbSchema)}
+        </script>
+      </Helmet>
 
-    <motion.p
-      className="text-lg sm:text-xl text-gray-700 max-w-3xl mx-auto text-center mb-12 leading-relaxed"
-      variants={itemVariants}
-    >
-      Explore a diverse range of investment opportunities tailored to your financial goals and risk appetite.
-    </motion.p>
-
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
-      {investmentTypes.map((investment, index) => (
-        <motion.div key={investment.title} variants={itemVariants}>
-          <InvestmentCard {...investment} />
+      {/* Main Container */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
         
-    {/* Government Savings & Tax Savings Resource Block */}
-    <div className="mt-16 max-w-5xl mx-auto bg-white rounded-2xl p-8 border border-slate-200 shadow-sm">
-      <span className="text-xs font-bold text-teal-700 uppercase tracking-wider block mb-1">
-        Government Savings & Tax Savings
-      </span>
-      <h3 className="text-2xl font-bold text-gray-900 mb-3">
-        Government Savings Schemes & Tax Optimization
-      </h3>
-      <p className="text-sm text-gray-650 leading-relaxed mb-6">
-        Maximize sovereign security and triple tax-exempt (EEE) growth through government-backed welfare and retirement avenues. Explore our comprehensive resources:
-      </p>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="p-5 rounded-xl bg-green-50/60 border border-green-200">
-          <h4 className="font-bold text-gray-900 text-base mb-1">Sukanya Samriddhi Yojana (SSY)</h4>
-          <p className="text-xs text-gray-600 mb-3 leading-relaxed">
-            High-interest sovereign savings scheme offering 8.2% p.a. guaranteed returns with Section 80C tax deduction and tax-free maturity for girl children.
-          </p>
-          <a
-            href="/blog/Sukanya-Samriddhi-Yojana-Guide"
-            className="text-xs font-bold text-teal-700 hover:text-teal-800 underline inline-flex items-center"
-          >
-            complete Sukanya Samriddhi Yojana guide &rarr;
-          </a>
-        </div>
-        <div className="p-5 rounded-xl bg-slate-50 border border-slate-200">
-          <h4 className="font-bold text-gray-900 text-base mb-1">SSY Maturity Calculator</h4>
-          <p className="text-xs text-gray-600 mb-3 leading-relaxed">
-            Estimate yearly compounding interest, maturity amount, and tenure timelines with our interactive calculator.
-          </p>
-          <a
-            href="/calculators/ssy-calculator"
-            className="text-xs font-bold text-blue-600 hover:text-blue-700 underline inline-flex items-center"
-          >
-            Calculate SSY Returns &rarr;
-          </a>
-        </div>
+        {/* Breadcrumb Navigation */}
+        <Breadcrumb path={["Home", "Investments"]} />
+
+        {/* Hero Section: Institutional Trust Navy / Slate */}
+        <section className="bg-gradient-to-r from-slate-900 via-[#1E3A8A] to-slate-900 rounded-2xl text-white p-6 sm:p-10 lg:p-12 shadow-lg border border-slate-800">
+          <div className="max-w-3xl space-y-4">
+            <div className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-400/30 rounded-full px-3.5 py-1 text-xs font-semibold text-blue-200 uppercase tracking-wider">
+              <ShieldCheck className="w-3.5 h-3.5 text-blue-400" />
+              Wealth & Fixed Income Marketplace
+            </div>
+
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight text-white">
+              Grow Your Wealth with Verified Investments
+            </h1>
+
+            <p className="text-slate-200 text-base sm:text-lg leading-relaxed max-w-2xl font-normal">
+              Compare India's leading investment avenues side-by-side. From guaranteed bank fixed deposits to direct mutual funds, government bonds, and gold securities.
+            </p>
+
+            <div className="pt-2 flex flex-wrap gap-4 text-xs font-medium text-slate-300">
+              <span className="flex items-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4 text-emerald-400" /> SEBI & RBI Regulated Avenues
+              </span>
+              <span className="flex items-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4 text-emerald-400" /> DICGC Insured Bank FDs
+              </span>
+              <span className="flex items-center gap-1.5">
+                <Lock className="w-4 h-4 text-emerald-400" /> Zero Commission Direct Investing
+              </span>
+            </div>
+          </div>
+        </section>
+
+        {/* 6 Core Investment Category Tiles Grid */}
+        <section className="space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <h2 className="text-2xl font-bold text-slate-900 tracking-tight">
+                Explore Investment Asset Classes
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-600 mt-1">
+                Choose the asset class that matches your risk tolerance, liquidity horizon, and return goals:
+              </p>
+            </div>
+            <span className="text-xs font-semibold text-slate-500 bg-slate-100 px-3 py-1.5 rounded-lg whitespace-nowrap self-start sm:self-auto">
+              Updated November 2026
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {investmentCategories.map((item, idx) => {
+              const Icon = item.icon;
+              return (
+                <div
+                  key={idx}
+                  className="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:border-blue-200 transition-all p-6 sm:p-7 flex flex-col justify-between"
+                >
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <div className="w-12 h-12 rounded-xl bg-blue-50 text-[#1E3A8A] flex items-center justify-center font-bold">
+                        <Icon className="w-6 h-6" />
+                      </div>
+                      <span className="text-xs font-bold text-blue-900 bg-blue-50 border border-blue-200 px-2.5 py-0.5 rounded-full">
+                        {item.badge}
+                      </span>
+                    </div>
+
+                    <div>
+                      <h3 className="text-xl font-bold text-slate-900">{item.title}</h3>
+                      <div className="text-xs font-bold text-emerald-700 font-mono mt-1">
+                        {item.yieldHighlight}
+                      </div>
+                    </div>
+
+                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
+                      {item.description}
+                    </p>
+                  </div>
+
+                  <div className="pt-6 mt-4 border-t border-slate-100">
+                    <Link
+                      to={item.to}
+                      className="inline-flex items-center justify-between w-full p-2.5 rounded-xl bg-slate-50 hover:bg-[#1E3A8A] text-slate-800 hover:text-white font-semibold text-xs transition-colors group"
+                    >
+                      <span>{item.actionLabel}</span>
+                      <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-white group-hover:translate-x-0.5 transition-all" />
+                    </Link>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* Standalone Sovereign Savings & Tax Exemption Section */}
+        <section className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-10 space-y-6">
+          <div>
+            <span className="text-xs font-bold text-[#1E3A8A] uppercase tracking-wider block mb-1">
+              Government Savings & Sovereign Schemes
+            </span>
+            <h3 className="text-2xl font-bold text-slate-900">
+              Government Welfare Schemes & Tax Optimization
+            </h3>
+            <p className="text-xs sm:text-sm text-slate-600 mt-1 max-w-3xl leading-relaxed">
+              Maximize sovereign security and triple tax-exempt (EEE) compounding through central government savings and retirement programs:
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="p-5 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+              <h4 className="font-bold text-slate-900 text-base">Sukanya Samriddhi Yojana (SSY)</h4>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                High-interest sovereign savings scheme offering 8.2% p.a. guaranteed returns with Section 80C tax deduction and 100% tax-free maturity for girl children.
+              </p>
+              <Link
+                to="/blog/Sukanya-Samriddhi-Yojana-Guide"
+                className="text-xs font-bold text-[#1E3A8A] hover:underline inline-flex items-center gap-1 pt-1"
+              >
+                Complete Sukanya Samriddhi Guide &rarr;
+              </Link>
+            </div>
+
+            <div className="p-5 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+              <h4 className="font-bold text-slate-900 text-base">Public Provident Fund (PPF) & NPS</h4>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                Build a secure retirement corpus with guaranteed government interest rates (7.1% p.a. for PPF) plus an additional ₹50,000 tax deduction under Section 80CCD(1B) for NPS.
+              </p>
+              <Link
+                to="/investment/more-plans"
+                className="text-xs font-bold text-[#1E3A8A] hover:underline inline-flex items-center gap-1 pt-1"
+              >
+                Compare Retirement & Tax Plans &rarr;
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* Conversion CTA Banner: Clean & Functional */}
+        <section className="bg-gradient-to-r from-slate-900 via-[#1E3A8A] to-slate-900 text-white rounded-2xl p-6 sm:p-10 shadow-lg border border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-6">
+          <div className="space-y-1.5 text-center sm:text-left">
+            <h3 className="font-bold text-xl sm:text-2xl text-white">Need Guidance on Portfolio Allocation?</h3>
+            <p className="text-xs sm:text-sm text-slate-300 max-w-xl">
+              Compare pre-approved institutional fixed deposits, zero-commission mutual fund SIPs, and sovereign securities online.
+            </p>
+          </div>
+          <div className="flex flex-wrap items-center gap-3">
+            <Link
+              to="/investment/fixed-deposit"
+              className="px-5 py-3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-xl shadow transition-colors whitespace-nowrap text-xs sm:text-sm"
+            >
+              Compare Fixed Deposits &rarr;
+            </Link>
+            <Link
+              to="/investment/mutual-funds"
+              className="px-5 py-3 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/20 transition-colors whitespace-nowrap text-xs sm:text-sm"
+            >
+              Start Mutual Fund SIP
+            </Link>
+          </div>
+        </section>
+
       </div>
     </div>
-  </motion.div>
-      ))}
-    </div>
-
-    <motion.section
-      className="text-center mt-16 p-8 bg-gradient-to-r from-green-600 to-teal-700 rounded-2xl shadow-xl"
-      variants={pageVariants}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.4 }}
-    >
-      <motion.h2
-        className="text-3xl sm:text-4xl font-extrabold text-white mb-4 drop-shadow-lg"
-        variants={itemVariants}
-      >
-        Ready to Build Your Investment Portfolio?
-      </motion.h2>
-      <motion.p
-        className="text-lg text-green-100 mb-8 max-w-2xl mx-auto leading-relaxed"
-        variants={itemVariants}
-      >
-        Our investment experts can provide personalized strategies to help you achieve your financial aspirations.
-      </motion.p>
-      <motion.div variants={itemVariants}>
-        {/* Assuming openApplyModal is passed down from App.tsx if needed, or you can remove it */}
-        <button
-          onClick={() => alert("Connect with an investment expert!")} // Replace with actual modal/contact logic
-          className="bg-white text-green-600 px-8 py-4 rounded-full font-bold text-lg shadow-lg
-                     hover:bg-gray-100 transition-all duration-300 ease-in-out transform hover:-translate-y-1
-                     focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-50"
-        >
-          Talk to an Investment Advisor
-        </button>
-      </motion.div>
-    </motion.section>
-  </motion.div>
-  </>
-);
+  );
+};
 
 export default InvestmentsOverviewPage;

@@ -1,5 +1,7 @@
 import directoryLinksData from './financialDirectoryLinks.json';
 import { getNewPageDetailedContent } from './newPagesDetailedData';
+import { RECHARGE_PAGE_MAP } from './rechargePageData';
+import { getBankById } from './banks';
 
 export interface SEOMetadata {
   title: string;
@@ -1128,6 +1130,49 @@ export function getSEOMetadata(pathname: string): SEOMetadata {
       description: `${d} Check verified information and apply online with BanksCart.`,
       keywords: `${entry.categoryId}, ${entry.name.toLowerCase()}, bankscart services`
     };
+  }
+
+  // 7.5. Recharge & Utility Bill Payment
+  if (cleanPath.startsWith('/recharge') || cleanPath.startsWith('/bill-payment') || cleanPath.startsWith('/bill-payments')) {
+    const sub = cleanPath
+      .replace('/recharge/', '')
+      .replace('/recharge', '')
+      .replace('/bill-payment/', '')
+      .replace('/bill-payment', '')
+      .replace('/bill-payments/', '')
+      .replace('/bill-payments', '');
+    const key = sub && RECHARGE_PAGE_MAP[sub] ? sub : (sub === 'overview' || !sub ? 'overview' : 'mobile');
+    const content = RECHARGE_PAGE_MAP[key] || RECHARGE_PAGE_MAP['overview'];
+    if (content) {
+      return {
+        title: content.metaTitle,
+        description: content.metaDescription,
+        keywords: `${content.badge.toLowerCase()}, bbps bill payment, online recharge, ${content.title.toLowerCase()}`
+      };
+    }
+  }
+
+  // 7.6. Banks Directory & Bank Details
+  if (cleanPath === '/banks' || cleanPath === '/all-banks') {
+    return {
+      title: "All-India Commercial Banks Directory (2026): Interest Rates, Branches & Contact | BanksCart",
+      description: "Explore the complete directory of Indian commercial banks, public sector PSUs, private lenders, and small finance banks. Compare latest Home Loan, Personal Loan, FD, and Savings rates with contact details and IFSC prefixes.",
+      keywords: "indian banks directory, psu banks, private banks in india, bank interest rates, ifsc codes"
+    };
+  }
+
+  if (cleanPath.startsWith('/bank-details/')) {
+    const bankId = cleanPath.replace('/bank-details/', '').replace('/', '');
+    const bank = getBankById(bankId);
+    if (bank) {
+      const homeRate = bank.loanRates.find(r => r.type === 'home')?.minRate || 8.5;
+      const peakFd = bank.fdSlabs[bank.fdSlabs.length - 1]?.regularRate || 7.0;
+      return {
+        title: `${bank.name}: Latest Loan Interest Rates, FD Slabs, Customer Care & IFSC | BanksCart`,
+        description: `Compare ${bank.name} latest Home Loan (${homeRate}% onwards), Personal Loan, Car Loan, and FD rates (up to ${peakFd}%). Check branch network and customer care.`,
+        keywords: `${bank.name.toLowerCase()}, ${bank.shortName.toLowerCase()} loan rates, ${bank.shortName.toLowerCase()} customer care, ${bank.shortName.toLowerCase()} fd rates`
+      };
+    }
   }
 
   // 8. Dynamic pages detailed content

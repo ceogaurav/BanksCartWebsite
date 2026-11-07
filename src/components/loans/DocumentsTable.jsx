@@ -1,4 +1,5 @@
 import React from "react";
+import { FileCheck, ShieldCheck, CheckCircle2 } from "lucide-react";
 
 const documents = [
   {
@@ -18,73 +19,70 @@ const documents = [
   },
   {
     category: "Banking Statements",
-    salaried: "Latest 6 months' salary bank account statement (PDF/NetBanking)",
-    selfEmployed: "Latest 6 to 12 months' primary current/savings account statement",
+    salaried: "Latest 6 months' salary bank account statement (PDF / NetBanking / Account Aggregator)",
+    selfEmployed: "Latest 6 to 12 months' primary current/savings bank statements",
   },
   {
-    category: "Business Proof",
+    category: "Employment / Business Proof",
     salaried: "Current employee ID card & official corporate email verification",
     selfEmployed: "GST Registration Certificate, Shop & Establishment Certificate, or MSME Udyam",
   },
 ];
 
 const DocumentsTable = () => (
-  <section className="my-14">
+  <section className="my-14 font-ibm">
     <div className="text-center max-w-3xl mx-auto mb-10">
-      <span className="inline-block bg-blue-50 text-blue-700 text-xs sm:text-sm font-semibold px-3 py-1 rounded-full uppercase tracking-wider mb-2">
-        Checklist
+      <span className="inline-block bg-slate-100 text-slate-800 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider mb-2 border border-slate-200">
+        Checklist &amp; Verification
       </span>
-      <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
-        Mandatory Documents Required for Instant Personal Loan Disbursal
+      <h2 className="text-2xl sm:text-3xl font-bold text-slate-950 tracking-tight">
+        Documents Required for Personal Loan Disbursal
       </h2>
-      <p className="text-gray-600 text-sm sm:text-base mt-2">
+      <p className="text-slate-600 text-sm sm:text-base mt-2">
         Keep digital copies of these KYC and income proofs ready for 100% paperless instant processing.
       </p>
     </div>
 
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+    <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
       <div className="overflow-x-auto">
-        <table className="min-w-full divide-y divide-gray-200 text-left text-sm">
-          <thead className="bg-slate-50">
+        <table className="min-w-full divide-y divide-slate-200 text-left text-sm">
+          <thead className="bg-slate-900 text-white">
             <tr>
-              <th scope="col" className="px-6 py-4 font-bold text-gray-900 w-1/4">
+              <th scope="col" className="px-6 py-4 font-semibold w-1/4">
                 Document Category
               </th>
-              <th scope="col" className="px-6 py-4 font-bold text-teal-800 w-3/8">
+              <th scope="col" className="px-6 py-4 font-semibold text-amber-400 w-3/8">
                 Salaried Applicants
               </th>
-              <th scope="col" className="px-6 py-4 font-bold text-blue-800 w-3/8">
-                Self-Employed Professionals & Traders
+              <th scope="col" className="px-6 py-4 font-semibold text-blue-300 w-3/8">
+                Self-Employed Professionals &amp; Traders
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-100">
-            {documents.map((row, i) => (
-              <tr
-                key={row.category}
-                className={i % 2 === 0 ? "bg-white" : "bg-slate-50/50"}
-              >
-                <td className="px-6 py-4 font-semibold text-gray-900 align-top">
-                  <div className="flex items-center gap-2">
-                    <svg className="w-4 h-4 text-teal-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                    </svg>
-                    <span>{row.category}</span>
-                  </div>
+          <tbody className="divide-y divide-slate-100 bg-white">
+            {documents.map((d, i) => (
+              <tr key={d.category} className={i % 2 === 0 ? "bg-white" : "bg-slate-50/50"}>
+                <td className="px-6 py-4 font-bold text-slate-900 flex items-center gap-2">
+                  <FileCheck className="w-4 h-4 text-emerald-600 shrink-0" />
+                  <span>{d.category}</span>
                 </td>
-                <td className="px-6 py-4 text-gray-700 leading-relaxed align-top">
-                  {row.salaried}
+                <td className="px-6 py-4 text-slate-800 text-xs sm:text-sm leading-relaxed">
+                  {d.salaried}
                 </td>
-                <td className="px-6 py-4 text-gray-700 leading-relaxed align-top">
-                  {row.selfEmployed}
+                <td className="px-6 py-4 text-slate-800 text-xs sm:text-sm leading-relaxed">
+                  {d.selfEmployed}
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-      <div className="p-4 bg-slate-50 border-t border-gray-100 text-xs text-gray-500 text-center">
-        💡 <strong>Pro Tip:</strong> Having your mobile number linked with your Aadhaar enables DigiLocker instant verification, speeding up disbursal to under 4 hours.
+
+      <div className="p-4 bg-emerald-50/60 border-t border-emerald-100 flex items-center gap-3">
+        <ShieldCheck className="w-5 h-5 text-emerald-700 shrink-0" />
+        <div className="text-xs text-emerald-900">
+          <strong>Instant DigiLocker Verification:</strong> Applicants with an Aadhaar-linked mobile number can complete digital KYC instantly without uploading physical paper scans.
+        </div>
       </div>
     </div>
   </section>

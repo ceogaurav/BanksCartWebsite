@@ -5,7 +5,8 @@ import {
   Wallet, BarChart, Lightbulb, Info, ChevronDown, CheckCircle, Search, Scale, MessageSquare,
   Briefcase, ReceiptText, TrendingDown, Coins, HandCoins, UserCheck, PiggyBank, Landmark
 } from 'lucide-react'; // Lucide icons
-import ApplyButton from '../../components/common/ApplyButton'; // Assuming this path is correct
+import ApplyButton from '../../components/common/ApplyButton';
+import Breadcrumb from '../../components/Breadcrumb'; // Assuming this path is correct
 
 // --- Helper Functions ---
 // Formats a number into INR currency format
@@ -254,11 +255,20 @@ const PayrollTaxCalculatorPage: React.FC<PayrollTaxCalculatorPageProps> = ({ ope
 
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50 py-8 font-inter text-gray-800">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-slate-50 py-8 font-sans text-slate-800">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Breadcrumb Navigation */}
+        <div className="mb-6">
+          <Breadcrumb
+            items={[
+              { label: 'Calculators', path: '/calculators' },
+              { label: 'Payroll & Salary Take-Home' }
+            ]}
+          />
+        </div>
         {/* Hero Section */}
         <motion.div
-          className="text-center mb-12 bg-gradient-to-r from-purple-600 to-pink-700 text-white p-8 rounded-3xl shadow-xl"
+          className="text-center mb-8 bg-gradient-to-r from-[#0F172A] via-[#1E3A8A] to-[#0F172A] text-white p-8 sm:p-10 rounded-2xl shadow-xl border border-slate-700/50"
           variants={sectionVariants}
           initial="hidden"
           whileInView="visible"
@@ -269,7 +279,7 @@ const PayrollTaxCalculatorPage: React.FC<PayrollTaxCalculatorPageProps> = ({ ope
             variants={itemVariants}
           >
             Understand Your Paycheck with Our{' '}
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 to-orange-300">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-amber-300 to-amber-100">
               Payroll Tax Calculator.
             </span>
           </motion.h1>
@@ -285,9 +295,7 @@ const PayrollTaxCalculatorPage: React.FC<PayrollTaxCalculatorPageProps> = ({ ope
               <ApplyButton
                 loanType="Tax Planning Inquiry"
                 openApplyModal={openApplyModal}
-                className="bg-white text-purple-600 px-8 py-4 rounded-full font-bold text-lg shadow-lg
-                           hover:bg-gray-100 transition-all duration-300 ease-in-out transform hover:-translate-y-1
-                           focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-50"
+                className="bg-amber-500 hover:bg-amber-400 text-slate-950 px-8 py-3.5 rounded-xl font-bold text-base shadow-lg transition-all inline-block"
               >
                 Get Tax Planning Advice
               </ApplyButton>
@@ -297,28 +305,40 @@ const PayrollTaxCalculatorPage: React.FC<PayrollTaxCalculatorPageProps> = ({ ope
 
         {/* Payroll Tax Calculator Section */}
         <motion.div
-          className="bg-white rounded-3xl shadow-2xl p-6 md:p-10 w-full border border-purple-100 mb-12"
+          className="bg-white rounded-2xl shadow-sm p-6 sm:p-8 w-full border border-slate-200 mb-10"
           variants={sectionVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
         >
-          <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-pink-600 to-purple-600 drop-shadow-md">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-8 text-center flex items-center justify-center">
             <Calculator className="inline-block w-9 h-9 mr-3 text-pink-500" /> Paycheck Deductions Estimator
           </h2>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
             {/* Input Controls Section */}
-            <div className="space-y-8 p-4 bg-gray-50 rounded-2xl border border-gray-100 shadow-inner">
+            <div className="space-y-6 p-6 bg-slate-50/70 rounded-xl border border-slate-200">
               <h3 className="text-2xl font-bold text-gray-800 mb-4 flex items-center">
                 <Briefcase className="w-6 h-6 mr-2 text-purple-600" /> Your Salary Details
               </h3>
 
               {/* Gross Monthly Salary */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="grossMonthlySalary" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Gross Monthly Salary: <span className="text-blue-600">{formatCurrency(grossMonthlySalary)}</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="grossMonthlySalary" className="text-sm font-semibold text-slate-700">
+                    Gross Monthly Salary
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="text"
+                  value={formatNumberWithCommas(grossMonthlySalary)}
+                  onChange={handleGrossMonthlySalaryChange}
+                  onBlur={(e) => setGrossMonthlySalary(Number(e.target.value.replace(/,/g, '')))}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  inputMode="numeric"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="grossMonthlySalary"
@@ -327,23 +347,27 @@ const PayrollTaxCalculatorPage: React.FC<PayrollTaxCalculatorPageProps> = ({ ope
                   step="1000"
                   value={grossMonthlySalary}
                   onChange={handleGrossMonthlySalaryChange}
-                  className="w-full h-2 bg-gradient-to-r from-blue-300 to-blue-500 rounded-lg appearance-none cursor-pointer accent-blue-600"
-                />
-                <input
-                  type="text"
-                  value={formatNumberWithCommas(grossMonthlySalary)}
-                  onChange={handleGrossMonthlySalaryChange}
-                  onBlur={(e) => setGrossMonthlySalary(Number(e.target.value.replace(/,/g, '')))}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-blue-500 focus:border-blue-500 transition-all"
-                  inputMode="numeric"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
 
               {/* PF Contribution Rate */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="pfContributionRate" className="block text-lg font-semibold text-gray-700 mb-2">
-                  EPF Contribution Rate (on Basic + DA): <span className="text-teal-600">{pfContributionRate}%</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="pfContributionRate" className="text-sm font-semibold text-slate-700">
+                    EPF Contribution Rate (on Basic + DA)
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="number"
+                  value={pfContributionRate}
+                  onChange={handlePfContributionRateChange}
+                  onBlur={(e) => setPfContributionRate(Number(e.target.value))}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  step="0.1"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="pfContributionRate"
@@ -352,23 +376,27 @@ const PayrollTaxCalculatorPage: React.FC<PayrollTaxCalculatorPageProps> = ({ ope
                   step="0.5"
                   value={pfContributionRate}
                   onChange={handlePfContributionRateChange}
-                  className="w-full h-2 bg-gradient-to-r from-teal-300 to-teal-500 rounded-lg appearance-none cursor-pointer accent-teal-600"
-                />
-                <input
-                  type="number"
-                  value={pfContributionRate}
-                  onChange={handlePfContributionRateChange}
-                  onBlur={(e) => setPfContributionRate(Number(e.target.value))}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-teal-500 focus:border-teal-500 transition-all"
-                  step="0.1"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
 
               {/* Professional Tax Monthly */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="professionalTaxMonthly" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Professional Tax (Monthly): <span className="text-orange-600">{formatCurrency(professionalTaxMonthly)}</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="professionalTaxMonthly" className="text-sm font-semibold text-slate-700">
+                    Professional Tax (Monthly)
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="text"
+                  value={formatNumberWithCommas(professionalTaxMonthly)}
+                  onChange={handleProfessionalTaxMonthlyChange}
+                  onBlur={(e) => setProfessionalTaxMonthly(Number(e.target.value.replace(/,/g, '')))}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  inputMode="numeric"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="professionalTaxMonthly"
@@ -377,15 +405,7 @@ const PayrollTaxCalculatorPage: React.FC<PayrollTaxCalculatorPageProps> = ({ ope
                   step="10"
                   value={professionalTaxMonthly}
                   onChange={handleProfessionalTaxMonthlyChange}
-                  className="w-full h-2 bg-gradient-to-r from-orange-300 to-orange-500 rounded-lg appearance-none cursor-pointer accent-orange-600"
-                />
-                <input
-                  type="text"
-                  value={formatNumberWithCommas(professionalTaxMonthly)}
-                  onChange={handleProfessionalTaxMonthlyChange}
-                  onBlur={(e) => setProfessionalTaxMonthly(Number(e.target.value.replace(/,/g, '')))}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-orange-500 focus:border-orange-500 transition-all"
-                  inputMode="numeric"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
 
@@ -409,41 +429,41 @@ const PayrollTaxCalculatorPage: React.FC<PayrollTaxCalculatorPageProps> = ({ ope
             </div>
 
             {/* Results Display Section */}
-            <div className="p-6 bg-gradient-to-br from-purple-500 to-pink-600 text-white rounded-2xl shadow-xl flex flex-col justify-center items-center text-center">
+            <div className="p-6 sm:p-8 bg-[#0F172A] text-white rounded-2xl shadow-xl border border-slate-800 flex flex-col justify-between text-left">
               <h3 className="text-2xl md:text-3xl font-bold mb-4">Your Estimated Net Pay</h3>
               <motion.div
                 key={calculations.netMonthlyPay} // Key for re-animation on value change
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, type: 'spring', damping: 20, stiffness: 300 }}
-                className="text-5xl md:text-6xl font-extrabold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 to-orange-300 drop-shadow-lg"
+                className="text-4xl sm:text-5xl font-extrabold text-amber-400 mb-4 font-mono tabular-nums tracking-tight text-center"
               >
                 {formatCurrency(calculations.netMonthlyPay)}
               </motion.div>
               <p className="text-xl text-purple-100 mb-8">Your Take-Home Salary (Monthly)</p>
 
               <div className="w-full space-y-4 text-lg">
-                <motion.div variants={itemVariants} className="flex justify-between items-center bg-purple-700/30 p-3 rounded-lg">
+                <motion.div variants={itemVariants} className="flex justify-between items-center bg-slate-800/80 border border-slate-700/60 p-3 rounded-xl text-sm sm:text-base font-mono tabular-nums">
                   <span className="font-medium flex items-center gap-2"><IndianRupee className="w-5 h-5" /> Gross Monthly Salary</span>
                   <span className="font-bold text-white">{formatCurrency(grossMonthlySalary)}</span>
                 </motion.div>
-                <motion.div variants={itemVariants} className="flex justify-between items-center bg-purple-700/30 p-3 rounded-lg">
+                <motion.div variants={itemVariants} className="flex justify-between items-center bg-slate-800/80 border border-slate-700/60 p-3 rounded-xl text-sm sm:text-base font-mono tabular-nums">
                   <span className="font-medium flex items-center gap-2"><PiggyBank className="w-5 h-5" /> EPF Contribution</span>
                   <span className="font-bold text-white">{formatCurrency(calculations.pfContribution)}</span>
                 </motion.div>
-                <motion.div variants={itemVariants} className="flex justify-between items-center bg-purple-700/30 p-3 rounded-lg">
+                <motion.div variants={itemVariants} className="flex justify-between items-center bg-slate-800/80 border border-slate-700/60 p-3 rounded-xl text-sm sm:text-base font-mono tabular-nums">
                   <span className="font-medium flex items-center gap-2"><Briefcase className="w-5 h-5" /> Professional Tax</span>
                   <span className="font-bold text-white">{formatCurrency(calculations.professionalTax)}</span>
                 </motion.div>
-                <motion.div variants={itemVariants} className="flex justify-between items-center bg-purple-700/30 p-3 rounded-lg">
+                <motion.div variants={itemVariants} className="flex justify-between items-center bg-slate-800/80 border border-slate-700/60 p-3 rounded-xl text-sm sm:text-base font-mono tabular-nums">
                   <span className="font-medium flex items-center gap-2"><ReceiptText className="w-5 h-5" /> Estimated Income Tax (TDS)</span>
                   <span className="font-bold text-white">{formatCurrency(calculations.estimatedIncomeTaxMonthly)}</span>
                 </motion.div>
-                <motion.div variants={itemVariants} className="flex justify-between items-center bg-purple-700/30 p-3 rounded-lg">
+                <motion.div variants={itemVariants} className="flex justify-between items-center bg-slate-800/80 border border-slate-700/60 p-3 rounded-xl text-sm sm:text-base font-mono tabular-nums">
                   <span className="font-medium flex items-center gap-2"><TrendingDown className="w-5 h-5" /> Total Monthly Deductions</span>
                   <span className="font-bold text-white">{formatCurrency(calculations.totalDeductions)}</span>
                 </motion.div>
-                <motion.div variants={itemVariants} className="flex justify-between items-center bg-purple-700/30 p-3 rounded-lg">
+                <motion.div variants={itemVariants} className="flex justify-between items-center bg-slate-800/80 border border-slate-700/60 p-3 rounded-xl text-sm sm:text-base font-mono tabular-nums">
                   <span className="font-medium flex items-center gap-2"><HandCoins className="w-5 h-5" /> Annual Taxable Income (Approx)</span>
                   <span className="font-bold text-white">{formatCurrency(calculations.annualTaxableIncome)}</span>
                 </motion.div>
@@ -505,7 +525,7 @@ const PayrollTaxCalculatorPage: React.FC<PayrollTaxCalculatorPageProps> = ({ ope
         </motion.div>
 
         {/* Informational Sections */}
-        <div className="bg-white border border-gray-100 rounded-2xl p-8 shadow-lg mt-6 space-y-10">
+        <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm mt-8 space-y-10">
           <motion.section variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }}>
             <h2 className="text-3xl font-bold text-gray-900 mb-4 flex items-center">
               <Lightbulb className="w-8 h-8 mr-3 text-yellow-500" /> What is a Payroll Tax Calculator?
@@ -598,7 +618,7 @@ const PayrollTaxCalculatorPage: React.FC<PayrollTaxCalculatorPageProps> = ({ ope
               {whyUseBanksCart.map((reason, index) => (
                 <motion.div
                   key={index}
-                  className="flex flex-col items-center text-center p-6 rounded-xl shadow-lg bg-gradient-to-br from-purple-50 to-pink-50 border border-purple-100"
+                  className="flex flex-col items-center text-center p-6 rounded-xl shadow-sm bg-slate-50 border border-slate-200"
                   variants={cardVariants}
                 >
                   {reason.icon}
@@ -611,7 +631,7 @@ const PayrollTaxCalculatorPage: React.FC<PayrollTaxCalculatorPageProps> = ({ ope
 
           {/* Final Call to Action */}
           <motion.section
-            className="text-center mt-12 p-8 bg-gradient-to-r from-purple-600 to-pink-700 rounded-2xl shadow-xl"
+            className="text-center mt-12 p-8 sm:p-10 bg-gradient-to-r from-[#0F172A] via-[#1E3A8A] to-[#0F172A] text-white rounded-2xl shadow-xl border border-slate-700/50"
             variants={sectionVariants}
             initial="hidden"
             whileInView="visible"
@@ -635,9 +655,7 @@ const PayrollTaxCalculatorPage: React.FC<PayrollTaxCalculatorPageProps> = ({ ope
                 <ApplyButton
                   loanType="Payroll & Tax Advisory"
                   openApplyModal={openApplyModal}
-                  className="bg-white text-purple-600 px-8 py-4 rounded-full font-bold text-lg shadow-lg
-                             hover:bg-gray-100 transition-all duration-300 ease-in-out transform hover:-translate-y-1
-                             focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-50"
+                  className="bg-amber-500 hover:bg-amber-400 text-slate-950 px-8 py-3.5 rounded-xl font-bold text-base shadow-lg transition-all inline-block"
                 >
                   Connect with a Tax Advisor
                 </ApplyButton>

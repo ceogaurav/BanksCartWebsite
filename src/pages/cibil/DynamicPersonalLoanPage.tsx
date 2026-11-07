@@ -14,6 +14,8 @@ import {
   Percent,
   Clock,
   Landmark,
+  Building2,
+  Info
 } from 'lucide-react';
 import Breadcrumb from '../../components/Breadcrumb';
 import ApplyButton from '../../components/common/ApplyButton';
@@ -118,35 +120,34 @@ const DynamicPersonalLoanPage: React.FC<DynamicPersonalLoanPageProps> = ({
   const generateFallbackContent = (slug: string): LoanPageContent => {
     const formatted = formatSlug(slug);
     return {
-      title: `${formatted}: Compare Rates, EMIs & Eligibility`,
-      badge: "Tailored Loan Facility",
+      title: `${formatted} Personal Loans in India`,
+      badge: "Verified Lending Slabs",
+      intro: `Compare verified interest rates, eligibility criteria, and monthly EMIs for **${formatted}** across India's top scheduled commercial banks. Secure zero-collateral funding with 100% digital KYC and rapid disbursal.`,
       defaultAmount: 500000,
-      intro: `A **${formatted}** is a dedicated personal credit facility designed to help borrowers meet specific financial milestones with competitive interest rates and flexible tenures.`,
-      moreIntro: `At BanksCart, we compare options across India's top banks and NBFCs, matching your profile with lowest base rates starting from 10.25% p.a., transparent processing charges, and 100% digital onboarding.`,
-      keyFeaturesTitle: `${formatted} Core Highlights`,
+      keyFeaturesTitle: `Key Highlights of ${formatted} Personal Loan`,
       keyFeatures: [
-        { label: "100% Paperless Process", text: "Complete application online via Aadhaar OTP and instant bank statement verification." },
-        { label: "Competitive Benchmark Rates", text: "Link your loan account directly to prime reducing-balance interest rates." },
-        { label: "Flexible Repayment", text: "Choose comfortable monthly EMIs across tenures from 12 to 72 months." }
+        { label: "Collateral-Free", text: "Zero assets or securities required. Approval based on monthly income and credit history." },
+        { label: "Transparent Rates", text: "Competitive reducing interest rates starting from 10.25% p.a. with transparent APR." },
+        { label: "Flexible Tenure", text: "Choose customizable repayment horizons between 12 and 72 months to suit your monthly cash flow." }
       ],
-      repaymentDetailsTitle: `Compare Top Lenders for ${formatted}`,
-      repaymentHeaders: ["Lender Bank", "Interest Rate (p.a.)", "Processing Fee", "Maximum Tenure"],
+      repaymentDetailsTitle: `${formatted} Interest Rates & Bank Comparison`,
+      repaymentHeaders: ["Lender / Bank", "Interest Rate (p.a.)", "Processing Fee", "Loan Tenure"],
       repaymentDetails: [
-        { col1: "State Bank of India (SBI)", col2: "10.30% - 13.60%", col3: "0.50% - 1.00% + GST", col4: "Up to 72 Months" },
-        { col1: "HDFC Bank", col2: "10.50% - 14.50%", col3: "Up to 1.50% + GST", col4: "Up to 72 Months" },
-        { col1: "ICICI Bank", col2: "10.65% - 14.99%", col3: "Up to 1.50% + GST", col4: "Up to 84 Months" },
-        { col1: "Axis Bank", col2: "10.49% - 15.00%", col3: "1.00% - 2.00% + GST", col4: "Up to 84 Months" }
+        { col1: "State Bank of India (SBI)", col2: "10.30% - 15.10%", col3: "Up to 1.50% (Min ₹1,000)", col4: "Up to 72 Months" },
+        { col1: "HDFC Bank", col2: "10.50% - 21.00%", col3: "Up to 2.50% (Min ₹1,999)", col4: "Up to 72 Months" },
+        { col1: "ICICI Bank", col2: "10.65% - 16.00%", col3: "Up to 2.50% + GST", col4: "Up to 72 Months" },
+        { col1: "Axis Bank", col2: "10.49% - 22.00%", col3: "Up to 2.00% + GST", col4: "Up to 60 Months" },
+        { col1: "Kotak Mahindra Bank", col2: "10.99% - 24.00%", col3: "Up to 3.00% + GST", col4: "Up to 72 Months" }
       ],
-      boostTipsTitle: "Important Checklist for Fast Approval",
+      boostTipsTitle: `Documents & Verification for ${formatted}`,
       boostTips: [
-        "Check your CIBIL score: A credit rating above 720 unlocks lowest interest rate tiers.",
-        "Keep DTI below 45%: Ensure existing EMIs do not exceed half of your net monthly earnings.",
-        "Gather digital KYC: Keep your Aadhaar, PAN, and recent bank statements ready."
+        "PAN Card and Aadhaar Card for paperless e-KYC authentication.",
+        "Past 3 months' salary slips or past 2 years' ITR with computation of income.",
+        "Last 6 months' bank account statement reflecting salary credits or operative business turnover."
       ],
       faqs: [
-        { q: `What is a ${formatted}?`, a: `A ${formatted} is a specialized unsecured personal loan designed to address specific borrowing needs without requiring collateral.` },
-        { q: "What is the minimum CIBIL score required for approval?", a: "Tier-1 banks prefer a CIBIL score of 720 and above. However, registered NBFCs approve loans for scores between 650 and 719 with risk-adjusted interest rates." },
-        { q: "How long does it take for loan disbursement?", a: "Pre-approved digital applications are disbursed within minutes. Standard online applications take between 24 and 48 hours." },
+        { q: `What is the eligibility criteria for ${formatted}?`, a: "Indian residents aged 21 to 60 with a minimum monthly take-home salary of ₹15,000–₹25,000 and a CIBIL score of 650+ qualify for competitive approval." },
+        { q: "How are monthly EMIs calculated?", a: "EMIs are calculated on a reducing monthly balance formula, ensuring you pay interest strictly on the remaining principal balance rather than the initial borrowed amount." },
         { q: "Are there any prepayment or foreclosure charges?", a: "Per RBI guidelines, zero foreclosure charges apply on floating-rate loans for individual borrowers after the initial lock-in period." },
         { q: "Will checking my eligibility impact my CIBIL score?", a: "No. Checking options on BanksCart initiates a soft inquiry, which has zero impact on your credit score." }
       ]
@@ -259,7 +260,7 @@ const DynamicPersonalLoanPage: React.FC<DynamicPersonalLoanPageProps> = ({
   };
 
   return (
-    <main className="min-h-screen bg-slate-50 selection:bg-teal-100 selection:text-teal-900 font-sans pb-20">
+    <main className="min-h-screen bg-slate-50 text-slate-800 font-sans selection:bg-amber-100 selection:text-amber-900 pb-20">
       <Helmet>
         <html lang="en-IN" />
         <title>{pageTitle}</title>
@@ -301,46 +302,47 @@ const DynamicPersonalLoanPage: React.FC<DynamicPersonalLoanPageProps> = ({
         ]}
       />
 
-      {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-blue-900 via-blue-800 to-indigo-900 text-white pt-10 pb-16 px-4 md:px-8 shadow-xl">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-teal-500/20 rounded-full blur-3xl pointer-events-none" />
+      {/* Hero Section — Master Design System Navy / Deep Slate */}
+      <section className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 text-white pt-8 sm:pt-12 pb-16 px-4 md:px-8 shadow-xl border-b border-blue-900/60">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="max-w-5xl mx-auto text-center relative z-10">
-          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 text-blue-100 px-4 py-1.5 rounded-full text-xs sm:text-sm font-medium mb-6 shadow-sm">
-            <ShieldCheck className="w-4 h-4 text-emerald-400" />
+        <div className="max-w-5xl mx-auto text-center relative z-10 space-y-6">
+          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/15 text-blue-200 px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold shadow-sm">
+            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
             <span>{pageContent.badge} • Verified Partner Lenders</span>
           </div>
 
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white mb-4 leading-tight">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-white leading-tight">
             {pageContent.title}
           </h1>
 
-          <p className="text-base sm:text-lg text-blue-100/90 max-w-3xl mx-auto mb-8 leading-relaxed font-normal">
+          <p className="text-base sm:text-lg text-slate-200 max-w-3xl mx-auto leading-relaxed font-normal">
             {pageContent.intro.replace(/\*\*/g, '')}
           </p>
 
           {/* Action CTAs */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 pt-2">
             {openApplyModal ? (
-              <ApplyButton
-                loanType={`Personal Loan - ${readableTitle}`}
-                openApplyModal={openApplyModal}
-                variant="primary"
-                size="lg"
-                className="w-full sm:w-auto bg-gradient-to-r from-teal-400 to-emerald-500 hover:from-teal-500 hover:to-emerald-600 text-slate-900 font-bold px-8 py-3.5 rounded-xl shadow-lg shadow-teal-500/25 transition-all transform hover:-translate-y-0.5"
+              <button
+                type="button"
+                onClick={() => openApplyModal(`Personal Loan - ${readableTitle}`)}
+                className="w-full sm:w-auto bg-amber-700 hover:bg-amber-800 text-white font-bold px-8 py-3.5 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 text-sm sm:text-base cursor-pointer"
               >
-                Apply for {readableTitle}
-              </ApplyButton>
+                <span>Apply for {readableTitle}</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
             ) : (
               <button
+                type="button"
                 onClick={() => {
                   const el = document.getElementById("loan-emi-calculator");
                   if (el) el.scrollIntoView({ behavior: "smooth" });
                 }}
-                className="w-full sm:w-auto bg-gradient-to-r from-teal-400 to-emerald-500 hover:from-teal-500 hover:to-emerald-600 text-slate-900 font-bold px-8 py-3.5 rounded-xl shadow-lg shadow-teal-500/25 transition-all"
+                className="w-full sm:w-auto bg-amber-700 hover:bg-amber-800 text-white font-bold px-8 py-3.5 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 text-sm sm:text-base cursor-pointer"
               >
-                Apply for {readableTitle}
+                <span>Apply for {readableTitle}</span>
+                <ArrowRight className="w-4 h-4" />
               </button>
             )}
 
@@ -348,7 +350,7 @@ const DynamicPersonalLoanPage: React.FC<DynamicPersonalLoanPageProps> = ({
               <button
                 type="button"
                 onClick={openEligibilityModal}
-                className="w-full sm:w-auto bg-white/10 hover:bg-white/20 text-white border border-white/20 font-semibold px-7 py-3.5 rounded-xl transition-all backdrop-blur-sm"
+                className="w-full sm:w-auto bg-white/15 hover:bg-white/20 text-white border border-white/20 font-semibold px-7 py-3.5 rounded-xl transition-all backdrop-blur-sm text-sm sm:text-base cursor-pointer"
               >
                 Check Free Eligibility
               </button>
@@ -356,7 +358,7 @@ const DynamicPersonalLoanPage: React.FC<DynamicPersonalLoanPageProps> = ({
 
             <Link
               to="/loans/personal/overview"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 text-cyan-300 hover:text-white font-medium px-4 py-3 text-sm underline-offset-4 hover:underline transition-colors"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 text-blue-200 hover:text-white font-semibold px-4 py-3 text-sm underline-offset-4 hover:underline transition-colors"
             >
               <span>Personal Loan Overview Guide</span>
               <ArrowRight className="w-4 h-4" />
@@ -364,64 +366,65 @@ const DynamicPersonalLoanPage: React.FC<DynamicPersonalLoanPageProps> = ({
           </div>
 
           {/* Key Metrics Banner */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 max-w-4xl mx-auto pt-4 border-t border-white/10 text-left">
-            <div className="bg-white/5 backdrop-blur-sm rounded-xl p-3 border border-white/10">
-              <div className="text-xs text-blue-200">Interest Rates</div>
-              <div className="text-sm sm:text-base font-bold text-teal-300">From 10.25% p.a.</div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 max-w-4xl mx-auto pt-6 border-t border-white/10 text-left">
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-3.5 border border-white/10 text-center">
+              <div className="text-xs text-blue-200 uppercase tracking-wider font-medium">Interest Rates</div>
+              <div className="text-sm sm:text-base font-black text-amber-300 mt-0.5 tabular-nums">From 10.25% p.a.</div>
             </div>
-            <div className="bg-white/5 backdrop-blur-sm rounded-xl p-3 border border-white/10">
-              <div className="text-xs text-blue-200">Max Loan Limit</div>
-              <div className="text-sm sm:text-base font-bold text-white">Up to ₹50 Lakhs</div>
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-3.5 border border-white/10 text-center">
+              <div className="text-xs text-blue-200 uppercase tracking-wider font-medium">Max Loan Limit</div>
+              <div className="text-sm sm:text-base font-black text-white mt-0.5 tabular-nums">Up to ₹50 Lakhs</div>
             </div>
-            <div className="bg-white/5 backdrop-blur-sm rounded-xl p-3 border border-white/10">
-              <div className="text-xs text-blue-200">Repayment Tenure</div>
-              <div className="text-sm sm:text-base font-bold text-white">12 to 72 Months</div>
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-3.5 border border-white/10 text-center">
+              <div className="text-xs text-blue-200 uppercase tracking-wider font-medium">Repayment Tenure</div>
+              <div className="text-sm sm:text-base font-black text-white mt-0.5 tabular-nums">12 to 72 Months</div>
             </div>
-            <div className="bg-white/5 backdrop-blur-sm rounded-xl p-3 border border-white/10">
-              <div className="text-xs text-blue-200">Documentation</div>
-              <div className="text-sm sm:text-base font-bold text-white">100% Paperless</div>
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-3.5 border border-white/10 text-center">
+              <div className="text-xs text-blue-200 uppercase tracking-wider font-medium">Documentation</div>
+              <div className="text-sm sm:text-base font-black text-emerald-400 mt-0.5">100% Paperless</div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Main Centered Container */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
         
         {/* Additional Intro Card if present */}
         {pageContent.moreIntro && (
-          <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-gray-200">
-            <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
+          <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200/80">
+            <p className="text-slate-700 text-sm sm:text-base leading-relaxed">
               {pageContent.moreIntro.replace(/\*\*/g, '')}
             </p>
           </div>
         )}
 
         {/* Interactive EMI Calculator Section */}
-        <section id="loan-emi-calculator" className="bg-white rounded-3xl shadow-xl border border-blue-100 p-6 sm:p-8 md:p-12 scroll-mt-24">
-          <div className="text-center max-w-3xl mx-auto mb-10">
-            <span className="inline-block bg-teal-50 text-teal-700 text-xs sm:text-sm font-semibold px-3 py-1 rounded-full uppercase tracking-wider mb-2">
+        <section id="loan-emi-calculator" className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-8 md:p-10 scroll-mt-24 space-y-8">
+          <div className="text-center max-w-3xl mx-auto space-y-2">
+            <span className="inline-flex items-center gap-1.5 bg-blue-50 text-blue-900 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+              <Calculator className="w-3.5 h-3.5" />
               EMI Calculator
             </span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
               {readableTitle} Repayment Estimator
             </h2>
-            <p className="text-gray-600 text-sm sm:text-base mt-2">
+            <p className="text-slate-600 text-sm sm:text-base">
               Calculate your monthly installment, total interest outgo, and overall borrowing cost based on verified reducing-balance interest rates.
             </p>
           </div>
 
           <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             {/* Sliders */}
-            <div className="lg:col-span-7 space-y-7">
+            <div className="lg:col-span-7 space-y-6">
               {/* Amount */}
               <div>
                 <div className="flex justify-between items-center mb-2">
-                  <label htmlFor="dyn-amount-input" className="text-gray-800 font-semibold text-sm sm:text-base">
+                  <label htmlFor="dyn-amount-input" className="text-slate-800 font-semibold text-sm sm:text-base">
                     Loan Amount
                   </label>
                   <div className="relative">
-                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 font-bold">₹</span>
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 font-bold">₹</span>
                     <input
                       id="dyn-amount-input"
                       type="number"
@@ -430,7 +433,7 @@ const DynamicPersonalLoanPage: React.FC<DynamicPersonalLoanPageProps> = ({
                       step={10000}
                       value={calcAmount}
                       onChange={(e) => setCalcAmount(Number(e.target.value) || 0)}
-                      className="w-36 pl-7 pr-3 py-1.5 border border-gray-300 rounded-lg text-right font-bold text-gray-900 focus:outline-none focus:ring-2 focus:ring-teal-500 text-sm sm:text-base"
+                      className="w-36 pl-7 pr-3 py-1.5 border border-slate-300 rounded-lg text-right font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-900 text-sm sm:text-base tabular-nums"
                     />
                   </div>
                 </div>
@@ -442,9 +445,9 @@ const DynamicPersonalLoanPage: React.FC<DynamicPersonalLoanPageProps> = ({
                   value={calcAmount}
                   onChange={(e) => setCalcAmount(Number(e.target.value))}
                   aria-label="Loan Amount Slider"
-                  className="w-full accent-teal-600 h-2 rounded-lg bg-gray-200 cursor-pointer"
+                  className="w-full accent-amber-600 h-2 rounded-lg bg-slate-200 cursor-pointer"
                 />
-                <div className="flex justify-between text-xs text-gray-400 mt-1">
+                <div className="flex justify-between text-xs text-slate-400 mt-1 tabular-nums">
                   <span>₹50,000</span>
                   <span>₹50,00,000</span>
                 </div>
@@ -462,10 +465,10 @@ const DynamicPersonalLoanPage: React.FC<DynamicPersonalLoanPageProps> = ({
                       key={p.val}
                       type="button"
                       onClick={() => setCalcAmount(p.val)}
-                      className={`text-xs px-2.5 py-1 rounded-md font-medium transition-colors ${
+                      className={`text-xs px-2.5 py-1 rounded-md font-semibold transition-colors cursor-pointer ${
                         calcAmount === p.val
-                          ? "bg-teal-600 text-white shadow-sm"
-                          : "bg-gray-100 hover:bg-gray-200 text-gray-700"
+                          ? "bg-amber-700 text-white shadow-sm"
+                          : "bg-slate-100 hover:bg-slate-200 text-slate-700"
                       }`}
                     >
                       {p.label}
@@ -477,7 +480,7 @@ const DynamicPersonalLoanPage: React.FC<DynamicPersonalLoanPageProps> = ({
               {/* Interest Rate */}
               <div>
                 <div className="flex justify-between items-center mb-2">
-                  <label htmlFor="dyn-rate-input" className="text-gray-800 font-semibold text-sm sm:text-base">
+                  <label htmlFor="dyn-rate-input" className="text-slate-800 font-semibold text-sm sm:text-base">
                     Interest Rate (% p.a.)
                   </label>
                   <div className="relative">
@@ -489,7 +492,7 @@ const DynamicPersonalLoanPage: React.FC<DynamicPersonalLoanPageProps> = ({
                       step={0.1}
                       value={calcRate}
                       onChange={(e) => setCalcRate(Number(e.target.value) || 0)}
-                      className="w-24 px-3 py-1.5 border border-gray-300 rounded-lg text-right font-bold text-gray-900 focus:outline-none focus:ring-2 focus:ring-teal-500 text-sm sm:text-base"
+                      className="w-24 px-3 py-1.5 border border-slate-300 rounded-lg text-right font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-900 text-sm sm:text-base tabular-nums"
                     />
                   </div>
                 </div>
@@ -501,9 +504,9 @@ const DynamicPersonalLoanPage: React.FC<DynamicPersonalLoanPageProps> = ({
                   value={calcRate}
                   onChange={(e) => setCalcRate(Number(e.target.value))}
                   aria-label="Interest Rate Slider"
-                  className="w-full accent-teal-600 h-2 rounded-lg bg-gray-200 cursor-pointer"
+                  className="w-full accent-amber-600 h-2 rounded-lg bg-slate-200 cursor-pointer"
                 />
-                <div className="flex justify-between text-xs text-gray-400 mt-1">
+                <div className="flex justify-between text-xs text-slate-400 mt-1 tabular-nums">
                   <span>10.25% (Best Bank Rate)</span>
                   <span>24.00%</span>
                 </div>
@@ -512,7 +515,7 @@ const DynamicPersonalLoanPage: React.FC<DynamicPersonalLoanPageProps> = ({
               {/* Tenure */}
               <div>
                 <div className="flex justify-between items-center mb-2">
-                  <label htmlFor="dyn-tenure-input" className="text-gray-800 font-semibold text-sm sm:text-base">
+                  <label htmlFor="dyn-tenure-input" className="text-slate-800 font-semibold text-sm sm:text-base">
                     Tenure (Months)
                   </label>
                   <div className="relative">
@@ -524,7 +527,7 @@ const DynamicPersonalLoanPage: React.FC<DynamicPersonalLoanPageProps> = ({
                       step={1}
                       value={calcTenure}
                       onChange={(e) => setCalcTenure(Number(e.target.value) || 0)}
-                      className="w-24 px-3 py-1.5 border border-gray-300 rounded-lg text-right font-bold text-gray-900 focus:outline-none focus:ring-2 focus:ring-teal-500 text-sm sm:text-base"
+                      className="w-24 px-3 py-1.5 border border-slate-300 rounded-lg text-right font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-900 text-sm sm:text-base tabular-nums"
                     />
                   </div>
                 </div>
@@ -536,9 +539,9 @@ const DynamicPersonalLoanPage: React.FC<DynamicPersonalLoanPageProps> = ({
                   value={calcTenure}
                   onChange={(e) => setCalcTenure(Number(e.target.value))}
                   aria-label="Tenure Slider"
-                  className="w-full accent-teal-600 h-2 rounded-lg bg-gray-200 cursor-pointer"
+                  className="w-full accent-amber-600 h-2 rounded-lg bg-slate-200 cursor-pointer"
                 />
-                <div className="flex justify-between text-xs text-gray-400 mt-1">
+                <div className="flex justify-between text-xs text-slate-400 mt-1 tabular-nums">
                   <span>12 Months (1 Year)</span>
                   <span>72 Months (6 Years)</span>
                 </div>
@@ -553,10 +556,10 @@ const DynamicPersonalLoanPage: React.FC<DynamicPersonalLoanPageProps> = ({
                       key={p.val}
                       type="button"
                       onClick={() => setCalcTenure(p.val)}
-                      className={`text-xs px-2.5 py-1 rounded-md font-medium transition-colors ${
+                      className={`text-xs px-2.5 py-1 rounded-md font-semibold transition-colors cursor-pointer ${
                         calcTenure === p.val
-                          ? "bg-teal-600 text-white shadow-sm"
-                          : "bg-gray-100 hover:bg-gray-200 text-gray-700"
+                          ? "bg-amber-700 text-white shadow-sm"
+                          : "bg-slate-100 hover:bg-slate-200 text-slate-700"
                       }`}
                     >
                       {p.label}
@@ -567,29 +570,29 @@ const DynamicPersonalLoanPage: React.FC<DynamicPersonalLoanPageProps> = ({
             </div>
 
             {/* Results Card */}
-            <div className="lg:col-span-5 bg-gradient-to-br from-slate-900 via-blue-950 to-indigo-950 text-white rounded-2xl p-6 sm:p-8 shadow-xl relative overflow-hidden">
+            <div className="lg:col-span-5 bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 text-white rounded-2xl p-6 sm:p-8 shadow-xl relative overflow-hidden border border-blue-900/60">
               <div className="text-center mb-6">
-                <span className="text-xs uppercase tracking-wider text-teal-300 font-semibold">
+                <span className="text-xs uppercase tracking-wider text-slate-300 font-semibold">
                   Equated Monthly Installment
                 </span>
-                <div className="text-3xl sm:text-4xl font-extrabold text-white mt-1">
+                <div className="text-3xl sm:text-4xl font-black text-amber-300 mt-1 tabular-nums">
                   ₹{Math.round(emi).toLocaleString("en-IN")}
-                  <span className="text-sm font-normal text-blue-200"> /month</span>
+                  <span className="text-sm font-normal text-slate-300"> /month</span>
                 </div>
               </div>
 
               <div className="space-y-3 border-t border-white/10 pt-4 text-sm">
                 <div className="flex justify-between items-center py-1">
-                  <span className="text-blue-200">Principal Amount</span>
-                  <span className="font-bold text-white">₹{calcAmount.toLocaleString("en-IN")}</span>
+                  <span className="text-slate-300">Principal Amount</span>
+                  <span className="font-bold text-white tabular-nums">₹{calcAmount.toLocaleString("en-IN")}</span>
                 </div>
                 <div className="flex justify-between items-center py-1">
-                  <span className="text-teal-300">Total Interest Payable</span>
-                  <span className="font-bold text-teal-300">₹{Math.round(interestPayable).toLocaleString("en-IN")}</span>
+                  <span className="text-slate-300">Total Interest Payable</span>
+                  <span className="font-bold text-amber-300 tabular-nums">₹{Math.round(interestPayable).toLocaleString("en-IN")}</span>
                 </div>
                 <div className="flex justify-between items-center py-1 border-t border-white/10 pt-2">
-                  <span className="text-blue-200 font-medium">Total Repayment Outflow</span>
-                  <span className="font-extrabold text-lg text-white">₹{Math.round(totalPayment).toLocaleString("en-IN")}</span>
+                  <span className="text-slate-300 font-medium">Total Repayment Outflow</span>
+                  <span className="font-extrabold text-lg text-white tabular-nums">₹{Math.round(totalPayment).toLocaleString("en-IN")}</span>
                 </div>
               </div>
 
@@ -598,7 +601,7 @@ const DynamicPersonalLoanPage: React.FC<DynamicPersonalLoanPageProps> = ({
                   <button
                     type="button"
                     onClick={() => openApplyModal(`Personal Loan - ${readableTitle} (₹${calcAmount.toLocaleString("en-IN")})`)}
-                    className="w-full bg-gradient-to-r from-teal-400 to-emerald-400 hover:from-teal-500 hover:to-emerald-500 text-slate-950 font-bold py-3 px-4 rounded-xl shadow-md transition-all flex items-center justify-center gap-2"
+                    className="w-full bg-amber-700 hover:bg-amber-800 text-white font-bold py-3.5 px-4 rounded-xl shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
                   >
                     <span>Apply for this Loan</span>
                     <ArrowRight className="w-4 h-4" />
@@ -606,7 +609,7 @@ const DynamicPersonalLoanPage: React.FC<DynamicPersonalLoanPageProps> = ({
                 ) : (
                   <a
                     href="#top-lenders-table"
-                    className="w-full bg-gradient-to-r from-teal-400 to-emerald-400 hover:from-teal-500 hover:to-emerald-500 text-slate-950 font-bold py-3 px-4 rounded-xl shadow-md transition-all flex items-center justify-center gap-2 text-center"
+                    className="w-full bg-amber-700 hover:bg-amber-800 text-white font-bold py-3.5 px-4 rounded-xl shadow-md transition-all flex items-center justify-center gap-2 text-center cursor-pointer"
                   >
                     <span>Compare Bank Rates</span>
                     <ArrowRight className="w-4 h-4" />
@@ -620,7 +623,7 @@ const DynamicPersonalLoanPage: React.FC<DynamicPersonalLoanPageProps> = ({
         {/* Key Features Block */}
         <section>
           <div className="text-center max-w-3xl mx-auto mb-8">
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
               {pageContent.keyFeaturesTitle}
             </h2>
           </div>
@@ -628,16 +631,16 @@ const DynamicPersonalLoanPage: React.FC<DynamicPersonalLoanPageProps> = ({
             {pageContent.keyFeatures.map((feat, idx) => (
               <div
                 key={idx}
-                className="bg-white rounded-2xl p-6 shadow-sm border border-gray-200 hover:border-teal-400 hover:shadow-md transition-all flex flex-col justify-between"
+                className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200/80 hover:border-blue-300 hover:shadow-md transition-all flex flex-col justify-between"
               >
                 <div>
-                  <div className="w-10 h-10 rounded-xl bg-teal-50 text-teal-700 flex items-center justify-center mb-4 font-bold">
-                    ✓
+                  <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-900 flex items-center justify-center mb-4 font-bold">
+                    <CheckCircle2 className="w-5 h-5 text-blue-700" />
                   </div>
-                  <h3 className="font-bold text-gray-900 text-base mb-2">
+                  <h3 className="font-bold text-slate-900 text-base mb-2">
                     {feat.label}
                   </h3>
-                  <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
+                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
                     {feat.text}
                   </p>
                 </div>
@@ -648,46 +651,46 @@ const DynamicPersonalLoanPage: React.FC<DynamicPersonalLoanPageProps> = ({
 
         {/* Repayment details & Top Lenders Table */}
         <section id="top-lenders-table" className="scroll-mt-24">
-          <div className="text-center max-w-3xl mx-auto mb-8">
-            <span className="inline-block bg-blue-50 text-blue-700 text-xs sm:text-sm font-semibold px-3 py-1 rounded-full uppercase tracking-wider mb-2">
+          <div className="text-center max-w-3xl mx-auto mb-8 space-y-2">
+            <span className="inline-block bg-blue-50 text-blue-900 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
               Lender Comparison
             </span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
               {pageContent.repaymentDetailsTitle}
             </h2>
-            <p className="text-gray-600 text-sm sm:text-base mt-2">
+            <p className="text-slate-600 text-sm sm:text-base">
               Compare verified interest rates, processing charges, and repayment tenures across top scheduled commercial banks.
             </p>
           </div>
 
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+          <div className="bg-white rounded-2xl shadow-sm border border-slate-200/80 overflow-hidden">
             <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200 text-left text-sm">
-                <thead className="bg-slate-50">
+              <table className="min-w-full divide-y divide-slate-200 text-left text-sm">
+                <thead className="bg-slate-100/90">
                   <tr>
                     {pageContent.repaymentHeaders.map((header, idx) => (
-                      <th key={idx} scope="col" className="px-6 py-4 font-bold text-gray-900">
+                      <th key={idx} scope="col" className="px-6 py-4 font-bold text-slate-900 text-xs uppercase tracking-wider">
                         {header}
                       </th>
                     ))}
-                    <th scope="col" className="px-6 py-4 font-bold text-gray-900 text-center">
+                    <th scope="col" className="px-6 py-4 font-bold text-slate-900 text-center text-xs uppercase tracking-wider">
                       Action
                     </th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-100">
+                <tbody className="divide-y divide-slate-100">
                   {pageContent.repaymentDetails.map((row, idx) => (
                     <tr key={idx} className={idx % 2 === 0 ? "bg-white" : "bg-slate-50/50"}>
-                      <td className="px-6 py-4 font-bold text-gray-900">
+                      <td className="px-6 py-4 font-bold text-slate-900">
                         {row.col1}
                       </td>
-                      <td className="px-6 py-4 font-semibold text-teal-700">
+                      <td className="px-6 py-4 font-bold text-blue-900 tabular-nums">
                         {row.col2}
                       </td>
-                      <td className="px-6 py-4 text-gray-700">
+                      <td className="px-6 py-4 text-slate-600">
                         {row.col3}
                       </td>
-                      <td className="px-6 py-4 text-gray-600">
+                      <td className="px-6 py-4 text-slate-600 tabular-nums">
                         {row.col4}
                       </td>
                       <td className="px-6 py-4 text-center">
@@ -697,7 +700,7 @@ const DynamicPersonalLoanPage: React.FC<DynamicPersonalLoanPageProps> = ({
                             openApplyModal &&
                             openApplyModal(`Personal Loan - ${row.col1}`)
                           }
-                          className="bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded-xl text-xs sm:text-sm shadow-sm transition-all"
+                          className="bg-amber-700 hover:bg-amber-800 text-white font-bold py-2 px-4 rounded-lg text-xs sm:text-sm shadow-sm transition-all cursor-pointer"
                         >
                           Apply Now
                         </button>
@@ -707,13 +710,13 @@ const DynamicPersonalLoanPage: React.FC<DynamicPersonalLoanPageProps> = ({
                 </tbody>
               </table>
             </div>
-            <div className="p-4 bg-slate-50 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-gray-500">
+            <div className="p-4 bg-slate-50 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
               <div>
                 * Rates are indicative and subject to individual credit score, employer category, and lender underwriting policy.
               </div>
               <Link
                 to="/loans/personal/overview"
-                className="text-blue-600 hover:underline font-semibold"
+                className="text-blue-900 hover:underline font-bold"
               >
                 View Full Bank-by-Bank Overview Guide →
               </Link>
@@ -724,11 +727,11 @@ const DynamicPersonalLoanPage: React.FC<DynamicPersonalLoanPageProps> = ({
         {/* Detailed Editorial Articles Section */}
         {detailedArticles.length > 0 && (
           <section className="space-y-6">
-            <div className="text-center max-w-3xl mx-auto mb-4">
-              <span className="inline-block bg-teal-50 text-teal-700 text-xs sm:text-sm font-semibold px-3 py-1 rounded-full uppercase tracking-wider mb-2">
+            <div className="text-center max-w-3xl mx-auto mb-4 space-y-2">
+              <span className="inline-block bg-blue-50 text-blue-900 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
                 Expert Analysis
               </span>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
                 Comprehensive Financial Guide & Mathematical Insights
               </h2>
             </div>
@@ -736,14 +739,14 @@ const DynamicPersonalLoanPage: React.FC<DynamicPersonalLoanPageProps> = ({
               {detailedArticles.map((art, idx) => (
                 <div
                   key={idx}
-                  className="bg-white rounded-2xl border border-gray-200 p-6 sm:p-8 shadow-sm space-y-3"
+                  className="bg-white rounded-2xl border border-slate-200/80 p-6 sm:p-8 shadow-sm space-y-3"
                 >
-                  <h3 className="text-lg font-bold text-gray-900 flex items-center gap-2 border-b border-gray-100 pb-3">
-                    <span className="w-2 h-2 bg-teal-500 rounded-full" />
+                  <h3 className="text-lg font-bold text-slate-900 flex items-center gap-2 border-b border-slate-100 pb-3">
+                    <span className="w-2 h-2 bg-blue-900 rounded-full" />
                     {art.title}
                   </h3>
                   {art.content.map((p, pIdx) => (
-                    <p key={pIdx} className="text-gray-600 text-xs sm:text-sm leading-relaxed">
+                    <p key={pIdx} className="text-slate-600 text-xs sm:text-sm leading-relaxed">
                       {p.replace(/\*\*/g, '')}
                     </p>
                   ))}
@@ -754,17 +757,17 @@ const DynamicPersonalLoanPage: React.FC<DynamicPersonalLoanPageProps> = ({
         )}
 
         {/* Step-by-Step Optimization Checklist */}
-        <section className="bg-white rounded-2xl border border-gray-200 p-6 sm:p-8 shadow-sm">
-          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-6">
+        <section className="bg-white rounded-2xl border border-slate-200/80 p-6 sm:p-8 shadow-sm">
+          <h2 className="text-xl sm:text-2xl font-bold text-slate-900 mb-6">
             {pageContent.boostTipsTitle}
           </h2>
           <div className="grid sm:grid-cols-3 gap-6">
             {pageContent.boostTips.map((tip, idx) => (
               <div key={idx} className="flex gap-3 items-start">
-                <div className="w-7 h-7 bg-teal-50 text-teal-700 rounded-full flex items-center justify-center shrink-0 font-bold text-xs mt-0.5 border border-teal-100">
+                <div className="w-7 h-7 bg-blue-50 text-blue-900 rounded-full flex items-center justify-center shrink-0 font-bold text-xs mt-0.5 border border-blue-100">
                   {idx + 1}
                 </div>
-                <p className="text-xs sm:text-sm text-gray-700 leading-relaxed font-medium">
+                <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-medium">
                   {tip}
                 </p>
               </div>
@@ -776,10 +779,10 @@ const DynamicPersonalLoanPage: React.FC<DynamicPersonalLoanPageProps> = ({
         <div className="bg-gradient-to-br from-slate-50 to-blue-50/50 rounded-2xl p-6 sm:p-8 border border-blue-100/80">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-6">
             <div>
-              <h3 className="text-base sm:text-lg font-bold text-gray-900">
+              <h3 className="text-base sm:text-lg font-bold text-slate-900">
                 Editorial Review & Financial Transparency
               </h3>
-              <p className="text-xs text-gray-500">
+              <p className="text-xs text-slate-500">
                 Content audited against latest RBI master directions and official bank schedules • Last Updated: October 2026
               </p>
             </div>
@@ -790,51 +793,51 @@ const DynamicPersonalLoanPage: React.FC<DynamicPersonalLoanPageProps> = ({
           </div>
 
           <div className="grid md:grid-cols-2 gap-6">
-            <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100 flex items-start gap-4">
+            <div className="bg-white rounded-xl p-5 shadow-sm border border-slate-200/80 flex items-start gap-4">
               <img
                 src="/images/avatar1.jpg"
                 alt="Amit Sharma"
-                className="w-12 h-12 rounded-full object-cover border-2 border-teal-500 shrink-0"
+                className="w-12 h-12 rounded-full object-cover border-2 border-blue-900 shrink-0"
                 onError={(e) => {
                   e.currentTarget.src = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80";
                 }}
               />
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between gap-1">
-                  <div className="font-bold text-gray-900 text-sm">Amit Sharma</div>
-                  <span className="text-[10px] font-bold text-teal-700 bg-teal-50 px-2 py-0.5 rounded uppercase">Author</span>
+                  <div className="font-bold text-slate-900 text-sm">Amit Sharma</div>
+                  <span className="text-[10px] font-bold text-blue-900 bg-blue-50 px-2 py-0.5 rounded uppercase">Author</span>
                 </div>
-                <div className="text-xs text-teal-800 font-medium mb-1">Senior Finance Advisor & Banking Analyst</div>
-                <div className="text-xs text-gray-500 leading-relaxed">Specializes in retail lending, benchmark interest rates, and consumer credit planning.</div>
+                <div className="text-xs text-blue-900 font-semibold mb-1">Senior Finance Advisor & Banking Analyst</div>
+                <div className="text-xs text-slate-500 leading-relaxed">Specializes in retail lending, benchmark interest rates, and consumer credit planning.</div>
               </div>
             </div>
 
-            <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100 flex items-start gap-4">
+            <div className="bg-white rounded-xl p-5 shadow-sm border border-slate-200/80 flex items-start gap-4">
               <img
                 src="/images/avatar3.jpg"
                 alt="Priya Mishra"
-                className="w-12 h-12 rounded-full object-cover border-2 border-blue-500 shrink-0"
+                className="w-12 h-12 rounded-full object-cover border-2 border-amber-600 shrink-0"
                 onError={(e) => {
                   e.currentTarget.src = "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&auto=format&fit=crop&q=80";
                 }}
               />
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between gap-1">
-                  <div className="font-bold text-gray-900 text-sm">Priya Mishra</div>
-                  <span className="text-[10px] font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded uppercase">Reviewer</span>
+                  <div className="font-bold text-slate-900 text-sm">Priya Mishra</div>
+                  <span className="text-[10px] font-bold text-amber-800 bg-amber-50 px-2 py-0.5 rounded uppercase">Reviewer</span>
                 </div>
-                <div className="text-xs text-blue-800 font-medium mb-1">Certified Credit Counselor & Financial Risk Analyst</div>
-                <div className="text-xs text-gray-500 leading-relaxed">Audits consumer credit products, RBI fair practice compliance, and borrower affordability.</div>
+                <div className="text-xs text-amber-800 font-semibold mb-1">Certified Credit Counselor & Financial Risk Analyst</div>
+                <div className="text-xs text-slate-500 leading-relaxed">Audits consumer credit products, RBI fair practice compliance, and borrower affordability.</div>
               </div>
             </div>
           </div>
         </div>
 
         {/* FAQs Accordion */}
-        <section className="bg-white rounded-2xl border border-gray-200 p-6 sm:p-8 shadow-sm">
+        <section className="bg-white rounded-2xl border border-slate-200/80 p-6 sm:p-8 shadow-sm">
           <div className="flex items-center gap-2 mb-6">
-            <HelpCircle className="w-5 h-5 text-teal-600" />
-            <h2 className="text-xl sm:text-2xl font-bold text-gray-900">
+            <HelpCircle className="w-5 h-5 text-blue-900" />
+            <h2 className="text-xl sm:text-2xl font-bold text-slate-900">
               Frequently Asked Questions: {readableTitle}
             </h2>
           </div>
@@ -843,23 +846,24 @@ const DynamicPersonalLoanPage: React.FC<DynamicPersonalLoanPageProps> = ({
               <div
                 key={index}
                 className={`border rounded-xl transition-all duration-200 overflow-hidden ${
-                  activeFaq === index ? "border-teal-500 ring-1 ring-teal-200" : "border-gray-200"
+                  activeFaq === index ? "border-blue-900 ring-1 ring-blue-900/20" : "border-slate-200"
                 }`}
               >
                 <button
+                  type="button"
                   onClick={() => setActiveFaq(activeFaq === index ? null : index)}
-                  className="w-full flex justify-between items-center p-4 bg-slate-50/50 hover:bg-slate-50 text-left font-bold text-gray-800 text-sm sm:text-base outline-none transition-colors"
+                  className="w-full flex justify-between items-center p-4 bg-slate-50/50 hover:bg-slate-50 text-left font-bold text-slate-800 text-sm sm:text-base outline-none transition-colors cursor-pointer"
                   aria-expanded={activeFaq === index}
                 >
                   <span className="pr-4">{faq.q}</span>
                   <ChevronDown
-                    className={`w-4 h-4 text-gray-400 shrink-0 transition-transform duration-200 ${
-                      activeFaq === index ? 'rotate-180 text-teal-600' : ''
+                    className={`w-4 h-4 text-slate-400 shrink-0 transition-transform duration-200 ${
+                      activeFaq === index ? 'rotate-180 text-blue-900' : ''
                     }`}
                   />
                 </button>
                 {activeFaq === index && (
-                  <div className="p-4 text-xs sm:text-sm text-gray-600 border-t border-gray-100 bg-white leading-relaxed">
+                  <div className="p-4 text-xs sm:text-sm text-slate-600 border-t border-slate-100 bg-white leading-relaxed">
                     {faq.a}
                   </div>
                 )}
@@ -869,8 +873,8 @@ const DynamicPersonalLoanPage: React.FC<DynamicPersonalLoanPageProps> = ({
         </section>
 
         {/* Related Personal Loan Categories */}
-        <section className="bg-white rounded-2xl border border-gray-200 p-6 sm:p-8 shadow-sm">
-          <h2 className="text-lg font-bold text-gray-900 mb-4">
+        <section className="bg-white rounded-2xl border border-slate-200/80 p-6 sm:p-8 shadow-sm">
+          <h2 className="text-lg font-bold text-slate-900 mb-4">
             Explore Related Personal Loan Guides & Options
           </h2>
           <div className="flex flex-wrap gap-2">
@@ -880,8 +884,8 @@ const DynamicPersonalLoanPage: React.FC<DynamicPersonalLoanPageProps> = ({
                 to={rp.path}
                 className={`text-xs px-3 py-1.5 rounded-lg border font-medium transition-all ${
                   rp.path === window.location.pathname
-                    ? "bg-teal-600 text-white border-teal-600"
-                    : "bg-slate-50 text-gray-700 border-gray-200 hover:border-teal-400 hover:bg-teal-50 hover:text-teal-900"
+                    ? "bg-blue-900 text-white border-blue-900"
+                    : "bg-slate-50 text-slate-700 border-slate-200 hover:border-blue-400 hover:bg-blue-50 hover:text-blue-900"
                 }`}
               >
                 {rp.label}

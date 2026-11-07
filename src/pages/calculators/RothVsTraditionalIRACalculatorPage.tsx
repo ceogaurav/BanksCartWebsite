@@ -5,7 +5,8 @@ import {
   Wallet, BarChart, Lightbulb, Info, ChevronDown, CheckCircle, Search, Scale, MessageSquare,
   PiggyBank, Clock, Users, ShieldCheck, TrendingDown, Gavel, Landmark, Handshake, Briefcase
 } from 'lucide-react'; // Lucide icons
-import ApplyButton from '../../components/common/ApplyButton'; // Assuming this path is correct
+import ApplyButton from '../../components/common/ApplyButton';
+import Breadcrumb from '../../components/Breadcrumb'; // Assuming this path is correct
 
 // --- Helper Functions ---
 // Formats a number into INR currency format
@@ -279,11 +280,20 @@ const RothVsTraditionalIRACalculatorPage: React.FC<RothVsTraditionalIRACalculato
 
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-50 py-8 font-inter text-gray-800">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-slate-50 py-8 font-sans text-slate-800">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Breadcrumb Navigation */}
+        <div className="mb-6">
+          <Breadcrumb
+            items={[
+              { label: 'Calculators', path: '/calculators' },
+              { label: 'Tax-Deferred vs Taxable Calculator' }
+            ]}
+          />
+        </div>
         {/* Hero Section */}
         <motion.div
-          className="text-center mb-12 bg-gradient-to-r from-green-600 to-emerald-700 text-white p-8 rounded-3xl shadow-xl"
+          className="text-center mb-8 bg-gradient-to-r from-[#0F172A] via-[#1E3A8A] to-[#0F172A] text-white p-8 sm:p-10 rounded-2xl shadow-xl border border-slate-700/50"
           variants={sectionVariants}
           initial="hidden"
           whileInView="visible"
@@ -294,7 +304,7 @@ const RothVsTraditionalIRACalculatorPage: React.FC<RothVsTraditionalIRACalculato
             variants={itemVariants}
           >
             Roth vs. Traditional IRA:{' '}
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 to-orange-300">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-amber-300 to-amber-100">
               Which is Right for You?
             </span>
           </motion.h1>
@@ -310,9 +320,7 @@ const RothVsTraditionalIRACalculatorPage: React.FC<RothVsTraditionalIRACalculato
               <ApplyButton
                 loanType="IRA Investment Inquiry"
                 openApplyModal={openApplyModal}
-                className="bg-white text-green-600 px-8 py-4 rounded-full font-bold text-lg shadow-lg
-                           hover:bg-gray-100 transition-all duration-300 ease-in-out transform hover:-translate-y-1
-                           focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-50"
+                className="bg-amber-500 hover:bg-amber-400 text-slate-950 px-8 py-3.5 rounded-xl font-bold text-base shadow-lg transition-all inline-block"
               >
                 Get Retirement Planning Advice
               </ApplyButton>
@@ -322,28 +330,41 @@ const RothVsTraditionalIRACalculatorPage: React.FC<RothVsTraditionalIRACalculato
 
         {/* Roth vs. Traditional IRA Calculator Section */}
         <motion.div
-          className="bg-white rounded-3xl shadow-2xl p-6 md:p-10 w-full border border-green-100 mb-12"
+          className="bg-white rounded-2xl shadow-sm p-6 sm:p-8 w-full border border-slate-200 mb-10"
           variants={sectionVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
         >
-          <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-emerald-600 to-green-600 drop-shadow-md">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-8 text-center flex items-center justify-center">
             <Calculator className="inline-block w-9 h-9 mr-3 text-emerald-500" /> Compare Your IRA Options
           </h2>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
             {/* Input Controls Section */}
-            <div className="space-y-8 p-4 bg-gray-50 rounded-2xl border border-gray-100 shadow-inner">
+            <div className="space-y-6 p-6 bg-slate-50/70 rounded-xl border border-slate-200">
               <h3 className="text-2xl font-bold text-gray-800 mb-4 flex items-center">
                 <PiggyBank className="w-6 h-6 mr-2 text-green-600" /> Your Financial Profile
               </h3>
 
               {/* Current Age */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="currentAge" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Your Current Age: <span className="text-blue-600">{currentAge} Years</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="currentAge" className="text-sm font-semibold text-slate-700">
+                    Your Current Age
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="number"
+                  value={currentAge}
+                  onChange={handleCurrentAgeChange}
+                  onBlur={(e) => setCurrentAge(Number(e.target.value))}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  min="18"
+                  max="60"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="currentAge"
@@ -352,24 +373,28 @@ const RothVsTraditionalIRACalculatorPage: React.FC<RothVsTraditionalIRACalculato
                   step="1"
                   value={currentAge}
                   onChange={handleCurrentAgeChange}
-                  className="w-full h-2 bg-gradient-to-r from-blue-300 to-blue-500 rounded-lg appearance-none cursor-pointer accent-blue-600"
-                />
-                <input
-                  type="number"
-                  value={currentAge}
-                  onChange={handleCurrentAgeChange}
-                  onBlur={(e) => setCurrentAge(Number(e.target.value))}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-blue-500 focus:border-blue-500 transition-all"
-                  min="18"
-                  max="60"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
 
               {/* Retirement Age */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="retirementAge" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Desired Retirement Age: <span className="text-purple-600">{retirementAge} Years</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="retirementAge" className="text-sm font-semibold text-slate-700">
+                    Desired Retirement Age
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="number"
+                  value={retirementAge}
+                  onChange={handleRetirementAgeChange}
+                  onBlur={(e) => setRetirementAge(Number(e.target.value))}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  min={currentAge + 5}
+                  max="75"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="retirementAge"
@@ -378,24 +403,27 @@ const RothVsTraditionalIRACalculatorPage: React.FC<RothVsTraditionalIRACalculato
                   step="1"
                   value={retirementAge}
                   onChange={handleRetirementAgeChange}
-                  className="w-full h-2 bg-gradient-to-r from-purple-300 to-purple-500 rounded-lg appearance-none cursor-pointer accent-purple-600"
-                />
-                <input
-                  type="number"
-                  value={retirementAge}
-                  onChange={handleRetirementAgeChange}
-                  onBlur={(e) => setRetirementAge(Number(e.target.value))}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-purple-500 focus:border-purple-500 transition-all"
-                  min={currentAge + 5}
-                  max="75"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
 
               {/* Annual Contribution */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="annualContribution" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Annual Contribution: <span className="text-teal-600">{formatCurrency(annualContribution)}</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="annualContribution" className="text-sm font-semibold text-slate-700">
+                    Annual Contribution
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="text"
+                  value={formatNumberWithCommas(annualContribution)}
+                  onChange={handleAnnualContributionChange}
+                  onBlur={(e) => setAnnualContribution(Number(e.target.value.replace(/,/g, '')))}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  inputMode="numeric"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="annualContribution"
@@ -404,23 +432,27 @@ const RothVsTraditionalIRACalculatorPage: React.FC<RothVsTraditionalIRACalculato
                   step="1000"
                   value={annualContribution}
                   onChange={handleAnnualContributionChange}
-                  className="w-full h-2 bg-gradient-to-r from-teal-300 to-teal-500 rounded-lg appearance-none cursor-pointer accent-teal-600"
-                />
-                <input
-                  type="text"
-                  value={formatNumberWithCommas(annualContribution)}
-                  onChange={handleAnnualContributionChange}
-                  onBlur={(e) => setAnnualContribution(Number(e.target.value.replace(/,/g, '')))}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-teal-500 focus:border-teal-500 transition-all"
-                  inputMode="numeric"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
 
               {/* Expected Annual Return */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="expectedAnnualReturn" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Expected Annual Return: <span className="text-orange-600">{expectedAnnualReturn.toFixed(1)}%</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="expectedAnnualReturn" className="text-sm font-semibold text-slate-700">
+                    Expected Annual Return
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="number"
+                  value={expectedAnnualReturn}
+                  onChange={handleExpectedAnnualReturnChange}
+                  onBlur={(e) => setExpectedAnnualReturn(Number(e.target.value))}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  step="0.1"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="expectedAnnualReturn"
@@ -429,15 +461,7 @@ const RothVsTraditionalIRACalculatorPage: React.FC<RothVsTraditionalIRACalculato
                   step="0.1"
                   value={expectedAnnualReturn}
                   onChange={handleExpectedAnnualReturnChange}
-                  className="w-full h-2 bg-gradient-to-r from-orange-300 to-orange-500 rounded-lg appearance-none cursor-pointer accent-orange-600"
-                />
-                <input
-                  type="number"
-                  value={expectedAnnualReturn}
-                  onChange={handleExpectedAnnualReturnChange}
-                  onBlur={(e) => setExpectedAnnualReturn(Number(e.target.value))}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-orange-500 focus:border-orange-500 transition-all"
-                  step="0.1"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
 
@@ -479,7 +503,7 @@ const RothVsTraditionalIRACalculatorPage: React.FC<RothVsTraditionalIRACalculato
             </div>
 
             {/* Results Display Section */}
-            <div className="p-6 bg-gradient-to-br from-green-500 to-emerald-600 text-white rounded-2xl shadow-xl flex flex-col justify-center items-center text-center">
+            <div className="p-6 sm:p-8 bg-[#0F172A] text-white rounded-2xl shadow-xl border border-slate-800 flex flex-col justify-between text-left">
               <h3 className="text-2xl md:text-3xl font-bold mb-4">Projected After-Tax Retirement Value</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full mb-6">
                 <motion.div
@@ -490,7 +514,7 @@ const RothVsTraditionalIRACalculatorPage: React.FC<RothVsTraditionalIRACalculato
                   className="bg-green-700/40 p-4 rounded-lg flex flex-col items-center justify-center"
                 >
                   <p className="text-lg text-green-100 font-semibold">Traditional IRA</p>
-                  <span className="text-3xl md:text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 to-orange-300 drop-shadow-lg">
+                  <span className="text-3xl md:text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-amber-300 to-amber-100 drop-shadow-lg">
                     {formatCurrency(calculations.traditionalIRA_Net_Retirement_Value)}
                   </span>
                 </motion.div>
@@ -502,26 +526,26 @@ const RothVsTraditionalIRACalculatorPage: React.FC<RothVsTraditionalIRACalculato
                   className="bg-emerald-700/40 p-4 rounded-lg flex flex-col items-center justify-center"
                 >
                   <p className="text-lg text-emerald-100 font-semibold">Roth IRA</p>
-                  <span className="text-3xl md:text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 to-orange-300 drop-shadow-lg">
+                  <span className="text-3xl md:text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-amber-300 to-amber-100 drop-shadow-lg">
                     {formatCurrency(calculations.rothIRA_Net_Retirement_Value)}
                   </span>
                 </motion.div>
               </div>
 
               <div className="w-full space-y-4 text-lg">
-                <motion.div variants={itemVariants} className="flex justify-between items-center bg-green-700/30 p-3 rounded-lg">
+                <motion.div variants={itemVariants} className="flex justify-between items-center bg-slate-800/80 border border-slate-700/60 p-3 rounded-xl text-sm sm:text-base font-mono tabular-nums">
                   <span className="font-medium flex items-center gap-2"><IndianRupee className="w-5 h-5" /> Total Invested (Out of Pocket)</span>
                   <span className="font-bold text-white">{formatCurrency(calculations.totalInvestedRoth)}</span>
                 </motion.div>
-                <motion.div variants={itemVariants} className="flex justify-between items-center bg-green-700/30 p-3 rounded-lg">
+                <motion.div variants={itemVariants} className="flex justify-between items-center bg-slate-800/80 border border-slate-700/60 p-3 rounded-xl text-sm sm:text-base font-mono tabular-nums">
                   <span className="font-medium flex items-center gap-2"><Clock className="w-5 h-5" /> Years to Retirement</span>
                   <span className="font-bold text-white">{calculations.yearsToRetirement} Years</span>
                 </motion.div>
-                <motion.div variants={itemVariants} className="flex justify-between items-center bg-green-700/30 p-3 rounded-lg">
+                <motion.div variants={itemVariants} className="flex justify-between items-center bg-slate-800/80 border border-slate-700/60 p-3 rounded-xl text-sm sm:text-base font-mono tabular-nums">
                   <span className="font-medium flex items-center gap-2"><TrendingUp className="w-5 h-5" /> Traditional IRA (Pre-Tax FV)</span>
                   <span className="font-bold text-white">{formatCurrency(calculations.traditionalIRA_FV_PreTax)}</span>
                 </motion.div>
-                <motion.div variants={itemVariants} className="flex justify-between items-center bg-green-700/30 p-3 rounded-lg">
+                <motion.div variants={itemVariants} className="flex justify-between items-center bg-slate-800/80 border border-slate-700/60 p-3 rounded-xl text-sm sm:text-base font-mono tabular-nums">
                   <span className="font-medium flex items-center gap-2"><DollarSign className="w-5 h-5" /> Est. Traditional IRA Tax Savings Today</span>
                   <span className="font-bold text-white">{formatCurrency(calculations.traditionalIRA_TaxSavingsToday)}</span>
                 </motion.div>
@@ -583,7 +607,7 @@ const RothVsTraditionalIRACalculatorPage: React.FC<RothVsTraditionalIRACalculato
         </motion.div>
 
         {/* Informational Sections */}
-        <div className="bg-white border border-gray-100 rounded-2xl p-8 shadow-lg mt-6 space-y-10">
+        <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm mt-8 space-y-10">
           <motion.section variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }}>
             <h2 className="text-3xl font-bold text-gray-900 mb-4 flex items-center">
               <Lightbulb className="w-8 h-8 mr-3 text-yellow-500" /> What is a Roth IRA vs. Traditional IRA Calculator?
@@ -676,7 +700,7 @@ const RothVsTraditionalIRACalculatorPage: React.FC<RothVsTraditionalIRACalculato
               {whyUseBanksCart.map((reason, index) => (
                 <motion.div
                   key={index}
-                  className="flex flex-col items-center text-center p-6 rounded-xl shadow-lg bg-gradient-to-br from-green-50 to-emerald-50 border border-green-100"
+                  className="flex flex-col items-center text-center p-6 rounded-xl shadow-sm bg-slate-50 border border-slate-200"
                   variants={cardVariants}
                 >
                   {reason.icon}
@@ -689,7 +713,7 @@ const RothVsTraditionalIRACalculatorPage: React.FC<RothVsTraditionalIRACalculato
 
           {/* Final Call to Action */}
           <motion.section
-            className="text-center mt-12 p-8 bg-gradient-to-r from-green-600 to-emerald-700 rounded-2xl shadow-xl"
+            className="text-center mt-12 p-8 sm:p-10 bg-gradient-to-r from-[#0F172A] via-[#1E3A8A] to-[#0F172A] text-white rounded-2xl shadow-xl border border-slate-700/50"
             variants={sectionVariants}
             initial="hidden"
             whileInView="visible"
@@ -713,9 +737,7 @@ const RothVsTraditionalIRACalculatorPage: React.FC<RothVsTraditionalIRACalculato
                 <ApplyButton
                   loanType="Retirement Tax Strategy"
                   openApplyModal={openApplyModal}
-                  className="bg-white text-green-600 px-8 py-4 rounded-full font-bold text-lg shadow-lg
-                             hover:bg-gray-100 transition-all duration-300 ease-in-out transform hover:-translate-y-1
-                             focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-50"
+                  className="bg-amber-500 hover:bg-amber-400 text-slate-950 px-8 py-3.5 rounded-xl font-bold text-base shadow-lg transition-all inline-block"
                 >
                   Get Personalized Retirement Advice
                 </ApplyButton>

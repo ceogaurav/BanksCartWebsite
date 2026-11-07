@@ -7,7 +7,8 @@ import {
   HandCoins, CreditCard, Clock, Hourglass, PiggyBank as SavingsIcon, Home, Building2, User,
   Shield, Landmark, ReceiptText as TaxIcon, Building, TrendingUp as RoiIcon // Icons for Cap Rate
 } from 'lucide-react'; // Lucide icons
-import ApplyButton from '../../components/common/ApplyButton'; // Assuming this path is correct
+import ApplyButton from '../../components/common/ApplyButton';
+import Breadcrumb from '../../components/Breadcrumb'; // Assuming this path is correct
 
 // --- Helper Functions ---
 // Formats a number into INR currency format
@@ -224,11 +225,20 @@ const CapitalizationRateCalculatorPage: React.FC<CapitalizationRateCalculatorPag
 
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 to-amber-50 py-8 font-inter text-gray-800">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-slate-50 py-8 font-sans text-slate-800">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Breadcrumb Navigation */}
+        <div className="mb-6">
+          <Breadcrumb
+            items={[
+              { label: 'Calculators', path: '/calculators' },
+              { label: 'Cap Rate Calculator' }
+            ]}
+          />
+        </div>
         {/* Hero Section */}
         <motion.div
-          className="text-center mb-12 bg-gradient-to-r from-orange-600 to-amber-700 text-white p-8 rounded-3xl shadow-xl"
+          className="text-center mb-8 bg-gradient-to-r from-[#0F172A] via-[#1E3A8A] to-[#0F172A] text-white p-8 sm:p-10 rounded-2xl shadow-xl border border-slate-700/50"
           variants={sectionVariants}
           initial="hidden"
           whileInView="visible"
@@ -255,9 +265,7 @@ const CapitalizationRateCalculatorPage: React.FC<CapitalizationRateCalculatorPag
               <ApplyButton
                 loanType="Real Estate Investment Loan"
                 openApplyModal={openApplyModal}
-                className="bg-white text-orange-600 px-8 py-4 rounded-full font-bold text-lg shadow-lg
-                           hover:bg-gray-100 transition-all duration-300 ease-in-out transform hover:-translate-y-1
-                           focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-50"
+                className="bg-amber-500 hover:bg-amber-400 text-slate-950 px-8 py-3.5 rounded-xl font-bold text-base shadow-lg transition-all inline-block"
               >
                 Explore Property Investment Loans
               </ApplyButton>
@@ -267,28 +275,40 @@ const CapitalizationRateCalculatorPage: React.FC<CapitalizationRateCalculatorPag
 
         {/* Capitalization Rate Calculator Section */}
         <motion.div
-          className="bg-white rounded-3xl shadow-2xl p-6 md:p-10 w-full border border-orange-100 mb-12"
+          className="bg-white rounded-2xl shadow-sm p-6 sm:p-8 w-full border border-slate-200 mb-10"
           variants={sectionVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
         >
-          <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-amber-600 to-orange-600 drop-shadow-md">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-8 text-center flex items-center justify-center">
             <Calculator className="inline-block w-9 h-9 mr-3 text-amber-500" /> Capitalization Rate Estimator
           </h2>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
             {/* Input Controls Section */}
-            <div className="space-y-8 p-4 bg-gray-50 rounded-2xl border border-gray-100 shadow-inner">
+            <div className="space-y-6 p-6 bg-slate-50/70 rounded-xl border border-slate-200">
               <h3 className="text-2xl font-bold text-gray-800 mb-4 flex items-center">
                 <Building className="w-6 h-6 mr-2 text-orange-600" /> Property & Income Details
               </h3>
 
               {/* Property Purchase Price */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="propertyPurchasePrice" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Property Purchase Price: <span className="text-blue-600">{formatCurrency(propertyPurchasePrice)}</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="propertyPurchasePrice" className="text-sm font-semibold text-slate-700">
+                    Property Purchase Price
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="text"
+                  value={formatNumberWithCommas(propertyPurchasePrice)}
+                  onChange={handlePropertyPurchasePriceChange}
+                  onBlur={(e) => setPropertyPurchasePrice(Number(e.target.value.replace(/,/g, '')))}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  inputMode="numeric"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="propertyPurchasePrice"
@@ -297,23 +317,27 @@ const CapitalizationRateCalculatorPage: React.FC<CapitalizationRateCalculatorPag
                   step="500000"
                   value={propertyPurchasePrice}
                   onChange={handlePropertyPurchasePriceChange}
-                  className="w-full h-2 bg-gradient-to-r from-blue-300 to-blue-500 rounded-lg appearance-none cursor-pointer accent-blue-600"
-                />
-                <input
-                  type="text"
-                  value={formatNumberWithCommas(propertyPurchasePrice)}
-                  onChange={handlePropertyPurchasePriceChange}
-                  onBlur={(e) => setPropertyPurchasePrice(Number(e.target.value.replace(/,/g, '')))}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-blue-500 focus:border-blue-500 transition-all"
-                  inputMode="numeric"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
 
               {/* Gross Rental Income (Annual) */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="grossRentalIncomeAnnual" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Gross Rental Income (Annual): <span className="text-teal-600">{formatCurrency(grossRentalIncomeAnnual)}</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="grossRentalIncomeAnnual" className="text-sm font-semibold text-slate-700">
+                    Gross Rental Income (Annual)
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="text"
+                  value={formatNumberWithCommas(grossRentalIncomeAnnual)}
+                  onChange={handleGrossRentalIncomeAnnualChange}
+                  onBlur={(e) => setGrossRentalIncomeAnnual(Number(e.target.value.replace(/,/g, '')))}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  inputMode="numeric"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="grossRentalIncomeAnnual"
@@ -322,23 +346,27 @@ const CapitalizationRateCalculatorPage: React.FC<CapitalizationRateCalculatorPag
                   step="50000"
                   value={grossRentalIncomeAnnual}
                   onChange={handleGrossRentalIncomeAnnualChange}
-                  className="w-full h-2 bg-gradient-to-r from-teal-300 to-teal-500 rounded-lg appearance-none cursor-pointer accent-teal-600"
-                />
-                <input
-                  type="text"
-                  value={formatNumberWithCommas(grossRentalIncomeAnnual)}
-                  onChange={handleGrossRentalIncomeAnnualChange}
-                  onBlur={(e) => setGrossRentalIncomeAnnual(Number(e.target.value.replace(/,/g, '')))}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-teal-500 focus:border-teal-500 transition-all"
-                  inputMode="numeric"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
 
               {/* Annual Operating Expenses */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="annualOperatingExpenses" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Annual Operating Expenses: <span className="text-orange-600">{formatCurrency(annualOperatingExpenses)}</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="annualOperatingExpenses" className="text-sm font-semibold text-slate-700">
+                    Annual Operating Expenses
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="text"
+                  value={formatNumberWithCommas(annualOperatingExpenses)}
+                  onChange={handleAnnualOperatingExpensesChange}
+                  onBlur={(e) => setAnnualOperatingExpenses(Number(e.target.value.replace(/,/g, '')))}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  inputMode="numeric"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="annualOperatingExpenses"
@@ -347,21 +375,13 @@ const CapitalizationRateCalculatorPage: React.FC<CapitalizationRateCalculatorPag
                   step="20000"
                   value={annualOperatingExpenses}
                   onChange={handleAnnualOperatingExpensesChange}
-                  className="w-full h-2 bg-gradient-to-r from-orange-300 to-orange-500 rounded-lg appearance-none cursor-pointer accent-orange-600"
-                />
-                <input
-                  type="text"
-                  value={formatNumberWithCommas(annualOperatingExpenses)}
-                  onChange={handleAnnualOperatingExpensesChange}
-                  onBlur={(e) => setAnnualOperatingExpenses(Number(e.target.value.replace(/,/g, '')))}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-orange-500 focus:border-orange-500 transition-all"
-                  inputMode="numeric"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
             </div>
 
             {/* Results Display Section */}
-            <div className="p-6 bg-gradient-to-br from-orange-500 to-amber-600 text-white rounded-2xl shadow-xl flex flex-col justify-center items-center text-center">
+            <div className="p-6 sm:p-8 bg-[#0F172A] text-white rounded-2xl shadow-xl border border-slate-800 flex flex-col justify-between text-left">
               <h3 className="text-2xl md:text-3xl font-bold mb-4">Your Investment Insights</h3>
 
               {calculations.isCalculable ? (
@@ -390,19 +410,19 @@ const CapitalizationRateCalculatorPage: React.FC<CapitalizationRateCalculatorPag
               )}
 
               <div className="w-full space-y-4 text-lg mt-8">
-                <motion.div variants={itemVariants} className="flex justify-between items-center bg-orange-700/30 p-3 rounded-lg">
+                <motion.div variants={itemVariants} className="flex justify-between items-center bg-slate-800/80 border border-slate-700/60 p-3 rounded-xl text-sm sm:text-base font-mono tabular-nums">
                   <span className="font-medium flex items-center gap-2"><DollarSign className="w-5 h-5" /> Net Operating Income (NOI)</span>
                   <span className="font-bold text-white">{formatCurrency(calculations.netOperatingIncome)}</span>
                 </motion.div>
-                <motion.div variants={itemVariants} className="flex justify-between items-center bg-orange-700/30 p-3 rounded-lg">
+                <motion.div variants={itemVariants} className="flex justify-between items-center bg-slate-800/80 border border-slate-700/60 p-3 rounded-xl text-sm sm:text-base font-mono tabular-nums">
                   <span className="font-medium flex items-center gap-2"><Home className="w-5 h-5" /> Property Purchase Price</span>
                   <span className="font-bold text-white">{formatCurrency(propertyPurchasePrice)}</span>
                 </motion.div>
-                <motion.div variants={itemVariants} className="flex justify-between items-center bg-orange-700/30 p-3 rounded-lg">
+                <motion.div variants={itemVariants} className="flex justify-between items-center bg-slate-800/80 border border-slate-700/60 p-3 rounded-xl text-sm sm:text-base font-mono tabular-nums">
                   <span className="font-medium flex items-center gap-2"><IndianRupee className="w-5 h-5" /> Gross Rental Income (Annual)</span>
                   <span className="font-bold text-white">{formatCurrency(grossRentalIncomeAnnual)}</span>
                 </motion.div>
-                <motion.div variants={itemVariants} className="flex justify-between items-center bg-orange-700/30 p-3 rounded-lg">
+                <motion.div variants={itemVariants} className="flex justify-between items-center bg-slate-800/80 border border-slate-700/60 p-3 rounded-xl text-sm sm:text-base font-mono tabular-nums">
                   <span className="font-medium flex items-center gap-2"><Wallet className="w-5 h-5" /> Annual Operating Expenses</span>
                   <span className="font-bold text-white">{formatCurrency(annualOperatingExpenses)}</span>
                 </motion.div>
@@ -473,7 +493,7 @@ const CapitalizationRateCalculatorPage: React.FC<CapitalizationRateCalculatorPag
         </motion.div>
 
         {/* Informational Sections */}
-        <div className="bg-white border border-gray-100 rounded-2xl p-8 shadow-lg mt-6 space-y-10">
+        <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm mt-8 space-y-10">
           <motion.section variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }}>
             <h2 className="text-3xl font-bold text-gray-900 mb-4 flex items-center">
               <Lightbulb className="w-8 h-8 mr-3 text-yellow-500" /> What is a Capitalization Rate Calculator?
@@ -565,7 +585,7 @@ const CapitalizationRateCalculatorPage: React.FC<CapitalizationRateCalculatorPag
               {whyUseBanksCart.map((reason, index) => (
                 <motion.div
                   key={index}
-                  className="flex flex-col items-center text-center p-6 rounded-xl shadow-lg bg-gradient-to-br from-orange-50 to-amber-50 border border-orange-100"
+                  className="flex flex-col items-center text-center p-6 rounded-xl shadow-sm bg-slate-50 border border-slate-200"
                   variants={cardVariants}
                 >
                   {reason.icon}
@@ -578,7 +598,7 @@ const CapitalizationRateCalculatorPage: React.FC<CapitalizationRateCalculatorPag
 
           {/* Final Call to Action */}
           <motion.section
-            className="text-center mt-12 p-8 bg-gradient-to-r from-orange-600 to-amber-700 rounded-2xl shadow-xl"
+            className="text-center mt-12 p-8 sm:p-10 bg-gradient-to-r from-[#0F172A] via-[#1E3A8A] to-[#0F172A] text-white rounded-2xl shadow-xl border border-slate-700/50"
             variants={sectionVariants}
             initial="hidden"
             whileInView="visible"
@@ -602,9 +622,7 @@ const CapitalizationRateCalculatorPage: React.FC<CapitalizationRateCalculatorPag
                 <ApplyButton
                   loanType="Real Estate Investment Financing"
                   openApplyModal={openApplyModal}
-                  className="bg-white text-orange-600 px-8 py-4 rounded-full font-bold text-lg shadow-lg
-                             hover:bg-gray-100 transition-all duration-300 ease-in-out transform hover:-translate-y-1
-                             focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-50"
+                  className="bg-amber-500 hover:bg-amber-400 text-slate-950 px-8 py-3.5 rounded-xl font-bold text-base shadow-lg transition-all inline-block"
                 >
                   Get Investment Advice
                 </ApplyButton>

@@ -8,7 +8,8 @@ import {
   Shield, Landmark, ReceiptText as TaxIcon, HandCoins as DownPaymentIcon,
   ArrowRightLeft, Building, TrendingDown as RentDown, TrendingUp as BuyUp // Icons for rent vs. buy
 } from 'lucide-react'; // Lucide icons
-import ApplyButton from '../../components/common/ApplyButton'; // Assuming this path is correct
+import ApplyButton from '../../components/common/ApplyButton';
+import Breadcrumb from '../../components/Breadcrumb'; // Assuming this path is correct
 
 // --- Helper Functions ---
 // Formats a number into INR currency format
@@ -361,11 +362,20 @@ const RentVsBuyCalculatorPage: React.FC<RentVsBuyCalculatorPageProps> = ({ openA
 
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-teal-50 py-8 font-inter text-gray-800">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-slate-50 py-8 font-sans text-slate-800">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Breadcrumb Navigation */}
+        <div className="mb-6">
+          <Breadcrumb
+            items={[
+              { label: 'Calculators', path: '/calculators' },
+              { label: 'Rent vs. Buy Calculator' }
+            ]}
+          />
+        </div>
         {/* Hero Section */}
         <motion.div
-          className="text-center mb-12 bg-gradient-to-r from-green-600 to-teal-700 text-white p-8 rounded-3xl shadow-xl"
+          className="text-center mb-8 bg-gradient-to-r from-[#0F172A] via-[#1E3A8A] to-[#0F172A] text-white p-8 sm:p-10 rounded-2xl shadow-xl border border-slate-700/50"
           variants={sectionVariants}
           initial="hidden"
           whileInView="visible"
@@ -376,7 +386,7 @@ const RentVsBuyCalculatorPage: React.FC<RentVsBuyCalculatorPageProps> = ({ openA
             variants={itemVariants}
           >
             Rent or Buy? Make the Smart Choice with Our{' '}
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 to-orange-300">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-amber-300 to-amber-100">
               Rent vs. Buy Calculator.
             </span>
           </motion.h1>
@@ -392,9 +402,7 @@ const RentVsBuyCalculatorPage: React.FC<RentVsBuyCalculatorPageProps> = ({ openA
               <ApplyButton
                 loanType="Home Loan or Investment Advisory"
                 openApplyModal={openApplyModal}
-                className="bg-white text-green-600 px-8 py-4 rounded-full font-bold text-lg shadow-lg
-                           hover:bg-gray-100 transition-all duration-300 ease-in-out transform hover:-translate-y-1
-                           focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-50"
+                className="bg-amber-500 hover:bg-amber-400 text-slate-950 px-8 py-3.5 rounded-xl font-bold text-base shadow-lg transition-all inline-block"
               >
                 Get Housing Financial Advice
               </ApplyButton>
@@ -404,21 +412,34 @@ const RentVsBuyCalculatorPage: React.FC<RentVsBuyCalculatorPageProps> = ({ openA
 
         {/* Rent vs. Buy Calculator Section */}
         <motion.div
-          className="bg-white rounded-3xl shadow-2xl p-6 md:p-10 w-full border border-green-100 mb-12"
+          className="bg-white rounded-2xl shadow-sm p-6 sm:p-8 w-full border border-slate-200 mb-10"
           variants={sectionVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
         >
-          <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-teal-600 to-green-600 drop-shadow-md">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-8 text-center flex items-center justify-center">
             <Calculator className="inline-block w-9 h-9 mr-3 text-teal-500" /> Housing Financial Comparison
           </h2>
 
           <div className="mb-8">
-            <label htmlFor="comparisonPeriodYears" className="block text-lg font-semibold text-gray-700 mb-2 text-center">
-              Comparison Period: <span className="text-purple-600">{comparisonPeriodYears} Years</span>
-            </label>
-            <input
+            <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="comparisonPeriodYears" className="text-sm font-semibold text-slate-700">
+                    Comparison Period
+                  </label>
+                  <div className="flex items-center">
+                    <input
+              type="number"
+              value={comparisonPeriodYears}
+              onChange={handleComparisonPeriodYearsChange}
+              onBlur={(e) => setComparisonPeriodYears(Number(e.target.value))}
+              className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+              min="1"
+              max="15"
+            />
+                  </div>
+                </div>
+                <input
               type="range"
               id="comparisonPeriodYears"
               min="1"
@@ -426,16 +447,7 @@ const RentVsBuyCalculatorPage: React.FC<RentVsBuyCalculatorPageProps> = ({ openA
               step="1"
               value={comparisonPeriodYears}
               onChange={handleComparisonPeriodYearsChange}
-              className="w-full h-2 bg-gradient-to-r from-purple-300 to-purple-500 rounded-lg appearance-none cursor-pointer accent-purple-600"
-            />
-            <input
-              type="number"
-              value={comparisonPeriodYears}
-              onChange={handleComparisonPeriodYearsChange}
-              onBlur={(e) => setComparisonPeriodYears(Number(e.target.value))}
-              className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-purple-500 focus:border-purple-500 transition-all"
-              min="1"
-              max="15"
+              className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
             />
           </div>
 
@@ -448,9 +460,21 @@ const RentVsBuyCalculatorPage: React.FC<RentVsBuyCalculatorPageProps> = ({ openA
 
               {/* Monthly Rent */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="monthlyRent" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Current Monthly Rent: <span className="text-indigo-600">{formatCurrency(monthlyRent)}</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="monthlyRent" className="text-sm font-semibold text-slate-700">
+                    Current Monthly Rent
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="text"
+                  value={formatNumberWithCommas(monthlyRent)}
+                  onChange={handleMonthlyRentChange}
+                  onBlur={(e) => setMonthlyRent(Number(e.target.value.replace(/,/g, '')))}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  inputMode="numeric"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="monthlyRent"
@@ -459,23 +483,27 @@ const RentVsBuyCalculatorPage: React.FC<RentVsBuyCalculatorPageProps> = ({ openA
                   step="1000"
                   value={monthlyRent}
                   onChange={handleMonthlyRentChange}
-                  className="w-full h-2 bg-gradient-to-r from-indigo-300 to-indigo-500 rounded-lg appearance-none cursor-pointer accent-indigo-600"
-                />
-                <input
-                  type="text"
-                  value={formatNumberWithCommas(monthlyRent)}
-                  onChange={handleMonthlyRentChange}
-                  onBlur={(e) => setMonthlyRent(Number(e.target.value.replace(/,/g, '')))}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-indigo-500 focus:border-indigo-500 transition-all"
-                  inputMode="numeric"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
 
               {/* Annual Rent Increase */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="annualRentIncrease" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Annual Rent Increase (%): <span className="text-teal-600">{annualRentIncrease}%</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="annualRentIncrease" className="text-sm font-semibold text-slate-700">
+                    Annual Rent Increase (%)
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="number"
+                  value={annualRentIncrease}
+                  onChange={handleAnnualRentIncreaseChange}
+                  onBlur={(e) => setAnnualRentIncrease(Number(e.target.value))}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  step="0.1"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="annualRentIncrease"
@@ -484,23 +512,27 @@ const RentVsBuyCalculatorPage: React.FC<RentVsBuyCalculatorPageProps> = ({ openA
                   step="0.1"
                   value={annualRentIncrease}
                   onChange={handleAnnualRentIncreaseChange}
-                  className="w-full h-2 bg-gradient-to-r from-teal-300 to-teal-500 rounded-lg appearance-none cursor-pointer accent-teal-600"
-                />
-                <input
-                  type="number"
-                  value={annualRentIncrease}
-                  onChange={handleAnnualRentIncreaseChange}
-                  onBlur={(e) => setAnnualRentIncrease(Number(e.target.value))}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-teal-500 focus:border-teal-500 transition-all"
-                  step="0.1"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
 
               {/* Renter's Insurance Annual */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="rentersInsuranceAnnual" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Annual Renter's Insurance: <span className="text-orange-600">{formatCurrency(rentersInsuranceAnnual)}</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="rentersInsuranceAnnual" className="text-sm font-semibold text-slate-700">
+                    Annual Renter's Insurance
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="text"
+                  value={formatNumberWithCommas(rentersInsuranceAnnual)}
+                  onChange={handleRentersInsuranceAnnualChange}
+                  onBlur={(e) => setRentersInsuranceAnnual(Number(e.target.value.replace(/,/g, '')))}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  inputMode="numeric"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="rentersInsuranceAnnual"
@@ -509,23 +541,27 @@ const RentVsBuyCalculatorPage: React.FC<RentVsBuyCalculatorPageProps> = ({ openA
                   step="500"
                   value={rentersInsuranceAnnual}
                   onChange={handleRentersInsuranceAnnualChange}
-                  className="w-full h-2 bg-gradient-to-r from-orange-300 to-orange-500 rounded-lg appearance-none cursor-pointer accent-orange-600"
-                />
-                <input
-                  type="text"
-                  value={formatNumberWithCommas(rentersInsuranceAnnual)}
-                  onChange={handleRentersInsuranceAnnualChange}
-                  onBlur={(e) => setRentersInsuranceAnnual(Number(e.target.value.replace(/,/g, '')))}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-orange-500 focus:border-orange-500 transition-all"
-                  inputMode="numeric"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
 
               {/* Rent Savings Investment Return */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="rentSavingsInvestmentReturn" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Annual Investment Return on Saved Funds (%): <span className="text-purple-600">{rentSavingsInvestmentReturn}%</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="rentSavingsInvestmentReturn" className="text-sm font-semibold text-slate-700">
+                    Annual Investment Return on Saved Funds (%)
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="number"
+                  value={rentSavingsInvestmentReturn}
+                  onChange={handleRentSavingsInvestmentReturnChange}
+                  onBlur={(e) => setRentSavingsInvestmentReturn(Number(e.target.value))}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  step="0.1"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="rentSavingsInvestmentReturn"
@@ -534,15 +570,7 @@ const RentVsBuyCalculatorPage: React.FC<RentVsBuyCalculatorPageProps> = ({ openA
                   step="0.1"
                   value={rentSavingsInvestmentReturn}
                   onChange={handleRentSavingsInvestmentReturnChange}
-                  className="w-full h-2 bg-gradient-to-r from-purple-300 to-purple-500 rounded-lg appearance-none cursor-pointer accent-purple-600"
-                />
-                <input
-                  type="number"
-                  value={rentSavingsInvestmentReturn}
-                  onChange={handleRentSavingsInvestmentReturnChange}
-                  onBlur={(e) => setRentSavingsInvestmentReturn(Number(e.target.value))}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-purple-500 focus:border-purple-500 transition-all"
-                  step="0.1"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
             </div>
@@ -555,9 +583,21 @@ const RentVsBuyCalculatorPage: React.FC<RentVsBuyCalculatorPageProps> = ({ openA
 
               {/* Home Price */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="homePrice" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Estimated Home Price: <span className="text-red-600">{formatCurrency(homePrice)}</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="homePrice" className="text-sm font-semibold text-slate-700">
+                    Estimated Home Price
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="text"
+                  value={formatNumberWithCommas(homePrice)}
+                  onChange={handleHomePriceChange}
+                  onBlur={(e) => setHomePrice(Number(e.target.value.replace(/,/g, '')))}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  inputMode="numeric"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="homePrice"
@@ -566,23 +606,28 @@ const RentVsBuyCalculatorPage: React.FC<RentVsBuyCalculatorPageProps> = ({ openA
                   step="100000"
                   value={homePrice}
                   onChange={handleHomePriceChange}
-                  className="w-full h-2 bg-gradient-to-r from-red-300 to-red-500 rounded-lg appearance-none cursor-pointer accent-red-600"
-                />
-                <input
-                  type="text"
-                  value={formatNumberWithCommas(homePrice)}
-                  onChange={handleHomePriceChange}
-                  onBlur={(e) => setHomePrice(Number(e.target.value.replace(/,/g, '')))}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-red-500 focus:border-red-500 transition-all"
-                  inputMode="numeric"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
 
               {/* Down Payment Percent */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="downPaymentPercent" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Down Payment (%): <span className="text-green-600">{downPaymentPercent}%</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="downPaymentPercent" className="text-sm font-semibold text-slate-700">
+                    Down Payment (%)
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="number"
+                  value={downPaymentPercent}
+                  onChange={handleDownPaymentPercentChange}
+                  onBlur={(e) => setDownPaymentPercent(Number(e.target.value))}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  min="0"
+                  max="50"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="downPaymentPercent"
@@ -591,24 +636,27 @@ const RentVsBuyCalculatorPage: React.FC<RentVsBuyCalculatorPageProps> = ({ openA
                   step="1"
                   value={downPaymentPercent}
                   onChange={handleDownPaymentPercentChange}
-                  className="w-full h-2 bg-gradient-to-r from-green-300 to-green-500 rounded-lg appearance-none cursor-pointer accent-green-600"
-                />
-                <input
-                  type="number"
-                  value={downPaymentPercent}
-                  onChange={handleDownPaymentPercentChange}
-                  onBlur={(e) => setDownPaymentPercent(Number(e.target.value))}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-green-500 focus:border-green-500 transition-all"
-                  min="0"
-                  max="50"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
 
               {/* Mortgage Interest Rate */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="mortgageInterestRate" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Mortgage Interest Rate (%): <span className="text-yellow-600">{mortgageInterestRate}%</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="mortgageInterestRate" className="text-sm font-semibold text-slate-700">
+                    Mortgage Interest Rate (%)
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="number"
+                  value={mortgageInterestRate}
+                  onChange={handleMortgageInterestRateChange}
+                  onBlur={(e) => setMortgageInterestRate(Number(e.target.value))}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  step="0.1"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="mortgageInterestRate"
@@ -617,23 +665,28 @@ const RentVsBuyCalculatorPage: React.FC<RentVsBuyCalculatorPageProps> = ({ openA
                   step="0.1"
                   value={mortgageInterestRate}
                   onChange={handleMortgageInterestRateChange}
-                  className="w-full h-2 bg-gradient-to-r from-yellow-300 to-yellow-500 rounded-lg appearance-none cursor-pointer accent-yellow-600"
-                />
-                <input
-                  type="number"
-                  value={mortgageInterestRate}
-                  onChange={handleMortgageInterestRateChange}
-                  onBlur={(e) => setMortgageInterestRate(Number(e.target.value))}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-yellow-500 focus:border-yellow-500 transition-all"
-                  step="0.1"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
 
               {/* Loan Term Years */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="loanTermYears" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Loan Term (Years): <span className="text-pink-600">{loanTermYears} Years</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="loanTermYears" className="text-sm font-semibold text-slate-700">
+                    Loan Term (Years)
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="number"
+                  value={loanTermYears}
+                  onChange={handleLoanTermYearsChange}
+                  onBlur={(e) => setLoanTermYears(Number(e.target.value))}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  min="5"
+                  max="30"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="loanTermYears"
@@ -642,24 +695,27 @@ const RentVsBuyCalculatorPage: React.FC<RentVsBuyCalculatorPageProps> = ({ openA
                   step="1"
                   value={loanTermYears}
                   onChange={handleLoanTermYearsChange}
-                  className="w-full h-2 bg-gradient-to-r from-pink-300 to-pink-500 rounded-lg appearance-none cursor-pointer accent-pink-600"
-                />
-                <input
-                  type="number"
-                  value={loanTermYears}
-                  onChange={handleLoanTermYearsChange}
-                  onBlur={(e) => setLoanTermYears(Number(e.target.value))}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-pink-500 focus:border-pink-500 transition-all"
-                  min="5"
-                  max="30"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
 
               {/* Property Tax Rate */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="propertyTaxRate" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Annual Property Tax Rate (% of Home Value): <span className="text-gray-600">{propertyTaxRate}%</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="propertyTaxRate" className="text-sm font-semibold text-slate-700">
+                    Annual Property Tax Rate (% of Home Value)
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="number"
+                  value={propertyTaxRate}
+                  onChange={handlePropertyTaxRateChange}
+                  onBlur={(e) => setPropertyTaxRate(Number(e.target.value))}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  step="0.01"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="propertyTaxRate"
@@ -668,23 +724,27 @@ const RentVsBuyCalculatorPage: React.FC<RentVsBuyCalculatorPageProps> = ({ openA
                   step="0.01"
                   value={propertyTaxRate}
                   onChange={handlePropertyTaxRateChange}
-                  className="w-full h-2 bg-gradient-to-r from-gray-300 to-gray-500 rounded-lg appearance-none cursor-pointer accent-gray-600"
-                />
-                <input
-                  type="number"
-                  value={propertyTaxRate}
-                  onChange={handlePropertyTaxRateChange}
-                  onBlur={(e) => setPropertyTaxRate(Number(e.target.value))}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-gray-500 focus:border-gray-500 transition-all"
-                  step="0.01"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
 
               {/* Home Insurance Annual */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="homeInsuranceAnnual" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Annual Home Insurance: <span className="text-blue-600">{formatCurrency(homeInsuranceAnnual)}</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="homeInsuranceAnnual" className="text-sm font-semibold text-slate-700">
+                    Annual Home Insurance
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="text"
+                  value={formatNumberWithCommas(homeInsuranceAnnual)}
+                  onChange={handleHomeInsuranceAnnualChange}
+                  onBlur={(e) => setHomeInsuranceAnnual(Number(e.target.value.replace(/,/g, '')))}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  inputMode="numeric"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="homeInsuranceAnnual"
@@ -693,23 +753,27 @@ const RentVsBuyCalculatorPage: React.FC<RentVsBuyCalculatorPageProps> = ({ openA
                   step="1000"
                   value={homeInsuranceAnnual}
                   onChange={handleHomeInsuranceAnnualChange}
-                  className="w-full h-2 bg-gradient-to-r from-blue-300 to-blue-500 rounded-lg appearance-none cursor-pointer accent-blue-600"
-                />
-                <input
-                  type="text"
-                  value={formatNumberWithCommas(homeInsuranceAnnual)}
-                  onChange={handleHomeInsuranceAnnualChange}
-                  onBlur={(e) => setHomeInsuranceAnnual(Number(e.target.value.replace(/,/g, '')))}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-blue-500 focus:border-blue-500 transition-all"
-                  inputMode="numeric"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
 
               {/* HOA Monthly */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="hoaMonthly" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Monthly HOA Fees: <span className="text-purple-600">{formatCurrency(hoaMonthly)}</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="hoaMonthly" className="text-sm font-semibold text-slate-700">
+                    Monthly HOA Fees
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="text"
+                  value={formatNumberWithCommas(hoaMonthly)}
+                  onChange={handleHoaMonthlyChange}
+                  onBlur={(e) => setHoaMonthly(Number(e.target.value.replace(/,/g, '')))}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  inputMode="numeric"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="hoaMonthly"
@@ -718,23 +782,27 @@ const RentVsBuyCalculatorPage: React.FC<RentVsBuyCalculatorPageProps> = ({ openA
                   step="100"
                   value={hoaMonthly}
                   onChange={handleHoaMonthlyChange}
-                  className="w-full h-2 bg-gradient-to-r from-purple-300 to-purple-500 rounded-lg appearance-none cursor-pointer accent-purple-600"
-                />
-                <input
-                  type="text"
-                  value={formatNumberWithCommas(hoaMonthly)}
-                  onChange={handleHoaMonthlyChange}
-                  onBlur={(e) => setHoaMonthly(Number(e.target.value.replace(/,/g, '')))}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-purple-500 focus:border-purple-500 transition-all"
-                  inputMode="numeric"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
 
               {/* Closing Costs Percent */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="closingCostsPercent" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Closing Costs (% of Home Price): <span className="text-teal-600">{closingCostsPercent}%</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="closingCostsPercent" className="text-sm font-semibold text-slate-700">
+                    Closing Costs (% of Home Price)
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="number"
+                  value={closingCostsPercent}
+                  onChange={handleClosingCostsPercentChange}
+                  onBlur={(e) => setClosingCostsPercent(Number(e.target.value))}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  step="0.1"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="closingCostsPercent"
@@ -743,23 +811,27 @@ const RentVsBuyCalculatorPage: React.FC<RentVsBuyCalculatorPageProps> = ({ openA
                   step="0.1"
                   value={closingCostsPercent}
                   onChange={handleClosingCostsPercentChange}
-                  className="w-full h-2 bg-gradient-to-r from-teal-300 to-teal-500 rounded-lg appearance-none cursor-pointer accent-teal-600"
-                />
-                <input
-                  type="number"
-                  value={closingCostsPercent}
-                  onChange={handleClosingCostsPercentChange}
-                  onBlur={(e) => setClosingCostsPercent(Number(e.target.value))}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-teal-500 focus:border-teal-500 transition-all"
-                  step="0.1"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
 
               {/* Maintenance Annual Percent */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="maintenanceAnnualPercent" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Annual Maintenance (% of Home Value): <span className="text-orange-600">{maintenanceAnnualPercent}%</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="maintenanceAnnualPercent" className="text-sm font-semibold text-slate-700">
+                    Annual Maintenance (% of Home Value)
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="number"
+                  value={maintenanceAnnualPercent}
+                  onChange={handleMaintenanceAnnualPercentChange}
+                  onBlur={(e) => setMaintenanceAnnualPercent(Number(e.target.value))}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  step="0.1"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="maintenanceAnnualPercent"
@@ -768,23 +840,27 @@ const RentVsBuyCalculatorPage: React.FC<RentVsBuyCalculatorPageProps> = ({ openA
                   step="0.1"
                   value={maintenanceAnnualPercent}
                   onChange={handleMaintenanceAnnualPercentChange}
-                  className="w-full h-2 bg-gradient-to-r from-orange-300 to-orange-500 rounded-lg appearance-none cursor-pointer accent-orange-600"
-                />
-                <input
-                  type="number"
-                  value={maintenanceAnnualPercent}
-                  onChange={handleMaintenanceAnnualPercentChange}
-                  onBlur={(e) => setMaintenanceAnnualPercent(Number(e.target.value))}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-orange-500 focus:border-orange-500 transition-all"
-                  step="0.1"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
 
               {/* Home Appreciation Annual */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="homeAppreciationAnnual" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Annual Home Appreciation (%): <span className="text-pink-600">{homeAppreciationAnnual}%</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="homeAppreciationAnnual" className="text-sm font-semibold text-slate-700">
+                    Annual Home Appreciation (%)
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="number"
+                  value={homeAppreciationAnnual}
+                  onChange={handleHomeAppreciationAnnualChange}
+                  onBlur={(e) => setHomeAppreciationAnnual(Number(e.target.value))}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  step="0.1"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="homeAppreciationAnnual"
@@ -793,15 +869,7 @@ const RentVsBuyCalculatorPage: React.FC<RentVsBuyCalculatorPageProps> = ({ openA
                   step="0.1"
                   value={homeAppreciationAnnual}
                   onChange={handleHomeAppreciationAnnualChange}
-                  className="w-full h-2 bg-gradient-to-r from-pink-300 to-pink-500 rounded-lg appearance-none cursor-pointer accent-pink-600"
-                />
-                <input
-                  type="number"
-                  value={homeAppreciationAnnual}
-                  onChange={handleHomeAppreciationAnnualChange}
-                  onBlur={(e) => setHomeAppreciationAnnual(Number(e.target.value))}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-pink-500 focus:border-pink-500 transition-all"
-                  step="0.1"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
             </div>
@@ -951,7 +1019,7 @@ const RentVsBuyCalculatorPage: React.FC<RentVsBuyCalculatorPageProps> = ({ openA
         </motion.div>
 
         {/* Informational Sections */}
-        <div className="bg-white border border-gray-100 rounded-2xl p-8 shadow-lg mt-6 space-y-10">
+        <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm mt-8 space-y-10">
           <motion.section variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }}>
             <h2 className="text-3xl font-bold text-gray-900 mb-4 flex items-center">
               <Lightbulb className="w-8 h-8 mr-3 text-yellow-500" /> What is a Rent vs. Buy Calculator?
@@ -1065,7 +1133,7 @@ const RentVsBuyCalculatorPage: React.FC<RentVsBuyCalculatorPageProps> = ({ openA
               {whyUseBanksCart.map((reason, index) => (
                 <motion.div
                   key={index}
-                  className="flex flex-col items-center text-center p-6 rounded-xl shadow-lg bg-gradient-to-br from-green-50 to-teal-50 border border-green-100"
+                  className="flex flex-col items-center text-center p-6 rounded-xl shadow-sm bg-slate-50 border border-slate-200"
                   variants={cardVariants}
                 >
                   {reason.icon}
@@ -1078,7 +1146,7 @@ const RentVsBuyCalculatorPage: React.FC<RentVsBuyCalculatorPageProps> = ({ openA
 
           {/* Final Call to Action */}
           <motion.section
-            className="text-center mt-12 p-8 bg-gradient-to-r from-green-600 to-teal-700 rounded-2xl shadow-xl"
+            className="text-center mt-12 p-8 sm:p-10 bg-gradient-to-r from-[#0F172A] via-[#1E3A8A] to-[#0F172A] text-white rounded-2xl shadow-xl border border-slate-700/50"
             variants={sectionVariants}
             initial="hidden"
             whileInView="visible"
@@ -1102,9 +1170,7 @@ const RentVsBuyCalculatorPage: React.FC<RentVsBuyCalculatorPageProps> = ({ openA
                 <ApplyButton
                   loanType="Housing Financial Planning"
                   openApplyModal={openApplyModal}
-                  className="bg-white text-green-600 px-8 py-4 rounded-full font-bold text-lg shadow-lg
-                             hover:bg-gray-100 transition-all duration-300 ease-in-out transform hover:-translate-y-1
-                             focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-50"
+                  className="bg-amber-500 hover:bg-amber-400 text-slate-950 px-8 py-3.5 rounded-xl font-bold text-base shadow-lg transition-all inline-block"
                 >
                   Get Personalized Advice
                 </ApplyButton>

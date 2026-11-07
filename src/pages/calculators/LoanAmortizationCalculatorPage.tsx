@@ -7,7 +7,8 @@ import {
   HandCoins, CreditCard, Clock, Hourglass, PiggyBank as SavingsIcon, Landmark,
   Table, ScrollText, GitFork, // Icons for amortization
 } from 'lucide-react'; // Lucide icons
-import ApplyButton from '../../components/common/ApplyButton'; // Assuming this path is correct
+import ApplyButton from '../../components/common/ApplyButton';
+import Breadcrumb from '../../components/Breadcrumb'; // Assuming this path is correct
 
 // --- Helper Functions ---
 // Formats a number into INR currency format
@@ -329,11 +330,20 @@ const LoanAmortizationCalculatorPage: React.FC<LoanAmortizationCalculatorPagePro
 
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-cyan-50 py-8 font-inter text-gray-800">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-slate-50 py-8 font-sans text-slate-800">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Breadcrumb Navigation */}
+        <div className="mb-6">
+          <Breadcrumb
+            items={[
+              { label: 'Calculators', path: '/calculators' },
+              { label: 'Loan Amortization Schedule' }
+            ]}
+          />
+        </div>
         {/* Hero Section */}
         <motion.div
-          className="text-center mb-12 bg-gradient-to-r from-blue-600 to-cyan-700 text-white p-8 rounded-3xl shadow-xl"
+          className="text-center mb-8 bg-gradient-to-r from-[#0F172A] via-[#1E3A8A] to-[#0F172A] text-white p-8 sm:p-10 rounded-2xl shadow-xl border border-slate-700/50"
           variants={sectionVariants}
           initial="hidden"
           whileInView="visible"
@@ -344,7 +354,7 @@ const LoanAmortizationCalculatorPage: React.FC<LoanAmortizationCalculatorPagePro
             variants={itemVariants}
           >
             Understand Your Loan Repayment with Our{' '}
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 to-orange-300">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-amber-300 to-amber-100">
               Loan Amortization Calculator.
             </span>
           </motion.h1>
@@ -360,9 +370,7 @@ const LoanAmortizationCalculatorPage: React.FC<LoanAmortizationCalculatorPagePro
               <ApplyButton
                 loanType="Loan Amortization & Planning"
                 openApplyModal={openApplyModal}
-                className="bg-white text-blue-600 px-8 py-4 rounded-full font-bold text-lg shadow-lg
-                           hover:bg-gray-100 transition-all duration-300 ease-in-out transform hover:-translate-y-1
-                           focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-50"
+                className="bg-amber-500 hover:bg-amber-400 text-slate-950 px-8 py-3.5 rounded-xl font-bold text-base shadow-lg transition-all inline-block"
               >
                 Explore Loan Options
               </ApplyButton>
@@ -372,28 +380,40 @@ const LoanAmortizationCalculatorPage: React.FC<LoanAmortizationCalculatorPagePro
 
         {/* Loan Amortization Calculator Section */}
         <motion.div
-          className="bg-white rounded-3xl shadow-2xl p-6 md:p-10 w-full border border-blue-100 mb-12"
+          className="bg-white rounded-2xl shadow-sm p-6 sm:p-8 w-full border border-slate-200 mb-10"
           variants={sectionVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
         >
-          <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-cyan-600 to-blue-600 drop-shadow-md">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-8 text-center flex items-center justify-center">
             <Calculator className="inline-block w-9 h-9 mr-3 text-cyan-500" /> Loan Payment Breakdown
           </h2>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
             {/* Input Controls Section */}
-            <div className="space-y-8 p-4 bg-gray-50 rounded-2xl border border-gray-100 shadow-inner">
+            <div className="space-y-6 p-6 bg-slate-50/70 rounded-xl border border-slate-200">
               <h3 className="text-2xl font-bold text-gray-800 mb-4 flex items-center">
                 <CreditCard className="w-6 h-6 mr-2 text-blue-600" /> Loan Details
               </h3>
 
               {/* Loan Amount */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="loanAmount" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Loan Amount: <span className="text-indigo-600">{formatCurrency(displayLoanAmount)}</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="loanAmount" className="text-sm font-semibold text-slate-700">
+                    Loan Amount
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="text"
+                  value={formatNumberWithCommas(displayLoanAmount)}
+                  onChange={handleLoanAmountChange}
+                  onBlur={(e) => setLoanAmount(Number(e.target.value.replace(/,/g, '')))}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  inputMode="numeric"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="loanAmount"
@@ -402,23 +422,27 @@ const LoanAmortizationCalculatorPage: React.FC<LoanAmortizationCalculatorPagePro
                   step="50000"
                   value={displayLoanAmount}
                   onChange={handleLoanAmountChange}
-                  className="w-full h-2 bg-gradient-to-r from-indigo-300 to-indigo-500 rounded-lg appearance-none cursor-pointer accent-indigo-600"
-                />
-                <input
-                  type="text"
-                  value={formatNumberWithCommas(displayLoanAmount)}
-                  onChange={handleLoanAmountChange}
-                  onBlur={(e) => setLoanAmount(Number(e.target.value.replace(/,/g, '')))}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-indigo-500 focus:border-indigo-500 transition-all"
-                  inputMode="numeric"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
 
               {/* Interest Rate */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="interestRate" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Annual Interest Rate (%): <span className="text-teal-600">{displayInterestRate}%</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="interestRate" className="text-sm font-semibold text-slate-700">
+                    Annual Interest Rate (%)
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="number"
+                  value={displayInterestRate}
+                  onChange={handleInterestRateChange}
+                  onBlur={(e) => { const v = Number(e.target.value); setDisplayInterestRate(v); setCalcInterestRate(v); }}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  step="0.1"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="interestRate"
@@ -427,23 +451,28 @@ const LoanAmortizationCalculatorPage: React.FC<LoanAmortizationCalculatorPagePro
                   step="0.1"
                   value={displayInterestRate}
                   onChange={handleInterestRateChange}
-                  className="w-full h-2 bg-gradient-to-r from-teal-300 to-teal-500 rounded-lg appearance-none cursor-pointer accent-teal-600"
-                />
-                <input
-                  type="number"
-                  value={displayInterestRate}
-                  onChange={handleInterestRateChange}
-                  onBlur={(e) => { const v = Number(e.target.value); setDisplayInterestRate(v); setCalcInterestRate(v); }}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-teal-500 focus:border-teal-500 transition-all"
-                  step="0.1"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
 
               {/* Loan Term Years */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="loanTermYears" className="block text-lg font-semibold text-gray-700 mb-2">
-                  Loan Term (Years): <span className="text-orange-600">{displayLoanTermYears} Years</span>
-                </label>
+                <div className="flex justify-between items-center mb-2">
+                  <label htmlFor="loanTermYears" className="text-sm font-semibold text-slate-700">
+                    Loan Term (Years)
+                  </label>
+                  <div className="flex items-center">
+                    <input
+                  type="number"
+                  value={displayLoanTermYears}
+                  onChange={handleLoanTermYearsChange}
+                  onBlur={(e) => { const v = Number(e.target.value); setDisplayLoanTermYears(v); setCalcLoanTermYears(v); }}
+                  className="w-36 text-right font-bold text-slate-900 bg-white border border-slate-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-[#1E3A8A] font-mono text-sm shadow-sm"
+                  min="1"
+                  max="30"
+                />
+                  </div>
+                </div>
                 <input
                   type="range"
                   id="loanTermYears"
@@ -452,22 +481,13 @@ const LoanAmortizationCalculatorPage: React.FC<LoanAmortizationCalculatorPagePro
                   step="1"
                   value={displayLoanTermYears}
                   onChange={handleLoanTermYearsChange}
-                  className="w-full h-2 bg-gradient-to-r from-orange-300 to-orange-500 rounded-lg appearance-none cursor-pointer accent-orange-600"
-                />
-                <input
-                  type="number"
-                  value={displayLoanTermYears}
-                  onChange={handleLoanTermYearsChange}
-                  onBlur={(e) => { const v = Number(e.target.value); setDisplayLoanTermYears(v); setCalcLoanTermYears(v); }}
-                  className="mt-3 w-full p-3 border border-gray-300 rounded-lg text-gray-800 text-center text-lg focus:ring-orange-500 focus:border-orange-500 transition-all"
-                  min="1"
-                  max="30"
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#1E3A8A]"
                 />
               </motion.div>
             </div>
 
             {/* Results Summary Section */}
-            <div className="p-6 bg-gradient-to-br from-blue-500 to-cyan-600 text-white rounded-2xl shadow-xl flex flex-col justify-center items-center text-center">
+            <div className="p-6 sm:p-8 bg-[#0F172A] text-white rounded-2xl shadow-xl border border-slate-800 flex flex-col justify-between text-left">
               <h3 className="text-2xl md:text-3xl font-bold mb-4">Summary of Your Loan</h3>
 
               <p className="text-xl text-blue-100 mb-4">Estimated Monthly Payment:</p>
@@ -476,17 +496,17 @@ const LoanAmortizationCalculatorPage: React.FC<LoanAmortizationCalculatorPagePro
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, type: 'spring', damping: 20, stiffness: 300 }}
-                className="text-5xl md:text-6xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 to-orange-300 drop-shadow-lg"
+                className="text-5xl md:text-6xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-amber-300 to-amber-100 drop-shadow-lg"
               >
                 {formatCurrency(calculations.monthlyPayment)}
               </motion.div>
 
               <div className="w-full space-y-4 text-lg mt-8">
-                <motion.div variants={itemVariants} className="flex justify-between items-center bg-blue-700/30 p-3 rounded-lg">
+                <motion.div variants={itemVariants} className="flex justify-between items-center bg-slate-800/80 border border-slate-700/60 p-3 rounded-xl text-sm sm:text-base font-mono tabular-nums">
                   <span className="font-medium flex items-center gap-2"><DollarSign className="w-5 h-5" /> Total Principal Paid</span>
                   <span className="font-bold text-white">{formatCurrency(calculations.totalPrincipalPaid)}</span>
                 </motion.div>
-                <motion.div variants={itemVariants} className="flex justify-between items-center bg-blue-700/30 p-3 rounded-lg">
+                <motion.div variants={itemVariants} className="flex justify-between items-center bg-slate-800/80 border border-slate-700/60 p-3 rounded-xl text-sm sm:text-base font-mono tabular-nums">
                   <span className="font-medium flex items-center gap-2"><IndianRupee className="w-5 h-5" /> Total Interest Paid</span>
                   <span className="font-bold text-white">{formatCurrency(calculations.totalInterestPaid)}</span>
                 </motion.div>
@@ -624,7 +644,7 @@ const LoanAmortizationCalculatorPage: React.FC<LoanAmortizationCalculatorPagePro
         </motion.div>
 
         {/* Informational Sections */}
-        <div className="bg-white border border-gray-100 rounded-2xl p-8 shadow-lg mt-6 space-y-10">
+        <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm mt-8 space-y-10">
           <motion.section variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }}>
             <h2 className="text-3xl font-bold text-gray-900 mb-4 flex items-center">
               <Lightbulb className="w-8 h-8 mr-3 text-yellow-500" /> What is a Loan Amortization Calculator?
@@ -725,7 +745,7 @@ const LoanAmortizationCalculatorPage: React.FC<LoanAmortizationCalculatorPagePro
               {whyUseBanksCart.map((reason, index) => (
                 <motion.div
                   key={index}
-                  className="flex flex-col items-center text-center p-6 rounded-xl shadow-lg bg-gradient-to-br from-blue-50 to-cyan-50 border border-blue-100"
+                  className="flex flex-col items-center text-center p-6 rounded-xl shadow-sm bg-slate-50 border border-slate-200"
                   variants={cardVariants}
                 >
                   {reason.icon}
@@ -738,7 +758,7 @@ const LoanAmortizationCalculatorPage: React.FC<LoanAmortizationCalculatorPagePro
 
           {/* Final Call to Action */}
           <motion.section
-            className="text-center mt-12 p-8 bg-gradient-to-r from-blue-600 to-cyan-700 rounded-2xl shadow-xl"
+            className="text-center mt-12 p-8 sm:p-10 bg-gradient-to-r from-[#0F172A] via-[#1E3A8A] to-[#0F172A] text-white rounded-2xl shadow-xl border border-slate-700/50"
             variants={sectionVariants}
             initial="hidden"
             whileInView="visible"
@@ -762,9 +782,7 @@ const LoanAmortizationCalculatorPage: React.FC<LoanAmortizationCalculatorPagePro
                 <ApplyButton
                   loanType="Loan Management & Advisory"
                   openApplyModal={openApplyModal}
-                  className="bg-white text-blue-600 px-8 py-4 rounded-full font-bold text-lg shadow-lg
-                             hover:bg-gray-100 transition-all duration-300 ease-in-out transform hover:-translate-y-1
-                             focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-50"
+                  className="bg-amber-500 hover:bg-amber-400 text-slate-950 px-8 py-3.5 rounded-xl font-bold text-base shadow-lg transition-all inline-block"
                 >
                   Get Personalized Loan Advice
                 </ApplyButton>

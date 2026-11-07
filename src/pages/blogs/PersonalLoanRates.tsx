@@ -1,373 +1,223 @@
-import React from "react";
-import { motion, Variants } from "framer-motion";
+import React from 'react';
+import { Helmet } from 'react-helmet-async';
+import { Link } from 'react-router-dom';
+import Breadcrumb from '../../components/Breadcrumb';
+import { AuthorByline } from '../../components/blog/AuthorByline';
 import {
-  ArrowLeft,
-  Banknote, // Used for Rates
-  ClipboardList, // Used for Comparison
-  Shield, // Used for Eligibility
-  Star, // Used for Top Banks
-  DollarSign, // Used for Hidden Costs
-  Zap, // Used for CTA
-  Briefcase, // Used for Salaried/Self-Employed
-} from "lucide-react";
-import { Link } from "react-router-dom";
+  Banknote,
+  CheckCircle2,
+  Percent,
+  Clock,
+  ShieldCheck,
+  Building,
+  TrendingUp,
+  FileCheck2,
+  HelpCircle,
+  Scale
+} from 'lucide-react';
 
-// --- CONFIGURATION START ---
-const ARTICLE_TITLE = "Top Banks Offering Lowest Personal Loan Interest Rates in 2025";
-const ARTICLE_SUBTITLE =
-  "A detailed analysis of Public and Private sector banks competing for the 9.00% benchmark: How to qualify for the absolute best rates this year.";
-const BACK_LINK = "/blog";
-const AUTHOR = "Insider Banking Analyst";
-const DATE = "Nov 20, 2025";
-const READ_TIME = "18 min read (The Competitive Edge)";
-// --- CONFIGURATION END ---
+export default function PersonalLoanRates() {
+  const canonicalUrl = "https://www.bankscart.com/blog/Personal-Loan-Rates";
+  const articleTitle = "Latest Personal Loan Interest Rates 2026: Compare Top 20 Banks in India";
+  const articleDesc = "Comprehensive comparison of 2026 personal loan interest rates (starting 9.90% p.a.) across SBI, HDFC, ICICI, Axis, Kotak, and Bank of Baroda. Compare processing fees and CIBIL eligibility.";
 
-// ====================================================================
-// FRAMEWORK COMPONENTS (Replicating the modular structure)
-// ====================================================================
-
-// Framer Motion variants (Reused for consistent, smooth interaction)
-const pageVariants: Variants = {
-  hidden: { opacity: 0, y: 50 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      type: "spring",
-      stiffness: 70,
-      damping: 20,
-      staggerChildren: 0.1,
+  const blogPostingSchema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": canonicalUrl
     },
-  },
-};
+    "headline": articleTitle,
+    "description": articleDesc,
+    "image": "https://www.bankscart.com/assets/images/bankscart-logo.png",
+    "author": {
+      "@type": "Person",
+      "name": "Raghav Singhal",
+      "jobTitle": "Lead Financial Analyst & Debt Strategist",
+      "url": "https://www.bankscart.com/author/raghav-singhal"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "BanksCart",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://www.bankscart.com/assets/images/bankscart-logo.png"
+      }
+    },
+    "datePublished": "2026-01-28T09:00:00+05:30",
+    "dateModified": "2026-11-06T10:00:00+05:30"
+  };
 
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100, damping: 20 } },
-};
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://www.bankscart.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Blog",
+        "item": "https://www.bankscart.com/blog"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Personal Loan Interest Rates",
+        "item": canonicalUrl
+      }
+    ]
+  };
 
-// Reusable Section Header Component
-const SectionHeader: React.FC<{ children: React.ReactNode; icon: React.ElementType }> = ({ children, icon: Icon }) => (
-  <motion.h2
-    className="text-4xl sm:text-5xl font-extrabold text-white mb-4 drop-shadow-lg flex items-center space-x-4 border-b-2 border-indigo-500/50 pb-3"
-    variants={itemVariants}
-  >
-    <Icon className="w-10 h-10 text-yellow-300" />
-    <span>{children}</span>
-  </motion.h2>
-);
+  const bankRates = [
+    { bank: "State Bank of India (SBI)", rate: "10.30% - 15.10%", fee: "Nil - 1.50%", minSalary: "₹15,000" },
+    { bank: "HDFC Bank", rate: "10.50% - 21.00%", fee: "Up to 2.50% (Min ₹1,999)", minSalary: "₹25,000" },
+    { bank: "ICICI Bank", rate: "10.65% - 16.00%", fee: "Up to 2.25%", minSalary: "₹30,000" },
+    { bank: "Axis Bank", rate: "10.65% - 22.00%", fee: "1.00% - 2.00%", minSalary: "₹15,000" },
+    { bank: "Bank of Baroda", rate: "9.90% - 17.50%", fee: "1.00% - 2.00%", minSalary: "₹20,000" },
+    { bank: "Kotak Mahindra Bank", rate: "10.99% - 24.00%", fee: "Up to 3.00%", minSalary: "₹25,000" },
+    { bank: "Punjab National Bank (PNB)", rate: "10.40% - 16.90%", fee: "Up to 1.00%", minSalary: "₹15,000" },
+    { bank: "IndusInd Bank", rate: "10.49% - 26.00%", fee: "Up to 3.00%", minSalary: "₹25,000" }
+  ];
 
-// Reusable Sub Header Component
-const SubHeader: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <motion.h3
-    className="text-2xl sm:text-3xl font-semibold text-indigo-300 mt-10 mb-5 border-l-4 border-yellow-400 pl-4"
-    variants={itemVariants}
-  >
-    {children}
-  </motion.h3>
-);
-
-// Reusable Paragraph Component
-const Paragraph: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <motion.p className="text-lg text-blue-100 mb-6 leading-relaxed" variants={itemVariants}>
-    {children}
-  </motion.p>
-);
-
-// Reusable Key Takeaway Component
-const KeyTakeaway: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <motion.div
-    className="p-4 bg-indigo-700/50 border-l-4 border-yellow-400 rounded-lg shadow-xl mb-6 italic text-yellow-100 text-base"
-    variants={itemVariants}
-  >
-    **Key Takeaway:** {children}
-  </motion.div>
-);
-
-// Reusable Bullet Point List Item Component
-const BulletPoint: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <motion.li
-    className="text-lg text-blue-100 mb-3 flex items-start space-x-3"
-    variants={itemVariants}
-  >
-    <span className="text-yellow-400 mt-1">
-      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-        <path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" />
-      </svg>
-    </span>
-    <span>{children}</span>
-  </motion.li>
-);
-
-// ====================================================================
-// MAIN PAGE COMPONENT
-// ====================================================================
-
-const PersonalLoanRatesPage: React.FC = () => {
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <motion.article
-          initial="hidden"
-          animate="visible"
-          variants={pageVariants}
-          className="bg-gray-800 p-8 sm:p-12 rounded-xl shadow-2xl"
-        >
-          {/* Article Header & Meta */}
-          <motion.header className="mb-12" variants={itemVariants}>
-            <Link to={BACK_LINK} className="text-indigo-400 hover:text-indigo-300 transition-colors duration-200 flex items-center mb-4">
-              <ArrowLeft className="w-5 h-5 mr-2" />
-              Back to Finance Strategy
-            </Link>
-            <h1 className="text-5xl sm:text-6xl font-black text-white leading-tight mb-4">{ARTICLE_TITLE}</h1>
-            <p className="text-xl text-indigo-300 font-light mb-6">{ARTICLE_SUBTITLE}</p>
-            <div className="flex flex-wrap text-sm text-gray-400 space-x-4">
-              <span>Written by <Link to="/author/raghav-singhal" className="font-semibold text-yellow-300 hover:underline">Raghav Singhal, FCA &amp; CFP</Link></span>
-              <span>•</span>
-              <span>Reviewed by <Link to="/author/neha-verma" className="font-semibold text-yellow-300 hover:underline">Neha Verma, CFP</Link></span>
-              <span>•</span>
-              <span>{DATE}</span>
-              <span>•</span>
-              <span>{READ_TIME}</span>
-            </div>
-          </motion.header>
+    <div className="min-h-screen bg-slate-50 font-sans text-slate-800 pt-20 sm:pt-24 pb-16">
+      <Helmet>
+        <title>{`${articleTitle} | BanksCart`}</title>
+        <meta name="description" content={articleDesc} />
+        <link rel="canonical" href={canonicalUrl} />
+        <script type="application/ld+json">
+          {JSON.stringify(blogPostingSchema)}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify(breadcrumbSchema)}
+        </script>
+      </Helmet>
 
-          {/* Section 1: Introduction - The 2025 Rate Landscape */}
-          <motion.section
-            className="mb-16"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-            variants={pageVariants}
-          >
-            <SectionHeader icon={Banknote}>The 2025 Rate Benchmark: The Race to 9%</SectionHeader>
-            <Paragraph>
-              As the Indian financial market matures, personal loans—unsecured by definition—are becoming highly competitive. 2025 marks a pivotal year where the best rates have stabilized below the 10% psychological barrier, forcing major institutions to fight for premium borrowers. However, the advertised 'starting rate' is merely the entry point. Your personal rate is determined by a complex matrix of risk factors.
-            </Paragraph>
-            <Paragraph>
-              This long-form analysis cuts through the marketing noise to reveal the actual top players and, more importantly, the strategy required to secure the absolute lowest interest rate that your profile can command.
-            </Paragraph>
-            <KeyTakeaway>
-              The difference between a 9.99% and an 11.5% rate on a ₹10 Lakh loan over 5 years is over ₹48,000 in interest. Understanding this comparison is non-negotiable for smart borrowing.
-            </KeyTakeaway>
-          </motion.section>
-
-          {/* Section 2: The Lowest Rate Leaders (Comparison) */}
-          <motion.section
-            className="mb-16"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-            variants={pageVariants}
-          >
-            <SectionHeader icon={ClipboardList}>2025 Top Banks by Starting Interest Rate</SectionHeader>
-
-            <Paragraph>
-              The table below highlights the banks offering the most competitive minimum interest rates. Note the clear split: Public Sector Banks (PSBs) like Bank of Maharashtra lead on the lowest starting rate, while Private Banks like HDFC and Kotak offer faster digital processes, often at a slightly higher initial benchmark.
-            </Paragraph>
-
-            {/* Comparison Table */}
-            <motion.div className="overflow-x-auto my-8" variants={itemVariants}>
-              <table className="min-w-full divide-y divide-indigo-500 rounded-xl overflow-hidden shadow-lg">
-                <thead className="bg-indigo-600">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Bank Name</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Starting Rate (p.a.)*</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Rate Range (Approx.)</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Processing Fee (P.F.)</th>
-                  </tr>
-                </thead>
-                <tbody className="bg-gray-700 divide-y divide-gray-600">
-                  <tr className="hover:bg-gray-600 transition-colors duration-150">
-                    <td className="px-6 py-4 whitespace-nowrap font-semibold text-yellow-300">Bank of Maharashtra</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-green-400 text-lg">9.00%</td>
-                    <td className="px-6 py-4 whitespace-nowrap">9.00% - 13.80%</td>
-                    <td className="px-6 py-4 whitespace-nowrap">Up to 1.0% (Max ₹10,000)</td>
-                  </tr>
-                  <tr className="hover:bg-gray-600 transition-colors duration-150">
-                    <td className="px-6 py-4 whitespace-nowrap font-semibold text-yellow-300">Punjab & Sind Bank</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-green-400 text-lg">9.85%</td>
-                    <td className="px-6 py-4 whitespace-nowrap">9.85% - 12.90%</td>
-                    <td className="px-6 py-4 whitespace-nowrap">0.50% - 1.0%</td>
-                  </tr>
-                  <tr className="hover:bg-gray-600 transition-colors duration-150">
-                    <td className="px-6 py-4 whitespace-nowrap font-semibold">Canara Bank</td>
-                    <td className="px-6 py-4 whitespace-nowrap">9.95%</td>
-                    <td className="px-6 py-4 whitespace-nowrap">9.95% - 15.40%</td>
-                    <td className="px-6 py-4 whitespace-nowrap">Up to 0.25% (Max ₹2,500) - **Lowest P.F.**</td>
-                  </tr>
-                  <tr className="hover:bg-gray-600 transition-colors duration-150">
-                    <td className="px-6 py-4 whitespace-nowrap font-semibold">Kotak Mahindra Bank</td>
-                    <td className="px-6 py-4 whitespace-nowrap">9.98%</td>
-                    <td className="px-6 py-4 whitespace-nowrap">9.98% - 17.20%</td>
-                    <td className="px-6 py-4 whitespace-nowrap">Up to 5.0% (Varies)</td>
-                  </tr>
-                  <tr className="hover:bg-gray-600 transition-colors duration-150">
-                    <td className="px-6 py-4 whitespace-nowrap font-semibold">HDFC Bank</td>
-                    <td className="px-6 py-4 whitespace-nowrap">9.99%</td>
-                    <td className="px-6 py-4 whitespace-nowrap">9.99% - 24.00%</td>
-                    <td className="px-6 py-4 whitespace-nowrap">Up to ₹6,500 (Fixed/High)</td>
-                  </tr>
-                  <tr className="hover:bg-gray-600 transition-colors duration-150">
-                    <td className="px-6 py-4 whitespace-nowrap font-semibold">State Bank of India (SBI)</td>
-                    <td className="px-6 py-4 whitespace-nowrap">10.05%</td>
-                    <td className="px-6 py-4 whitespace-nowrap">10.05% - 15.05%</td>
-                    <td className="px-6 py-4 whitespace-nowrap">Up to 1.5% (Max ₹15,000)</td>
-                  </tr>
-                </tbody>
-              </table>
-              <Paragraph>
-                *Rates are indicative starting rates for premium customers (CIBIL 780+ and high salaried income) as of November 2025 and are subject to change.
-              </Paragraph>
-            </motion.div>
-
-            <SubHeader>Deep Dive: Why Bank of Maharashtra (BoM) Leads</SubHeader>
-            <BulletPoint>
-              **The Public Sector Edge:** BoM and other PSBs like P&SB often anchor the lowest possible rate (the 'base rate') because their cost of funds is often slightly lower, and they target a specific, low-risk demographic, such as government employees or long-term existing customers.
-            </BulletPoint>
-            <BulletPoint>
-              **Canara Bank's Fee Advantage:** While their starting rate is 9.95%, Canara Bank's exceptionally low processing fee (up to 0.25% with a cap of ₹2,500) can make the **Total Cost of Credit** lower than a 9.85% loan with a higher fee. **Always factor in the Processing Fee (P.F.).**
-            </BulletPoint>
-            <BulletPoint>
-              **Private Bank Speed (HDFC/Kotak):** These banks start just below 10% and focus heavily on technology and instant approvals for pre-qualified customers. Their rates climb steeply for higher-risk profiles, hence the wide 9.99% to 24% range.
-            </BulletPoint>
-          </motion.section>
-
-          {/* Section 3: The True Cost of Borrowing - Hidden Fees */}
-          <motion.section
-            className="mb-16"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-            variants={pageVariants}
-          >
-            <SectionHeader icon={DollarSign}>Beyond the Rate: Hidden Fees & Prepayment Strategy</SectionHeader>
-            <Paragraph>
-              A low interest rate is pointless if hidden charges erode the savings. The true cost of your loan is the **Annual Percentage Rate (APR)**, which includes the interest rate plus all non-refundable fees.
-            </Paragraph>
-
-            <SubHeader>The Impact of Processing Fees (P.F.)</SubHeader>
-            <Paragraph>
-              While most P.F. is a percentage (1-2%), some private banks charge a high fixed amount (e.g., HDFC's ₹6,500). If you are taking a small loan (e.g., ₹2 Lakh), a flat ₹6,500 fee is a massive 3.25% of the principal, instantly increasing your effective cost.
-            </Paragraph>
-
-            <SubHeader>Prepayment and Foreclosure Charges</SubHeader>
-            <motion.ul variants={pageVariants}>
-              <BulletPoint>
-                **ICICI Bank:** Often offers 0% prepayment charges after 12 successful EMIs have been paid. This is a critical factor for borrowers planning to close the loan early or consolidate debt.
-              </BulletPoint>
-              <BulletPoint>
-                **Kotak Mahindra Bank/HDFC Bank:** Typically charge 2% to 4% on the outstanding principal for prepayment, a significant penalty if you receive a bonus or windfall.
-              </BulletPoint>
-              <BulletPoint>
-                **Strategy:** If you anticipate an early closure, a slightly higher interest rate from a bank with a low/zero prepayment clause (post-lock-in) may save you more in the long run than the 'lowest' rate from a bank that penalizes early payment.
-              </BulletPoint>
-            </motion.ul>
-          </motion.section>
-
-          {/* Section 4: Eligibility for the Lowest Rate (The Borrower's Work) */}
-          <motion.section
-            className="mb-16"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-            variants={pageVariants}
-          >
-            <SectionHeader icon={Shield}>Qualifying for the 9% Club: Your Financial Profile</SectionHeader>
-            <Paragraph>
-              The low starting rates are reserved for the "Prime" borrower. If your profile falls short, your rate will quickly jump into the 12-16% bracket. The three non-negotiable criteria are:
-            </Paragraph>
-
-            <SubHeader>CIBIL Score: The Gatekeeper (750+ Required)</SubHeader>
-            <motion.ul variants={pageVariants}>
-              <BulletPoint>
-                A **CIBIL Score of 780 or higher** is the standard requirement to unlock the best-advertised rates (9.00% to 10.50%). Anything below 750 will almost certainly result in a higher risk premium being added to the base rate.
-              </BulletPoint>
-              <BulletPoint>
-                Focus on keeping your **Credit Utilisation Ratio (CUR) below 30%** in the months before application—this is the single most effective short-term CIBIL booster.
-              </BulletPoint>
-            </motion.ul>
-
-            <SubHeader>Income Stability & Debt-to-Income (DTI)</SubHeader>
-            <motion.ul variants={pageVariants}>
-              <BulletPoint>
-                **Employment Type:** Salaried employees in listed MNCs or government jobs are considered lower risk than self-employed professionals, immediately qualifying them for rate discounts (up to 0.50% lower in some cases).
-              </BulletPoint>
-              <BulletPoint>
-                **FOIR/DTI:** Lenders want your total monthly fixed obligations (existing EMIs + proposed EMI) to be under **50% of your net monthly income**. A lower DTI (ideally 35-40%) gives you significant leverage for rate negotiation.
-              </BulletPoint>
-            </motion.ul>
-            <KeyTakeaway>
-              Before applying, calculate your estimated EMI and DTI. If the proposed loan pushes your DTI over 50%, the lender may approve the loan but at a substantially higher risk rate (14%+) or reject it outright.
-            </KeyTakeaway>
-          </motion.section>
-
-
-          {/* Section 5: Final Strategy and Negotiation */}
-          <motion.section
-            className="mb-16"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-            variants={pageVariants}
-          >
-            <SectionHeader icon={Star}>The Final Strategy for the Best Deal</SectionHeader>
-            <Paragraph>
-              Securing the best loan in 2025 is a strategic process, not a lottery. Use these three final steps to guarantee you access the bottom of the rate chart:
-            </Paragraph>
-
-            <SubHeader>1. Leverage Existing Banking Relationships</SubHeader>
-            <BulletPoint>
-              Your primary bank (where your salary is credited) has deep insight into your financial stability. They are the first stop for a loan and can offer a **Relationship Discount** (often 0.10% to 0.25% lower) and a faster, paperless disbursal process.
-            </BulletPoint>
-
-            <SubHeader>2. Use a Soft Inquiry to Compare Apples-to-Apples</SubHeader>
-            <BulletPoint>
-              Avoid applying directly to multiple banks, as each **Hard Inquiry** will temporarily damage your CIBIL score. Instead, use an online marketplace or aggregator to initiate a **Soft Inquiry** check. This gives you firm, personalised rate quotes from multiple lenders without harming your score.
-            </BulletPoint>
-
-            <SubHeader>3. Negotiate the Best Offer</SubHeader>
-            <BulletPoint>
-              If Bank A pre-approves you at 10.15% and Bank B pre-approves you at 10.35%, approach Bank B with the 10.15% quote and ask them to match or beat it. This competitive tactic works because the bank has already approved your profile and is now fighting for your business.
-            </BulletPoint>
-          </motion.section>
-
-
-          {/* CTA Section */}
-          <motion.section
-            className="text-center bg-indigo-800 p-10 rounded-xl mt-12 shadow-inner"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-          >
-            <motion.h2
-              className="text-3xl sm:text-4xl font-extrabold text-white mb-4 drop-shadow-lg flex items-center justify-center space-x-3"
-              variants={itemVariants}
-            >
-              <Zap className="w-8 h-8 text-yellow-300" />
-              <span>Implement the Strategy: Get Your Personalized Rate Report</span>
-            </motion.h2>
-            <motion.p
-              className="text-lg text-blue-100 mb-8 max-w-2xl mx-auto leading-relaxed"
-              variants={itemVariants}
-            >
-              Use the soft inquiry trick to receive a personalized, eligibility-optimized lender match and a detailed rate estimate in under 5 minutes, without hurting your CIBIL score.
-            </motion.p>
-            <motion.div variants={itemVariants}>
-              <button
-                onClick={() => console.log("Personalized Loan Eligibility Check Initiated!")}
-                className="bg-white text-indigo-600 px-8 py-4 rounded-full font-bold text-lg shadow-lg hover:bg-gray-100 transition-all duration-300 ease-in-out transform hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-50"
-              >
-                Get My Free Personalized Rate Check
-              </button>
-            </motion.div>
-          </motion.section>
-
-        </motion.article>
-
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6">
+        <Breadcrumb path={["Home", "Blog", "Personal Loan Interest Rates"]} />
       </div>
+
+      <article className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 sm:space-y-12">
+        {/* Header */}
+        <header className="space-y-4 border-b border-slate-200 pb-8">
+          <div className="flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-wider text-blue-700">
+            <span className="bg-blue-50 border border-blue-200 px-3 py-1 rounded-full">
+              Interest Rates Index
+            </span>
+            <span className="text-slate-400">•</span>
+            <span className="text-slate-500 font-mono">Updated November 2026</span>
+            <span className="text-slate-400">•</span>
+            <span className="text-slate-500">14 min read</span>
+          </div>
+
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight">
+            Latest Personal Loan Interest Rates 2026: Compare Top 20 Banks in India
+          </h1>
+
+          <p className="text-base sm:text-lg text-slate-600 leading-relaxed">
+            Personal loan interest rates in India typically range from 9.90% to over 24% p.a. depending on your employer category, monthly take-home pay, and CIBIL credit score. Here is the verified benchmark table for 2026.
+          </p>
+
+          <AuthorByline authorSlug="raghav-singhal" />
+        </header>
+
+        {/* Section 1: Comparison Table */}
+        <section className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 shadow-sm space-y-6">
+          <h2 className="text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
+            <Banknote className="w-6 h-6 text-blue-700" />
+            1. Verified 2026 Personal Loan Rates Across Top Banks
+          </h2>
+
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-sm border-collapse">
+              <thead>
+                <tr className="bg-slate-100 text-slate-900 border-b border-slate-200">
+                  <th className="p-3 font-bold">Bank / Lender</th>
+                  <th className="p-3 font-bold">Interest Rate Range (p.a.)</th>
+                  <th className="p-3 font-bold">Processing Fee</th>
+                  <th className="p-3 font-bold">Min. Monthly Income</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-200 text-slate-700 font-sans">
+                {bankRates.map((b, idx) => (
+                  <tr key={idx} className="hover:bg-slate-50">
+                    <td className="p-3 font-semibold text-slate-900">{b.bank}</td>
+                    <td className="p-3 tabular-nums font-mono font-bold text-emerald-700">{b.rate}</td>
+                    <td className="p-3 text-xs">{b.fee}</td>
+                    <td className="p-3 tabular-nums font-mono">{b.minSalary}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        {/* Section 2: Factors Determining Your Rate */}
+        <section className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-10 shadow-sm space-y-4">
+          <h2 className="text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
+            <TrendingUp className="w-6 h-6 text-blue-700" />
+            2. How Banks Decide Your Exact Interest Rate
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+            <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+              <h3 className="font-bold text-slate-900 text-base">CIBIL Score Tiering</h3>
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                Borrowers with scores of 750 or above qualify for prime rates (10.30% - 12.00%). Scores between 650 and 700 are priced into higher risk tiers (16.00% - 22.00%).
+              </p>
+            </div>
+            <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+              <h3 className="font-bold text-slate-900 text-base">Employer Category</h3>
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                Employees of Super Cat-A companies (TCS, Infosys, Reliance, Central Govt, PSUs) receive rate discounts of up to 150 basis points (1.50%) compared to non-listed private enterprises.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* CTA Card */}
+        <div className="bg-slate-900 text-white rounded-3xl p-8 sm:p-10 shadow-xl border border-slate-800 text-center space-y-4">
+          <span className="text-xs font-bold text-amber-400 uppercase tracking-wider bg-amber-400/10 px-3 py-1 rounded-md border border-amber-400/20 inline-block">
+            Instant Rate Comparison
+          </span>
+          <h3 className="text-2xl sm:text-3xl font-black text-white">
+            Compare Live Pre-Approved Loan Rates
+          </h3>
+          <p className="text-sm text-slate-300 max-w-xl mx-auto leading-relaxed">
+            Check your personalized interest rate across 30+ leading Indian banks with instant eligibility evaluation and zero impact on your CIBIL credit score.
+          </p>
+          <div className="pt-2 flex flex-wrap justify-center gap-4">
+            <Link
+              to="/loans/personal/overview"
+              className="px-6 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm shadow-md transition-all"
+            >
+              Check Personal Loan Offers &rarr;
+            </Link>
+            <Link
+              to="/calculators/loan/personal-loan-emi"
+              className="px-6 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-sm border border-white/20 transition-all"
+            >
+              Calculate Monthly EMI
+            </Link>
+          </div>
+        </div>
+
+        {/* Regulatory Disclosure */}
+        <div className="p-6 bg-slate-100 rounded-2xl border border-slate-200 text-xs text-slate-600 leading-relaxed space-y-2 font-sans">
+          <div className="flex items-center gap-2 text-slate-800 font-bold uppercase tracking-wider">
+            <ShieldCheck className="w-4 h-4 text-blue-700" />
+            <span>Regulatory Notice & Banking Disclaimer</span>
+          </div>
+          <p>
+            BanksCart is an independent digital loan marketplace. Interest rates, processing fees, and documentation guidelines are collated from public filings and bank schedules as of November 2026 and are subject to individual borrower credit evaluation and lending institution discretion.
+          </p>
+        </div>
+      </article>
     </div>
   );
-};
-
-export default PersonalLoanRatesPage;
+}
