@@ -702,3 +702,20 @@ From `design-system/bankscart/WEBSITE-ROADMAP.md`, the remaining prioritized pag
 4. **Automated Verification:**
    - `npx tsc --noEmit`: 0 errors.
    - `npm test`: 4 passed (100%).
+
+
+---
+
+## 19. Authentication Modal Elevation (`LoginModal.tsx`)
+
+### Upgrades Implemented:
+1. **Master Design System Compliance:**
+   - Deep Slate (`#0F172A`) header with Trust Blue (`#1E3A8A`) and Gold conversion accents (`bg-gradient-to-r from-amber-600 to-amber-700`).
+   - Frosted glass backdrop (`bg-slate-950/75 backdrop-blur-xs`) and rounded 3xl card.
+2. **Indian Fintech Authentication Ergonomics:**
+   - **Mode 1: Instant Mobile OTP Login** (10-digit phone verification with 6-digit OTP input boxes and 30-second countdown timer).
+   - **Mode 2: Email & Password Login** (Email input, password with show/hide eye toggle, remember me checkbox, and forgot password recovery link).
+   - **Mode 3: Google Single Sign-On** (Official Google SVG icon, clean card style).
+   - **Mode 4: Integrated Account Creation** (Full legal name as per PAN, mobile number, email, password, and DPDP Act consent).
+3. **Institutional Trust Ribbon:**
+   - Bottom security banner: `🔒 Protected by 256-Bit Bank Encryption • DPDP Act 2023 Compliant`.
